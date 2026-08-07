@@ -93,6 +93,44 @@ If you cached, stored, or passed around `AgentResponseItem` values, change those
 `ResponseItem.Kind` (an `OpenAI.Responses.ResponseItemKind`) or pattern-match on the concrete Azure
 subtype as shown above.
 
+### Agent metadata is now exposed through extension members
+
+`AgentResponseItem` declared `AgentReference` and `ResponseId` as settable instance properties. Because
+the base type is now the upstream `OpenAI.Responses.ResponseItem`, that metadata is surfaced as
+**read-only extension properties** in `ResponseItemExtensions`. The equivalent response-level metadata
+is surfaced by `ResponseResultExtensions` (`Agent`, `AgentConversationId`) and the request-level
+metadata by `CreateResponseOptionsExtensions` (`Agent`, `AgentConversationId`, `SessionId` — these are
+settable).
+
+To see them, keep a `using Azure.AI.Extensions.OpenAI;` in scope:
+
+```csharp
+using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
+
+// Response-level metadata.
+AgentReference agent = response.Agent;
+string conversationId = response.AgentConversationId;
+
+foreach (ResponseItem item in response.OutputItems)
+{
+    // Item-level metadata (read-only).
+    AgentReference itemAgent = item.AgentReference;
+    string sourceResponseId = item.ResponseId;
+}
+
+// Request-level metadata (settable).
+CreateResponseOptions options = new(inputItems);
+options.Agent = new AgentReference(FOUNDRY_AGENT_NAME);
+options.AgentConversationId = conversation.Id;
+options.SessionId = sessionId;
+```
+
+If you previously *assigned* `AgentResponseItem.AgentReference` or `AgentResponseItem.ResponseId`,
+there is no replacement on the item; set the corresponding value on `CreateResponseOptions` instead.
+`CreateResponseOptions.SessionId` is new in `3.0.0-beta.1` and lets you scope a response to a specific
+session.
+
 ### Built-in tools now come from OpenAI
 
 Tools and items that OpenAI already models are no longer emitted by this library. Use the upstream
@@ -159,6 +197,9 @@ Azure Responses tool and model types dropped the `Responses` prefix so they read
 the upstream `OpenAI.Responses` types. A few names were normalized further:
 
 - `...ToolParameters` became `...ToolOptions`.
+- `...Configuration` and `...ConnectionParameters` on the Bing and browser-automation search shapes
+  became `...Options`.
+- `...AuthDetails` became `...AuthenticationDetails`.
 - `Sharepoint` became `SharePoint` (on the options type), and `OpenApi` became `OpenAPI` on the tool
   type name.
 
@@ -176,14 +217,14 @@ Full mapping (old to new):
 | `ResponsesAzureFunctionDefinitionFunction` | `AzureFunctionDefinitionFunction` |
 | `ResponsesAzureFunctionStorageQueue` | `AzureFunctionStorageQueue` |
 | `ResponsesAzureFunctionTool` | `AzureFunctionTool` |
-| `ResponsesBingCustomSearchConfiguration` | `BingCustomSearchConfiguration` |
+| `ResponsesBingCustomSearchConfiguration` | `BingCustomSearchOptions` |
 | `ResponsesBingCustomSearchPreviewTool` | `BingCustomSearchPreviewTool` |
 | `ResponsesBingCustomSearchToolParameters` | `BingCustomSearchToolOptions` |
-| `ResponsesBingGroundingSearchConfiguration` | `BingGroundingSearchConfiguration` |
+| `ResponsesBingGroundingSearchConfiguration` | `BingGroundingSearchOptions` |
 | `ResponsesBingGroundingSearchToolParameters` | `BingGroundingSearchToolOptions` |
 | `ResponsesBingGroundingTool` | `BingGroundingTool` |
 | `ResponsesBrowserAutomationPreviewTool` | `BrowserAutomationPreviewTool` |
-| `ResponsesBrowserAutomationToolConnectionParameters` | `BrowserAutomationToolConnectionParameters` |
+| `ResponsesBrowserAutomationToolConnectionParameters` | `BrowserAutomationToolConnectionOptions` |
 | `ResponsesBrowserAutomationToolParameters` | `BrowserAutomationToolOptions` |
 | `ResponsesCaptureStructuredOutputsTool` | `CaptureStructuredOutputsTool` |
 | `ResponsesFabricDataAgentToolOptions` | `FabricDataAgentToolOptions` |
@@ -195,7 +236,7 @@ Full mapping (old to new):
 | `ResponsesOpenApiAuthDetails` | `OpenApiAuthenticationDetails` |
 | `ResponsesOpenApiFunctionDefinition` | `OpenApiFunctionDefinition` |
 | `ResponsesOpenApiFunctionDefinitionFunction` | `OpenApiFunctionDefinitionFunction` |
-| `ResponsesOpenApiManagedAuthDetails` | `OpenApiManagedAuthDetails` |
+| `ResponsesOpenApiManagedAuthDetails` | `OpenApiManagedAuthenticationDetails` |
 | `ResponsesOpenApiManagedSecurityScheme` | `OpenApiManagedSecurityScheme` |
 | `ResponsesOpenApiProjectConnectionAuthDetails` | `OpenApiProjectConnectionAuthenticationDetails` |
 | `ResponsesOpenApiProjectConnectionSecurityScheme` | `OpenApiProjectConnectionSecurityScheme` |
@@ -223,8 +264,42 @@ After (3.0.0-beta.1):
 
 ```csharp
 BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOptions(
-    searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
+    searchConfigurations: [new BingGroundingSearchOptions(projectConnectionId: bingConnectionName.Id)]
 ));
+```
+
+### Member renames
+
+A few members were renamed alongside their declaring types:
+
+| Type | Old member (2.x) | New member (3.0.0-beta.1) |
+| --- | --- | --- |
+| `OpenApiFunctionDefinition` | `Auth` (and the `auth` constructor parameter) | `Authentication` (and `authentication`) |
+| `OpenApiFunctionDefinition` | `DefaultParams` | `DefaultParameters` |
+| `OpenApiAuthenticationDetails` | `Type` | `Kind` |
+
+`OAuthConsentRequestResponseItem` also changed shape: the consent link is now the strongly-typed
+`Uri ConsentLink` property (previously the `internalConsentLink` string), and both `ConsentLink` and
+`Id` are now settable.
+
+Before (2.x):
+
+```csharp
+ResponsesOpenApiFunctionDefinition openApiFunction = new(name, specification, auth)
+{
+    DefaultParams = { "format" },
+};
+ResponsesOpenApiAuthDetails details = openApiFunction.Auth;
+```
+
+After (3.0.0-beta.1):
+
+```csharp
+OpenApiFunctionDefinition openApiFunction = new(name, specification, authentication)
+{
+    DefaultParameters = { "format" },
+};
+OpenApiAuthenticationDetails details = openApiFunction.Authentication;
 ```
 
 ## 4. Client options
@@ -245,15 +320,24 @@ BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOption
 Before (2.x):
 
 ```csharp
+// ProjectResponsesClientOptions derived from ProjectOpenAIClientOptions, so the same
+// options instance could be handed to both clients.
 ProjectResponsesClientOptions options = new();
+ProjectOpenAIClient openAIClient = new(projectEndpoint, tokenProvider, options);
 ProjectResponsesClient client = new(projectEndpoint, tokenProvider, options);
 ```
 
 After (3.0.0-beta.1):
 
 ```csharp
-ProjectResponsesClientOptions options = new();
-ProjectResponsesClient client = new(projectEndpoint, tokenProvider, options);
+// ProjectOpenAIClient requires ProjectOpenAIClientOptions.
+ProjectOpenAIClientOptions openAIOptions = new();
+ProjectOpenAIClient openAIClient = new(projectEndpoint, tokenProvider, openAIOptions);
+
+// ProjectResponsesClientOptions is still accepted by ProjectResponsesClient, and
+// ProjectOpenAIClientOptions converts implicitly if you want to share configuration.
+ProjectResponsesClientOptions responsesOptions = openAIOptions;
+ProjectResponsesClient client = new(projectEndpoint, tokenProvider, responsesOptions);
 ```
 
 ## Preview tool kinds temporarily unavailable
@@ -284,11 +368,21 @@ This does not affect the Azure Foundry toolbox search feature, which remains ava
 
 ## Experimental APIs
 
-Several of the response-normalization surfaces and the `CreateResponse`/`CreateResponseAsync`
-extension overloads that take a `ConversationResource` are marked experimental with the diagnostic ID
-`AAIP001`. To use them, suppress that diagnostic (for example with `#pragma warning disable AAIP001`
-around the call site, or by adding `AAIP001` to `<NoWarn>` in your project). Experimental APIs may
-change in a later release.
+Parts of this library are marked with `[Experimental]` and must be explicitly acknowledged before you
+can compile against them. Two diagnostic IDs are used:
+
+| Diagnostic | Applies to |
+| --- | --- |
+| `AAIP001` | Response-normalization surfaces, `ProjectResponsesClient`, the `CreateResponse`/`CreateResponseAsync` extension overloads that take a `ConversationResource`, the extension-member classes, and the preview Foundry tool/item types (A2A, SharePoint, Fabric data agent, memory, Azure Function, browser automation, Bing custom search, ...). |
+| `AAIP002` | The remaining Azure tool and response-item models, including `BingGroundingTool`, `AzureAISearchTool`, `CaptureStructuredOutputsTool`, `OAuthConsentRequestResponseItem`, `AgentStructuredOutputsResponseItem`, `AgentWorkflowPreviewActionResponseItem`, and their `...ToolCall`/`...ToolCallOutput` types. |
+
+Suppress the IDs you use — for example with `#pragma warning disable AAIP001, AAIP002` around the call
+site, or by adding them to `<NoWarn>` in your project. Code that only suppressed `AAIP001` against an
+earlier `3.0.0-beta.1` drop must add `AAIP002`.
+
+Extension properties additionally surface the .NET `SCME0001` experimental diagnostic from
+`System.ClientModel`, and upstream OpenAI preview surfaces use `OPENAI001`; suppress those as well if
+you consume them. Experimental APIs may change in a later release.
 
 ## Getting help
 
