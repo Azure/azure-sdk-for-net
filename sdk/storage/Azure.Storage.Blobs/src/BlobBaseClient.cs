@@ -3406,9 +3406,12 @@ namespace Azure.Storage.Blobs.Specialized
                     long blobContentLength = blobProperties.Value.ContentLength;
                     EncryptionData encryptionData = null;
                     BlobClientSideDecryptor decryptor = null;
-                    if (UsingClientSideEncryption && !allowModifications)
+                    if (UsingClientSideEncryption)
                     {
                         decryptor = new(new(ClientSideEncryption));
+                    }
+                    if (UsingClientSideEncryption && !allowModifications)
+                    {
                         encryptionData = BlobClientSideDecryptor.GetAndValidateEncryptionDataOrDefault(blobProperties?.Value?.Metadata);
                     }
 
@@ -3435,7 +3438,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 async,
                                 cancellationToken).ConfigureAwait(false);
 
-                            if (UsingClientSideEncryption)
+                            if (decryptor != null)
                             {
                                 response.Value.Content = await decryptor.DecryptInternal(
                                         response.Value.Content,
