@@ -1,5 +1,5 @@
 directory: specification/confidentialledger/data-plane/ConfidentialLedger
-commit: e7dffbc07d8f6e632fda8a7c8913eb3a51bab288
+commit: e41b2ddb02f6c4f8078eb22ee988e6660acece15
 repo: Azure/azure-rest-api-specs
 additionalDirectories:
 
