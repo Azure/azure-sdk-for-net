@@ -13,150 +13,266 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
-    /// <summary>
-    /// A class representing the ApplicationInsightsWebTest data model.
-    /// An Application Insights WebTest definition.
-    /// </summary>
+    /// <summary> An Application Insights WebTest definition. </summary>
     public partial class ApplicationInsightsWebTestData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsWebTestData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public ApplicationInsightsWebTestData(AzureLocation location) : base(location)
         {
-            Locations = new ChangeTrackingList<WebTestGeolocation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsWebTestData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="kind"> The kind of WebTest that this web test watches. Choices are ping, multistep and standard. </param>
-        /// <param name="syntheticMonitorId"> Unique ID of this WebTest. This is typically the same value as the Name field. </param>
-        /// <param name="webTestName"> User defined name if this WebTest. </param>
-        /// <param name="description"> User defined description for this WebTest. </param>
-        /// <param name="isEnabled"> Is the test actively being monitored. </param>
-        /// <param name="frequencyInSeconds"> Interval in seconds between test runs for this WebTest. Default value is 300. </param>
-        /// <param name="timeoutInSeconds"> Seconds until this WebTest will timeout and fail. Default value is 30. </param>
-        /// <param name="webTestKind"> The kind of web test this is, valid choices are ping, multistep and standard. </param>
-        /// <param name="isRetryEnabled"> Allow for retries should this WebTest fail. </param>
-        /// <param name="locations"> A list of where to physically run the tests from to give global coverage for accessibility of your application. </param>
-        /// <param name="configuration"> An XML configuration specification for a WebTest. </param>
-        /// <param name="provisioningState"> Current state of this component, whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </param>
-        /// <param name="request"> The collection of request properties. </param>
-        /// <param name="validationRules"> The collection of validation rule properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsWebTestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WebTestKind? kind, string syntheticMonitorId, string webTestName, string description, bool? isEnabled, int? frequencyInSeconds, int? timeoutInSeconds, WebTestKind? webTestKind, bool? isRetryEnabled, IList<WebTestGeolocation> locations, WebTestConfiguration configuration, string provisioningState, WebTestRequest request, WebTestValidationRules validationRules, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="properties"> Metadata describing a web test for an Azure resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationInsightsWebTestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WebTestKind? kind, WebTestProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
-            SyntheticMonitorId = syntheticMonitorId;
-            WebTestName = webTestName;
-            Description = description;
-            IsEnabled = isEnabled;
-            FrequencyInSeconds = frequencyInSeconds;
-            TimeoutInSeconds = timeoutInSeconds;
-            WebTestKind = webTestKind;
-            IsRetryEnabled = isRetryEnabled;
-            Locations = locations;
-            Configuration = configuration;
-            ProvisioningState = provisioningState;
-            Request = request;
-            ValidationRules = validationRules;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsWebTestData"/> for deserialization. </summary>
-        internal ApplicationInsightsWebTestData()
-        {
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The kind of WebTest that this web test watches. Choices are ping, multistep and standard. </summary>
         [WirePath("kind")]
         public WebTestKind? Kind { get; set; }
+
+        /// <summary> Metadata describing a web test for an Azure resource. </summary>
+        [WirePath("properties")]
+        internal WebTestProperties Properties { get; set; }
+
         /// <summary> Unique ID of this WebTest. This is typically the same value as the Name field. </summary>
         [WirePath("properties.SyntheticMonitorId")]
-        public string SyntheticMonitorId { get; set; }
-        /// <summary> User defined name if this WebTest. </summary>
-        [WirePath("properties.Name")]
-        public string WebTestName { get; set; }
-        /// <summary> User defined description for this WebTest. </summary>
-        [WirePath("properties.Description")]
-        public string Description { get; set; }
-        /// <summary> Is the test actively being monitored. </summary>
-        [WirePath("properties.Enabled")]
-        public bool? IsEnabled { get; set; }
-        /// <summary> Interval in seconds between test runs for this WebTest. Default value is 300. </summary>
-        [WirePath("properties.Frequency")]
-        public int? FrequencyInSeconds { get; set; }
-        /// <summary> Seconds until this WebTest will timeout and fail. Default value is 30. </summary>
-        [WirePath("properties.Timeout")]
-        public int? TimeoutInSeconds { get; set; }
-        /// <summary> The kind of web test this is, valid choices are ping, multistep and standard. </summary>
-        [WirePath("properties.Kind")]
-        public WebTestKind? WebTestKind { get; set; }
-        /// <summary> Allow for retries should this WebTest fail. </summary>
-        [WirePath("properties.RetryEnabled")]
-        public bool? IsRetryEnabled { get; set; }
-        /// <summary> A list of where to physically run the tests from to give global coverage for accessibility of your application. </summary>
-        [WirePath("properties.Locations")]
-        public IList<WebTestGeolocation> Locations { get; }
-        /// <summary> An XML configuration specification for a WebTest. </summary>
-        internal WebTestConfiguration Configuration { get; set; }
-        /// <summary> The XML specification of a WebTest to run against an application. </summary>
-        [WirePath("properties.Configuration.WebTest")]
-        public string WebTest
+        public string SyntheticMonitorId
         {
-            get => Configuration is null ? default : Configuration.WebTest;
+            get
+            {
+                return Properties is null ? default : Properties.SyntheticMonitorId;
+            }
             set
             {
-                if (Configuration is null)
-                    Configuration = new WebTestConfiguration();
-                Configuration.WebTest = value;
+                if (Properties is null)
+                {
+                    Properties = new WebTestProperties();
+                }
+                Properties.SyntheticMonitorId = value;
+            }
+        }
+
+        /// <summary> User defined name if this WebTest. </summary>
+        [WirePath("properties.Name")]
+        public string WebTestName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WebTestName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebTestProperties();
+                }
+                Properties.WebTestName = value;
+            }
+        }
+
+        /// <summary> User defined description for this WebTest. </summary>
+        [WirePath("properties.Description")]
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebTestProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> Is the test actively being monitored. </summary>
+        [WirePath("properties.Enabled")]
+        public bool? IsEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebTestProperties();
+                }
+                Properties.IsEnabled = value;
+            }
+        }
+
+        /// <summary> Interval in seconds between test runs for this WebTest. Default value is 300. </summary>
+        [WirePath("properties.Frequency")]
+        public int? FrequencyInSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FrequencyInSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebTestProperties();
+                }
+                Properties.FrequencyInSeconds = value;
+            }
+        }
+
+        /// <summary> Seconds until this WebTest will timeout and fail. Default value is 30. </summary>
+        [WirePath("properties.Timeout")]
+        public int? TimeoutInSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeoutInSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebTestProperties();
+                }
+                Properties.TimeoutInSeconds = value;
+            }
+        }
+
+        /// <summary> The kind of web test this is, valid choices are ping, multistep and standard. </summary>
+        [WirePath("properties.Kind")]
+        public WebTestKind? WebTestKind
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WebTestKind;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new WebTestProperties();
+                    }
+                    Properties.WebTestKind = value.Value;
+                }
+            }
+        }
+
+        /// <summary> Allow for retries should this WebTest fail. </summary>
+        [WirePath("properties.RetryEnabled")]
+        public bool? IsRetryEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsRetryEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebTestProperties();
+                }
+                Properties.IsRetryEnabled = value;
+            }
+        }
+
+        /// <summary> A list of where to physically run the tests from to give global coverage for accessibility of your application. </summary>
+        [WirePath("properties.Locations")]
+        public IList<WebTestGeolocation> Locations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebTestProperties();
+                }
+                return Properties.Locations;
             }
         }
 
         /// <summary> Current state of this component, whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </summary>
         [WirePath("properties.provisioningState")]
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The collection of request properties. </summary>
         [WirePath("properties.Request")]
-        public WebTestRequest Request { get; set; }
+        public WebTestRequest Request
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Request;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebTestProperties();
+                }
+                Properties.Request = value;
+            }
+        }
+
         /// <summary> The collection of validation rule properties. </summary>
         [WirePath("properties.ValidationRules")]
-        public WebTestValidationRules ValidationRules { get; set; }
+        public WebTestValidationRules ValidationRules
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ValidationRules;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebTestProperties();
+                }
+                Properties.ValidationRules = value;
+            }
+        }
+
+        /// <summary> The XML specification of a WebTest to run against an application. </summary>
+        [WirePath("properties.Configuration.WebTest")]
+        public string WebTest
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WebTest;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebTestProperties();
+                }
+                Properties.WebTest = value;
+            }
+        }
     }
 }
