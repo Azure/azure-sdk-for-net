@@ -6,7 +6,6 @@ using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.ShutdownPersistence;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 
@@ -39,17 +38,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         internal AzureMonitorResource? MetricResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource(_instrumentationKey);
 
         internal ITransmitter Transmitter => _transmitter;
-
-        /// <inheritdoc/>
-        protected override bool OnShutdown(int timeoutMilliseconds)
-        {
-            // Only reached when a caller supplied their own reader, which has already exported the
-            // final collection. Kicks the storage drain so anything previously persisted still gets
-            // a chance to upload.
-            _transmitter.DrainStorage(PersistOnShutdownConfig.ResolveDrainWait(timeoutMilliseconds));
-
-            return base.OnShutdown(timeoutMilliseconds);
-        }
 
         /// <inheritdoc/>
         public override ExportResult Export(in Batch<Metric> batch)

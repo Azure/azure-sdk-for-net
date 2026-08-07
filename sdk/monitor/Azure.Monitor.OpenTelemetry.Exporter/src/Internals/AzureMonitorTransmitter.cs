@@ -28,6 +28,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     /// </summary>
     internal class AzureMonitorTransmitter : ITransmitter
     {
+        private const long StorageMaxSizeBytes = 52428800;
+
         internal readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
         internal PersistentBlobProvider? _fileBlobProvider;
         internal readonly AzureMonitorStatsbeat? _statsbeat;
@@ -35,6 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal readonly TransmissionStateManager _transmissionStateManager;
         internal readonly TransmitFromStorageHandler? _transmitFromStorageHandler;
         private readonly bool _isAadEnabled;
+        private readonly string? _storageDirectory;
         private int _persistOnlyScopeCount;
         private Task? _inFlightDrain;
         private Stopwatch? _drainStarted;
@@ -57,6 +60,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars, out _isAadEnabled);
 
             _fileBlobProvider = InitializeOfflineStorage(platform, _connectionVars, options.DisableOfflineStorage, options.StorageDirectory, out var storageDirectory);
+
+            _storageDirectory = storageDirectory;
 
             _statsbeat = InitializeStatsbeat(options, _connectionVars, platform);
 
@@ -127,7 +132,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                     AzureMonitorExporterEventSource.Log.InitializedPersistentStorage(connectionVars.InstrumentationKey, storageDirectory);
 
-                    return new FileBlobProvider(storageDirectory);
+                    return new FileBlobProvider(storageDirectory, maxSizeInBytes: StorageMaxSizeBytes);
                 }
                 catch (Exception ex)
                 {
@@ -239,7 +244,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             try
             {
-                var result = blobProvider.SaveTelemetryWithEviction(HttpPipelineHelper.GetSerializedContent(telemetryItems));
+                var result = blobProvider.SaveTelemetryWithEviction(HttpPipelineHelper.GetSerializedContent(telemetryItems), _storageDirectory, StorageMaxSizeBytes);
 
                 if (result == ExportResult.Success)
                 {
@@ -355,7 +360,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     byte[] requestContent = HttpPipelineHelper.GetSerializedContent(telemetryItems);
                     if (_fileBlobProvider != null)
                     {
-                        result = _fileBlobProvider.SaveTelemetryWithEviction(requestContent);
+                        result = _fileBlobProvider.SaveTelemetryWithEviction(requestContent, _storageDirectory, StorageMaxSizeBytes);
                     }
 
                     if (result == ExportResult.Success)

@@ -153,7 +153,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     continue;
                 }
 
-                if (!blob.TryRead(out var data) || data == null || data.Length == 0)
+                if (!blob.TryRead(out var data))
+                {
+                    // A read can fail transiently. Leave it leased so a later pass retries rather
+                    // than deleting telemetry that is probably still good.
+                    continue;
+                }
+
+                if (data == null || data.Length == 0)
                 {
                     blob.TryDelete();
                     continue;
@@ -265,11 +272,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // No blob is passed because this batch may span many of them: a partial success
             // re-persists the retryable subset as a single new blob, after which every blob in the
             // batch has been superseded and is deleted here.
-            HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _blobProvider, blob: null, _connectionVars, TelemetryItemOrigin.Storage, _isAadEnabled, telemetrySchemaTypeCounter, _networkSdkStatsManager);
+            var transmissionResult = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _blobProvider, blob: null, _connectionVars, TelemetryItemOrigin.Storage, _isAadEnabled, telemetrySchemaTypeCounter, _networkSdkStatsManager);
 
             if (statusCode == ResponseStatusCodes.PartialSuccess)
             {
-                DeleteAll(batch);
+                // Only discard the originals once the retryable subset has been re-persisted, or
+                // there was nothing retryable. An unreadable response body would otherwise take the
+                // whole batch with it.
+                if (transmissionResult.PartialSuccessHandled)
+                {
+                    DeleteAll(batch);
+                }
+
                 return true;
             }
 

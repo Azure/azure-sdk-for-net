@@ -103,8 +103,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
 
                 return meterProviderBuilder
-                    .AddReader(new PeriodicExportingMetricReader(metricExporter)
-                    { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
+                    .AddReader(new AzureMonitorPeriodicExportingMetricReader(metricExporter))
                     .Build();
             }, LazyThreadSafetyMode.ExecutionAndPublication);
 

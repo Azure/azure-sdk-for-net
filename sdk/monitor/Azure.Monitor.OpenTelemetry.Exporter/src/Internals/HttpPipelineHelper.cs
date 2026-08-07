@@ -14,7 +14,6 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.ShutdownPersistence;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry;
 using OpenTelemetry.PersistentStorage.Abstractions;
@@ -354,7 +353,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             if (blobProvider != null && TryGetRequestContent(httpMessage.Request.Content, out var content))
             {
-                result.ExportResult = blobProvider.SaveTelemetryWithEviction(content);
+                result.ExportResult = blobProvider.SaveTelemetry(content);
                 result.WillRetry = (result.ExportResult == ExportResult.Success);
                 result.SavedToStorage = result.WillRetry;
             }
@@ -409,6 +408,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             if (partialContent == null || blobProvider == null)
             {
+                // Nothing retryable came back, so the caller is free to discard the originals.
+                result.PartialSuccessHandled = true;
+
                 // No retry possible - track everything else as dropped
                 if (retryCounter != null)
                 {
@@ -430,9 +432,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
             }
 
-            result.ExportResult = blobProvider.SaveTelemetryWithEviction(partialContent);
+            result.ExportResult = blobProvider.SaveTelemetry(partialContent);
             result.WillRetry = (result.ExportResult == ExportResult.Success);
             result.SavedToStorage = result.WillRetry;
+            result.PartialSuccessHandled = result.WillRetry;
 
             if (result.WillRetry && retryCounter != null)
             {
@@ -457,7 +460,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 if (blobProvider != null && TryGetRequestContent(httpMessage.Request.Content, out var content))
                 {
-                    result.ExportResult = blobProvider.SaveTelemetryWithEviction(content);
+                    result.ExportResult = blobProvider.SaveTelemetry(content);
                     result.WillRetry = (result.ExportResult == ExportResult.Success);
                     result.SavedToStorage = result.WillRetry;
                 }

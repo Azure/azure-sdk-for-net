@@ -223,20 +223,45 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             // The storage provider refuses new telemetry once the directory hits its cap and never
             // evicts, so a stale backlog would otherwise permanently starve current telemetry.
-            using var provider = new FileBlobProvider(Path.Combine(_storageRoot, "full"), maxSizeInBytes: 2048);
+            var directory = Path.Combine(_storageRoot, "full");
+            using var provider = new FileBlobProvider(directory, maxSizeInBytes: 2048);
 
+            var accepted = FillToCapacity(provider);
+            var storedBeforeEviction = provider.GetBlobs().Count();
+
+            Assert.Equal(ExportResult.Success, provider.SaveTelemetryWithEviction(new byte[512], directory, maxSizeInBytes: 2048));
+            Assert.True(provider.GetBlobs().Count() <= storedBeforeEviction);
+            Assert.InRange(accepted, 1, 99);
+        }
+
+        [Fact]
+        public void SaveDoesNotEvictWhenTheFailureIsNotCapacity()
+        {
+            var directory = Path.Combine(_storageRoot, "notfull");
+            using var provider = new FileBlobProvider(directory, maxSizeInBytes: 2048);
+
+            FillToCapacity(provider);
+            var storedBeforeSave = provider.GetBlobs().Count();
+
+            // Points the capacity check at an empty directory, standing in for a write that failed
+            // for a reason eviction cannot fix - permissions, a full disk, a locked file.
+            var elsewhere = Path.Combine(_storageRoot, "empty");
+            Directory.CreateDirectory(elsewhere);
+
+            Assert.Equal(ExportResult.Failure, provider.SaveTelemetryWithEviction(new byte[512], elsewhere, maxSizeInBytes: 2048));
+            Assert.Equal(storedBeforeSave, provider.GetBlobs().Count());
+        }
+
+        private static int FillToCapacity(FileBlobProvider provider)
+        {
             var payload = new byte[512];
             var accepted = 0;
-            while (provider.SaveTelemetry(payload) == ExportResult.Success && accepted < 100)
+            while (accepted < 100 && provider.SaveTelemetry(payload) == ExportResult.Success)
             {
                 accepted++;
             }
 
-            Assert.InRange(accepted, 1, 99);
-            var storedBeforeEviction = provider.GetBlobs().Count();
-
-            Assert.Equal(ExportResult.Success, provider.SaveTelemetryWithEviction(payload));
-            Assert.True(provider.GetBlobs().Count() <= storedBeforeEviction);
+            return accepted;
         }
 
         [Theory]
