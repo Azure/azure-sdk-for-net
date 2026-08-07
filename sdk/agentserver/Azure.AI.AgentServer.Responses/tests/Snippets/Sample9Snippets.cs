@@ -3,10 +3,10 @@
 
 using Azure.AI.AgentServer.Responses;
 using Azure.AI.AgentServer.Responses.Models;
+using Microsoft.OpenTelemetry;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenTelemetry;
 using NUnit.Framework;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;

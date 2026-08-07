@@ -17,7 +17,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// multi-instance deployments.
 /// </para>
 /// <para>
-/// Event streaming is handled by the Core event-stream primitive, not by this provider.
+/// For event streaming, extend <see cref="ResponsesStreamProvider"/>.
 /// For cancellation signalling, extend <see cref="ResponsesCancellationSignalProvider"/>.
 /// </para>
 /// <para>

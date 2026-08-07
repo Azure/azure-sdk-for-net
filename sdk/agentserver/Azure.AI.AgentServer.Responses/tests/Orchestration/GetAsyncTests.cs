@@ -3,11 +3,11 @@
 
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Internal;
-using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
+
 using CreateResponseRequest = Azure.AI.AgentServer.Responses.CreateResponseRequest;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Orchestration;
@@ -30,9 +30,8 @@ public class GetAsyncTests : IDisposable
             Options.Create(new InMemoryProviderOptions()), TimeProvider.System);
         _tracker = new ResponseExecutionTracker(NullLogger<ResponseExecutionTracker>.Instance);
         _orchestrator = new ResponseOrchestrator(
-            _handler, _provider, new InMemoryCancellationSignalProvider(_provider), TestEventStreams.CreateInMemoryRegistry(), _tracker,
-            NullLogger<ResponseOrchestrator>.Instance,
-            Options.Create(new ResponsesServerOptions()));
+            _handler, _provider, new InMemoryCancellationSignalProvider(_provider), new InMemoryStreamProvider(_provider), _tracker,
+            NullLogger<ResponseOrchestrator>.Instance);
     }
 
     [Test]

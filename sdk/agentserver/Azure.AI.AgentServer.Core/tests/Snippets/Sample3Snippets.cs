@@ -28,12 +28,11 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
 
             // GetOrCreateAsync fetches the store, or creates it if it does not exist,
             // in a single call — so you can read and write items right away.
-            // When endpoint is null it is resolved from the FOUNDRY_PROJECT_ENDPOINT
-            // environment variable.
+            // Outside Foundry hosting, omitting endpoint uses the local file-backed fallback.
+            // In Foundry hosting, endpoint is resolved from FOUNDRY_PROJECT_ENDPOINT.
             FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
                 "checkpoints/thread-abc",
                 credential,
-                userIsolation: true,
                 itemTtlSeconds: 3600,
                 description: "Checkpoint store for thread abc");
 

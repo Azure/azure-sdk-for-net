@@ -150,7 +150,7 @@ A `/readiness` endpoint is registered by default, responding to liveness and rea
 
 ### Resilient tasks and streaming
 
-The library provides durable **task** and resumable **streaming** primitives for long-running agents. Register tasks with `AddResilientTasks()` and event streams with `AddAgentEventStreams()`, then run work through `ITaskInvoker` and emit progress through `AgentEventStreamRegistry`. Tasks survive process restarts, support multi-turn conversations and steering, and persist idempotent state via `TaskMetadata`. See the [Tasks guide][tasks_guide] and the [Streaming guide][streaming_guide] for full walkthroughs.
+The library provides durable **task** and resumable **streaming** primitives for long-running agents. Register tasks with `AddResilientTasks()` and event streams with `AddAgentEventStreams()`, then run work through `ITaskInvoker` and emit progress through `AgentEventStreamRegistry`. Tasks survive process restarts and support multi-turn conversations and steering. Persist application checkpoints and idempotency state explicitly with `FoundryStateStore`. See the [Tasks guide][tasks_guide], [Streaming guide][streaming_guide], and [State Store guide][state_store_guide] for full walkthroughs.
 
 ### Durable state store
 
@@ -158,7 +158,7 @@ The library provides durable **task** and resumable **streaming** primitives for
 
 ### Resilient tasks and streaming
 
-The library provides durable **task** and resumable **streaming** primitives for long-running agents. Register tasks with `AddResilientTasks()` and event streams with `AddEventStreams()`, then run work through `ITaskInvoker` and emit progress through `EventStreamRegistry`. Tasks survive process restarts, support multi-turn conversations and steering, and persist idempotent state via `TaskMetadata`. See the [Tasks guide][tasks_guide] and the [Streaming guide][streaming_guide] for full walkthroughs.
+The library provides durable **task** and resumable **streaming** primitives for long-running agents. Register tasks with `AddResilientTasks()` and event streams with `AddEventStreams()`, then run work through `ITaskInvoker` and emit progress through `EventStreamRegistry`. Tasks survive process restarts and support multi-turn conversations and steering; persist application state explicitly with `FoundryStateStore`. See the [Tasks guide][tasks_guide], [state store guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/StateStoreGuide.md), and [Streaming guide][streaming_guide].
 
 ## Examples
 
@@ -199,5 +199,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 [invocations]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations
 [tasks_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/tasks-guide.md
 [streaming_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/streaming-guide.md
+[state_store_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/StateStoreGuide.md
 [responses_tier3]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample9_Tier3SelfHosting.md
 [invocations_tier3]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample7_Tier3SelfHosting.md

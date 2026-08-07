@@ -40,16 +40,6 @@ services.AddSingleton(CreateModelClient());
 // (In-memory replay would lose the pre-crash buffer, defeating this sample's resilience.)
 services.AddAgentEventStreams(o => o.UseFileBackedReplay());
 
-// Heavy in-flight artifacts (partial phase output) live in a file-backed store;
-// metadata holds only small integer watermarks. Use a DURABLE state root under the
-// user profile — NOT Path.GetTempPath(), whose contents the OS may clear between
-// runs, which would defeat crash recovery. (Mirrors the Python sample's
-// ~/.agentserver/_checkpoints location.)
-string stateRoot = Path.Combine(
-    Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-    ".agentserver", "resilient-research-checkpoints");
-var checkpointStore = new CheckpointStore(stateRoot);
-
 // AddResilientTasks records registrations into a live registry that the engine reads
 // when a task is invoked. The provider-aware overloads were removed (the service-locator
 // shape is being retired ahead of GA), so resolve the handler's singleton dependencies
@@ -73,7 +63,6 @@ tasks.AddMultiTurnTask<ResearchRequest, ResearchResult>(
         model,
         ModelDeployment,
         ctx,
-        checkpointStore,
         ct: ct),
     steerable: true);
 ```
@@ -111,54 +100,10 @@ public static readonly (string Role, string Instructions)[] SubCallRoles = new[]
 };
 
 /// <summary>
-/// A file-backed checkpoint store for heavy in-flight artifacts (potentially
-/// several KB of LLM output). Metadata stores only small integer watermarks;
-/// the actual content lives here keyed by invocation id.
-/// </summary>
-public class CheckpointStore
-{
-    private readonly string _directory;
-
-    public CheckpointStore(string directory)
-    {
-        _directory = directory;
-        Directory.CreateDirectory(directory);
-    }
-
-    public void Save(string key, string content)
-    {
-        string path = PathForKey(key);
-        string tmp = path + ".tmp";
-        File.WriteAllText(tmp, content);
-        File.Move(tmp, path, overwrite: true);
-    }
-
-    public string? Load(string key)
-    {
-        string path = PathForKey(key);
-        return File.Exists(path) ? File.ReadAllText(path) : null;
-    }
-
-    public void Delete(string key)
-    {
-        string path = PathForKey(key);
-        if (File.Exists(path))
-            File.Delete(path);
-    }
-
-    private string PathForKey(string key)
-    {
-        byte[] hash = System.Security.Cryptography.SHA256.HashData(Encoding.UTF8.GetBytes(key));
-        string safeKey = Convert.ToHexString(hash).ToLowerInvariant();
-        return Path.Combine(_directory, safeKey + ".json");
-    }
-}
-
-/// <summary>
 /// The durable task that PRODUCES research events with crash-resilient,
 /// per-subcall checkpointing and cooperative steering.
 ///
-/// Metadata watermarks: <c>completed_phases</c>, <c>in_progress_phase</c>,
+/// State Store watermarks: <c>completed_phases</c>, <c>in_progress_phase</c>,
 /// <c>completed_subcalls</c>. On recovery, resumes at the next un-finished
 /// subcall. On steering (a newer input queued behind this turn, observed via
 /// <c>ctx.PendingInputCount &gt; 0</c>), winds down and returns a steered-status so the
@@ -174,7 +119,6 @@ public static async Task<ResearchResult> RunResearchAsync(
     ResponsesClient model,
     string modelName,
     TaskContext<ResearchRequest> ctx,
-    CheckpointStore checkpointStore,
     int numPhases = 5,
     int callsPerPhase = 4,
     TimeSpan? interPhaseCooldown = null,
@@ -185,7 +129,34 @@ public static async Task<ResearchResult> RunResearchAsync(
     // The stream id is the per-turn invocation id (one stream per turn), while the
     // durable TaskId spans the whole session.
     string invId = ctx.Input.InvocationId;
+    string sessionId = ctx.Input.SessionId;
     AgentEventStream stream = await registry.GetOrCreateAsync(invId, ct);
+    FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
+        $"resilient-research/{sessionId}",
+        s_credential,
+        description: "Deep-research recovery checkpoints",
+        cancellationToken: CancellationToken.None);
+    StateStoreItem? checkpointItem = await store.GetItemAsync(
+        invId,
+        cancellationToken: CancellationToken.None);
+    var checkpoint = checkpointItem?.Value is { } value
+        ? new Dictionary<string, BinaryData>(value, StringComparer.Ordinal)
+        : new Dictionary<string, BinaryData>(StringComparer.Ordinal);
+
+    if (checkpoint.TryGetValue("terminal_status", out BinaryData? terminalData))
+    {
+        string? terminalStatus = terminalData.ToObjectFromJson<string>();
+        await stream.CloseAsync();
+        if (terminalStatus == "failed")
+        {
+            string error = checkpoint.TryGetValue("error", out BinaryData? errorData)
+                ? errorData.ToObjectFromJson<string>() ?? "Previous task attempt failed."
+                : "Previous task attempt failed.";
+            throw new InvalidOperationException(error);
+        }
+
+        return new ResearchResult(terminalStatus ?? "completed", Array.Empty<string>());
+    }
 
     // On crash recovery, the last event id rehydrates the sequence counter.
     string? lastEventId = await stream.GetLastEventIdAsync(ct);
@@ -210,16 +181,15 @@ public static async Task<ResearchResult> RunResearchAsync(
 
     await Emit("run_start", topic);
 
-    // Read watermarks from metadata (persisted across crashes)
-    int completedPhases = 0;
-    int inProgressPhase = -1;
-    int completedSubcalls = 0;
-    if (ctx.Metadata.TryGetValue("completed_phases", out var cpRaw) && cpRaw is not null)
-        completedPhases = cpRaw.ToObjectFromJson<int>();
-    if (ctx.Metadata.TryGetValue("in_progress_phase", out var ipRaw) && ipRaw is not null)
-        inProgressPhase = ipRaw.ToObjectFromJson<int>();
-    if (ctx.Metadata.TryGetValue("completed_subcalls", out var csRaw) && csRaw is not null)
-        completedSubcalls = csRaw.ToObjectFromJson<int>();
+    int completedPhases = checkpoint.TryGetValue("completed_phases", out BinaryData? cpRaw)
+        ? cpRaw.ToObjectFromJson<int>()
+        : 0;
+    int inProgressPhase = checkpoint.TryGetValue("in_progress_phase", out BinaryData? ipRaw)
+        ? ipRaw.ToObjectFromJson<int>()
+        : -1;
+    int completedSubcalls = checkpoint.TryGetValue("completed_subcalls", out BinaryData? csRaw)
+        ? csRaw.ToObjectFromJson<int>()
+        : 0;
 
     // On recovered entry, emit a recovery event
     if (ctx.EntryMode == EntryMode.Recovered && completedPhases > 0)
@@ -238,7 +208,7 @@ public static async Task<ResearchResult> RunResearchAsync(
             if (ctx.PendingInputCount > 0)
             {
                 await Emit("wind_down", "Steering: winding down for new topic");
-                await FinishTurn(stream, ctx, invId, checkpointStore);
+                await FinishTurn(store, stream, invId, "suspended");
                 return new ResearchResult("steered", allFindings.ToArray());
             }
 
@@ -247,19 +217,23 @@ public static async Task<ResearchResult> RunResearchAsync(
                 : $"Continued research (phase {phaseIdx + 1})";
 
             await Emit("phase_start", title, $"{phaseIdx + 1}/{numPhases}");
-            ctx.Metadata["in_progress_phase"] = BinaryData.FromObjectAsJson(phaseIdx);
-            await ctx.Metadata.FlushAsync(ct);
-
-            // Determine resume point within this phase
-            int startSubcall = (phaseIdx == inProgressPhase) ? completedSubcalls : 0;
+            bool resumingPhase = phaseIdx == inProgressPhase;
+            int startSubcall = resumingPhase ? completedSubcalls : 0;
             StringBuilder phaseText = new();
 
-            // Load checkpoint if resuming mid-phase
-            if (startSubcall > 0)
+            if (resumingPhase
+                && checkpoint.TryGetValue("current_text", out BinaryData? currentText))
             {
-                string? saved = checkpointStore.Load(invId);
+                string? saved = currentText.ToObjectFromJson<string>();
                 if (saved != null)
                     phaseText.Append(saved);
+            }
+            else
+            {
+                checkpoint["in_progress_phase"] = BinaryData.FromObjectAsJson(phaseIdx);
+                checkpoint["completed_subcalls"] = BinaryData.FromObjectAsJson(0);
+                checkpoint["current_text"] = BinaryData.FromObjectAsJson(string.Empty);
+                await SaveCheckpointAsync(store, invId, checkpoint);
             }
 
             int effectiveCalls = Math.Min(callsPerPhase, SubCallRoles.Length);
@@ -268,7 +242,7 @@ public static async Task<ResearchResult> RunResearchAsync(
                 if (ctx.PendingInputCount > 0)
                 {
                     await Emit("wind_down", "Steering: winding down mid-phase");
-                    await FinishTurn(stream, ctx, invId, checkpointStore);
+                    await FinishTurn(store, stream, invId, "suspended");
                     return new ResearchResult("steered", allFindings.ToArray());
                 }
 
@@ -307,7 +281,7 @@ public static async Task<ResearchResult> RunResearchAsync(
                           && !ctx.TimeoutExceeded && !ctx.Shutdown.IsCancellationRequested)
                 {
                     await Emit("wind_down", "Steering: winding down mid-stream");
-                    await FinishTurn(stream, ctx, invId, checkpointStore);
+                    await FinishTurn(store, stream, invId, "suspended");
                     return new ResearchResult("steered", allFindings.ToArray());
                 }
                 string result = sb.ToString();
@@ -316,9 +290,9 @@ public static async Task<ResearchResult> RunResearchAsync(
                 await Emit("subcall_complete", role, phaseLabel);
 
                 // Per-subcall checkpoint
-                ctx.Metadata["completed_subcalls"] = BinaryData.FromObjectAsJson(sc + 1);
-                checkpointStore.Save(invId, phaseText.ToString());
-                await ctx.Metadata.FlushAsync(ct);
+                checkpoint["completed_subcalls"] = BinaryData.FromObjectAsJson(sc + 1);
+                checkpoint["current_text"] = BinaryData.FromObjectAsJson(phaseText.ToString());
+                await SaveCheckpointAsync(store, invId, checkpoint);
 
                 // Intra-phase cooldown
                 if (sc + 1 < effectiveCalls && intraPhaseCooldown.HasValue
@@ -331,7 +305,7 @@ public static async Task<ResearchResult> RunResearchAsync(
                               && !ctx.TimeoutExceeded && !ctx.Shutdown.IsCancellationRequested)
                     {
                         await Emit("wind_down", "Steering during cooldown");
-                        await FinishTurn(stream, ctx, invId, checkpointStore);
+                        await FinishTurn(store, stream, invId, "suspended");
                         return new ResearchResult("steered", allFindings.ToArray());
                     }
                 }
@@ -340,11 +314,11 @@ public static async Task<ResearchResult> RunResearchAsync(
             allFindings.Add(phaseText.ToString());
 
             // Phase complete checkpoint
-            ctx.Metadata["completed_phases"] = BinaryData.FromObjectAsJson(phaseIdx + 1);
-            ctx.Metadata["in_progress_phase"] = BinaryData.FromObjectAsJson(-1);
-            ctx.Metadata["completed_subcalls"] = BinaryData.FromObjectAsJson(0);
-            checkpointStore.Delete(invId);
-            await ctx.Metadata.FlushAsync(ct);
+            checkpoint["completed_phases"] = BinaryData.FromObjectAsJson(phaseIdx + 1);
+            checkpoint["in_progress_phase"] = BinaryData.FromObjectAsJson(-1);
+            checkpoint["completed_subcalls"] = BinaryData.FromObjectAsJson(0);
+            checkpoint["current_text"] = BinaryData.FromObjectAsJson(string.Empty);
+            await SaveCheckpointAsync(store, invId, checkpoint);
 
             await Emit("phase_end", title, $"{phaseIdx + 1}/{numPhases}");
 
@@ -359,14 +333,14 @@ public static async Task<ResearchResult> RunResearchAsync(
                           && !ctx.TimeoutExceeded && !ctx.Shutdown.IsCancellationRequested)
                 {
                     await Emit("wind_down", "Steering between phases");
-                    await FinishTurn(stream, ctx, invId, checkpointStore);
+                    await FinishTurn(store, stream, invId, "suspended");
                     return new ResearchResult("steered", allFindings.ToArray());
                 }
             }
         }
 
         await Emit("done", $"Completed {numPhases} phases");
-        await FinishTurn(stream, ctx, invId, checkpointStore);
+        await FinishTurn(store, stream, invId, "completed");
         return new ResearchResult("done", allFindings.ToArray());
     }
     catch (Exception ex) when (ex is not OperationCanceledException)
@@ -381,20 +355,44 @@ public static async Task<ResearchResult> RunResearchAsync(
                 EventId = seq.ToString(CultureInfo.InvariantCulture),
             },
             close: true, cancellationToken: CancellationToken.None);
+        await FinishTurn(store, stream, invId, "failed", ex.Message);
         throw;
     }
 }
 
 private static async Task FinishTurn(
-    AgentEventStream stream, TaskContext<ResearchRequest> ctx,
-    string invId, CheckpointStore store)
+    FoundryStateStore store,
+    AgentEventStream stream,
+    string invId,
+    string terminalStatus,
+    string? error = null)
 {
+    var terminal = new Dictionary<string, BinaryData>
+    {
+        ["terminal_status"] = BinaryData.FromObjectAsJson(terminalStatus),
+    };
+    if (error is not null)
+    {
+        terminal["error"] = BinaryData.FromObjectAsJson(error);
+    }
+
+    await store.SetItemAsync(
+        invId,
+        terminal,
+        tags: new Dictionary<string, string> { ["invocation_id"] = invId },
+        cancellationToken: CancellationToken.None);
     await stream.CloseAsync();
-    ctx.Metadata.Remove("completed_phases");
-    ctx.Metadata.Remove("in_progress_phase");
-    ctx.Metadata.Remove("completed_subcalls");
-    store.Delete(invId);
 }
+
+private static Task SaveCheckpointAsync(
+    FoundryStateStore store,
+    string invocationId,
+    IDictionary<string, BinaryData> checkpoint)
+    => store.SetItemAsync(
+        invocationId,
+        checkpoint,
+        tags: new Dictionary<string, string> { ["invocation_id"] = invocationId },
+        cancellationToken: CancellationToken.None);
 ```
 
 ## Implement the handler
@@ -454,7 +452,7 @@ public class ResilientResearchHandler : InvocationHandler
         // transparently enqueues this input as steering while a turn is in flight.
         _ = await invoker.StartAsync<ResearchRequest, ResearchResult>(
             "research",
-            new ResearchRequest(body.Topic, invId),
+            new ResearchRequest(body.Topic, invId, context.SessionId),
             new RunOptions { TaskId = taskId },
             cancellationToken);
 
@@ -595,7 +593,7 @@ public record ResearchStartRequest(string Topic);
 
 /// <summary>Input for the research task. Carries the per-turn invocation id so the
 /// producer can key its event stream to this turn.</summary>
-public record ResearchRequest(string Topic, string InvocationId);
+public record ResearchRequest(string Topic, string InvocationId, string SessionId);
 
 /// <summary>Final result of the research task.</summary>
 public record ResearchResult(string Status, string[] Findings);

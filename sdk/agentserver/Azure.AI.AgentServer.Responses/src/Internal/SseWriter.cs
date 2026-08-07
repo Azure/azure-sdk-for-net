@@ -5,7 +5,6 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Azure.AI.AgentServer.Core;
-using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
@@ -47,7 +46,6 @@ internal sealed class SseWriter
 
         // Inject the SDK-assigned sequence number into the serialized JSON
         var node = JsonNode.Parse(json)!;
-        InternalMetadataEgress.Strip(node);
         node["sequence_number"] = sequenceNumber;
         json = node.ToJsonString(_jsonOptions);
 

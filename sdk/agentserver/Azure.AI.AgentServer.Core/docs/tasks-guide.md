@@ -153,7 +153,7 @@ builder.Services
     .AddResilientTasks()
     .AddMultiTurnTask<string, string>("chat", async (ctx, ct) =>
     {
-        // ctx.Input is this turn's message; ctx.Metadata persists across turns.
+        // ctx.Input is this turn's message. Persist application state explicitly.
         return $"reply to: {ctx.Input}";
     });
 
@@ -245,7 +245,6 @@ Every turn receives a `TaskContext<TInput>`:
 | `Input` | the typed input for this turn |
 | `TaskId` / `InputId` | identifiers for the run / this input |
 | `EntryMode` | fresh, resumed, or recovered |
-| `Metadata` | durable, namespaced key/value store (§4.5) |
 | `RetryAttempt` | zero-based retry attempt for the current turn |
 | `RecoveryCount` | zero-based crash-recovery count (mirrors the durable lease generation); a signal, not a guarantee (§4.2) |
 | `IsSteeredTurn` | whether this turn was triggered by a steering input |
@@ -259,25 +258,13 @@ Every turn receives a `TaskContext<TInput>`:
 Always pass `ct` (or `ctx.Cancellation`) into the async calls you make, so the run
 stops promptly when cancelled, times out, or the host shuts down.
 
-### 4.5 Metadata
+### 4.5 Application state
 
-`TaskContext.Metadata` is a durable, namespaced key/value store that travels with the
-task across turns and restarts. Values are `BinaryData`, so anything you store is, by
-construction, serializable:
-
-```csharp
-ctx.Metadata["charged"] = BinaryData.FromObjectAsJson(true);
-
-if (ctx.Metadata.TryGetValue("charged", out var raw) && raw.ToObjectFromJson<bool>())
-{
-    // already done — skip the side effect.
-}
-```
-
-Keys beginning with `_` are reserved for the framework **by convention** (SOT §17) but
-are not rejected by the primitive — metadata is namespaced under `payload["metadata"]`, so
-it cannot collide with the framework's top-level `_`-prefixed payload keys. Use
-`Metadata.GetNamespace("billing")` for an isolated sibling namespace with the same surface.
+Task records contain framework orchestration state only. Persist checkpoints,
+conversation history, and idempotency markers explicitly with `FoundryStateStore`.
+Scope the store name to your task, session, or conversation identity. See the
+[State Store guide](StateStoreGuide.md) for local fallback, optimistic concurrency,
+tagging, and recovered-execution patterns.
 
 ### 4.6 The result handle (`TaskRun<TOutput>`)
 
@@ -562,13 +549,7 @@ construction. The delay bounds (max delay, jitter) are owned by the composed `De
 Retries are off unless a policy
 is set (§4.8).
 
-### 5.8 `TaskMetadata`
-
-Indexer `BinaryData? this[string key]`, `Keys`, `ContainsKey`, `TryGetValue`, `Append`,
-`Increment`, `Remove`, `ToDictionary`, `FlushAsync`, and `Namespace(string)`. Keys
-beginning with `_` are reserved by convention (not rejected).
-
-### 5.9 `EntryMode`
+### 5.8 `EntryMode`
 
 `Fresh`, `Resumed`, `Recovered`.
 
@@ -581,12 +562,21 @@ beginning with `_` are reserved by convention (not rejected).
 ```csharp
 builder.AddMultiTurnTask<string, string>("agent", async (ctx, ct) =>
 {
-    var history = ctx.Metadata.TryGetValue("history", out var h)
-        ? h.ToObjectFromJson<List<string>>() : new List<string>();
+    FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
+        $"agent-history/{ctx.TaskId}", credential);
+    StateStoreItem? item = await store.GetItemAsync("history", cancellationToken: ct);
+    var history = item?.Value["messages"].ToObjectFromJson<List<string>>()
+        ?? new List<string>();
     history.Add(ctx.Input);
     var reply = await Model.RespondAsync(history, ct);
     history.Add(reply);
-    ctx.Metadata["history"] = BinaryData.FromObjectAsJson(history);
+    await store.SetItemAsync(
+        "history",
+        new Dictionary<string, BinaryData>
+        {
+            ["messages"] = BinaryData.FromObjectAsJson(history),
+        },
+        cancellationToken: ct);
     return reply;
 });
 ```
@@ -602,15 +592,22 @@ gateway dedupes it.
 ```csharp
 builder.AddTask<Order, Receipt>("charge", async (ctx, ct) =>
 {
-    if (ctx.Metadata.TryGetValue("receipt", out var prior))
-        return prior!.ToObjectFromJson<Receipt>();      // already charged in a prior lifetime
+    FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
+        $"billing/{ctx.TaskId}", credential);
+    StateStoreItem? item = await store.GetItemAsync("charge", cancellationToken: ct);
+    IReadOnlyDictionary<string, BinaryData> state = item?.Value
+        ?? new Dictionary<string, BinaryData>();
+    if (state.TryGetValue("receipt", out BinaryData? prior))
+        return prior.ToObjectFromJson<Receipt>();       // already charged in a prior lifetime
 
-    // 1. Reserve a dedup token and FLUSH it before the side effect.
-    if (!ctx.Metadata.TryGetValue("charge_token", out var tokenData))
+    // 1. Reserve a dedup token and persist it before the side effect.
+    if (!state.TryGetValue("charge_token", out BinaryData? tokenData))
     {
         tokenData = BinaryData.FromObjectAsJson(Guid.NewGuid().ToString());
-        ctx.Metadata["charge_token"] = tokenData;
-        await ctx.Metadata.FlushAsync(ct);
+        await store.SetItemAsync(
+            "charge",
+            new Dictionary<string, BinaryData> { ["charge_token"] = tokenData },
+            cancellationToken: ct);
     }
     string chargeToken = tokenData!.ToObjectFromJson<string>()!;
 
@@ -618,11 +615,17 @@ builder.AddTask<Order, Receipt>("charge", async (ctx, ct) =>
     Receipt receipt = await Billing.ChargeAsync(
         ctx.Input, idempotencyKey: chargeToken, ct);
 
-    // 3. Record the result and flush it so a later recovery short-circuits at the top.
-    //    Even if the process dies before this flush lands, the reserved token above
+    // 3. Record the result so a later recovery short-circuits at the top.
+    //    Even if the process dies before this write lands, the reserved token above
     //    keeps the charge at-most-once (the gateway dedupes on the idempotency key).
-    ctx.Metadata["receipt"] = BinaryData.FromObjectAsJson(receipt);
-    await ctx.Metadata.FlushAsync(ct);
+    await store.SetItemAsync(
+        "charge",
+        new Dictionary<string, BinaryData>
+        {
+            ["charge_token"] = tokenData,
+            ["receipt"] = BinaryData.FromObjectAsJson(receipt),
+        },
+        cancellationToken: ct);
     return receipt;
 });
 ```
@@ -749,10 +752,9 @@ gets queued (multi-turn, when steering is enabled), or sees a `ResilientTaskExce
 o => o.Retry = new TaskRetryPolicy());`) to opt in. Without a policy a handler
 runs once and surfaces the exception.
 
-**Can I store conversation history in `ctx.Metadata`?** Small histories fit, but
-`Metadata` is intentionally small and JSON-only (values are `BinaryData`). Use a
-dedicated checkpointer (your own database, a vector store, etc.) for large multi-turn
-state, and keep `Metadata` to small watermarks and dedup tokens.
+**Where should I store conversation history and recovery checkpoints?** Use
+`FoundryStateStore` or another application-owned durable store. Keep the framework task
+record limited to orchestration state.
 
 **What if my handler ignores `ctx.Cancellation`?** Cooperative cancellation is a
 request; nothing forces a handler to stop. If your handler must be interruptible,
@@ -762,8 +764,7 @@ cancellation on the in-flight turn — but it does not preempt or abort running 
 A non-cooperating handler keeps running until it returns or throws on its own.
 
 **How do I inspect a task's persisted state from outside the handler?** You don't —
-the public surface is intentionally write-shaped (register + invoke), and the store,
-providers, and wire schema are internal. Read paths stay in the handler via
-`ctx.Metadata`, `ctx.RetryAttempt`, `ctx.RecoveryCount`, and `ctx.EntryMode`. If you
-need external read access, record your own watermarks in `Metadata` and surface them
-from your application.
+the public surface is intentionally write-shaped (register + invoke), and the task
+provider and wire schema are internal. Read application state from your own
+`FoundryStateStore` items. Handler lifecycle signals remain available through
+`ctx.RetryAttempt`, `ctx.RecoveryCount`, and `ctx.EntryMode`.

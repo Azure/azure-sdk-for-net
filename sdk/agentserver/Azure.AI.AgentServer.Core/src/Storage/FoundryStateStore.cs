@@ -5,6 +5,7 @@ using System;
 using System.Buffers;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -32,13 +33,17 @@ namespace Azure.AI.AgentServer.Core.Storage
 
         private static readonly ModelReaderWriterOptions WireOptions = new("W");
 
-        private readonly FoundryStorageClient _client = null!;
+        private readonly FoundryStorageClient? _client;
+        private readonly LocalStateStoreBackend? _localBackend;
         private readonly string _name = null!;
         private readonly bool _userIsolation;
         private readonly int _itemTtlSeconds;
         private readonly string? _description;
         private readonly IReadOnlyDictionary<string, string>? _tags;
         private readonly string? _userId;
+
+        private FoundryStorageClient Client => _client
+            ?? throw new InvalidOperationException("The hosted storage client is unavailable in local mode.");
 
         /// <summary>Initializes a new instance of the <see cref="FoundryStateStore"/> class for mocking.</summary>
         protected FoundryStateStore()
@@ -65,6 +70,28 @@ namespace Azure.AI.AgentServer.Core.Storage
             _userId = userId;
         }
 
+        private FoundryStateStore(
+            string name,
+            bool userIsolation,
+            int itemTtlSeconds,
+            string? description,
+            IReadOnlyDictionary<string, string>? tags)
+        {
+            _name = name;
+            _userIsolation = userIsolation;
+            _itemTtlSeconds = itemTtlSeconds;
+            _description = description;
+            _tags = tags;
+            string path = Path.Combine(AgentServerStatePaths.StateStoresRoot(), $"{EncodeSegment(name)}.json");
+            _localBackend = new LocalStateStoreBackend(
+                path,
+                name,
+                userIsolation,
+                itemTtlSeconds,
+                description,
+                tags);
+        }
+
         /// <summary>Gets the logical store name bound to this client.</summary>
         public virtual string Name => _name;
 
@@ -72,9 +99,9 @@ namespace Azure.AI.AgentServer.Core.Storage
         /// Returns a client bound to <paramref name="name"/>, creating the store if it does not exist.
         /// </summary>
         /// <param name="name">The logical state-store name. Encode conversation/thread identity into this name when you need that scope.</param>
-        /// <param name="credential">A token credential used to authenticate to the storage service.</param>
-        /// <param name="endpoint">Optional Foundry project endpoint (or full storage URL). When <see langword="null"/>, resolved from the <c>FOUNDRY_PROJECT_ENDPOINT</c> environment variable.</param>
-        /// <param name="userIsolation">Whether item operations are partitioned per resolved user. Applied only when the store is created.</param>
+        /// <param name="credential">A token credential used to authenticate to the storage service. May be <see langword="null"/> when using the non-hosted local fallback.</param>
+        /// <param name="endpoint">Optional Foundry project endpoint (or full storage URL). Used only in Foundry hosting; non-hosted execution always uses the local fallback. When <see langword="null"/> in Foundry hosting, resolved from the <c>FOUNDRY_PROJECT_ENDPOINT</c> environment variable.</param>
+        /// <param name="userIsolation">Whether hosted item operations are partitioned per resolved user. Applied only when the store is created. The local fallback does not support user isolation.</param>
         /// <param name="itemTtlSeconds">Store-level default TTL inherited by every item. Applied only when the store is created.</param>
         /// <param name="description">Optional store description, set at creation.</param>
         /// <param name="tags">Optional store metadata tags, set at creation.</param>
@@ -84,7 +111,7 @@ namespace Azure.AI.AgentServer.Core.Storage
         /// <returns>The bound, ready-to-use store client.</returns>
         public static Task<FoundryStateStore> GetOrCreateAsync(
             string name,
-            TokenCredential credential,
+            TokenCredential? credential = null,
             Uri? endpoint = null,
             bool userIsolation = false,
             int itemTtlSeconds = DefaultItemTtlSeconds,
@@ -98,7 +125,7 @@ namespace Azure.AI.AgentServer.Core.Storage
 
         internal static async Task<FoundryStateStore> GetOrCreateAsync(
             string name,
-            TokenCredential credential,
+            TokenCredential? credential,
             Uri? endpoint,
             bool userIsolation,
             int itemTtlSeconds,
@@ -110,14 +137,40 @@ namespace Azure.AI.AgentServer.Core.Storage
             CancellationToken cancellationToken)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (itemTtlSeconds == 0 || itemTtlSeconds < -1)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(itemTtlSeconds),
+                    itemTtlSeconds,
+                    "Item TTL must be -1 (no expiration) or greater than zero.");
+            }
+
+            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT")))
+            {
+                if (userIsolation)
+                {
+                    throw new NotSupportedException("The local state store fallback does not support user isolation.");
+                }
+
+                var localStore = new FoundryStateStore(
+                    name,
+                    userIsolation,
+                    itemTtlSeconds,
+                    description,
+                    tags);
+                await localStore._localBackend!.EnsureStoreAsync(cancellationToken).ConfigureAwait(false);
+                return localStore;
+            }
+
+            TokenCredential resolvedCredential = credential
+                ?? throw new ArgumentNullException(nameof(credential));
 
             FoundryStorageEndpoint resolved = endpoint is null
                 ? FoundryStorageEndpoint.FromEnvironment(apiVersion)
                 : FoundryStorageEndpoint.FromEndpoint(endpoint.AbsoluteUri, apiVersion);
 
             var store = new FoundryStateStore(
-                name, credential, resolved, userIsolation, itemTtlSeconds, description, tags, userId, options);
+                name, resolvedCredential, resolved, userIsolation, itemTtlSeconds, description, tags, userId, options);
 
             try
             {
@@ -143,6 +196,18 @@ namespace Azure.AI.AgentServer.Core.Storage
         /// <returns>The store descriptor, or <see langword="null"/> if the store does not exist.</returns>
         public virtual async Task<StateStore?> GetAsync(CancellationToken cancellationToken = default)
         {
+            if (_localBackend is not null)
+            {
+                try
+                {
+                    return await _localBackend.GetStoreAsync(cancellationToken).ConfigureAwait(false);
+                }
+                catch (FoundryStorageNotFoundException)
+                {
+                    return null;
+                }
+            }
+
             try
             {
                 return await FetchPropertiesAsync(cancellationToken).ConfigureAwait(false);
@@ -160,10 +225,14 @@ namespace Azure.AI.AgentServer.Core.Storage
         public virtual async Task<StateStore> UpdateAsync(StateStoreUpdateOptions update, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(update, nameof(update));
+            if (_localBackend is not null)
+            {
+                return await _localBackend.UpdateStoreAsync(update, cancellationToken).ConfigureAwait(false);
+            }
 
             BinaryData body = BuildUpdateBody(update);
             Request request = BuildRequest(RequestMethod.Patch, StorePath(), content: body);
-            Response response = await _client.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
             return Deserialize<StateStore>(response);
         }
 
@@ -172,8 +241,13 @@ namespace Azure.AI.AgentServer.Core.Storage
         /// <returns>The deleted-store marker.</returns>
         public virtual async Task<DeletedStateStore> DeleteAsync(CancellationToken cancellationToken = default)
         {
+            if (_localBackend is not null)
+            {
+                return await _localBackend.DeleteStoreAsync(cancellationToken).ConfigureAwait(false);
+            }
+
             Request request = BuildRequest(RequestMethod.Delete, StorePath());
-            Response response = await _client.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
             return Deserialize<DeletedStateStore>(response);
         }
 
@@ -191,12 +265,20 @@ namespace Azure.AI.AgentServer.Core.Storage
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
+            if (_localBackend is not null)
+            {
+                return await _localBackend.CreateItemAsync(key, value, tags, cancellationToken).ConfigureAwait(false);
+            }
 
             var payload = new CreateItemRequest(key, value);
             CopyTags(tags, payload.Tags);
             BinaryData body = ModelReaderWriter.Write(payload, WireOptions, AzureAIAgentServerCoreStorageContext.Default);
-            Request request = BuildRequest(RequestMethod.Post, $"{StorePath()}/items", content: body, includeUserId: true);
-            Response response = await _client.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            Request request = BuildRequest(
+                RequestMethod.Post,
+                $"{StorePath()}/items",
+                content: body,
+                includeUserId: true);
+            Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
             return Deserialize<StateStoreItemRef>(response);
         }
 
@@ -223,12 +305,22 @@ namespace Azure.AI.AgentServer.Core.Storage
                 throw new ArgumentException($"{nameof(ifMatch)} and {nameof(requireExists)} are mutually exclusive.");
             }
 
+            string? header = requireExists ? "*" : ifMatch;
+            if (_localBackend is not null)
+            {
+                return await _localBackend.SetItemAsync(key, value, tags, header, cancellationToken).ConfigureAwait(false);
+            }
+
             var payload = new PutItemRequest(value);
             CopyTags(tags, payload.Tags);
             BinaryData body = ModelReaderWriter.Write(payload, WireOptions, AzureAIAgentServerCoreStorageContext.Default);
-            string? header = requireExists ? "*" : ifMatch;
-            Request request = BuildRequest(RequestMethod.Put, ItemPath(key), content: body, includeUserId: true, ifMatch: header);
-            Response response = await _client.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            Request request = BuildRequest(
+                RequestMethod.Put,
+                ItemPath(key),
+                content: body,
+                includeUserId: true,
+                ifMatch: header);
+            Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
             return Deserialize<StateStoreItemRef>(response);
         }
 
@@ -236,14 +328,23 @@ namespace Azure.AI.AgentServer.Core.Storage
         /// <param name="key">The item key.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
         /// <returns>The item, or <see langword="null"/> if it does not exist.</returns>
-        public virtual async Task<StateStoreItem?> GetItemAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<StateStoreItem?> GetItemAsync(
+            string key,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
+            if (_localBackend is not null)
+            {
+                return await _localBackend.GetItemAsync(key, cancellationToken).ConfigureAwait(false);
+            }
 
             try
             {
-                Request request = BuildRequest(RequestMethod.Get, ItemPath(key), includeUserId: true);
-                Response response = await _client.SendAsync(request, cancellationToken).ConfigureAwait(false);
+                Request request = BuildRequest(
+                    RequestMethod.Get,
+                    ItemPath(key),
+                    includeUserId: true);
+                Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
                 return Deserialize<StateStoreItem>(response);
             }
             catch (FoundryStorageNotFoundException)
@@ -263,9 +364,17 @@ namespace Azure.AI.AgentServer.Core.Storage
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
+            if (_localBackend is not null)
+            {
+                return await _localBackend.DeleteItemAsync(key, ifMatch, cancellationToken).ConfigureAwait(false);
+            }
 
-            Request request = BuildRequest(RequestMethod.Delete, ItemPath(key), includeUserId: true, ifMatch: ifMatch);
-            Response response = await _client.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            Request request = BuildRequest(
+                RequestMethod.Delete,
+                ItemPath(key),
+                includeUserId: true,
+                ifMatch: ifMatch);
+            Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
             return Deserialize<DeletedStateStoreItem>(response);
         }
 
@@ -288,6 +397,17 @@ namespace Azure.AI.AgentServer.Core.Storage
             if (after is not null && before is not null)
             {
                 throw new ArgumentException($"{nameof(after)} and {nameof(before)} are mutually exclusive.");
+            }
+
+            if (_localBackend is not null)
+            {
+                return await _localBackend.ListKeysAsync(
+                    tags,
+                    limit,
+                    after,
+                    before,
+                    order,
+                    cancellationToken).ConfigureAwait(false);
             }
 
             var query = new List<KeyValuePair<string, string>>();
@@ -316,15 +436,19 @@ namespace Azure.AI.AgentServer.Core.Storage
 
             query.Add(new KeyValuePair<string, string>("order", order.ToSerialString()));
 
-            Request request = BuildRequest(RequestMethod.Get, $"{StorePath()}/items:keys", includeUserId: true, query: query);
-            Response response = await _client.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            Request request = BuildRequest(
+                RequestMethod.Get,
+                $"{StorePath()}/items:keys",
+                includeUserId: true,
+                query: query);
+            Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
             return new StateStoreItemKeyPage(Deserialize<ListResponseStateStoreItemKey>(response));
         }
 
         private async Task<StateStore> FetchPropertiesAsync(CancellationToken cancellationToken)
         {
             Request request = BuildRequest(RequestMethod.Get, StorePath());
-            Response response = await _client.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
             return Deserialize<StateStore>(response);
         }
 
@@ -339,7 +463,7 @@ namespace Azure.AI.AgentServer.Core.Storage
             CopyTags(_tags, payload.Tags);
             BinaryData body = ModelReaderWriter.Write(payload, WireOptions, AzureAIAgentServerCoreStorageContext.Default);
             Request request = BuildRequest(RequestMethod.Post, "state_stores", content: body);
-            Response response = await _client.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
             return Deserialize<StateStore>(response);
         }
 
@@ -351,9 +475,10 @@ namespace Azure.AI.AgentServer.Core.Storage
             string? ifMatch = null,
             IEnumerable<KeyValuePair<string, string>>? query = null)
         {
-            Request request = _client.CreateRequest();
+            FoundryStorageClient client = Client;
+            Request request = client.CreateRequest();
             request.Method = method;
-            request.Uri.Reset(_client.Endpoint.BuildUri(path, query));
+            request.Uri.Reset(client.Endpoint.BuildUri(path, query));
             if (content is not null)
             {
                 request.Headers.Add("Content-Type", FoundryStorageClient.JsonContentType);

@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 // ResponsesApiException is in the root namespace Azure.AI.AgentServer.Responses
-using Azure.AI.AgentServer.Core.Streaming;
 using Azure.AI.AgentServer.Responses.Internal;
-using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -22,7 +20,6 @@ public class ErrorRecoveryTests : IDisposable
     private readonly TestHandler _handler;
     private readonly InMemoryResponsesProvider _provider;
     private readonly ResponseExecutionTracker _tracker;
-    private readonly EventStreamRegistry _eventStreamRegistry;
     private readonly ResponseOrchestrator _orchestrator;
 
     public ErrorRecoveryTests()
@@ -31,11 +28,9 @@ public class ErrorRecoveryTests : IDisposable
         _provider = new InMemoryResponsesProvider(
             Options.Create(new InMemoryProviderOptions()), TimeProvider.System);
         _tracker = new ResponseExecutionTracker(NullLogger<ResponseExecutionTracker>.Instance);
-        _eventStreamRegistry = TestEventStreams.CreateInMemoryRegistry();
         _orchestrator = new ResponseOrchestrator(
-            _handler, _provider, new InMemoryCancellationSignalProvider(_provider), _eventStreamRegistry, _tracker,
-            NullLogger<ResponseOrchestrator>.Instance,
-            Options.Create(new ResponsesServerOptions()));
+            _handler, _provider, new InMemoryCancellationSignalProvider(_provider), new InMemoryStreamProvider(_provider), _tracker,
+            NullLogger<ResponseOrchestrator>.Instance);
     }
 
     [Test]
@@ -171,16 +166,17 @@ public class ErrorRecoveryTests : IDisposable
         CreateExecutionWithPublisher(string responseId)
     {
         var execution = _tracker.Create(responseId);
-        var publisher = await TestEventStreams.CreatePublisherAsync(_eventStreamRegistry, responseId);
+        var publisher = await _provider.CreateEventPublisherAsync(responseId);
         return (execution, publisher);
     }
 
-    private Task<(List<ResponseStreamEvent> Events, TestSubscription Observer)>
+    private async Task<(List<ResponseStreamEvent> Events, CollectingObserver Observer)>
         SubscribeToEvents(string responseId)
     {
         var events = new List<ResponseStreamEvent>();
-        var subscription = TestEventStreams.Subscribe(_eventStreamRegistry, responseId, events);
-        return Task.FromResult((events, subscription));
+        var observer = new CollectingObserver(events);
+        await _provider.SubscribeToEventsAsync(responseId, observer);
+        return (events, observer);
     }
 
     public void Dispose()
