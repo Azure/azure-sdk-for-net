@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed a bug in client-side encryption where version downgrades were only detected at the start of a download.
+
 ### Other Changes
 
 ## 12.30.0-beta.1 (2026-07-21)
