@@ -115,46 +115,6 @@ namespace Azure.ResourceManager.Resources.Deployments
         }
 
         /// <summary>
-        /// Returns changes that will be made by the deployment if executed at the scope of the subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourcesDeploymentsSubscriptionResource.WhatIfAtSubscriptionScopeAsync(WaitUntil, string, ArmDeploymentWhatIfContent, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="content"> Parameters to What If. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<ArmOperation<WhatIfOperationResult>> WhatIfAtSubscriptionScopeAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string deploymentName, ArmDeploymentWhatIfContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableResourcesDeploymentsSubscriptionResource(subscriptionResource).WhatIfAtSubscriptionScopeAsync(waitUntil, deploymentName, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns changes that will be made by the deployment if executed at the scope of the subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourcesDeploymentsSubscriptionResource.WhatIfAtSubscriptionScope(WaitUntil, string, ArmDeploymentWhatIfContent, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="content"> Parameters to What If. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static ArmOperation<WhatIfOperationResult> WhatIfAtSubscriptionScope(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string deploymentName, ArmDeploymentWhatIfContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableResourcesDeploymentsSubscriptionResource(subscriptionResource).WhatIfAtSubscriptionScope(waitUntil, deploymentName, content, cancellationToken);
-        }
-
-        /// <summary>
         /// Calculate the hash of the given template.
         /// <item>
         /// <term> Mocking. </term>
