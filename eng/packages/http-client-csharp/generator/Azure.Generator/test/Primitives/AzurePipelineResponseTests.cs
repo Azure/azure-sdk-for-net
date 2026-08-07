@@ -3,6 +3,8 @@
 
 using System;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Moq;
 using NUnit.Framework;
@@ -31,6 +33,33 @@ namespace Azure.Generator.Tests.Primitives
             var pipelineResponse = new AzurePipelineResponse(response.Object);
 
             BinaryData content = pipelineResponse.BufferContent();
+
+            Assert.IsTrue(networkStream.IsDisposed);
+            Assert.AreEqual(new byte[] { 1, 2, 3 }, content.ToArray());
+            Assert.IsInstanceOf<MemoryStream>(response.Object.ContentStream);
+        }
+
+        [Test]
+        public void BufferContentHonorsCancellationToken()
+        {
+            var response = new Mock<Response> { CallBase = true };
+            var networkStream = new TrackingStream([1, 2, 3]);
+            response.SetupProperty(r => r.ContentStream, networkStream);
+            var pipelineResponse = new AzurePipelineResponse(response.Object);
+            var cancellationToken = new CancellationToken(canceled: true);
+
+            Assert.Throws<OperationCanceledException>(() => pipelineResponse.BufferContent(cancellationToken));
+        }
+
+        [Test]
+        public async Task BufferContentAsyncDisposesNetworkStream()
+        {
+            var response = new Mock<Response> { CallBase = true };
+            var networkStream = new TrackingStream([1, 2, 3]);
+            response.SetupProperty(r => r.ContentStream, networkStream);
+            var pipelineResponse = new AzurePipelineResponse(response.Object);
+
+            BinaryData content = await pipelineResponse.BufferContentAsync();
 
             Assert.IsTrue(networkStream.IsDisposed);
             Assert.AreEqual(new byte[] { 1, 2, 3 }, content.ToArray());

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -30,13 +31,11 @@ namespace Azure.Generator.Visitors
             return base.VisitInvokeMethodExpression(expression, method);
         }
 
+#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         private static bool IsStreamingResponseType(CSharpType? type)
-            => UnwrapTask(type) is
-            {
-                Namespace: "System.ClientModel",
-                Name: "AsyncStreamingClientResult",
-                Arguments: { Count: 1 }
-            };
+            => UnwrapTask(type) is { IsGenericType: true } streamingType &&
+               streamingType.GetGenericTypeDefinition().Equals(typeof(AsyncStreamingClientResult<>));
+#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         private static bool IsAzureResponse(ValueExpression expression)
             => expression switch

@@ -43,7 +43,10 @@ namespace Azure.Core
                 var content = new MemoryStream();
                 try
                 {
-                    responseContentStream?.CopyTo(content);
+                    if (responseContentStream is not null)
+                    {
+                        CopyTo(responseContentStream, content, cancellationToken);
+                    }
                     content.Position = 0;
                     responseContentStream?.Dispose();
                     _response.ContentStream = content;
@@ -85,6 +88,22 @@ namespace Azure.Core
         }
 
         public override void Dispose() => _response.Dispose();
+
+        private static void CopyTo(Stream source, Stream destination, CancellationToken cancellationToken)
+        {
+            byte[] buffer = new byte[81920];
+            while (true)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                int bytesRead = source.Read(buffer, 0, buffer.Length);
+                if (bytesRead == 0)
+                {
+                    return;
+                }
+
+                destination.Write(buffer, 0, bytesRead);
+            }
+        }
 
         private sealed class AzurePipelineResponseHeaders : PipelineResponseHeaders
         {
