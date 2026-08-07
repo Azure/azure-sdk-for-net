@@ -103,9 +103,15 @@ namespace Azure.Security.KeyVault.Certificates
             // (per-call + per-retry), custom RetryPolicy / RetryOptions, Transport,
             // Diagnostics.LoggedHeaderNames + LoggedQueryParameters and ApplicationId
             // flow through automatically. No field-by-field copy is needed - future
-            // additions to ClientOptions are picked up for free.
-            var authPolicy = new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification);
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, authPolicy);
+            // additions to ClientOptions are picked up for free. The explicit
+            // transport options enable Proof-of-Possession (PoP) token binding
+            // in the authentication policy.
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(
+                options,
+                perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                perRetryPolicies: [new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification)],
+                transportOptions: new HttpPipelineTransportOptions(),
+                responseClassifier: null);
 
             _generated = new KeyVaultCertificatesClient(vaultUri, MapApiVersion(options.Version), pipeline, _diagnostics);
 

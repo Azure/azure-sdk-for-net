@@ -22,6 +22,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
     {
         private const string TenantId = "72f988bf-86f1-41af-91ab-2d7cd011db47";
         private const string VaultHost = "test.vault.azure.net";
+        private const string TokenBoundAuthHeader = "x-ms-tokenboundauth";
 
         private static Uri VaultUri => new Uri("https://" + VaultHost);
 
@@ -44,6 +45,42 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             KeyVaultSecret secret = await client.GetSecretAsync("test-secret").ConfigureAwait(false);
             Assert.AreEqual("secret-value", secret.Value);
+        }
+
+        [Test]
+        public async Task RequestsProofOfPossessionTokenAndAddsTokenBoundAuthHeader()
+        {
+            bool sawAuthorizedVaultRequest = false;
+            MockTransportBuilder builder = new MockTransportBuilder();
+            builder.Request += (_, args) =>
+            {
+                if (args.Request.Uri.Host == VaultHost &&
+                    args.Request.Headers.TryGetValue("Authorization", out string _) &&
+                    args.Request.Headers.TryGetValue(TokenBoundAuthHeader, out string tokenBoundAuth))
+                {
+                    sawAuthorizedVaultRequest = true;
+                    Assert.AreEqual("true", tokenBoundAuth);
+                }
+            };
+
+            MockTransport transport = builder.Build();
+            MockCredential credential = new MockCredential(transport);
+            SecretClient client = new SecretClient(
+                VaultUri,
+                credential,
+                new SecretClientOptions
+                {
+                    Transport = transport,
+                });
+
+            KeyVaultSecret secret = await client.GetSecretAsync("test-secret").ConfigureAwait(false);
+
+            Assert.AreEqual("secret-value", secret.Value);
+            Assert.IsTrue(sawAuthorizedVaultRequest);
+            Assert.IsNotNull(credential.LastRequestContext);
+            Assert.IsTrue(credential.LastRequestContext.IsProofOfPossessionEnabled);
+            Assert.AreEqual(TenantId, credential.LastRequestContext.TenantId);
+            CollectionAssert.AreEqual(new[] { "https://vault.azure.net/.default" }, credential.LastRequestContext.Scopes);
         }
 
         // Test concurrent authentication requests with immediate, fast, and slow network simulations.
@@ -336,10 +373,14 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 _clientSecret = clientSecret ?? throw new ArgumentNullException(nameof(clientSecret));
             }
 
+            public TokenRequestContext LastRequestContext { get; private set; }
+
             public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken) => GetTokenAsync(requestContext, cancellationToken).EnsureCompleted();
 
             public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
             {
+                LastRequestContext = requestContext;
+
                 Request request = _pipeline.CreateRequest();
                 request.Method = RequestMethod.Post;
                 request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);

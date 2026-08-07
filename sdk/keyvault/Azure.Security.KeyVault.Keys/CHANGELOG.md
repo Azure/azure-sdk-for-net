@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added support for Proof-of-Possession (PoP) token binding in the Key Vault authentication policy.
+
 ### Breaking Changes
 
 ### Bugs Fixed

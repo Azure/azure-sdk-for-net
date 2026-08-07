@@ -14,6 +14,7 @@ namespace Azure.Security.KeyVault
     internal class ChallengeBasedAuthenticationPolicy : BearerTokenAuthenticationPolicy
     {
         private const string KeyVaultStashedContentKey = "KeyVaultContent";
+        private const string TokenBoundAuthHeaderName = "x-ms-tokenboundauth";
         private readonly bool _verifyChallengeResource;
 
         /// <summary>
@@ -52,7 +53,8 @@ namespace Azure.Security.KeyVault
             if (_challenge != null)
             {
                 // We fetched the challenge from the cache, but we have not initialized the Scopes in the base yet.
-                var context = new TokenRequestContext(_challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: _challenge.TenantId, isCaeEnabled: true);
+                var context = new TokenRequestContext(_challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: _challenge.TenantId, isCaeEnabled: true, isProofOfPossessionEnabled: true);
+                AddTokenBoundAuthHeader(message, context);
                 if (async)
                 {
                     await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
@@ -175,7 +177,13 @@ namespace Azure.Security.KeyVault
                 s_challengeCache[authority] = _challenge;
             }
 
-            var context = new TokenRequestContext(_challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: _challenge.TenantId, isCaeEnabled: true, claims: claims);
+            if (_challenge is null)
+            {
+                return false;
+            }
+
+            var context = new TokenRequestContext(_challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: _challenge.TenantId, isCaeEnabled: true, claims: claims, isProofOfPossessionEnabled: true);
+            AddTokenBoundAuthHeader(message, context);
             if (async)
             {
                 await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
@@ -186,6 +194,14 @@ namespace Azure.Security.KeyVault
             }
 
             return true;
+        }
+
+        private static void AddTokenBoundAuthHeader(HttpMessage message, TokenRequestContext context)
+        {
+            if (context.IsProofOfPossessionEnabled)
+            {
+                message.Request.Headers.SetValue(TokenBoundAuthHeaderName, "true");
+            }
         }
 
         /// <inheritdoc />
