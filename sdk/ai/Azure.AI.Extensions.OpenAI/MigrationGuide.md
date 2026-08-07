@@ -340,6 +340,51 @@ ProjectResponsesClientOptions responsesOptions = openAIOptions;
 ProjectResponsesClient client = new(projectEndpoint, tokenProvider, responsesOptions);
 ```
 
+## Code-interpreter container settings
+
+The generated code-interpreter container types were replaced by the upstream Responses container
+configuration and the equivalent container-management value types:
+
+| Old (2.x) | New (3.0.0-beta.1) |
+| --- | --- |
+| `ResponsesAutoCodeInterpreterToolParam` | `OpenAI.Responses.AutomaticCodeInterpreterToolContainerConfiguration` |
+| `ResponsesContainerMemoryLimit` | `OpenAI.Containers.ContainerMemoryLimit` |
+| `ResponsesContainerNetworkPolicyParam` | `OpenAI.Containers.ContainerNetworkPolicy` |
+| `ResponsesContainerNetworkPolicyAllowlistParam` | `OpenAI.Containers.ContainerAllowlistNetworkPolicy` |
+| `ResponsesContainerNetworkPolicyDisabledParam` | `OpenAI.Containers.ContainerDisabledNetworkPolicy` |
+| `ResponsesContainerNetworkPolicyDomainSecretParam` | `OpenAI.Containers.ContainerNetworkPolicyDomainSecret` |
+
+Create the automatic container configuration through `OpenAI.Responses`, then set `MemoryLimit` and
+`NetworkPolicy` using the extension properties provided by this library:
+
+```csharp
+using Azure.AI.Extensions.OpenAI;
+using OpenAI.Containers;
+using OpenAI.Responses;
+
+ContainerAllowlistNetworkPolicy networkPolicy =
+    new(["pypi.org", "files.pythonhosted.org"]);
+
+networkPolicy.DomainSecrets.Add(
+    new ContainerNetworkPolicyDomainSecret(
+        domain: "pypi.org",
+        name: "PYPI_TOKEN",
+        value: "<token>"));
+
+AutomaticCodeInterpreterToolContainerConfiguration configuration =
+    CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration(
+        fileIds: ["file_123"]);
+
+configuration.MemoryLimit = ContainerMemoryLimit.Max4GB;
+configuration.NetworkPolicy = networkPolicy;
+
+ResponseTool codeInterpreterTool = ResponseTool.CreateCodeInterpreterTool(
+    new CodeInterpreterToolContainer(configuration));
+```
+
+Use `new ContainerDisabledNetworkPolicy()` when the container should have no network access. File IDs
+and container-ID selection continue to use the upstream `OpenAI.Responses` APIs.
+
 ## Preview tool kinds temporarily unavailable
 
 Some preview Responses tool kinds have no equivalent in `OpenAI` 2.12.0, so mapping onto the upstream
@@ -354,11 +399,6 @@ types dropped their strongly-typed request/response classes. These are:
   `OutputItemToolSearchOutput`.
 - **Skills:** `ResponsesInlineSkillParam`, `ResponsesInlineSkillSourceParam`,
   `ResponsesSkillReferenceParam`, `LocalSkillParam`.
-- **Code-interpreter container settings:** the code-interpreter tool container's `memory_limit` and
-  `network_policy` are no longer configurable through this library (`ResponsesContainerMemoryLimit`,
-  `ResponsesContainerAutoParam`, and the `ResponsesContainerNetworkPolicy*` types). OpenAI's
-  automatic code-interpreter container configuration models only `file_ids`; file IDs and
-  container-id selection are unaffected.
 
 These capabilities remain reachable on the wire because the corresponding tool kind is an extensible
 enum and the tool slots accept a raw object payload — but strongly-typed construction is not

@@ -7,13 +7,17 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
+using OpenAI.Containers;
 using OpenAI.Conversations;
 using OpenAI.Files;
+using OpenAI.Models;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
 // We need this alias to avoid conflict with internal enum MessageRole.
@@ -565,6 +569,49 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
         ProjectOpenAIClient client = CreateProxyFromClient(new ProjectOpenAIClient(GetTestAuthenticationPolicy(), clientOptions));
         ResponseResult response = await client.GetProjectResponsesClient().CreateResponseAsync("What is the size of France in square miles?");
         Assert.That(string.IsNullOrEmpty(response.GetOutputText()), Is.False, "The Agent did not returned a response.");
+    }
+
+    [Category("Smoke")]
+    [Test]
+    public void AutomaticContainerSerializesMemoryAndNetworkPolicy()
+    {
+        ContainerAllowlistNetworkPolicy networkPolicy = new ContainerAllowlistNetworkPolicy(["pypi.org", "files.pythonhosted.org"]);
+
+        networkPolicy.DomainSecrets.Add(
+            new ContainerNetworkPolicyDomainSecret(
+                domain: "pypi.org",
+                name: "PYPI_TOKEN",
+                value: "test-token"));
+
+        AutomaticCodeInterpreterToolContainerConfiguration configuration = CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration(fileIds: ["file_123"]);
+        configuration.NetworkPolicy = networkPolicy;
+        configuration.MemoryLimit = ContainerMemoryLimit.Max4GB;
+
+        CodeInterpreterToolContainer container = new CodeInterpreterToolContainer(configuration);
+
+        CodeInterpreterTool tool = CodeInterpreterTool.CreateCodeInterpreterTool(container);
+
+        BinaryData serialized = ModelReaderWriter.Write(
+            tool,
+            ModelReaderWriterOptions.Json);
+
+        using JsonDocument document = JsonDocument.Parse(serialized);
+        JsonElement root = document.RootElement;
+
+        Assert.That(root.GetProperty("type").GetString(), Is.EqualTo("auto"));
+        Assert.That(root.GetProperty("file_ids")[0].GetString(), Is.EqualTo("file_123"));
+        Assert.That(root.GetProperty("memory_limit").GetString(), Is.EqualTo("4g"));
+
+        JsonElement policy = root.GetProperty("network_policy");
+        Assert.That(policy.GetProperty("type").GetString(), Is.EqualTo("allowlist"));
+        Assert.That(
+            policy.GetProperty("allowed_domains")[0].GetString(),
+            Is.EqualTo("pypi.org"));
+
+        JsonElement secret = policy.GetProperty("domain_secrets")[0];
+        Assert.That(secret.GetProperty("domain").GetString(), Is.EqualTo("pypi.org"));
+        Assert.That(secret.GetProperty("name").GetString(), Is.EqualTo("PYPI_TOKEN"));
+        Assert.That(secret.GetProperty("value").GetString(), Is.EqualTo("test-token"));
     }
 }
 #pragma warning restore AAIP001

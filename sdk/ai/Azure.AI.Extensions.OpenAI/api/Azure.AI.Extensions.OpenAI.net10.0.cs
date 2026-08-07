@@ -124,6 +124,28 @@ namespace Azure.AI.Extensions.OpenAI
         public static bool operator !=(Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionStatus left, Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public static partial class AutomaticCodeInterpreterToolContainerConfigurationExtensions
+    {
+        public static OpenAI.Containers.ContainerMemoryLimit? get_MemoryLimit(OpenAI.Responses.AutomaticCodeInterpreterToolContainerConfiguration configuration) { throw null; }
+        public static OpenAI.Containers.ContainerNetworkPolicy? get_NetworkPolicy(OpenAI.Responses.AutomaticCodeInterpreterToolContainerConfiguration configuration) { throw null; }
+        public static void set_MemoryLimit(OpenAI.Responses.AutomaticCodeInterpreterToolContainerConfiguration configuration, OpenAI.Containers.ContainerMemoryLimit? value) { }
+        public static void set_NetworkPolicy(OpenAI.Responses.AutomaticCodeInterpreterToolContainerConfiguration configuration, OpenAI.Containers.ContainerNetworkPolicy? value) { }
+        public sealed partial class <G>$1A705A1397B690A0273AF6A7E1DB5D28
+        {
+            internal <G>$1A705A1397B690A0273AF6A7E1DB5D28() { }
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0001")]
+            [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$1DABC5CB45A7DD9E2C245A7B98914B24")]
+            public OpenAI.Containers.ContainerMemoryLimit? MemoryLimit { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$1DABC5CB45A7DD9E2C245A7B98914B24")] get { throw null; } [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$1DABC5CB45A7DD9E2C245A7B98914B24")] set { } }
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0001")]
+            [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$1DABC5CB45A7DD9E2C245A7B98914B24")]
+            public OpenAI.Containers.ContainerNetworkPolicy? NetworkPolicy { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$1DABC5CB45A7DD9E2C245A7B98914B24")] get { throw null; } [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$1DABC5CB45A7DD9E2C245A7B98914B24")] set { } }
+            public static partial class <M>$1DABC5CB45A7DD9E2C245A7B98914B24
+            {
+                public static void <Extension>$(OpenAI.Responses.AutomaticCodeInterpreterToolContainerConfiguration configuration) { }
+            }
+        }
+    }
     public static partial class AzureAIExtensions
     {
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
