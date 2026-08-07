@@ -4,6 +4,17 @@
 
 ### Features Added
 
+- Added the preview `Azure.AI.AgentServer.Invocations.Voice` submodule, a typed
+  implementation of Voice Live Bridge Protocol 1.0 over the existing
+  `invocations_ws` transport. It includes `VoiceHandler`, `VoiceSession`,
+  `VoiceResponse`, `VoiceTextItem`, immutable callback models, proactive
+  admission, self-cancel and barge-in reconciliation, response timeouts, DTMF,
+  handoff, history mutation, strict framing and duplicate suppression, and
+  `AddVoice<THandler>()` / `VoiceServer.Run<THandler>()` hosting entry points.
+  Outbound frames are bounded by their final JSON-encoded size, teardown shares
+  one absolute cleanup deadline, and content-free connection/turn activities
+  preserve the inbound W3C trace hierarchy.
+  Voice ships as part of the Invocations package rather than as a separate package.
 - AsyncAPI discovery endpoints — `InvocationHandler` now exposes two new
   virtual methods, `GetAsyncApiJsonAsync` and `GetAsyncApiYamlAsync`, served
   at `GET /invocations/docs/asyncapi.json` and `GET /invocations/docs/asyncapi.yaml`

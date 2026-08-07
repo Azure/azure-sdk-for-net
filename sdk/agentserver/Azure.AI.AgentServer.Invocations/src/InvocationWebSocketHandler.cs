@@ -28,12 +28,11 @@ namespace Azure.AI.AgentServer.Invocations;
 /// <see cref="HandleWebSocketAsync"/>; both methods see the same session
 /// when <c>FOUNDRY_AGENT_SESSION_ID</c> is set so HTTP and WebSocket turns
 /// correlate.</para>
-/// <para>No framework-level OpenTelemetry span is created for the
-/// connection; ASP.NET Core auto-propagates the inbound W3C trace context
-/// to the request <see cref="System.Diagnostics.Activity"/>, so any spans
-/// the handler starts are parented correctly. Session / invocation /
-/// <c>x-request-id</c> baggage is propagated onto the current Activity
-/// before the handler runs.</para>
+/// <para>ASP.NET Core auto-propagates the inbound W3C trace context to the
+/// request <see cref="System.Diagnostics.Activity"/>. The library creates an
+/// <c>agentserver.connection</c> child activity for the accepted WebSocket;
+/// spans started by handlers are parented beneath it. Session / invocation /
+/// <c>x-request-id</c> baggage is propagated before the handler runs.</para>
 /// </remarks>
 public abstract class InvocationWebSocketHandler : InvocationHandler
 {

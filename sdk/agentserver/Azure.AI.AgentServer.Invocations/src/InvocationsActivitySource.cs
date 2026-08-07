@@ -3,6 +3,7 @@
 
 using System.Diagnostics;
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Invocations.Internal;
 using Microsoft.AspNetCore.Http;
 
 namespace Azure.AI.AgentServer.Invocations;
@@ -18,7 +19,7 @@ internal class InvocationsActivitySource
     /// <summary>
     /// The default activity source name (retained for listener registration compatibility).
     /// </summary>
-    public const string DefaultName = "Azure.AI.AgentServer.Invocations";
+    public const string DefaultName = InvocationsTelemetry.SourceName;
 
     /// <summary>
     /// Initializes a new instance of <see cref="InvocationsActivitySource"/>.

@@ -4,8 +4,8 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Azure.AI.AgentServer.Invocations</RootNamespace>
     <Version>1.0.0-beta.6</Version>
-    <Description>Invocations protocol implementation for Azure AI Agent Server — provides InvocationHandler, endpoint routing, and distributed tracing.</Description>
-    <PackageTags>Microsoft Azure AI Agent Server Invocations Protocol Handler</PackageTags>
+    <Description>Invocations protocol implementation for Azure AI Agent Server, including preview typed Voice Live Bridge support over invocations_ws.</Description>
+    <PackageTags>Microsoft Azure AI Agent Server Invocations Protocol Handler Voice Live Bridge</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Nullable>enable</Nullable>
   </PropertyGroup>
