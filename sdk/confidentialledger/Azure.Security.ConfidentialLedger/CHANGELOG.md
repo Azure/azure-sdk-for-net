@@ -4,13 +4,16 @@
 
 ### Features Added
 
+- Added strongly typed convenience overloads for service operations. The existing protocol methods remain available for advanced scenarios.
+- Added experimental configuration and host-builder integration through `ConfidentialLedgerClientSettings` and `ConfidentialLedgerClientHostExtensions`.
+
 ### Breaking Changes
+
+- Renamed and moved `Azure.Security.ConfidentialLedger.Models.SecurityConfidentialLedgerModelFactory` to `Azure.Security.ConfidentialLedger.ConfidentialLedgerModelFactory`.
 
 ### Bugs Fixed
 
 ### Other Changes
-
-- Migrated code generation from the legacy TypeSpec C# emitter to the new C# generator.
 
 ## 2.0.0-beta.1 (2026-08-05)
 
