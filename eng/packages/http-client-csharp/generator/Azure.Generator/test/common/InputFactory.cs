@@ -630,7 +630,7 @@ namespace Azure.Generator.Tests.Common
                 path ?? string.Empty,
                 null,
                 requestMediaTypes is null ? null : [.. requestMediaTypes],
-                false,
+                true,
                 true,
                 true,
                 name,
