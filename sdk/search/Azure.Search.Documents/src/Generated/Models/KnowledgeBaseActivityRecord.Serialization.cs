@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
@@ -17,7 +18,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseSearchIndexActivityRecord"/>, <see cref="KnowledgeBaseAzureBlobActivityRecord"/>, <see cref="KnowledgeBaseIndexedSharePointActivityRecord"/>, <see cref="KnowledgeBaseIndexedOneLakeActivityRecord"/>, <see cref="KnowledgeBaseWebActivityRecord"/>, <see cref="KnowledgeBaseRemoteSharePointActivityRecord"/>, <see cref="KnowledgeBaseWorkIQActivityRecord"/>, <see cref="KnowledgeBaseFabricDataAgentActivityRecord"/>, <see cref="KnowledgeBaseFabricOntologyActivityRecord"/>, <see cref="KnowledgeBaseMcpServerActivityRecord"/>, <see cref="KnowledgeBaseFileActivityRecord"/>, <see cref="KnowledgeBaseIndexedSqlActivityRecord"/>, <see cref="KnowledgeBaseModelQueryPlanningActivityRecord"/>, <see cref="KnowledgeBaseModelAnswerSynthesisActivityRecord"/>, <see cref="KnowledgeBaseModelWebSummarizationActivityRecord"/>, and <see cref="KnowledgeBaseAgenticReasoningActivityRecord"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownKnowledgeBaseActivityRecord))]
-    public abstract partial class KnowledgeBaseActivityRecord : KnowledgeBaseRetrievalStreamEvent, IJsonModel<KnowledgeBaseActivityRecord>
+    public abstract partial class KnowledgeBaseActivityRecord : IJsonModel<KnowledgeBaseActivityRecord>
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseActivityRecord"/> for deserialization. </summary>
         internal KnowledgeBaseActivityRecord()
@@ -63,6 +64,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KnowledgeBaseActivityRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KnowledgeBaseActivityRecord"/> from. </param>
+        public static explicit operator KnowledgeBaseActivityRecord(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeKnowledgeBaseActivityRecord(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

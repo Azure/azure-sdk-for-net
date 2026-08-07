@@ -24,6 +24,8 @@ namespace Azure.Search.Documents.Tests
         {
             const string content = """
                 event: retrieval.started
+                id: event-1
+                retry: 2500
                 data: {"requestId":"request-id","knowledgeBaseName":"fake-knowledge-base","outputMode":"answerSynthesis","reasoningEffort":{"kind":"minimal"}}
 
                 event: activity.started
@@ -82,6 +84,8 @@ namespace Azure.Search.Documents.Tests
             Assert.That(started.RequestId, Is.EqualTo("request-id"));
             Assert.That(started.KnowledgeBaseName, Is.EqualTo("fake-knowledge-base"));
             Assert.That(started.OutputMode, Is.EqualTo(KnowledgeRetrievalOutputMode.AnswerSynthesis));
+            Assert.That(items[0].EventId, Is.EqualTo("event-1"));
+            Assert.That(items[0].ReconnectionInterval, Is.EqualTo(TimeSpan.FromMilliseconds(2500)));
 
             KnowledgeBaseActivityStartedEvent activityStarted = items[1].Data as KnowledgeBaseActivityStartedEvent;
             Assert.That(activityStarted, Is.Not.Null);

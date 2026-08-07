@@ -9,12 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Emitted when a fully validated and post-processed synthesized answer is available. </summary>
-    public partial class KnowledgeBaseAnswerCompletedEvent : KnowledgeBaseRetrievalStreamEvent, IJsonModel<KnowledgeBaseAnswerCompletedEvent>
+    public partial class KnowledgeBaseAnswerCompletedEvent : IJsonModel<KnowledgeBaseAnswerCompletedEvent>
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAnswerCompletedEvent"/> for deserialization. </summary>
         internal KnowledgeBaseAnswerCompletedEvent()
@@ -60,6 +61,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KnowledgeBaseAnswerCompletedEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KnowledgeBaseAnswerCompletedEvent"/> from. </param>
+        public static explicit operator KnowledgeBaseAnswerCompletedEvent(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeKnowledgeBaseAnswerCompletedEvent(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

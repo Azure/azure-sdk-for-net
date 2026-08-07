@@ -9,12 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Emitted in place of `response.completed` if retrieval fails after the stream starts. </summary>
-    public partial class KnowledgeBaseStreamErrorEvent : KnowledgeBaseRetrievalStreamEvent, IJsonModel<KnowledgeBaseStreamErrorEvent>
+    public partial class KnowledgeBaseStreamErrorEvent : IJsonModel<KnowledgeBaseStreamErrorEvent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -55,6 +56,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KnowledgeBaseStreamErrorEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KnowledgeBaseStreamErrorEvent"/> from. </param>
+        public static explicit operator KnowledgeBaseStreamErrorEvent(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeKnowledgeBaseStreamErrorEvent(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

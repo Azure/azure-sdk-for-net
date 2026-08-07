@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -14,6 +15,8 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Search.Documents.KnowledgeBases.Models;
+
+#pragma warning disable AZC0004, AZC0015
 
 namespace Azure.Search.Documents.KnowledgeBases
 {
@@ -180,7 +183,11 @@ namespace Azure.Search.Documents.KnowledgeBases
                             throw;
                         }
 
-                        yield return new SseItem<KnowledgeBaseRetrievalStreamEvent>(value, item.EventType);
+                        yield return new SseItem<KnowledgeBaseRetrievalStreamEvent>(value, item.EventType)
+                        {
+                            EventId = item.EventId,
+                            ReconnectionInterval = item.ReconnectionInterval,
+                        };
 
                         if (item.EventType is "error" or "response.completed")
                         {

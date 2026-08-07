@@ -9,12 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Emitted immediately before an individual retrieval activity begins executing. </summary>
-    public partial class KnowledgeBaseActivityStartedEvent : KnowledgeBaseRetrievalStreamEvent, IJsonModel<KnowledgeBaseActivityStartedEvent>
+    public partial class KnowledgeBaseActivityStartedEvent : IJsonModel<KnowledgeBaseActivityStartedEvent>
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseActivityStartedEvent"/> for deserialization. </summary>
         internal KnowledgeBaseActivityStartedEvent()
@@ -60,6 +61,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KnowledgeBaseActivityStartedEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KnowledgeBaseActivityStartedEvent"/> from. </param>
+        public static explicit operator KnowledgeBaseActivityStartedEvent(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeKnowledgeBaseActivityStartedEvent(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

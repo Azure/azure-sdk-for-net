@@ -9,12 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Emitted after retrieval completes successfully. </summary>
-    public partial class KnowledgeBaseResponseCompletedEvent : KnowledgeBaseRetrievalStreamEvent, IJsonModel<KnowledgeBaseResponseCompletedEvent>
+    public partial class KnowledgeBaseResponseCompletedEvent : IJsonModel<KnowledgeBaseResponseCompletedEvent>
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseResponseCompletedEvent"/> for deserialization. </summary>
         internal KnowledgeBaseResponseCompletedEvent()
@@ -60,6 +61,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KnowledgeBaseResponseCompletedEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="KnowledgeBaseResponseCompletedEvent"/> from. </param>
+        public static explicit operator KnowledgeBaseResponseCompletedEvent(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeKnowledgeBaseResponseCompletedEvent(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -26,6 +26,7 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
+        [Ignore("Work IQ knowledge requires entra app authentication which requires provisioning a live app. Skipping test for now")]
         [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task CreateAndUseWorkIqKnowledgeSource()
         {
@@ -60,8 +61,7 @@ namespace Azure.Search.Documents.Tests.Samples
 #if !SNIPPET
                 knowledgeSourceName = testSourceName;
 #endif
-                // Work IQ now authenticates to Microsoft 365 through an Entra
-                // application identity configured with a federated credential.
+
                 WorkIQKnowledgeSourceParameters workIqParameters = new WorkIQKnowledgeSourceParameters(
                     new EntraAppAuthentication(
                         applicationId: Guid.Parse("00000000-0000-0000-0000-000000000000"),
