@@ -5,3 +5,6 @@
 # Compiled Bicep output (auto-generated from test-resources.bicep)
 test-resources.json
 
+
+# Local-only files
+_local_only/

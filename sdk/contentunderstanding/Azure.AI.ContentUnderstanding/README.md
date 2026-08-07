@@ -19,11 +19,19 @@ If you have encountered issues or want to suggest features, please [file an issu
 
 ### Install the package
 
-Install the client library for .NET with [NuGet][nuget]:
+This README documents the current beta package (`1.2.0-beta.3`), which adds support for service API version `2026-06-01-preview`. Install that beta package with [NuGet][nuget]:
+
+```bash
+dotnet add package Azure.AI.ContentUnderstanding --prerelease
+```
+
+To use only the latest generally available package (`1.1.0`, service API `2025-11-01`):
 
 ```bash
 dotnet add package Azure.AI.ContentUnderstanding
 ```
+
+> **Note:** Preview-only capabilities (inline analysis, semantic chunking, analyzer workflows, signature detection, in-page segmentation, and related APIs) require this beta package (`1.2.0-beta.3` or later). A plain `dotnet add package Azure.AI.ContentUnderstanding` installs the latest stable package (`1.1.0`), which does not include `ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview`.
 
 ### Prerequisites
 
@@ -32,7 +40,11 @@ dotnet add package Azure.AI.ContentUnderstanding
 
 ### Configuring Microsoft Foundry resource
 
-Before using the Content Understanding SDK, you need to set up a Microsoft Foundry resource and deploy the required large language models. Content Understanding currently uses OpenAI GPT models (such as gpt-4.1, gpt-4.1-mini, and text-embedding-3-large).
+Before using the Content Understanding SDK, you need to set up a Microsoft Foundry resource and deploy supported generative models. The service periodically adds support for more models, including the latest gpt-5.x models such as gpt-5.2, gpt-5.4-mini, gpt-5.5, and others. The examples in this README use **gpt-5.2** and **text-embedding-3-large**.
+
+- Current supported and deprecated models: [Supported generative models][supported_generative_models]
+- Models being retired: [Foundry model retirement schedule][model_retirement_schedule]
+- Deployment guidance: [Content Understanding model deployments guidance][cu_models_deployments]
 
 #### Step 1: Create Microsoft Foundry resource
 
@@ -58,33 +70,91 @@ After creating your Microsoft Foundry resource, you must grant yourself the **Co
 
 > **Note:** This role assignment is required even if you are the owner of the resource. Without this role, you will not be able to call the Content Understanding API to configure model deployments for prebuilt analyzers and custom analyzers.
 
-#### Step 2: Deploy required models
+#### Step 2: Deploy supported models
 
-**Important:** The prebuilt and custom analyzers require large language model deployments. You must deploy at least these models before using prebuilt analyzers and custom analyzers:
-- `prebuilt-documentSearch`, `prebuilt-imageSearch`, `prebuilt-audioSearch`, `prebuilt-videoSearch` require **gpt-4.1-mini** and **text-embedding-3-large**
-- Other prebuilt analyzers like `prebuilt-invoice`, `prebuilt-receipt` require **gpt-4.1** and **text-embedding-3-large**
+**Important:** Prebuilt and custom analyzers require generative model deployments. Deploy models that Content Understanding currently supports; the supported set grows over time (for example, gpt-5.x models such as gpt-5.2, gpt-5.4-mini, and gpt-5.5). This README uses the following examples:
+- **gpt-5.2**
+- **text-embedding-3-large**
+
+See [Supported generative models][supported_generative_models] for the current list, including models being deprecated.
 
 To deploy a model:
 
 1. In Microsoft Foundry, go to **Deployments** > **Deploy model** > **Deploy base model**
-2. Search for and select the model you want to deploy. Currently, prebuilt analyzers require models such as `gpt-4.1`, `gpt-4.1-mini`, and `text-embedding-3-large`
+2. Search for and select a [supported generative model][supported_generative_models] (this guide uses `gpt-5.2` and `text-embedding-3-large` as examples)
 3. Complete the deployment with your preferred settings
-4. Note the deployment name you chose (by convention, use the model name as the deployment name, e.g., `gpt-4.1` for the `gpt-4.1` model). You can use any deployment name you prefer, but you'll need to note it for use in Step 3 when configuring model deployments.
+4. Note the deployment name you chose (by convention, use the model name as the deployment name, e.g., `gpt-5.2` for the `gpt-5.2` model). You can use any deployment name you prefer, but you'll need to note it for use in Step 3 when configuring model deployments.
 
-Repeat this process for each model required by your prebuilt analyzers.
+Repeat this process for each model your analyzers need.
 
 For more information on deploying models, see [Create model deployments in Microsoft Foundry portal][deploy_models_docs].
+
+> **Note on model retirement:** Azure OpenAI / Foundry models are subject to a [model retirement schedule][model_retirement_schedule]. When a model is retired, redeploy to a still-supported model and update your Content Understanding defaults. Review the retirement schedule regularly so you can plan migrations before support ends.
 
 #### Step 3: Configure model deployments (required for prebuilt analyzers)
 
 > **IMPORTANT:**  This is a **one-time setup per Microsoft Foundry resource** that maps your deployed models to those required by the prebuilt analyzers and custom models. If you have multiple Microsoft Foundry resources, you need to configure each one separately.
 
-You need to configure the default model mappings in your Microsoft Foundry resource. This can be done programmatically using the SDK. The configuration maps your deployed models (currently gpt-4.1, gpt-4.1-mini, and text-embedding-3-large) to the large language models required by prebuilt analyzers.
+You need to configure the default model mappings in your Microsoft Foundry resource. This can be done programmatically using the SDK. The configuration maps your deployed models (for example, gpt-5.2 and text-embedding-3-large) to the model names and aliases required by prebuilt analyzers.
+
+Prebuilt analyzers reference model aliases in addition to concrete model names. Most prebuilt analyzers, including `prebuilt-invoice`, use `prebuilt-analyzer-completion`; `prebuilt-*Search` analyzers use `prebuilt-analyzer-completion-mini`; and analyzers requiring embeddings use `prebuilt-analyzer-embedding`. Configure all three aliases even when they map to the same deployments as your example models. See [Supported generative models][supported_generative_models] and [Content Understanding model deployments guidance][cu_models_deployments] for current requirements.
 
 To configure model deployments using code, see [Sample 00: Configure model deployment defaults][sample00] for a complete example. The sample shows how to:
 - Map your deployed models to the models required by prebuilt analyzers
 - Retrieve the current default model deployment configuration
 
+
+### Service API versions
+
+This package supports multiple Azure Content Understanding service API versions. You can use the same `Azure.AI.ContentUnderstanding` package with either the latest generally available (GA) service API or a newer preview service API by choosing the corresponding `ContentUnderstandingClientOptions.ServiceVersion` value when creating the client.
+
+The package supports the following service API versions:
+
+| SDK version | Supported service API versions | Default service API version | Install |
+|-------------|--------------------------------|-----------------------------|---------|
+| `1.1.0` (stable) | `2025-11-01` | `2025-11-01` | `dotnet add package Azure.AI.ContentUnderstanding` |
+| `1.2.0-beta.3` (prerelease) | `2025-11-01`, `2026-06-01-preview` | `2026-06-01-preview` | `dotnet add package Azure.AI.ContentUnderstanding --prerelease` |
+
+If you don't specify a service version, the beta package uses the latest preview API version by default. The stable `1.1.0` package supports only `2025-11-01`.
+
+#### Choose a service API version
+
+When deciding which service API version to use:
+
+- Use `2025-11-01` when you want the latest GA service API.
+- Use `2026-06-01-preview` when you want to try preview capabilities added after the GA release.
+- If you are following sample code or documentation for preview-only features, create the client with the preview service version explicitly.
+
+#### Use the latest GA service API version
+
+Use the latest GA service API version when you want stable, generally available service behavior:
+
+```C#
+var options = new ContentUnderstandingClientOptions(
+  ContentUnderstandingClientOptions.ServiceVersion.V2025_11_01);
+var client = new ContentUnderstandingClient(new Uri(endpoint), credential, options);
+```
+
+#### Use the latest preview service API version
+
+This beta package defaults to `2026-06-01-preview`. Omit `ContentUnderstandingClientOptions` unless you need to pin a specific service version:
+
+```C#
+var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
+// To pin a version explicitly:
+// var options = new ContentUnderstandingClientOptions(
+//     ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview);
+// var client = new ContentUnderstandingClient(new Uri(endpoint), credential, options);
+```
+
+> **Note:** Some service capabilities are available only in `2026-06-01-preview`, including:
+> - Inline analysis (`AnalyzeInline*` / `AnalyzeBinaryInline*`) — see [Sample 18](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample18_AnalyzeInline.md) and [Sample 19](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample19_AnalyzeBinaryInline.md)
+> - Semantic chunking (`SemanticChunkingStrategy` / `DocumentChunk`) — see [Sample 17](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample17_AnalyzeChunking.md)
+> - Analyzer workflows (`ContentAnalyzerWorkflow`) — see [Sample 16](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample16_CreateAnalyzerWorkflow.md)
+> - Signature detection (`DocumentSignature`) — see [Sample 10](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample10_AnalyzeConfigs.md) and [Detect signatures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample_Advanced_DetectSignatures.md)
+> - In-page segmentation (`AllowInPageSegments`) — see [Classify in-page segments](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample_Advanced_ClassifyInPageSegments.md)
+> - Embedded document metadata (`AnalysisContent.Metadata`) — see [Extract document metadata](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample_Advanced_ExtractDocumentMetadata.md)
+> - Analysis-result metadata in `ToLlmInput` front matter — see [ToLlmInput](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample_Advanced_ToLlmInput.md)
 
 ### Authenticate the client
 
@@ -289,7 +359,7 @@ Console.WriteLine(text);
 > An LLM or RAG indexer can therefore cite "see page 5" with the correct page
 > number, even though page 5 is the *third* segment in the response.
 
-See the [advanced ToLlmInput sample][sample-advanced-to-llm-input] for output options (fields-only, markdown-only, custom metadata), multi-page content ranges, and multi-segment video.
+See the [ToLlmInput sample][sample-advanced-to-llm-input] for output options (fields-only, markdown-only, custom metadata), preview metadata from analysis result, multi-page content ranges, and multi-segment video.
 
 ## Troubleshooting
 
@@ -301,7 +371,7 @@ See the [advanced ToLlmInput sample][sample-advanced-to-llm-input] for output op
 - Make sure you have the **Cognitive Services User** role assigned to your account
 
 **Error: "Model deployment not found" or "Default model deployment not configured"**
-- Ensure you have deployed the required models (gpt-4.1, gpt-4.1-mini, text-embedding-3-large) in Microsoft Foundry
+- Ensure you have deployed [supported generative models][supported_generative_models] (this guide uses gpt-5.2 and text-embedding-3-large as examples) in Microsoft Foundry
 - Verify you have configured the default model deployments (see [Configure Model Deployments](#step-3-configure-model-deployments-required-for-prebuilt-analyzers))
 - Check that your deployment names match what you configured in the defaults
 
@@ -347,6 +417,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [azure_subscription]: https://azure.microsoft.com/free/dotnet/
 [cu_quickstart]: https://learn.microsoft.com/azure/ai-services/content-understanding/quickstart/use-rest-api?tabs=portal%2Cdocument
 [cu_region_support]: https://learn.microsoft.com/azure/ai-services/content-understanding/language-region-support
+[cu_models_deployments]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/models-deployments
+[supported_generative_models]: https://learn.microsoft.com/azure/ai-services/content-understanding/service-limits#supported-generative-models
+[model_retirement_schedule]: https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule
 [azure_portal]: https://portal.azure.com/
 [deploy_models_docs]: https://learn.microsoft.com/azure/ai-studio/how-to/deploy-models-openai
 [azure_identity_readme]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
