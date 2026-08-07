@@ -382,7 +382,7 @@ namespace Azure.Storage.Cryptography
                 {
                     /* The encryption data did not match the encryption data the CEK was originally
                      * wrapped inside of. This is a downgrade attack. Fail the entire download.*/
-                    throw new CryptographicException("Mismatched encryption data.");
+                    throw new CryptographicException("Enryption data modified during decryption process.");
                 }
             }
 
@@ -438,7 +438,7 @@ namespace Azure.Storage.Cryptography
                         .Trim('\0');
                     if (unwrappedProtocolString != encryptionData.EncryptionAgent.EncryptionVersion.Serialize())
                     {
-                        throw new CryptographicException("Encryption metadata has been tampered.");
+                        throw new CryptographicException("Mismatched encryption data.");
                     }
                     unwrappedKey = new Memory<byte>(unwrappedContent)
                         .Slice(Constants.ClientSideEncryption.V2.WrappedDataVersionLength).ToArray();
@@ -465,9 +465,9 @@ namespace Azure.Storage.Cryptography
         /// </summary>
         internal class ContentEncryptionKeyCache
         {
-            private Memory<byte> _key;
-            private string _kekId;
-            private ClientSideEncryptionVersionInternal _cseVersion;
+            private readonly Memory<byte> _key;
+            private readonly string _kekId;
+            private readonly ClientSideEncryptionVersionInternal _cseVersion;
 
             public ContentEncryptionKeyCache(Memory<byte> key, string kekId, ClientSideEncryptionVersionInternal cseVersion)
             {
