@@ -103,7 +103,7 @@ public class RoutinesTests : ProjectsClientTestBase
                 { "group_id", BinaryData.FromString(JsonSerializer.Serialize(TestEnvironment.TEAMS_GROUP_ID))},
                 { "channel_id", BinaryData.FromString(JsonSerializer.Serialize(TestEnvironment.TEAMS_CHANNEL_ID))},
             });
-        for (int i=0; i< PAGE_SIZE + 1; i++)
+        for (int i = 0; i < PAGE_SIZE + 1; i++)
         {
             ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine created by unit test.", enabled: false);
             routineOptions.Triggers.Add("manual", trigger);
