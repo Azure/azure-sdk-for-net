@@ -203,21 +203,35 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         /// <summary>
-        /// Verifies that when custom code overrides a model's base type to an inheritable
-        /// system type (e.g., TrackedResourceData) that is NOT present as an
-        /// InheritableSystemObjectModelProvider, the visitor uses Roslyn source metadata to
-        /// filter inherited properties from the model.
+        /// Verifies that when custom code overrides a model's base type to an inheritable system
+        /// type (e.g., TrackedResourceData), the visitor creates and walks the corresponding
+        /// system model provider hierarchy to filter inherited properties from the model.
         /// </summary>
         [Test]
-        public void CustomCodeBaseTypeOverride_UsesReferencedAssemblyMetadata()
+        public void CustomCodeBaseTypeOverride_UsesSystemModelProviderHierarchy()
         {
-            // The upgraded base generator no longer exposes framework properties through
-            // SystemObjectModelProvider.Properties in this path, so use an empty input model
-            // to exercise the referenced assembly metadata fallback.
+            var resourceInputModel = InputFactory.Model(
+                "Resource",
+                properties: [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("systemData", InputPrimitiveType.String, isReadOnly: true),
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            typeof(InputModelType).GetProperty(nameof(InputModelType.CrossLanguageDefinitionId))!
+                .SetValue(resourceInputModel, "Azure.ResourceManager.CommonTypes.Resource");
+
             var trackedResourceInputModel = InputFactory.Model(
                 "TrackedResource",
-                properties: [],
+                properties: [
+                    InputFactory.Property("location", InputPrimitiveType.String),
+                    InputFactory.Property("tags", InputPrimitiveType.String),
+                ],
+                baseModel: resourceInputModel,
                 usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            typeof(InputModelType).GetProperty(nameof(InputModelType.CrossLanguageDefinitionId))!
+                .SetValue(trackedResourceInputModel, "Azure.ResourceManager.CommonTypes.TrackedResource");
 
             // Create a simple model with properties that overlap TrackedResourceData's properties
             var inputModel = InputFactory.Model(
@@ -235,8 +249,7 @@ namespace Azure.Generator.Mgmt.Tests
 
             // Load mock plugin (needed for ManagementClientGenerator.Instance)
             var plugin = ManagementMockHelpers.LoadMockPlugin(
-                inputModels: () => [inputModel, trackedResourceInputModel],
-                customizationSources: ["namespace Samples { internal class Placeholder { } }"]);
+                inputModels: () => [inputModel, trackedResourceInputModel, resourceInputModel]);
 
             // Register a SystemObjectModelProvider for TrackedResourceData in CSharpTypeMap
             var trackedResourceType = new CSharpType(typeof(TrackedResourceData));
@@ -257,7 +270,7 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(result, Is.Not.Null);
 
             // Properties from TrackedResourceData (Id, Name, ResourceType, SystemData, Tags, Location)
-            // should be filtered using referenced assembly metadata.
+            // should be filtered using the SystemObjectModelProvider hierarchy.
             // Only CustomProp should remain.
             var propertyNames = result!.Properties.Select(p => p.Name).ToList();
             Assert.That(propertyNames.Contains("Id"), Is.False, "Id should be filtered (from TrackedResourceData base)");

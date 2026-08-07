@@ -118,44 +118,31 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
                 basePropertyNames.Add(property.Name);
             }
 
-            if (currentModel is SystemObjectModelProvider systemModel)
-            {
-                AddSourceTypeProperties(systemModel.SystemType, basePropertyNames);
-            }
-
-            currentModel = currentModel.BaseModelProvider;
+            currentModel = ResolveBaseModelProvider(currentModel);
         }
         return basePropertyNames;
     }
 
-    private static void AddSourceTypeProperties(CSharpType type, HashSet<string> propertyNames)
+    private static ModelProvider? ResolveBaseModelProvider(ModelProvider model)
     {
-        var visitedTypes = new HashSet<string>(StringComparer.Ordinal);
-        CSharpType? currentType = type;
-        while (currentType is not null &&
-            visitedTypes.Add($"{currentType.Namespace}.{currentType.Name}"))
+        var baseModelProvider = model.BaseModelProvider;
+        if (baseModelProvider is not null)
         {
-            var sourceType = ManagementClientGenerator.Instance.SourceInputModel.FindForTypeInCurrentCompilation(
-                currentType.Namespace,
-                currentType.Name,
-                currentType.DeclaringType?.Name,
-                includeReferencedAssemblies: true);
-            if (sourceType is null)
-            {
-                return;
-            }
-
-            foreach (var property in sourceType.Properties)
-            {
-                if (property.Modifiers.HasFlag(MethodSignatureModifiers.Public) ||
-                    property.Modifiers.HasFlag(MethodSignatureModifiers.Protected))
-                {
-                    propertyNames.Add(property.Name);
-                }
-            }
-
-            currentType = sourceType.BaseType;
+            return baseModelProvider;
         }
+
+        // A system provider can be visited before MTG has created and registered the provider
+        // for its TypeSpec base model. Create that provider so its properties are available.
+        if (model is SystemObjectModelProvider systemModel &&
+            ManagementClientGenerator.Instance.InputLibrary.ModelsByCrossLanguageDefinitionId.TryGetValue(
+                systemModel.CrossLanguageDefinitionId,
+                out var inputModel) &&
+            inputModel.BaseModel is not null)
+        {
+            return ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel.BaseModel);
+        }
+
+        return null;
     }
 
     private static void StripOrphanedVirtualModifiers(ModelProvider baseModel, HashSet<string> removedPropertyNames)
