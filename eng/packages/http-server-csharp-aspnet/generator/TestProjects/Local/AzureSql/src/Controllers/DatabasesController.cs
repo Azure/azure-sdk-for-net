@@ -5,36 +5,38 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Asp.Versioning;
-using Azure.TypeSpec.Generator.AspNetServer.AzureSql.Generated.V20260201.Controllers;
-using Azure.TypeSpec.Generator.AspNetServer.AzureSql.Generated.V20260201.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Sql;
+using V20260201Controllers = Azure.TypeSpec.Generator.AspNetServer.AzureSql.Generated.V20260201.Controllers;
+using V20260201Models = Azure.TypeSpec.Generator.AspNetServer.AzureSql.Generated.V20260201.Models;
 
 namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
 {
     /// <summary>
-    /// Hand-written controller that consumes the generated server contract.
+    /// Hand-written controller that implements operations impacted in 2026-02-01.
     /// </summary>
     [ApiVersion("2026-02-01")]
-    public sealed class DatabasesController : DatabasesControllerBase
+    public sealed class DatabasesController : V20260201Controllers.DatabasesControllerBase
     {
         /// <inheritdoc/>
-        public override Task<ActionResult<Database>> GetAsync(
+        [MapToApiVersion("2026-02-01")]
+        public override Task<ActionResult<V20260201Models.Database>> GetAsync(
             string subscriptionId,
             string resourceGroupName,
             string databaseName,
             CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            return Task.FromResult<ActionResult<Database>>(Ok(CreateDatabase(subscriptionId, resourceGroupName, databaseName)));
+            return Task.FromResult<ActionResult<V20260201Models.Database>>(Ok(CreateDatabase(subscriptionId, resourceGroupName, databaseName)));
         }
 
         /// <inheritdoc/>
-        public override Task<ActionResult<Database>> CreateOrUpdateAsync(
+        [MapToApiVersion("2026-02-01")]
+        public override Task<ActionResult<V20260201Models.Database>> CreateOrUpdateAsync(
             string subscriptionId,
             string resourceGroupName,
             string databaseName,
-            Database resource,
+            V20260201Models.Database resource,
             CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -43,26 +45,16 @@ namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
             resource.Name = databaseName;
             resource.Type = "Microsoft.Sql/databases";
 
-            return Task.FromResult<ActionResult<Database>>(Ok(resource));
+            return Task.FromResult<ActionResult<V20260201Models.Database>>(Ok(resource));
         }
 
         /// <inheritdoc/>
-        public override Task<IActionResult> DeleteAsync(
+        [MapToApiVersion("2026-02-01")]
+        public override Task<ActionResult<V20260201Models.Database>> UpdateAsync(
             string subscriptionId,
             string resourceGroupName,
             string databaseName,
-            CancellationToken cancellationToken = default)
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-            return Task.FromResult<IActionResult>(NoContent());
-        }
-
-        /// <inheritdoc/>
-        public override Task<ActionResult<Database>> UpdateAsync(
-            string subscriptionId,
-            string resourceGroupName,
-            string databaseName,
-            DatabaseUpdate properties,
+            V20260201Models.DatabaseUpdate properties,
             CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -73,18 +65,19 @@ namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
             database.Properties.MaxSizeBytes = properties.Properties?.MaxSizeBytes ?? database.Properties.MaxSizeBytes;
             database.Properties.ElasticPoolId = properties.Properties?.ElasticPoolId ?? database.Properties.ElasticPoolId;
 
-            return Task.FromResult<ActionResult<Database>>(Ok(database));
+            return Task.FromResult<ActionResult<V20260201Models.Database>>(Ok(database));
         }
 
         /// <inheritdoc/>
-        public override Task<ActionResult<DatabaseListResult>> ListByResourceGroupAsync(
+        [MapToApiVersion("2026-02-01")]
+        public override Task<ActionResult<V20260201Models.DatabaseListResult>> ListByResourceGroupAsync(
             string subscriptionId,
             string resourceGroupName,
             CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var result = new DatabaseListResult
+            var result = new V20260201Models.DatabaseListResult
             {
                 Value =
                 [
@@ -93,28 +86,34 @@ namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
                 ]
             };
 
-            return Task.FromResult<ActionResult<DatabaseListResult>>(Ok(result));
+            return Task.FromResult<ActionResult<V20260201Models.DatabaseListResult>>(Ok(result));
         }
 
-        private static Database CreateDatabase(string subscriptionId, string resourceGroupName, string databaseName)
+        private static V20260201Models.Database CreateDatabase(string subscriptionId, string resourceGroupName, string databaseName)
         {
-            return new Database
+            return new V20260201Models.Database
             {
                 Id = BuildDatabaseId(subscriptionId, resourceGroupName, databaseName),
                 Name = databaseName,
                 Type = "Microsoft.Sql/databases",
                 Location = "westus",
-                Tags = new Dictionary<string, string>
-                {
-                    ["scenario"] = "existing-project"
-                },
-                Properties = new DatabaseProperties
+                Tags = CreateTags(),
+                Properties = new V20260201Models.DatabaseProperties
                 {
                     Collation = "SQL_Latin1_General_CP1_CI_AS",
                     MaxSizeBytes = 268435456000,
                     Status = "Online",
-                    ProvisioningState = ProvisioningState.Succeeded
+                    ProvisioningState = ProvisioningState.Succeeded,
+                    ElasticPoolId = "/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Sql/elasticPools/pool1"
                 }
+            };
+        }
+
+        private static Dictionary<string, string> CreateTags()
+        {
+            return new Dictionary<string, string>
+            {
+                ["scenario"] = "existing-project"
             };
         }
 

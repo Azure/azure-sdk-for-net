@@ -5,14 +5,14 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Asp.Versioning;
-using Azure.TypeSpec.Generator.AspNetServer.AzureSql.Generated.V20260201.Models;
+using Azure.TypeSpec.Generator.AspNetServer.AzureSql.Generated.V20251101.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Generated.V20260201.Controllers
+namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Generated.V20251101.Controllers
 {
     /// <summary> ARM operations endpoint. </summary>
     [ApiController]
-    [ApiVersion("2026-02-01")]
+    [ApiVersion("2025-11-01")]
     public abstract partial class OperationsControllerBase : ControllerBase
     {
         /// <summary> List the operations for the provider. </summary>

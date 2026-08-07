@@ -5,24 +5,16 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Asp.Versioning;
-using Azure.TypeSpec.Generator.AspNetServer.AzureSql.Generated.V20260201.Models;
+using Azure.TypeSpec.Generator.AspNetServer.AzureSql.Generated.V20251201.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Generated.V20260201.Controllers
+namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Generated.V20251201.Controllers
 {
     /// <summary> Database resource operations. </summary>
     [ApiController]
-    [ApiVersion("2026-02-01")]
+    [ApiVersion("2025-12-01")]
     public abstract partial class DatabasesControllerBase : ControllerBase
     {
-        /// <summary> Gets a database. </summary>
-        [HttpGet("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/databases/{databaseName}")]
-        public abstract Task<ActionResult<Database>> GetAsync([FromRoute(Name = "subscriptionId")] string subscriptionId, [FromRoute(Name = "resourceGroupName")] string resourceGroupName, [FromRoute(Name = "databaseName")] string databaseName, CancellationToken cancellationToken = default);
-
-        /// <summary> Creates or updates a database (long-running operation). </summary>
-        [HttpPut("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/databases/{databaseName}")]
-        public abstract Task<ActionResult<Database>> CreateOrUpdateAsync([FromRoute(Name = "subscriptionId")] string subscriptionId, [FromRoute(Name = "resourceGroupName")] string resourceGroupName, [FromRoute(Name = "databaseName")] string databaseName, [FromBody] Database resource, CancellationToken cancellationToken = default);
-
         /// <summary> Updates a database. Added in 2025-12-01. </summary>
         [HttpPatch("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/databases/{databaseName}")]
         public abstract Task<ActionResult<Database>> UpdateAsync([FromRoute(Name = "subscriptionId")] string subscriptionId, [FromRoute(Name = "resourceGroupName")] string resourceGroupName, [FromRoute(Name = "databaseName")] string databaseName, [FromBody] DatabaseUpdate properties, CancellationToken cancellationToken = default);

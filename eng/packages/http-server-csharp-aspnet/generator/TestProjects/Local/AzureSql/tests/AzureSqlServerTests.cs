@@ -12,6 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Tests
 {
+    [NonParallelizable]
     public class AzureSqlServerTests
     {
         private const string ApiVersion = "2026-02-01";
@@ -45,6 +46,7 @@ namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Tests
             Assert.That(root.GetProperty("type").GetString(), Is.EqualTo("Microsoft.Sql/databases"));
             Assert.That(root.GetProperty("tags").GetProperty("scenario").GetString(), Is.EqualTo("existing-project"));
             Assert.That(root.GetProperty("properties").GetProperty("status").GetString(), Is.EqualTo("Online"));
+            Assert.That(root.GetProperty("properties").GetProperty("elasticPoolId").GetString(), Is.EqualTo("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Sql/elasticPools/pool1"));
         }
 
         [Test]
@@ -94,35 +96,13 @@ namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Tests
         }
 
         [Test]
-        public async Task DeleteDatabaseUsesGeneratedRouteAndReturnsNoContent()
-        {
-            using var response = await _client.DeleteAsync(WithApiVersion("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Sql/databases/db"));
-
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
-        }
-
-        [Test]
-        public async Task ListOperationsUsesGeneratedOperationsRoute()
-        {
-            using var response = await _client.GetAsync(WithApiVersion("/providers/Microsoft.Sql/operations"));
-
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-
-            using var payload = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
-            var values = payload.RootElement.GetProperty("value");
-            Assert.That(values.GetArrayLength(), Is.EqualTo(2));
-            Assert.That(values[0].GetProperty("name").GetString(), Is.EqualTo("Microsoft.Sql/databases/read"));
-            Assert.That(values[1].GetProperty("name").GetString(), Is.EqualTo("Microsoft.Sql/databases/write"));
-        }
-
-        [Test]
         public async Task UnsupportedApiVersionIsRejected()
         {
-            using var response = await _client.GetAsync("/providers/Microsoft.Sql/operations?api-version=2025-01-01");
+            using var response = await _client.GetAsync("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Sql/databases/db?api-version=2025-01-01");
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
 
-        private static string WithApiVersion(string path) => $"{path}?api-version={ApiVersion}";
+        private static string WithApiVersion(string path, string apiVersion = ApiVersion) => $"{path}?api-version={apiVersion}";
     }
 }
