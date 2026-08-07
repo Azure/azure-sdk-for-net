@@ -37,12 +37,22 @@ namespace Azure.Core
 
         public override BinaryData BufferContent(CancellationToken cancellationToken = default)
         {
-            if (_response.ContentStream is not MemoryStream)
+            Stream? responseContentStream = _response.ContentStream;
+            if (responseContentStream is not MemoryStream)
             {
                 var content = new MemoryStream();
-                _response.ContentStream?.CopyTo(content);
-                content.Position = 0;
-                _response.ContentStream = content;
+                try
+                {
+                    responseContentStream?.CopyTo(content);
+                    content.Position = 0;
+                    responseContentStream?.Dispose();
+                    _response.ContentStream = content;
+                }
+                catch
+                {
+                    content.Dispose();
+                    throw;
+                }
             }
 
             return _response.Content;
@@ -50,15 +60,25 @@ namespace Azure.Core
 
         public override async ValueTask<BinaryData> BufferContentAsync(CancellationToken cancellationToken = default)
         {
-            if (_response.ContentStream is not MemoryStream)
+            Stream? responseContentStream = _response.ContentStream;
+            if (responseContentStream is not MemoryStream)
             {
                 var content = new MemoryStream();
-                if (_response.ContentStream is not null)
+                try
                 {
-                    await _response.ContentStream.CopyToAsync(content, 81920, cancellationToken).ConfigureAwait(false);
+                    if (responseContentStream is not null)
+                    {
+                        await responseContentStream.CopyToAsync(content, 81920, cancellationToken).ConfigureAwait(false);
+                    }
+                    content.Position = 0;
+                    responseContentStream?.Dispose();
+                    _response.ContentStream = content;
                 }
-                content.Position = 0;
-                _response.ContentStream = content;
+                catch
+                {
+                    content.Dispose();
+                    throw;
+                }
             }
 
             return _response.Content;
