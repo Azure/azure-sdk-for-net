@@ -72,9 +72,6 @@ internal static partial class VoiceValidation
             : value[..MaxErrorMessageLength];
     }
 
-    public static bool IsDtmfKey(char value) =>
-        (value >= '0' && value <= '9') || value is '*' or '#';
-
     public static IReadOnlyDictionary<string, object?>? NormalizeVoice(
         IReadOnlyDictionary<string, object?>? voice)
     {

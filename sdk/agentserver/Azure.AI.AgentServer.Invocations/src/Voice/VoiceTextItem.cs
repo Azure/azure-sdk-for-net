@@ -89,6 +89,8 @@ public class VoiceTextItem
 
     internal int EscapedTextBytes { get; private set; }
 
+    internal long RetainedTextBytes { get; private set; }
+
     internal int ChunkCount => _chunks.Count;
 
     internal void CommitCompleteText(string text, int textBytes, int escapedTextBytes)
@@ -96,6 +98,7 @@ public class VoiceTextItem
         _chunks.Add(text);
         TextBytes = textBytes;
         EscapedTextBytes = escapedTextBytes;
+        RetainedTextBytes = checked((long)text.Length * sizeof(char));
         IsStarted = true;
         IsDone = true;
     }
@@ -105,6 +108,7 @@ public class VoiceTextItem
         _chunks.Add(delta);
         TextBytes += deltaBytes;
         EscapedTextBytes += escapedDeltaBytes;
+        RetainedTextBytes = checked(RetainedTextBytes + ((long)delta.Length * sizeof(char)));
         IsStarted = true;
     }
 

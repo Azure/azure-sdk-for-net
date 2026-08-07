@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Buffers;
+using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Security.Cryptography;
 using System.Text.Json;
@@ -13,7 +14,18 @@ namespace Azure.AI.AgentServer.Invocations.Voice.Internal;
 /// </summary>
 internal readonly record struct VoiceFramePayload(
     string MessageType,
-    IReadOnlyDictionary<string, object?> Fields);
+    IReadOnlyDictionary<string, object?> Fields,
+    string? OwnerResponseId = null,
+    string? TerminalKind = null);
+
+/// <summary>
+/// The single in-flight logical send after it crossed the irreversible socket
+/// attempt boundary and before its local semantic commit completed.
+/// </summary>
+internal sealed record VoiceOutboundAttempt(
+    long Generation,
+    IReadOnlyList<VoiceFramePayload> Frames,
+    int AttemptedPrefix);
 
 /// <summary>
 /// The single owner of outbound frame preparation, ordering, reservation, wire
@@ -22,17 +34,143 @@ internal readonly record struct VoiceFramePayload(
 internal sealed class VoiceSendTransaction
 {
     private readonly WebSocket _webSocket;
+    private readonly VoiceResourceGovernor _resourceGovernor;
     private readonly SemaphoreSlim _sendGate = new(1, 1);
     private readonly CancellationToken _wireCancellation;
+    private readonly TimeSpan? _physicalSendTimeout;
+    private readonly TimeSpan? _terminalSendDrainTimeout;
+    private VoiceOutboundAttempt? _currentAttempt;
+    private long _nextAttemptGeneration;
     private int _abortRequested;
 
-    public VoiceSendTransaction(WebSocket webSocket, CancellationToken wireCancellation = default)
+    public VoiceSendTransaction(
+        WebSocket webSocket,
+        CancellationToken wireCancellation = default,
+        TimeSpan? physicalSendTimeout = null,
+        TimeSpan? terminalSendDrainTimeout = null)
+        : this(
+            webSocket,
+            new VoiceResourceGovernor(),
+            wireCancellation,
+            physicalSendTimeout,
+            terminalSendDrainTimeout)
+    {
+    }
+
+    internal VoiceSendTransaction(
+        WebSocket webSocket,
+        VoiceResourceGovernor resourceGovernor,
+        CancellationToken wireCancellation = default,
+        TimeSpan? physicalSendTimeout = null,
+        TimeSpan? terminalSendDrainTimeout = null)
     {
         _webSocket = webSocket ?? throw new ArgumentNullException(nameof(webSocket));
+        _resourceGovernor = resourceGovernor ?? throw new ArgumentNullException(nameof(resourceGovernor));
         _wireCancellation = wireCancellation;
+        _physicalSendTimeout = physicalSendTimeout;
+        _terminalSendDrainTimeout = terminalSendDrainTimeout;
+        if (_physicalSendTimeout is { } timeout && timeout <= TimeSpan.Zero)
+        {
+            throw new ArgumentOutOfRangeException(nameof(physicalSendTimeout));
+        }
+        if (_terminalSendDrainTimeout is { } terminalTimeout && terminalTimeout <= TimeSpan.Zero)
+        {
+            throw new ArgumentOutOfRangeException(nameof(terminalSendDrainTimeout));
+        }
     }
 
     public bool Ending => Volatile.Read(ref _abortRequested) != 0 || _webSocket.State != WebSocketState.Open;
+
+    internal long OutstandingPreparedFrameBytes => _resourceGovernor.PreparedFrameBytes;
+
+    public bool IsItemPotentiallyVisible(string responseId, string itemId)
+    {
+        var attempt = Volatile.Read(ref _currentAttempt);
+        if (attempt is null)
+        {
+            return false;
+        }
+
+        var attemptedPrefix = attempt.AttemptedPrefix;
+        for (var index = 0; index < attemptedPrefix; index++)
+        {
+            var frame = attempt.Frames[index];
+            if (frame.MessageType is "response.output_text.delta" or "response.output_text.done" &&
+                frame.Fields.TryGetValue("response_id", out var responseValue) &&
+                string.Equals(responseValue as string, responseId, StringComparison.Ordinal) &&
+                frame.Fields.TryGetValue("item_id", out var itemValue) &&
+                string.Equals(itemValue as string, itemId, StringComparison.Ordinal))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool TryGetPotentiallyVisibleTerminal(string responseId, out string terminalKind)
+    {
+        var attempt = Volatile.Read(ref _currentAttempt);
+        if (attempt is not null)
+        {
+            var attemptedPrefix = attempt.AttemptedPrefix;
+            for (var index = 0; index < attemptedPrefix; index++)
+            {
+                var frame = attempt.Frames[index];
+                if (frame.TerminalKind is null ||
+                    !string.Equals(frame.OwnerResponseId, responseId, StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
+                terminalKind = frame.TerminalKind;
+                return true;
+            }
+        }
+
+        terminalKind = string.Empty;
+        return false;
+    }
+
+    public bool TryGetPotentiallyVisibleHandoff(string target, out string responseId)
+    {
+        if (TryGetPotentiallyVisibleHandoff(out responseId, out var attemptedTarget) &&
+            string.Equals(attemptedTarget, target, StringComparison.Ordinal))
+        {
+            return true;
+        }
+
+        responseId = string.Empty;
+        return false;
+    }
+
+    public bool TryGetPotentiallyVisibleHandoff(out string responseId, out string target)
+    {
+        var attempt = Volatile.Read(ref _currentAttempt);
+        if (attempt is not null)
+        {
+            var attemptedPrefix = attempt.AttemptedPrefix;
+            for (var index = 0; index < attemptedPrefix; index++)
+            {
+                var frame = attempt.Frames[index];
+                if (frame.TerminalKind != "handoff" ||
+                    !frame.Fields.TryGetValue("target", out var targetValue) ||
+                    targetValue is not string attemptedTarget ||
+                    string.IsNullOrEmpty(frame.OwnerResponseId))
+                {
+                    continue;
+                }
+
+                responseId = frame.OwnerResponseId;
+                target = attemptedTarget;
+                return true;
+            }
+        }
+
+        responseId = string.Empty;
+        target = string.Empty;
+        return false;
+    }
 
     /// <summary>
     /// Sends a stateless frame through the same transaction owner used by
@@ -76,14 +214,12 @@ internal sealed class VoiceSendTransaction
     /// the SDK state machine's perspective.
     /// </summary>
     /// <remarks>
-    /// <paramref name="responseCancellation"/> interrupts an in-flight wire
-    /// write when the owning response terminates (for example, a caller
-    /// barge-in or a response timeout) so a back-pressured send cannot remain
-    /// blocked on a now-terminal response. An interrupted write leaves the
-    /// message framing ambiguous, so it aborts the carrier like any other wire
-    /// failure. A write that completes fully before the terminal is not
-    /// interrupted: the frame is valid on the wire and the bridge drops later
-    /// output for a terminal response, so the connection is left intact.
+    /// <paramref name="responseCancellation"/> prevents a pre-attempt write.
+    /// Once a frame has entered the irreversible socket-attempt boundary, a
+    /// response terminal starts bounded physical drain instead of immediately
+    /// cancelling the write. The bridge owns protocol-legal late-frame dropping;
+    /// expiry of the drain, connection cancellation, or socket failure remains
+    /// a transport-level failure and aborts the carrier.
     /// </remarks>
     public async Task<TReservation> ExecuteAsync<TReservation>(
         IReadOnlyList<VoiceFramePayload> frames,
@@ -102,32 +238,39 @@ internal sealed class VoiceSendTransaction
             throw new ArgumentException("A send transaction requires at least one frame.", nameof(frames));
         }
 
+        long attemptGeneration = 0;
+        long? terminalDrainStarted = null;
+        var retainAttemptUntilUnderlyingSendCompletes = false;
         await _sendGate.WaitAsync(cancellationToken).ConfigureAwait(false);
         try
         {
             EnsureOpen();
-            using var preparedFrames = PrepareFrames(frames);
+            var reservedBytes = checked((long)frames.Count * VoiceProtocolConstants.MaxFrameBytes);
+            var control = IsControlTransaction(frames);
+            var frameLease = _resourceGovernor.AcquirePreparedFrames(
+                frames.Count,
+                reservedBytes,
+                control);
+            using var preparedFrames = PrepareFrames(frames, frameLease);
 
             // Caller cancellation is honored before any state is reserved. Once
-            // reservation succeeds, the transaction must either commit or abort
-            // the carrier; cancellation cannot roll state back safely.
+            // reservation succeeds, the transaction must physically drain and
+            // then either commit or lose semantic arbitration.
             cancellationToken.ThrowIfCancellationRequested();
-            var reservation = await reserveAsync(CancellationToken.None).ConfigureAwait(false);
+            if (responseCancellation.IsCancellationRequested)
+            {
+                throw new VoiceBridgeConnectionClosedException(
+                    "The outbound transaction was terminal before state reservation.");
+            }
 
-            // The wire write observes the connection runtime token and, for
-            // response-scoped sends, the owning response's terminal token, so a
-            // back-pressured write is interrupted when the response terminates.
-            using var wireLink = responseCancellation.CanBeCanceled
-                ? CancellationTokenSource.CreateLinkedTokenSource(_wireCancellation, responseCancellation)
-                : null;
-            var wireToken = wireLink?.Token ?? _wireCancellation;
+            var reservation = await reserveAsync(CancellationToken.None).ConfigureAwait(false);
 
             // Cancellation that was already visible before the first wire
             // attempt cannot have produced a partial frame. Fail the logical
             // transaction without aborting the otherwise healthy carrier. Once
             // execution crosses this check, any cancellation/error from
             // SendAsync is conservatively treated as an ambiguous wire attempt.
-            if (wireToken.IsCancellationRequested)
+            if (_wireCancellation.IsCancellationRequested)
             {
                 throw new VoiceBridgeConnectionClosedException(
                     "The outbound transaction was terminal before its wire write.");
@@ -139,20 +282,26 @@ internal sealed class VoiceSendTransaction
             }
 
             // The pre-wire callback can race a response or connection
-            // terminal. Recheck before invoking the socket so an already
-            // cancelled token never reaches WebSocket.SendAsync and gets
-            // misclassified as an ambiguous write attempt.
-            if (wireToken.IsCancellationRequested)
+            // terminal. Only connection-level cancellation aborts the physical
+            // carrier after reservation; response terminals are reconciled by
+            // the post-send generation-safe commit.
+            if (_wireCancellation.IsCancellationRequested)
             {
                 throw new VoiceBridgeConnectionClosedException(
                     "The outbound transaction was terminal before its wire write.");
+            }
+
+            if (responseCancellation.IsCancellationRequested)
+            {
+                throw new VoiceBridgeConnectionClosedException(
+                    "The outbound transaction lost semantic arbitration before its wire write.");
             }
 
             try
             {
                 for (var index = 0; index < preparedFrames.Frames.Count; index++)
                 {
-                    if (wireToken.IsCancellationRequested)
+                    if (_wireCancellation.IsCancellationRequested)
                     {
                         // A terminal after an earlier frame in this transaction
                         // leaves the ordered group incomplete on the wire.
@@ -165,6 +314,13 @@ internal sealed class VoiceSendTransaction
                             "The outbound transaction was terminal before its wire write.");
                     }
 
+                    if (attemptGeneration == 0)
+                    {
+                        attemptGeneration = PublishAttempt(frames);
+                    }
+
+                    MarkFrameAttempted(attemptGeneration, index);
+
                     var preparedFrame = preparedFrames.Frames[index];
                     // Calling WebSocket.SendAsync is the irreversible attempt
                     // boundary. The socket token is intentionally None: our
@@ -175,45 +331,116 @@ internal sealed class VoiceSendTransaction
                         WebSocketMessageType.Text,
                         endOfMessage: true,
                         CancellationToken.None).AsTask();
-                    var writeState = new WireWriteState(
-                        this,
-                        sendTask,
-                        index == preparedFrames.Frames.Count - 1 ? wireWriteCompleted : null);
-                    writeState.ObserveCompletion(sendTask);
-                    var cancellationRegistration = wireToken.CanBeCanceled
-                        ? wireToken.UnsafeRegister(
-                            static state => ((WireWriteState)state!).Cancel(),
-                            writeState)
+                    var transportCancellation = new TaskCompletionSource(
+                        TaskCreationOptions.RunContinuationsAsynchronously);
+                    var cancellationRegistration = _wireCancellation.CanBeCanceled
+                        ? _wireCancellation.UnsafeRegister(
+                            static state => ((TaskCompletionSource)state!).TrySetResult(),
+                            transportCancellation)
                         : default;
+                    var semanticCancellation = new TaskCompletionSource(
+                        TaskCreationOptions.RunContinuationsAsynchronously);
+                    var semanticCancellationRegistration = responseCancellation.CanBeCanceled
+                        ? responseCancellation.UnsafeRegister(
+                            static state => ((TaskCompletionSource)state!).TrySetResult(),
+                            semanticCancellation)
+                        : default;
+                    using var timeoutCancellation = new CancellationTokenSource();
+                    var timeoutTask = _physicalSendTimeout is { } sendTimeout
+                        ? Task.Delay(sendTimeout, timeoutCancellation.Token)
+                        : Task.Delay(Timeout.InfiniteTimeSpan, timeoutCancellation.Token);
+                    var semanticDrainStart = _terminalSendDrainTimeout.HasValue
+                        ? semanticCancellation.Task
+                        : Task.Delay(Timeout.InfiniteTimeSpan, timeoutCancellation.Token);
+                    using var terminalFrameDrainCancellation = new CancellationTokenSource();
+                    var terminalFrameDrainTask = Task.Delay(
+                        Timeout.InfiniteTimeSpan,
+                        terminalFrameDrainCancellation.Token);
+                    if (frames[index].TerminalKind is not null &&
+                        _terminalSendDrainTimeout is { } responseTerminalDrainTimeout)
+                    {
+                        terminalDrainStarted ??= Stopwatch.GetTimestamp();
+                        var remaining = responseTerminalDrainTimeout -
+                            Stopwatch.GetElapsedTime(terminalDrainStarted.Value);
+                        terminalFrameDrainTask = remaining <= TimeSpan.Zero
+                            ? Task.CompletedTask
+                            : Task.Delay(remaining, terminalFrameDrainCancellation.Token);
+                    }
                     try
                     {
-                        await Task.WhenAny(sendTask, writeState.Cancellation).ConfigureAwait(false);
-                        if (!writeState.WasCancelled)
+                        var completed = await Task.WhenAny(
+                            sendTask,
+                            transportCancellation.Task,
+                            semanticDrainStart,
+                            timeoutTask,
+                            terminalFrameDrainTask).ConfigureAwait(false);
+                        if (sendTask.IsCompletedSuccessfully)
                         {
                             await sendTask.ConfigureAwait(false);
-                            writeState.Complete(sendTask);
+                            if (index == preparedFrames.Frames.Count - 1)
+                            {
+                                wireWriteCompleted?.Invoke();
+                            }
+                            continue;
                         }
+
+                        var terminalDrainExpired = false;
+                        if (completed == semanticDrainStart &&
+                            _terminalSendDrainTimeout is { } terminalDrainTimeout)
+                        {
+                            terminalDrainStarted ??= Stopwatch.GetTimestamp();
+                            if (frames[index].TerminalKind is null)
+                            {
+                                var remaining = terminalDrainTimeout -
+                                    Stopwatch.GetElapsedTime(terminalDrainStarted.Value);
+                                terminalFrameDrainTask = remaining <= TimeSpan.Zero
+                                    ? Task.CompletedTask
+                                    : Task.Delay(remaining, terminalFrameDrainCancellation.Token);
+                            }
+
+                            completed = await Task.WhenAny(
+                                sendTask,
+                                transportCancellation.Task,
+                                timeoutTask,
+                                terminalFrameDrainTask).ConfigureAwait(false);
+                            terminalDrainExpired = completed == terminalFrameDrainTask;
+
+                            if (sendTask.IsCompletedSuccessfully)
+                            {
+                                await sendTask.ConfigureAwait(false);
+                                if (index == preparedFrames.Frames.Count - 1)
+                                {
+                                    wireWriteCompleted?.Invoke();
+                                }
+                                continue;
+                            }
+                        }
+                        else
+                        {
+                            terminalDrainExpired = completed == terminalFrameDrainTask;
+                        }
+
+                        if (completed == sendTask)
+                        {
+                            await sendTask.ConfigureAwait(false);
+                        }
+
+                        AbortBestEffort();
+                        retainAttemptUntilUnderlyingSendCompletes = true;
+                        preparedFrames.TransferOwnershipTo(
+                            sendTask,
+                            () => ClearAttempt(attemptGeneration));
+                        throw new VoiceBridgeConnectionClosedException(
+                            completed == timeoutTask || terminalDrainExpired
+                                ? "The physical voice send exceeded its bounded drain deadline."
+                                : "The voice connection closed during an outbound transaction.");
                     }
                     finally
                     {
-                        // Never synchronously wait for an in-progress Abort
-                        // callback while holding the connection send gate.
                         cancellationRegistration.Unregister();
-                        if (wireToken.IsCancellationRequested)
-                        {
-                            writeState.Cancel();
-                        }
-                    }
-
-                    if (writeState.WasCancelled)
-                    {
-                        // A non-cooperative WebSocket implementation may
-                        // not complete its pending send after Abort. Keep
-                        // the pooled frame alive until that operation really
-                        // completes, but release the transaction gate now.
-                        preparedFrames.TransferOwnershipTo(sendTask);
-                        throw new VoiceBridgeConnectionClosedException(
-                            "The voice connection closed during an outbound transaction.");
+                        semanticCancellationRegistration.Unregister();
+                        timeoutCancellation.Cancel();
+                        terminalFrameDrainCancellation.Cancel();
                     }
                 }
             }
@@ -259,7 +486,53 @@ internal sealed class VoiceSendTransaction
         }
         finally
         {
+            if (!retainAttemptUntilUnderlyingSendCompletes)
+            {
+                ClearAttempt(attemptGeneration);
+            }
             _sendGate.Release();
+        }
+    }
+
+    private long PublishAttempt(IReadOnlyList<VoiceFramePayload> frames)
+    {
+        var generation = checked(Interlocked.Increment(ref _nextAttemptGeneration));
+        Volatile.Write(
+            ref _currentAttempt,
+            new VoiceOutboundAttempt(generation, frames.ToArray(), AttemptedPrefix: 0));
+        return generation;
+    }
+
+    private void MarkFrameAttempted(long generation, int index)
+    {
+        while (true)
+        {
+            var attempt = Volatile.Read(ref _currentAttempt);
+            if (attempt?.Generation != generation || attempt.AttemptedPrefix != index)
+            {
+                throw new InvalidOperationException(
+                    "The outbound frame attempt generation or prefix changed unexpectedly.");
+            }
+
+            var updated = attempt with { AttemptedPrefix = index + 1 };
+            if (Interlocked.CompareExchange(ref _currentAttempt, updated, attempt) == attempt)
+            {
+                return;
+            }
+        }
+    }
+
+    private void ClearAttempt(long generation)
+    {
+        if (generation == 0)
+        {
+            return;
+        }
+
+        var attempt = Volatile.Read(ref _currentAttempt);
+        if (attempt?.Generation == generation)
+        {
+            Interlocked.CompareExchange(ref _currentAttempt, null, attempt);
         }
     }
 
@@ -298,7 +571,39 @@ internal sealed class VoiceSendTransaction
         }
     }
 
-    private PreparedFrameCollection PrepareFrames(IReadOnlyList<VoiceFramePayload> frames)
+    private static bool IsControlFrame(string messageType) =>
+        messageType is
+            "session.ready" or
+            "session.rejected" or
+            "response.none" or
+            "response.done" or
+            "response.cancel" or
+            "handoff" or
+            "end_call" or
+            "error";
+
+    private static bool IsControlTransaction(IReadOnlyList<VoiceFramePayload> frames)
+    {
+        if (frames.All(static frame => IsControlFrame(frame.MessageType)))
+        {
+            return true;
+        }
+
+        if (frames.Count != 2 ||
+            frames[0].MessageType != "response.created" ||
+            !IsControlFrame(frames[1].MessageType))
+        {
+            return false;
+        }
+
+        return frames[0].Fields.TryGetValue("response_id", out var openedResponseId) &&
+            frames[1].Fields.TryGetValue("response_id", out var terminalResponseId) &&
+            string.Equals(openedResponseId as string, terminalResponseId as string, StringComparison.Ordinal);
+    }
+
+    private PreparedFrameCollection PrepareFrames(
+        IReadOnlyList<VoiceFramePayload> frames,
+        VoiceResourceLease frameLease)
     {
         var prepared = new List<FixedSizeBufferStream>(frames.Count);
         try
@@ -308,7 +613,7 @@ internal sealed class VoiceSendTransaction
                 prepared.Add(PrepareFrame(frame));
             }
 
-            return new PreparedFrameCollection(prepared);
+            return new PreparedFrameCollection(prepared, frameLease);
         }
         catch
         {
@@ -317,6 +622,7 @@ internal sealed class VoiceSendTransaction
                 frame.Dispose();
             }
 
+            frameLease.Dispose();
             throw;
         }
     }
@@ -390,16 +696,21 @@ internal sealed class VoiceSendTransaction
 
     private sealed class PreparedFrameCollection : IDisposable
     {
+        private readonly VoiceResourceLease _frameLease;
         private int _ownershipTransferred;
+        private int _disposed;
 
-        public PreparedFrameCollection(IReadOnlyList<FixedSizeBufferStream> frames)
+        public PreparedFrameCollection(
+            IReadOnlyList<FixedSizeBufferStream> frames,
+            VoiceResourceLease frameLease)
         {
             Frames = frames;
+            _frameLease = frameLease;
         }
 
         public IReadOnlyList<FixedSizeBufferStream> Frames { get; }
 
-        public void TransferOwnershipTo(Task sendTask)
+        public void TransferOwnershipTo(Task sendTask, Action? ownershipReleased = null)
         {
             if (Interlocked.Exchange(ref _ownershipTransferred, 1) != 0)
             {
@@ -407,7 +718,7 @@ internal sealed class VoiceSendTransaction
             }
 
             _ = sendTask.ContinueWith(
-                static (completed, state) =>
+                (completed, state) =>
                 {
                     if (completed.IsFaulted)
                     {
@@ -415,6 +726,7 @@ internal sealed class VoiceSendTransaction
                     }
 
                     ((PreparedFrameCollection)state!).DisposeFrames();
+                    ownershipReleased?.Invoke();
                 },
                 this,
                 CancellationToken.None,
@@ -434,88 +746,17 @@ internal sealed class VoiceSendTransaction
 
         private void DisposeFrames()
         {
+            if (Interlocked.Exchange(ref _disposed, 1) != 0)
+            {
+                return;
+            }
+
             foreach (var frame in Frames)
             {
                 frame.Dispose();
             }
-        }
-    }
 
-    private sealed class WireWriteState
-    {
-        private const int InFlight = 0;
-        private const int Completed = 1;
-        private const int Cancelled = 2;
-
-        private readonly VoiceSendTransaction _transaction;
-        private readonly Task _sendTask;
-        private readonly Action? _writeCompleted;
-        private readonly TaskCompletionSource _cancellation =
-            new(TaskCreationOptions.RunContinuationsAsynchronously);
-        private int _state;
-
-        public WireWriteState(
-            VoiceSendTransaction transaction,
-            Task sendTask,
-            Action? writeCompleted)
-        {
-            _transaction = transaction;
-            _sendTask = sendTask;
-            _writeCompleted = writeCompleted;
-        }
-
-        public Task Cancellation => _cancellation.Task;
-
-        public bool WasCancelled => Volatile.Read(ref _state) == Cancelled;
-
-        public void ObserveCompletion(Task sendTask)
-        {
-            _ = sendTask.ContinueWith(
-                static (completed, state) => ((WireWriteState)state!).Complete(completed),
-                this,
-                CancellationToken.None,
-                TaskContinuationOptions.ExecuteSynchronously,
-                TaskScheduler.Default);
-        }
-
-        public void Cancel()
-        {
-            if (_sendTask.IsCompletedSuccessfully)
-            {
-                Complete(_sendTask);
-                return;
-            }
-
-            if (Interlocked.CompareExchange(ref _state, Cancelled, InFlight) != InFlight)
-            {
-                return;
-            }
-
-            // The send may have completed between the first observation and
-            // cancellation winning the state CAS. A completed frame is valid
-            // on the wire and must win over a later terminal notification.
-            if (_sendTask.IsCompletedSuccessfully &&
-                Interlocked.CompareExchange(ref _state, Completed, Cancelled) == Cancelled)
-            {
-                _writeCompleted?.Invoke();
-                return;
-            }
-
-            var shouldAbort = _transaction.TryRequestAbort();
-            _cancellation.TrySetResult();
-            if (shouldAbort)
-            {
-                _transaction.AbortSocketBestEffort();
-            }
-        }
-
-        public void Complete(Task sendTask)
-        {
-            if (Interlocked.CompareExchange(ref _state, Completed, InFlight) == InFlight &&
-                sendTask.Status == TaskStatus.RanToCompletion)
-            {
-                _writeCompleted?.Invoke();
-            }
+            _frameLease.Dispose();
         }
     }
 

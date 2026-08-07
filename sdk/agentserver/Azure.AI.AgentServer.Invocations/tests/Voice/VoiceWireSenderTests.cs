@@ -220,12 +220,22 @@ public class VoiceWireSenderTests
 
         Assert.That(
             async () => await transaction.ExecuteAsync(
-                new VoiceFramePayload("response.output_text.delta", new Dictionary<string, object?>()),
+                new VoiceFramePayload(
+                    "response.output_text.delta",
+                    new Dictionary<string, object?>
+                    {
+                        ["response_id"] = "r_test",
+                        ["item_id"] = "it_test",
+                    }),
                 static _ => ValueTask.FromResult(0),
                 static _ => ValueTask.FromResult(true),
                 CancellationToken.None,
                 responseCancellation.Token,
-                beforeWireAsync: async () => await responseCancellation.CancelAsync()),
+                beforeWireAsync: async () =>
+                {
+                    Assert.That(transaction.IsItemPotentiallyVisible("r_test", "it_test"), Is.False);
+                    await responseCancellation.CancelAsync();
+                }),
             Throws.TypeOf<VoiceBridgeConnectionClosedException>());
         Assert.Multiple(() =>
         {
@@ -236,10 +246,10 @@ public class VoiceWireSenderTests
     }
 
     [Test]
-    public async Task ResponseTerminalDuringWireAttemptAbortsCarrier()
+    public async Task ResponseTerminalDuringWireAttemptDoesNotAbortCarrier()
     {
-        var neverComplete = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
-        using var webSocket = new RecordingWebSocket { AllowSend = neverComplete.Task };
+        var allowSend = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        using var webSocket = new RecordingWebSocket { AllowSend = allowSend.Task };
         var transaction = new VoiceSendTransaction(webSocket);
         using var responseCancellation = new CancellationTokenSource();
         var send = transaction.ExecuteAsync(
@@ -251,18 +261,20 @@ public class VoiceWireSenderTests
         await webSocket.SendStarted.Task.WaitAsync(TimeSpan.FromSeconds(2));
 
         await responseCancellation.CancelAsync();
+        Assert.That(send.IsCompleted, Is.False);
+        allowSend.TrySetResult();
+        await send.WaitAsync(TimeSpan.FromSeconds(2));
 
-        Assert.That(async () => await send, Throws.TypeOf<VoiceBridgeConnectionClosedException>());
         Assert.Multiple(() =>
         {
             Assert.That(webSocket.SendCount, Is.EqualTo(1));
-            Assert.That(webSocket.AbortCount, Is.EqualTo(1));
-            Assert.That(webSocket.State, Is.EqualTo(WebSocketState.Aborted));
+            Assert.That(webSocket.AbortCount, Is.Zero);
+            Assert.That(webSocket.State, Is.EqualTo(WebSocketState.Open));
         });
     }
 
     [Test]
-    public async Task ResponseTerminalDoesNotWaitForSendThatIgnoresAbort()
+    public async Task PhysicalSendDeadlineAbortsSendThatIgnoresSemanticTerminal()
     {
         var allowSend = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         using var webSocket = new RecordingWebSocket
@@ -270,7 +282,9 @@ public class VoiceWireSenderTests
             AllowSend = allowSend.Task,
             IgnoreAbortDuringSend = true,
         };
-        var transaction = new VoiceSendTransaction(webSocket);
+        var transaction = new VoiceSendTransaction(
+            webSocket,
+            physicalSendTimeout: TimeSpan.FromMilliseconds(50));
         using var responseCancellation = new CancellationTokenSource();
         var send = transaction.ExecuteAsync(
             new VoiceFramePayload("response.output_text.delta", new Dictionary<string, object?>()),
@@ -301,6 +315,357 @@ public class VoiceWireSenderTests
     }
 
     [Test]
+    public async Task TerminalDrainDeadlineStartsOnlyAfterSemanticTerminal()
+    {
+        var allowSend = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        using var webSocket = new RecordingWebSocket
+        {
+            AllowSend = allowSend.Task,
+            IgnoreAbortDuringSend = true,
+        };
+        var transaction = new VoiceSendTransaction(
+            webSocket,
+            terminalSendDrainTimeout: TimeSpan.FromMilliseconds(50));
+        using var responseCancellation = new CancellationTokenSource();
+        var send = transaction.ExecuteAsync(
+            new VoiceFramePayload("response.output_text.delta", new Dictionary<string, object?>()),
+            static _ => ValueTask.FromResult(0),
+            static _ => ValueTask.FromResult(true),
+            CancellationToken.None,
+            responseCancellation.Token);
+        await webSocket.SendStarted.Task.WaitAsync(TimeSpan.FromSeconds(2));
+
+        Assert.That(
+            async () => await send.WaitAsync(TimeSpan.FromMilliseconds(100)),
+            Throws.TypeOf<TimeoutException>());
+        Assert.That(webSocket.AbortCount, Is.Zero);
+
+        await responseCancellation.CancelAsync();
+        Assert.That(
+            async () => await send.WaitAsync(TimeSpan.FromSeconds(2)),
+            Throws.TypeOf<VoiceBridgeConnectionClosedException>());
+        Assert.That(webSocket.AbortCount, Is.EqualTo(1));
+
+        allowSend.TrySetResult();
+        await webSocket.SendFinished.Task.WaitAsync(TimeSpan.FromSeconds(2));
+    }
+
+    [Test]
+    public async Task DetachedSendReleasesProcessFrameBudgetWhenUnderlyingTaskCompletes()
+    {
+        var allowSend = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        using var webSocket = new RecordingWebSocket
+        {
+            AllowSend = allowSend.Task,
+            IgnoreAbortDuringSend = true,
+        };
+        var transaction = new VoiceSendTransaction(
+            webSocket,
+            physicalSendTimeout: TimeSpan.FromMilliseconds(25));
+        var baseline = transaction.OutstandingPreparedFrameBytes;
+        var send = transaction.ExecuteAsync(
+            new VoiceFramePayload(
+                "response.output_text.delta",
+                new Dictionary<string, object?>
+                {
+                    ["response_id"] = "r_test",
+                    ["item_id"] = "it_test",
+                    ["delta"] = new string('x', 1024),
+                }),
+            static _ => ValueTask.FromResult(0),
+            static _ => ValueTask.FromResult(true),
+            CancellationToken.None);
+        await webSocket.SendStarted.Task.WaitAsync(TimeSpan.FromSeconds(2));
+
+        Assert.That(
+            async () => await send.WaitAsync(TimeSpan.FromSeconds(2)),
+            Throws.TypeOf<VoiceBridgeConnectionClosedException>());
+        Assert.That(transaction.OutstandingPreparedFrameBytes, Is.GreaterThan(baseline));
+        Assert.That(transaction.IsItemPotentiallyVisible("r_test", "it_test"), Is.True);
+
+        allowSend.TrySetResult();
+        await webSocket.SendFinished.Task.WaitAsync(TimeSpan.FromSeconds(2));
+        await WaitForOutstandingFrameBytesAsync(transaction, baseline).WaitAsync(TimeSpan.FromSeconds(2));
+        Assert.That(transaction.IsItemPotentiallyVisible("r_test", "it_test"), Is.False);
+    }
+
+    [Test]
+    public async Task SharedPreparedFrameBudgetRejectsBeforeSecondSocketWrite()
+    {
+        var governor = new VoiceResourceGovernor(new VoiceResourceLimits
+        {
+            MaxPreparedFrameBytes = VoiceProtocolConstants.MaxFrameBytes,
+            MaxPreparedFrames = 1,
+        });
+        var allowFirst = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        using var firstSocket = new RecordingWebSocket { AllowSend = allowFirst.Task };
+        using var secondSocket = new RecordingWebSocket();
+        var firstTransaction = new VoiceSendTransaction(
+            firstSocket,
+            governor,
+            physicalSendTimeout: TimeSpan.FromSeconds(2));
+        var secondTransaction = new VoiceSendTransaction(secondSocket, governor);
+        var frame = new VoiceFramePayload(
+            "response.output_text.delta",
+            new Dictionary<string, object?>
+            {
+                ["response_id"] = "r_test",
+                ["item_id"] = "it_test",
+                ["delta"] = "x",
+            });
+
+        var first = firstTransaction.ExecuteAsync(
+            frame,
+            static _ => ValueTask.FromResult(0),
+            static _ => ValueTask.FromResult(true),
+            CancellationToken.None);
+        await firstSocket.SendStarted.Task.WaitAsync(TimeSpan.FromSeconds(2));
+
+        Assert.That(
+            async () => await secondTransaction.ExecuteAsync(
+                frame,
+                static _ => ValueTask.FromResult(0),
+                static _ => ValueTask.FromResult(true),
+                CancellationToken.None),
+            Throws.TypeOf<VoiceResourceExhaustedException>());
+        Assert.Multiple(() =>
+        {
+            Assert.That(secondSocket.SendCount, Is.Zero);
+            Assert.That(governor.PreparedFrameBytes, Is.EqualTo(VoiceProtocolConstants.MaxFrameBytes));
+        });
+
+        allowFirst.TrySetResult();
+        await first.WaitAsync(TimeSpan.FromSeconds(2));
+        Assert.That(governor.PreparedFrameBytes, Is.Zero);
+    }
+
+    [Test]
+    public async Task ResponseOpenTerminalBatchUsesProtectedControlCapacity()
+    {
+        var governor = new VoiceResourceGovernor(new VoiceResourceLimits
+        {
+            MaxPreparedFrameBytes = VoiceProtocolConstants.MaxFrameBytes,
+            MaxPreparedFrames = 1,
+            MaxControlFrameBytes = 2L * VoiceProtocolConstants.MaxFrameBytes,
+            MaxControlFrames = 2,
+        });
+        var allowData = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        using var dataSocket = new RecordingWebSocket { AllowSend = allowData.Task };
+        using var controlSocket = new RecordingWebSocket();
+        var dataTransaction = new VoiceSendTransaction(
+            dataSocket,
+            governor,
+            physicalSendTimeout: TimeSpan.FromSeconds(2));
+        var controlTransaction = new VoiceSendTransaction(controlSocket, governor);
+        var dataSend = dataTransaction.SendAsync(
+            "response.output_text.delta",
+            new Dictionary<string, object?> { ["delta"] = "x" },
+            CancellationToken.None);
+        await dataSocket.SendStarted.Task.WaitAsync(TimeSpan.FromSeconds(2));
+
+        await controlTransaction.ExecuteAsync(
+            new[]
+            {
+                new VoiceFramePayload(
+                    "response.created",
+                    new Dictionary<string, object?> { ["response_id"] = "r_terminal" }),
+                new VoiceFramePayload(
+                    "error",
+                    new Dictionary<string, object?> { ["response_id"] = "r_terminal" }),
+            },
+            static _ => ValueTask.FromResult(0),
+            static _ => ValueTask.FromResult(true),
+            CancellationToken.None);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(controlSocket.SendCount, Is.EqualTo(2));
+            Assert.That(governor.PreparedFrameBytes, Is.EqualTo(VoiceProtocolConstants.MaxFrameBytes));
+        });
+
+        allowData.TrySetResult();
+        await dataSend.WaitAsync(TimeSpan.FromSeconds(2));
+    }
+
+    [Test]
+    public async Task MultiFrameAttemptExposesOnlyAttemptedPrefix()
+    {
+        var allowCreated = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var allowDelta = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var deltaStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        using var webSocket = new RecordingWebSocket
+        {
+            SendGate = sendNumber => sendNumber == 1 ? allowCreated.Task : allowDelta.Task,
+            OnSendStarted = sendNumber =>
+            {
+                if (sendNumber == 2)
+                {
+                    deltaStarted.TrySetResult();
+                }
+            },
+        };
+        var transaction = new VoiceSendTransaction(webSocket);
+        var send = transaction.ExecuteAsync(
+            new[]
+            {
+                new VoiceFramePayload(
+                    "response.created",
+                    new Dictionary<string, object?> { ["response_id"] = "r_test" }),
+                new VoiceFramePayload(
+                    "response.output_text.delta",
+                    new Dictionary<string, object?>
+                    {
+                        ["response_id"] = "r_test",
+                        ["item_id"] = "it_test",
+                        ["delta"] = "hello",
+                    }),
+            },
+            static _ => ValueTask.FromResult(0),
+            static _ => ValueTask.FromResult(true),
+            CancellationToken.None);
+        await webSocket.SendStarted.Task.WaitAsync(TimeSpan.FromSeconds(2));
+
+        Assert.That(transaction.IsItemPotentiallyVisible("r_test", "it_test"), Is.False);
+
+        allowCreated.TrySetResult();
+        await deltaStarted.Task.WaitAsync(TimeSpan.FromSeconds(2));
+        Assert.That(transaction.IsItemPotentiallyVisible("r_test", "it_test"), Is.True);
+
+        allowDelta.TrySetResult();
+        await send.WaitAsync(TimeSpan.FromSeconds(2));
+    }
+
+    [Test]
+    public void SynchronousSendThrowExposesCurrentFrameButNotLaterFrames()
+    {
+        using var webSocket = new SynchronousThrowWebSocket();
+        var transaction = new VoiceSendTransaction(webSocket);
+        webSocket.BeforeThrow = () =>
+        {
+            Assert.That(transaction.IsItemPotentiallyVisible("r_test", "it_current"), Is.True);
+            Assert.That(transaction.IsItemPotentiallyVisible("r_test", "it_later"), Is.False);
+        };
+
+        Assert.That(
+            async () => await transaction.ExecuteAsync(
+                new[]
+                {
+                    new VoiceFramePayload(
+                        "response.output_text.delta",
+                        new Dictionary<string, object?>
+                        {
+                            ["response_id"] = "r_test",
+                            ["item_id"] = "it_current",
+                            ["delta"] = "first",
+                        }),
+                    new VoiceFramePayload(
+                        "response.output_text.delta",
+                        new Dictionary<string, object?>
+                        {
+                            ["response_id"] = "r_test",
+                            ["item_id"] = "it_later",
+                            ["delta"] = "second",
+                        }),
+                },
+                static _ => ValueTask.FromResult(0),
+                static _ => ValueTask.FromResult(true),
+                CancellationToken.None),
+            Throws.TypeOf<VoiceBridgeConnectionClosedException>());
+        Assert.Multiple(() =>
+        {
+            Assert.That(webSocket.AbortCount, Is.EqualTo(1));
+            Assert.That(transaction.IsItemPotentiallyVisible("r_test", "it_current"), Is.False);
+            Assert.That(transaction.IsItemPotentiallyVisible("r_test", "it_later"), Is.False);
+        });
+    }
+
+    [Test]
+    public async Task ResponseTerminalFrameStartsBoundedDrainWithoutSemanticCancellation()
+    {
+        var allowSend = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        using var webSocket = new RecordingWebSocket
+        {
+            AllowSend = allowSend.Task,
+            IgnoreAbortDuringSend = true,
+        };
+        var transaction = new VoiceSendTransaction(
+            webSocket,
+            terminalSendDrainTimeout: TimeSpan.FromMilliseconds(50));
+        var send = transaction.ExecuteAsync(
+            new VoiceFramePayload(
+                "response.done",
+                new Dictionary<string, object?> { ["response_id"] = "r_test" },
+                OwnerResponseId: "r_test",
+                TerminalKind: "done"),
+            static _ => ValueTask.FromResult(0),
+            static _ => ValueTask.FromResult(true),
+            CancellationToken.None);
+        await webSocket.SendStarted.Task.WaitAsync(TimeSpan.FromSeconds(2));
+
+        Assert.That(
+            async () => await send.WaitAsync(TimeSpan.FromSeconds(2)),
+            Throws.TypeOf<VoiceBridgeConnectionClosedException>());
+        Assert.That(webSocket.AbortCount, Is.EqualTo(1));
+
+        allowSend.TrySetResult();
+        await webSocket.SendFinished.Task.WaitAsync(TimeSpan.FromSeconds(2));
+    }
+
+    [Test]
+    public async Task ResponseOpenBatchStartsTerminalDrainAtTerminalFrameOnly()
+    {
+        var allowCreated = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var allowError = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var errorStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        using var webSocket = new RecordingWebSocket
+        {
+            IgnoreAbortDuringSend = true,
+            SendGate = sendNumber => sendNumber == 1 ? allowCreated.Task : allowError.Task,
+            OnSendStarted = sendNumber =>
+            {
+                if (sendNumber == 2)
+                {
+                    errorStarted.TrySetResult();
+                }
+            },
+        };
+        var transaction = new VoiceSendTransaction(
+            webSocket,
+            terminalSendDrainTimeout: TimeSpan.FromMilliseconds(50));
+        var send = transaction.ExecuteAsync(
+            new[]
+            {
+                new VoiceFramePayload(
+                    "response.created",
+                    new Dictionary<string, object?> { ["response_id"] = "r_test" }),
+                new VoiceFramePayload(
+                    "error",
+                    new Dictionary<string, object?> { ["response_id"] = "r_test" },
+                    OwnerResponseId: "r_test",
+                    TerminalKind: "error"),
+            },
+            static _ => ValueTask.FromResult(0),
+            static _ => ValueTask.FromResult(true),
+            CancellationToken.None);
+        await webSocket.SendStarted.Task.WaitAsync(TimeSpan.FromSeconds(2));
+
+        Assert.That(
+            async () => await send.WaitAsync(TimeSpan.FromMilliseconds(100)),
+            Throws.TypeOf<TimeoutException>());
+        Assert.That(webSocket.AbortCount, Is.Zero);
+
+        allowCreated.TrySetResult();
+        await errorStarted.Task.WaitAsync(TimeSpan.FromSeconds(2));
+        Assert.That(
+            async () => await send.WaitAsync(TimeSpan.FromSeconds(2)),
+            Throws.TypeOf<VoiceBridgeConnectionClosedException>());
+        Assert.That(webSocket.AbortCount, Is.EqualTo(1));
+
+        allowError.TrySetResult();
+        await webSocket.SendFinished.Task.WaitAsync(TimeSpan.FromSeconds(2));
+    }
+
+    [Test]
     public async Task CompletedWireWriteWinsRacingResponseTerminal()
     {
         using var responseCancellation = new CancellationTokenSource();
@@ -326,7 +691,7 @@ public class VoiceWireSenderTests
     }
 
     [Test]
-    public void ResponseTerminalBetweenBatchFramesAbortsCarrier()
+    public async Task ResponseTerminalBetweenBatchFramesDoesNotAbortCarrier()
     {
         using var responseCancellation = new CancellationTokenSource();
         using var webSocket = new RecordingWebSocket
@@ -341,23 +706,21 @@ public class VoiceWireSenderTests
         };
         var transaction = new VoiceSendTransaction(webSocket);
 
-        Assert.That(
-            async () => await transaction.ExecuteAsync(
-                new[]
-                {
-                    new VoiceFramePayload("response.created", new Dictionary<string, object?>()),
-                    new VoiceFramePayload("response.output_text.delta", new Dictionary<string, object?>()),
-                },
-                static _ => ValueTask.FromResult(0),
-                static _ => ValueTask.FromResult(true),
-                CancellationToken.None,
-                responseCancellation.Token),
-            Throws.TypeOf<VoiceBridgeConnectionClosedException>());
+        await transaction.ExecuteAsync(
+            new[]
+            {
+                new VoiceFramePayload("response.created", new Dictionary<string, object?>()),
+                new VoiceFramePayload("response.output_text.delta", new Dictionary<string, object?>()),
+            },
+            static _ => ValueTask.FromResult(0),
+            static _ => ValueTask.FromResult(true),
+            CancellationToken.None,
+            responseCancellation.Token);
         Assert.Multiple(() =>
         {
-            Assert.That(webSocket.SendCount, Is.EqualTo(1));
-            Assert.That(webSocket.AbortCount, Is.EqualTo(1));
-            Assert.That(webSocket.State, Is.EqualTo(WebSocketState.Aborted));
+            Assert.That(webSocket.SendCount, Is.EqualTo(2));
+            Assert.That(webSocket.AbortCount, Is.Zero);
+            Assert.That(webSocket.State, Is.EqualTo(WebSocketState.Open));
         });
     }
 
@@ -428,6 +791,16 @@ public class VoiceWireSenderTests
         }
     }
 
+    private static async Task WaitForOutstandingFrameBytesAsync(
+        VoiceSendTransaction transaction,
+        long expected)
+    {
+        while (transaction.OutstandingPreparedFrameBytes != expected)
+        {
+            await Task.Yield();
+        }
+    }
+
     private sealed class RecordingWebSocket : WebSocket
     {
         private readonly CancellationTokenSource _abortSignal = new();
@@ -442,11 +815,15 @@ public class VoiceWireSenderTests
 
         public Task? AllowSend { get; init; }
 
+        public Func<int, Task?>? SendGate { get; init; }
+
         public bool ObserveCancellationBeforeSend { get; init; }
 
         public bool IgnoreAbortDuringSend { get; init; }
 
         public Action<int>? AfterSend { get; init; }
+
+        public Action<int>? OnSendStarted { get; init; }
 
         public TaskCompletionSource SendStarted { get; } =
             new(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -504,17 +881,20 @@ public class VoiceWireSenderTests
             }
 
             SendCount++;
+            var sendNumber = SendCount;
             SendStarted.TrySetResult();
+            OnSendStarted?.Invoke(sendNumber);
             if (SendException is not null)
             {
                 throw SendException;
             }
 
-            if (AllowSend is not null)
+            var sendGate = SendGate?.Invoke(sendNumber) ?? AllowSend;
+            if (sendGate is not null)
             {
                 try
                 {
-                    await AllowSend.WaitAsync(
+                    await sendGate.WaitAsync(
                         IgnoreAbortDuringSend ? CancellationToken.None : _abortSignal.Token);
                 }
                 finally
@@ -523,13 +903,66 @@ public class VoiceWireSenderTests
                 }
             }
 
-            AfterSend?.Invoke(SendCount);
+            AfterSend?.Invoke(sendNumber);
         }
 
         public override void Dispose()
         {
             _state = WebSocketState.Closed;
             _abortSignal.Dispose();
+        }
+    }
+
+    private sealed class SynchronousThrowWebSocket : WebSocket
+    {
+        private WebSocketState _state = WebSocketState.Open;
+        private int _abortCount;
+
+        public Action? BeforeThrow { get; set; }
+
+        public int AbortCount => Volatile.Read(ref _abortCount);
+
+        public override WebSocketCloseStatus? CloseStatus => null;
+
+        public override string? CloseStatusDescription => null;
+
+        public override WebSocketState State => _state;
+
+        public override string? SubProtocol => null;
+
+        public override void Abort()
+        {
+            Interlocked.Increment(ref _abortCount);
+            _state = WebSocketState.Aborted;
+        }
+
+        public override Task CloseAsync(
+            WebSocketCloseStatus closeStatus,
+            string? statusDescription,
+            CancellationToken cancellationToken) => Task.CompletedTask;
+
+        public override Task CloseOutputAsync(
+            WebSocketCloseStatus closeStatus,
+            string? statusDescription,
+            CancellationToken cancellationToken) => Task.CompletedTask;
+
+        public override Task<WebSocketReceiveResult> ReceiveAsync(
+            ArraySegment<byte> buffer,
+            CancellationToken cancellationToken) => throw new NotSupportedException();
+
+        public override Task SendAsync(
+            ArraySegment<byte> buffer,
+            WebSocketMessageType messageType,
+            bool endOfMessage,
+            CancellationToken cancellationToken)
+        {
+            BeforeThrow?.Invoke();
+            throw new WebSocketException("Synchronous send failure.");
+        }
+
+        public override void Dispose()
+        {
+            _state = WebSocketState.Closed;
         }
     }
 }

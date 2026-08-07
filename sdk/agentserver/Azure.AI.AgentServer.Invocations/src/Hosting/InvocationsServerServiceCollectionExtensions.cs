@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using Azure.AI.AgentServer.Invocations.Internal;
+using Azure.AI.AgentServer.Invocations.Voice.Internal;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -34,11 +36,19 @@ public static class InvocationsServerServiceCollectionExtensions
 
         // Register activity source as singleton (virtual → mockable)
         services.TryAddSingleton<InvocationsActivitySource>();
-        services.TryAddSingleton<TelemetryCallbackDispatcher>();
+        services.TryAddSingleton<TelemetryCallbackDispatcher>(
+            static _ => new TelemetryCallbackDispatcher(workerCount: 2));
+        services.TryAddSingleton<VoiceResourceGovernor>();
+        services.TryAddSingleton<InvocationsEndpointOwnershipRegistration>();
 
         // Register endpoint handlers as scoped (per-request)
         services.AddScoped<InvocationEndpointHandler>();
         services.AddScoped<WebSocketEndpointHandler>();
+
+        // Validate the final endpoint table after pipeline construction and
+        // before the server accepts requests.
+        services.TryAddEnumerable(ServiceDescriptor.Transient<IStartupFilter,
+            InvocationsEndpointOwnershipValidator>());
 
         // Log startup configuration when the host starts
         services.AddHostedService<InvocationsStartupLogger>();

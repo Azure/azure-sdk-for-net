@@ -6,6 +6,7 @@ using Azure.AI.AgentServer.Invocations.Internal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Routing.Patterns;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Azure.AI.AgentServer.Invocations;
@@ -20,13 +21,30 @@ public static class InvocationsServerEndpointRouteBuilderExtensions
     /// Maps the Invocations API routes to the endpoint routing pipeline.
     /// </summary>
     /// <param name="endpoints">The endpoint route builder to map routes on.</param>
-    /// <param name="prefix">Optional route prefix (e.g., "/v1"). Default: empty (routes at /invocations).</param>
+    /// <param name="prefix">
+    /// Optional literal route prefix (e.g., <c>/v1</c>). Parameters and
+    /// catch-alls are not supported. The default maps routes at the root.
+    /// </param>
     /// <returns>A <see cref="RouteGroupBuilder"/> for further endpoint configuration.</returns>
+    /// <exception cref="InvalidOperationException">
+    /// Invocations services were not registered before mapping.
+    /// </exception>
+    /// <exception cref="ArgumentException">
+    /// <paramref name="prefix"/> is not an absolute literal route prefix.
+    /// </exception>
     public static RouteGroupBuilder MapInvocationsServer(
         this IEndpointRouteBuilder endpoints,
         string? prefix = null)
     {
-        var groupPrefix = string.IsNullOrEmpty(prefix) ? string.Empty : prefix.TrimEnd('/');
+        ArgumentNullException.ThrowIfNull(endpoints);
+        if (endpoints.ServiceProvider.GetService<InvocationsEndpointOwnershipRegistration>() is null)
+        {
+            throw new InvalidOperationException(
+                "Invocations services are not registered. Call AddInvocationsServer() " +
+                "before MapInvocationsServer().");
+        }
+
+        var groupPrefix = NormalizeLiteralPrefix(prefix);
         var group = endpoints.MapGroup(groupPrefix);
 
         // Register Invocations protocol identity with the version registry (if available)
@@ -99,16 +117,40 @@ public static class InvocationsServerEndpointRouteBuilderExtensions
         // `InvocationHandler.HandleWebSocketAsync`, so an upgrade attempt
         // against a host without a registered WS handler fails fast with
         // "endpoint not registered".
-        group.Map(InvocationsWebSocketConstants.RoutePath, async (
+        group.MapGet(InvocationsWebSocketConstants.RoutePath, async (
             HttpContext httpContext,
             WebSocketEndpointHandler endpointHandler,
             InvocationHandler userHandler) =>
         {
             await endpointHandler.HandleAsync(httpContext, userHandler);
-        });
+        }).WithMetadata(InvocationsEndpointOwnerMetadata.Instance);
 
         group.WithTags("Invocations");
 
         return group;
+    }
+
+    private static string NormalizeLiteralPrefix(string? prefix)
+    {
+        if (string.IsNullOrEmpty(prefix) || prefix == "/")
+        {
+            return string.Empty;
+        }
+
+        if (!prefix.StartsWith("/", StringComparison.Ordinal))
+        {
+            throw new ArgumentException("The route prefix must start with '/'.", nameof(prefix));
+        }
+
+        var normalized = prefix.TrimEnd('/');
+        var pattern = RoutePatternFactory.Parse(normalized);
+        if (!InvocationsEndpointOwnershipValidator.TryGetLiteralPath(pattern, out _))
+        {
+            throw new ArgumentException(
+                "The route prefix must contain only literal path segments.",
+                nameof(prefix));
+        }
+
+        return normalized;
     }
 }

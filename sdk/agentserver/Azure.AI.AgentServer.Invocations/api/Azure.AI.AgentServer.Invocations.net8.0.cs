@@ -58,51 +58,6 @@ namespace Azure.AI.AgentServer.Invocations.Voice
         public string? ItemId { get { throw null; } }
         public string ResponseId { get { throw null; } }
     }
-    public sealed partial class ConversationHistoryItem
-    {
-        internal ConversationHistoryItem() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.AgentServer.Invocations.Voice.VoiceContentPart> Content { get { throw null; } }
-        public string ItemId { get { throw null; } }
-        public string Role { get { throw null; } }
-    }
-    public sealed partial class ConversationItemCreateEvent
-    {
-        internal ConversationItemCreateEvent() { }
-        public Azure.AI.AgentServer.Invocations.Voice.ConversationHistoryItem Item { get { throw null; } }
-        public string? PreviousItemId { get { throw null; } }
-        public string RequestId { get { throw null; } }
-    }
-    public sealed partial class ConversationItemDeleteEvent
-    {
-        internal ConversationItemDeleteEvent() { }
-        public string ItemId { get { throw null; } }
-        public string RequestId { get { throw null; } }
-    }
-    public sealed partial class DtmfCollectedEvent
-    {
-        internal DtmfCollectedEvent() { }
-        public string CollectionId { get { throw null; } }
-        public string CompletionReason { get { throw null; } }
-        public string Digits { get { throw null; } }
-        public string ItemId { get { throw null; } }
-    }
-    public sealed partial class DtmfCollectionCancelledEvent
-    {
-        internal DtmfCollectionCancelledEvent() { }
-        public string CollectionId { get { throw null; } }
-        public string Reason { get { throw null; } }
-    }
-    public sealed partial class DtmfCollectionRejectedEvent
-    {
-        internal DtmfCollectionRejectedEvent() { }
-        public string CollectionId { get { throw null; } }
-        public string Reason { get { throw null; } }
-    }
-    public sealed partial class DtmfKeyEvent
-    {
-        internal DtmfKeyEvent() { }
-        public string Digit { get { throw null; } }
-    }
     public sealed partial class HandoffFailedEvent
     {
         internal HandoffFailedEvent() { }
@@ -199,12 +154,6 @@ namespace Azure.AI.AgentServer.Invocations.Voice
         protected VoiceHandler() { }
         public sealed override System.Threading.Tasks.Task HandleWebSocketAsync(System.Net.WebSockets.WebSocket webSocket, Azure.AI.AgentServer.Invocations.InvocationContext context, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected virtual System.Threading.Tasks.Task OnBargeInAsync(Azure.AI.AgentServer.Invocations.Voice.VoiceSession session, Azure.AI.AgentServer.Invocations.Voice.BargeInEvent bargeIn, System.Threading.CancellationToken cancellationToken) { throw null; }
-        protected virtual System.Threading.Tasks.Task OnConversationItemCreateAsync(Azure.AI.AgentServer.Invocations.Voice.VoiceSession session, Azure.AI.AgentServer.Invocations.Voice.ConversationItemCreateEvent create, System.Threading.CancellationToken cancellationToken) { throw null; }
-        protected virtual System.Threading.Tasks.Task OnConversationItemDeleteAsync(Azure.AI.AgentServer.Invocations.Voice.VoiceSession session, Azure.AI.AgentServer.Invocations.Voice.ConversationItemDeleteEvent delete, System.Threading.CancellationToken cancellationToken) { throw null; }
-        protected virtual System.Threading.Tasks.Task OnDtmfCollectedAsync(Azure.AI.AgentServer.Invocations.Voice.VoiceSession session, Azure.AI.AgentServer.Invocations.Voice.DtmfCollectedEvent dtmf, Azure.AI.AgentServer.Invocations.Voice.VoiceResponse response, System.Threading.CancellationToken cancellationToken) { throw null; }
-        protected virtual System.Threading.Tasks.Task OnDtmfCollectionCancelledAsync(Azure.AI.AgentServer.Invocations.Voice.VoiceSession session, Azure.AI.AgentServer.Invocations.Voice.DtmfCollectionCancelledEvent cancelled, System.Threading.CancellationToken cancellationToken) { throw null; }
-        protected virtual System.Threading.Tasks.Task OnDtmfCollectionRejectedAsync(Azure.AI.AgentServer.Invocations.Voice.VoiceSession session, Azure.AI.AgentServer.Invocations.Voice.DtmfCollectionRejectedEvent rejected, System.Threading.CancellationToken cancellationToken) { throw null; }
-        protected virtual System.Threading.Tasks.Task OnDtmfKeyAsync(Azure.AI.AgentServer.Invocations.Voice.VoiceSession session, Azure.AI.AgentServer.Invocations.Voice.DtmfKeyEvent dtmf, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected virtual System.Threading.Tasks.Task OnHandoffFailedAsync(Azure.AI.AgentServer.Invocations.Voice.VoiceSession session, Azure.AI.AgentServer.Invocations.Voice.HandoffFailedEvent failure, Azure.AI.AgentServer.Invocations.Voice.VoiceResponse response, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected virtual System.Threading.Tasks.Task OnResponseTimeoutAsync(Azure.AI.AgentServer.Invocations.Voice.VoiceSession session, Azure.AI.AgentServer.Invocations.Voice.ResponseTimeoutEvent timeout, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected virtual System.Threading.Tasks.Task OnSessionEndAsync(Azure.AI.AgentServer.Invocations.Voice.VoiceSession session, Azure.AI.AgentServer.Invocations.Voice.SessionEndEvent sessionEnd, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -216,13 +165,6 @@ namespace Azure.AI.AgentServer.Invocations.Voice
     public static partial class VoiceModelFactory
     {
         public static Azure.AI.AgentServer.Invocations.Voice.BargeInEvent BargeInEvent(string responseId = "r_test", string heardText = "", string? itemId = null) { throw null; }
-        public static Azure.AI.AgentServer.Invocations.Voice.ConversationHistoryItem ConversationHistoryItem(string itemId = "hi_test", System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Invocations.Voice.VoiceContentPart>? content = null) { throw null; }
-        public static Azure.AI.AgentServer.Invocations.Voice.ConversationItemCreateEvent ConversationItemCreateEvent(string requestId = "m_test", Azure.AI.AgentServer.Invocations.Voice.ConversationHistoryItem? item = null, string? previousItemId = null) { throw null; }
-        public static Azure.AI.AgentServer.Invocations.Voice.ConversationItemDeleteEvent ConversationItemDeleteEvent(string requestId = "m_test", string itemId = "hi_test") { throw null; }
-        public static Azure.AI.AgentServer.Invocations.Voice.DtmfCollectedEvent DtmfCollectedEvent(string itemId = "in_test", string collectionId = "dc_test", string digits = "", string completionReason = "max_digits") { throw null; }
-        public static Azure.AI.AgentServer.Invocations.Voice.DtmfCollectionCancelledEvent DtmfCollectionCancelledEvent(string collectionId = "dc_test", string reason = "cancelled_by_agent") { throw null; }
-        public static Azure.AI.AgentServer.Invocations.Voice.DtmfCollectionRejectedEvent DtmfCollectionRejectedEvent(string collectionId = "dc_test", string reason = "invalid_configuration") { throw null; }
-        public static Azure.AI.AgentServer.Invocations.Voice.DtmfKeyEvent DtmfKeyEvent(string digit = "1") { throw null; }
         public static Azure.AI.AgentServer.Invocations.Voice.HandoffFailedEvent HandoffFailedEvent(string itemId = "in_test", string target = "target-agent", string code = "target_unavailable", string? message = null) { throw null; }
         public static Azure.AI.AgentServer.Invocations.Voice.InputImagePart InputImagePart(string imageRef = "https://example.invalid/image", string mimeType = "image/png", string? alt = null) { throw null; }
         public static Azure.AI.AgentServer.Invocations.Voice.InputTextPart InputTextPart(string text = "") { throw null; }
@@ -251,7 +193,6 @@ namespace Azure.AI.AgentServer.Invocations.Voice
         public virtual bool IsTerminal { get { throw null; } }
         public virtual string ResponseId { get { throw null; } }
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Invocations.Voice.ResponseCancellationOutcome> CancelAsync(string? reason = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<string> CollectDtmfAsync(int maxDigits, int initialTimeoutMs, int interDigitTimeoutMs, string? terminator = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task CompleteAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AI.AgentServer.Invocations.Voice.VoiceTextItem CreateTextItem() { throw null; }
         public virtual System.Threading.Tasks.Task DeclineAsync(string? reason = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -278,7 +219,6 @@ namespace Azure.AI.AgentServer.Invocations.Voice
         public virtual bool Reconnect { get { throw null; } }
         public virtual Azure.AI.AgentServer.Invocations.Voice.ResponseTimeouts ResponseTimeouts { get { throw null; } }
         public virtual Azure.AI.AgentServer.Invocations.Voice.SessionStartEvent StartEvent { get { throw null; } }
-        public virtual System.Threading.Tasks.Task CancelDtmfCollectionAsync(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task EndCallAsync(string reason, string mode = "drain", System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task ReportErrorAsync(string code, string message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Invocations.Voice.VoiceResponse> StartProactiveResponseAsync(int admissionTimeoutMs = 60000, string? supersedeKey = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

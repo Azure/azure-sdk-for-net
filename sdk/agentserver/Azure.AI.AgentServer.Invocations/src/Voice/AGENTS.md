@@ -36,8 +36,8 @@ The wire specification wins over code. Deviations are bugs.
   keep-alive Ping remain owned by Invocations.
 - **Outbound wire models are internal.** Customer code cannot construct frames;
   `VoiceResponse` and `VoiceSession` own framing, ordering, and terminals.
-- **Content-free telemetry.** Never log transcripts, generated text, caller
-  metadata, or DTMF digits.
+- **Content-free telemetry.** Never log transcripts, generated text, or caller
+  metadata.
 - **Exactly three lifecycle owners.** Every application frame goes through
   `VoiceSendTransaction`; every response/connection terminal goes through
   `VoiceTerminationCoordinator`; reactive and accepted proactive turns share
@@ -52,8 +52,9 @@ The wire specification wins over code. Deviations are bugs.
 The current implementation contains the hosting entry points, immutable inbound
 models, strict codec, exact-payload dedupe, serialized send path, activation
 handshake, ordered callback coordinator, single- and multi-item output,
-decline/cancel/barge-in/timeout arbitration, proactive admission, DTMF, handoff,
-history mutation, and bounded connection cleanup.
+decline/cancel/barge-in/timeout arbitration, proactive admission, handoff, and
+bounded connection cleanup. A host-scoped retained-work governor provides
+aggregate admission for all Voice connections created by one AgentServer host.
 Content-free `agentserver.connection` / `hosted_agent.turn` activities and
 activation, callback, terminal, protocol-violation, connection, and close-code
 metrics use only approved identifiers or low-cardinality classifications.

@@ -31,8 +31,8 @@ internal static class VoiceMetrics
     private static readonly ObservableGauge<long> ActiveConnections = Meter.CreateObservableGauge(
         "azure.ai.agentserver.invocations.voice.active_connections",
         () => Interlocked.Read(ref _activeConnections));
-    private static readonly Counter<long> CloseCodes = Meter.CreateCounter<long>(
-        "azure.ai.agentserver.invocations.voice.close_codes");
+    private static readonly Counter<long> SelectedCloseCodes = Meter.CreateCounter<long>(
+        "azure.ai.agentserver.invocations.voice.selected_close_codes");
     private static readonly Counter<long> ParentFallbacks = Meter.CreateCounter<long>(
         "azure.ai.agentserver.invocations.voice.trace.parent_fallbacks");
     private static long _activeConnections;
@@ -88,9 +88,9 @@ internal static class VoiceMetrics
         InvocationsTelemetry.QueueCallback(dispatcher, () =>
             ProtocolViolations.Add(1, new KeyValuePair<string, object?>("close_code", closeCode)));
 
-    public static void RecordCloseCode(TelemetryCallbackDispatcher dispatcher, int closeCode) =>
+    public static void RecordSelectedCloseCode(TelemetryCallbackDispatcher dispatcher, int closeCode) =>
         InvocationsTelemetry.QueueCallback(dispatcher, () =>
-            CloseCodes.Add(1, new KeyValuePair<string, object?>("code", closeCode)));
+            SelectedCloseCodes.Add(1, new KeyValuePair<string, object?>("code", closeCode)));
 
     public static void RecordParentFallback(TelemetryCallbackDispatcher dispatcher) =>
         InvocationsTelemetry.QueueCallback(dispatcher, () =>

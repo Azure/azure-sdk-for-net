@@ -10,9 +10,12 @@ namespace Azure.AI.AgentServer.Invocations.Voice.Internal;
 internal sealed class TrackedIdentityBudget
 {
     private readonly long _maximumBytes;
+    private readonly VoiceResourceGovernor? _resourceGovernor;
     private long _bytes;
 
-    public TrackedIdentityBudget(long maximumBytes)
+    public TrackedIdentityBudget(
+        long maximumBytes,
+        VoiceResourceGovernor? resourceGovernor = null)
     {
         if (maximumBytes <= 0)
         {
@@ -20,6 +23,7 @@ internal sealed class TrackedIdentityBudget
         }
 
         _maximumBytes = maximumBytes;
+        _resourceGovernor = resourceGovernor;
     }
 
     public long Bytes => Interlocked.Read(ref _bytes);
@@ -31,21 +35,28 @@ internal sealed class TrackedIdentityBudget
             throw new ArgumentOutOfRangeException(nameof(bytes));
         }
 
-        while (true)
+        _resourceGovernor?.ReserveIdentityBytes(bytes);
+        try
         {
-            var current = Interlocked.Read(ref _bytes);
-            var updated = checked(current + bytes);
-            if (updated > _maximumBytes)
+            while (true)
             {
-                throw new VoiceBridgeProtocolException(
-                    "Identity tracking byte limit exceeded.",
-                    VoiceProtocolConstants.ClosePolicyViolation);
-            }
+                var current = Interlocked.Read(ref _bytes);
+                var updated = checked(current + bytes);
+                if (updated > _maximumBytes)
+                {
+                    throw new VoiceResourceExhaustedException("connection identity tracking bytes");
+                }
 
-            if (Interlocked.CompareExchange(ref _bytes, updated, current) == current)
-            {
-                return;
+                if (Interlocked.CompareExchange(ref _bytes, updated, current) == current)
+                {
+                    return;
+                }
             }
+        }
+        catch
+        {
+            _resourceGovernor?.ReleaseIdentityBytes(bytes);
+            throw;
         }
     }
 
@@ -59,13 +70,26 @@ internal sealed class TrackedIdentityBudget
         while (true)
         {
             var current = Interlocked.Read(ref _bytes);
-            var updated = Math.Max(0, current - bytes);
+            if (current < bytes)
+            {
+                throw new InvalidOperationException("Voice identity accounting underflowed.");
+            }
+
+            var updated = current - bytes;
             if (Interlocked.CompareExchange(ref _bytes, updated, current) == current)
             {
+                _resourceGovernor?.ReleaseIdentityBytes(bytes);
                 return;
             }
         }
     }
 
-    public void Reset() => Interlocked.Exchange(ref _bytes, 0);
+    public void Reset()
+    {
+        var released = Interlocked.Exchange(ref _bytes, 0);
+        if (released > 0)
+        {
+            _resourceGovernor?.ReleaseIdentityBytes(released);
+        }
+    }
 }

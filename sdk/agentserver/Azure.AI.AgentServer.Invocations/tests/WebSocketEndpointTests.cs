@@ -370,6 +370,75 @@ public class WebSocketEndpointTests
     }
 
     [Test]
+    public async Task HandlerCloseOutputIsReportedAsHalfClose()
+    {
+        var captured = new CapturingLoggerProvider("invocations_ws connection closed");
+        var app = BuildApp(new HandlerInitiatedCloseOutputInvocationHandler(), captured);
+        await app.StartAsync();
+        try
+        {
+            var server = app.GetTestServer();
+            using var webSocket = await server.CreateWebSocketClient().ConnectAsync(
+                new Uri(server.BaseAddress, "invocations_ws"),
+                CancellationToken.None);
+            var frame = await webSocket.ReceiveAsync(new byte[128], CancellationToken.None);
+            var closeEvent = await captured.WaitForMatchAsync(TimeSpan.FromSeconds(5));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(frame.MessageType, Is.EqualTo(WebSocketMessageType.Close));
+                Assert.That(
+                    closeEvent.GetValue("azure.ai.agentserver.invocations_ws.attempted_close_code"),
+                    Is.EqualTo(1008));
+                Assert.That(
+                    closeEvent.GetValue("azure.ai.agentserver.invocations_ws.close_code"),
+                    Is.EqualTo(1008));
+                Assert.That(
+                    closeEvent.GetValue("azure.ai.agentserver.invocations_ws.close_outcome"),
+                    Is.EqualTo("local_close_output_completed"));
+            });
+        }
+        finally
+        {
+            await app.StopAsync();
+        }
+    }
+
+    [Test]
+    public async Task PeerInitiatedCloseUsesPeerCodeAsFinalOutcome()
+    {
+        var captured = new CapturingLoggerProvider("invocations_ws connection closed");
+        var app = BuildApp(new EchoWebSocketInvocationHandler(), captured);
+        await app.StartAsync();
+        try
+        {
+            var server = app.GetTestServer();
+            using var webSocket = await server.CreateWebSocketClient().ConnectAsync(
+                new Uri(server.BaseAddress, "invocations_ws"),
+                CancellationToken.None);
+            await webSocket.CloseOutputAsync(
+                (WebSocketCloseStatus)1001,
+                "service-shutdown",
+                CancellationToken.None);
+
+            var closeEvent = await captured.WaitForMatchAsync(TimeSpan.FromSeconds(5));
+            Assert.Multiple(() =>
+            {
+                Assert.That(
+                    closeEvent.GetValue("azure.ai.agentserver.invocations_ws.close_code"),
+                    Is.EqualTo(1001));
+                Assert.That(
+                    closeEvent.GetValue("azure.ai.agentserver.invocations_ws.close_outcome"),
+                    Is.EqualTo("peer_closed"));
+            });
+        }
+        finally
+        {
+            await app.StopAsync();
+        }
+    }
+
+    [Test]
     public async Task EndpointCleanup_PreservesSelectedPolicyViolationCloseCode()
     {
         // Model a typed protocol layer that selected a policy-violation terminal
@@ -434,6 +503,15 @@ public class WebSocketEndpointTests
                 Assert.That(
                     closeEvent.GetValue("azure.ai.agentserver.invocations_ws.close_code"),
                     Is.EqualTo(1011));
+                Assert.That(
+                    closeEvent.GetValue("azure.ai.agentserver.invocations_ws.selected_close_code"),
+                    Is.EqualTo(1006));
+                Assert.That(
+                    closeEvent.GetValue("azure.ai.agentserver.invocations_ws.attempted_close_code"),
+                    Is.EqualTo(1011));
+                Assert.That(
+                    closeEvent.GetValue("azure.ai.agentserver.invocations_ws.close_outcome"),
+                    Is.EqualTo("local_close_completed"));
             });
         }
         finally
@@ -466,6 +544,56 @@ public class WebSocketEndpointTests
             Assert.That(frame.MessageType, Is.EqualTo(WebSocketMessageType.Close));
             Assert.That(ws.CloseStatus, Is.EqualTo(WebSocketCloseStatus.InternalServerError),
                 "Handler-internal OCE (different token than RequestAborted) must surface as 1011, not 1000.");
+        }
+        finally
+        {
+            await app.StopAsync();
+        }
+    }
+
+    [Test]
+    public async Task HandlerFailureOverridesEarlierSelectedNormalIntent()
+    {
+        var captured = new CapturingLoggerProvider("invocations_ws connection closed");
+        var app = BuildApp(new SelectThenThrowInvocationHandler(), captured);
+        await app.StartAsync();
+        try
+        {
+            var server = app.GetTestServer();
+            using var webSocket = await server.CreateWebSocketClient().ConnectAsync(
+                new Uri(server.BaseAddress, "invocations_ws"),
+                CancellationToken.None);
+            var buffer = new byte[128];
+            var close = await webSocket.ReceiveAsync(buffer, CancellationToken.None);
+            try
+            {
+                await webSocket.CloseOutputAsync(
+                    WebSocketCloseStatus.NormalClosure,
+                    "ack",
+                    CancellationToken.None);
+            }
+            catch (WebSocketException)
+            {
+            }
+
+            var closeEvent = await captured.WaitForMatchAsync(TimeSpan.FromSeconds(5));
+            Assert.Multiple(() =>
+            {
+                Assert.That(close.MessageType, Is.EqualTo(WebSocketMessageType.Close));
+                Assert.That((int?)webSocket.CloseStatus, Is.EqualTo(1011));
+                Assert.That(
+                    closeEvent.GetValue("azure.ai.agentserver.invocations_ws.selected_close_code"),
+                    Is.EqualTo(1000));
+                Assert.That(
+                    closeEvent.GetValue("azure.ai.agentserver.invocations_ws.attempted_close_code"),
+                    Is.EqualTo(1011));
+                Assert.That(
+                    closeEvent.GetValue("azure.ai.agentserver.invocations_ws.close_code"),
+                    Is.EqualTo(1011));
+                Assert.That(
+                    closeEvent.GetValue("azure.ai.agentserver.invocations_ws.close_outcome"),
+                    Is.EqualTo("internal_failure"));
+            });
         }
         finally
         {
@@ -595,6 +723,115 @@ public class WebSocketEndpointTests
     }
 
     [Test]
+    public async Task HostedTelemetryContinuesWhenOneCallbackBlocks()
+    {
+        var app = BuildApp(new EchoWebSocketInvocationHandler());
+        await app.StartAsync();
+        var dispatcher = app.Services.GetRequiredService<TelemetryCallbackDispatcher>();
+        var blockerStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var releaseBlocker = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        try
+        {
+            Assert.That(dispatcher.TryQueue(() =>
+            {
+                blockerStarted.TrySetResult();
+                releaseBlocker.Task.GetAwaiter().GetResult();
+            }), Is.True);
+            await blockerStarted.Task.WaitAsync(TimeSpan.FromSeconds(2));
+
+            var completed = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+            Assert.That(dispatcher.TryQueueCritical(completed.SetResult), Is.True);
+            await completed.Task.WaitAsync(TimeSpan.FromSeconds(2));
+        }
+        finally
+        {
+            releaseBlocker.TrySetResult();
+            await app.StopAsync();
+        }
+    }
+
+    [Test]
+    public async Task CloseEventCriticalQueueTimeoutIsCountedWithoutBlockingTeardown()
+    {
+        var app = BuildApp(new EchoWebSocketInvocationHandler());
+        await app.StartAsync();
+        var dispatcher = app.Services.GetRequiredService<TelemetryCallbackDispatcher>();
+        var blockersStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var releaseBlocker = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var startedCount = 0;
+        Action blocker = () =>
+        {
+            if (Interlocked.Increment(ref startedCount) == 2)
+            {
+                blockersStarted.TrySetResult();
+            }
+
+            releaseBlocker.Task.GetAwaiter().GetResult();
+        };
+        Assert.Multiple(() =>
+        {
+            Assert.That(dispatcher.TryQueue(blocker), Is.True);
+            Assert.That(dispatcher.TryQueue(blocker), Is.True);
+        });
+        await blockersStarted.Task.WaitAsync(TimeSpan.FromSeconds(2));
+        for (var index = 0; index < 256; index++)
+        {
+            Assert.That(dispatcher.TryQueueCritical(static () => { }), Is.True);
+        }
+
+        var baseline = InvocationsTelemetry.CloseEventDroppedDeadlineCount;
+        try
+        {
+            var server = app.GetTestServer();
+            using var webSocket = await server.CreateWebSocketClient().ConnectAsync(
+                new Uri(server.BaseAddress, "invocations_ws"),
+                CancellationToken.None);
+            await webSocket.CloseOutputAsync(
+                WebSocketCloseStatus.NormalClosure,
+                "client done",
+                CancellationToken.None);
+
+            await WaitForCounterAsync(
+                () => InvocationsTelemetry.CloseEventDroppedDeadlineCount,
+                baseline + 1).WaitAsync(TimeSpan.FromSeconds(2));
+        }
+        finally
+        {
+            releaseBlocker.TrySetResult();
+            await app.StopAsync();
+        }
+    }
+
+    [Test]
+    public async Task CloseEventDispatcherCompletionIsCountedWithoutBlockingTeardown()
+    {
+        var app = BuildApp(new EchoWebSocketInvocationHandler());
+        await app.StartAsync();
+        var dispatcher = app.Services.GetRequiredService<TelemetryCallbackDispatcher>();
+        dispatcher.Dispose();
+        var baseline = InvocationsTelemetry.CloseEventDroppedDispatcherCount;
+        try
+        {
+            var server = app.GetTestServer();
+            using var webSocket = await server.CreateWebSocketClient().ConnectAsync(
+                new Uri(server.BaseAddress, "invocations_ws"),
+                CancellationToken.None);
+            await webSocket.CloseOutputAsync(
+                WebSocketCloseStatus.NormalClosure,
+                "client done",
+                CancellationToken.None);
+
+            await WaitForCounterAsync(
+                () => InvocationsTelemetry.CloseEventDroppedDispatcherCount,
+                baseline + 1).WaitAsync(TimeSpan.FromSeconds(2));
+        }
+        finally
+        {
+            await app.StopAsync();
+        }
+    }
+
+    [Test]
     public async Task CloseEventLog_IncludesErrorCodeField_WhenHandlerThrows()
     {
         var captured = new CapturingLoggerProvider("invocations_ws connection closed");
@@ -638,6 +875,14 @@ public class WebSocketEndpointTests
         finally
         {
             await app.StopAsync();
+        }
+    }
+
+    private static async Task WaitForCounterAsync(Func<long> read, long expected)
+    {
+        while (read() < expected)
+        {
+            await Task.Yield();
         }
     }
 
@@ -833,6 +1078,18 @@ public class WebSocketEndpointTests
         }
     }
 
+    private sealed class HandlerInitiatedCloseOutputInvocationHandler : InvocationWebSocketHandler
+    {
+        public override Task HandleWebSocketAsync(
+            WebSocket webSocket,
+            InvocationContext context,
+            CancellationToken cancellationToken) =>
+            webSocket.CloseOutputAsync(
+                WebSocketCloseStatus.PolicyViolation,
+                "policy violation",
+                cancellationToken);
+    }
+
     private sealed class SelectCloseCodeInvocationHandler : InvocationWebSocketHandler
     {
         private readonly int _closeCode;
@@ -847,7 +1104,7 @@ public class WebSocketEndpointTests
         {
             var trackingWebSocket = webSocket as TrackingWebSocket
                 ?? throw new InvalidOperationException("The endpoint did not provide a tracking WebSocket.");
-            trackingWebSocket.RecordCloseCode(_closeCode);
+            trackingWebSocket.TrySelectCloseCode(_closeCode);
             return Task.CompletedTask;
         }
     }
@@ -864,6 +1121,20 @@ public class WebSocketEndpointTests
             using var localCts = new CancellationTokenSource();
             localCts.Cancel();
             throw new OperationCanceledException("handler-internal timeout", localCts.Token);
+        }
+    }
+
+    private sealed class SelectThenThrowInvocationHandler : InvocationWebSocketHandler
+    {
+        public override Task HandleWebSocketAsync(
+            WebSocket webSocket,
+            InvocationContext context,
+            CancellationToken cancellationToken)
+        {
+            var tracking = webSocket as TrackingWebSocket ??
+                throw new InvalidOperationException("Expected the endpoint tracking socket.");
+            tracking.TrySelectCloseCode(1000);
+            throw new InvalidOperationException("handler failed after selecting normal close");
         }
     }
 

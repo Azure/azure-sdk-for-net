@@ -33,9 +33,6 @@ internal sealed class VoiceConnection : IVoiceConnection
     {
         "session.ready",
         "session.rejected",
-        "conversation.item.created",
-        "conversation.item.deleted",
-        "conversation.item.failed",
         "response.created",
         "response.none",
         "response.output_text.delta",
@@ -44,8 +41,6 @@ internal sealed class VoiceConnection : IVoiceConnection
         "response.cancel",
         "handoff",
         "end_call",
-        "dtmf.collect",
-        "dtmf.collect.cancel",
         "error",
     };
 
@@ -56,7 +51,9 @@ internal sealed class VoiceConnection : IVoiceConnection
     private readonly CleanupDeadline _cleanupDeadline;
     private readonly VoiceTurnLease _turnLease;
     private readonly VoiceTerminationCoordinator _termination;
-    private readonly TrackedIdentityBudget _identityBudget = new(VoiceProtocolConstants.MaxTrackedIdentityBytes);
+    private readonly VoiceResourceGovernor _resourceGovernor;
+    private readonly VoiceResourceLease _connectionResourceLease;
+    private readonly TrackedIdentityBudget _identityBudget;
     private readonly TelemetryCallbackDispatcher _telemetryDispatcher;
     private readonly bool _ownsTelemetryDispatcher;
     private readonly ActivityContext _requestActivityContext;
@@ -77,12 +74,8 @@ internal sealed class VoiceConnection : IVoiceConnection
     private readonly LinkedList<ResolvedPrefix> _resolvedPrefixes = new();
     private readonly Dictionary<string, VoiceResponse> _recentResponses = new(StringComparer.Ordinal);
     private readonly LinkedList<string> _recentResponseOrder = new();
-    private readonly Dictionary<string, TaskCompletionSource<ResponseCancellationOutcome>> _cancelWaiters = new(StringComparer.Ordinal);
+    private readonly Dictionary<string, CancelWaiter> _cancelWaiters = new(StringComparer.Ordinal);
     private readonly Dictionary<string, PendingProactive> _pendingProactive = new(StringComparer.Ordinal);
-    private readonly Dictionary<string, string> _dtmfCollections = new(StringComparer.Ordinal);
-    private readonly HashSet<string> _dtmfCancelPending = new(StringComparer.Ordinal);
-    private readonly HashSet<string> _recentDtmfCancelRaces = new(StringComparer.Ordinal);
-    private readonly LinkedList<string> _recentDtmfCancelRaceOrder = new();
     private readonly Dictionary<string, long> _responseStartTimestamps = new(StringComparer.Ordinal);
     private readonly HashSet<string> _firstOutputRecorded = new(StringComparer.Ordinal);
     private readonly TaskCompletionSource _sessionEndSignal =
@@ -95,6 +88,8 @@ internal sealed class VoiceConnection : IVoiceConnection
     private bool _ready;
     private bool _closed;
     private bool _ending;
+    private string? _pendingHandoffResponseId;
+    private string? _pendingHandoffTarget;
     private bool _activationRecorded;
     private int _closeRecorded;
     private int _sessionEndCallbackStarted;
@@ -104,10 +99,29 @@ internal sealed class VoiceConnection : IVoiceConnection
         VoiceHandler handler,
         InvocationContext invocationContext,
         CancellationToken cancellationToken)
+        : this(
+            webSocket,
+            handler,
+            invocationContext,
+            new VoiceResourceGovernor(),
+            cancellationToken)
+    {
+    }
+
+    internal VoiceConnection(
+        WebSocket webSocket,
+        VoiceHandler handler,
+        InvocationContext invocationContext,
+        VoiceResourceGovernor resourceGovernor,
+        CancellationToken cancellationToken)
     {
         _webSocket = webSocket;
         _handler = handler;
         _invocationContext = invocationContext;
+        _resourceGovernor = resourceGovernor ?? throw new ArgumentNullException(nameof(resourceGovernor));
+        _identityBudget = new TrackedIdentityBudget(
+            VoiceProtocolConstants.MaxTrackedIdentityBytes,
+            _resourceGovernor);
         _requestActivityContext = Activity.Current?.Context ?? default;
         _connectionActivityBaggage = Activity.Current?.Baggage.ToArray() ?? [];
         if (webSocket is TrackingWebSocket trackingWebSocket)
@@ -126,21 +140,26 @@ internal sealed class VoiceConnection : IVoiceConnection
         _connectionCancellationToken = cancellationToken;
         _runtimeCancellation = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
-        // The wire owner observes the runtime cancellation token so that any
-        // connection terminal (end_call, session end, protocol/transport error,
-        // or cleanup deadline) aborts an in-flight, back-pressured socket write
-        // and releases the send gate instead of stranding it indefinitely.
-        _sendTransaction = new VoiceSendTransaction(webSocket, _runtimeCancellation.Token);
+        // Response terminals are semantic outcomes and do not abort the
+        // carrier. The wire owner observes only connection cancellation and a
+        // bounded physical-send drain so a non-cooperative socket cannot strand
+        // the send gate indefinitely.
+        _sendTransaction = new VoiceSendTransaction(
+            webSocket,
+            _resourceGovernor,
+            _runtimeCancellation.Token,
+            terminalSendDrainTimeout: _cleanupDeadline.Remaining);
         _turnLease = new VoiceTurnLease(_telemetryDispatcher);
         _termination = new VoiceTerminationCoordinator(
             _cleanupDeadline,
             _runtimeCancellation,
             webSocket,
             _turnLease,
-            RecordCloseCode,
+            SelectCloseCode,
             SealTerminationAsync,
             ApplyTerminationAsync,
-            NotifySessionEndAsync);
+            NotifySessionEndAsync,
+            _resourceGovernor);
         _callbackQueue = Channel.CreateBounded<CallbackWork>(new BoundedChannelOptions(VoiceProtocolConstants.MaxCallbackQueue)
         {
             FullMode = BoundedChannelFullMode.Wait,
@@ -148,6 +167,7 @@ internal sealed class VoiceConnection : IVoiceConnection
             SingleWriter = true,
             AllowSynchronousContinuations = false,
         });
+        _connectionResourceLease = _resourceGovernor.AcquireConnection();
     }
 
     public bool Ending => _termination.IsTerminating || _closed || _sendTransaction.Ending;
@@ -166,6 +186,19 @@ internal sealed class VoiceConnection : IVoiceConnection
     }
 
     internal long TrackedIdentityBytes => _identityBudget.Bytes;
+
+    internal async Task<string?> GetActiveResponseIdAsync()
+    {
+        await _stateGate.WaitAsync(CancellationToken.None).ConfigureAwait(false);
+        try
+        {
+            return _turnLease.Current?.Response.ResponseId;
+        }
+        finally
+        {
+            _stateGate.Release();
+        }
+    }
 
     public async Task RunAsync()
     {
@@ -201,7 +234,7 @@ internal sealed class VoiceConnection : IVoiceConnection
                             // wins the completion race, preserve the original
                             // request token instead of misclassifying its
                             // expected shutdown as a coordinator failure.
-                            RecordCloseCode(1006);
+                            SelectCloseCode(1006);
                             throw new OperationCanceledException(_connectionCancellationToken);
                         }
 
@@ -242,7 +275,7 @@ internal sealed class VoiceConnection : IVoiceConnection
             // The bridge uses that classification to decide whether reattach
             // is permitted; converting it to a clean return would emit 1000
             // and incorrectly suppress reconnect.
-            RecordCloseCode(1006);
+            SelectCloseCode(1006);
             throw new OperationCanceledException(_connectionCancellationToken);
         }
         catch (OperationCanceledException) when (_runtimeCancellation.IsCancellationRequested)
@@ -277,6 +310,7 @@ internal sealed class VoiceConnection : IVoiceConnection
             {
                 _termination.MarkCompleted();
                 VoiceMetrics.ConnectionClosed(_telemetryDispatcher);
+                _connectionResourceLease.Dispose();
                 if (_ownsTelemetryDispatcher)
                 {
                     _telemetryDispatcher.Dispose();
@@ -385,7 +419,11 @@ internal sealed class VoiceConnection : IVoiceConnection
                 }));
         }
 
-        frames.Add(new VoiceFramePayload(messageType, fields));
+        frames.Add(new VoiceFramePayload(
+            messageType,
+            fields,
+            terminal ? response.ResponseId : null,
+            terminal ? terminalKind : null));
         VoiceResponseTermination responseTermination = default;
         long? firstOutputStarted = null;
         await _sendTransaction.ExecuteAsync(
@@ -409,10 +447,7 @@ internal sealed class VoiceConnection : IVoiceConnection
                     var reservation = response.ReserveSend(opensResponse);
                     if (opensResponse)
                     {
-                        var inReplyTo = response.InReplyTo!;
-                        ValidatePendingPrefixLocked(inReplyTo);
-                        RememberResolvedPrefixLocked(inReplyTo, response, wireOpened: true);
-                        ConsumePendingPrefixLocked(inReplyTo);
+                        ValidatePendingPrefixLocked(response.InReplyTo!);
                     }
 
                     return reservation;
@@ -437,6 +472,13 @@ internal sealed class VoiceConnection : IVoiceConnection
                         return false;
                     }
 
+                    if (reservation.OpensResponse)
+                    {
+                        var inReplyTo = response.InReplyTo!;
+                        RememberResolvedPrefixLocked(inReplyTo, response, wireOpened: true);
+                        ConsumePendingPrefixLocked(inReplyTo);
+                    }
+
                     if (messageType is "response.output_text.delta" or "response.output_text.done" &&
                         _responseStartTimestamps.TryGetValue(response.ResponseId, out var started) &&
                         _firstOutputRecorded.Add(response.ResponseId))
@@ -446,7 +488,25 @@ internal sealed class VoiceConnection : IVoiceConnection
 
                     if (terminal)
                     {
+                        string? handoffTarget = null;
+                        if (terminalKind == "handoff")
+                        {
+                            if (!fields.TryGetValue("target", out var targetValue) ||
+                                targetValue is not string target ||
+                                string.IsNullOrEmpty(target))
+                            {
+                                throw new InvalidOperationException("A handoff terminal requires a target.");
+                            }
+
+                            handoffTarget = target;
+                        }
+
                         responseTermination = _termination.TryTerminateResponse(response, terminalKind!);
+                        if (handoffTarget is not null)
+                        {
+                            _pendingHandoffResponseId = response.ResponseId;
+                            _pendingHandoffTarget = handoffTarget;
+                        }
                         ForgetResponseTimingLocked(response.ResponseId);
                         RememberResponseLocked(response);
                     }
@@ -512,8 +572,6 @@ internal sealed class VoiceConnection : IVoiceConnection
 
                         var reservation = response.ReserveSend(opensResponse: true);
                         ValidatePendingPrefixLocked(inReplyTo);
-                        RememberResolvedPrefixLocked(inReplyTo, response, wireOpened: true);
-                        ConsumePendingPrefixLocked(inReplyTo);
                         return reservation;
                     }
                     finally
@@ -531,7 +589,14 @@ internal sealed class VoiceConnection : IVoiceConnection
                             return false;
                         }
 
-                        return response.TryCommitSend(reservation, static () => { }, terminal: false);
+                        if (!response.TryCommitSend(reservation, static () => { }, terminal: false))
+                        {
+                            return false;
+                        }
+
+                        RememberResolvedPrefixLocked(inReplyTo, response, wireOpened: true);
+                        ConsumePendingPrefixLocked(inReplyTo);
+                        return true;
                     }
                     finally
                     {
@@ -577,7 +642,7 @@ internal sealed class VoiceConnection : IVoiceConnection
         VoiceResponseTermination responseTermination = default;
         long? firstOutputStarted = null;
         await _sendTransaction.ExecuteAsync(
-            new VoiceFramePayload("response.none", fields),
+            new VoiceFramePayload("response.none", fields, response.ResponseId, "none"),
             async transactionCancellation =>
             {
                 await _stateGate.WaitAsync(transactionCancellation).ConfigureAwait(false);
@@ -590,8 +655,6 @@ internal sealed class VoiceConnection : IVoiceConnection
                     }
 
                     ValidatePendingPrefixLocked(inReplyTo);
-                    RememberResolvedPrefixLocked(inReplyTo, response, wireOpened: false);
-                    ConsumePendingPrefixLocked(inReplyTo);
                     return 0;
                 }
                 finally
@@ -601,10 +664,17 @@ internal sealed class VoiceConnection : IVoiceConnection
             },
             async _ =>
             {
-                await response.MarkTerminalAsync().ConfigureAwait(false);
                 await _stateGate.WaitAsync(CancellationToken.None).ConfigureAwait(false);
                 try
                 {
+                    if (_termination.IsResponseTerminal(response.ResponseId))
+                    {
+                        return false;
+                    }
+
+                    RememberResolvedPrefixLocked(inReplyTo, response, wireOpened: false);
+                    ConsumePendingPrefixLocked(inReplyTo);
+                    await response.MarkTerminalAsync().ConfigureAwait(false);
                     if (_responseStartTimestamps.TryGetValue(response.ResponseId, out var started) &&
                         _firstOutputRecorded.Add(response.ResponseId))
                     {
@@ -651,50 +721,63 @@ internal sealed class VoiceConnection : IVoiceConnection
             fields["reason"] = reason;
         }
 
-        try
-        {
-            await _sendTransaction.ExecuteAsync(
-                new VoiceFramePayload("response.cancel", fields),
-                async transactionCancellation =>
+        var sendTask = _sendTransaction.ExecuteAsync(
+            new VoiceFramePayload("response.cancel", fields),
+            async transactionCancellation =>
+            {
+                await _stateGate.WaitAsync(transactionCancellation).ConfigureAwait(false);
+                try
                 {
-                    await _stateGate.WaitAsync(transactionCancellation).ConfigureAwait(false);
+                    EnsureReadyLocked();
+                    var trackedResponse = FindResponseLocked(responseId);
+                    if (!ReferenceEquals(trackedResponse, response) || !response.IsWireOpened)
+                    {
+                        throw new VoiceBridgeConnectionClosedException("The response is not open.");
+                    }
+
+                    var waiterLease = _resourceGovernor.AcquirePendingOperation();
+                    if (!_cancelWaiters.TryAdd(responseId, new CancelWaiter(completion, waiterLease)))
+                    {
+                        waiterLease.Dispose();
+                        throw new InvalidOperationException("Response cancellation is already pending.");
+                    }
+
+                    waiterRegistered = true;
+
                     try
                     {
-                        EnsureReadyLocked();
-                        var trackedResponse = FindResponseLocked(responseId);
-                        if (!ReferenceEquals(trackedResponse, response) || !response.IsWireOpened)
-                        {
-                            throw new VoiceBridgeConnectionClosedException("The response is not open.");
-                        }
-
-                        if (!_cancelWaiters.TryAdd(responseId, completion))
-                        {
-                            throw new InvalidOperationException("Response cancellation is already pending.");
-                        }
-
-                        waiterRegistered = true;
-
-                        try
-                        {
-                            response.ReserveCancellation();
-                        }
-                        catch
-                        {
-                            _cancelWaiters.Remove(responseId);
-                            waiterRegistered = false;
-                            throw;
-                        }
-
-                        return 0;
+                        response.ReserveCancellation();
                     }
-                    finally
+                    catch
                     {
-                        _stateGate.Release();
+                        if (_cancelWaiters.Remove(responseId, out var removedWaiter))
+                        {
+                            removedWaiter.Lease.Dispose();
+                        }
+                        waiterRegistered = false;
+                        throw;
                     }
-                },
-                static _ => ValueTask.FromResult(true),
-                cancellationToken,
-                response.CancellationToken).ConfigureAwait(false);
+
+                    return 0;
+                }
+                finally
+                {
+                    _stateGate.Release();
+                }
+            },
+            static _ => ValueTask.FromResult(true),
+            cancellationToken,
+            response.CancellationToken);
+        var firstCompleted = await Task.WhenAny(sendTask, completion.Task).ConfigureAwait(false);
+        if (firstCompleted == completion.Task)
+        {
+            TrackCleanup(sendTask);
+            return completion.Task;
+        }
+
+        try
+        {
+            await sendTask.ConfigureAwait(false);
         }
         catch (VoiceBridgeConnectionClosedException)
         {
@@ -719,114 +802,6 @@ internal sealed class VoiceConnection : IVoiceConnection
         }
 
         return completion.Task;
-    }
-
-    public async Task RegisterDtmfCollectionAsync(
-        VoiceResponse response,
-        string collectionId,
-        int maxDigits,
-        string? terminator,
-        int initialTimeoutMs,
-        int interDigitTimeoutMs,
-        CancellationToken cancellationToken)
-    {
-        EnsureReady();
-        var responseId = response.ResponseId;
-        var fields = new Dictionary<string, object?>
-        {
-            ["response_id"] = responseId,
-            ["collection_id"] = collectionId,
-            ["max_digits"] = maxDigits,
-            ["initial_timeout_ms"] = initialTimeoutMs,
-            ["inter_digit_timeout_ms"] = interDigitTimeoutMs,
-        };
-        if (terminator is not null)
-        {
-            fields["terminator"] = terminator;
-        }
-
-        try
-        {
-            await _sendTransaction.ExecuteAsync(
-                new VoiceFramePayload("dtmf.collect", fields),
-                async transactionCancellation =>
-                {
-                    await _stateGate.WaitAsync(transactionCancellation).ConfigureAwait(false);
-                    try
-                    {
-                        EnsureReadyLocked();
-                        if (_dtmfCollections.Count != 0)
-                        {
-                            throw new InvalidOperationException("Only one DTMF collection may be pending or active.");
-                        }
-
-                        var trackedResponse = FindResponseLocked(responseId);
-                        if (!ReferenceEquals(trackedResponse, response) || response.IsTerminal)
-                        {
-                            throw new VoiceBridgeConnectionClosedException("The source response is not open.");
-                        }
-
-                        _dtmfCollections.Add(collectionId, responseId);
-                        return 0;
-                    }
-                    finally
-                    {
-                        _stateGate.Release();
-                    }
-                },
-                static _ => ValueTask.FromResult(true),
-                cancellationToken,
-                response.CancellationToken).ConfigureAwait(false);
-        }
-        catch
-        {
-            await _stateGate.WaitAsync(CancellationToken.None).ConfigureAwait(false);
-            try
-            {
-                _dtmfCollections.Remove(collectionId);
-                _dtmfCancelPending.Remove(collectionId);
-            }
-            finally
-            {
-                _stateGate.Release();
-            }
-
-            throw;
-        }
-    }
-
-    public async Task CancelDtmfCollectionAsync(string collectionId, CancellationToken cancellationToken)
-    {
-        EnsureReady();
-        await _sendTransaction.ExecuteAsync(
-            new VoiceFramePayload(
-                "dtmf.collect.cancel",
-                new Dictionary<string, object?> { ["collection_id"] = collectionId }),
-            async transactionCancellation =>
-            {
-                await _stateGate.WaitAsync(transactionCancellation).ConfigureAwait(false);
-                try
-                {
-                    EnsureReadyLocked();
-                    if (!_dtmfCollections.ContainsKey(collectionId))
-                    {
-                        throw new InvalidOperationException("Unknown or completed DTMF collection ID.");
-                    }
-
-                    if (!_dtmfCancelPending.Add(collectionId))
-                    {
-                        throw new InvalidOperationException("DTMF collection cancellation is already pending.");
-                    }
-
-                    return 0;
-                }
-                finally
-                {
-                    _stateGate.Release();
-                }
-            },
-            static _ => ValueTask.FromResult(true),
-            cancellationToken).ConfigureAwait(false);
     }
 
     public async Task EndCallAsync(string reason, string mode, CancellationToken cancellationToken)
@@ -866,7 +841,8 @@ internal sealed class VoiceConnection : IVoiceConnection
             inReplyTo: null,
             wireOpened: true,
             accepted: false,
-            _runtimeCancellation.Token);
+            _runtimeCancellation.Token,
+            _resourceGovernor);
         var completion = new TaskCompletionSource<ProactiveOutcome>(TaskCreationOptions.RunContinuationsAsynchronously);
         var fields = new Dictionary<string, object?>
         {
@@ -886,13 +862,31 @@ internal sealed class VoiceConnection : IVoiceConnection
                 try
                 {
                     EnsureReadyLocked();
+                    if (_pendingHandoffTarget is not null ||
+                        _sendTransaction.TryGetPotentiallyVisibleHandoff(out _, out _))
+                    {
+                        throw new VoiceBridgeConnectionClosedException(
+                            "Proactive admission is unavailable while handoff is pending.");
+                    }
+
                     if (_pendingProactive.Count >= VoiceProtocolConstants.MaxPendingProactive)
                     {
                         throw new InvalidOperationException("Too many proactive admission outcomes are pending.");
                     }
 
-                    AddSeenResponseIdLocked(response.ResponseId);
-                    _pendingProactive.Add(response.ResponseId, new PendingProactive(response, completion));
+                    var pendingLease = _resourceGovernor.AcquirePendingOperation();
+                    try
+                    {
+                        AddSeenResponseIdLocked(response.ResponseId);
+                        _pendingProactive.Add(
+                            response.ResponseId,
+                            new PendingProactive(response, completion, pendingLease));
+                    }
+                    catch
+                    {
+                        pendingLease.Dispose();
+                        throw;
+                    }
                     return 0;
                 }
                 finally
@@ -1097,13 +1091,12 @@ internal sealed class VoiceConnection : IVoiceConnection
                 return ActivationResult.NotReady;
             }
 
-            // Explicitly race the complete session.ready wire write against the
-            // already-running receive. This compares task completion at the wire
-            // boundary rather than inferring ordering from a later continuation.
-            using var readinessCancellation = CancellationTokenSource.CreateLinkedTokenSource(
-                _connectionCancellationToken);
-            var readyWireCompleted = new TaskCompletionSource(
-                TaskCreationOptions.RunContinuationsAsynchronously);
+            // The last pre-attempt check is the readiness protocol boundary.
+            // Once the socket send has been attempted, a compliant bridge may
+            // observe session.ready and return its first application frame before
+            // the local send continuation commits _ready. Keep that prefetched
+            // frame for the normal receive loop instead of rejecting it based on
+            // local task-completion ordering.
             var readySendTask = _sendTransaction.ExecuteAsync(
                 new VoiceFramePayload("session.ready", new Dictionary<string, object?>()),
                 static _ => ValueTask.FromResult(0),
@@ -1121,7 +1114,6 @@ internal sealed class VoiceConnection : IVoiceConnection
                     }
                 },
                 _connectionCancellationToken,
-                readinessCancellation.Token,
                 beforeWireAsync: () =>
                 {
                     if (pendingReceive.IsCompleted)
@@ -1130,31 +1122,17 @@ internal sealed class VoiceConnection : IVoiceConnection
                     }
 
                     return ValueTask.CompletedTask;
-                },
-                wireWriteCompleted: () => readyWireCompleted.TrySetResult());
-            var readinessWinner = await Task.WhenAny(
-                readyWireCompleted.Task,
-                pendingReceive,
-                readySendTask).ConfigureAwait(false);
-            if (readinessWinner == pendingReceive && !readyWireCompleted.Task.IsCompleted)
-            {
-                await readinessCancellation.CancelAsync().ConfigureAwait(false);
-                try
-                {
-                    await readySendTask.ConfigureAwait(false);
-                }
-                catch (Exception exception) when (
-                    exception is ActivationAbortedException or
-                        VoiceBridgeConnectionClosedException or
-                        OperationCanceledException)
-                {
-                }
+                });
 
+            try
+            {
+                await readySendTask.ConfigureAwait(false);
+            }
+            catch (ActivationAbortedException)
+            {
                 await RejectEarlyFrameAsync(pendingReceive).ConfigureAwait(false);
                 return ActivationResult.NotReady;
             }
-
-            await readySendTask.ConfigureAwait(false);
 
             RecordActivation("ready");
             return new ActivationResult(true, pendingReceive);
@@ -1262,82 +1240,9 @@ internal sealed class VoiceConnection : IVoiceConnection
                         _handler.InvokeUserSpeechStartedAsync(session, speechStarted, cancellationToken),
                     payload).ConfigureAwait(false);
                 break;
-            case "conversation.item.create":
-                var create = VoiceProtocolCodec.ParseConversationItemCreate(payload);
-                await EnqueueHistoryAsync(
-                    create,
-                    create.RequestId,
-                    create.Item.ItemId,
-                    "conversation.item.create",
-                    "conversation.item.created",
-                    (session, cancellationToken) =>
-                        _handler.InvokeConversationItemCreateAsync(session, create, cancellationToken),
-                    payload).ConfigureAwait(false);
-                break;
-            case "conversation.item.delete":
-                var delete = VoiceProtocolCodec.ParseConversationItemDelete(payload);
-                await EnqueueHistoryAsync(
-                    delete,
-                    delete.RequestId,
-                    createdItemId: null,
-                    "conversation.item.delete",
-                    "conversation.item.deleted",
-                    (session, cancellationToken) =>
-                        _handler.InvokeConversationItemDeleteAsync(session, delete, cancellationToken),
-                    payload).ConfigureAwait(false);
-                break;
-            case "dtmf":
-                var dtmf = VoiceProtocolCodec.ParseDtmf(payload);
-                if (dtmf is DtmfKeyEvent key)
-                {
-                    await EnqueueSignalAsync(
-                        key,
-                        "dtmf.key",
-                        (session, cancellationToken) =>
-                            _handler.InvokeDtmfKeyAsync(session, key, cancellationToken),
-                        payload).ConfigureAwait(false);
-                }
-                else
-                {
-                    var collected = (DtmfCollectedEvent)dtmf;
-                    await ConsumeDtmfCollectionAsync(collected.CollectionId, preserveCancelRace: true).ConfigureAwait(false);
-                    await EnqueueTurnAsync(
-                        collected.ItemId,
-                        collected,
-                        "dtmf.collected",
-                        (session, response, cancellationToken) =>
-                            _handler.InvokeDtmfCollectedAsync(session, collected, response, cancellationToken),
-                        payload).ConfigureAwait(false);
-                }
-
-                break;
-            case "dtmf.collect.rejected":
-                var rejected = VoiceProtocolCodec.ParseDtmfCollectionRejected(payload);
-                await ConsumeDtmfCollectionAsync(
-                    rejected.CollectionId,
-                    allowLateCancelRejection: rejected.Reason == "collection_not_found",
-                    preserveCancelRace: rejected.Reason != "collection_not_found").ConfigureAwait(false);
-                await EnqueueSignalAsync(
-                    rejected,
-                    "dtmf.collect.rejected",
-                    (session, cancellationToken) =>
-                        _handler.InvokeDtmfCollectionRejectedAsync(session, rejected, cancellationToken),
-                    payload).ConfigureAwait(false);
-                break;
-            case "dtmf.collect.cancelled":
-                var cancelled = VoiceProtocolCodec.ParseDtmfCollectionCancelled(payload);
-                await ConsumeDtmfCollectionAsync(
-                    cancelled.CollectionId,
-                    preserveCancelRace: cancelled.Reason != "cancelled_by_agent").ConfigureAwait(false);
-                await EnqueueSignalAsync(
-                    cancelled,
-                    "dtmf.collect.cancelled",
-                    (session, cancellationToken) =>
-                        _handler.InvokeDtmfCollectionCancelledAsync(session, cancelled, cancellationToken),
-                    payload).ConfigureAwait(false);
-                break;
             case "handoff.failed":
                 var handoff = VoiceProtocolCodec.ParseHandoffFailed(payload);
+                await ReconcileHandoffFailureAsync(handoff).ConfigureAwait(false);
                 await EnqueueTurnAsync(
                     handoff.ItemId,
                     handoff,
@@ -1381,6 +1286,70 @@ internal sealed class VoiceConnection : IVoiceConnection
         return true;
     }
 
+    private async Task ReconcileHandoffFailureAsync(HandoffFailedEvent failure)
+    {
+        VoiceResponse? priorResponse = null;
+        VoiceResponseTermination priorTermination = default;
+        await _stateGate.WaitAsync(_runtimeCancellation.Token).ConfigureAwait(false);
+        try
+        {
+            if (_ending)
+            {
+                return;
+            }
+
+            if (_pendingHandoffTarget is not null)
+            {
+                if (string.IsNullOrEmpty(_pendingHandoffResponseId) ||
+                    !_termination.IsResponseTerminal(_pendingHandoffResponseId) ||
+                    !string.Equals(_pendingHandoffTarget, failure.Target, StringComparison.Ordinal))
+                {
+                    throw new VoiceBridgeProtocolException(
+                        "handoff.failed target does not match the pending handoff.",
+                        VoiceProtocolConstants.ClosePolicyViolation);
+                }
+
+                _pendingHandoffResponseId = null;
+                _pendingHandoffTarget = null;
+                return;
+            }
+
+            var current = _turnLease.Current;
+            if (current is null ||
+                !_sendTransaction.TryGetPotentiallyVisibleHandoff(
+                    failure.Target,
+                    out var attemptedResponseId) ||
+                !string.Equals(
+                    current.Response.ResponseId,
+                    attemptedResponseId,
+                    StringComparison.Ordinal))
+            {
+                throw new VoiceBridgeProtocolException(
+                    "handoff.failed does not match an attempted handoff.",
+                    VoiceProtocolConstants.ClosePolicyViolation);
+            }
+
+            priorResponse = current.Response;
+            priorTermination = _termination.TryTerminateResponse(priorResponse, "handoff");
+            ForgetResponseTimingLocked(priorResponse.ResponseId);
+            RememberResponseLocked(priorResponse);
+        }
+        finally
+        {
+            _stateGate.Release();
+        }
+
+        if (priorResponse is not null)
+        {
+            await priorResponse.MarkTerminalAsync().ConfigureAwait(false);
+            ApplyResponseTermination(priorTermination);
+            if (priorTermination.IsNewTerminal)
+            {
+                VoiceMetrics.RecordTerminal(_telemetryDispatcher, "handoff");
+            }
+        }
+    }
+
     private async Task EnqueueTurnAsync<TEvent>(
         string itemId,
         TEvent @event,
@@ -1395,7 +1364,8 @@ internal sealed class VoiceConnection : IVoiceConnection
             new[] { itemId },
             wireOpened: false,
             accepted: true,
-            _runtimeCancellation.Token);
+            _runtimeCancellation.Token,
+            _resourceGovernor);
 
         await _stateGate.WaitAsync(_runtimeCancellation.Token).ConfigureAwait(false);
         try
@@ -1403,6 +1373,15 @@ internal sealed class VoiceConnection : IVoiceConnection
             if (_ending)
             {
                 return;
+            }
+
+            if (kind != "handoff.failed" &&
+                (_pendingHandoffTarget is not null ||
+                    _sendTransaction.TryGetPotentiallyVisibleHandoff(out _, out _)))
+            {
+                throw new VoiceBridgeProtocolException(
+                    "A response-producing turn is invalid while handoff is pending.",
+                    VoiceProtocolConstants.ClosePolicyViolation);
             }
 
             AddSeenItemIdLocked(itemId);
@@ -1452,59 +1431,23 @@ internal sealed class VoiceConnection : IVoiceConnection
         }
     }
 
-    private async Task EnqueueHistoryAsync<TEvent>(
-        TEvent @event,
-        string requestId,
-        string? createdItemId,
-        string kind,
-        string successType,
-        Func<VoiceSession, CancellationToken, Task> callback,
-        JsonElement payload)
-    {
-        _ = @event;
-        await _stateGate.WaitAsync(_runtimeCancellation.Token).ConfigureAwait(false);
-        try
-        {
-            if (_ending)
-            {
-                return;
-            }
-
-            if (createdItemId is not null)
-            {
-                AddSeenItemIdLocked(createdItemId);
-            }
-
-            EnqueueWork(new CallbackWork(
-                kind,
-                EstimatePayloadBytes(payload),
-                cancellationToken => callback(_session!, cancellationToken),
-                RequestId: requestId,
-                SuccessType: successType));
-        }
-        finally
-        {
-            _stateGate.Release();
-        }
-    }
-
     private void EnqueueWork(CallbackWork work)
     {
+        var queueLease = _resourceGovernor.AcquireCallbackQueueItem(work.EstimatedBytes);
         var queuedBytes = Interlocked.Add(ref _queuedCallbackBytes, work.EstimatedBytes);
         if (queuedBytes > MaxCallbackQueueBytes)
         {
             Interlocked.Add(ref _queuedCallbackBytes, -work.EstimatedBytes);
-            throw new VoiceBridgeProtocolException(
-                "Voice callback queue byte limit exceeded.",
-                VoiceProtocolConstants.ClosePolicyViolation);
+            queueLease.Dispose();
+            throw new VoiceResourceExhaustedException("connection callback queue bytes");
         }
 
-        if (!_callbackQueue.Writer.TryWrite(work))
+        var admittedWork = work with { QueueLease = queueLease };
+        if (!_callbackQueue.Writer.TryWrite(admittedWork))
         {
             Interlocked.Add(ref _queuedCallbackBytes, -work.EstimatedBytes);
-            throw new VoiceBridgeProtocolException(
-                "Voice callback queue limit exceeded.",
-                VoiceProtocolConstants.ClosePolicyViolation);
+            queueLease.Dispose();
+            throw new VoiceResourceExhaustedException("connection callback queue items");
         }
     }
 
@@ -1515,6 +1458,7 @@ internal sealed class VoiceConnection : IVoiceConnection
             await foreach (var work in _callbackQueue.Reader.ReadAllAsync(_runtimeCancellation.Token).ConfigureAwait(false))
             {
                 Interlocked.Add(ref _queuedCallbackBytes, -work.EstimatedBytes);
+                work.QueueLease?.Dispose();
                 if (_sessionEndSignal.Task.IsCompleted || Volatile.Read(ref _ending))
                 {
                     continue;
@@ -1651,18 +1595,14 @@ internal sealed class VoiceConnection : IVoiceConnection
             {
                 if (!_sessionEndSignal.Task.IsCompleted)
                 {
-                    try
+                    var drainTask = response.DrainPendingSendAsync();
+                    if (!drainTask.IsCompleted)
                     {
-                        var remaining = _cleanupDeadline.Remaining;
-                        if (remaining > TimeSpan.Zero)
-                        {
-                            await response.DrainPendingSendAsync()
-                                .WaitAsync(remaining)
-                                .ConfigureAwait(false);
-                        }
+                        TrackCleanup(drainTask);
                     }
-                    catch (TimeoutException)
+                    else if (drainTask.IsFaulted)
                     {
+                        _ = drainTask.Exception;
                     }
                 }
 
@@ -1747,50 +1687,6 @@ internal sealed class VoiceConnection : IVoiceConnection
             return;
         }
 
-        if (work.SuccessType is not null)
-        {
-            bool customerFailed;
-            try
-            {
-                await customerTask.ConfigureAwait(false);
-                customerFailed = false;
-            }
-#pragma warning disable CA1031 // History callback failures become a sanitized mutation result.
-            catch (Exception)
-#pragma warning restore CA1031
-            {
-                customerFailed = true;
-            }
-
-            // The customer callback outcome — not a transport failure — decides
-            // whether the mutation succeeded. Emit the correlated result, but
-            // treat a terminal/closed connection while sending it as an expected
-            // teardown race rather than a callback failure or a worker fault.
-            var resultType = customerFailed ? "conversation.item.failed" : work.SuccessType;
-            var resultFields = customerFailed
-                ? new Dictionary<string, object?>
-                {
-                    ["request_id"] = work.RequestId,
-                    ["code"] = "mutation_failed",
-                    ["message"] = "History mutation callback failed",
-                }
-                : new Dictionary<string, object?> { ["request_id"] = work.RequestId };
-            try
-            {
-                await SendAsync(resultType, resultFields, _runtimeCancellation.Token).ConfigureAwait(false);
-            }
-            catch (VoiceBridgeConnectionClosedException)
-            {
-                // The connection terminated before the mutation result could be
-                // delivered. Later frames are dropped by contract during teardown.
-            }
-
-            callbackFailed = customerFailed;
-            VoiceMetrics.RecordCallback(_telemetryDispatcher, work.Kind, callbackStarted, callbackFailed);
-
-            return;
-        }
-
         try
         {
             await customerTask.ConfigureAwait(false);
@@ -1833,7 +1729,7 @@ internal sealed class VoiceConnection : IVoiceConnection
     private async Task<bool> HandlePlaybackTerminalCoreAsync(ResponseCancellationOutcome outcome)
     {
         VoiceResponse response;
-        TaskCompletionSource<ResponseCancellationOutcome>? waiter;
+        CancelWaiter? waiter;
         VoiceResponseTermination termination;
         var abandoned = false;
 
@@ -1869,7 +1765,9 @@ internal sealed class VoiceConnection : IVoiceConnection
                     "Unknown playback response_id.",
                     VoiceProtocolConstants.ClosePolicyViolation);
             }
-            if (outcome.ItemId is not null && !response.OwnsItem(outcome.ItemId))
+            if (outcome.ItemId is not null &&
+                !response.OwnsItem(outcome.ItemId) &&
+                !_sendTransaction.IsItemPotentiallyVisible(outcome.ResponseId, outcome.ItemId))
             {
                 throw new VoiceBridgeProtocolException(
                     "Playback item_id does not belong to response_id.",
@@ -1897,7 +1795,11 @@ internal sealed class VoiceConnection : IVoiceConnection
 
         await response.MarkTerminalAsync().ConfigureAwait(false);
         ApplyResponseTermination(termination);
-        waiter?.TrySetResult(outcome);
+        if (waiter is not null)
+        {
+            waiter.Lease.Dispose();
+            waiter.Completion.TrySetResult(outcome);
+        }
         if (termination.IsNewTerminal)
         {
             VoiceMetrics.RecordTerminal(_telemetryDispatcher, outcome.Kind);
@@ -1910,7 +1812,7 @@ internal sealed class VoiceConnection : IVoiceConnection
     {
         var responses = new List<VoiceResponse>();
         var terminations = new List<VoiceResponseTermination>();
-        TaskCompletionSource<ResponseCancellationOutcome>? cancelWaiter = null;
+        var cancelWaiters = new List<CancelWaiter>();
 
         await _stateGate.WaitAsync(_runtimeCancellation.Token).ConfigureAwait(false);
         try
@@ -1953,7 +1855,10 @@ internal sealed class VoiceConnection : IVoiceConnection
                 terminations.Add(_termination.TryTerminateResponse(response, "timeout"));
                 ForgetResponseTimingLocked(timeout.ResponseId);
 
-                _cancelWaiters.Remove(timeout.ResponseId, out cancelWaiter);
+                if (_cancelWaiters.Remove(timeout.ResponseId, out var cancelWaiter))
+                {
+                    cancelWaiters.Add(cancelWaiter);
+                }
             }
             else
             {
@@ -1961,7 +1866,7 @@ internal sealed class VoiceConnection : IVoiceConnection
                     timeout.ItemIds!,
                     responses,
                     terminations,
-                    ref cancelWaiter);
+                    cancelWaiters);
             }
         }
         finally
@@ -1979,7 +1884,12 @@ internal sealed class VoiceConnection : IVoiceConnection
             ApplyResponseTermination(termination);
         }
 
-        cancelWaiter?.TrySetException(new VoiceBridgeConnectionClosedException("Response terminated by timeout."));
+        foreach (var cancelWaiter in cancelWaiters)
+        {
+            cancelWaiter.Lease.Dispose();
+            cancelWaiter.Completion.TrySetException(
+                new VoiceBridgeConnectionClosedException("Response terminated by timeout."));
+        }
         foreach (var termination in terminations)
         {
             if (termination.IsNewTerminal)
@@ -2000,6 +1910,8 @@ internal sealed class VoiceConnection : IVoiceConnection
     {
         PendingProactive pending;
         VoiceTurnActivation activation = default;
+        VoiceResponseTermination priorTermination = default;
+        VoiceResponse? priorResponse = null;
         await _stateGate.WaitAsync(_runtimeCancellation.Token).ConfigureAwait(false);
         try
         {
@@ -2014,37 +1926,41 @@ internal sealed class VoiceConnection : IVoiceConnection
                     "Unknown proactive response_id.",
                     VoiceProtocolConstants.ClosePolicyViolation);
             }
+            pending.Lease.Dispose();
 
-            if (_turnLease.Current is not null)
-            {
-                throw new VoiceBridgeProtocolException(
-                    "A proactive response was accepted while another response was active.",
-                    VoiceProtocolConstants.ClosePolicyViolation);
-            }
-
-            activation = _turnLease.Activate(
-                pending.Response,
-                "proactive",
-                release: null,
-                activity: null);
-
-            _responseStartTimestamps[responseId] = Stopwatch.GetTimestamp();
-
-            // Mark accepted while still holding the state gate, atomically with
-            // the lease activation. This closes
-            // the race where a concurrent connection terminal could capture and
-            // terminalize the freshly activated response after it was removed
-            // from _pendingProactive, which would otherwise strand the awaiting
-            // StartProactiveResponseAsync caller. The waiter is completed below,
-            // after telemetry attachment has run outside the state gate.
             try
             {
+                var current = _turnLease.Current;
+                if (current is not null &&
+                    _sendTransaction.TryGetPotentiallyVisibleTerminal(
+                        current.Response.ResponseId,
+                        out var terminalKind) &&
+                    terminalKind != "handoff")
+                {
+                    priorResponse = current.Response;
+                    priorTermination = _termination.TryTerminateResponse(priorResponse, terminalKind);
+                    ForgetResponseTimingLocked(priorResponse.ResponseId);
+                    RememberResponseLocked(priorResponse);
+                }
+                else if (current is not null)
+                {
+                    throw new VoiceBridgeProtocolException(
+                        "A proactive response was accepted while another response was active.",
+                        VoiceProtocolConstants.ClosePolicyViolation);
+                }
+
+                activation = _turnLease.Activate(
+                    pending.Response,
+                    "proactive",
+                    release: null,
+                    activity: null);
+
+                _responseStartTimestamps[responseId] = Stopwatch.GetTimestamp();
                 pending.Response.MarkAccepted();
             }
-            catch (Exception markException)
+            catch (Exception exception)
             {
-                // The awaiter must observe an outcome rather than hang; propagate.
-                pending.Completion.TrySetException(markException);
+                pending.Completion.TrySetException(exception);
                 throw;
             }
         }
@@ -2053,13 +1969,31 @@ internal sealed class VoiceConnection : IVoiceConnection
             _stateGate.Release();
         }
 
-        var activityAttachment = StartAndAttachProactiveActivityAsync(responseId, activation.Token);
-        if (!activityAttachment.IsCompleted)
+        try
         {
-            TrackCleanup(activityAttachment);
-        }
+            if (priorResponse is not null)
+            {
+                await priorResponse.MarkTerminalAsync().ConfigureAwait(false);
+                ApplyResponseTermination(priorTermination);
+                if (priorTermination.IsNewTerminal)
+                {
+                    VoiceMetrics.RecordTerminal(_telemetryDispatcher, priorTermination.TerminalKind);
+                }
+            }
 
-        pending.Completion.TrySetResult(new ProactiveOutcome(true, string.Empty));
+            var activityAttachment = StartAndAttachProactiveActivityAsync(responseId, activation.Token);
+            if (!activityAttachment.IsCompleted)
+            {
+                TrackCleanup(activityAttachment);
+            }
+
+            pending.Completion.TrySetResult(new ProactiveOutcome(true, string.Empty));
+        }
+        catch (Exception exception)
+        {
+            pending.Completion.TrySetException(exception);
+            throw;
+        }
     }
 
     private async Task HandleResponseDroppedAsync(string responseId, string reason)
@@ -2080,24 +2014,41 @@ internal sealed class VoiceConnection : IVoiceConnection
                     "Unknown proactive response_id.",
                     VoiceProtocolConstants.ClosePolicyViolation);
             }
+            pending.Lease.Dispose();
 
-            _abandonedProactiveCancels.Remove(responseId);
-            termination = _termination.TryTerminateResponse(pending.Response, "dropped");
-            ForgetResponseTimingLocked(responseId);
+            try
+            {
+                _abandonedProactiveCancels.Remove(responseId);
+                termination = _termination.TryTerminateResponse(pending.Response, "dropped");
+                ForgetResponseTimingLocked(responseId);
+            }
+            catch (Exception exception)
+            {
+                pending.Completion.TrySetException(exception);
+                throw;
+            }
         }
         finally
         {
             _stateGate.Release();
         }
 
-        await pending.Response.MarkTerminalAsync().ConfigureAwait(false);
-        ApplyResponseTermination(termination);
-        if (termination.IsNewTerminal)
+        try
         {
-            VoiceMetrics.RecordTerminal(_telemetryDispatcher, "dropped");
-        }
+            await pending.Response.MarkTerminalAsync().ConfigureAwait(false);
+            ApplyResponseTermination(termination);
+            if (termination.IsNewTerminal)
+            {
+                VoiceMetrics.RecordTerminal(_telemetryDispatcher, "dropped");
+            }
 
-        pending.Completion.TrySetResult(new ProactiveOutcome(false, VoiceValidation.SafeCode(reason, "dropped")));
+            pending.Completion.TrySetResult(new ProactiveOutcome(false, VoiceValidation.SafeCode(reason, "dropped")));
+        }
+        catch (Exception exception)
+        {
+            pending.Completion.TrySetException(exception);
+            throw;
+        }
     }
 
     private async Task HandleSessionEndAsync(SessionEndEvent sessionEnd)
@@ -2108,51 +2059,6 @@ internal sealed class VoiceConnection : IVoiceConnection
                 stopRuntime: true,
                 sessionEnd),
             _runtimeCancellation.Token).ConfigureAwait(false);
-    }
-
-    private async Task ConsumeDtmfCollectionAsync(
-        string collectionId,
-        bool allowLateCancelRejection = false,
-        bool preserveCancelRace = false)
-    {
-        await _stateGate.WaitAsync(_runtimeCancellation.Token).ConfigureAwait(false);
-        try
-        {
-            if (_ending)
-            {
-                return;
-            }
-
-            if (!_dtmfCollections.Remove(collectionId))
-            {
-                if (allowLateCancelRejection && _recentDtmfCancelRaces.Remove(collectionId))
-                {
-                    _recentDtmfCancelRaceOrder.Remove(collectionId);
-                    return;
-                }
-
-                throw new VoiceBridgeProtocolException(
-                    "Unknown DTMF collection_id.",
-                    VoiceProtocolConstants.ClosePolicyViolation);
-            }
-
-            var cancelPending = _dtmfCancelPending.Remove(collectionId);
-            if (cancelPending && preserveCancelRace)
-            {
-                _recentDtmfCancelRaces.Add(collectionId);
-                _recentDtmfCancelRaceOrder.AddLast(collectionId);
-                while (_recentDtmfCancelRaceOrder.Count > MaxRecentResponses)
-                {
-                    var oldest = _recentDtmfCancelRaceOrder.First!.Value;
-                    _recentDtmfCancelRaceOrder.RemoveFirst();
-                    _recentDtmfCancelRaces.Remove(oldest);
-                }
-            }
-        }
-        finally
-        {
-            _stateGate.Release();
-        }
     }
 
     private async Task<JsonElement?> ReceivePayloadAsync(CancellationToken cancellationToken)
@@ -2220,18 +2126,18 @@ internal sealed class VoiceConnection : IVoiceConnection
             }
             catch (WebSocketException)
             {
-                RecordCloseCode(1006);
+                SelectCloseCode(1006);
                 return null;
             }
             catch (IOException)
             {
-                RecordCloseCode(1006);
+                SelectCloseCode(1006);
                 return null;
             }
 
             if (received.MessageType == WebSocketMessageType.Close)
             {
-                RecordCloseCode((int?)_webSocket.CloseStatus ?? VoiceProtocolConstants.CloseNormal);
+                SelectCloseCode((int?)_webSocket.CloseStatus ?? VoiceProtocolConstants.CloseNormal);
                 return null;
             }
 
@@ -2305,7 +2211,7 @@ internal sealed class VoiceConnection : IVoiceConnection
             return;
         }
 
-        RecordCloseCode(closeCode);
+        SelectCloseCode(closeCode);
         _closed = true;
         if (_webSocket.State is WebSocketState.Open or WebSocketState.CloseReceived)
         {
@@ -2356,7 +2262,7 @@ internal sealed class VoiceConnection : IVoiceConnection
         }
 
         _closed = true;
-        RecordCloseCode(VoiceProtocolConstants.CloseNormal);
+        SelectCloseCode(VoiceProtocolConstants.CloseNormal);
         if (_cleanupTasks.Count > 0)
         {
             try
@@ -2380,8 +2286,14 @@ internal sealed class VoiceConnection : IVoiceConnection
             _seenResponseIds.Clear();
             ClearPlaybackOutcomesLocked();
             ClearResolvedPrefixesLocked();
+            foreach (var response in _recentResponses.Values)
+            {
+                response.ReleaseRetainedIdentities();
+            }
             _recentResponses.Clear();
             _recentResponseOrder.Clear();
+            _pendingHandoffResponseId = null;
+            _pendingHandoffTarget = null;
             _responseStartTimestamps.Clear();
             _firstOutputRecorded.Clear();
             _identityBudget.Reset();
@@ -2451,6 +2363,7 @@ internal sealed class VoiceConnection : IVoiceConnection
         {
             await termination.Response.MarkTerminalAsync().ConfigureAwait(false);
             ApplyResponseTermination(termination);
+            termination.Response.ReleaseRetainedIdentities();
             if (termination.IsNewTerminal)
             {
                 VoiceMetrics.RecordTerminal(_telemetryDispatcher, termination.TerminalKind);
@@ -2498,17 +2411,15 @@ internal sealed class VoiceConnection : IVoiceConnection
     {
         foreach (var waiter in _cancelWaiters.Values)
         {
-            waiter.TrySetException(new VoiceBridgeConnectionClosedException(message));
+            waiter.Lease.Dispose();
+            waiter.Completion.TrySetException(new VoiceBridgeConnectionClosedException(message));
         }
 
         _cancelWaiters.Clear();
         _abandonedProactiveCancels.Clear();
-        _dtmfCollections.Clear();
-        _dtmfCancelPending.Clear();
-        _recentDtmfCancelRaces.Clear();
-        _recentDtmfCancelRaceOrder.Clear();
         foreach (var pending in _pendingProactive.Values)
         {
+            pending.Lease.Dispose();
             pending.Completion.TrySetException(new VoiceBridgeConnectionClosedException(message));
         }
 
@@ -2528,8 +2439,9 @@ internal sealed class VoiceConnection : IVoiceConnection
         try
         {
             using var callbackCancellation = _cleanupDeadline.CreateCancellationTokenSource();
-            customerTask = InvokeCustomerCallback(() =>
-                _handler.InvokeSessionEndAsync(_session, sessionEnd, callbackCancellation.Token));
+            customerTask = InvokeCustomerCallback(
+                () => _handler.InvokeSessionEndAsync(_session, sessionEnd, callbackCancellation.Token),
+                terminal: true);
             await customerTask.WaitAsync(callbackCancellation.Token).ConfigureAwait(false);
         }
         catch (OperationCanceledException) when (_cleanupDeadline.Remaining <= TimeSpan.Zero)
@@ -2554,22 +2466,12 @@ internal sealed class VoiceConnection : IVoiceConnection
         while (_callbackQueue.Reader.TryRead(out var work))
         {
             Interlocked.Add(ref _queuedCallbackBytes, -work.EstimatedBytes);
+            work.QueueLease?.Dispose();
         }
     }
 
-    private static Task InvokeCustomerCallback(Func<Task> callback)
-    {
-        try
-        {
-            return callback() ?? Task.FromException(new InvalidOperationException("A voice callback returned a null task."));
-        }
-#pragma warning disable CA1031 // Synchronous customer callback failures are represented as faulted tasks.
-        catch (Exception exception)
-#pragma warning restore CA1031
-        {
-            return Task.FromException(exception);
-        }
-    }
+    private Task InvokeCustomerCallback(Func<Task> callback, bool terminal = false) =>
+        _resourceGovernor.InvokeCustomerTask(callback, terminal);
 
     private async Task<Activity?> StartTurnActivityAsync(string responseId, string kind)
     {
@@ -2677,7 +2579,7 @@ internal sealed class VoiceConnection : IVoiceConnection
         IReadOnlyList<string> itemIds,
         List<VoiceResponse> responses,
         List<VoiceResponseTermination> terminations,
-        ref TaskCompletionSource<ResponseCancellationOutcome>? cancelWaiter)
+        List<CancelWaiter> cancelWaiters)
     {
         var offset = 0;
         while (offset < itemIds.Count)
@@ -2705,7 +2607,7 @@ internal sealed class VoiceConnection : IVoiceConnection
                     AddPlaybackOutcomeLocked(resolved.Response.ResponseId);
                     if (_cancelWaiters.Remove(resolved.Response.ResponseId, out var waiter))
                     {
-                        cancelWaiter = waiter;
+                        cancelWaiters.Add(waiter);
                     }
                 }
 
@@ -2781,7 +2683,10 @@ internal sealed class VoiceConnection : IVoiceConnection
         {
             var oldest = _recentResponseOrder.First!.Value;
             _recentResponseOrder.RemoveFirst();
-            _recentResponses.Remove(oldest);
+            if (_recentResponses.Remove(oldest, out var evicted))
+            {
+                evicted.ReleaseRetainedIdentities();
+            }
         }
     }
 
@@ -2977,7 +2882,7 @@ internal sealed class VoiceConnection : IVoiceConnection
         VoiceMetrics.RecordActivation(_telemetryDispatcher, result);
     }
 
-    private void RecordCloseCode(int closeCode)
+    private void SelectCloseCode(int closeCode)
     {
         if (Interlocked.Exchange(ref _closeRecorded, 1) != 0)
         {
@@ -2986,10 +2891,10 @@ internal sealed class VoiceConnection : IVoiceConnection
 
         if (_webSocket is TrackingWebSocket trackingWebSocket)
         {
-            trackingWebSocket.RecordCloseCode(closeCode);
+            trackingWebSocket.TrySelectCloseCode(closeCode);
         }
 
-        VoiceMetrics.RecordCloseCode(_telemetryDispatcher, closeCode);
+        VoiceMetrics.RecordSelectedCloseCode(_telemetryDispatcher, closeCode);
     }
 
     private void TrackCleanup(Task task)
@@ -3006,9 +2911,22 @@ internal sealed class VoiceConnection : IVoiceConnection
             TaskContinuationOptions.ExecuteSynchronously,
             TaskScheduler.Default);
 
+        VoiceResourceLease cleanupLease;
+        try
+        {
+            cleanupLease = _resourceGovernor.AcquireCleanupTask();
+        }
+        catch (VoiceResourceExhaustedException)
+        {
+            // Fault observation above remains attached to the original task.
+            // Do not allocate another cleanup wrapper after host admission is full.
+            return;
+        }
+
         var cleanup = BoundedCleanupAsync(task, _cleanupDeadline);
         if (!_cleanupTasks.TryAdd(cleanup, 0))
         {
+            cleanupLease.Dispose();
             return;
         }
 
@@ -3016,6 +2934,7 @@ internal sealed class VoiceConnection : IVoiceConnection
             completed =>
             {
                 _cleanupTasks.TryRemove(completed, out _);
+                cleanupLease.Dispose();
                 if (completed.IsFaulted)
                 {
                     _ = completed.Exception;
@@ -3124,8 +3043,8 @@ internal sealed class VoiceConnection : IVoiceConnection
         // The estimate is used only as a queue memory guard. Measuring the raw
         // inbound JSON is a faithful, conservative upper bound on the memory the
         // queued callback retains, and — unlike serializing the typed event —
-        // it correctly accounts for nested polymorphic content (text, image
-        // references, history items) that default serialization would omit.
+        // it correctly accounts for nested polymorphic content (text and image
+        // references) that default serialization would omit.
         return Math.Max(64, Encoding.UTF8.GetByteCount(payload.GetRawText()));
     }
 
@@ -3135,8 +3054,7 @@ internal sealed class VoiceConnection : IVoiceConnection
         Func<CancellationToken, Task> Callback,
         VoiceResponse? Response = null,
         string? ItemId = null,
-        string? RequestId = null,
-        string? SuccessType = null);
+        VoiceResourceLease? QueueLease = null);
 
     private sealed record ResolvedPrefix(
         IReadOnlyList<string> ItemIdDigests,
@@ -3146,7 +3064,12 @@ internal sealed class VoiceConnection : IVoiceConnection
 
     private sealed record PendingProactive(
         VoiceResponse Response,
-        TaskCompletionSource<ProactiveOutcome> Completion);
+        TaskCompletionSource<ProactiveOutcome> Completion,
+        VoiceResourceLease Lease);
+
+    private sealed record CancelWaiter(
+        TaskCompletionSource<ResponseCancellationOutcome> Completion,
+        VoiceResourceLease Lease);
 
     private sealed record ProactiveOutcome(bool Accepted, string Reason);
 

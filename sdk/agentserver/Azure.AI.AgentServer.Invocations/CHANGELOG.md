@@ -8,12 +8,25 @@
   implementation of Voice Live Bridge Protocol 1.0 over the existing
   `invocations_ws` transport. It includes `VoiceHandler`, `VoiceSession`,
   `VoiceResponse`, `VoiceTextItem`, immutable callback models, proactive
-  admission, self-cancel and barge-in reconciliation, response timeouts, DTMF,
-  handoff, history mutation, strict framing and duplicate suppression, and
+  admission, self-cancel and barge-in reconciliation, response timeouts,
+  handoff, strict framing and duplicate suppression, and
   `AddVoice<THandler>()` / `VoiceServer.Run<THandler>()` hosting entry points.
-  Outbound frames are bounded by their final JSON-encoded size, teardown shares
-  one absolute cleanup deadline, and content-free connection/turn activities
-  preserve the inbound W3C trace hierarchy.
+  Outbound frames are bounded by their final JSON-encoded size, a per-frame
+  attempted-prefix ledger reconciles peer-visible state before local send
+  continuations, response terminal writes have bounded physical drain, and
+  teardown shares one absolute cleanup deadline. Host-wide admission bounds
+  retained output, prepared frames, callback queues and tasks, pending helpers,
+  identities, and cleanup work across all Voice connections. Content-free
+  connection/turn activities preserve the inbound W3C trace hierarchy.
+  WebSocket close observability now separates selected intent, mapped transport
+  attempt, and final local outcome. Close-event logging uses a bounded
+  best-effort enqueue whose deadline, dispatcher-shutdown, and sink-failure
+  degradation is exposed through aggregate metrics without blocking teardown.
+  Hosted telemetry uses two fixed workers over the same bounded priority queues,
+  so one blocked external callback no longer stalls telemetry for every connection.
+  The `/invocations_ws` transport is now a literal GET endpoint with stable owner
+  metadata; final endpoint-table validation rejects duplicate or foreign
+  GET-capable ownership conflicts before the host begins serving requests.
   Voice ships as part of the Invocations package rather than as a separate package.
 - AsyncAPI discovery endpoints — `InvocationHandler` now exposes two new
   virtual methods, `GetAsyncApiJsonAsync` and `GetAsyncApiYamlAsync`, served

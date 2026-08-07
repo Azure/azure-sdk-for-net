@@ -42,7 +42,7 @@ public class TrackedIdentityBudgetTests
                 budget.Reserve(1);
                 Interlocked.Increment(ref accepted);
             }
-            catch (VoiceBridgeProtocolException)
+            catch (VoiceResourceExhaustedException)
             {
                 Interlocked.Increment(ref rejected);
             }

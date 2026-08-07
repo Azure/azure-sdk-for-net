@@ -83,7 +83,8 @@ internal sealed class VoiceTerminationCoordinator
     private readonly CancellationTokenSource _runtimeCancellation;
     private readonly WebSocket _webSocket;
     private readonly VoiceTurnLease _turnLease;
-    private readonly Action<int> _recordCloseCode;
+    private readonly VoiceResourceGovernor _resourceGovernor;
+    private readonly Action<int> _selectCloseCode;
     private readonly Func<
         VoiceConnectionTerminationRequest,
         CancellationToken,
@@ -110,19 +111,21 @@ internal sealed class VoiceTerminationCoordinator
         CancellationTokenSource runtimeCancellation,
         WebSocket webSocket,
         VoiceTurnLease turnLease,
-        Action<int> recordCloseCode,
+        Action<int> selectCloseCode,
         Func<
             VoiceConnectionTerminationRequest,
             CancellationToken,
             ValueTask<VoiceConnectionTerminationSnapshot>> sealAsync,
         Func<VoiceConnectionTerminationSnapshot, ValueTask> applyAsync,
-        Func<SessionEndEvent, ValueTask> notifySessionEndAsync)
+        Func<SessionEndEvent, ValueTask> notifySessionEndAsync,
+        VoiceResourceGovernor? resourceGovernor = null)
     {
         _deadline = deadline ?? throw new ArgumentNullException(nameof(deadline));
         _runtimeCancellation = runtimeCancellation ?? throw new ArgumentNullException(nameof(runtimeCancellation));
         _webSocket = webSocket ?? throw new ArgumentNullException(nameof(webSocket));
         _turnLease = turnLease ?? throw new ArgumentNullException(nameof(turnLease));
-        _recordCloseCode = recordCloseCode ?? throw new ArgumentNullException(nameof(recordCloseCode));
+        _resourceGovernor = resourceGovernor ?? new VoiceResourceGovernor();
+        _selectCloseCode = selectCloseCode ?? throw new ArgumentNullException(nameof(selectCloseCode));
         _sealAsync = sealAsync ?? throw new ArgumentNullException(nameof(sealAsync));
         _applyAsync = applyAsync ?? throw new ArgumentNullException(nameof(applyAsync));
         _notifySessionEndAsync = notifySessionEndAsync ?? throw new ArgumentNullException(nameof(notifySessionEndAsync));
@@ -234,16 +237,17 @@ internal sealed class VoiceTerminationCoordinator
         bool added;
         lock (_sync)
         {
-            added = _terminalResponseIds.Add(response.ResponseId);
-            if (added)
+            added = false;
+            if (!_terminalResponseIds.Contains(response.ResponseId))
             {
-                _terminalIdBytes = checked(_terminalIdBytes + EstimatedTerminalIdBytes);
-                if (_terminalIdBytes > VoiceProtocolConstants.MaxTrackedIdentityBytes)
+                if (_terminalIdBytes > VoiceProtocolConstants.MaxTrackedIdentityBytes - EstimatedTerminalIdBytes)
                 {
-                    throw new VoiceBridgeProtocolException(
-                        "Terminal response identity tracking byte limit exceeded.",
-                        VoiceProtocolConstants.ClosePolicyViolation);
+                    throw new VoiceResourceExhaustedException("connection terminal identity tracking bytes");
                 }
+
+                _resourceGovernor.ReserveIdentityBytes(EstimatedTerminalIdBytes);
+                added = _terminalResponseIds.Add(response.ResponseId);
+                _terminalIdBytes = checked(_terminalIdBytes + EstimatedTerminalIdBytes);
             }
         }
 
@@ -265,6 +269,11 @@ internal sealed class VoiceTerminationCoordinator
         }
 
         termination.Response.ReleaseOutputBuffers();
+        if (!termination.Response.IsWireOpened)
+        {
+            termination.Response.ReleaseRetainedIdentities();
+        }
+
         return termination.TurnTermination.Complete();
     }
 
@@ -283,6 +292,10 @@ internal sealed class VoiceTerminationCoordinator
         lock (_sync)
         {
             _terminalResponseIds.Clear();
+            if (_terminalIdBytes > 0)
+            {
+                _resourceGovernor.ReleaseIdentityBytes(_terminalIdBytes);
+            }
             _terminalIdBytes = 0;
         }
 
@@ -321,7 +334,7 @@ internal sealed class VoiceTerminationCoordinator
             return;
         }
 
-        _recordCloseCode(1006);
+        _selectCloseCode(1006);
         CancelRuntime();
         AbortBestEffort();
     }

@@ -17,10 +17,13 @@ namespace Azure.AI.AgentServer.Invocations;
 /// maps a clean handler return to RFC 6455 close code <c>1000</c>
 /// (<c>NormalClosure</c>) and an uncaught handler exception to
 /// <c>1011</c> (<c>InternalServerError</c>), preserves handler-initiated
-/// close codes unchanged, and emits a structured close-event log line
-/// carrying <c>azure.ai.agentserver.invocations_ws.session_id</c>,
-/// <c>azure.ai.agentserver.invocations_ws.close_code</c>, and
-/// <c>azure.ai.agentserver.invocations_ws.duration_ms</c>.</para>
+/// valid close codes unchanged, maps reserved or invalid local statuses to
+/// <c>1011</c> for a wire attempt, and makes one bounded best-effort attempt to
+/// enqueue a structured close-event log. The log's
+/// <c>azure.ai.agentserver.invocations_ws.close_code</c> is the endpoint's final
+/// local transport classification; selected and attempted close codes are
+/// carried in separate fields. Queue acceptance does not guarantee external
+/// logger or exporter completion.</para>
 /// <para>The inherited <see cref="HandleAsync"/> (HTTP
 /// <c>POST /invocations</c>) returns <c>404 Not Found</c> by default — a
 /// WS-only handler does not need to override it. Multi-protocol handlers

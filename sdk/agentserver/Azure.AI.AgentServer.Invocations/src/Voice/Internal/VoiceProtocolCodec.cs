@@ -150,111 +150,6 @@ internal static class VoiceProtocolCodec
             RequirePrefixedId(root, "item_id", VoiceProtocolConstants.InputItemPrefix),
             RequirePositiveInt(root, "count"));
 
-    /// <summary>Parses and validates a <c>conversation.item.create</c> mutation.</summary>
-    public static ConversationItemCreateEvent ParseConversationItemCreate(JsonElement root)
-    {
-        var requestId = RequireNonEmptyStringValue(root, "id");
-        if (!root.TryGetProperty("item", out var item) || item.ValueKind != JsonValueKind.Object)
-        {
-            throw new VoiceBridgeProtocolException("conversation.item.create item must be an object.");
-        }
-
-        var itemId = RequirePrefixedId(item, "id", VoiceProtocolConstants.HistoryItemPrefix);
-        if (RequireString(item, "role") != "user")
-        {
-            throw new VoiceBridgeProtocolException(
-                "conversation.item.create role must be user.",
-                VoiceProtocolConstants.ClosePolicyViolation);
-        }
-
-        var previousItemId = OptionalString(root, "previous_item_id");
-        if (previousItemId is not null &&
-            previousItemId != "root" &&
-            !HasPrefix(previousItemId, VoiceProtocolConstants.InputItemPrefix) &&
-            !HasPrefix(previousItemId, VoiceProtocolConstants.HistoryItemPrefix) &&
-            !HasPrefix(previousItemId, VoiceProtocolConstants.OutputItemPrefix))
-        {
-            throw new VoiceBridgeProtocolException(
-                "previous_item_id must be root or start with in_, hi_, or it_.",
-                VoiceProtocolConstants.ClosePolicyViolation);
-        }
-
-        var content = ParseContentParts(item, "conversation.item.create");
-        if (content.Count == 0)
-        {
-            throw new VoiceBridgeProtocolException("conversation.item.create contains no supported content parts.");
-        }
-
-        return new ConversationItemCreateEvent(
-            requestId,
-            new ConversationHistoryItem(itemId, content),
-            previousItemId);
-    }
-
-    /// <summary>Parses and validates a <c>conversation.item.delete</c> mutation.</summary>
-    public static ConversationItemDeleteEvent ParseConversationItemDelete(JsonElement root)
-    {
-        var itemId = RequireNonEmptyStringValue(root, "item_id");
-        if (!HasPrefix(itemId, VoiceProtocolConstants.HistoryItemPrefix) &&
-            !HasPrefix(itemId, VoiceProtocolConstants.OutputItemPrefix))
-        {
-            throw new VoiceBridgeProtocolException(
-                "conversation.item.delete item_id must start with hi_ or it_.",
-                VoiceProtocolConstants.ClosePolicyViolation);
-        }
-
-        return new ConversationItemDeleteEvent(
-            RequireNonEmptyStringValue(root, "id"),
-            itemId);
-    }
-
-    /// <summary>Parses a raw-key or collected-result <c>dtmf</c> event.</summary>
-    public static object ParseDtmf(JsonElement root)
-    {
-        var digits = RequireString(root, "digits");
-        var hasCollection = root.TryGetProperty("collection_id", out _);
-        var hasItem = root.TryGetProperty("item_id", out _);
-        var hasReason = root.TryGetProperty("completion_reason", out _);
-        if (!hasCollection && !hasItem && !hasReason)
-        {
-            if (digits.Length != 1 || !IsDtmfKey(digits[0]))
-            {
-                throw new VoiceBridgeProtocolException("Raw dtmf digits must contain exactly one DTMF key.");
-            }
-
-            return new DtmfKeyEvent(digits);
-        }
-
-        if (!hasCollection || !hasItem || !hasReason)
-        {
-            throw new VoiceBridgeProtocolException(
-                "Collected dtmf requires collection_id, item_id, and completion_reason.");
-        }
-
-        if (digits.Any(character => !IsDtmfKey(character)))
-        {
-            throw new VoiceBridgeProtocolException("Collected dtmf digits contain an invalid key.");
-        }
-
-        return new DtmfCollectedEvent(
-            RequirePrefixedId(root, "item_id", VoiceProtocolConstants.InputItemPrefix),
-            RequirePrefixedId(root, "collection_id", VoiceProtocolConstants.DtmfCollectionPrefix),
-            digits,
-            RequireNonEmptyStringValue(root, "completion_reason"));
-    }
-
-    /// <summary>Parses a <c>dtmf.collect.rejected</c> event.</summary>
-    public static DtmfCollectionRejectedEvent ParseDtmfCollectionRejected(JsonElement root) =>
-        new(
-            RequirePrefixedId(root, "collection_id", VoiceProtocolConstants.DtmfCollectionPrefix),
-            RequireNonEmptyStringValue(root, "reason"));
-
-    /// <summary>Parses a <c>dtmf.collect.cancelled</c> event.</summary>
-    public static DtmfCollectionCancelledEvent ParseDtmfCollectionCancelled(JsonElement root) =>
-        new(
-            RequirePrefixedId(root, "collection_id", VoiceProtocolConstants.DtmfCollectionPrefix),
-            RequireNonEmptyStringValue(root, "reason"));
-
     /// <summary>Parses a bridge-generated <c>handoff.failed</c> recovery turn.</summary>
     public static HandoffFailedEvent ParseHandoffFailed(JsonElement root) =>
         new(
@@ -357,10 +252,6 @@ internal static class VoiceProtocolCodec
     /// <summary>Returns one required response ID.</summary>
     public static string ParseResponseId(JsonElement root) =>
         RequirePrefixedId(root, "response_id", VoiceProtocolConstants.ResponsePrefix);
-
-    /// <summary>Returns one required collection ID.</summary>
-    public static string ParseCollectionId(JsonElement root) =>
-        RequirePrefixedId(root, "collection_id", VoiceProtocolConstants.DtmfCollectionPrefix);
 
     /// <summary>Returns one required non-empty open-enum reason.</summary>
     public static string ParseReason(JsonElement root) => RequireNonEmptyStringValue(root, "reason");
@@ -580,9 +471,6 @@ internal static class VoiceProtocolCodec
         var marker = prefix + "_";
         return value.StartsWith(marker, StringComparison.Ordinal) && value.Length > marker.Length;
     }
-
-    private static bool IsDtmfKey(char value) =>
-        (value >= '0' && value <= '9') || value is '*' or '#';
 
     private static int RequirePositiveInt(JsonElement root, string name)
     {

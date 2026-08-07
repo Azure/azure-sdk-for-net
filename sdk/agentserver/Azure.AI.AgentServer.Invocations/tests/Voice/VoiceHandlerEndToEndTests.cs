@@ -8,10 +8,12 @@ using System.Text;
 using System.Text.Json;
 using Azure.AI.AgentServer.Invocations.Internal;
 using Azure.AI.AgentServer.Invocations.Voice;
+using Azure.AI.AgentServer.Invocations.Voice.Internal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Invocations.Tests.Voice;
@@ -78,6 +80,46 @@ public class VoiceHandlerEndToEndTests
     }
 
     [Test]
+    public async Task HostCustomerTaskAdmissionRejectsAnotherConnectionUntilOriginalTaskCompletes()
+    {
+        var governor = new VoiceResourceGovernor(new VoiceResourceLimits
+        {
+            MaxCustomerTasks = 1,
+        });
+        var handler = new BlockingFirstStartupHandler();
+        await using var app = BuildApp(handler, governor);
+        await app.StartAsync();
+        using var first = await ConnectAsync(app);
+        using var rejected = await ConnectAsync(app);
+
+        await SendAsync(first, SessionStartFrame("m_first"));
+        await handler.FirstStarted.Task.WaitAsync(TestTimeout);
+        await SendAsync(rejected, SessionStartFrame("m_rejected"));
+        using var rejection = await ReceiveJsonAsync(rejected);
+        Assert.Multiple(() =>
+        {
+            Assert.That(rejection.RootElement.GetProperty("type").GetString(), Is.EqualTo("session.rejected"));
+            Assert.That(rejection.RootElement.GetProperty("code").GetString(), Is.EqualTo("startup_failed"));
+            Assert.That(handler.StartupCount, Is.EqualTo(1));
+            Assert.That(governor.CustomerTaskCount, Is.EqualTo(1));
+        });
+
+        handler.AllowFirst.TrySetResult();
+        using var firstReady = await ReceiveJsonAsync(first);
+        Assert.That(firstReady.RootElement.GetProperty("type").GetString(), Is.EqualTo("session.ready"));
+        Assert.That(governor.CustomerTaskCount, Is.Zero);
+
+        using var admitted = await ConnectAsync(app);
+        await SendAsync(admitted, SessionStartFrame("m_admitted"));
+        using var admittedReady = await ReceiveJsonAsync(admitted);
+        Assert.Multiple(() =>
+        {
+            Assert.That(admittedReady.RootElement.GetProperty("type").GetString(), Is.EqualTo("session.ready"));
+            Assert.That(handler.StartupCount, Is.EqualTo(2));
+        });
+    }
+
+    [Test]
     public async Task SessionExposesInvocationTransportContext()
     {
         var handler = new ContextCapturingHandler();
@@ -133,6 +175,86 @@ public class VoiceHandlerEndToEndTests
             Assert.That(output.RootElement.GetProperty("type").GetString(), Is.EqualTo("response.output_text.done"));
             Assert.That(output.RootElement.GetProperty("text").GetString(), Is.EqualTo("Silence count 2"));
             Assert.That(done.RootElement.GetProperty("type").GetString(), Is.EqualTo("response.done"));
+        });
+    }
+
+    [Test]
+    public async Task ResponseWriteBudgetExhaustionEmitsResponseScopedError()
+    {
+        var governor = new VoiceResourceGovernor(new VoiceResourceLimits
+        {
+            MaxResponseOutputWrites = 1,
+        });
+        await using var app = BuildApp(new TinyDeltaStormHandler(), governor);
+        await app.StartAsync();
+        using var webSocket = await ConnectAndActivateAsync(app);
+
+        await SendAsync(webSocket, UserMessageFrame("m_user", "in_user", "speak"));
+        using var created = await ReceiveJsonAsync(webSocket);
+        using var firstDelta = await ReceiveJsonAsync(webSocket);
+        using var terminal = await ReceiveJsonAsync(webSocket);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(created.RootElement.GetProperty("type").GetString(), Is.EqualTo("response.created"));
+            Assert.That(firstDelta.RootElement.GetProperty("type").GetString(), Is.EqualTo("response.output_text.delta"));
+            Assert.That(terminal.RootElement.GetProperty("type").GetString(), Is.EqualTo("error"));
+            Assert.That(terminal.RootElement.GetProperty("code").GetString(), Is.EqualTo("handler_error"));
+            Assert.That(terminal.RootElement.GetProperty("response_id").GetString(),
+                Is.EqualTo(created.RootElement.GetProperty("response_id").GetString()));
+        });
+    }
+
+    [Test]
+    public async Task MatchingHandoffFailureCreatesRecoveryTurn()
+    {
+        var handler = new HandoffRecoveryHandler();
+        await using var app = BuildApp(handler);
+        await app.StartAsync();
+        using var webSocket = await ConnectAndActivateAsync(app);
+
+        await SendAsync(webSocket, UserMessageFrame("m_user", "in_user", "transfer"));
+        using var sourceCreated = await ReceiveJsonAsync(webSocket);
+        using var handoff = await ReceiveJsonAsync(webSocket);
+        Assert.That(handoff.RootElement.GetProperty("type").GetString(), Is.EqualTo("handoff"));
+
+        await SendAsync(webSocket, """
+            {"type":"handoff.failed","id":"m_handoff_failed","ts":"2026-08-03T00:00:02.000Z","item_id":"in_recovery","target":"target-agent","code":"target_unavailable"}
+            """);
+        using var recoveryCreated = await ReceiveJsonAsync(webSocket);
+        using var recoveryOutput = await ReceiveJsonAsync(webSocket);
+        using var recoveryDone = await ReceiveJsonAsync(webSocket);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(recoveryCreated.RootElement.GetProperty("type").GetString(), Is.EqualTo("response.created"));
+            Assert.That(recoveryOutput.RootElement.GetProperty("text").GetString(), Is.EqualTo("handoff recovered"));
+            Assert.That(recoveryDone.RootElement.GetProperty("type").GetString(), Is.EqualTo("response.done"));
+            Assert.That(handler.HandoffFailureCount, Is.EqualTo(1));
+        });
+    }
+
+    [Test]
+    public async Task MismatchedHandoffFailureClosesWithoutRecoveryCallback()
+    {
+        var handler = new HandoffRecoveryHandler();
+        await using var app = BuildApp(handler);
+        await app.StartAsync();
+        using var webSocket = await ConnectAndActivateAsync(app);
+
+        await SendAsync(webSocket, UserMessageFrame("m_user", "in_user", "transfer"));
+        using var sourceCreated = await ReceiveJsonAsync(webSocket);
+        using var handoff = await ReceiveJsonAsync(webSocket);
+        await SendAsync(webSocket, """
+            {"type":"handoff.failed","id":"m_handoff_failed","ts":"2026-08-03T00:00:02.000Z","item_id":"in_recovery","target":"wrong-agent","code":"target_unavailable"}
+            """);
+
+        var close = await webSocket.ReceiveAsync(new byte[256], CancellationToken.None).WaitAsync(TestTimeout);
+        Assert.Multiple(() =>
+        {
+            Assert.That(close.MessageType, Is.EqualTo(WebSocketMessageType.Close));
+            Assert.That((int?)webSocket.CloseStatus, Is.EqualTo(VoiceProtocolConstants.ClosePolicyViolation));
+            Assert.That(handler.HandoffFailureCount, Is.Zero);
         });
     }
 
@@ -254,9 +376,6 @@ public class VoiceHandlerEndToEndTests
         await SendAsync(webSocket, """
             {"type":"user.speech_started","id":"m_late_signal","ts":"2026-08-03T00:00:01.000Z"}
             """);
-        await SendAsync(webSocket, """
-            {"type":"conversation.item.create","id":"m_late_history","ts":"2026-08-03T00:00:02.000Z","item":{"id":"hi_late","role":"user","content":[{"type":"input_text","text":"must not persist"}]}}
-            """);
         await SendAsync(webSocket, UserMessageFrame("m_late_turn", "in_late", "must not run"));
         await SendAsync(webSocket, """
             {"type":"session.end","id":"m_end","ts":"2026-08-03T00:00:03.000Z","reason":"agent_completed"}
@@ -266,7 +385,6 @@ public class VoiceHandlerEndToEndTests
         Assert.Multiple(() =>
         {
             Assert.That(handler.SignalCallbackCount, Is.Zero);
-            Assert.That(handler.HistoryCallbackCount, Is.Zero);
             Assert.That(handler.UserMessageCallbackCount, Is.EqualTo(1));
         });
     }
@@ -824,113 +942,6 @@ public class VoiceHandlerEndToEndTests
     }
 
     [Test]
-    public async Task DtmfCollectionCompletesAsNewResponseTurn()
-    {
-        var handler = new DtmfHandler();
-        await using var app = BuildApp(handler);
-        await app.StartAsync();
-        using var webSocket = await ConnectAndActivateAsync(app);
-
-        await SendAsync(webSocket, UserMessageFrame("m_user", "in_1", "menu"));
-        using var created = await ReceiveJsonAsync(webSocket);
-        using var menu = await ReceiveJsonAsync(webSocket);
-        using var collect = await ReceiveJsonAsync(webSocket);
-        using var done = await ReceiveJsonAsync(webSocket);
-        var collectionId = collect.RootElement.GetProperty("collection_id").GetString()!;
-        Assert.That(collect.RootElement.GetProperty("type").GetString(), Is.EqualTo("dtmf.collect"));
-
-        await SendAsync(webSocket, $$"""
-            {"type":"dtmf","id":"m_digits","ts":"2026-08-03T00:00:02.000Z","collection_id":"{{collectionId}}","item_id":"in_digits","digits":"12","completion_reason":"max_digits"}
-            """);
-
-        using var replyCreated = await ReceiveJsonAsync(webSocket);
-        using var reply = await ReceiveJsonAsync(webSocket);
-        using var replyDone = await ReceiveJsonAsync(webSocket);
-        Assert.Multiple(() =>
-        {
-            Assert.That(replyCreated.RootElement.GetProperty("in_reply_to")[0].GetString(), Is.EqualTo("in_digits"));
-            Assert.That(reply.RootElement.GetProperty("text").GetString(), Is.EqualTo("Received 2 digits"));
-            Assert.That(replyDone.RootElement.GetProperty("type").GetString(), Is.EqualTo("response.done"));
-        });
-    }
-
-    [Test]
-    public async Task HistoryMutationCompletesBeforeLaterTurnDispatch()
-    {
-        var handler = new OrderedHistoryHandler();
-        await using var app = BuildApp(handler);
-        await app.StartAsync();
-        using var webSocket = await ConnectAndActivateAsync(app);
-
-        await SendAsync(webSocket, """
-            {"type":"conversation.item.create","id":"m_history","ts":"2026-08-03T00:00:01.000Z","item":{"id":"hi_1","role":"user","content":[{"type":"input_text","text":"context"}]}}
-            """);
-        await handler.HistoryStarted.Task.WaitAsync(TestTimeout);
-        await SendAsync(webSocket, UserMessageFrame("m_user", "in_1", "question"));
-        Assert.That(handler.UserTurnStarted.Task.IsCompleted, Is.False);
-
-        handler.AllowHistory.TrySetResult();
-        using var mutationResult = await ReceiveJsonAsync(webSocket);
-        await handler.UserTurnStarted.Task.WaitAsync(TestTimeout);
-        using var created = await ReceiveJsonAsync(webSocket);
-        using var output = await ReceiveJsonAsync(webSocket);
-        using var done = await ReceiveJsonAsync(webSocket);
-
-        Assert.That(mutationResult.RootElement.GetProperty("type").GetString(), Is.EqualTo("conversation.item.created"));
-    }
-
-    [Test]
-    public async Task HistoryMutationCanInsertAfterUserInputItem()
-    {
-        var handler = new HistoryIdentityHandler();
-        await using var app = BuildApp(handler);
-        await app.StartAsync();
-        using var webSocket = await ConnectAndActivateAsync(app);
-
-        await SendAsync(webSocket, UserMessageFrame("m_user", "in_anchor", "anchor"));
-        using var created = await ReceiveJsonAsync(webSocket);
-        using var output = await ReceiveJsonAsync(webSocket);
-        using var done = await ReceiveJsonAsync(webSocket);
-        await SendAsync(webSocket, """
-            {"type":"conversation.item.create","id":"m_history","ts":"2026-08-03T00:00:01.000Z","previous_item_id":"in_anchor","item":{"id":"hi_after_anchor","role":"user","content":[{"type":"input_text","text":"context"}]}}
-            """);
-
-        using var mutationResult = await ReceiveJsonAsync(webSocket);
-        var mutation = await handler.HistoryCreated.Task.WaitAsync(TestTimeout);
-        Assert.Multiple(() =>
-        {
-            Assert.That(mutation.PreviousItemId, Is.EqualTo("in_anchor"));
-            Assert.That(mutationResult.RootElement.GetProperty("type").GetString(), Is.EqualTo("conversation.item.created"));
-        });
-    }
-
-    [Test]
-    public async Task ReusedHistoryItemIdClosesWithPolicyViolationBeforeSecondCallback()
-    {
-        var handler = new HistoryIdentityHandler();
-        await using var app = BuildApp(handler);
-        await app.StartAsync();
-        using var webSocket = await ConnectAndActivateAsync(app);
-
-        await SendAsync(webSocket, """
-            {"type":"conversation.item.create","id":"m_history_1","ts":"2026-08-03T00:00:01.000Z","item":{"id":"hi_reused","role":"user","content":[{"type":"input_text","text":"first"}]}}
-            """);
-        using var firstResult = await ReceiveJsonAsync(webSocket);
-        await handler.HistoryCreated.Task.WaitAsync(TestTimeout);
-        await SendAsync(webSocket, """
-            {"type":"conversation.item.create","id":"m_history_2","ts":"2026-08-03T00:00:02.000Z","item":{"id":"hi_reused","role":"user","content":[{"type":"input_text","text":"second"}]}}
-            """);
-
-        var close = await webSocket.ReceiveAsync(new byte[128], CancellationToken.None).WaitAsync(TestTimeout);
-        Assert.Multiple(() =>
-        {
-            Assert.That(close.MessageType, Is.EqualTo(WebSocketMessageType.Close));
-            Assert.That((int?)webSocket.CloseStatus, Is.EqualTo(1008));
-            Assert.That(handler.HistoryCallbackCount, Is.EqualTo(1));
-        });
-    }
-
-    [Test]
     public async Task ExactDuplicateIsIgnoredBeforeSemanticDispatch()
     {
         var handler = new DedupeHandler();
@@ -993,6 +1004,10 @@ public class VoiceHandlerEndToEndTests
         Assert.Multiple(() =>
         {
             Assert.That(connection.GetTagItem("azure.ai.agentserver.invocations_ws.close_code"), Is.EqualTo(1008));
+            Assert.That(connection.GetTagItem("azure.ai.agentserver.invocations_ws.selected_close_code"), Is.EqualTo(1008));
+            Assert.That(connection.GetTagItem("azure.ai.agentserver.invocations_ws.attempted_close_code"), Is.EqualTo(1008));
+            Assert.That(connection.GetTagItem("azure.ai.agentserver.invocations_ws.close_outcome"),
+                Is.EqualTo("local_close_output_completed"));
             Assert.That(connection.Status, Is.EqualTo(ActivityStatusCode.Error));
         });
     }
@@ -1335,26 +1350,6 @@ public class VoiceHandlerEndToEndTests
     }
 
     [Test]
-    public async Task HistoryMutationFailureEmitsCorrelatedFailure()
-    {
-        await using var app = BuildApp(new FailingHistoryHandler());
-        await app.StartAsync();
-        using var webSocket = await ConnectAndActivateAsync(app);
-
-        await SendAsync(webSocket, """
-            {"type":"conversation.item.delete","id":"m_delete","ts":"2026-08-03T00:00:01.000Z","item_id":"hi_1"}
-            """);
-
-        using var failure = await ReceiveJsonAsync(webSocket);
-        Assert.Multiple(() =>
-        {
-            Assert.That(failure.RootElement.GetProperty("type").GetString(), Is.EqualTo("conversation.item.failed"));
-            Assert.That(failure.RootElement.GetProperty("request_id").GetString(), Is.EqualTo("m_delete"));
-            Assert.That(failure.RootElement.GetProperty("message").GetString(), Is.EqualTo("History mutation callback failed"));
-        });
-    }
-
-    [Test]
     public async Task ReattachCreatesFreshRuntimeAndSurfacesReconnectContext()
     {
         var handler = new ReconnectHandler();
@@ -1379,7 +1374,9 @@ public class VoiceHandlerEndToEndTests
         Assert.That(activations, Is.EqualTo(new[] { false, true }));
     }
 
-    private static WebApplication BuildApp(VoiceHandler handler)
+    private static WebApplication BuildApp(
+        VoiceHandler handler,
+        VoiceResourceGovernor? resourceGovernor = null)
     {
         var builder = WebApplication.CreateBuilder(new WebApplicationOptions
         {
@@ -1387,6 +1384,11 @@ public class VoiceHandlerEndToEndTests
         });
         builder.WebHost.UseTestServer();
         builder.Services.AddInvocationsServer();
+        if (resourceGovernor is not null)
+        {
+            builder.Services.Replace(ServiceDescriptor.Singleton(resourceGovernor));
+        }
+
         builder.Services.AddSingleton<InvocationHandler>(handler);
 
         var app = builder.Build();
@@ -1489,7 +1491,6 @@ public class VoiceHandlerEndToEndTests
     private sealed class AgentTerminalPhaseHandler : VoiceHandler
     {
         private int _signalCallbackCount;
-        private int _historyCallbackCount;
         private int _userMessageCallbackCount;
 
         public TaskCompletionSource TerminalSent { get; } =
@@ -1499,8 +1500,6 @@ public class VoiceHandlerEndToEndTests
             new(TaskCreationOptions.RunContinuationsAsynchronously);
 
         public int SignalCallbackCount => Volatile.Read(ref _signalCallbackCount);
-
-        public int HistoryCallbackCount => Volatile.Read(ref _historyCallbackCount);
 
         public int UserMessageCallbackCount => Volatile.Read(ref _userMessageCallbackCount);
 
@@ -1521,15 +1520,6 @@ public class VoiceHandlerEndToEndTests
             CancellationToken cancellationToken)
         {
             Interlocked.Increment(ref _signalCallbackCount);
-            return Task.CompletedTask;
-        }
-
-        protected override Task OnConversationItemCreateAsync(
-            VoiceSession session,
-            ConversationItemCreateEvent create,
-            CancellationToken cancellationToken)
-        {
-            Interlocked.Increment(ref _historyCallbackCount);
             return Task.CompletedTask;
         }
 
@@ -1573,6 +1563,39 @@ public class VoiceHandlerEndToEndTests
             CancellationToken cancellationToken) => Task.CompletedTask;
     }
 
+    private sealed class BlockingFirstStartupHandler : VoiceHandler
+    {
+        private int _startupCount;
+
+        public TaskCompletionSource FirstStarted { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public TaskCompletionSource AllowFirst { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public int StartupCount => Volatile.Read(ref _startupCount);
+
+        protected override Task OnSessionStartAsync(
+            VoiceSession session,
+            SessionStartEvent startEvent,
+            CancellationToken cancellationToken)
+        {
+            if (Interlocked.Increment(ref _startupCount) != 1)
+            {
+                return Task.CompletedTask;
+            }
+
+            FirstStarted.TrySetResult();
+            return AllowFirst.Task;
+        }
+
+        protected override Task OnUserMessageAsync(
+            VoiceSession session,
+            UserMessageEvent message,
+            VoiceResponse response,
+            CancellationToken cancellationToken) => Task.CompletedTask;
+    }
+
     private sealed class ContextCapturingHandler : VoiceHandler
     {
         public TaskCompletionSource<InvocationContext> Context { get; } =
@@ -1592,6 +1615,43 @@ public class VoiceHandlerEndToEndTests
             UserMessageEvent message,
             VoiceResponse response,
             CancellationToken cancellationToken) => Task.CompletedTask;
+    }
+
+    private sealed class TinyDeltaStormHandler : VoiceHandler
+    {
+        protected override async Task OnUserMessageAsync(
+            VoiceSession session,
+            UserMessageEvent message,
+            VoiceResponse response,
+            CancellationToken cancellationToken)
+        {
+            await response.SendTextDeltaAsync("a", cancellationToken);
+            await response.SendTextDeltaAsync("b", cancellationToken);
+        }
+    }
+
+    private sealed class HandoffRecoveryHandler : VoiceHandler
+    {
+        private int _handoffFailureCount;
+
+        public int HandoffFailureCount => Volatile.Read(ref _handoffFailureCount);
+
+        protected override Task OnUserMessageAsync(
+            VoiceSession session,
+            UserMessageEvent message,
+            VoiceResponse response,
+            CancellationToken cancellationToken) =>
+            response.HandoffAsync("target-agent", cancellationToken: cancellationToken);
+
+        protected override Task OnHandoffFailedAsync(
+            VoiceSession session,
+            HandoffFailedEvent failure,
+            VoiceResponse response,
+            CancellationToken cancellationToken)
+        {
+            Interlocked.Increment(ref _handoffFailureCount);
+            return response.SendTextAsync("handoff recovered", cancellationToken);
+        }
     }
 
     private sealed class BlockingTurnHandler : VoiceHandler
@@ -1975,88 +2035,6 @@ public class VoiceHandlerEndToEndTests
         }
     }
 
-    private sealed class DtmfHandler : VoiceHandler
-    {
-        protected override async Task OnUserMessageAsync(
-            VoiceSession session,
-            UserMessageEvent message,
-            VoiceResponse response,
-            CancellationToken cancellationToken)
-        {
-            await response.SendTextAsync("Enter digits", cancellationToken);
-            _ = await response.CollectDtmfAsync(
-                maxDigits: 2,
-                initialTimeoutMs: 10000,
-                interDigitTimeoutMs: 5000,
-                terminator: "#",
-                cancellationToken);
-        }
-
-        protected override Task OnDtmfCollectedAsync(
-            VoiceSession session,
-            DtmfCollectedEvent dtmf,
-            VoiceResponse response,
-            CancellationToken cancellationToken) =>
-            response.SendTextAsync($"Received {dtmf.Digits.Length} digits", cancellationToken);
-    }
-
-    private sealed class OrderedHistoryHandler : VoiceHandler
-    {
-        public TaskCompletionSource HistoryStarted { get; } =
-            new(TaskCreationOptions.RunContinuationsAsynchronously);
-
-        public TaskCompletionSource AllowHistory { get; } =
-            new(TaskCreationOptions.RunContinuationsAsynchronously);
-
-        public TaskCompletionSource UserTurnStarted { get; } =
-            new(TaskCreationOptions.RunContinuationsAsynchronously);
-
-        protected override async Task OnConversationItemCreateAsync(
-            VoiceSession session,
-            ConversationItemCreateEvent create,
-            CancellationToken cancellationToken)
-        {
-            HistoryStarted.TrySetResult();
-            await AllowHistory.Task.WaitAsync(cancellationToken);
-        }
-
-        protected override Task OnUserMessageAsync(
-            VoiceSession session,
-            UserMessageEvent message,
-            VoiceResponse response,
-            CancellationToken cancellationToken)
-        {
-            UserTurnStarted.TrySetResult();
-            return response.SendTextAsync("after history", cancellationToken);
-        }
-    }
-
-    private sealed class HistoryIdentityHandler : VoiceHandler
-    {
-        private int _historyCallbackCount;
-
-        public TaskCompletionSource<ConversationItemCreateEvent> HistoryCreated { get; } =
-            new(TaskCreationOptions.RunContinuationsAsynchronously);
-
-        public int HistoryCallbackCount => Volatile.Read(ref _historyCallbackCount);
-
-        protected override Task OnConversationItemCreateAsync(
-            VoiceSession session,
-            ConversationItemCreateEvent create,
-            CancellationToken cancellationToken)
-        {
-            Interlocked.Increment(ref _historyCallbackCount);
-            HistoryCreated.TrySetResult(create);
-            return Task.CompletedTask;
-        }
-
-        protected override Task OnUserMessageAsync(
-            VoiceSession session,
-            UserMessageEvent message,
-            VoiceResponse response,
-            CancellationToken cancellationToken) => response.SendTextAsync("anchor", cancellationToken);
-    }
-
     private sealed class DedupeHandler : VoiceHandler
     {
         private int _userMessageCount;
@@ -2238,20 +2216,6 @@ public class VoiceHandlerEndToEndTests
             UserMessageEvent message,
             VoiceResponse response,
             CancellationToken cancellationToken) => Task.CompletedTask;
-    }
-
-    private sealed class FailingHistoryHandler : VoiceHandler
-    {
-        protected override Task OnUserMessageAsync(
-            VoiceSession session,
-            UserMessageEvent message,
-            VoiceResponse response,
-            CancellationToken cancellationToken) => Task.CompletedTask;
-
-        protected override Task OnConversationItemDeleteAsync(
-            VoiceSession session,
-            ConversationItemDeleteEvent delete,
-            CancellationToken cancellationToken) => throw new InvalidOperationException("sensitive failure");
     }
 
     private sealed class ReconnectHandler : VoiceHandler

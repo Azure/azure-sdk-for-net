@@ -4,6 +4,8 @@
 using System.Diagnostics;
 using System.Net.WebSockets;
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Invocations.Voice;
+using Azure.AI.AgentServer.Invocations.Voice.Internal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
@@ -20,25 +22,30 @@ namespace Azure.AI.AgentServer.Invocations.Internal;
 /// child activity spanning the accepted socket through bounded close, and also
 /// emits a structured close-event log line carrying
 /// <c>azure.ai.agentserver.invocations_ws.session_id</c>,
-/// <c>azure.ai.agentserver.invocations_ws.close_code</c>, and
-/// <c>azure.ai.agentserver.invocations_ws.duration_ms</c>.
+/// final <c>azure.ai.agentserver.invocations_ws.close_code</c>, separate selected
+/// and attempted close codes, outcome, and duration. Emission is one bounded
+/// best-effort enqueue attempt and never changes transport teardown.
 /// </remarks>
 internal sealed class WebSocketEndpointHandler
 {
     private const string SessionIdResponseHeader = PlatformHeaders.SessionId;
     private static readonly TimeSpan TelemetryStartTimeout = TimeSpan.FromMilliseconds(100);
+    private static readonly TimeSpan CriticalTelemetryEnqueueBudget = TimeSpan.FromMilliseconds(100);
 
     private readonly InvocationsActivitySource _activitySource;
     private readonly TelemetryCallbackDispatcher _telemetryDispatcher;
+    private readonly VoiceResourceGovernor _voiceResourceGovernor;
     private readonly ILogger<WebSocketEndpointHandler> _logger;
 
     public WebSocketEndpointHandler(
         InvocationsActivitySource activitySource,
         TelemetryCallbackDispatcher telemetryDispatcher,
+        VoiceResourceGovernor voiceResourceGovernor,
         ILogger<WebSocketEndpointHandler> logger)
     {
         _activitySource = activitySource;
         _telemetryDispatcher = telemetryDispatcher;
+        _voiceResourceGovernor = voiceResourceGovernor;
         _logger = logger;
     }
 
@@ -107,7 +114,7 @@ internal sealed class WebSocketEndpointHandler
         Activity? connectionActivity = null;
         var requestActivity = Activity.Current;
         var requestBaggage = requestActivity?.Baggage.ToArray();
-        var connectionActivityTerminal = new TaskCompletionSource<ConnectionActivityTerminal>(
+        var connectionActivityTerminal = new TaskCompletionSource<WebSocketTerminationResult>(
             TaskCreationOptions.RunContinuationsAsynchronously);
 
         try
@@ -158,7 +165,18 @@ internal sealed class WebSocketEndpointHandler
 
             try
             {
-                await webSocketHandler.HandleWebSocketAsync(webSocket, context, httpContext.RequestAborted);
+                if (webSocketHandler is VoiceHandler voiceHandler)
+                {
+                    await voiceHandler.HandleWebSocketAsync(
+                        webSocket,
+                        context,
+                        _voiceResourceGovernor,
+                        httpContext.RequestAborted);
+                }
+                else
+                {
+                    await webSocketHandler.HandleWebSocketAsync(webSocket, context, httpContext.RequestAborted);
+                }
             }
             catch (OperationCanceledException oce)
                 when (oce.CancellationToken == httpContext.RequestAborted
@@ -200,25 +218,18 @@ internal sealed class WebSocketEndpointHandler
         }
         finally
         {
-            if (!abnormalClosure &&
-                webSocket is TrackingWebSocket trackingWebSocket &&
-                trackingWebSocket.SelectedCloseCode is int selectedCloseCode)
-            {
-                closeCode = selectedCloseCode;
-            }
-
-            closeCode = await CloseSocketAsync(webSocket, closeCode, sessionId, abnormalClosure);
-
             var durationMs = GetElapsedMilliseconds(startTimestamp);
-            var activityTerminal = new ConnectionActivityTerminal(
+            var termination = await FinalizeWebSocketAsync(
+                webSocket,
                 sessionId,
                 closeCode,
+                abnormalClosure,
                 durationMs,
                 errorCode,
                 activityStartTimeUtc.AddMilliseconds(durationMs));
             if (connectionActivity is not null)
             {
-                ApplyConnectionActivityTerminal(connectionActivity, activityTerminal);
+                ApplyConnectionActivityTerminal(connectionActivity, termination);
                 Activity.Current = requestActivity;
                 _ = InvocationsTelemetry.StopActivityAsync(
                     _telemetryDispatcher,
@@ -226,21 +237,22 @@ internal sealed class WebSocketEndpointHandler
                     connectionActivity.Stop);
             }
 
-            connectionActivityTerminal.TrySetResult(activityTerminal);
-            await EmitCloseEventLogAsync(webSocket, sessionId, closeCode, durationMs, errorCode);
+            connectionActivityTerminal.TrySetResult(termination);
+            InvocationsTelemetry.RecordWebSocketTermination(termination);
+            await EmitCloseEventLogAsync(webSocket, termination);
         }
     }
 
     private void ObserveLateActivity(
         Task<Activity?> activityStart,
-        Task<ConnectionActivityTerminal> activityTerminal)
+        Task<WebSocketTerminationResult> activityTerminal)
     {
         _ = CompleteLateActivityAsync(activityStart, activityTerminal);
     }
 
     private async Task CompleteLateActivityAsync(
         Task<Activity?> activityStart,
-        Task<ConnectionActivityTerminal> activityTerminal)
+        Task<WebSocketTerminationResult> activityTerminal)
     {
         var activity = await activityStart.ConfigureAwait(false);
         if (activity is null)
@@ -258,11 +270,14 @@ internal sealed class WebSocketEndpointHandler
 
     private static void ApplyConnectionActivityTerminal(
         Activity activity,
-        ConnectionActivityTerminal terminal)
+        WebSocketTerminationResult terminal)
     {
         activity.SetTag(InvocationsWebSocketConstants.AttrSpanSessionId, terminal.SessionId);
         activity.SetTag("network.protocol.name", "websocket");
-        activity.SetTag(InvocationsWebSocketConstants.AttrSpanCloseCode, terminal.CloseCode);
+        activity.SetTag(InvocationsWebSocketConstants.AttrSpanCloseCode, terminal.FinalCloseCode);
+        activity.SetTag(InvocationsWebSocketConstants.AttrSpanSelectedCloseCode, terminal.SelectedCloseCode);
+        activity.SetTag(InvocationsWebSocketConstants.AttrSpanAttemptedCloseCode, terminal.AttemptedCloseCode);
+        activity.SetTag(InvocationsWebSocketConstants.AttrSpanCloseOutcome, terminal.OutcomeName);
         activity.SetTag(InvocationsWebSocketConstants.AttrSpanDurationMs, terminal.DurationMs);
         if (terminal.ErrorCode is not null)
         {
@@ -270,21 +285,40 @@ internal sealed class WebSocketEndpointHandler
         }
 
         activity.SetStatus(
-            terminal.CloseCode == InvocationsWebSocketConstants.CloseNormal && terminal.ErrorCode is null
+            terminal.FinalCloseCode == InvocationsWebSocketConstants.CloseNormal && terminal.ErrorCode is null
                 ? ActivityStatusCode.Ok
                 : ActivityStatusCode.Error);
         activity.SetEndTime(terminal.EndTimeUtc);
     }
 
-    private async Task<int> CloseSocketAsync(
+    private async Task<WebSocketTerminationResult> FinalizeWebSocketAsync(
         WebSocket? webSocket,
-        int closeCode,
         string sessionId,
-        bool abnormalClosure)
+        int requestedCloseCode,
+        bool abnormalClosure,
+        long durationMs,
+        string? errorCode,
+        DateTime endTimeUtc)
     {
+        var trackingWebSocket = webSocket as TrackingWebSocket;
+        var selectedCloseCode = trackingWebSocket?.SelectedCloseCode ?? requestedCloseCode;
+        var localCloseInitiated = trackingWebSocket?.AttemptApi != WebSocketCloseAttemptApi.None ||
+            webSocket?.State == WebSocketState.Open;
         if (webSocket is null)
         {
-            return closeCode;
+            return WebSocketTerminationResult.Create(
+                sessionId,
+                selectedCloseCode,
+                attemptedCloseCode: null,
+                WebSocketCloseAttemptApi.None,
+                peerCloseCode: null,
+                localCloseInitiated: false,
+                wasAborted: false,
+                closeOperationSucceeded: false,
+                WebSocketState.None,
+                errorCode,
+                durationMs,
+                endTimeUtc);
         }
 
         if (abnormalClosure)
@@ -297,14 +331,30 @@ internal sealed class WebSocketEndpointHandler
             {
             }
 
+            var result = CreateTerminationResult(
+                webSocket,
+                sessionId,
+                selectedCloseCode,
+                localCloseInitiated,
+                errorCode,
+                durationMs,
+                endTimeUtc);
             webSocket.Dispose();
-            return 1006;
+            return result;
         }
 
         if (webSocket is TrackingWebSocket { WasAborted: true })
         {
+            var result = CreateTerminationResult(
+                webSocket,
+                sessionId,
+                selectedCloseCode,
+                localCloseInitiated,
+                errorCode,
+                durationMs,
+                endTimeUtc);
             webSocket.Dispose();
-            return 1006;
+            return result;
         }
 
         // Only send a close frame if neither side has already done so. The user
@@ -313,11 +363,22 @@ internal sealed class WebSocketEndpointHandler
         // server-initiated close is either redundant or invalid.
         if (webSocket.State is WebSocketState.Closed or WebSocketState.CloseSent or WebSocketState.Aborted)
         {
+            var result = CreateTerminationResult(
+                webSocket,
+                sessionId,
+                selectedCloseCode,
+                localCloseInitiated,
+                errorCode,
+                durationMs,
+                endTimeUtc);
             webSocket.Dispose();
-            return closeCode;
+            return result;
         }
 
-        var status = GetWireCloseStatus(closeCode);
+        var effectiveRequestedCode = errorCode is null
+            ? selectedCloseCode
+            : requestedCloseCode;
+        var status = (WebSocketCloseStatus)WebSocketTerminationResult.MapWireCloseCode(effectiveRequestedCode);
         var description = status == WebSocketCloseStatus.InternalServerError
             ? "Internal server error"
             : string.Empty;
@@ -333,7 +394,14 @@ internal sealed class WebSocketEndpointHandler
                 await webSocket.CloseAsync(status, description, CancellationToken.None);
                 if (((TrackingWebSocket)webSocket).WasAborted)
                 {
-                    return 1006;
+                    return CreateTerminationResult(
+                        webSocket,
+                        sessionId,
+                        selectedCloseCode,
+                        localCloseInitiated,
+                        errorCode,
+                        durationMs,
+                        endTimeUtc);
                 }
             }
             else
@@ -343,7 +411,14 @@ internal sealed class WebSocketEndpointHandler
                 await webSocket.CloseAsync(status, description, closeCancellation.Token);
             }
 
-            return (int)status;
+            return CreateTerminationResult(
+                webSocket,
+                sessionId,
+                selectedCloseCode,
+                localCloseInitiated,
+                errorCode,
+                durationMs,
+                endTimeUtc);
         }
         catch (Exception ex) when (ex is WebSocketException or ObjectDisposedException or OperationCanceledException or IOException)
         {
@@ -358,7 +433,14 @@ internal sealed class WebSocketEndpointHandler
             {
             }
 
-            return 1006;
+            return CreateTerminationResult(
+                webSocket,
+                sessionId,
+                selectedCloseCode,
+                localCloseInitiated,
+                errorCode,
+                durationMs,
+                endTimeUtc);
         }
         finally
         {
@@ -372,23 +454,29 @@ internal sealed class WebSocketEndpointHandler
         }
     }
 
-    private static WebSocketCloseStatus GetWireCloseStatus(int closeCode)
+    private static WebSocketTerminationResult CreateTerminationResult(
+        WebSocket webSocket,
+        string sessionId,
+        int? selectedCloseCode,
+        bool localCloseInitiated,
+        string? errorCode,
+        long durationMs,
+        DateTime endTimeUtc)
     {
-        // Preserve every valid RFC 6455 application/protocol close code selected
-        // by the handler or typed protocol layer. In particular, policy and data
-        // errors such as 1008/1009 must not be rewritten to normal closure 1000
-        // during endpoint cleanup.
-        if (closeCode is >= 1000 and <= 4999 &&
-            closeCode is not (1004 or 1005 or 1006 or 1015))
-        {
-            return (WebSocketCloseStatus)closeCode;
-        }
-
-        // 1004/1005/1006/1015 are reserved for local status reporting and are
-        // forbidden in a Close control frame. An invalid/out-of-range code also
-        // cannot be sent. Use 1011 on the wire while TrackingWebSocket retains
-        // the originally observed code for telemetry.
-        return WebSocketCloseStatus.InternalServerError;
+        var tracking = webSocket as TrackingWebSocket;
+        return WebSocketTerminationResult.Create(
+            sessionId,
+            selectedCloseCode,
+            tracking?.AttemptedCloseCode,
+            tracking?.AttemptApi ?? WebSocketCloseAttemptApi.None,
+            webSocket.CloseStatus is { } peerStatus ? (int)peerStatus : null,
+            localCloseInitiated,
+            tracking?.WasAborted == true || webSocket.State == WebSocketState.Aborted,
+            tracking?.CloseOperationSucceeded == true,
+            webSocket.State,
+            errorCode,
+            durationMs,
+            endTimeUtc);
     }
 
     private static long GetElapsedMilliseconds(long startTimestamp)
@@ -403,20 +491,23 @@ internal sealed class WebSocketEndpointHandler
     private const string CloseEventTemplate =
         "invocations_ws connection closed: session_id={" + InvocationsWebSocketConstants.AttrSpanSessionId +
         "} close_code={" + InvocationsWebSocketConstants.AttrSpanCloseCode +
+        "} selected_close_code={" + InvocationsWebSocketConstants.AttrSpanSelectedCloseCode +
+        "} attempted_close_code={" + InvocationsWebSocketConstants.AttrSpanAttemptedCloseCode +
+        "} close_outcome={" + InvocationsWebSocketConstants.AttrSpanCloseOutcome +
         "} duration_ms={" + InvocationsWebSocketConstants.AttrSpanDurationMs + "}";
 
     private const string CloseEventTemplateWithError =
         "invocations_ws connection closed: session_id={" + InvocationsWebSocketConstants.AttrSpanSessionId +
         "} close_code={" + InvocationsWebSocketConstants.AttrSpanCloseCode +
+        "} selected_close_code={" + InvocationsWebSocketConstants.AttrSpanSelectedCloseCode +
+        "} attempted_close_code={" + InvocationsWebSocketConstants.AttrSpanAttemptedCloseCode +
+        "} close_outcome={" + InvocationsWebSocketConstants.AttrSpanCloseOutcome +
         "} duration_ms={" + InvocationsWebSocketConstants.AttrSpanDurationMs +
         "} error_code={" + InvocationsWebSocketConstants.AttrSpanErrorCode + "}";
 
     private async Task EmitCloseEventLogAsync(
         WebSocket? webSocket,
-        string sessionId,
-        int closeCode,
-        long durationMs,
-        string? errorCode)
+        WebSocketTerminationResult termination)
     {
         // Single structured close-event log line. The message-template
         // placeholder names ARE the structured-log field names downstream
@@ -429,34 +520,60 @@ internal sealed class WebSocketEndpointHandler
         // structured close-event log line.
         using var enqueueCancellation = CreateCloseEventCancellation(
             (webSocket as TrackingWebSocket)?.CleanupDeadline);
-        if (errorCode is null)
+        Action callback;
+        if (termination.ErrorCode is null)
         {
-            await InvocationsTelemetry.QueueCriticalCallbackAsync(_telemetryDispatcher, () => _logger.LogInformation(
+            callback = () => _logger.LogInformation(
                 CloseEventTemplate,
-                sessionId,
-                closeCode,
-                durationMs), enqueueCancellation.Token);
+                termination.SessionId,
+                termination.FinalCloseCode,
+                termination.SelectedCloseCode,
+                termination.AttemptedCloseCode,
+                termination.OutcomeName,
+                termination.DurationMs);
         }
         else
         {
-            await InvocationsTelemetry.QueueCriticalCallbackAsync(_telemetryDispatcher, () => _logger.LogInformation(
+            callback = () => _logger.LogInformation(
                 CloseEventTemplateWithError,
-                sessionId,
-                closeCode,
-                durationMs,
-                errorCode), enqueueCancellation.Token);
+                termination.SessionId,
+                termination.FinalCloseCode,
+                termination.SelectedCloseCode,
+                termination.AttemptedCloseCode,
+                termination.OutcomeName,
+                termination.DurationMs,
+                termination.ErrorCode);
         }
+
+        var closeEventCallback = InvocationsTelemetry.CreateCloseEventCallback(callback);
+        var enqueueResult = await InvocationsTelemetry.QueueCriticalCallbackAsync(
+            _telemetryDispatcher,
+            closeEventCallback,
+            enqueueCancellation.Token);
+        InvocationsTelemetry.RecordCloseEventEnqueueResult(enqueueResult);
     }
 
-    internal static CancellationTokenSource CreateCloseEventCancellation(CleanupDeadline? cleanupDeadline) =>
-        cleanupDeadline?.CreateCancellationTokenSource() ??
-        new CancellationTokenSource(
-            TimeSpan.FromSeconds(InvocationsWebSocketConstants.CleanupTimeoutSeconds));
+    internal static CancellationTokenSource CreateCloseEventCancellation(CleanupDeadline? cleanupDeadline)
+    {
+        var remaining = cleanupDeadline?.Remaining ?? CriticalTelemetryEnqueueBudget;
+        var budget = GetCloseEventEnqueueBudget(remaining);
+        var cancellation = new CancellationTokenSource();
+        if (budget <= TimeSpan.Zero)
+        {
+            cancellation.Cancel();
+        }
+        else
+        {
+            cancellation.CancelAfter(budget);
+        }
 
-    private readonly record struct ConnectionActivityTerminal(
-        string SessionId,
-        int CloseCode,
-        long DurationMs,
-        string? ErrorCode,
-        DateTime EndTimeUtc);
+        return cancellation;
+    }
+
+    internal static TimeSpan GetCloseEventEnqueueBudget(TimeSpan remaining) =>
+        remaining <= TimeSpan.Zero
+            ? TimeSpan.Zero
+            : remaining < CriticalTelemetryEnqueueBudget
+                ? remaining
+                : CriticalTelemetryEnqueueBudget;
 }

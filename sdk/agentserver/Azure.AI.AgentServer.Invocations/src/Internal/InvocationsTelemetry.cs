@@ -14,7 +14,27 @@ internal static class InvocationsTelemetry
     private static readonly ObservableCounter<long> DroppedCallbacks = Meter.CreateObservableCounter(
         "azure.ai.agentserver.invocations.telemetry.callbacks.dropped",
         () => Interlocked.Read(ref _droppedCallbackCount));
+    private static readonly ObservableCounter<long> CloseEventsDroppedDeadline = Meter.CreateObservableCounter(
+        "azure.ai.agentserver.invocations_ws.close_events.dropped_deadline",
+        () => Interlocked.Read(ref _closeEventDroppedDeadlineCount));
+    private static readonly ObservableCounter<long> CloseEventsDroppedDispatcher = Meter.CreateObservableCounter(
+        "azure.ai.agentserver.invocations_ws.close_events.dropped_dispatcher",
+        () => Interlocked.Read(ref _closeEventDroppedDispatcherCount));
+    private static readonly ObservableCounter<long> CloseEventSinkFailures = Meter.CreateObservableCounter(
+        "azure.ai.agentserver.invocations_ws.close_events.sink_faulted",
+        () => Interlocked.Read(ref _closeEventSinkFaultedCount));
+    private static readonly ObservableCounter<long> WebSocketFinalCloseCodes = Meter.CreateObservableCounter(
+        "azure.ai.agentserver.invocations_ws.final_close_codes",
+        ObserveFinalCloseCodes);
+    private static readonly ObservableCounter<long> WebSocketCloseOutcomes = Meter.CreateObservableCounter(
+        "azure.ai.agentserver.invocations_ws.close_outcomes",
+        ObserveCloseOutcomes);
     private static long _droppedCallbackCount;
+    private static long _closeEventDroppedDeadlineCount;
+    private static long _closeEventDroppedDispatcherCount;
+    private static long _closeEventSinkFaultedCount;
+    private static readonly long[] FinalCloseCodeCounts = new long[5000];
+    private static readonly long[] CloseOutcomeCounts = new long[Enum.GetValues<WebSocketTerminationOutcome>().Length];
 
     public const string SourceName = "Azure.AI.AgentServer.Invocations";
 
@@ -22,19 +42,98 @@ internal static class InvocationsTelemetry
 
     internal static long DroppedCallbackCount => Interlocked.Read(ref _droppedCallbackCount);
 
+    internal static long CloseEventDroppedDeadlineCount =>
+        Interlocked.Read(ref _closeEventDroppedDeadlineCount);
+
+    internal static long CloseEventDroppedDispatcherCount =>
+        Interlocked.Read(ref _closeEventDroppedDispatcherCount);
+
+    internal static long CloseEventSinkFaultedCount =>
+        Interlocked.Read(ref _closeEventSinkFaultedCount);
+
     public static void QueueCallback(TelemetryCallbackDispatcher dispatcher, Action callback) =>
         dispatcher.TryQueue(callback);
 
     public static bool QueueCriticalCallback(TelemetryCallbackDispatcher dispatcher, Action callback) =>
         dispatcher.TryQueueCritical(callback);
 
-    public static ValueTask<bool> QueueCriticalCallbackAsync(
+    public static ValueTask<CriticalTelemetryEnqueueResult> QueueCriticalCallbackAsync(
         TelemetryCallbackDispatcher dispatcher,
         Action callback,
         CancellationToken cancellationToken) =>
         dispatcher.QueueCriticalAsync(callback, cancellationToken);
 
     internal static void RecordDroppedCallback() => Interlocked.Increment(ref _droppedCallbackCount);
+
+    internal static void RecordCloseEventEnqueueResult(CriticalTelemetryEnqueueResult result)
+    {
+        if (result == CriticalTelemetryEnqueueResult.DeadlineExpired)
+        {
+            Interlocked.Increment(ref _closeEventDroppedDeadlineCount);
+        }
+        else if (result == CriticalTelemetryEnqueueResult.DispatcherCompleted)
+        {
+            Interlocked.Increment(ref _closeEventDroppedDispatcherCount);
+        }
+    }
+
+    internal static Action CreateCloseEventCallback(Action callback)
+    {
+        ArgumentNullException.ThrowIfNull(callback);
+        return () =>
+        {
+            try
+            {
+                callback();
+            }
+            catch
+            {
+                Interlocked.Increment(ref _closeEventSinkFaultedCount);
+                throw;
+            }
+        };
+    }
+
+    internal static void RecordWebSocketTermination(WebSocketTerminationResult termination)
+    {
+        if ((uint)termination.FinalCloseCode >= FinalCloseCodeCounts.Length)
+        {
+            throw new ArgumentOutOfRangeException(nameof(termination));
+        }
+
+        Interlocked.Increment(ref FinalCloseCodeCounts[termination.FinalCloseCode]);
+        Interlocked.Increment(ref CloseOutcomeCounts[(int)termination.Outcome]);
+    }
+
+    private static IEnumerable<Measurement<long>> ObserveFinalCloseCodes()
+    {
+        for (var code = 0; code < FinalCloseCodeCounts.Length; code++)
+        {
+            var count = Interlocked.Read(ref FinalCloseCodeCounts[code]);
+            if (count != 0)
+            {
+                yield return new Measurement<long>(
+                    count,
+                    new KeyValuePair<string, object?>("code", code));
+            }
+        }
+    }
+
+    private static IEnumerable<Measurement<long>> ObserveCloseOutcomes()
+    {
+        foreach (var outcome in Enum.GetValues<WebSocketTerminationOutcome>())
+        {
+            var count = Interlocked.Read(ref CloseOutcomeCounts[(int)outcome]);
+            if (count != 0)
+            {
+                yield return new Measurement<long>(
+                    count,
+                    new KeyValuePair<string, object?>(
+                        "outcome",
+                        WebSocketTerminationResult.GetOutcomeName(outcome)));
+            }
+        }
+    }
 
     public static Task QueueCallbackAsync(TelemetryCallbackDispatcher dispatcher, Action callback)
     {
@@ -107,7 +206,9 @@ internal static class InvocationsTelemetry
                         }
                     }
 
-                    activity.SetCustomProperty(DispatcherReservationKey, dispatcher);
+                    activity.SetCustomProperty(
+                        DispatcherReservationKey,
+                        new ActivityReservation(dispatcher));
                     activityStarted?.Invoke(activity);
                 }
 
@@ -136,13 +237,23 @@ internal static class InvocationsTelemetry
     {
         ArgumentNullException.ThrowIfNull(activity);
         ArgumentNullException.ThrowIfNull(stopCallback);
-        if (!ReferenceEquals(activity.GetCustomProperty(DispatcherReservationKey), dispatcher))
+        if (activity.GetCustomProperty(DispatcherReservationKey) is not ActivityReservation reservation)
         {
             return QueueCallbackAsync(dispatcher, stopCallback);
         }
 
-        var completion = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
-        if (!dispatcher.TryQueueActivityStop(() =>
+        var reservationDispatcher = reservation.Dispatcher;
+        if (reservationDispatcher is null)
+        {
+            return reservation.StopCompletion;
+        }
+
+        if (!reservation.TryClaimStop())
+        {
+            return reservation.StopCompletion;
+        }
+
+        if (!reservationDispatcher.TryQueueActivityStop(() =>
         {
             try
             {
@@ -150,17 +261,40 @@ internal static class InvocationsTelemetry
             }
             finally
             {
-                activity.SetCustomProperty(DispatcherReservationKey, null);
-                dispatcher.ReleaseActivity();
-                completion.TrySetResult();
+                reservationDispatcher.ReleaseActivity();
+                reservation.CompleteStop();
             }
         }))
         {
-            activity.SetCustomProperty(DispatcherReservationKey, null);
-            dispatcher.ReleaseActivity();
-            completion.TrySetResult();
+            reservationDispatcher.ReleaseActivity();
+            reservation.CompleteStop();
         }
 
-        return completion.Task;
+        return reservation.StopCompletion;
+    }
+
+    private sealed class ActivityReservation
+    {
+        private readonly TaskCompletionSource _stopCompletion =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+        private TelemetryCallbackDispatcher? _dispatcher;
+        private int _stopClaimed;
+
+        public ActivityReservation(TelemetryCallbackDispatcher dispatcher)
+        {
+            _dispatcher = dispatcher;
+        }
+
+        public TelemetryCallbackDispatcher? Dispatcher => Volatile.Read(ref _dispatcher);
+
+        public Task StopCompletion => _stopCompletion.Task;
+
+        public bool TryClaimStop() => Interlocked.Exchange(ref _stopClaimed, 1) == 0;
+
+        public void CompleteStop()
+        {
+            Interlocked.Exchange(ref _dispatcher, null);
+            _stopCompletion.TrySetResult();
+        }
     }
 }

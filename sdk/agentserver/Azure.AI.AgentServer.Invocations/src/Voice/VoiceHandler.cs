@@ -22,6 +22,8 @@ namespace Azure.AI.AgentServer.Invocations.Voice;
 /// </remarks>
 public abstract class VoiceHandler : InvocationWebSocketHandler
 {
+    private readonly VoiceResourceGovernor _standaloneResourceGovernor = new();
+
     /// <summary>
     /// Invoked once, after a validated <c>session.start</c> and before readiness,
     /// to perform customer session startup. Reconnect startup must be idempotent.
@@ -69,48 +71,6 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
         UserSpeechStartedEvent speechStarted,
         CancellationToken cancellationToken) => Task.CompletedTask;
 
-    /// <summary>Invoked for one raw, session-scoped DTMF key.</summary>
-    /// <param name="session">The read-only session context.</param>
-    /// <param name="dtmf">The raw key event.</param>
-    /// <param name="cancellationToken">A token to observe for connection cancellation.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
-    protected virtual Task OnDtmfKeyAsync(
-        VoiceSession session,
-        DtmfKeyEvent dtmf,
-        CancellationToken cancellationToken) => Task.CompletedTask;
-
-    /// <summary>Invoked for one completed DTMF collection turn.</summary>
-    /// <param name="session">The read-only session context.</param>
-    /// <param name="dtmf">The collected DTMF turn.</param>
-    /// <param name="response">The response bound to the collected input item.</param>
-    /// <param name="cancellationToken">Cancelled when this turn reaches a terminal boundary.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
-    protected virtual Task OnDtmfCollectedAsync(
-        VoiceSession session,
-        DtmfCollectedEvent dtmf,
-        VoiceResponse response,
-        CancellationToken cancellationToken) => Task.CompletedTask;
-
-    /// <summary>Invoked when the bridge rejects a DTMF collection request.</summary>
-    /// <param name="session">The read-only session context.</param>
-    /// <param name="rejected">The collection rejection.</param>
-    /// <param name="cancellationToken">A token to observe for connection cancellation.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
-    protected virtual Task OnDtmfCollectionRejectedAsync(
-        VoiceSession session,
-        DtmfCollectionRejectedEvent rejected,
-        CancellationToken cancellationToken) => Task.CompletedTask;
-
-    /// <summary>Invoked when a DTMF collection ends without a collected turn.</summary>
-    /// <param name="session">The read-only session context.</param>
-    /// <param name="cancelled">The collection cancellation.</param>
-    /// <param name="cancellationToken">A token to observe for connection cancellation.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
-    protected virtual Task OnDtmfCollectionCancelledAsync(
-        VoiceSession session,
-        DtmfCollectionCancelledEvent cancelled,
-        CancellationToken cancellationToken) => Task.CompletedTask;
-
     /// <summary>Invoked for a bridge-generated handoff recovery turn.</summary>
     /// <param name="session">The read-only session context.</param>
     /// <param name="failure">The target activation failure.</param>
@@ -122,28 +82,6 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
         HandoffFailedEvent failure,
         VoiceResponse response,
         CancellationToken cancellationToken) => Task.CompletedTask;
-
-    /// <summary>Invoked to durably persist one caller-app history item.</summary>
-    /// <param name="session">The read-only session context.</param>
-    /// <param name="create">The history create request.</param>
-    /// <param name="cancellationToken">A token to observe for connection cancellation.</param>
-    /// <returns>A task that completes only after durable persistence succeeds.</returns>
-    protected virtual Task OnConversationItemCreateAsync(
-        VoiceSession session,
-        ConversationItemCreateEvent create,
-        CancellationToken cancellationToken) =>
-        Task.FromException(new InvalidOperationException("No conversation item create callback is implemented."));
-
-    /// <summary>Invoked to durably delete one conversation history item.</summary>
-    /// <param name="session">The read-only session context.</param>
-    /// <param name="delete">The history delete request.</param>
-    /// <param name="cancellationToken">A token to observe for connection cancellation.</param>
-    /// <returns>A task that completes only after durable deletion succeeds.</returns>
-    protected virtual Task OnConversationItemDeleteAsync(
-        VoiceSession session,
-        ConversationItemDeleteEvent delete,
-        CancellationToken cancellationToken) =>
-        Task.FromException(new InvalidOperationException("No conversation item delete callback is implemented."));
 
     /// <summary>Invoked after a caller interruption terminalizes a response.</summary>
     /// <param name="session">The read-only session context.</param>
@@ -191,26 +129,8 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
     internal Task InvokeUserSpeechStartedAsync(VoiceSession session, UserSpeechStartedEvent speechStarted, CancellationToken cancellationToken) =>
         OnUserSpeechStartedAsync(session, speechStarted, cancellationToken);
 
-    internal Task InvokeDtmfKeyAsync(VoiceSession session, DtmfKeyEvent dtmf, CancellationToken cancellationToken) =>
-        OnDtmfKeyAsync(session, dtmf, cancellationToken);
-
-    internal Task InvokeDtmfCollectedAsync(VoiceSession session, DtmfCollectedEvent dtmf, VoiceResponse response, CancellationToken cancellationToken) =>
-        OnDtmfCollectedAsync(session, dtmf, response, cancellationToken);
-
-    internal Task InvokeDtmfCollectionRejectedAsync(VoiceSession session, DtmfCollectionRejectedEvent rejected, CancellationToken cancellationToken) =>
-        OnDtmfCollectionRejectedAsync(session, rejected, cancellationToken);
-
-    internal Task InvokeDtmfCollectionCancelledAsync(VoiceSession session, DtmfCollectionCancelledEvent cancelled, CancellationToken cancellationToken) =>
-        OnDtmfCollectionCancelledAsync(session, cancelled, cancellationToken);
-
     internal Task InvokeHandoffFailedAsync(VoiceSession session, HandoffFailedEvent failure, VoiceResponse response, CancellationToken cancellationToken) =>
         OnHandoffFailedAsync(session, failure, response, cancellationToken);
-
-    internal Task InvokeConversationItemCreateAsync(VoiceSession session, ConversationItemCreateEvent create, CancellationToken cancellationToken) =>
-        OnConversationItemCreateAsync(session, create, cancellationToken);
-
-    internal Task InvokeConversationItemDeleteAsync(VoiceSession session, ConversationItemDeleteEvent delete, CancellationToken cancellationToken) =>
-        OnConversationItemDeleteAsync(session, delete, cancellationToken);
 
     internal Task InvokeBargeInAsync(VoiceSession session, BargeInEvent bargeIn, CancellationToken cancellationToken) =>
         OnBargeInAsync(session, bargeIn, cancellationToken);
@@ -227,10 +147,24 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
         InvocationContext context,
         CancellationToken cancellationToken)
     {
+        await HandleWebSocketAsync(
+            webSocket,
+            context,
+            _standaloneResourceGovernor,
+            cancellationToken).ConfigureAwait(false);
+    }
+
+    internal async Task HandleWebSocketAsync(
+        WebSocket webSocket,
+        InvocationContext context,
+        VoiceResourceGovernor resourceGovernor,
+        CancellationToken cancellationToken)
+    {
         ArgumentNullException.ThrowIfNull(webSocket);
         ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(resourceGovernor);
 
-        var connection = new VoiceConnection(webSocket, this, context, cancellationToken);
+        var connection = new VoiceConnection(webSocket, this, context, resourceGovernor, cancellationToken);
         await connection.RunAsync().ConfigureAwait(false);
     }
 }

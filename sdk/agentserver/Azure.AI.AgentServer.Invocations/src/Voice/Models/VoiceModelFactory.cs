@@ -47,24 +47,6 @@ public static class VoiceModelFactory
         IEnumerable<VoiceContentPart>? content = null) =>
         new(itemId, FreezeList(content ?? new[] { InputTextPart() }));
 
-    /// <summary>Creates one user-role conversation history item.</summary>
-    public static ConversationHistoryItem ConversationHistoryItem(
-        string itemId = "hi_test",
-        IEnumerable<VoiceContentPart>? content = null) =>
-        new(itemId, FreezeList(content ?? new[] { InputTextPart() }));
-
-    /// <summary>Creates a history-item create callback model.</summary>
-    public static ConversationItemCreateEvent ConversationItemCreateEvent(
-        string requestId = "m_test",
-        ConversationHistoryItem? item = null,
-        string? previousItemId = null) =>
-        new(requestId, item ?? ConversationHistoryItem(), previousItemId);
-
-    /// <summary>Creates a history-item delete callback model.</summary>
-    public static ConversationItemDeleteEvent ConversationItemDeleteEvent(
-        string requestId = "m_test",
-        string itemId = "hi_test") => new(requestId, itemId);
-
     /// <summary>Creates a bridge-generated no-input turn.</summary>
     public static UserNoInputEvent UserNoInputEvent(
         string itemId = "in_test",
@@ -72,27 +54,6 @@ public static class VoiceModelFactory
 
     /// <summary>Creates an advisory speech-started callback model.</summary>
     public static UserSpeechStartedEvent UserSpeechStartedEvent() => new();
-
-    /// <summary>Creates one raw DTMF key callback model.</summary>
-    public static DtmfKeyEvent DtmfKeyEvent(string digit = "1") => new(digit);
-
-    /// <summary>Creates one completed DTMF collection turn.</summary>
-    public static DtmfCollectedEvent DtmfCollectedEvent(
-        string itemId = "in_test",
-        string collectionId = "dc_test",
-        string digits = "",
-        string completionReason = "max_digits") =>
-        new(itemId, collectionId, digits, completionReason);
-
-    /// <summary>Creates one DTMF collection rejection callback model.</summary>
-    public static DtmfCollectionRejectedEvent DtmfCollectionRejectedEvent(
-        string collectionId = "dc_test",
-        string reason = "invalid_configuration") => new(collectionId, reason);
-
-    /// <summary>Creates one DTMF collection cancellation callback model.</summary>
-    public static DtmfCollectionCancelledEvent DtmfCollectionCancelledEvent(
-        string collectionId = "dc_test",
-        string reason = "cancelled_by_agent") => new(collectionId, reason);
 
     /// <summary>Creates one handoff failure recovery turn.</summary>
     public static HandoffFailedEvent HandoffFailedEvent(

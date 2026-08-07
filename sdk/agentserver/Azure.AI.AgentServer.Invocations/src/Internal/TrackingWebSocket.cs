@@ -16,6 +16,7 @@ internal sealed class TrackingWebSocket : WebSocket
     private readonly WebSocket _inner;
     private readonly bool _ownsTelemetryDispatcher;
     private int _selectedCloseCode = NoCloseCode;
+    private WebSocketCloseAttempt? _closeAttempt;
     private int _aborted;
     private int _disposed;
 
@@ -48,6 +49,14 @@ internal sealed class TrackingWebSocket : WebSocket
 
     public bool WasAborted => Volatile.Read(ref _aborted) != 0;
 
+    public int? AttemptedCloseCode => Volatile.Read(ref _closeAttempt)?.CloseCode;
+
+    public WebSocketCloseAttemptApi AttemptApi =>
+        Volatile.Read(ref _closeAttempt)?.Api ?? WebSocketCloseAttemptApi.None;
+
+    public bool CloseOperationSucceeded =>
+        Volatile.Read(ref _closeAttempt)?.State == WebSocketCloseAttemptState.Succeeded;
+
     public override WebSocketCloseStatus? CloseStatus => _inner.CloseStatus;
 
     public override string? CloseStatusDescription => _inner.CloseStatusDescription;
@@ -56,13 +65,15 @@ internal sealed class TrackingWebSocket : WebSocket
 
     public override string? SubProtocol => _inner.SubProtocol;
 
-    public void RecordCloseCode(int closeCode) =>
+    public void TrySelectCloseCode(int closeCode) =>
         Interlocked.CompareExchange(ref _selectedCloseCode, closeCode, NoCloseCode);
 
     public override void Abort()
     {
-        Volatile.Write(ref _aborted, 1);
-        _inner.Abort();
+        if (Interlocked.Exchange(ref _aborted, 1) == 0)
+        {
+            _inner.Abort();
+        }
     }
 
     public override async Task CloseAsync(
@@ -70,7 +81,11 @@ internal sealed class TrackingWebSocket : WebSocket
         string? statusDescription,
         CancellationToken cancellationToken)
     {
-        RecordCloseCode((int)closeStatus);
+        var requestedCloseCode = (int)closeStatus;
+        TrySelectCloseCode(requestedCloseCode);
+        cancellationToken.ThrowIfCancellationRequested();
+        var attemptedCloseCode = WebSocketTerminationResult.MapWireCloseCode(requestedCloseCode);
+        var attempt = TryRecordCloseAttempt(attemptedCloseCode, WebSocketCloseAttemptApi.CloseAsync);
         CleanupDeadline.Start();
         using var deadlineCancellation = CleanupDeadline.CreateCancellationTokenSource();
         using var linkedCancellation = CancellationTokenSource.CreateLinkedTokenSource(
@@ -78,10 +93,15 @@ internal sealed class TrackingWebSocket : WebSocket
             deadlineCancellation.Token);
         try
         {
-            await _inner.CloseAsync(closeStatus, statusDescription, linkedCancellation.Token).ConfigureAwait(false);
+            await _inner.CloseAsync(
+                (WebSocketCloseStatus)attemptedCloseCode,
+                GetMappedDescription(requestedCloseCode, attemptedCloseCode, statusDescription),
+                linkedCancellation.Token).ConfigureAwait(false);
+            MarkCloseAttemptSucceeded(attempt);
         }
         catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
+            MarkCloseAttemptFailed(attempt);
             // Preserve the caller's cancellation attribution: rethrow with the
             // original request token so upstream identity checks classify this
             // as caller cancellation rather than an internal handler failure.
@@ -89,8 +109,14 @@ internal sealed class TrackingWebSocket : WebSocket
         }
         catch (OperationCanceledException) when (deadlineCancellation.IsCancellationRequested)
         {
+            MarkCloseAttemptFailed(attempt);
             // The shared cleanup deadline expired; abort best-effort.
             Abort();
+        }
+        catch
+        {
+            MarkCloseAttemptFailed(attempt);
+            throw;
         }
     }
 
@@ -99,7 +125,11 @@ internal sealed class TrackingWebSocket : WebSocket
         string? statusDescription,
         CancellationToken cancellationToken)
     {
-        RecordCloseCode((int)closeStatus);
+        var requestedCloseCode = (int)closeStatus;
+        TrySelectCloseCode(requestedCloseCode);
+        cancellationToken.ThrowIfCancellationRequested();
+        var attemptedCloseCode = WebSocketTerminationResult.MapWireCloseCode(requestedCloseCode);
+        var attempt = TryRecordCloseAttempt(attemptedCloseCode, WebSocketCloseAttemptApi.CloseOutputAsync);
         CleanupDeadline.Start();
         using var deadlineCancellation = CleanupDeadline.CreateCancellationTokenSource();
         using var linkedCancellation = CancellationTokenSource.CreateLinkedTokenSource(
@@ -107,10 +137,15 @@ internal sealed class TrackingWebSocket : WebSocket
             deadlineCancellation.Token);
         try
         {
-            await _inner.CloseOutputAsync(closeStatus, statusDescription, linkedCancellation.Token).ConfigureAwait(false);
+            await _inner.CloseOutputAsync(
+                (WebSocketCloseStatus)attemptedCloseCode,
+                GetMappedDescription(requestedCloseCode, attemptedCloseCode, statusDescription),
+                linkedCancellation.Token).ConfigureAwait(false);
+            MarkCloseAttemptSucceeded(attempt);
         }
         catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
+            MarkCloseAttemptFailed(attempt);
             // Preserve the caller's cancellation attribution: rethrow with the
             // original request token so upstream identity checks classify this
             // as caller cancellation rather than an internal handler failure.
@@ -118,8 +153,14 @@ internal sealed class TrackingWebSocket : WebSocket
         }
         catch (OperationCanceledException) when (deadlineCancellation.IsCancellationRequested)
         {
+            MarkCloseAttemptFailed(attempt);
             // The shared cleanup deadline expired; abort best-effort.
             Abort();
+        }
+        catch
+        {
+            MarkCloseAttemptFailed(attempt);
+            throw;
         }
     }
 
@@ -151,5 +192,71 @@ internal sealed class TrackingWebSocket : WebSocket
                 }
             }
         }
+    }
+
+    private WebSocketCloseAttempt? TryRecordCloseAttempt(
+        int closeCode,
+        WebSocketCloseAttemptApi api)
+    {
+        while (true)
+        {
+            var current = Volatile.Read(ref _closeAttempt);
+            if (current is not null && current.State != WebSocketCloseAttemptState.Failed)
+            {
+                return null;
+            }
+
+            var attempt = new WebSocketCloseAttempt(
+                closeCode,
+                api,
+                WebSocketCloseAttemptState.InProgress);
+            if (Interlocked.CompareExchange(ref _closeAttempt, attempt, current) == current)
+            {
+                return attempt;
+            }
+        }
+    }
+
+    private void MarkCloseAttemptSucceeded(WebSocketCloseAttempt? attempt)
+    {
+        if (attempt is null)
+        {
+            return;
+        }
+
+        var succeeded = attempt with { State = WebSocketCloseAttemptState.Succeeded };
+        Interlocked.CompareExchange(ref _closeAttempt, succeeded, attempt);
+    }
+
+    private void MarkCloseAttemptFailed(WebSocketCloseAttempt? attempt)
+    {
+        if (attempt is null)
+        {
+            return;
+        }
+
+        var failed = attempt with { State = WebSocketCloseAttemptState.Failed };
+        Interlocked.CompareExchange(ref _closeAttempt, failed, attempt);
+    }
+
+    private static string? GetMappedDescription(
+        int requestedCloseCode,
+        int attemptedCloseCode,
+        string? statusDescription) =>
+        requestedCloseCode != attemptedCloseCode &&
+        attemptedCloseCode == InvocationsWebSocketConstants.CloseInternalError
+            ? "Internal server error"
+            : statusDescription;
+
+    private sealed record WebSocketCloseAttempt(
+        int CloseCode,
+        WebSocketCloseAttemptApi Api,
+        WebSocketCloseAttemptState State);
+
+    private enum WebSocketCloseAttemptState
+    {
+        InProgress,
+        Succeeded,
+        Failed,
     }
 }

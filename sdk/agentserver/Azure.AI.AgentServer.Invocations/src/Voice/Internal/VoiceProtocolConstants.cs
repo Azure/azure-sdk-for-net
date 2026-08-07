@@ -24,8 +24,6 @@ internal static class VoiceProtocolConstants
     public const string InputItemPrefix = "in";   // bridge
     public const string ResponsePrefix = "r";     // library
     public const string OutputItemPrefix = "it";  // library
-    public const string DtmfCollectionPrefix = "dc"; // library
-    public const string HistoryItemPrefix = "hi"; // caller app / bridge
 
     // Bounded runtime limits that mirror the Python implementation.
     public const int MaxCallbackQueue = 128;

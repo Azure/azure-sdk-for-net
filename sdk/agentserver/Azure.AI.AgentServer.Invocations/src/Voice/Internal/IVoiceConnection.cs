@@ -36,17 +36,6 @@ internal interface IVoiceConnection
         string? reason,
         CancellationToken cancellationToken);
 
-    Task RegisterDtmfCollectionAsync(
-        VoiceResponse response,
-        string collectionId,
-        int maxDigits,
-        string? terminator,
-        int initialTimeoutMs,
-        int interDigitTimeoutMs,
-        CancellationToken cancellationToken);
-
-    Task CancelDtmfCollectionAsync(string collectionId, CancellationToken cancellationToken);
-
     Task EndCallAsync(string reason, string mode, CancellationToken cancellationToken);
 
     Task<VoiceResponse> StartProactiveResponseAsync(

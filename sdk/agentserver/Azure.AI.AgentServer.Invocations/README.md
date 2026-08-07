@@ -71,9 +71,10 @@ implementation of Voice Live Bridge Protocol 1.0 on the existing
 `OnUserMessageAsync` plus any optional control callbacks your agent needs. The
 submodule owns activation, framing, response and item IDs, exact duplicate
 handling, ordered callbacks, multi-item output, proactive admission,
-self-cancellation, timeout and barge-in arbitration, DTMF, handoff, history
-mutation, and bounded per-connection cleanup while the application remains
-text-in and text-out. Voice Live continues to own audio, speech recognition,
+self-cancellation, timeout and barge-in arbitration, handoff, and bounded
+per-connection cleanup while host-wide admission limits retained Voice output,
+frames, callback work, and protocol bookkeeping across connections. Voice Live
+continues to own audio, speech recognition,
 synthesis, voice activity detection, turn-taking, and barge-in. No additional
 NuGet package is required.
 
@@ -155,10 +156,23 @@ public class WebSocketEchoHandler : InvocationWebSocketHandler
 What the SDK does for you when the registered handler derives from `InvocationWebSocketHandler`:
 
 - Registers the `/invocations_ws` route on the same host as `/invocations` and `/readiness`.
+- Owns the WebSocket route as a literal GET endpoint. Host startup fails before
+    serving requests if another GET-capable endpoint owns the same final path;
+    repeated Invocations mapping at that path is also rejected.
 - Calls `AcceptWebSocketAsync` before invoking your handler.
 - Sends an RFC 6455 protocol-level Ping frame (opcode `0x9`) every `WS_KEEPALIVE_INTERVAL` seconds when the env var is set — Kestrel does this for us via `WebSocketOptions.KeepAliveInterval`, so the connection stays alive across upstream proxy / load-balancer idle timeouts without any extra application traffic. Disabled by default.
-- Closes the connection cleanly on handler return (close code `1000` — `NormalClosure`) or maps an uncaught handler exception to close code `1011` (`InternalServerError`). Handler-initiated close codes are preserved unchanged.
-- Emits an `agentserver.connection` activity and a structured close-event log line carrying `session_id`, `close_code`, and `duration_ms`. ASP.NET Core propagates the inbound W3C trace context, so the connection activity and handler spans remain in the caller's trace.
+- Closes the connection cleanly on handler return (close code `1000` — `NormalClosure`) or maps an uncaught handler exception to close code `1011` (`InternalServerError`). Valid handler-initiated close codes are preserved; reserved or out-of-range local statuses are mapped to `1011` for the wire attempt.
+- Emits an `agentserver.connection` activity and makes one bounded best-effort
+    attempt to enqueue a structured close-event log carrying `session_id`, final
+    local `close_code`, `selected_close_code`, `attempted_close_code`,
+    `close_outcome`, and `duration_ms`. Queue acceptance does not guarantee that
+    an external logger or exporter completes. Hosted telemetry callbacks use two
+    fixed background workers over shared bounded queues, so one blocked callback
+    does not consume the host's only telemetry execution slot. Callback completion
+    order is not guaranteed; if both workers block, existing deadline and drop
+    metrics expose bounded degradation. Telemetry backpressure never changes the
+    transport result. ASP.NET Core propagates the inbound W3C trace context, so
+    the connection activity and handler spans remain in the caller's trace.
 - When the registered handler is a plain `InvocationHandler` (not an `InvocationWebSocketHandler`), an upgrade attempt receives HTTP `404 Not Found` — the WS endpoint short-circuits with "endpoint not registered" semantics so a missing handler fails fast instead of accepting and immediately closing.
 
 The session ID honours `FOUNDRY_AGENT_SESSION_ID` (matching the HTTP `POST /invocations` precedence, minus the query-param override which has no ergonomic equivalent on a long-lived WS connection), falling back to a generated UUID. Both transports on the same container therefore report the same session ID.

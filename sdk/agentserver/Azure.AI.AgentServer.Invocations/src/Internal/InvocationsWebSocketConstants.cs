@@ -36,8 +36,17 @@ internal static class InvocationsWebSocketConstants
     /// <summary>Structured-log field key carrying the per-connection session ID.</summary>
     public const string AttrSpanSessionId = "azure.ai.agentserver.invocations_ws.session_id";
 
-    /// <summary>Structured-log field key carrying the final RFC 6455 close code.</summary>
+    /// <summary>Structured-log field key carrying the endpoint's final local transport classification.</summary>
     public const string AttrSpanCloseCode = "azure.ai.agentserver.invocations_ws.close_code";
+
+    /// <summary>Structured-log field key carrying the first semantic close intent.</summary>
+    public const string AttrSpanSelectedCloseCode = "azure.ai.agentserver.invocations_ws.selected_close_code";
+
+    /// <summary>Structured-log field key carrying the first mapped local close attempt.</summary>
+    public const string AttrSpanAttemptedCloseCode = "azure.ai.agentserver.invocations_ws.attempted_close_code";
+
+    /// <summary>Structured-log field key carrying the final transport outcome classification.</summary>
+    public const string AttrSpanCloseOutcome = "azure.ai.agentserver.invocations_ws.close_outcome";
 
     /// <summary>Structured-log field key carrying the connection duration in milliseconds.</summary>
     public const string AttrSpanDurationMs = "azure.ai.agentserver.invocations_ws.duration_ms";

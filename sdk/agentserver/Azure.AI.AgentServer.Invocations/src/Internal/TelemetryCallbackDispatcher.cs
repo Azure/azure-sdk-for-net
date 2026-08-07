@@ -5,11 +5,19 @@ using System.Diagnostics;
 
 namespace Azure.AI.AgentServer.Invocations.Internal;
 
+internal enum CriticalTelemetryEnqueueResult
+{
+    Accepted,
+    DeadlineExpired,
+    DispatcherCompleted,
+}
+
 /// <summary>
 /// Isolates synchronous telemetry callbacks from protocol and teardown paths.
-/// A bounded, single background thread preserves telemetry ordering without
-/// allowing a blocked listener or exporter to consume unbounded ThreadPool
-/// threads or retain an unbounded work queue.
+/// A bounded, fixed-size background worker pool prevents one blocked listener
+/// or exporter from consuming the host's only telemetry execution slot without
+/// allowing unbounded threads or an unbounded work queue. Callback completion
+/// order is not guaranteed when more than one worker is configured.
 /// </summary>
 internal sealed class TelemetryCallbackDispatcher : IDisposable
 {
@@ -24,10 +32,27 @@ internal sealed class TelemetryCallbackDispatcher : IDisposable
     private readonly object _sync = new();
     private readonly TaskCompletionSource _workerCompletion =
         new(TaskCreationOptions.RunContinuationsAsynchronously);
+    private readonly int _workerCount;
     private int _started;
     private int _completed;
+    private int _workersRemaining;
     private int _activityReservations;
     private long _droppedCallbacks;
+
+    public TelemetryCallbackDispatcher()
+        : this(workerCount: 1)
+    {
+    }
+
+    internal TelemetryCallbackDispatcher(int workerCount)
+    {
+        if (workerCount <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(workerCount));
+        }
+
+        _workerCount = workerCount;
+    }
 
     internal long DroppedCallbackCount => Interlocked.Read(ref _droppedCallbacks);
 
@@ -79,7 +104,7 @@ internal sealed class TelemetryCallbackDispatcher : IDisposable
         return true;
     }
 
-    public async ValueTask<bool> QueueCriticalAsync(
+    public async ValueTask<CriticalTelemetryEnqueueResult> QueueCriticalAsync(
         Action callback,
         CancellationToken cancellationToken)
     {
@@ -91,7 +116,7 @@ internal sealed class TelemetryCallbackDispatcher : IDisposable
         catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
             RecordDroppedCallback();
-            return false;
+            return CriticalTelemetryEnqueueResult.DeadlineExpired;
         }
 
         lock (_sync)
@@ -100,7 +125,7 @@ internal sealed class TelemetryCallbackDispatcher : IDisposable
             {
                 _criticalSlots.Release();
                 RecordDroppedCallback();
-                return false;
+                return CriticalTelemetryEnqueueResult.DispatcherCompleted;
             }
 
             _criticalCallbacks.Enqueue(callback);
@@ -108,7 +133,7 @@ internal sealed class TelemetryCallbackDispatcher : IDisposable
         }
 
         EnsureStarted();
-        return true;
+        return CriticalTelemetryEnqueueResult.Accepted;
     }
 
     public bool TryReserveActivity()
@@ -155,7 +180,7 @@ internal sealed class TelemetryCallbackDispatcher : IDisposable
                 _activityReservations--;
                 if (_activityReservations == 0 && _completed != 0)
                 {
-                    System.Threading.Monitor.PulseAll(_sync);
+                    CompleteOrWakeWorkersLocked();
                 }
             }
         }
@@ -171,6 +196,24 @@ internal sealed class TelemetryCallbackDispatcher : IDisposable
             }
 
             _completed = 1;
+            if (_activityReservations == 0)
+            {
+                CompleteOrWakeWorkersLocked();
+            }
+        }
+    }
+
+    private void CompleteOrWakeWorkersLocked()
+    {
+        if (_started == 0 &&
+            _activityStops.Count == 0 &&
+            _criticalCallbacks.Count == 0 &&
+            _callbacks.Count == 0)
+        {
+            _workerCompletion.TrySetResult();
+        }
+        else
+        {
             System.Threading.Monitor.PulseAll(_sync);
         }
     }
@@ -182,12 +225,29 @@ internal sealed class TelemetryCallbackDispatcher : IDisposable
             return;
         }
 
-        var thread = new Thread(Run)
+        Volatile.Write(ref _workersRemaining, _workerCount);
+        for (var index = 0; index < _workerCount; index++)
         {
-            IsBackground = true,
-            Name = "AgentServer telemetry callbacks",
-        };
-        thread.Start();
+            var thread = new Thread(Run)
+            {
+                IsBackground = true,
+                Name = _workerCount == 1
+                    ? "AgentServer telemetry callbacks"
+                    : $"AgentServer telemetry callbacks {index + 1}",
+            };
+            try
+            {
+                thread.Start();
+            }
+            catch
+            {
+                if (Interlocked.Add(ref _workersRemaining, index - _workerCount) == 0)
+                {
+                    _workerCompletion.TrySetResult();
+                }
+                throw;
+            }
+        }
     }
 
     private void Run()
@@ -243,6 +303,14 @@ internal sealed class TelemetryCallbackDispatcher : IDisposable
             }
         }
         finally
+        {
+            WorkerExited();
+        }
+    }
+
+    private void WorkerExited()
+    {
+        if (Interlocked.Decrement(ref _workersRemaining) == 0)
         {
             _workerCompletion.TrySetResult();
         }

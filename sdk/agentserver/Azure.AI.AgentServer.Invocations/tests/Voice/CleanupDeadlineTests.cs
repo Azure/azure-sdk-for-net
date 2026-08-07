@@ -44,6 +44,28 @@ public class CleanupDeadlineTests
         Assert.That(cancellation.IsCancellationRequested, Is.True);
     }
 
+    [Test]
+    public void CloseEventCancellationDoesNotStartSharedDeadline()
+    {
+        var deadline = new CleanupDeadline(TimeSpan.FromSeconds(5), new ManualTimeProvider());
+
+        using var cancellation = WebSocketEndpointHandler.CreateCloseEventCancellation(deadline);
+
+        Assert.That(deadline.IsStarted, Is.False);
+    }
+
+    [TestCase(500, 100)]
+    [TestCase(100, 100)]
+    [TestCase(50, 50)]
+    [TestCase(0, 0)]
+    public void CloseEventBudgetNeverExceedsSharedRemaining(int remainingMs, int expectedMs)
+    {
+        var actual = WebSocketEndpointHandler.GetCloseEventEnqueueBudget(
+            TimeSpan.FromMilliseconds(remainingMs));
+
+        Assert.That(actual, Is.EqualTo(TimeSpan.FromMilliseconds(expectedMs)));
+    }
+
     private sealed class ManualTimeProvider : TimeProvider
     {
         private long _timestamp;

@@ -173,6 +173,117 @@ public class VoiceResponseConcurrencyTests
         Assert.DoesNotThrow(() => response.CreateTextItem());
     }
 
+    [Test]
+    public void EmptyDeltaIsRejectedWithoutCreatingAnOutputItem()
+    {
+        var connection = new CoordinatedConnection();
+        var response = new VoiceResponse(
+            connection,
+            "r_test",
+            new[] { "in_test" },
+            wireOpened: false,
+            accepted: true,
+            CancellationToken.None);
+
+        Assert.That(
+            async () => await response.SendTextDeltaAsync(string.Empty),
+            Throws.TypeOf<ArgumentException>());
+        Assert.DoesNotThrow(() => response.CreateTextItem());
+        Assert.That(connection.ItemIds, Is.Empty);
+    }
+
+    [Test]
+    public async Task ResponseCumulativeWriteLimitStopsTinyDeltaStorm()
+    {
+        var governor = new VoiceResourceGovernor(new VoiceResourceLimits
+        {
+            MaxResponseOutputWrites = 1,
+        });
+        var connection = new CoordinatedConnection();
+        connection.AllowFirstSend.TrySetResult();
+        var response = new VoiceResponse(
+            connection,
+            "r_test",
+            new[] { "in_test" },
+            wireOpened: false,
+            accepted: true,
+            CancellationToken.None,
+            governor);
+
+        await response.SendTextDeltaAsync("a");
+
+        Assert.That(
+            async () => await response.SendTextDeltaAsync("b"),
+            Throws.TypeOf<VoiceResourceExhaustedException>());
+        Assert.That(connection.ItemIds, Has.Count.EqualTo(1));
+    }
+
+    [Test]
+    public void ResponsesShareAndReleaseHostOutputCapacity()
+    {
+        var governor = new VoiceResourceGovernor(new VoiceResourceLimits
+        {
+            MaxRetainedOutputItems = 1,
+        });
+        var first = new VoiceResponse(
+            new CoordinatedConnection(),
+            "r_first",
+            new[] { "in_first" },
+            wireOpened: false,
+            accepted: true,
+            CancellationToken.None,
+            governor);
+        var second = new VoiceResponse(
+            new CoordinatedConnection(),
+            "r_second",
+            new[] { "in_second" },
+            wireOpened: false,
+            accepted: true,
+            CancellationToken.None,
+            governor);
+
+        _ = first.CreateTextItem();
+        Assert.That(
+            second.CreateTextItem,
+            Throws.TypeOf<VoiceResourceExhaustedException>());
+
+        first.ReleaseOutputBuffers();
+        first.ReleaseRetainedIdentities();
+        Assert.DoesNotThrow(() => second.CreateTextItem());
+        Assert.That(governor.RetainedOutputItems, Is.EqualTo(1));
+        second.ReleaseOutputBuffers();
+        second.ReleaseRetainedIdentities();
+        Assert.That(governor.RetainedOutputItems, Is.Zero);
+    }
+
+    [Test]
+    public async Task PreWireTerminalReleasesCreatedItemCapacity()
+    {
+        var governor = new VoiceResourceGovernor(new VoiceResourceLimits
+        {
+            MaxRetainedOutputItems = 1,
+        });
+        var response = new VoiceResponse(
+            new CoordinatedConnection(),
+            "r_test",
+            new[] { "in_test" },
+            wireOpened: false,
+            accepted: true,
+            CancellationToken.None,
+            governor);
+        _ = response.CreateTextItem();
+
+        await response.MarkTerminalAsync();
+        await VoiceTerminationCoordinator.ApplyResponseTermination(
+            new VoiceResponseTermination(
+                IsNewTerminal: true,
+                TerminalKind: "timeout",
+                response,
+                VoiceTurnTermination.None("timeout")));
+
+        Assert.That(governor.RetainedOutputItems, Is.Zero);
+    }
+
     private sealed class CoordinatedConnection : IVoiceConnection
     {
         private int _sendCount;
@@ -230,18 +341,6 @@ public class VoiceResponseConcurrencyTests
             VoiceResponse response,
             string? reason,
             CancellationToken cancellationToken) => throw new NotSupportedException();
-
-        public Task RegisterDtmfCollectionAsync(
-            VoiceResponse response,
-            string collectionId,
-            int maxDigits,
-            string? terminator,
-            int initialTimeoutMs,
-            int interDigitTimeoutMs,
-            CancellationToken cancellationToken) => throw new NotSupportedException();
-
-        public Task CancelDtmfCollectionAsync(string collectionId, CancellationToken cancellationToken) =>
-            throw new NotSupportedException();
 
         public Task EndCallAsync(string reason, string mode, CancellationToken cancellationToken) =>
             throw new NotSupportedException();

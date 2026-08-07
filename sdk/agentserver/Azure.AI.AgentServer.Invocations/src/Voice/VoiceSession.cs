@@ -109,23 +109,6 @@ public class VoiceSession
         return _connection.EndCallAsync(reason, mode, cancellationToken);
     }
 
-    /// <summary>Explicitly cancels one pending or active DTMF collection.</summary>
-    /// <param name="collectionId">The SDK-allocated <c>dc_</c> collection ID.</param>
-    /// <param name="cancellationToken">A token to observe for cancellation.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
-    public virtual Task CancelDtmfCollectionAsync(
-        string collectionId,
-        CancellationToken cancellationToken = default)
-    {
-        ArgumentException.ThrowIfNullOrEmpty(collectionId);
-        if (!collectionId.StartsWith("dc_", StringComparison.Ordinal) || collectionId.Length <= 3)
-        {
-            throw new ArgumentException("The collection ID must start with dc_.", nameof(collectionId));
-        }
-
-        return _connection.CancelDtmfCollectionAsync(collectionId, cancellationToken);
-    }
-
     /// <summary>Reports a terminal session-scoped agent failure.</summary>
     /// <param name="code">A bounded machine-readable open-enum code.</param>
     /// <param name="message">Sanitized diagnostic detail that must not contain sensitive content.</param>
