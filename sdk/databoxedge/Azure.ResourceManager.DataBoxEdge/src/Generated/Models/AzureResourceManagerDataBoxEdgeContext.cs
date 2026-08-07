@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using Azure.ResourceManager.Models;
 
@@ -164,7 +163,6 @@ namespace Azure.ResourceManager.DataBoxEdge
     [ModelReaderWriterBuildable(typeof(PeriodicTimerSourceInfo))]
     [ModelReaderWriterBuildable(typeof(ProactiveLogCollectionSettingsProperties))]
     [ModelReaderWriterBuildable(typeof(RawCertificateData))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RoleList))]
     [ModelReaderWriterBuildable(typeof(SecuritySettingsProperties))]
     [ModelReaderWriterBuildable(typeof(ShareAccessRight))]

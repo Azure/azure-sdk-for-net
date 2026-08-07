@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.ManagedOps.Models;
 using Azure.ResourceManager.Models;
 
@@ -34,7 +33,6 @@ namespace Azure.ResourceManager.ManagedOps
     [ModelReaderWriterBuildable(typeof(ManagedOpsSku))]
     [ModelReaderWriterBuildable(typeof(ManagedOpUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(PolicyAssignmentProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UpdateManagerInformation))]
     public partial class AzureResourceManagerManagedOpsContext : ModelReaderWriterContext

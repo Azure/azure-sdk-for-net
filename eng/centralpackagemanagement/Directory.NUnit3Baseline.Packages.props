@@ -33,7 +33,6 @@
         $(MSBuildProjectName) == 'Azure.AI.Language.Text.Tests' or
         $(MSBuildProjectName) == 'Azure.AI.OpenAI.Assistants.Tests' or
         $(MSBuildProjectName) == 'Azure.AI.OpenAI.Tests' or
-        $(MSBuildProjectName) == 'Azure.AI.Personalizer.Tests' or
         $(MSBuildProjectName) == 'Azure.AI.Speech.Transcription.Tests' or
         $(MSBuildProjectName) == 'Azure.AI.TextAnalytics.Tests' or
         $(MSBuildProjectName) == 'Azure.AI.Translation.Document.Tests' or
@@ -60,7 +59,6 @@
         $(MSBuildProjectName) == 'Azure.Identity.Broker.Tests' or
         $(MSBuildProjectName) == 'Azure.Identity.Tests' or
         $(MSBuildProjectName) == 'Azure.IoT.ModelsRepository.Tests' or
-        $(MSBuildProjectName) == 'Azure.IoT.TimeSeriesInsights.Tests' or
         $(MSBuildProjectName) == 'Azure.Maps.Common.Tests' or
         $(MSBuildProjectName) == 'Azure.Maps.Geolocation.Tests' or
         $(MSBuildProjectName) == 'Azure.Maps.Rendering.Tests' or

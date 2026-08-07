@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.27 (Unreleased)
+## 1.0.0-beta.28 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.27 (2026-07-29)
+
+### Features Added
+- Added a durable key-value **state store** client under `Azure.AI.AgentServer.Core.Storage`. `FoundryStateStore.GetOrCreateAsync` binds (creating if needed) a named, Foundry-backed store; instances expose async `GetAsync`/`UpdateAsync`/`DeleteAsync` for the store and `CreateItemAsync`/`SetItemAsync`/`GetItemAsync`/`DeleteItemAsync`/`ListKeysAsync` for its items, with optimistic concurrency (`If-Match`/`ETag`), optional per-user isolation, and store-level item TTL. The .NET analogue of the Python SDK's `FoundryStateStore`.
+- Added support for Microsoft Entra authentication when exporting telemetry to Azure Monitor. When `APPLICATIONINSIGHTS_AUTH_MODE` is set to `Entra`, the Azure Monitor exporter attempts to use a system-assigned managed identity credential (falling back to connection-string authentication if the credential cannot be created).
 
 ## 1.0.0-beta.26 (2026-06-28)
 

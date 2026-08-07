@@ -10,6 +10,10 @@ namespace Azure.AI.Inference
 {
     public partial class ChatMessageInputAudio
     {
+        /// <summary> Creates a new <see cref="ChatMessageInputAudio"/> from the contents of a local audio file. </summary>
+        /// <param name="path"> The path of the audio file to read. </param>
+        /// <param name="format"> The format of the audio data. </param>
+        /// <returns> A new <see cref="ChatMessageInputAudio"/> containing the base64-encoded contents of the file. </returns>
         public static ChatMessageInputAudio Load(string path, AudioContentFormat format)
         {
             byte[] bytes = File.ReadAllBytes(path);
