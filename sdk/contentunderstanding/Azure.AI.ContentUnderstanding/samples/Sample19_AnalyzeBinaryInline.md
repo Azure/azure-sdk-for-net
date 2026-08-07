@@ -1,26 +1,22 @@
-# Analyze binary input inline (no LRO polling)
+# Analyze binary input inline without Long Running Operation polling
 
-This sample shows `AnalyzeBinaryInlineAsync` for local binary input. This API is **available only** in service API version `2026-06-01-preview`.
+> **Supported service API version:** `2026-06-01-preview`
+>
+> Configure the client with `new ContentUnderstandingClientOptions(ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview)`.
 
-> **Preview only:** Configure the client with `new ContentUnderstandingClientOptions(ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview)`.
+This sample shows `AnalyzeBinaryInlineAsync` for local binary input.
 
-By default, `AnalyzeBinaryAsync` is a long-running operation (LRO): the client starts analysis and polls until the result is ready. `AnalyzeBinaryInlineAsync` completes analysis in a single call and returns `AnalysisResult` without polling, which can reduce latency for small files with supported analyzers.
+## Inline vs Long Running Operation analysis
 
-## How to choose
+Content Understanding provides two analysis patterns:
 
-Use `AnalyzeBinaryAsync` (LRO) when:
-- You need larger files or more pages (see [document limits](https://aka.ms/cu-doc-limits)).
-- You need broader analyzer coverage.
-- You want results retained for up to **24 hours** (or until you delete them) and operation lifecycle APIs.
+**Long Running Operation (LRO):** `AnalyzeBinaryAsync` starts an operation and polls until the result is ready. Choose this mode for larger files or more pages (see [document limits](https://aka.ms/cu-doc-limits)), broader analyzer coverage, or results retained for up to **24 hours** (or until you delete them) with operation lifecycle APIs.
 
-Use `AnalyzeBinaryInlineAsync` (available only in `2026-06-01-preview`) when:
-- You want a single call with no polling.
-- You want faster results for smaller inputs — with no polling and no wait tied to a polling interval, the inline path is faster than the corresponding `Analyze*` LRO APIs under the inline size/analyzer limits.
-- Your analyzer is in the supported inline set below (no field schema / field extraction).
+**Inline:** `AnalyzeBinaryInlineAsync` completes analysis in one HTTP call and returns the result without polling. Choose this mode for smaller inputs within the inline size and page limits when using one of the supported inline analyzers below (no field schema / field extraction). With no polling or wait tied to a polling interval, inline analysis is faster than the corresponding LRO API under these limits. Inline results are not persisted, and a non-succeeded status throws `RequestFailedException`.
 
 For current limits, see https://aka.ms/cu-doc-limits.
 
-## Supported inline analyzers (2026-06-01-preview only)
+## Supported inline analyzers
 
 Inline analysis supports only document analyzers without a field schema:
 

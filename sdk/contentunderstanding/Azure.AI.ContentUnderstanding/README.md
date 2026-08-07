@@ -13,7 +13,7 @@ Use the client library for Azure AI Content Understanding to:
 
 If you have encountered issues or want to suggest features, please [file an issue][file_issue].
 
-[Source code][source_code] | [Package (NuGet)][nuget_package] | [API reference documentation][api_reference] | [Product documentation][product_docs]
+[Source code][source_code] | [Package (NuGet)][nuget_package] | [API reference documentation][api_reference] | [Product documentation][product_docs] | [Changelog][changelog]
 
 ## Getting started
 
@@ -31,7 +31,7 @@ To use only the latest generally available package (`1.1.0`, service API `2025-1
 dotnet add package Azure.AI.ContentUnderstanding
 ```
 
-> **Note:** Preview-only capabilities (inline analysis, semantic chunking, analyzer workflows, signature detection, in-page segmentation, and related APIs) require this beta package (`1.2.0-beta.3` or later). A plain `dotnet add package Azure.AI.ContentUnderstanding` installs the latest stable package (`1.1.0`), which does not include `ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview`.
+> **Note:** Capabilities available only in `2026-06-01-preview` require this beta package (`1.2.0-beta.3` or later). A plain `dotnet add package Azure.AI.ContentUnderstanding` installs the latest stable package (`1.1.0`), which does not include `ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview`. For the preview capability inventory and links to samples, see the [`1.2.0-beta.3` changelog entry][changelog].
 
 ### Prerequisites
 
@@ -147,15 +147,6 @@ var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
 // var client = new ContentUnderstandingClient(new Uri(endpoint), credential, options);
 ```
 
-> **Note:** Some service capabilities are available only in `2026-06-01-preview`, including:
-> - Inline analysis (`AnalyzeInline*` / `AnalyzeBinaryInline*`) — see [Sample 18](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample18_AnalyzeInline.md) and [Sample 19](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample19_AnalyzeBinaryInline.md)
-> - Semantic chunking (`SemanticChunkingStrategy` / `DocumentChunk`) — see [Sample 17](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample17_AnalyzeChunking.md)
-> - Analyzer workflows (`ContentAnalyzerWorkflow`) — see [Sample 16](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample16_CreateAnalyzerWorkflow.md)
-> - Signature detection (`DocumentSignature`) — see [Sample 10](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample10_AnalyzeConfigs.md) and [Detect signatures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample_Advanced_DetectSignatures.md)
-> - In-page segmentation (`AllowInPageSegments`) — see [Classify in-page segments](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample_Advanced_ClassifyInPageSegments.md)
-> - Embedded document metadata (`AnalysisContent.Metadata`) — see [Extract document metadata](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample_Advanced_ExtractDocumentMetadata.md)
-> - Analysis-result metadata in `ToLlmInput` front matter — see [ToLlmInput](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample_Advanced_ToLlmInput.md)
-
 ### Authenticate the client
 
 In order to interact with the Content Understanding service, you'll need to create an instance of the `ContentUnderstandingClient` class. To authenticate the client, you need your Microsoft Foundry resource endpoint and credentials. You can use either an API key or Microsoft Entra ID authentication.
@@ -219,15 +210,12 @@ The API returns different content types based on the input. Both `DocumentConten
 * **`DocumentContent`** - For document files (PDF, HTML, images, Office documents such as Word, Excel, PowerPoint, and more). Provides basic information such as page count and MIME type. Retrieve detailed information including pages, tables, figures, paragraphs, and many others.
 * **`AudioVisualContent`** - For audio and video files. Provides basic information such as timing information (start/end times) and frame dimensions (for video). Retrieve detailed information including transcript phrases, timing information, and for video, key frame references and more.
 
-### Asynchronous operations
+### Analysis patterns (Long Running Operation and inline)
 
-Content Understanding operations are asynchronous long-running operations. The workflow is:
+Content Understanding supports two analysis patterns:
 
-1. **Begin Analysis** - Start the analysis operation (returns immediately with an operation location)
-2. **Poll for Results** - Poll the operation location until the analysis completes
-3. **Process Results** - Extract and display the structured results
-
-The SDK provides `Operation<T>` types that handle polling automatically when using `WaitUntil.Completed`. For analysis operations, the SDK returns `Operation<AnalysisResult>` and provides access to the operation ID via the `Id` property. This operation ID can be used with `GetResultFile*` and `DeleteResult*` methods.
+* **Long Running Operation (LRO)** - `Analyze*` and `AnalyzeBinary*` start analysis and return an `Operation<AnalysisResult>`. The SDK handles polling automatically with `WaitUntil.Completed`. The operation ID is available through `Operation<AnalysisResult>.Id` for use with `GetResultFile*` and `DeleteResult*` methods.
+* **Inline** - `AnalyzeInline*` and `AnalyzeBinaryInline*` return `AnalysisResult` in a single response without polling. Inline analysis is available only in `2026-06-01-preview`, supports smaller document inputs and a limited analyzer set, and does not persist results. See [Sample 18][sample18-inline] for URL input and [Sample 19][sample19-inline] for binary input.
 
 ### Main classes
 
@@ -413,6 +401,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [nuget_package]: https://www.nuget.org/packages/Azure.AI.ContentUnderstanding
 [api_reference]: https://learn.microsoft.com/dotnet/api/azure.ai.contentunderstanding
 [product_docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
+[changelog]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/CHANGELOG.md
 [nuget]: https://www.nuget.org/
 [azure_subscription]: https://azure.microsoft.com/free/dotnet/
 [cu_quickstart]: https://learn.microsoft.com/azure/ai-services/content-understanding/quickstart/use-rest-api?tabs=portal%2Cdocument
@@ -434,6 +423,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [samples_directory]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples
 [sample00]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md
 [sample01]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
+[sample18-inline]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample18_AnalyzeInline.md
+[sample19-inline]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample19_AnalyzeBinaryInline.md
 [prebuilt-analyzers-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/prebuilt-analyzers
 [sample-advanced-to-llm-input]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample_Advanced_ToLlmInput.md
 [cla]: https://cla.microsoft.com

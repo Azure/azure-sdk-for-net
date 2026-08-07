@@ -1,14 +1,16 @@
 # Create analyzers with workflow settings
 
+> **Supported service API version:** `2026-06-01-preview`
+>
+> Configure the client with `new ContentUnderstandingClientOptions(ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview)`.
+
 This sample shows how to create custom analyzers using `ContentAnalyzerConfig.Workflow`. Omit `Workflow` (or set `ContentAnalyzerWorkflow.Default`) for standard extraction, or set `ContentAnalyzerWorkflow.Agentic` when an answer must be built from evidence across the document. The sample analyzes the same 20-item invoice with each workflow so you can compare results.
 
-> **Preview notes:** In `2026-06-01-preview`, analysis currently supports **one input file per request** regardless of workflow. Agentic mode uses the **advanced contextualization** rate and typically takes longer and consumes more model tokens than the default workflow.
+> **Current preview limitations:** Analysis supports **one input file per request** regardless of workflow. Agentic mode uses the **advanced contextualization** rate and typically takes longer and consumes more model tokens than the default workflow.
 
 ## Prerequisites
 
 To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
-
-> This sample requires service API version `2026-06-01-preview`. Configure the client with `new ContentUnderstandingClientOptions(ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview)`.
 
 ## Define a shared invoice schema
 

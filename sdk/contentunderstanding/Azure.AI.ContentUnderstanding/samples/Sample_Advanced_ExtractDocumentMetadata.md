@@ -1,6 +1,8 @@
 # Extract embedded document metadata
 
-> **Preview only:** Embedded document metadata (`AnalysisContent.Metadata`) is available only in service API version `2026-06-01-preview`. Configure the client with `new ContentUnderstandingClientOptions(ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview)`.
+> **Supported service API version:** `2026-06-01-preview`
+>
+> Configure the client with `new ContentUnderstandingClientOptions(ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview)`.
 
 Content Understanding can return metadata embedded in source documents through
 `AnalysisContent.Metadata`. The metadata is a string-to-string dictionary, and

@@ -1,6 +1,8 @@
 # Classify multiple documents within one page
 
-> **Preview only:** In-page segmentation (`AllowInPageSegments`) is available only in service API version `2026-06-01-preview`. Configure the client with `new ContentUnderstandingClientOptions(ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview)`.
+> **Supported service API version:** `2026-06-01-preview`
+>
+> Configure the client with `new ContentUnderstandingClientOptions(ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview)`.
 
 By default, document segmentation uses page boundaries. Set
 `AllowInPageSegments` together with `EnableSegment` when distinct documents can

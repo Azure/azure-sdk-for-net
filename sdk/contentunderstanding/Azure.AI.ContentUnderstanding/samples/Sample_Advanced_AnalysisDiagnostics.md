@@ -1,5 +1,7 @@
 # Read analysis diagnostics
 
+> **Supported service API version:** `2026-06-01-preview`
+
 Content Understanding analysis results can include diagnostic information in
 `AnalysisResult.Infos`. Diagnostics are represented as `ResponseError` values
 with a code and a human-readable message.

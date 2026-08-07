@@ -10,16 +10,7 @@ Content Understanding supports both local binary inputs (see [Sample01_AnalyzeBi
 
 Documents, HTML, and images with text are returned as `DocumentContent` (derived from `AnalysisContent`), while audio and video are returned as `AudioVisualContent` (also derived from `AnalysisContent`). These prebuilt RAG analyzers return markdown and a one-paragraph `Summary` for each content item; `prebuilt-videoSearch` can return multiple segments, so iterate over all contents rather than just the first.
 
-### AnalyzeAsync vs AnalyzeInlineAsync
-
-`AnalyzeInlineAsync` is available only in `2026-06-01-preview`.
-
-- Use `AnalyzeAsync` (LRO) for larger files/pages (see [document limits](https://aka.ms/cu-doc-limits)), broader analyzer coverage, and results retained for up to **24 hours** (or until deleted).
-- Use `AnalyzeInlineAsync` (available only in `2026-06-01-preview`) for a single request/response with no polling on smaller inputs. With no polling and no wait tied to a polling interval, the inline path is faster than the corresponding `Analyze*` LRO APIs under the inline size/analyzer limits. Results are not persisted. In this preview, inline supports document analyzers without field schemas and without figure analysis enabled: `prebuilt-digitalParse`, `prebuilt-read`, `prebuilt-layout`, or custom document analyzers without fields.
-
-For current limits, see https://aka.ms/cu-doc-limits.
-
-See [Sample 18: Analyze URL input inline][sample18-inline] for a dedicated inline example.
+`AnalyzeAsync` uses a **Long Running Operation (LRO)** and polls until the result is ready. For the URL inline alternative and guidance on choosing between the patterns, see [Sample 18: Analyze URL input inline][sample18-inline].
 
 ## Prerequisites
 
@@ -46,8 +37,6 @@ var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCrede
 ## Document from a URL
 
 Use the `prebuilt-documentSearch` analyzer with a public document URL. Note that for URL inputs, use `AnalyzeAsync()` with `AnalysisInput` objects (as shown below). For binary data from local files, use `AnalyzeBinaryAsync()` instead (see [Sample01_AnalyzeBinary][sample01-analyze-binary]).
-
-> Content Understanding operations are long-running; the SDK handles polling when using `WaitUntil.Completed`.
 
 For a list of supported document types for `prebuilt-documentSearch`, see [Service limits][cu-service-limits].
 

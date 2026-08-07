@@ -1,6 +1,8 @@
 # Detect signatures in a document
 
-> **Preview only:** Signature detection is available only in service API version `2026-06-01-preview`. Configure the client with `new ContentUnderstandingClientOptions(ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview)`.
+> **Supported service API version:** `2026-06-01-preview`
+>
+> Configure the client with `new ContentUnderstandingClientOptions(ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview)`.
 
 Signature detection is available when layout extraction is enabled
 (`EnableLayout = true`), including with `prebuilt-layout`. Detected regions are
