@@ -476,9 +476,9 @@ namespace Azure.Storage.Cryptography
         /// <summary>
         /// A cache for a content encryption key (CEK), to avoid multiple key envelope unwraps over
         /// a multipart download, as unwraps may be costly or otherwise rate limited.
-        /// This cache tracks the key encryption key (KEK) ID which unwrapped as well as the
+        /// This cache tracks the key encryption key (KEK) ID that unwrapped the CEK as well as the
         /// client-side encryption version being used for this particular storage resource. If the
-        /// encryption metadata from a particular downloar partition does not match, the key will
+        /// encryption metadata from a particular download partition does not match, the key will
         /// not be returned.
         /// </summary>
         internal class ContentEncryptionKeyCache
@@ -498,7 +498,7 @@ namespace Azure.Storage.Cryptography
             /// Returns the encapsulated key only if the encryption metadata matches what is cached
             /// alongside the key.
             /// </summary>
-            /// <param name="match">Encrytpion data to match against.</param>
+            /// <param name="match">Encryption data to match against.</param>
             /// <param name="key">Key output.</param>
             /// <returns>
             /// True if the match is valid and a key has been returned in the out parameter.
