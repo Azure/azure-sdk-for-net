@@ -36,9 +36,7 @@ Review only new or changed public API relative to the latest stable release. Exi
    pwsh .github/skills/azure-sdk-mgmt-pr-review/Check-MgmtNamingRules.ps1 -ApiFilePath <current-api-file> -BaselineApiFilePath <baseline-api-file>
    ```
    Omit `-BaselineApiFilePath` when there is no stable baseline. Use `-PackagePath` only for local/manual trusted reviews. In GitHub Agentic Workflow mode, run the scanner from the base branch against explicit API files fetched from PR/baseline; do not execute PR scripts.
-   When a baseline is supplied, the scanner also compares required/optional parameter metadata for every matching public method and constructor. Investigate every `OPTPARAM001` and `OPTPARAM002` finding as a potential blocking source-compatibility issue; ApiCompat may not report them.
-
-   Before requesting restoration for `OPTPARAM001`, inspect the complete overload set and verify the change compiles for representative positional and named calls. A compatibility shim may need to keep parameters required when restoring defaults would introduce `CS0121`; the text scanner intentionally reports these cases rather than approximating the C# overload-resolution binder. Neither `[Obsolete]` nor `[EditorBrowsable]` changes overload resolution, and `[OverloadResolutionPriority]` only helps consumers compiling with C# 13 or later.
+   When a baseline is supplied, the scanner also compares required/optional parameter metadata for every matching public method and constructor. Treat `OPTPARAM001` and `OPTPARAM002` as candidates requiring overload-set analysis; ApiCompat may not report real source breaks, but an optional-metadata difference alone is not sufficient to block.
 3. Treat scanner API-file line numbers as symbol identifiers, not final comment targets. Resolve each finding to generated source, customization source, or TypeSpec customization files before commenting.
 4. Run contextual naming exhaustively using inventory mode:
    ```powershell
@@ -48,6 +46,12 @@ Review only new or changed public API relative to the latest stable release. Exi
 5. Review API files, `src/Generated/`, TypeSpec customizations (`client.tsp`, `main.tsp`, `tspconfig.yaml`), and SDK customizations for issues not covered by the scanner.
 
 Scanner rule families include `OPTPARAM001`, `OPTPARAM002`, `SUFFIX001`-`SUFFIX010`, `RESINFIX001`, `RESNAME001`, `ACRONYM001`, `ACRONYM002`, `ARMCOMMON001`, `BOOL001`, `DATETIME001`, and `TTL001`. Contextual naming is intentionally manual; the scanner only provides the bounded worklist.
+
+Optional-parameter compatibility:
+- For every `OPTPARAM001` or `OPTPARAM002` candidate, inspect all current overloads with the same type and member name. Block only when you can show a call that compiled against the stable API but no longer compiles, becomes ambiguous, or binds to behaviorally incompatible parameter types.
+- Do not require exact optional metadata on a compatibility overload when another overload preserves the omitted-argument call shape. Restoring defaults can itself create ambiguity between the compatibility overload and a new generated overload.
+- Check the meaningful stable call shapes: no optional arguments, each positional prefix, named optional arguments, `default`, and explicitly typed defaults where overload parameter types changed. In a trusted local review, use a minimal compiler probe when needed. In the untrusted agentic workflow, do not compile PR code; use API signatures and existing CI compiler evidence, and keep the candidate non-blocking when applicability cannot be established confidently.
+- Require the smallest safe fix. For example, when a former `string ifMatch = null, CancellationToken cancellationToken = default` overload coexists with a new optional `ETag?` overload, keeping `ifMatch` required can avoid no-argument ambiguity while `cancellationToken` may still need to remain optional so calls passing only the string ETag continue to compile.
 
 ### Comment Targets
 
@@ -155,7 +159,7 @@ If `ApiCompatVersion` exists, check breaking changes after Phase 2. Locally, bui
 
 For each ApiCompat error, list the removed/changed API and target the relevant source line when possible. Do not fix it during review; request mitigation through customization code, generator/spec features, or the `mitigate-breaking-changes` skill. Any unmitigated breaking change is blocking. If no `ApiCompatVersion` exists, skip this phase.
 
-ApiCompat passing is not sufficient for source compatibility. Before declaring this phase complete, investigate every `OPTPARAM001` and `OPTPARAM002` finding against the complete overload set. Do not infer that a previously reviewed overload covers its siblings; compare every matching signature against the stable baseline.
+ApiCompat passing is not sufficient for source compatibility. Before declaring this phase complete, analyze every `OPTPARAM001` or `OPTPARAM002` candidate against the complete overload set and confirm that stable call shapes still compile. Do not infer that a previously reported overload fix covers sibling overloads.
 
 ## Output Format
 
