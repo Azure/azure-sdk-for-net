@@ -1,14 +1,10 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.4 (2026-08-06)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+Additional Signal refresh interval added
 
 ## 1.0.0-beta.3 (2026-06-08)
 
