@@ -122,7 +122,7 @@ Naming fix recommendation:
 TypeSpec-backed rename customization (`TSPRENAME001`):
 - Apply this rule to every package with `tsp-location.yaml`, including brand-new packages, feature/refresh PRs, and migrations.
 - Inspect added or modified SDK customization files containing `[CodeGenType]`, `[CodeGenMember]`, `[CodeGenSuppress]`, wrapper members, or forwarding methods.
-- If custom code is used only to rename an API that is directly defined in the service TypeSpec, report `TSPRENAME001` as blocking. Require scoped `@@clientName(TypeSpecTarget, "CSharpName", "csharp")` in the spec repository and regeneration; do not accept SDK custom code as an alternative.
+- If custom code is used only to rename an API that is directly defined in the service TypeSpec, report `TSPRENAME001` as blocking. Require scoped `@@clientName(TypeSpecTarget, "CSharpName", "csharp")` in the spec repository's `client.tsp` and regeneration; do not accept SDK custom code as an alternative.
 - SDK rename customizations are allowed only for synthesized artifacts that TypeSpec cannot target or necessary compatibility shims that cannot be replaced by renaming the generated API.
 - On re-review, distinguish "the API now has the requested name" from "the rename is implemented in the required layer." Do not resolve a naming finding when it was moved to SDK custom code instead of TypeSpec.
 
