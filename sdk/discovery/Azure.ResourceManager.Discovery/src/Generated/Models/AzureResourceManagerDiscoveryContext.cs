@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Discovery.Models;
 using Azure.ResourceManager.Models;
 
@@ -68,7 +67,6 @@ namespace Azure.ResourceManager.Discovery
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(ProjectListResult))]
     [ModelReaderWriterBuildable(typeof(ProjectSettings))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StorageAssetListResult))]
     [ModelReaderWriterBuildable(typeof(StorageContainerListResult))]
     [ModelReaderWriterBuildable(typeof(SupercomputerListResult))]
