@@ -16,10 +16,10 @@
 
 ## Summary
 
-- Total libraries: 439
-- Management Plane (MPG): 257
-  - Autorest/Swagger: 46
-  - New Emitter (TypeSpec): 211
+- Total libraries: 442
+- Management Plane (MPG): 260
+  - Autorest/Swagger: 43
+  - New Emitter (TypeSpec): 217
   - Old TypeSpec: 0
 - Data Plane (DPG): 129
   - Autorest/Swagger: 30
@@ -136,7 +136,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 30
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 211 / 211 (100%)
+**Migration Status**: 217 / 217 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -144,6 +144,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | agricultureplatform | Azure.ResourceManager.AgriculturePlatform | ✅ |
 | alertsmanagement | Azure.ResourceManager.AlertProcessingRules | ✅ |
 | alertsmanagement | Azure.ResourceManager.AlertRuleRecommendations | ✅ |
+| alertsmanagement | Azure.ResourceManager.AlertsManagement | ✅ |
 | alertsmanagement | Azure.ResourceManager.PreviewAlertRule | ✅ |
 | alertsmanagement | Azure.ResourceManager.PrometheusRuleGroups | ✅ |
 | alertsmanagement | Azure.ResourceManager.TenantActivityLogAlerts | ✅ |
@@ -151,7 +152,9 @@ Libraries that provide resource management APIs for Azure services and have been
 | apimanagement | Azure.ResourceManager.ApiManagement | ✅ |
 | appcomplianceautomation | Azure.ResourceManager.AppComplianceAutomation | ✅ |
 | appconfiguration | Azure.ResourceManager.AppConfiguration | ✅ |
+| applicationinsights | Azure.ResourceManager.ApplicationInsights | ✅ |
 | appnetwork | Azure.ResourceManager.AppNetwork | ✅ |
+| arc-scvmm | Azure.ResourceManager.ScVmm | ✅ |
 | arizeaiobservabilityeval | Azure.ResourceManager.ArizeAIObservabilityEval | ✅ |
 | artifactsigning | Azure.ResourceManager.ArtifactSigning | ✅ |
 | astronomer | Azure.ResourceManager.Astro | ✅ |
@@ -255,6 +258,8 @@ Libraries that provide resource management APIs for Azure services and have been
 | iotoperations | Azure.ResourceManager.IotOperations | ✅ |
 | keyvault | Azure.ResourceManager.KeyVault | ✅ |
 | kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration.Extensions | ✅ |
+| kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes | ✅ |
+| kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations | ✅ |
 | kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes | ✅ |
 | kusto | Azure.ResourceManager.Kusto | ✅ |
 | lambdatesthyperexecute | Azure.ResourceManager.LambdaTestHyperExecute | ✅ |
@@ -356,15 +361,12 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 46
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 43
 
 | Service | Library |
 | ------- | ------- |
 | agrifood | Azure.ResourceManager.AgFoodPlatform |
-| alertsmanagement | Azure.ResourceManager.AlertsManagement |
 | analysisservices | Azure.ResourceManager.Analysis |
-| applicationinsights | Azure.ResourceManager.ApplicationInsights |
-| arc-scvmm | Azure.ResourceManager.ScVmm |
 | automanage | Azure.ResourceManager.Automanage |
 | blueprint | Azure.ResourceManager.Blueprint |
 | changeanalysis | Azure.ResourceManager.ChangeAnalysis |
@@ -418,7 +420,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | ------- | ------- | ----------------- | --------- |
 | apimanagement | Azure.Provisioning.ApiManagement | Azure.ResourceManager.ApiManagement ✅ | Reflection |
 | appconfiguration | Azure.Provisioning.AppConfiguration | Azure.ResourceManager.AppConfiguration ✅ | Reflection |
-| applicationinsights | Azure.Provisioning.ApplicationInsights | Azure.ResourceManager.ApplicationInsights | Reflection |
+| applicationinsights | Azure.Provisioning.ApplicationInsights | Azure.ResourceManager.ApplicationInsights ✅ | Reflection |
 | batch | Azure.Provisioning.Batch | Azure.ResourceManager.Batch ✅ | TypeSpec ✅ |
 | botservice | Azure.Provisioning.BotService | Azure.ResourceManager.BotService ✅ | TypeSpec ✅ |
 | cdn | Azure.Provisioning.Cdn | Azure.ResourceManager.Cdn ✅ | TypeSpec ✅ |
