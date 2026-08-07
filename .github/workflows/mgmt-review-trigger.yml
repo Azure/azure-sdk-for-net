@@ -89,6 +89,7 @@ jobs:
             local check_run_conclusion="$2"
             local check_run_head_sha="$3"
             local check_run_url="$4"
+            local allow_active_check="${5:-false}"
 
             if [ -z "$pr_number" ]; then
               echo "No pull request associated with this check run."
@@ -115,11 +116,14 @@ jobs:
             fi
 
             if has_active_management_review_check "$check_run_head_sha"; then
-              echo "Skipping PR #$pr_number; management review check is already active for $check_run_head_sha."
-              return 0
+              if [ "$allow_active_check" != "true" ]; then
+                echo "Skipping PR #$pr_number; management review check is already active for $check_run_head_sha."
+                return 0
+              fi
+              echo "Reusing active management review check for manual rerun of PR #$pr_number."
             fi
 
-            AW_CONTEXT=$(printf '{"item_type":"pull_request","item_number":%s}' "$pr_number")
+            AW_CONTEXT=$(printf '{"item_type":"pull_request","item_number":%s,"repo":"%s"}' "$pr_number" "$REPOSITORY")
 
             gh workflow run mgmt-review.lock.yml \
               --repo "$REPOSITORY" \
@@ -139,7 +143,7 @@ jobs:
               PR_NUMBER="$(find_open_pr_for_head_sha "$CHECK_RUN_HEAD_SHA")"
             fi
 
-            dispatch_management_review "$PR_NUMBER" "$CHECK_RUN_CONCLUSION" "$CHECK_RUN_HEAD_SHA" "$CHECK_RUN_URL"
+            dispatch_management_review "$PR_NUMBER" "$CHECK_RUN_CONCLUSION" "$CHECK_RUN_HEAD_SHA" "$CHECK_RUN_URL" false
             exit 0
           fi
 
@@ -160,4 +164,4 @@ jobs:
           fi
 
           IFS=$'\t' read -r check_run_conclusion check_run_head_sha check_run_url <<< "$check_run"
-          dispatch_management_review "$MANUAL_PR_NUMBER" "$check_run_conclusion" "$check_run_head_sha" "$check_run_url"
+          dispatch_management_review "$MANUAL_PR_NUMBER" "$check_run_conclusion" "$check_run_head_sha" "$check_run_url" true
