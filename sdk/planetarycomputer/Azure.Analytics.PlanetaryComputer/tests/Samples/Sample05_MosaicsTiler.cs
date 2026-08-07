@@ -78,7 +78,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
         [Test]
         [Ignore("Only for sample compilation verification")]
-        public async Task GetMosaicsSearchInfo()
+        public async Task GetSearchInfo()
         {
             #region Snippet:Sample05_GetSearchInfo
             // Create a Planetary Computer client
@@ -98,7 +98,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string searchId = "abc123"; // From previous registration
 
             // Get information about the registered search
-            Response<TilerStacSearchRegistration> response = await dataClient.GetMosaicsSearchInfoAsync(searchId);
+            Response<TilerStacSearchRegistration> response = await dataClient.GetSearchInfoAsync(searchId);
             TilerStacSearchRegistration searchInfo = response.Value;
 
             Console.WriteLine("Search registration retrieved successfully");
@@ -107,7 +107,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
         [Test]
         [Ignore("Only for sample compilation verification")]
-        public async Task GetMosaicsTileJson()
+        public async Task GetSearchTileJson()
         {
             #region Snippet:Sample05_GetTileJson
             // Create a Planetary Computer client
@@ -128,16 +128,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string collectionId = "naip";
 
             // Get TileJSON metadata for the mosaic
-            Response<TileJsonMetadata> response = await dataClient.GetMosaicsTileJsonAsync(
-                searchId: searchId,
-                tileMatrixSetId: "WebMercatorQuad",
-                assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3",
-                tileScale: 1,
-                minZoom: 9,
-                tileFormat: TilerImageFormat.Png,
-                collection: collectionId
-            );
+            var tileJsonOptions = new GetSearchTileJsonOptions(searchId)
+            {
+                TileMatrixSetId = "WebMercatorQuad",
+                Assets = { "image" },
+                AssetBandIndices = { "image|1,2,3" },
+                TileScale = 1,
+                MinZoom = 9,
+                TileFormat = "png",
+                CollectionId = collectionId
+            };
+            Response<TileJsonMetadata> response = await dataClient.GetSearchTileJsonAsync(tileJsonOptions);
 
             TileJsonMetadata tileJson = response.Value;
             Console.WriteLine($"TileJSON version: {tileJson.TileJson}");
@@ -147,7 +148,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
         [Test]
         [Ignore("Only for sample compilation verification")]
-        public async Task GetMosaicsTile()
+        public async Task GetSearchTile()
         {
             #region Snippet:Sample05_GetTile
             // Create a Planetary Computer client
@@ -168,7 +169,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string collectionId = "naip";
 
             // Get a specific tile image (z=13, x=2174, y=3282)
-            Response<BinaryData> response = await dataClient.GetMosaicsTileAsync(
+            Response response = await dataClient.GetSearchTileAsync(
                 searchId: searchId,
                 tileMatrixSetId: "WebMercatorQuad",
                 z: 13,
@@ -177,18 +178,18 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
                 scale: 1,
                 format: "png",
                 assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3",
+                assetBandIndices: new[] { "image|1,2,3" },
                 collection: collectionId
             );
 
-            byte[] imageBytes = response.Value.ToArray();
+            byte[] imageBytes = response.Content.ToArray();
             Console.WriteLine($"Downloaded tile: {imageBytes.Length} bytes");
             #endregion
         }
 
         [Test]
         [Ignore("Only for sample compilation verification")]
-        public async Task GetMosaicsWmtsCapabilities()
+        public async Task GetSearchWmtsCapabilities()
         {
             #region Snippet:Sample05_GetWmtsCapabilities
             // Create a Planetary Computer client
@@ -208,25 +209,25 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string searchId = "abc123"; // From previous registration
 
             // Get WMTS capabilities XML
-            Response<BinaryData> response = await dataClient.GetMosaicsWmtsCapabilitiesAsync(
+            Response response = await dataClient.GetSearchWmtsCapabilitiesAsync(
                 searchId: searchId,
                 tileMatrixSetId: "WebMercatorQuad",
-                tileFormat: TilerImageFormat.Png,
+                tileFormat: "png",
                 tileScale: 1,
                 minZoom: 7,
                 maxZoom: 13,
                 assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3"
+                assetBandIndices: new[] { "image|1,2,3" }
             );
 
-            string xmlString = Encoding.UTF8.GetString(response.Value.ToArray());
+            string xmlString = Encoding.UTF8.GetString(response.Content.ToArray());
             Console.WriteLine($"WMTS Capabilities XML: {xmlString.Substring(0, 200)}...");
             #endregion
         }
 
         [Test]
         [Ignore("Only for sample compilation verification")]
-        public async Task GetMosaicsAssetsForPoint()
+        public async Task GetSearchPointWithAssets()
         {
             #region Snippet:Sample05_GetAssetsForPoint
             // Create a Planetary Computer client
@@ -249,7 +250,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             float longitude = -84.432f;
             float latitude = 33.640f;
 
-            Response<IReadOnlyList<StacItemPointAsset>> response = await dataClient.GetMosaicsAssetsForPointAsync(
+            Response<IReadOnlyList<StacItemPointAsset>> response = await dataClient.GetSearchPointWithAssetsAsync(
                 searchId: searchId,
                 longitude: longitude,
                 latitude: latitude,
@@ -272,7 +273,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
         [Test]
         [Ignore("Only for sample compilation verification")]
-        public async Task GetMosaicsAssetsForTile()
+        public async Task GetSearchAssetsForTile()
         {
             #region Snippet:Sample05_GetAssetsForTile
             // Create a Planetary Computer client
@@ -293,7 +294,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string collectionId = "naip";
 
             // Get assets that intersect with a specific tile
-            Response<IReadOnlyList<TilerAssetGeoJson>> response = await dataClient.GetMosaicsAssetsForTileAsync(
+            Response<IReadOnlyList<TilerAssetGeoJson>> response = await dataClient.GetSearchAssetsForTileAsync(
                 searchId: searchId,
                 tileMatrixSetId: "WebMercatorQuad",
                 z: 13,
@@ -304,129 +305,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
             IReadOnlyList<TilerAssetGeoJson> assets = response.Value;
             Console.WriteLine($"Found {assets.Count} assets for tile z=13, x=2174, y=3282");
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only for sample compilation verification")]
-        public async Task CreateStaticImage()
-        {
-            #region Snippet:Sample05_CreateStaticImage
-            // Create a Planetary Computer client
-#if SNIPPET
-
-            Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
-
-            PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
-
-#else
-
-            var client = GetTestClient();
-
-#endif
-            DataClient dataClient = client.GetDataClient();
-
-            string collectionId = "naip";
-
-            // Define the area of interest
-            var coordinates = new List<IList<IList<float>>>
-            {
-                new List<IList<float>>
-                {
-                    new List<float> { -84.45f, 33.66f },
-                    new List<float> { -84.40f, 33.66f },
-                    new List<float> { -84.40f, 33.62f },
-                    new List<float> { -84.45f, 33.62f },
-                    new List<float> { -84.45f, 33.66f }
-                }
-            };
-            var geometry = new PolygonGeometry(coordinates);
-
-            // Define temporal filter
-            var cqlFilter = new Dictionary<string, BinaryData>
-            {
-                ["op"] = BinaryData.FromString("\"and\""),
-                ["args"] = BinaryData.FromObjectAsJson(new object[]
-                {
-                    new Dictionary<string, object>
-                    {
-                        ["op"] = "=",
-                        ["args"] = new object[]
-                        {
-                            new Dictionary<string, string> { ["property"] = "collection" },
-                            collectionId
-                        }
-                    },
-                    new Dictionary<string, object>
-                    {
-                        ["op"] = "anyinteracts",
-                        ["args"] = new object[]
-                        {
-                            new Dictionary<string, string> { ["property"] = "datetime" },
-                            new Dictionary<string, object>
-                            {
-                                ["interval"] = new[] { "2023-01-01T00:00:00Z", "2023-12-31T00:00:00Z" }
-                            }
-                        }
-                    }
-                })
-            };
-
-            // Create image request
-            var imageRequest = new ImageParameters(
-                cql: cqlFilter,
-                renderParameters: $"assets=image&asset_bidx=image|1,2,3&collection={collectionId}",
-                columns: 1080,
-                rows: 1080
-            );
-            imageRequest.Zoom = 13;
-            imageRequest.Geometry = geometry;
-            imageRequest.ImageSize = "1080x1080";
-            imageRequest.ShowBranding = false;
-
-            // Create the static image
-            Response<ImageResponse> response = await dataClient.CreateStaticImageAsync(
-                collectionId: collectionId,
-                body: imageRequest
-            );
-
-            Console.WriteLine($"Static image created: {response.Value.Url}");
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only for sample compilation verification")]
-        public async Task GetStaticImage()
-        {
-            #region Snippet:Sample05_GetStaticImage
-            // Create a Planetary Computer client
-#if SNIPPET
-
-            Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
-
-            PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
-
-#else
-
-            var client = GetTestClient();
-
-#endif
-            DataClient dataClient = client.GetDataClient();
-
-            string collectionId = "naip";
-            string imageId = "abc123.png"; // From CreateStaticImage response URL
-
-            // Retrieve the static image
-            Response<BinaryData> response = await dataClient.GetStaticImageAsync(
-                collectionId: collectionId,
-                id: imageId
-            );
-
-            byte[] imageBytes = response.Value.ToArray();
-            Console.WriteLine($"Retrieved static image: {imageBytes.Length} bytes");
-
-            // Save to file
-            System.IO.File.WriteAllBytes("static_image.png", imageBytes);
             #endregion
         }
 
@@ -493,21 +371,22 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             Console.WriteLine($"Step 1: Registered search ID: {searchId}");
 
             // Step 2: Get TileJSON metadata
-            Response<TileJsonMetadata> tileJsonResponse = await dataClient.GetMosaicsTileJsonAsync(
-                searchId: searchId,
-                tileMatrixSetId: "WebMercatorQuad",
-                assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3",
-                tileScale: 1,
-                minZoom: 9,
-                tileFormat: TilerImageFormat.Png,
-                collection: collectionId
-            );
+            var tileJsonOptions2 = new GetSearchTileJsonOptions(searchId)
+            {
+                TileMatrixSetId = "WebMercatorQuad",
+                Assets = { "image" },
+                AssetBandIndices = { "image|1,2,3" },
+                TileScale = 1,
+                MinZoom = 9,
+                TileFormat = "png",
+                CollectionId = collectionId
+            };
+            Response<TileJsonMetadata> tileJsonResponse = await dataClient.GetSearchTileJsonAsync(tileJsonOptions2);
 
             Console.WriteLine($"Step 2: TileJSON URL pattern: {tileJsonResponse.Value.Tiles[0]}");
 
             // Step 3: Get a specific tile
-            Response<BinaryData> tileResponse = await dataClient.GetMosaicsTileAsync(
+            Response tileResponse = await dataClient.GetSearchTileAsync(
                 searchId: searchId,
                 tileMatrixSetId: "WebMercatorQuad",
                 z: 13,
@@ -516,14 +395,14 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
                 scale: 1,
                 format: "png",
                 assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3",
+                assetBandIndices: new[] { "image|1,2,3" },
                 collection: collectionId
             );
 
-            Console.WriteLine($"Step 3: Downloaded tile: {tileResponse.Value.ToArray().Length} bytes");
+            Console.WriteLine($"Step 3: Downloaded tile: {tileResponse.Content.ToArray().Length} bytes");
 
             // Step 4: Get assets for a specific point
-            Response<IReadOnlyList<StacItemPointAsset>> assetsResponse = await dataClient.GetMosaicsAssetsForPointAsync(
+            Response<IReadOnlyList<StacItemPointAsset>> assetsResponse = await dataClient.GetSearchPointWithAssetsAsync(
                 searchId: searchId,
                 longitude: -84.432f,
                 latitude: 33.640f,
@@ -532,6 +411,40 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             );
 
             Console.WriteLine($"Step 4: Found {assetsResponse.Value.Count} assets at point");
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only for sample compilation verification")]
+        public async Task GetSearchTileByScaleAndFormat()
+        {
+            #region Snippet:Sample05_GetSearchTileByScaleAndFormat
+#if SNIPPET
+            Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
+            PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
+#else
+            var client = GetTestClient();
+#endif
+            DataClient dataClient = client.GetDataClient();
+            string searchId = "existing-search-id";
+            string collectionId = "naip";
+
+            // Get a tile with explicit scale and format in the URL path
+            Response response = await dataClient.GetSearchTileByScaleAndFormatAsync(
+                searchId: searchId,
+                tileMatrixSetId: "WebMercatorQuad",
+                z: 13,
+                x: 2174,
+                y: 3282,
+                scale: 1,
+                format: "png",
+                assets: new[] { "image" },
+                assetBandIndices: new[] { "image|1,2,3" },
+                collection: collectionId
+            );
+
+            byte[] imageBytes = response.Content.ToArray();
+            Console.WriteLine($"Downloaded tile (by scale and format): {imageBytes.Length} bytes");
             #endregion
         }
     }

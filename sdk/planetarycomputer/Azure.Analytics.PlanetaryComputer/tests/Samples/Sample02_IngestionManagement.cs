@@ -173,7 +173,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             var ingestionDefinition = new IngestionInformation("StaticCatalog")
             {
                 DisplayName = "My Dataset Ingestion",
-                SourceCatalogUrl = new Uri(sourceCatalogUrl),
+                SourceCatalogUri = new Uri(sourceCatalogUrl),
                 KeepOriginalAssets = true,
                 SkipExistingItems = true
             };
@@ -288,7 +288,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             {
                 Console.WriteLine($"  ID: {ingestion.Id}");
                 Console.WriteLine($"  Display Name: {ingestion.DisplayName}");
-                Console.WriteLine($"  Import Type: {ingestion.ImportType}");
+                Console.WriteLine($"  Import Type: {ingestion.ImportKind}");
             }
             #endregion
         }
@@ -321,8 +321,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
             Console.WriteLine($"Ingestion ID: {ingestion.Id}");
             Console.WriteLine($"Display Name: {ingestion.DisplayName}");
-            Console.WriteLine($"Import Type: {ingestion.ImportType}");
-            Console.WriteLine($"Source Catalog URL: {ingestion.SourceCatalogUrl}");
+            Console.WriteLine($"Import Type: {ingestion.ImportKind}");
+            Console.WriteLine($"Source Catalog URL: {ingestion.SourceCatalogUri}");
             #endregion
         }
 
@@ -381,12 +381,12 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             Guid operationId = Guid.Parse("00000000-0000-0000-0000-000000000000");
 
             // Get operation details
-            Response<LongRunningOperation> response = await ingestionClient.GetOperationAsync(operationId);
-            LongRunningOperation operation = response.Value;
+            Response<PlanetaryComputerOperation> response = await ingestionClient.GetOperationAsync(operationId);
+            PlanetaryComputerOperation operation = response.Value;
 
             Console.WriteLine($"Operation ID: {operation.Id}");
             Console.WriteLine($"Status: {operation.Status}");
-            Console.WriteLine($"Type: {operation.Type}");
+            Console.WriteLine($"Type: {operation.Kind}");
             #endregion
         }
 
@@ -533,7 +533,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             var ingestionDefinition = new IngestionInformation("StaticCatalog")
             {
                 DisplayName = "My Dataset Ingestion",
-                SourceCatalogUrl = new Uri(sourceCatalogUrl),
+                SourceCatalogUri = new Uri(sourceCatalogUrl),
                 KeepOriginalAssets = true,
                 SkipExistingItems = true
             };
@@ -561,6 +561,28 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             await foreach (IngestionRun r in ingestionClient.GetRunsAsync(collectionId, ingestionId))
             {
                 Console.WriteLine($"  Run {r.Id}: {r.Operation.Status}");
+            }
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only for sample compilation verification")]
+        public async Task ListOperations()
+        {
+            #region Snippet:Sample02_ListOperations
+#if SNIPPET
+            Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
+            PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
+#else
+            var client = GetTestClient();
+#endif
+            IngestionClient ingestionClient = client.GetIngestionClient();
+
+            // List all ingestion operations
+            Console.WriteLine("Listing ingestion operations:");
+            await foreach (PlanetaryComputerOperation operation in ingestionClient.GetOperationsAsync())
+            {
+                Console.WriteLine($"  Operation {operation.Id}: {operation.Status}");
             }
             #endregion
         }

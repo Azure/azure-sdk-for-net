@@ -24,6 +24,26 @@ namespace Azure.Analytics.PlanetaryComputer
         private const string TerrariumValue = "terrarium";
         /// <summary> Encodes elevation data in Mapbox TerrainRGB format. </summary>
         private const string TerrainrgbValue = "terrainrgb";
+        /// <summary> Calculates slope from elevation data. </summary>
+        private const string SlopeValue = "slope";
+        /// <summary> Casts data to a different type. </summary>
+        private const string CastValue = "cast";
+        /// <summary> Rounds values up to the nearest integer. </summary>
+        private const string CeilValue = "ceil";
+        /// <summary> Rounds values down to the nearest integer. </summary>
+        private const string FloorValue = "floor";
+        /// <summary> Computes the minimum value across bands. </summary>
+        private const string MinValue = "min";
+        /// <summary> Computes the maximum value across bands. </summary>
+        private const string MaxValue = "max";
+        /// <summary> Computes the median value across bands. </summary>
+        private const string MedianValue = "median";
+        /// <summary> Computes the mean value across bands. </summary>
+        private const string MeanValue = "mean";
+        /// <summary> Computes the standard deviation across bands. </summary>
+        private const string StdValue = "std";
+        /// <summary> Computes the variance across bands. </summary>
+        private const string VarValue = "var";
 
         /// <summary> Initializes a new instance of <see cref="TerrainAlgorithm"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -49,6 +69,36 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Encodes elevation data in Mapbox TerrainRGB format. </summary>
         public static TerrainAlgorithm Terrainrgb { get; } = new TerrainAlgorithm(TerrainrgbValue);
+
+        /// <summary> Calculates slope from elevation data. </summary>
+        public static TerrainAlgorithm Slope { get; } = new TerrainAlgorithm(SlopeValue);
+
+        /// <summary> Casts data to a different type. </summary>
+        public static TerrainAlgorithm Cast { get; } = new TerrainAlgorithm(CastValue);
+
+        /// <summary> Rounds values up to the nearest integer. </summary>
+        public static TerrainAlgorithm Ceil { get; } = new TerrainAlgorithm(CeilValue);
+
+        /// <summary> Rounds values down to the nearest integer. </summary>
+        public static TerrainAlgorithm Floor { get; } = new TerrainAlgorithm(FloorValue);
+
+        /// <summary> Computes the minimum value across bands. </summary>
+        public static TerrainAlgorithm Min { get; } = new TerrainAlgorithm(MinValue);
+
+        /// <summary> Computes the maximum value across bands. </summary>
+        public static TerrainAlgorithm Max { get; } = new TerrainAlgorithm(MaxValue);
+
+        /// <summary> Computes the median value across bands. </summary>
+        public static TerrainAlgorithm Median { get; } = new TerrainAlgorithm(MedianValue);
+
+        /// <summary> Computes the mean value across bands. </summary>
+        public static TerrainAlgorithm Mean { get; } = new TerrainAlgorithm(MeanValue);
+
+        /// <summary> Computes the standard deviation across bands. </summary>
+        public static TerrainAlgorithm Std { get; } = new TerrainAlgorithm(StdValue);
+
+        /// <summary> Computes the variance across bands. </summary>
+        public static TerrainAlgorithm Var { get; } = new TerrainAlgorithm(VarValue);
 
         /// <summary> Determines if two <see cref="TerrainAlgorithm"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

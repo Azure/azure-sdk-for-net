@@ -133,7 +133,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         [Experimental("SCME0004")]
-        public virtual Response<StacCollectionResource> CreateCollectionAsset(string collectionId, StacAssetData body, CancellationToken cancellationToken = default)
+        public virtual Response<StacCollection> CreateCollectionAsset(string collectionId, StacAssetData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
@@ -141,7 +141,7 @@ namespace Azure.Analytics.PlanetaryComputer
             using MultiPartFormContent content = body.ToMultipartFormContent();
             using RequestContent requestContent = RequestContent.Create(content);
             Response result = CreateCollectionAsset(collectionId, requestContent, content.MediaType, cancellationToken.ToRequestContext());
-            return Response.FromValue((StacCollectionResource)result, result);
+            return Response.FromValue((StacCollection)result, result);
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         [Experimental("SCME0004")]
-        public virtual async Task<Response<StacCollectionResource>> CreateCollectionAssetAsync(string collectionId, StacAssetData body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StacCollection>> CreateCollectionAssetAsync(string collectionId, StacAssetData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
@@ -163,7 +163,7 @@ namespace Azure.Analytics.PlanetaryComputer
             using MultiPartFormContent content = body.ToMultipartFormContent();
             using RequestContent requestContent = RequestContent.Create(content);
             Response result = await CreateCollectionAssetAsync(collectionId, requestContent, content.MediaType, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((StacCollectionResource)result, result);
+            return Response.FromValue((StacCollection)result, result);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         [Experimental("SCME0004")]
-        public virtual Response<StacCollectionResource> ReplaceCollectionAsset(string collectionId, string assetId, StacAssetData body, CancellationToken cancellationToken = default)
+        public virtual Response<StacCollection> ReplaceCollectionAsset(string collectionId, string assetId, StacAssetData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
@@ -260,7 +260,7 @@ namespace Azure.Analytics.PlanetaryComputer
             using MultiPartFormContent content = body.ToMultipartFormContent();
             using RequestContent requestContent = RequestContent.Create(content);
             Response result = ReplaceCollectionAsset(collectionId, assetId, requestContent, content.MediaType, cancellationToken.ToRequestContext());
-            return Response.FromValue((StacCollectionResource)result, result);
+            return Response.FromValue((StacCollection)result, result);
         }
 
         /// <summary> Update an existing asset in a given collection. </summary>
@@ -272,7 +272,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         [Experimental("SCME0004")]
-        public virtual async Task<Response<StacCollectionResource>> ReplaceCollectionAssetAsync(string collectionId, string assetId, StacAssetData body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StacCollection>> ReplaceCollectionAssetAsync(string collectionId, string assetId, StacAssetData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
@@ -281,7 +281,7 @@ namespace Azure.Analytics.PlanetaryComputer
             using MultiPartFormContent content = body.ToMultipartFormContent();
             using RequestContent requestContent = RequestContent.Create(content);
             Response result = await ReplaceCollectionAssetAsync(collectionId, assetId, requestContent, content.MediaType, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((StacCollectionResource)result, result);
+            return Response.FromValue((StacCollection)result, result);
         }
 
         /// <summary>
@@ -359,13 +359,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="assetId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<StacCollectionResource> DeleteCollectionAsset(string collectionId, string assetId, CancellationToken cancellationToken = default)
+        public virtual Response<StacCollection> DeleteCollectionAsset(string collectionId, string assetId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
 
             Response result = DeleteCollectionAsset(collectionId, assetId, cancellationToken.ToRequestContext());
-            return Response.FromValue((StacCollectionResource)result, result);
+            return Response.FromValue((StacCollection)result, result);
         }
 
         /// <summary> Delete an asset from a given collection. </summary>
@@ -375,13 +375,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="assetId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<StacCollectionResource>> DeleteCollectionAssetAsync(string collectionId, string assetId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StacCollection>> DeleteCollectionAssetAsync(string collectionId, string assetId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
 
             Response result = await DeleteCollectionAssetAsync(collectionId, assetId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((StacCollectionResource)result, result);
+            return Response.FromValue((StacCollection)result, result);
         }
 
         /// <summary>
@@ -1041,7 +1041,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="body"> Request collection body. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Operation CreateCollection(WaitUntil waitUntil, StacCollectionResource body, CancellationToken cancellationToken = default)
+        public virtual Operation CreateCollection(WaitUntil waitUntil, StacCollection body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -1053,7 +1053,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="body"> Request collection body. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Operation> CreateCollectionAsync(WaitUntil waitUntil, StacCollectionResource body, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> CreateCollectionAsync(WaitUntil waitUntil, StacCollection body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -1061,7 +1061,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Create or replace a collection in the GeoCatalog instance
+        /// [Protocol Method] Replace an existing collection in the GeoCatalog instance
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -1075,16 +1075,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CreateOrReplaceCollection(string collectionId, RequestContent content, RequestContext context = null)
+        public virtual Response ReplaceCollection(string collectionId, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.CreateOrReplaceCollection");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.ReplaceCollection");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrReplaceCollectionRequest(collectionId, content, context);
+                using HttpMessage message = CreateReplaceCollectionRequest(collectionId, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1095,7 +1095,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Create or replace a collection in the GeoCatalog instance
+        /// [Protocol Method] Replace an existing collection in the GeoCatalog instance
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -1109,16 +1109,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateOrReplaceCollectionAsync(string collectionId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> ReplaceCollectionAsync(string collectionId, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.CreateOrReplaceCollection");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.ReplaceCollection");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrReplaceCollectionRequest(collectionId, content, context);
+                using HttpMessage message = CreateReplaceCollectionRequest(collectionId, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1128,36 +1128,36 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
-        /// <summary> Create or replace a collection in the GeoCatalog instance. </summary>
+        /// <summary> Replace an existing collection in the GeoCatalog instance. </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="body"> Request collection body. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<StacCollectionResource> CreateOrReplaceCollection(string collectionId, StacCollectionResource body, CancellationToken cancellationToken = default)
+        public virtual Response<StacCollection> ReplaceCollection(string collectionId, StacCollection body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = CreateOrReplaceCollection(collectionId, body, cancellationToken.ToRequestContext());
-            return Response.FromValue((StacCollectionResource)result, result);
+            Response result = ReplaceCollection(collectionId, body, cancellationToken.ToRequestContext());
+            return Response.FromValue((StacCollection)result, result);
         }
 
-        /// <summary> Create or replace a collection in the GeoCatalog instance. </summary>
+        /// <summary> Replace an existing collection in the GeoCatalog instance. </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="body"> Request collection body. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<StacCollectionResource>> CreateOrReplaceCollectionAsync(string collectionId, StacCollectionResource body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StacCollection>> ReplaceCollectionAsync(string collectionId, StacCollection body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CreateOrReplaceCollectionAsync(collectionId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((StacCollectionResource)result, result);
+            Response result = await ReplaceCollectionAsync(collectionId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((StacCollection)result, result);
         }
 
         /// <summary> Delete a collection in the GeoCatalog instance. </summary>
@@ -1312,12 +1312,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<StacCollectionResource> GetCollection(string collectionId, StacAssetUrlSigningMode? sign = default, int? durationInMinutes = default, CancellationToken cancellationToken = default)
+        public virtual Response<StacCollection> GetCollection(string collectionId, StacAssetUrlSigningMode? sign = default, int? durationInMinutes = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
             Response result = GetCollection(collectionId, sign?.ToString(), durationInMinutes, cancellationToken.ToRequestContext());
-            return Response.FromValue((StacCollectionResource)result, result);
+            return Response.FromValue((StacCollection)result, result);
         }
 
         /// <summary> Get a collection in the GeoCatalog instance. </summary>
@@ -1328,12 +1328,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<StacCollectionResource>> GetCollectionAsync(string collectionId, StacAssetUrlSigningMode? sign = default, int? durationInMinutes = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StacCollection>> GetCollectionAsync(string collectionId, StacAssetUrlSigningMode? sign = default, int? durationInMinutes = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
             Response result = await GetCollectionAsync(collectionId, sign?.ToString(), durationInMinutes, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((StacCollectionResource)result, result);
+            return Response.FromValue((StacCollection)result, result);
         }
 
         /// <summary>
@@ -1486,12 +1486,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<PartitionType> GetPartitionType(string collectionId, CancellationToken cancellationToken = default)
+        public virtual Response<PartitionKind> GetPartitionType(string collectionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
             Response result = GetPartitionType(collectionId, cancellationToken.ToRequestContext());
-            return Response.FromValue((PartitionType)result, result);
+            return Response.FromValue((PartitionKind)result, result);
         }
 
         /// <summary> Get the partitiontype for a GeoCatalog Collection. </summary>
@@ -1500,12 +1500,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<PartitionType>> GetPartitionTypeAsync(string collectionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PartitionKind>> GetPartitionTypeAsync(string collectionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
             Response result = await GetPartitionTypeAsync(collectionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((PartitionType)result, result);
+            return Response.FromValue((PartitionKind)result, result);
         }
 
         /// <summary>
@@ -1597,7 +1597,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response ReplacePartitionType(string collectionId, PartitionType body, CancellationToken cancellationToken = default)
+        public virtual Response ReplacePartitionType(string collectionId, PartitionKind body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
@@ -1618,7 +1618,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> ReplacePartitionTypeAsync(string collectionId, PartitionType body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ReplacePartitionTypeAsync(string collectionId, PartitionKind body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
@@ -2152,7 +2152,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetCollectionThumbnail(string collectionId, RequestContext context)
+        public virtual Response GetCollectionThumbnail(string collectionId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.GetCollectionThumbnail");
             scope.Start();
@@ -2184,7 +2184,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetCollectionThumbnailAsync(string collectionId, RequestContext context)
+        public virtual async Task<Response> GetCollectionThumbnailAsync(string collectionId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.GetCollectionThumbnail");
             scope.Start();
@@ -2200,34 +2200,6 @@ namespace Azure.Analytics.PlanetaryComputer
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Get thumbnail for given collection. </summary>
-        /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetCollectionThumbnail(string collectionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            Response result = GetCollectionThumbnail(collectionId, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary> Get thumbnail for given collection. </summary>
-        /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetCollectionThumbnailAsync(string collectionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            Response result = await GetCollectionThumbnailAsync(collectionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
         }
 
         /// <summary>
@@ -2433,13 +2405,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetConformanceClass(RequestContext context)
+        public virtual Response GetConformanceClasses(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.GetConformanceClass");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.GetConformanceClasses");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetConformanceClassRequest(context);
+                using HttpMessage message = CreateGetConformanceClassesRequest(context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2460,13 +2432,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetConformanceClassAsync(RequestContext context)
+        public virtual async Task<Response> GetConformanceClassesAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.GetConformanceClass");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.GetConformanceClasses");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetConformanceClassRequest(context);
+                using HttpMessage message = CreateGetConformanceClassesRequest(context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2479,18 +2451,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Returns the STAC conformance classes. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<StacConformanceClasses> GetConformanceClass(CancellationToken cancellationToken = default)
+        public virtual Response<StacConformanceClasses> GetConformanceClasses(CancellationToken cancellationToken = default)
         {
-            Response result = GetConformanceClass(cancellationToken.ToRequestContext());
+            Response result = GetConformanceClasses(cancellationToken.ToRequestContext());
             return Response.FromValue((StacConformanceClasses)result, result);
         }
 
         /// <summary> Returns the STAC conformance classes. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<StacConformanceClasses>> GetConformanceClassAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StacConformanceClasses>> GetConformanceClassesAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await GetConformanceClassAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetConformanceClassesAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((StacConformanceClasses)result, result);
         }
 
@@ -2668,7 +2640,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return await CreateItemAsync(waitUntil, collectionId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
-        /// <summary> Create or replace a STAC item in a collection. </summary>
+        /// <summary> Replace a STAC item in a collection. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="itemId"> STAC Item id. </param>
@@ -2677,9 +2649,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Operation CreateOrReplaceItem(WaitUntil waitUntil, string collectionId, string itemId, RequestContent content, RequestContext context = null)
+        public virtual Operation ReplaceItem(WaitUntil waitUntil, string collectionId, string itemId, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.CreateOrReplaceItem");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.ReplaceItem");
             scope.Start();
             try
             {
@@ -2687,8 +2659,8 @@ namespace Azure.Analytics.PlanetaryComputer
                 Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrReplaceItemRequest(collectionId, itemId, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "StacClient.CreateOrReplaceItem", OperationFinalStateVia.Location, context, waitUntil);
+                using HttpMessage message = CreateReplaceItemRequest(collectionId, itemId, content, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "StacClient.ReplaceItem", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2697,7 +2669,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
-        /// <summary> Create or replace a STAC item in a collection. </summary>
+        /// <summary> Replace a STAC item in a collection. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="itemId"> STAC Item id. </param>
@@ -2706,9 +2678,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation> CreateOrReplaceItemAsync(WaitUntil waitUntil, string collectionId, string itemId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation> ReplaceItemAsync(WaitUntil waitUntil, string collectionId, string itemId, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.CreateOrReplaceItem");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.ReplaceItem");
             scope.Start();
             try
             {
@@ -2716,8 +2688,8 @@ namespace Azure.Analytics.PlanetaryComputer
                 Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrReplaceItemRequest(collectionId, itemId, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "StacClient.CreateOrReplaceItem", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateReplaceItemRequest(collectionId, itemId, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "StacClient.ReplaceItem", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2726,7 +2698,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
-        /// <summary> Create or replace a STAC item in a collection. </summary>
+        /// <summary> Replace a STAC item in a collection. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="itemId"> STAC Item id. </param>
@@ -2734,16 +2706,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Operation CreateOrReplaceItem(WaitUntil waitUntil, string collectionId, string itemId, StacItemResource body, CancellationToken cancellationToken = default)
+        public virtual Operation ReplaceItem(WaitUntil waitUntil, string collectionId, string itemId, StacItem body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNull(body, nameof(body));
 
-            return CreateOrReplaceItem(waitUntil, collectionId, itemId, body, cancellationToken.ToRequestContext());
+            return ReplaceItem(waitUntil, collectionId, itemId, body, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> Create or replace a STAC item in a collection. </summary>
+        /// <summary> Replace a STAC item in a collection. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="itemId"> STAC Item id. </param>
@@ -2751,13 +2723,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> CreateOrReplaceItemAsync(WaitUntil waitUntil, string collectionId, string itemId, StacItemResource body, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> ReplaceItemAsync(WaitUntil waitUntil, string collectionId, string itemId, StacItem body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNull(body, nameof(body));
 
-            return await CreateOrReplaceItemAsync(waitUntil, collectionId, itemId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await ReplaceItemAsync(waitUntil, collectionId, itemId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary> Delete a STAC item from a collection. </summary>
@@ -2854,12 +2826,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="itemId"> STAC Item id. </param>
+        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
+        /// <param name="durationInMinutes"> URL signature duration in minutes. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetItem(string collectionId, string itemId, RequestContext context)
+        public virtual Response GetItem(string collectionId, string itemId, string sign, int? durationInMinutes, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.GetItem");
             scope.Start();
@@ -2868,7 +2842,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
                 Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using HttpMessage message = CreateGetItemRequest(collectionId, itemId, context);
+                using HttpMessage message = CreateGetItemRequest(collectionId, itemId, sign, durationInMinutes, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2888,12 +2862,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="itemId"> STAC Item id. </param>
+        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
+        /// <param name="durationInMinutes"> URL signature duration in minutes. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetItemAsync(string collectionId, string itemId, RequestContext context)
+        public virtual async Task<Response> GetItemAsync(string collectionId, string itemId, string sign, int? durationInMinutes, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.GetItem");
             scope.Start();
@@ -2902,7 +2878,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
                 Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using HttpMessage message = CreateGetItemRequest(collectionId, itemId, context);
+                using HttpMessage message = CreateGetItemRequest(collectionId, itemId, sign, durationInMinutes, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2915,33 +2891,37 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Fetch a single STAC Item. </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="itemId"> STAC Item id. </param>
+        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
+        /// <param name="durationInMinutes"> URL signature duration in minutes. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<StacItemResource> GetItem(string collectionId, string itemId, CancellationToken cancellationToken = default)
+        public virtual Response<StacItem> GetItem(string collectionId, string itemId, StacAssetUrlSigningMode? sign = default, int? durationInMinutes = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = GetItem(collectionId, itemId, cancellationToken.ToRequestContext());
-            return Response.FromValue((StacItemResource)result, result);
+            Response result = GetItem(collectionId, itemId, sign?.ToString(), durationInMinutes, cancellationToken.ToRequestContext());
+            return Response.FromValue((StacItem)result, result);
         }
 
         /// <summary> Fetch a single STAC Item. </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="itemId"> STAC Item id. </param>
+        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
+        /// <param name="durationInMinutes"> URL signature duration in minutes. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<StacItemResource>> GetItemAsync(string collectionId, string itemId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StacItem>> GetItemAsync(string collectionId, string itemId, StacAssetUrlSigningMode? sign = default, int? durationInMinutes = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = await GetItemAsync(collectionId, itemId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((StacItemResource)result, result);
+            Response result = await GetItemAsync(collectionId, itemId, sign?.ToString(), durationInMinutes, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((StacItem)result, result);
         }
 
         /// <summary>
@@ -2992,12 +2972,15 @@ namespace Azure.Analytics.PlanetaryComputer
         /// server whether only a single temporal property is used to determine
         /// the extent or all relevant temporal properties.
         /// </param>
+        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
+        /// <param name="durationInMinutes"> URL signature duration in minutes. </param>
+        /// <param name="token"> Pagination token for fetching the next set of results. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetItemCollection(string collectionId, int? limit, IEnumerable<string> boundingBox, string datetime, RequestContext context)
+        public virtual Response GetItemCollection(string collectionId, int? limit, IEnumerable<string> boundingBox, string datetime, string sign, int? durationInMinutes, string token, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.GetItemCollection");
             scope.Start();
@@ -3005,7 +2988,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-                using HttpMessage message = CreateGetItemCollectionRequest(collectionId, limit, boundingBox, datetime, context);
+                using HttpMessage message = CreateGetItemCollectionRequest(collectionId, limit, boundingBox, datetime, sign, durationInMinutes, token, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3063,12 +3046,15 @@ namespace Azure.Analytics.PlanetaryComputer
         /// server whether only a single temporal property is used to determine
         /// the extent or all relevant temporal properties.
         /// </param>
+        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
+        /// <param name="durationInMinutes"> URL signature duration in minutes. </param>
+        /// <param name="token"> Pagination token for fetching the next set of results. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetItemCollectionAsync(string collectionId, int? limit, IEnumerable<string> boundingBox, string datetime, RequestContext context)
+        public virtual async Task<Response> GetItemCollectionAsync(string collectionId, int? limit, IEnumerable<string> boundingBox, string datetime, string sign, int? durationInMinutes, string token, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.GetItemCollection");
             scope.Start();
@@ -3076,7 +3062,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-                using HttpMessage message = CreateGetItemCollectionRequest(collectionId, limit, boundingBox, datetime, context);
+                using HttpMessage message = CreateGetItemCollectionRequest(collectionId, limit, boundingBox, datetime, sign, durationInMinutes, token, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3129,16 +3115,19 @@ namespace Azure.Analytics.PlanetaryComputer
         /// server whether only a single temporal property is used to determine
         /// the extent or all relevant temporal properties.
         /// </param>
+        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
+        /// <param name="durationInMinutes"> URL signature duration in minutes. </param>
+        /// <param name="token"> Pagination token for fetching the next set of results. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<StacItemCollectionResource> GetItemCollection(string collectionId, int? limit = default, IEnumerable<string> boundingBox = default, string datetime = default, CancellationToken cancellationToken = default)
+        public virtual Response<StacItemCollection> GetItemCollection(string collectionId, int? limit = default, IEnumerable<string> boundingBox = default, string datetime = default, StacAssetUrlSigningMode? sign = default, int? durationInMinutes = default, string token = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = GetItemCollection(collectionId, limit, boundingBox, datetime, cancellationToken.ToRequestContext());
-            return Response.FromValue((StacItemCollectionResource)result, result);
+            Response result = GetItemCollection(collectionId, limit, boundingBox, datetime, sign?.ToString(), durationInMinutes, token, cancellationToken.ToRequestContext());
+            return Response.FromValue((StacItemCollection)result, result);
         }
 
         /// <summary>
@@ -3184,16 +3173,19 @@ namespace Azure.Analytics.PlanetaryComputer
         /// server whether only a single temporal property is used to determine
         /// the extent or all relevant temporal properties.
         /// </param>
+        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
+        /// <param name="durationInMinutes"> URL signature duration in minutes. </param>
+        /// <param name="token"> Pagination token for fetching the next set of results. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<StacItemCollectionResource>> GetItemCollectionAsync(string collectionId, int? limit = default, IEnumerable<string> boundingBox = default, string datetime = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StacItemCollection>> GetItemCollectionAsync(string collectionId, int? limit = default, IEnumerable<string> boundingBox = default, string datetime = default, StacAssetUrlSigningMode? sign = default, int? durationInMinutes = default, string token = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = await GetItemCollectionAsync(collectionId, limit, boundingBox, datetime, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((StacItemCollectionResource)result, result);
+            Response result = await GetItemCollectionAsync(collectionId, limit, boundingBox, datetime, sign?.ToString(), durationInMinutes, token, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((StacItemCollection)result, result);
         }
 
         /// <summary> Update a STAC item in a collection. </summary>
@@ -3641,19 +3633,19 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> List all queryables in the GeoCatalog instance. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<QueryableDefinitionsResponse> GetQueryables(CancellationToken cancellationToken = default)
+        public virtual Response<QueryableDefinitionsResult> GetQueryables(CancellationToken cancellationToken = default)
         {
             Response result = GetQueryables(cancellationToken.ToRequestContext());
-            return Response.FromValue((QueryableDefinitionsResponse)result, result);
+            return Response.FromValue((QueryableDefinitionsResult)result, result);
         }
 
         /// <summary> List all queryables in the GeoCatalog instance. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<QueryableDefinitionsResponse>> GetQueryablesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QueryableDefinitionsResult>> GetQueryablesAsync(CancellationToken cancellationToken = default)
         {
             Response result = await GetQueryablesAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((QueryableDefinitionsResponse)result, result);
+            return Response.FromValue((QueryableDefinitionsResult)result, result);
         }
 
         /// <summary>
@@ -3726,12 +3718,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<QueryableDefinitionsResponse> GetCollectionQueryables(string collectionId, CancellationToken cancellationToken = default)
+        public virtual Response<QueryableDefinitionsResult> GetCollectionQueryables(string collectionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
             Response result = GetCollectionQueryables(collectionId, cancellationToken.ToRequestContext());
-            return Response.FromValue((QueryableDefinitionsResponse)result, result);
+            return Response.FromValue((QueryableDefinitionsResult)result, result);
         }
 
         /// <summary> List all queryables in a given collection. </summary>
@@ -3740,12 +3732,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<QueryableDefinitionsResponse>> GetCollectionQueryablesAsync(string collectionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QueryableDefinitionsResult>> GetCollectionQueryablesAsync(string collectionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
             Response result = await GetCollectionQueryablesAsync(collectionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((QueryableDefinitionsResponse)result, result);
+            return Response.FromValue((QueryableDefinitionsResult)result, result);
         }
 
         /// <summary>
@@ -3821,12 +3813,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<StacItemCollectionResource> Search(StacSearchParameters body, StacAssetUrlSigningMode? sign = default, int? durationInMinutes = default, CancellationToken cancellationToken = default)
+        public virtual Response<StacItemCollection> Search(StacSearchParameters body, StacAssetUrlSigningMode? sign = default, int? durationInMinutes = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = Search(body, sign?.ToString(), durationInMinutes, cancellationToken.ToRequestContext());
-            return Response.FromValue((StacItemCollectionResource)result, result);
+            return Response.FromValue((StacItemCollection)result, result);
         }
 
         /// <summary> STAC search operation. </summary>
@@ -3836,12 +3828,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<StacItemCollectionResource>> SearchAsync(StacSearchParameters body, StacAssetUrlSigningMode? sign = default, int? durationInMinutes = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StacItemCollection>> SearchAsync(StacSearchParameters body, StacAssetUrlSigningMode? sign = default, int? durationInMinutes = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = await SearchAsync(body, sign?.ToString(), durationInMinutes, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((StacItemCollectionResource)result, result);
+            return Response.FromValue((StacItemCollection)result, result);
         }
     }
 }
