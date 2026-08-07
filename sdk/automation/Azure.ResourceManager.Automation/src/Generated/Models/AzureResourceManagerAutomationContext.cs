@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Automation
 {
@@ -28,6 +29,8 @@ namespace Azure.ResourceManager.Automation
     [ModelReaderWriterBuildable(typeof(AutomationAccountModuleResource))]
     [ModelReaderWriterBuildable(typeof(AutomationAccountPatch))]
     [ModelReaderWriterBuildable(typeof(AutomationAccountProperties))]
+    [ModelReaderWriterBuildable(typeof(AutomationAccountPython2PackageCreateOrUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(AutomationAccountPython2PackagePatch))]
     [ModelReaderWriterBuildable(typeof(AutomationAccountPython2PackageResource))]
     [ModelReaderWriterBuildable(typeof(AutomationAccountResource))]
     [ModelReaderWriterBuildable(typeof(AutomationAccountStatistics))]
@@ -147,6 +150,15 @@ namespace Azure.ResourceManager.Automation
     [ModelReaderWriterBuildable(typeof(DeletedRunbook))]
     [ModelReaderWriterBuildable(typeof(DeletedRunbookListResult))]
     [ModelReaderWriterBuildable(typeof(DeletedRunbookProperties))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(DscCompilationJobCreateOrUpdateContent))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.Automation.DscCompilationJobData is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(DscCompilationJobData))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.Automation.DscCompilationJobData is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.Automation.DscCompilationJobResource is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(DscCompilationJobResource))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.Automation.DscCompilationJobResource is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(DscConfigurationAssociationProperty))]
     [ModelReaderWriterBuildable(typeof(DscConfigurationCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(DscConfigurationCreateOrUpdateProperties))]
@@ -291,6 +303,7 @@ namespace Azure.ResourceManager.Automation
     [ModelReaderWriterBuildable(typeof(WebhookProperties))]
     [ModelReaderWriterBuildable(typeof(WebhookUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(WindowsUpdateConfigurationProperties))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerAutomationContext : ModelReaderWriterContext
     {
     }

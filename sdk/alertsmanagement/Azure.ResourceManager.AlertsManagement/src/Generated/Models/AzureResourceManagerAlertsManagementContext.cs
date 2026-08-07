@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.AlertsManagement.Models;
 using Azure.ResourceManager.Models;
 
@@ -19,19 +20,60 @@ namespace Azure.ResourceManager.AlertsManagement
     [ModelReaderWriterBuildable(typeof(AlertEnrichmentItem))]
     [ModelReaderWriterBuildable(typeof(AlertEnrichmentProperties))]
     [ModelReaderWriterBuildable(typeof(AlertEnrichmentsList))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleAction is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(AlertProcessingRuleAction))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleAction is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleAddGroupsAction is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(AlertProcessingRuleAddGroupsAction))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleAddGroupsAction is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleCondition is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(AlertProcessingRuleCondition))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleCondition is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.AlertsManagement.AlertProcessingRuleData is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(AlertProcessingRuleData))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.AlertsManagement.AlertProcessingRuleData is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleMonthlyRecurrence is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(AlertProcessingRuleMonthlyRecurrence))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleMonthlyRecurrence is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRulePatch is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(AlertProcessingRulePatch))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRulePatch is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleProperties is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(AlertProcessingRuleProperties))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleProperties is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleRecurrence is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(AlertProcessingRuleRecurrence))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleRecurrence is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleRemoveAllGroupsAction is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(AlertProcessingRuleRemoveAllGroupsAction))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleRemoveAllGroupsAction is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.AlertsManagement.AlertProcessingRuleResource is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(AlertProcessingRuleResource))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.AlertsManagement.AlertProcessingRuleResource is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleSchedule is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(AlertProcessingRuleSchedule))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleSchedule is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleWeeklyRecurrence is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(AlertProcessingRuleWeeklyRecurrence))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleWeeklyRecurrence is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(AlertsList))]
     [ModelReaderWriterBuildable(typeof(AlertsManagementBaseDetails))]
     [ModelReaderWriterBuildable(typeof(AlertsManagementNotificationResult))]
     [ModelReaderWriterBuildable(typeof(AlertsManagementTriggeredRule))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.DailyRecurrence is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(DailyRecurrence))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.DailyRecurrence is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(MonitorServiceDetails))]
     [ModelReaderWriterBuildable(typeof(MonitorServiceList))]
     [ModelReaderWriterBuildable(typeof(PrometheusEnrichmentItem))]
     [ModelReaderWriterBuildable(typeof(PrometheusInstantQuery))]
     [ModelReaderWriterBuildable(typeof(PrometheusRangeQuery))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertActionStatus))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertActionSuppressedDetails))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertActionTriggeredDetails))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertChangeStateContent))]
+    [ModelReaderWriterBuildable(typeof(ServiceAlertCollectionGetAllOptions))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertData))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertEssentials))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertMetadata))]
@@ -46,11 +88,39 @@ namespace Azure.ResourceManager.AlertsManagement
     [ModelReaderWriterBuildable(typeof(ServiceAlertSummaryGroup))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertSummaryGroupItemInfo))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertTenantResource))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.SmartGroupAggregatedProperty is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(SmartGroupAggregatedProperty))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.SmartGroupAggregatedProperty is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.SmartGroupCollectionGetAllOptions is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(SmartGroupCollectionGetAllOptions))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.SmartGroupCollectionGetAllOptions is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.AlertsManagement.SmartGroupData is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(SmartGroupData))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.AlertsManagement.SmartGroupData is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.SmartGroupModification is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(SmartGroupModification))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.SmartGroupModification is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.SmartGroupModificationItemInfo is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(SmartGroupModificationItemInfo))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.SmartGroupModificationItemInfo is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.SmartGroupModificationProperties is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(SmartGroupModificationProperties))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.SmartGroupModificationProperties is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.AlertsManagement.SmartGroupResource is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(SmartGroupResource))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.AlertsManagement.SmartGroupResource is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(SubscriptionResourceGetServiceAlertSummaryOptions))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.UnknownAction is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(UnknownAction))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.UnknownAction is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(UnknownAlertEnrichmentItem))]
     [ModelReaderWriterBuildable(typeof(UnknownAlertsManagementBaseDetails))]
     [ModelReaderWriterBuildable(typeof(UnknownAlertsMetaDataProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownPrometheusEnrichmentItem))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.UnknownRecurrence is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(UnknownRecurrence))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.AlertsManagement.Models.UnknownRecurrence is obsolete and may be removed in future versions.
     public partial class AzureResourceManagerAlertsManagementContext : ModelReaderWriterContext
     {
     }

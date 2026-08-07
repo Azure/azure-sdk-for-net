@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -339,6 +340,7 @@ namespace Azure.ResourceManager.Compute
     [ModelReaderWriterBuildable(typeof(ResourceSkuCosts))]
     [ModelReaderWriterBuildable(typeof(ResourceSkusResult))]
     [ModelReaderWriterBuildable(typeof(ResourceUriList))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestartRecoveryPolicy))]
     [ModelReaderWriterBuildable(typeof(RestorePointCollectionListResult))]
     [ModelReaderWriterBuildable(typeof(RestorePointCollectionProperties))]

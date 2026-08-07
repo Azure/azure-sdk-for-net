@@ -16,6 +16,9 @@ namespace Azure.ResourceManager.PolicyInsights
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+#pragma warning disable CS0618 // global::Azure.ResourceManager.PolicyInsights.Models.ArmResourceGetQueryResultsForResourceComponentPolicyStatesOptions is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ArmResourceGetQueryResultsForResourceComponentPolicyStatesOptions))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.PolicyInsights.Models.ArmResourceGetQueryResultsForResourceComponentPolicyStatesOptions is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(AttestationEvidence))]
     [ModelReaderWriterBuildable(typeof(AttestationListResult))]
     [ModelReaderWriterBuildable(typeof(AttestationProperties))]
@@ -69,8 +72,23 @@ namespace Azure.ResourceManager.PolicyInsights
     [ModelReaderWriterBuildable(typeof(RemediationListResult))]
     [ModelReaderWriterBuildable(typeof(RemediationProperties))]
     [ModelReaderWriterBuildable(typeof(RemediationPropertiesFailureThreshold))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.PolicyInsights.Models.ResourceGroupResourceGetQueryResultsForResourceGroupComponentPolicyStatesOptions is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ResourceGroupResourceGetQueryResultsForResourceGroupComponentPolicyStatesOptions))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.PolicyInsights.Models.ResourceGroupResourceGetQueryResultsForResourceGroupComponentPolicyStatesOptions is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.PolicyInsights.Models.ResourceGroupResourceGetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesOptions is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ResourceGroupResourceGetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesOptions))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.PolicyInsights.Models.ResourceGroupResourceGetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesOptions is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SlimPolicyMetadata))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.PolicyInsights.Models.SubscriptionResourceGetQueryResultsForPolicyDefinitionComponentPolicyStatesOptions is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(SubscriptionResourceGetQueryResultsForPolicyDefinitionComponentPolicyStatesOptions))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.PolicyInsights.Models.SubscriptionResourceGetQueryResultsForPolicyDefinitionComponentPolicyStatesOptions is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.PolicyInsights.Models.SubscriptionResourceGetQueryResultsForSubscriptionComponentPolicyStatesOptions is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(SubscriptionResourceGetQueryResultsForSubscriptionComponentPolicyStatesOptions))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.PolicyInsights.Models.SubscriptionResourceGetQueryResultsForSubscriptionComponentPolicyStatesOptions is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.PolicyInsights.Models.SubscriptionResourceGetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesOptions is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(SubscriptionResourceGetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesOptions))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.PolicyInsights.Models.SubscriptionResourceGetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesOptions is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(SummarizeResults))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TrackedResourceModificationDetails))]

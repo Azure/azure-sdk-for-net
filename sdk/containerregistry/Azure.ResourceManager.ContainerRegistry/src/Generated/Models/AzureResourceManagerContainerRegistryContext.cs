@@ -6,8 +6,10 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.ContainerRegistry.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
@@ -38,6 +40,18 @@ namespace Azure.ResourceManager.ContainerRegistry
     [ModelReaderWriterBuildable(typeof(ConnectedRegistrySyncProperties))]
     [ModelReaderWriterBuildable(typeof(ConnectedRegistrySyncUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ConnectedRegistryUpdateProperties))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.ContainerRegistryAgentPoolData is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryAgentPoolData))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.ContainerRegistryAgentPoolData is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAgentPoolPatch is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryAgentPoolPatch))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAgentPoolPatch is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAgentPoolQueueStatus is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryAgentPoolQueueStatus))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAgentPoolQueueStatus is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.ContainerRegistryAgentPoolResource is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryAgentPoolResource))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.ContainerRegistryAgentPoolResource is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(ContainerRegistryArchiveData))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryArchivePackageSourceProperties))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryArchivePatch))]
@@ -45,22 +59,67 @@ namespace Azure.ResourceManager.ContainerRegistry
     [ModelReaderWriterBuildable(typeof(ContainerRegistryArchiveVersionData))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryArchiveVersionResource))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryAuthCredential))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependency is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryBaseImageDependency))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependency is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageTrigger is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryBaseImageTrigger))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageTrigger is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageTriggerUpdateContent is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryBaseImageTriggerUpdateContent))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageTriggerUpdateContent is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(ContainerRegistryCacheAuthentication))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryCacheRuleData))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryCacheRulePatch))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryCacheRuleResource))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryCredentialHealth))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryCredentialRegenerateContent))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentials is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryCredentials))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentials is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(ContainerRegistryCredentialSetData))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryCredentialSetPatch))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryCredentialSetResource))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryData))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryDockerBuildContent is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryDockerBuildContent))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryDockerBuildContent is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryDockerBuildStep is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryDockerBuildStep))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryDockerBuildStep is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryDockerBuildStepUpdateContent is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryDockerBuildStepUpdateContent))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryDockerBuildStepUpdateContent is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncodedTaskRunContent is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryEncodedTaskRunContent))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncodedTaskRunContent is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncodedTaskStep is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryEncodedTaskStep))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncodedTaskStep is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncodedTaskStepUpdateContent is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryEncodedTaskStepUpdateContent))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncodedTaskStepUpdateContent is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(ContainerRegistryEncryption))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryExportPipelineData))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryExportPipelineResource))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryExportPipelineTargetProperties))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryFileTaskRunContent is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryFileTaskRunContent))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryFileTaskRunContent is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryFileTaskStep is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryFileTaskStep))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryFileTaskStep is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryFileTaskStepUpdateContent is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryFileTaskStepUpdateContent))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryFileTaskStepUpdateContent is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(ContainerRegistryGenerateCredentialsContent))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryGenerateCredentialsResult))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryImageDescriptor is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryImageDescriptor))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryImageDescriptor is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryImageUpdateTrigger is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryImageUpdateTrigger))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryImageUpdateTrigger is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(ContainerRegistryImportImageContent))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryImportPipelineData))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryImportPipelineResource))]
@@ -73,6 +132,9 @@ namespace Azure.ResourceManager.ContainerRegistry
     [ModelReaderWriterBuildable(typeof(ContainerRegistryNameAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryNameAvailableResult))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryNetworkRuleSet))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOverrideTaskStepProperties is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryOverrideTaskStepProperties))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOverrideTaskStepProperties is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(ContainerRegistryPassword))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryPatch))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryPipelineRunContent))]
@@ -81,6 +143,12 @@ namespace Azure.ResourceManager.ContainerRegistry
     [ModelReaderWriterBuildable(typeof(ContainerRegistryPipelineRunResult))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryPipelineRunSourceProperties))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryPipelineRunTargetProperties))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPlatformProperties is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryPlatformProperties))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPlatformProperties is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPlatformUpdateContent is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryPlatformUpdateContent))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPlatformUpdateContent is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(ContainerRegistryPolicies))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryPrivateEndpointConnectionData))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryPrivateEndpointConnectionListResult))]
@@ -96,9 +164,78 @@ namespace Azure.ResourceManager.ContainerRegistry
     [ModelReaderWriterBuildable(typeof(ContainerRegistryResource))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryResourceStatus))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryRetentionPolicy))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunArgument is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryRunArgument))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunArgument is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunContent is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryRunContent))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunContent is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.ContainerRegistryRunData is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryRunData))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.ContainerRegistryRunData is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunGetLogResult is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryRunGetLogResult))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunGetLogResult is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunPatch is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryRunPatch))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunPatch is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.ContainerRegistryRunResource is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryRunResource))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.ContainerRegistryRunResource is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySecretObject is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistrySecretObject))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySecretObject is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(ContainerRegistrySku))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistrySoftDeletePolicy))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySourceTrigger is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistrySourceTrigger))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySourceTrigger is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySourceTriggerDescriptor is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistrySourceTriggerDescriptor))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySourceTriggerDescriptor is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySourceTriggerUpdateContent is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistrySourceTriggerUpdateContent))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySourceTriggerUpdateContent is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(ContainerRegistrySyncResult))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.ContainerRegistryTaskData is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryTaskData))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.ContainerRegistryTaskData is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskOverridableValue is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryTaskOverridableValue))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskOverridableValue is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskPatch is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryTaskPatch))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskPatch is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.ContainerRegistryTaskResource is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryTaskResource))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.ContainerRegistryTaskResource is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskRunContent is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryTaskRunContent))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskRunContent is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.ContainerRegistryTaskRunData is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryTaskRunData))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.ContainerRegistryTaskRunData is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskRunPatch is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryTaskRunPatch))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskRunPatch is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.ContainerRegistryTaskRunResource is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryTaskRunResource))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.ContainerRegistryTaskRunResource is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskStepProperties is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryTaskStepProperties))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskStepProperties is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskStepUpdateContent is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryTaskStepUpdateContent))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskStepUpdateContent is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTimerTrigger is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryTimerTrigger))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTimerTrigger is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTimerTriggerDescriptor is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryTimerTriggerDescriptor))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTimerTriggerDescriptor is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTimerTriggerUpdateContent is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryTimerTriggerUpdateContent))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTimerTriggerUpdateContent is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(ContainerRegistryTlsCertificateProperties))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryTlsProperties))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryTokenCertificate))]
@@ -107,6 +244,12 @@ namespace Azure.ResourceManager.ContainerRegistry
     [ModelReaderWriterBuildable(typeof(ContainerRegistryTokenPassword))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryTokenPatch))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryTokenResource))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerProperties is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryTriggerProperties))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerProperties is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerUpdateContent is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryTriggerUpdateContent))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerUpdateContent is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(ContainerRegistryTrustPolicy))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryUsage))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryUsageListResult))]
@@ -127,6 +270,9 @@ namespace Azure.ResourceManager.ContainerRegistry
     [ModelReaderWriterBuildable(typeof(CredentialSetListResult))]
     [ModelReaderWriterBuildable(typeof(CredentialSetProperties))]
     [ModelReaderWriterBuildable(typeof(CredentialSetUpdateProperties))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.CustomRegistryCredentials is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(CustomRegistryCredentials))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.CustomRegistryCredentials is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(EventListResult))]
     [ModelReaderWriterBuildable(typeof(ExportPipelineListResult))]
     [ModelReaderWriterBuildable(typeof(ExportPipelineProperties))]
@@ -152,22 +298,51 @@ namespace Azure.ResourceManager.ContainerRegistry
     [ModelReaderWriterBuildable(typeof(ReplicationListResult))]
     [ModelReaderWriterBuildable(typeof(ReplicationProperties))]
     [ModelReaderWriterBuildable(typeof(ReplicationUpdateParametersProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScopeMapData))]
     [ModelReaderWriterBuildable(typeof(ScopeMapListResult))]
     [ModelReaderWriterBuildable(typeof(ScopeMapPatch))]
     [ModelReaderWriterBuildable(typeof(ScopeMapProperties))]
     [ModelReaderWriterBuildable(typeof(ScopeMapPropertiesUpdateParameters))]
     [ModelReaderWriterBuildable(typeof(ScopeMapResource))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.SourceCodeRepoAuthInfo is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(SourceCodeRepoAuthInfo))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.SourceCodeRepoAuthInfo is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.SourceCodeRepoAuthInfoUpdateContent is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(SourceCodeRepoAuthInfoUpdateContent))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.SourceCodeRepoAuthInfoUpdateContent is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.SourceCodeRepoProperties is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(SourceCodeRepoProperties))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.SourceCodeRepoProperties is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.SourceCodeRepoUpdateContent is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(SourceCodeRepoUpdateContent))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.SourceCodeRepoUpdateContent is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.SourceRegistryCredentials is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(SourceRegistryCredentials))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.SourceRegistryCredentials is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.SourceUploadDefinition is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(SourceUploadDefinition))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.SourceUploadDefinition is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TokenListResult))]
     [ModelReaderWriterBuildable(typeof(TokenProperties))]
     [ModelReaderWriterBuildable(typeof(TokenUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownContainerRegistryCacheAuthentication))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.UnknownRunRequest is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(UnknownRunRequest))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.UnknownRunRequest is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.UnknownTaskStepProperties is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(UnknownTaskStepProperties))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.UnknownTaskStepProperties is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.UnknownTaskStepUpdateParameters is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(UnknownTaskStepUpdateParameters))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.ContainerRegistry.Models.UnknownTaskStepUpdateParameters is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WebhookListResult))]
     [ModelReaderWriterBuildable(typeof(WebhookProperties))]
     [ModelReaderWriterBuildable(typeof(WebhookPropertiesCreateParameters))]
     [ModelReaderWriterBuildable(typeof(WebhookPropertiesUpdateParameters))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerContainerRegistryContext : ModelReaderWriterContext
     {
     }
