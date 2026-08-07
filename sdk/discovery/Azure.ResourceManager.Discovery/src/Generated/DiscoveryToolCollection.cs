@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Discovery
     /// <summary>
     /// A class representing a collection of <see cref="DiscoveryToolResource"/> and their operations.
     /// Each <see cref="DiscoveryToolResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="DiscoveryToolCollection"/> instance call the GetTools method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DiscoveryToolCollection"/> instance call the GetDiscoveryTools method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DiscoveryToolCollection : ArmCollection, IEnumerable<DiscoveryToolResource>, IAsyncEnumerable<DiscoveryToolResource>
     {
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoveryToolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DiscoveryToolResource.ResourceType, out string toolApiVersion);
+            TryGetApiVersion(DiscoveryToolResource.ResourceType, out string discoveryToolApiVersion);
             _toolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", DiscoveryToolResource.ResourceType.Namespace, Diagnostics);
-            _toolsRestClient = new Tools(_toolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, toolApiVersion ?? "2026-06-01");
+            _toolsRestClient = new Tools(_toolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryToolApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 

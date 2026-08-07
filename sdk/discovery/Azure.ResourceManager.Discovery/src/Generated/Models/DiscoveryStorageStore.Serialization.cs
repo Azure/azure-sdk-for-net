@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Discovery.Models
     /// An abstract representation of storage store kind.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureStorageBlobStore"/> and <see cref="AzureNetAppFilesStore"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownStorageStore))]
+    [PersistableModelProxy(typeof(UnknownDiscoveryStorageStore))]
     public abstract partial class DiscoveryStorageStore : IJsonModel<DiscoveryStorageStore>
     {
         /// <summary> Initializes a new instance of <see cref="DiscoveryStorageStore"/> for deserialization. </summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Discovery.Models
                         return AzureNetAppFilesStore.DeserializeAzureNetAppFilesStore(element, options);
                 }
             }
-            return UnknownStorageStore.DeserializeUnknownStorageStore(element, options);
+            return UnknownDiscoveryStorageStore.DeserializeUnknownDiscoveryStorageStore(element, options);
         }
     }
 }

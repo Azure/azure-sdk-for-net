@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         public void Setup() => InitializeClient();
 
         private DiscoveryStorageAssetCollection GetStorageAssetCollection()
-            => Client.GetDiscoveryStorageContainerResource(DiscoveryStorageContainerResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, StorageContainerName)).GetStorageAssets();
+            => Client.GetDiscoveryStorageContainerResource(DiscoveryStorageContainerResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, StorageContainerName)).GetDiscoveryStorageAssets();
 
         private DiscoveryStorageAssetResource GetStorageAssetReference()
             => Client.GetDiscoveryStorageAssetResource(DiscoveryStorageAssetResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, StorageContainerName, StorageAssetName));

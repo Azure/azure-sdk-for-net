@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Discovery
     /// <summary>
     /// A class representing a collection of <see cref="DiscoverySupercomputerResource"/> and their operations.
     /// Each <see cref="DiscoverySupercomputerResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="DiscoverySupercomputerCollection"/> instance call the GetSupercomputers method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DiscoverySupercomputerCollection"/> instance call the GetDiscoverySupercomputers method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DiscoverySupercomputerCollection : ArmCollection, IEnumerable<DiscoverySupercomputerResource>, IAsyncEnumerable<DiscoverySupercomputerResource>
     {
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoverySupercomputerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DiscoverySupercomputerResource.ResourceType, out string supercomputerApiVersion);
+            TryGetApiVersion(DiscoverySupercomputerResource.ResourceType, out string discoverySupercomputerApiVersion);
             _supercomputersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", DiscoverySupercomputerResource.ResourceType.Namespace, Diagnostics);
-            _supercomputersRestClient = new Supercomputers(_supercomputersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, supercomputerApiVersion ?? "2026-06-01");
+            _supercomputersRestClient = new Supercomputers(_supercomputersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoverySupercomputerApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 

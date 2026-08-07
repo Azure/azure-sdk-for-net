@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         public void Setup() => InitializeClient();
 
         private DiscoveryToolCollection GetDiscoveryToolCollection()
-            => GetResourceGroupReference(ResourceGroupName).GetTools();
+            => GetResourceGroupReference(ResourceGroupName).GetDiscoveryTools();
 
         private DiscoveryToolResource GetToolReference()
             => Client.GetDiscoveryToolResource(DiscoveryToolResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, ToolName));
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         public async Task ListBySubscription()
         {
             List<DiscoveryToolResource> items = new List<DiscoveryToolResource>();
-            await foreach (DiscoveryToolResource item in GetSubscriptionReference().GetToolsAsync())
+            await foreach (DiscoveryToolResource item in GetSubscriptionReference().GetDiscoveryToolsAsync())
             {
                 items.Add(item);
             }

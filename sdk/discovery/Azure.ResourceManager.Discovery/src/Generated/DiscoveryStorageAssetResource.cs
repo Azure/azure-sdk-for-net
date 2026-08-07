@@ -19,9 +19,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Discovery
 {
     /// <summary>
-    /// A class representing a StorageAsset along with the instance operations that can be performed on it.
+    /// A class representing a DiscoveryStorageAsset along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiscoveryStorageAssetResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DiscoveryStorageContainerResource"/> using the GetStorageAssets method.
+    /// Otherwise you can get one from its parent resource <see cref="DiscoveryStorageContainerResource"/> using the GetDiscoveryStorageAssets method.
     /// </summary>
     public partial class DiscoveryStorageAssetResource : ArmResource
     {
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoveryStorageAssetResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string storageAssetApiVersion);
+            TryGetApiVersion(ResourceType, out string discoveryStorageAssetApiVersion);
             _storageAssetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", ResourceType.Namespace, Diagnostics);
-            _storageAssetsRestClient = new StorageAssets(_storageAssetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageAssetApiVersion ?? "2026-06-01");
+            _storageAssetsRestClient = new StorageAssets(_storageAssetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryStorageAssetApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 

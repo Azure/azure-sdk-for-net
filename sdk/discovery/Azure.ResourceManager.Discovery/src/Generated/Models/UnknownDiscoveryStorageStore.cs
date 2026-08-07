@@ -10,12 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Discovery.Models
 {
-    internal partial class UnknownStorageStore : DiscoveryStorageStore
+    internal partial class UnknownDiscoveryStorageStore : DiscoveryStorageStore
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownStorageStore"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDiscoveryStorageStore"/>. </summary>
         /// <param name="kind"> The storage store kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownStorageStore(StorageStoreType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownDiscoveryStorageStore(StorageStoreType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

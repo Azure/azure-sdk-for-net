@@ -19,9 +19,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Discovery
 {
     /// <summary>
-    /// A class representing a Project along with the instance operations that can be performed on it.
+    /// A class representing a DiscoveryProject along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiscoveryProjectResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DiscoveryWorkspaceResource"/> using the GetProjects method.
+    /// Otherwise you can get one from its parent resource <see cref="DiscoveryWorkspaceResource"/> using the GetDiscoveryProjects method.
     /// </summary>
     public partial class DiscoveryProjectResource : ArmResource
     {
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoveryProjectResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string projectApiVersion);
+            TryGetApiVersion(ResourceType, out string discoveryProjectApiVersion);
             _projectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", ResourceType.Namespace, Diagnostics);
-            _projectsRestClient = new Projects(_projectsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, projectApiVersion ?? "2026-06-01");
+            _projectsRestClient = new Projects(_projectsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryProjectApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 

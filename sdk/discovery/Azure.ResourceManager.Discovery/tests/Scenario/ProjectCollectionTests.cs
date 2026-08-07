@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         public void Setup() => InitializeClient();
 
         private DiscoveryProjectCollection GetDiscoveryProjectCollection()
-            => Client.GetDiscoveryWorkspaceResource(DiscoveryWorkspaceResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, WorkspaceName)).GetProjects();
+            => Client.GetDiscoveryWorkspaceResource(DiscoveryWorkspaceResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, WorkspaceName)).GetDiscoveryProjects();
 
         [RecordedTest]
         public async Task CreateOrUpdate()

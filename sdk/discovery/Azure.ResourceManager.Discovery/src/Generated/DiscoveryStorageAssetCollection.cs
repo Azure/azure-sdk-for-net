@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Discovery
     /// <summary>
     /// A class representing a collection of <see cref="DiscoveryStorageAssetResource"/> and their operations.
     /// Each <see cref="DiscoveryStorageAssetResource"/> in the collection will belong to the same instance of <see cref="DiscoveryStorageContainerResource"/>.
-    /// To get a <see cref="DiscoveryStorageAssetCollection"/> instance call the GetStorageAssets method from an instance of <see cref="DiscoveryStorageContainerResource"/>.
+    /// To get a <see cref="DiscoveryStorageAssetCollection"/> instance call the GetDiscoveryStorageAssets method from an instance of <see cref="DiscoveryStorageContainerResource"/>.
     /// </summary>
     public partial class DiscoveryStorageAssetCollection : ArmCollection, IEnumerable<DiscoveryStorageAssetResource>, IAsyncEnumerable<DiscoveryStorageAssetResource>
     {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoveryStorageAssetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DiscoveryStorageAssetResource.ResourceType, out string storageAssetApiVersion);
+            TryGetApiVersion(DiscoveryStorageAssetResource.ResourceType, out string discoveryStorageAssetApiVersion);
             _storageAssetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", DiscoveryStorageAssetResource.ResourceType.Namespace, Diagnostics);
-            _storageAssetsRestClient = new StorageAssets(_storageAssetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageAssetApiVersion ?? "2026-06-01");
+            _storageAssetsRestClient = new StorageAssets(_storageAssetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryStorageAssetApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 

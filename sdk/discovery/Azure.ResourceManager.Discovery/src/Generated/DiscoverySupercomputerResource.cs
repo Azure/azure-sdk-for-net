@@ -19,9 +19,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Discovery
 {
     /// <summary>
-    /// A class representing a Supercomputer along with the instance operations that can be performed on it.
+    /// A class representing a DiscoverySupercomputer along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiscoverySupercomputerResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSupercomputers method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDiscoverySupercomputers method.
     /// </summary>
     public partial class DiscoverySupercomputerResource : ArmResource
     {
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoverySupercomputerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string supercomputerApiVersion);
+            TryGetApiVersion(ResourceType, out string discoverySupercomputerApiVersion);
             _supercomputersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", ResourceType.Namespace, Diagnostics);
-            _supercomputersRestClient = new Supercomputers(_supercomputersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, supercomputerApiVersion ?? "2026-06-01");
+            _supercomputersRestClient = new Supercomputers(_supercomputersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoverySupercomputerApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -678,9 +678,9 @@ namespace Azure.ResourceManager.Discovery
             }
         }
 
-        /// <summary> Gets a collection of NodePools in the <see cref="DiscoverySupercomputerResource"/>. </summary>
-        /// <returns> An object representing collection of NodePools and their operations over a DiscoveryNodePoolResource. </returns>
-        public virtual DiscoveryNodePoolCollection GetNodePools()
+        /// <summary> Gets a collection of DiscoveryNodePools in the <see cref="DiscoverySupercomputerResource"/>. </summary>
+        /// <returns> An object representing collection of DiscoveryNodePools and their operations over a DiscoveryNodePoolResource. </returns>
+        public virtual DiscoveryNodePoolCollection GetDiscoveryNodePools()
         {
             return GetCachedClient(client => new DiscoveryNodePoolCollection(client, Id));
         }
@@ -691,11 +691,11 @@ namespace Azure.ResourceManager.Discovery
         /// <exception cref="ArgumentNullException"> <paramref name="nodePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="nodePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DiscoveryNodePoolResource>> GetNodePoolAsync(string nodePoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiscoveryNodePoolResource>> GetDiscoveryNodePoolAsync(string nodePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodePoolName, nameof(nodePoolName));
 
-            return await GetNodePools().GetAsync(nodePoolName, cancellationToken).ConfigureAwait(false);
+            return await GetDiscoveryNodePools().GetAsync(nodePoolName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a NodePool. </summary>
@@ -704,11 +704,11 @@ namespace Azure.ResourceManager.Discovery
         /// <exception cref="ArgumentNullException"> <paramref name="nodePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="nodePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DiscoveryNodePoolResource> GetNodePool(string nodePoolName, CancellationToken cancellationToken = default)
+        public virtual Response<DiscoveryNodePoolResource> GetDiscoveryNodePool(string nodePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodePoolName, nameof(nodePoolName));
 
-            return GetNodePools().Get(nodePoolName, cancellationToken);
+            return GetDiscoveryNodePools().Get(nodePoolName, cancellationToken);
         }
     }
 }

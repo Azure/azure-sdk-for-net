@@ -19,9 +19,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Discovery
 {
     /// <summary>
-    /// A class representing a Tool along with the instance operations that can be performed on it.
+    /// A class representing a DiscoveryTool along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiscoveryToolResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetTools method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDiscoveryTools method.
     /// </summary>
     public partial class DiscoveryToolResource : ArmResource
     {
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoveryToolResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string toolApiVersion);
+            TryGetApiVersion(ResourceType, out string discoveryToolApiVersion);
             _toolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", ResourceType.Namespace, Diagnostics);
-            _toolsRestClient = new Tools(_toolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, toolApiVersion ?? "2026-06-01");
+            _toolsRestClient = new Tools(_toolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryToolApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 

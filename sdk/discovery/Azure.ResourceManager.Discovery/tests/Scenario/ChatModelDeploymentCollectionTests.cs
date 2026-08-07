@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         public void Setup() => InitializeClient();
 
         private DiscoveryChatModelDeploymentCollection GetChatModelDeploymentCollection()
-            => Client.GetDiscoveryWorkspaceResource(DiscoveryWorkspaceResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, WorkspaceName)).GetChatModelDeployments();
+            => Client.GetDiscoveryWorkspaceResource(DiscoveryWorkspaceResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, WorkspaceName)).GetDiscoveryChatModelDeployments();
 
         private DiscoveryChatModelDeploymentResource GetChatModelDeploymentReference()
             => Client.GetDiscoveryChatModelDeploymentResource(DiscoveryChatModelDeploymentResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, WorkspaceName, ChatModelDeploymentName));

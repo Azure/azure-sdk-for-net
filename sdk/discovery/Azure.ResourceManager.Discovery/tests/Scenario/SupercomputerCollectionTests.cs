@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         public void Setup() => InitializeClient();
 
         private DiscoverySupercomputerCollection GetDiscoverySupercomputerCollection()
-            => GetResourceGroupReference(ResourceGroupName).GetSupercomputers();
+            => GetResourceGroupReference(ResourceGroupName).GetDiscoverySupercomputers();
 
         private DiscoverySupercomputerResource GetSupercomputerReference()
             => Client.GetDiscoverySupercomputerResource(DiscoverySupercomputerResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, SupercomputerName));
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         public async Task ListBySubscription()
         {
             List<DiscoverySupercomputerResource> items = new List<DiscoverySupercomputerResource>();
-            await foreach (DiscoverySupercomputerResource item in GetSubscriptionReference().GetSupercomputersAsync())
+            await foreach (DiscoverySupercomputerResource item in GetSubscriptionReference().GetDiscoverySupercomputersAsync())
             {
                 items.Add(item);
             }

@@ -19,9 +19,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Discovery
 {
     /// <summary>
-    /// A class representing a StorageContainer along with the instance operations that can be performed on it.
+    /// A class representing a DiscoveryStorageContainer along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiscoveryStorageContainerResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetStorageContainers method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDiscoveryStorageContainers method.
     /// </summary>
     public partial class DiscoveryStorageContainerResource : ArmResource
     {
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoveryStorageContainerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string storageContainerApiVersion);
+            TryGetApiVersion(ResourceType, out string discoveryStorageContainerApiVersion);
             _storageContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", ResourceType.Namespace, Diagnostics);
-            _storageContainersRestClient = new StorageContainers(_storageContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageContainerApiVersion ?? "2026-06-01");
+            _storageContainersRestClient = new StorageContainers(_storageContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryStorageContainerApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -678,9 +678,9 @@ namespace Azure.ResourceManager.Discovery
             }
         }
 
-        /// <summary> Gets a collection of StorageAssets in the <see cref="DiscoveryStorageContainerResource"/>. </summary>
-        /// <returns> An object representing collection of StorageAssets and their operations over a DiscoveryStorageAssetResource. </returns>
-        public virtual DiscoveryStorageAssetCollection GetStorageAssets()
+        /// <summary> Gets a collection of DiscoveryStorageAssets in the <see cref="DiscoveryStorageContainerResource"/>. </summary>
+        /// <returns> An object representing collection of DiscoveryStorageAssets and their operations over a DiscoveryStorageAssetResource. </returns>
+        public virtual DiscoveryStorageAssetCollection GetDiscoveryStorageAssets()
         {
             return GetCachedClient(client => new DiscoveryStorageAssetCollection(client, Id));
         }
@@ -691,11 +691,11 @@ namespace Azure.ResourceManager.Discovery
         /// <exception cref="ArgumentNullException"> <paramref name="storageAssetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageAssetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DiscoveryStorageAssetResource>> GetStorageAssetAsync(string storageAssetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiscoveryStorageAssetResource>> GetDiscoveryStorageAssetAsync(string storageAssetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageAssetName, nameof(storageAssetName));
 
-            return await GetStorageAssets().GetAsync(storageAssetName, cancellationToken).ConfigureAwait(false);
+            return await GetDiscoveryStorageAssets().GetAsync(storageAssetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a StorageAsset. </summary>
@@ -704,11 +704,11 @@ namespace Azure.ResourceManager.Discovery
         /// <exception cref="ArgumentNullException"> <paramref name="storageAssetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageAssetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DiscoveryStorageAssetResource> GetStorageAsset(string storageAssetName, CancellationToken cancellationToken = default)
+        public virtual Response<DiscoveryStorageAssetResource> GetDiscoveryStorageAsset(string storageAssetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageAssetName, nameof(storageAssetName));
 
-            return GetStorageAssets().Get(storageAssetName, cancellationToken);
+            return GetDiscoveryStorageAssets().Get(storageAssetName, cancellationToken);
         }
     }
 }

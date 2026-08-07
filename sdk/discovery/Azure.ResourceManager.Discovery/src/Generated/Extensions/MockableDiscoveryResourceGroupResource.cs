@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.Discovery.Mocking
         {
         }
 
-        /// <summary> Gets a collection of Bookshelves in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Bookshelves and their operations over a DiscoveryBookshelfResource. </returns>
-        public virtual DiscoveryBookshelfCollection GetBookshelves()
+        /// <summary> Gets a collection of DiscoveryBookshelves in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DiscoveryBookshelves and their operations over a DiscoveryBookshelfResource. </returns>
+        public virtual DiscoveryBookshelfCollection GetDiscoveryBookshelves()
         {
             return GetCachedClient(client => new DiscoveryBookshelfCollection(client, Id));
         }
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="bookshelfName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="bookshelfName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DiscoveryBookshelfResource>> GetBookshelfAsync(string bookshelfName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiscoveryBookshelfResource>> GetDiscoveryBookshelfAsync(string bookshelfName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bookshelfName, nameof(bookshelfName));
 
-            return await GetBookshelves().GetAsync(bookshelfName, cancellationToken).ConfigureAwait(false);
+            return await GetDiscoveryBookshelves().GetAsync(bookshelfName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -89,16 +89,16 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="bookshelfName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="bookshelfName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DiscoveryBookshelfResource> GetBookshelf(string bookshelfName, CancellationToken cancellationToken = default)
+        public virtual Response<DiscoveryBookshelfResource> GetDiscoveryBookshelf(string bookshelfName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bookshelfName, nameof(bookshelfName));
 
-            return GetBookshelves().Get(bookshelfName, cancellationToken);
+            return GetDiscoveryBookshelves().Get(bookshelfName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Tools in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Tools and their operations over a DiscoveryToolResource. </returns>
-        public virtual DiscoveryToolCollection GetTools()
+        /// <summary> Gets a collection of DiscoveryTools in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DiscoveryTools and their operations over a DiscoveryToolResource. </returns>
+        public virtual DiscoveryToolCollection GetDiscoveryTools()
         {
             return GetCachedClient(client => new DiscoveryToolCollection(client, Id));
         }
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="toolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="toolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DiscoveryToolResource>> GetToolAsync(string toolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiscoveryToolResource>> GetDiscoveryToolAsync(string toolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(toolName, nameof(toolName));
 
-            return await GetTools().GetAsync(toolName, cancellationToken).ConfigureAwait(false);
+            return await GetDiscoveryTools().GetAsync(toolName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -154,16 +154,16 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="toolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="toolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DiscoveryToolResource> GetTool(string toolName, CancellationToken cancellationToken = default)
+        public virtual Response<DiscoveryToolResource> GetDiscoveryTool(string toolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(toolName, nameof(toolName));
 
-            return GetTools().Get(toolName, cancellationToken);
+            return GetDiscoveryTools().Get(toolName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Workspaces in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Workspaces and their operations over a DiscoveryWorkspaceResource. </returns>
-        public virtual DiscoveryWorkspaceCollection GetWorkspaces()
+        /// <summary> Gets a collection of DiscoveryWorkspaces in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DiscoveryWorkspaces and their operations over a DiscoveryWorkspaceResource. </returns>
+        public virtual DiscoveryWorkspaceCollection GetDiscoveryWorkspaces()
         {
             return GetCachedClient(client => new DiscoveryWorkspaceCollection(client, Id));
         }
@@ -190,11 +190,11 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DiscoveryWorkspaceResource>> GetWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiscoveryWorkspaceResource>> GetDiscoveryWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            return await GetWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetDiscoveryWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -219,16 +219,16 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DiscoveryWorkspaceResource> GetWorkspace(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<DiscoveryWorkspaceResource> GetDiscoveryWorkspace(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            return GetWorkspaces().Get(workspaceName, cancellationToken);
+            return GetDiscoveryWorkspaces().Get(workspaceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Supercomputers in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Supercomputers and their operations over a DiscoverySupercomputerResource. </returns>
-        public virtual DiscoverySupercomputerCollection GetSupercomputers()
+        /// <summary> Gets a collection of DiscoverySupercomputers in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DiscoverySupercomputers and their operations over a DiscoverySupercomputerResource. </returns>
+        public virtual DiscoverySupercomputerCollection GetDiscoverySupercomputers()
         {
             return GetCachedClient(client => new DiscoverySupercomputerCollection(client, Id));
         }
@@ -255,11 +255,11 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="supercomputerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="supercomputerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DiscoverySupercomputerResource>> GetSupercomputerAsync(string supercomputerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiscoverySupercomputerResource>> GetDiscoverySupercomputerAsync(string supercomputerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(supercomputerName, nameof(supercomputerName));
 
-            return await GetSupercomputers().GetAsync(supercomputerName, cancellationToken).ConfigureAwait(false);
+            return await GetDiscoverySupercomputers().GetAsync(supercomputerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -284,16 +284,16 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="supercomputerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="supercomputerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DiscoverySupercomputerResource> GetSupercomputer(string supercomputerName, CancellationToken cancellationToken = default)
+        public virtual Response<DiscoverySupercomputerResource> GetDiscoverySupercomputer(string supercomputerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(supercomputerName, nameof(supercomputerName));
 
-            return GetSupercomputers().Get(supercomputerName, cancellationToken);
+            return GetDiscoverySupercomputers().Get(supercomputerName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of StorageContainers in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of StorageContainers and their operations over a DiscoveryStorageContainerResource. </returns>
-        public virtual DiscoveryStorageContainerCollection GetStorageContainers()
+        /// <summary> Gets a collection of DiscoveryStorageContainers in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DiscoveryStorageContainers and their operations over a DiscoveryStorageContainerResource. </returns>
+        public virtual DiscoveryStorageContainerCollection GetDiscoveryStorageContainers()
         {
             return GetCachedClient(client => new DiscoveryStorageContainerCollection(client, Id));
         }
@@ -320,11 +320,11 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DiscoveryStorageContainerResource>> GetStorageContainerAsync(string storageContainerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiscoveryStorageContainerResource>> GetDiscoveryStorageContainerAsync(string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
-            return await GetStorageContainers().GetAsync(storageContainerName, cancellationToken).ConfigureAwait(false);
+            return await GetDiscoveryStorageContainers().GetAsync(storageContainerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -349,11 +349,11 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DiscoveryStorageContainerResource> GetStorageContainer(string storageContainerName, CancellationToken cancellationToken = default)
+        public virtual Response<DiscoveryStorageContainerResource> GetDiscoveryStorageContainer(string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
-            return GetStorageContainers().Get(storageContainerName, cancellationToken);
+            return GetDiscoveryStorageContainers().Get(storageContainerName, cancellationToken);
         }
     }
 }

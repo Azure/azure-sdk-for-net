@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Discovery
     /// <summary>
     /// A class representing a collection of <see cref="DiscoveryChatModelDeploymentResource"/> and their operations.
     /// Each <see cref="DiscoveryChatModelDeploymentResource"/> in the collection will belong to the same instance of <see cref="DiscoveryWorkspaceResource"/>.
-    /// To get a <see cref="DiscoveryChatModelDeploymentCollection"/> instance call the GetChatModelDeployments method from an instance of <see cref="DiscoveryWorkspaceResource"/>.
+    /// To get a <see cref="DiscoveryChatModelDeploymentCollection"/> instance call the GetDiscoveryChatModelDeployments method from an instance of <see cref="DiscoveryWorkspaceResource"/>.
     /// </summary>
     public partial class DiscoveryChatModelDeploymentCollection : ArmCollection, IEnumerable<DiscoveryChatModelDeploymentResource>, IAsyncEnumerable<DiscoveryChatModelDeploymentResource>
     {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoveryChatModelDeploymentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DiscoveryChatModelDeploymentResource.ResourceType, out string chatModelDeploymentApiVersion);
+            TryGetApiVersion(DiscoveryChatModelDeploymentResource.ResourceType, out string discoveryChatModelDeploymentApiVersion);
             _chatModelDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", DiscoveryChatModelDeploymentResource.ResourceType.Namespace, Diagnostics);
-            _chatModelDeploymentsRestClient = new ChatModelDeployments(_chatModelDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, chatModelDeploymentApiVersion ?? "2026-06-01");
+            _chatModelDeploymentsRestClient = new ChatModelDeployments(_chatModelDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryChatModelDeploymentApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 

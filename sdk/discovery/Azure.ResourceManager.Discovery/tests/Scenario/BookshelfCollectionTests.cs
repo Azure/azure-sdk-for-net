@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         public void Setup() => InitializeClient();
 
         private DiscoveryBookshelfCollection GetDiscoveryBookshelfCollection()
-            => GetResourceGroupReference(ResourceGroupName).GetBookshelves();
+            => GetResourceGroupReference(ResourceGroupName).GetDiscoveryBookshelves();
 
         private DiscoveryBookshelfResource GetBookshelfReference()
             => Client.GetDiscoveryBookshelfResource(DiscoveryBookshelfResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, BookshelfName));
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         public async Task ListBySubscription()
         {
             List<DiscoveryBookshelfResource> items = new List<DiscoveryBookshelfResource>();
-            await foreach (DiscoveryBookshelfResource item in GetSubscriptionReference().GetBookshelvesAsync())
+            await foreach (DiscoveryBookshelfResource item in GetSubscriptionReference().GetDiscoveryBookshelvesAsync())
             {
                 items.Add(item);
             }

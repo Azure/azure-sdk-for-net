@@ -19,9 +19,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Discovery
 {
     /// <summary>
-    /// A class representing a Bookshelf along with the instance operations that can be performed on it.
+    /// A class representing a DiscoveryBookshelf along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiscoveryBookshelfResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetBookshelves method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDiscoveryBookshelves method.
     /// </summary>
     public partial class DiscoveryBookshelfResource : ArmResource
     {
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoveryBookshelfResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string bookshelfApiVersion);
+            TryGetApiVersion(ResourceType, out string discoveryBookshelfApiVersion);
             _bookshelvesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", ResourceType.Namespace, Diagnostics);
-            _bookshelvesRestClient = new Bookshelves(_bookshelvesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, bookshelfApiVersion ?? "2026-06-01");
+            _bookshelvesRestClient = new Bookshelves(_bookshelvesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryBookshelfApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 

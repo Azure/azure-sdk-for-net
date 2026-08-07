@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         public void Setup() => InitializeClient();
 
         private DiscoveryWorkspaceCollection GetDiscoveryWorkspaceCollection()
-            => GetResourceGroupReference(ResourceGroupName).GetWorkspaces();
+            => GetResourceGroupReference(ResourceGroupName).GetDiscoveryWorkspaces();
 
         private DiscoveryWorkspaceResource GetWorkspaceReference()
             => Client.GetDiscoveryWorkspaceResource(DiscoveryWorkspaceResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, WorkspaceName));
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         public async Task ListBySubscription()
         {
             List<DiscoveryWorkspaceResource> workspaces = new List<DiscoveryWorkspaceResource>();
-            await foreach (DiscoveryWorkspaceResource workspace in GetSubscriptionReference().GetWorkspacesAsync())
+            await foreach (DiscoveryWorkspaceResource workspace in GetSubscriptionReference().GetDiscoveryWorkspacesAsync())
             {
                 workspaces.Add(workspace);
             }

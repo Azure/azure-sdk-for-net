@@ -19,9 +19,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Discovery
 {
     /// <summary>
-    /// A class representing a NodePool along with the instance operations that can be performed on it.
+    /// A class representing a DiscoveryNodePool along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiscoveryNodePoolResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DiscoverySupercomputerResource"/> using the GetNodePools method.
+    /// Otherwise you can get one from its parent resource <see cref="DiscoverySupercomputerResource"/> using the GetDiscoveryNodePools method.
     /// </summary>
     public partial class DiscoveryNodePoolResource : ArmResource
     {
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoveryNodePoolResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string nodePoolApiVersion);
+            TryGetApiVersion(ResourceType, out string discoveryNodePoolApiVersion);
             _nodePoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", ResourceType.Namespace, Diagnostics);
-            _nodePoolsRestClient = new NodePools(_nodePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, nodePoolApiVersion ?? "2026-06-01");
+            _nodePoolsRestClient = new NodePools(_nodePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryNodePoolApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 

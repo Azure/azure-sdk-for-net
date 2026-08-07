@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Discovery
     /// <summary>
     /// A class representing a collection of <see cref="DiscoveryStorageContainerResource"/> and their operations.
     /// Each <see cref="DiscoveryStorageContainerResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="DiscoveryStorageContainerCollection"/> instance call the GetStorageContainers method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DiscoveryStorageContainerCollection"/> instance call the GetDiscoveryStorageContainers method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DiscoveryStorageContainerCollection : ArmCollection, IEnumerable<DiscoveryStorageContainerResource>, IAsyncEnumerable<DiscoveryStorageContainerResource>
     {
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoveryStorageContainerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DiscoveryStorageContainerResource.ResourceType, out string storageContainerApiVersion);
+            TryGetApiVersion(DiscoveryStorageContainerResource.ResourceType, out string discoveryStorageContainerApiVersion);
             _storageContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", DiscoveryStorageContainerResource.ResourceType.Namespace, Diagnostics);
-            _storageContainersRestClient = new StorageContainers(_storageContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageContainerApiVersion ?? "2026-06-01");
+            _storageContainersRestClient = new StorageContainers(_storageContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryStorageContainerApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 

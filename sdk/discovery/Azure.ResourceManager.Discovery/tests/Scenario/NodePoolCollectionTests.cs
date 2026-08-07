@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         public void Setup() => InitializeClient();
 
         private DiscoveryNodePoolCollection GetNodePoolCollection()
-            => Client.GetDiscoverySupercomputerResource(DiscoverySupercomputerResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, SupercomputerName)).GetNodePools();
+            => Client.GetDiscoverySupercomputerResource(DiscoverySupercomputerResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, SupercomputerName)).GetDiscoveryNodePools();
 
         private DiscoveryNodePoolResource GetNodePoolReference()
             => Client.GetDiscoveryNodePoolResource(DiscoveryNodePoolResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, SupercomputerName, NodePoolName));

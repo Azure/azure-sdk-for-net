@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         public void Setup() => InitializeClient();
 
         private DiscoveryStorageContainerCollection GetStorageContainerCollection()
-            => GetResourceGroupReference(ResourceGroupName).GetStorageContainers();
+            => GetResourceGroupReference(ResourceGroupName).GetDiscoveryStorageContainers();
 
         private DiscoveryStorageContainerResource GetStorageContainerReference()
             => Client.GetDiscoveryStorageContainerResource(DiscoveryStorageContainerResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, StorageContainerName));
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         public async Task ListBySubscription()
         {
             List<DiscoveryStorageContainerResource> items = new List<DiscoveryStorageContainerResource>();
-            await foreach (DiscoveryStorageContainerResource item in GetSubscriptionReference().GetStorageContainersAsync())
+            await foreach (DiscoveryStorageContainerResource item in GetSubscriptionReference().GetDiscoveryStorageContainersAsync())
             {
                 items.Add(item);
             }

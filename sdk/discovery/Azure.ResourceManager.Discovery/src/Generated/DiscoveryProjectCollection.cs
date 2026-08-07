@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Discovery
     /// <summary>
     /// A class representing a collection of <see cref="DiscoveryProjectResource"/> and their operations.
     /// Each <see cref="DiscoveryProjectResource"/> in the collection will belong to the same instance of <see cref="DiscoveryWorkspaceResource"/>.
-    /// To get a <see cref="DiscoveryProjectCollection"/> instance call the GetProjects method from an instance of <see cref="DiscoveryWorkspaceResource"/>.
+    /// To get a <see cref="DiscoveryProjectCollection"/> instance call the GetDiscoveryProjects method from an instance of <see cref="DiscoveryWorkspaceResource"/>.
     /// </summary>
     public partial class DiscoveryProjectCollection : ArmCollection, IEnumerable<DiscoveryProjectResource>, IAsyncEnumerable<DiscoveryProjectResource>
     {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoveryProjectCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DiscoveryProjectResource.ResourceType, out string projectApiVersion);
+            TryGetApiVersion(DiscoveryProjectResource.ResourceType, out string discoveryProjectApiVersion);
             _projectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", DiscoveryProjectResource.ResourceType.Namespace, Diagnostics);
-            _projectsRestClient = new Projects(_projectsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, projectApiVersion ?? "2026-06-01");
+            _projectsRestClient = new Projects(_projectsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryProjectApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Discovery;
 using Azure.ResourceManager.Models;
@@ -607,7 +608,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <returns> A new <see cref="Models.DiscoveryStorageStore"/> instance for mocking. </returns>
         public static DiscoveryStorageStore DiscoveryStorageStore(string kind = default)
         {
-            return new UnknownStorageStore(default, default);
+            return new UnknownDiscoveryStorageStore(default, default);
         }
 
         /// <param name="mountProtocol"> The protocol to use for mounting the storage store. </param>

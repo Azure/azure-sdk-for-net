@@ -19,9 +19,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Discovery
 {
     /// <summary>
-    /// A class representing a Workspace along with the instance operations that can be performed on it.
+    /// A class representing a DiscoveryWorkspace along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiscoveryWorkspaceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetWorkspaces method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDiscoveryWorkspaces method.
     /// </summary>
     public partial class DiscoveryWorkspaceResource : ArmResource
     {
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoveryWorkspaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string workspaceApiVersion);
+            TryGetApiVersion(ResourceType, out string discoveryWorkspaceApiVersion);
             _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", ResourceType.Namespace, Diagnostics);
-            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workspaceApiVersion ?? "2026-06-01");
+            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryWorkspaceApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -678,9 +678,9 @@ namespace Azure.ResourceManager.Discovery
             }
         }
 
-        /// <summary> Gets a collection of Projects in the <see cref="DiscoveryWorkspaceResource"/>. </summary>
-        /// <returns> An object representing collection of Projects and their operations over a DiscoveryProjectResource. </returns>
-        public virtual DiscoveryProjectCollection GetProjects()
+        /// <summary> Gets a collection of DiscoveryProjects in the <see cref="DiscoveryWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of DiscoveryProjects and their operations over a DiscoveryProjectResource. </returns>
+        public virtual DiscoveryProjectCollection GetDiscoveryProjects()
         {
             return GetCachedClient(client => new DiscoveryProjectCollection(client, Id));
         }
@@ -691,11 +691,11 @@ namespace Azure.ResourceManager.Discovery
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DiscoveryProjectResource>> GetProjectAsync(string projectName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiscoveryProjectResource>> GetDiscoveryProjectAsync(string projectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return await GetProjects().GetAsync(projectName, cancellationToken).ConfigureAwait(false);
+            return await GetDiscoveryProjects().GetAsync(projectName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a Project. </summary>
@@ -704,11 +704,11 @@ namespace Azure.ResourceManager.Discovery
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DiscoveryProjectResource> GetProject(string projectName, CancellationToken cancellationToken = default)
+        public virtual Response<DiscoveryProjectResource> GetDiscoveryProject(string projectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetProjects().Get(projectName, cancellationToken);
+            return GetDiscoveryProjects().Get(projectName, cancellationToken);
         }
 
         /// <summary> Gets a collection of WorkspacePrivateEndpointConnections in the <see cref="DiscoveryWorkspaceResource"/>. </summary>
@@ -744,9 +744,9 @@ namespace Azure.ResourceManager.Discovery
             return GetWorkspacePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ChatModelDeployments in the <see cref="DiscoveryWorkspaceResource"/>. </summary>
-        /// <returns> An object representing collection of ChatModelDeployments and their operations over a DiscoveryChatModelDeploymentResource. </returns>
-        public virtual DiscoveryChatModelDeploymentCollection GetChatModelDeployments()
+        /// <summary> Gets a collection of DiscoveryChatModelDeployments in the <see cref="DiscoveryWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of DiscoveryChatModelDeployments and their operations over a DiscoveryChatModelDeploymentResource. </returns>
+        public virtual DiscoveryChatModelDeploymentCollection GetDiscoveryChatModelDeployments()
         {
             return GetCachedClient(client => new DiscoveryChatModelDeploymentCollection(client, Id));
         }
@@ -757,11 +757,11 @@ namespace Azure.ResourceManager.Discovery
         /// <exception cref="ArgumentNullException"> <paramref name="chatModelDeploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="chatModelDeploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DiscoveryChatModelDeploymentResource>> GetChatModelDeploymentAsync(string chatModelDeploymentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiscoveryChatModelDeploymentResource>> GetDiscoveryChatModelDeploymentAsync(string chatModelDeploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(chatModelDeploymentName, nameof(chatModelDeploymentName));
 
-            return await GetChatModelDeployments().GetAsync(chatModelDeploymentName, cancellationToken).ConfigureAwait(false);
+            return await GetDiscoveryChatModelDeployments().GetAsync(chatModelDeploymentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a ChatModelDeployment. </summary>
@@ -770,11 +770,11 @@ namespace Azure.ResourceManager.Discovery
         /// <exception cref="ArgumentNullException"> <paramref name="chatModelDeploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="chatModelDeploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DiscoveryChatModelDeploymentResource> GetChatModelDeployment(string chatModelDeploymentName, CancellationToken cancellationToken = default)
+        public virtual Response<DiscoveryChatModelDeploymentResource> GetDiscoveryChatModelDeployment(string chatModelDeploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(chatModelDeploymentName, nameof(chatModelDeploymentName));
 
-            return GetChatModelDeployments().Get(chatModelDeploymentName, cancellationToken);
+            return GetDiscoveryChatModelDeployments().Get(chatModelDeploymentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of WorkspacePrivateLinkResources in the <see cref="DiscoveryWorkspaceResource"/>. </summary>

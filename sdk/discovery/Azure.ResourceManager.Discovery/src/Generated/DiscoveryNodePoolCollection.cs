@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Discovery
     /// <summary>
     /// A class representing a collection of <see cref="DiscoveryNodePoolResource"/> and their operations.
     /// Each <see cref="DiscoveryNodePoolResource"/> in the collection will belong to the same instance of <see cref="DiscoverySupercomputerResource"/>.
-    /// To get a <see cref="DiscoveryNodePoolCollection"/> instance call the GetNodePools method from an instance of <see cref="DiscoverySupercomputerResource"/>.
+    /// To get a <see cref="DiscoveryNodePoolCollection"/> instance call the GetDiscoveryNodePools method from an instance of <see cref="DiscoverySupercomputerResource"/>.
     /// </summary>
     public partial class DiscoveryNodePoolCollection : ArmCollection, IEnumerable<DiscoveryNodePoolResource>, IAsyncEnumerable<DiscoveryNodePoolResource>
     {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoveryNodePoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DiscoveryNodePoolResource.ResourceType, out string nodePoolApiVersion);
+            TryGetApiVersion(DiscoveryNodePoolResource.ResourceType, out string discoveryNodePoolApiVersion);
             _nodePoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", DiscoveryNodePoolResource.ResourceType.Namespace, Diagnostics);
-            _nodePoolsRestClient = new NodePools(_nodePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, nodePoolApiVersion ?? "2026-06-01");
+            _nodePoolsRestClient = new NodePools(_nodePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryNodePoolApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 

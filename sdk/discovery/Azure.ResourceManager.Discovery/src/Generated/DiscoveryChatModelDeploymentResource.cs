@@ -19,9 +19,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Discovery
 {
     /// <summary>
-    /// A class representing a ChatModelDeployment along with the instance operations that can be performed on it.
+    /// A class representing a DiscoveryChatModelDeployment along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiscoveryChatModelDeploymentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DiscoveryWorkspaceResource"/> using the GetChatModelDeployments method.
+    /// Otherwise you can get one from its parent resource <see cref="DiscoveryWorkspaceResource"/> using the GetDiscoveryChatModelDeployments method.
     /// </summary>
     public partial class DiscoveryChatModelDeploymentResource : ArmResource
     {
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoveryChatModelDeploymentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string chatModelDeploymentApiVersion);
+            TryGetApiVersion(ResourceType, out string discoveryChatModelDeploymentApiVersion);
             _chatModelDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", ResourceType.Namespace, Diagnostics);
-            _chatModelDeploymentsRestClient = new ChatModelDeployments(_chatModelDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, chatModelDeploymentApiVersion ?? "2026-06-01");
+            _chatModelDeploymentsRestClient = new ChatModelDeployments(_chatModelDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryChatModelDeploymentApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 

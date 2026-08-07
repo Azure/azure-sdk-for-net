@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Discovery
     /// <summary>
     /// A class representing a collection of <see cref="DiscoveryBookshelfResource"/> and their operations.
     /// Each <see cref="DiscoveryBookshelfResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="DiscoveryBookshelfCollection"/> instance call the GetBookshelves method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DiscoveryBookshelfCollection"/> instance call the GetDiscoveryBookshelves method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DiscoveryBookshelfCollection : ArmCollection, IEnumerable<DiscoveryBookshelfResource>, IAsyncEnumerable<DiscoveryBookshelfResource>
     {
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoveryBookshelfCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DiscoveryBookshelfResource.ResourceType, out string bookshelfApiVersion);
+            TryGetApiVersion(DiscoveryBookshelfResource.ResourceType, out string discoveryBookshelfApiVersion);
             _bookshelvesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", DiscoveryBookshelfResource.ResourceType.Namespace, Diagnostics);
-            _bookshelvesRestClient = new Bookshelves(_bookshelvesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, bookshelfApiVersion ?? "2026-06-01");
+            _bookshelvesRestClient = new Bookshelves(_bookshelvesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryBookshelfApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 

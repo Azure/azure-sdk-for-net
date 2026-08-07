@@ -13,10 +13,10 @@ using Azure.ResourceManager.Discovery;
 
 namespace Azure.ResourceManager.Discovery.Models
 {
-    internal partial class UnknownStorageStore : DiscoveryStorageStore, IJsonModel<DiscoveryStorageStore>
+    internal partial class UnknownDiscoveryStorageStore : DiscoveryStorageStore, IJsonModel<DiscoveryStorageStore>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownStorageStore"/> for deserialization. </summary>
-        internal UnknownStorageStore()
+        /// <summary> Initializes a new instance of <see cref="UnknownDiscoveryStorageStore"/> for deserialization. </summary>
+        internal UnknownDiscoveryStorageStore()
         {
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Discovery.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownStorageStore DeserializeUnknownStorageStore(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownDiscoveryStorageStore DeserializeUnknownDiscoveryStorageStore(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Discovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownStorageStore(kind, additionalBinaryDataProperties);
+            return new UnknownDiscoveryStorageStore(kind, additionalBinaryDataProperties);
         }
     }
 }
