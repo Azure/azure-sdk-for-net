@@ -597,12 +597,13 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
 
         using JsonDocument document = JsonDocument.Parse(serialized);
         JsonElement root = document.RootElement;
+        JsonElement containerElement = root.GetProperty("container");
 
-        Assert.That(root.GetProperty("type").GetString(), Is.EqualTo("auto"));
-        Assert.That(root.GetProperty("file_ids")[0].GetString(), Is.EqualTo("file_123"));
-        Assert.That(root.GetProperty("memory_limit").GetString(), Is.EqualTo("4g"));
+        Assert.That(containerElement.GetProperty("type").GetString(), Is.EqualTo("auto"));
+        Assert.That(containerElement.GetProperty("file_ids")[0].GetString(), Is.EqualTo("file_123"));
+        Assert.That(containerElement.GetProperty("memory_limit").GetString(), Is.EqualTo("4g"));
 
-        JsonElement policy = root.GetProperty("network_policy");
+        JsonElement policy = containerElement.GetProperty("network_policy");
         Assert.That(policy.GetProperty("type").GetString(), Is.EqualTo("allowlist"));
         Assert.That(
             policy.GetProperty("allowed_domains")[0].GetString(),
