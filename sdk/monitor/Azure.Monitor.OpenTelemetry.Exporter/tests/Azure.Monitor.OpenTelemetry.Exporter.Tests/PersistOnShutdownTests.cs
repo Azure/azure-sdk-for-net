@@ -353,6 +353,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             started.Wait(TimeSpan.FromSeconds(10));
         }
 
+        [Fact]
+        public void StandardMetricsProcessorReleasesTheTransmitterWhenItsMeterProviderIsNeverBuilt()
+        {
+            var options = new AzureMonitorExporterOptions
+            {
+                ConnectionString = $"InstrumentationKey={Guid.NewGuid()};IngestionEndpoint={TestEndpoint}",
+                StorageDirectory = _storageRoot,
+                Transport = new MockTransport(_ => new MockResponse(200).SetContent("Ok")),
+                EnableStandardMetrics = false,
+                EnablePerformanceCounters = false,
+                EnableStatsbeat = false,
+            };
+
+            var transmitter = new AzureMonitorTransmitter(options, new MockPlatform());
+            TransmitterFactory.Instance.Set(options.ConnectionString, transmitter);
+
+            // The exporter is built eagerly and only reaches a meter provider if one is ever
+            // created, which for a process that records no spans never happens.
+            var processor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(options), options);
+            Assert.False(transmitter._disposed);
+
+            processor.Dispose();
+
+            // A retained reference would leave the storage timers running past provider disposal.
+            Assert.True(transmitter._disposed);
+        }
+
         [Theory]
         [InlineData(Timeout.Infinite, 0)]
         [InlineData(-5, 0)]
