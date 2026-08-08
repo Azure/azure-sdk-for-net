@@ -4,17 +4,20 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The InputItemToolSearchOutputItemParam. </summary>
-    internal partial class InputItemToolSearchOutputItemParam : InputItem
+    public partial class InputItemToolSearchOutputItemParam : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemToolSearchOutputItemParam"/>. </summary>
         /// <param name="tools"> The loaded tool definitions returned by the tool search output. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tools"/> is null. </exception>
-        public InputItemToolSearchOutputItemParam(IEnumerable<InternalTool> tools) : base(InputItemType.ToolSearchOutput)
+        [Experimental("AAIP002")]
+        public InputItemToolSearchOutputItemParam(IEnumerable<ResponseTool> tools) : base(InputItemType.ToolSearchOutput)
         {
             Argument.AssertNotNull(tools, nameof(tools));
 
@@ -29,7 +32,8 @@ namespace Azure.AI.Projects
         /// <param name="execution"> Whether tool search was executed by the server or by the client. </param>
         /// <param name="tools"> The loaded tool definitions returned by the tool search output. </param>
         /// <param name="status"></param>
-        internal InputItemToolSearchOutputItemParam(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ToolSearchExecutionType? execution, IList<InternalTool> tools, FunctionCallItemStatus? status) : base(@type, additionalBinaryDataProperties)
+        [Experimental("AAIP002")]
+        internal InputItemToolSearchOutputItemParam(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ToolSearchExecutionType? execution, IList<ResponseTool> tools, FunctionCallItemStatus? status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             CallId = callId;
@@ -48,7 +52,8 @@ namespace Azure.AI.Projects
         public ToolSearchExecutionType? Execution { get; set; }
 
         /// <summary> The loaded tool definitions returned by the tool search output. </summary>
-        public IList<InternalTool> Tools { get; }
+        [Experimental("AAIP002")]
+        public IList<ResponseTool> Tools { get; }
 
         /// <summary> Gets or sets the Status. </summary>
         public FunctionCallItemStatus? Status { get; set; }

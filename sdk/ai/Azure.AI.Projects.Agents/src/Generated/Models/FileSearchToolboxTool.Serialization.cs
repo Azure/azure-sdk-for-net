@@ -6,7 +6,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -80,7 +79,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(RankingOptions))
             {
                 writer.WritePropertyName("ranking_options"u8);
-                writer.WriteObjectValue(RankingOptions, options);
+                writer.WriteObjectValue<object>(RankingOptions, options);
             }
             if (Optional.IsDefined(Filters))
             {
@@ -142,7 +141,7 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, ToolConfig> toolConfigs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             long? maxNumResults = default;
-            RankingOptions rankingOptions = default;
+            object rankingOptions = default;
             BinaryData filters = default;
             IList<string> vectorStoreIds = default;
             foreach (var prop in element.EnumerateObject())
@@ -191,7 +190,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    rankingOptions = RankingOptions.DeserializeRankingOptions(prop.Value, options);
+                    rankingOptions = prop.Value.GetObject();
                     continue;
                 }
                 if (prop.NameEquals("filters"u8))

@@ -81,11 +81,11 @@ namespace Azure.AI.Projects.Memory
             writer.WritePropertyName("input_tokens"u8);
             writer.WriteNumberValue(InputTokens);
             writer.WritePropertyName("input_tokens_details"u8);
-            writer.WriteObjectValue(InputTokensDetails, options);
+            writer.WriteObjectValue<Projects.ResponseUsageInputTokensDetails>(InputTokensDetails, options);
             writer.WritePropertyName("output_tokens"u8);
             writer.WriteNumberValue(OutputTokens);
             writer.WritePropertyName("output_tokens_details"u8);
-            writer.WriteObjectValue(OutputTokensDetails, options);
+            writer.WriteObjectValue<Projects.ResponseUsageOutputTokensDetails>(OutputTokensDetails, options);
             writer.WritePropertyName("total_tokens"u8);
             writer.WriteNumberValue(TotalTokens);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -132,9 +132,9 @@ namespace Azure.AI.Projects.Memory
             }
             int embeddingTokens = default;
             long inputTokens = default;
-            ResponseUsageInputTokensDetails inputTokensDetails = default;
+            Projects.ResponseUsageInputTokensDetails inputTokensDetails = default;
             long outputTokens = default;
-            ResponseUsageOutputTokensDetails outputTokensDetails = default;
+            Projects.ResponseUsageOutputTokensDetails outputTokensDetails = default;
             long totalTokens = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -151,7 +151,7 @@ namespace Azure.AI.Projects.Memory
                 }
                 if (prop.NameEquals("input_tokens_details"u8))
                 {
-                    inputTokensDetails = ResponseUsageInputTokensDetails.DeserializeResponseUsageInputTokensDetails(prop.Value, options);
+                    inputTokensDetails = Projects.ResponseUsageInputTokensDetails.DeserializeResponseUsageInputTokensDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("output_tokens"u8))
@@ -161,7 +161,7 @@ namespace Azure.AI.Projects.Memory
                 }
                 if (prop.NameEquals("output_tokens_details"u8))
                 {
-                    outputTokensDetails = ResponseUsageOutputTokensDetails.DeserializeResponseUsageOutputTokensDetails(prop.Value, options);
+                    outputTokensDetails = Projects.ResponseUsageOutputTokensDetails.DeserializeResponseUsageOutputTokensDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("total_tokens"u8))

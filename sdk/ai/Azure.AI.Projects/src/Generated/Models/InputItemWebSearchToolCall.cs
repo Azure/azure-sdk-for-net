@@ -5,12 +5,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Web search tool call. </summary>
-    internal partial class InputItemWebSearchToolCall : InputItem
+    public partial class InputItemWebSearchToolCall : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemWebSearchToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the web search tool call. </param>
@@ -62,13 +62,13 @@ namespace Azure.AI.Projects
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="InternalWebSearchActionSearch"/>. </description>
+        /// <description> <see cref="WebSearchSearchAction"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalWebSearchActionOpenPage"/>. </description>
+        /// <description> <see cref="WebSearchOpenPageAction"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalWebSearchActionFind"/>. </description>
+        /// <description> <see cref="WebSearchFindInPageAction"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

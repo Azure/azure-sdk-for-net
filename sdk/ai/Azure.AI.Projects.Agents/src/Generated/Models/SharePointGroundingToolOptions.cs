@@ -16,7 +16,7 @@ namespace Azure.AI.Projects.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SharePointGroundingToolOptions"/>. </summary>
-        public SharePointGroundingToolOptions()
+        internal SharePointGroundingToolOptions()
         {
             ProjectConnections = new ChangeTrackingList<ToolProjectConnection>();
         }

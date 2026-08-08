@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> The FunctionShellCallItemParamEnvironmentLocalEnvironmentParam. </summary>
-    internal partial class FunctionShellCallItemParamEnvironmentLocalEnvironmentParam : FunctionShellCallItemParamEnvironment
+    public partial class FunctionShellCallItemParamEnvironmentLocalEnvironmentParam : FunctionShellCallItemParamEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallItemParamEnvironmentLocalEnvironmentParam"/>. </summary>
         public FunctionShellCallItemParamEnvironmentLocalEnvironmentParam() : base(FunctionShellCallItemParamEnvironmentType.Local)

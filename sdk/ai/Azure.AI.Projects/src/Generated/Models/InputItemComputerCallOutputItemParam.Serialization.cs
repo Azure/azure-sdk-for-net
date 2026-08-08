@@ -6,11 +6,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Computer tool call output. </summary>
-    internal partial class InputItemComputerCallOutputItemParam : InputItem, IJsonModel<InputItemComputerCallOutputItemParam>
+    public partial class InputItemComputerCallOutputItemParam : InputItem, IJsonModel<InputItemComputerCallOutputItemParam>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemComputerCallOutputItemParam"/> for deserialization. </summary>
         internal InputItemComputerCallOutputItemParam()
@@ -89,8 +90,13 @@ namespace Azure.AI.Projects
             {
                 writer.WritePropertyName("acknowledged_safety_checks"u8);
                 writer.WriteStartArray();
-                foreach (ComputerCallSafetyCheckParam item in AcknowledgedSafetyChecks)
+                foreach (ComputerCallSafetyCheck item in AcknowledgedSafetyChecks)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
@@ -132,7 +138,7 @@ namespace Azure.AI.Projects
             string id = default;
             string callId = default;
             ComputerScreenshotImage output = default;
-            IList<ComputerCallSafetyCheckParam> acknowledgedSafetyChecks = default;
+            IList<ComputerCallSafetyCheck> acknowledgedSafetyChecks = default;
             FunctionCallItemStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -167,10 +173,17 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    List<ComputerCallSafetyCheckParam> array = new List<ComputerCallSafetyCheckParam>();
+                    List<ComputerCallSafetyCheck> array = new List<ComputerCallSafetyCheck>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ComputerCallSafetyCheckParam.DeserializeComputerCallSafetyCheckParam(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<ComputerCallSafetyCheck>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsContext.Default));
+                        }
                     }
                     acknowledgedSafetyChecks = array;
                     continue;
@@ -196,7 +209,7 @@ namespace Azure.AI.Projects
                 id,
                 callId,
                 output,
-                acknowledgedSafetyChecks ?? new ChangeTrackingList<ComputerCallSafetyCheckParam>(),
+                acknowledgedSafetyChecks ?? new ChangeTrackingList<ComputerCallSafetyCheck>(),
                 status);
         }
     }

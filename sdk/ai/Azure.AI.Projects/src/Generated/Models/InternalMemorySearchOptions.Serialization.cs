@@ -7,7 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Memory;
+using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects
 {
@@ -153,7 +153,7 @@ namespace Azure.AI.Projects
             string scope = default;
             IList<InputItem> items = default;
             string previousSearchId = default;
-            MemorySearchResultOptions options0 = default;
+            MemorySearchOptions options0 = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -187,7 +187,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    options0 = MemorySearchResultOptions.DeserializeMemorySearchResultOptions(prop.Value, options);
+                    options0 = ModelReaderWriter.Read<MemorySearchOptions>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

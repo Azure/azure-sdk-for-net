@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -110,7 +111,7 @@ namespace Azure.AI.Projects.Agents
             string description = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AzureAISearchToolResource azureAiSearch = default;
+            AzureAISearchToolOptions azureAiSearch = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -144,7 +145,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("azure_ai_search"u8))
                 {
-                    azureAiSearch = AzureAISearchToolResource.DeserializeAzureAISearchToolResource(prop.Value, options);
+                    azureAiSearch = ModelReaderWriter.Read<AzureAISearchToolOptions>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

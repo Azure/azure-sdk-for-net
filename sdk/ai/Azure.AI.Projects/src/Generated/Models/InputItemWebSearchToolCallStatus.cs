@@ -5,7 +5,7 @@
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
-    internal enum InputItemWebSearchToolCallStatus
+    public enum InputItemWebSearchToolCallStatus
     {
         /// <summary> InProgress. </summary>
         InProgress,

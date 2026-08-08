@@ -12,7 +12,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="InternalCustomGrammarFormatParam"/>. </summary>
         /// <param name="syntax"> The syntax of the grammar definition. One of `lark` or `regex`. </param>
         /// <param name="definition"> The grammar definition. </param>
-        public InternalCustomGrammarFormatParam(GrammarSyntax1 syntax, string definition) : base(CustomToolParamFormatType.Grammar)
+        internal InternalCustomGrammarFormatParam(GrammarSyntax1 syntax, string definition) : base("grammar")
         {
             Syntax = syntax;
             Definition = definition;
@@ -30,9 +30,9 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The syntax of the grammar definition. One of `lark` or `regex`. </summary>
-        public GrammarSyntax1 Syntax { get; set; }
+        public GrammarSyntax1 Syntax { get; }
 
         /// <summary> The grammar definition. </summary>
-        public string Definition { get; set; }
+        public string Definition { get; }
     }
 }

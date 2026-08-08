@@ -7,11 +7,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Computer tool call. </summary>
-    internal partial class InputItemComputerToolCall : InputItem, IJsonModel<InputItemComputerToolCall>
+    public partial class InputItemComputerToolCall : InputItem, IJsonModel<InputItemComputerToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemComputerToolCall"/> for deserialization. </summary>
         internal InputItemComputerToolCall()
@@ -98,8 +99,13 @@ namespace Azure.AI.Projects
             }
             writer.WritePropertyName("pending_safety_checks"u8);
             writer.WriteStartArray();
-            foreach (ComputerCallSafetyCheckParam item in PendingSafetyChecks)
+            foreach (ComputerCallSafetyCheck item in PendingSafetyChecks)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
@@ -138,7 +144,7 @@ namespace Azure.AI.Projects
             string callId = default;
             InternalComputerAction action = default;
             IList<InternalComputerAction> actions = default;
-            IList<ComputerCallSafetyCheckParam> pendingSafetyChecks = default;
+            IList<ComputerCallSafetyCheck> pendingSafetyChecks = default;
             InputItemComputerToolCallStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -182,10 +188,17 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("pending_safety_checks"u8))
                 {
-                    List<ComputerCallSafetyCheckParam> array = new List<ComputerCallSafetyCheckParam>();
+                    List<ComputerCallSafetyCheck> array = new List<ComputerCallSafetyCheck>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ComputerCallSafetyCheckParam.DeserializeComputerCallSafetyCheckParam(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<ComputerCallSafetyCheck>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsContext.Default));
+                        }
                     }
                     pendingSafetyChecks = array;
                     continue;

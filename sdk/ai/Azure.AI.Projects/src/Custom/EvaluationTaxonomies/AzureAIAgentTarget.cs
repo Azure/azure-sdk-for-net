@@ -10,10 +10,10 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("AzureAIAgentTarget")]
 public partial class AzureAIAgentTarget
 {
-    /// <summary> Gets the Tools. </summary>
-    [CodeGenMember("Tools")]
-    internal IList<InternalTool> InternalTools { get; }
+    ///// <summary> Gets the Tools. </summary>
+    //[CodeGenMember("Tools")]
+    //internal IList<InternalTool> InternalTools { get; }
 
-    /// <summary> Gets the Tools. </summary>
-    public IList<ProjectsAgentTool> Tools { get => [.. InternalTools.Select(x => ProjectsAgentTool.AsProjectTool(x))]; }
+    ///// <summary> Gets the Tools. </summary>
+    //public IList<ProjectsAgentTool> Tools { get => [.. InternalTools.Select(x => ProjectsAgentTool.AsProjectTool(x))]; }
 }
