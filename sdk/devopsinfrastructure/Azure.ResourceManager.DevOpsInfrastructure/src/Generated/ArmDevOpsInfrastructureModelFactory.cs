@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.DevOpsInfrastructure;
@@ -90,15 +91,24 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             return new DevOpsGitHubOrganization(uri, (repositories ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <param name="description"> An extra description to add to the Azure DevOps pool. </param>
+        /// <param name="updateDescription"> Determines whether the service updates the Azure DevOps pool description. </param>
         /// <param name="organizations"> The list of Azure DevOps organizations the pool should be present in. </param>
         /// <param name="permissionProfile"> The type of permission which determines which accounts are admins on the Azure DevOps pool. </param>
         /// <param name="alias"> An alias to reference the Azure DevOps pool name. </param>
         /// <returns> A new <see cref="Models.DevOpsAzureOrganizationProfile"/> instance for mocking. </returns>
-        public static DevOpsAzureOrganizationProfile DevOpsAzureOrganizationProfile(IEnumerable<DevOpsOrganization> organizations = default, DevOpsAzurePermissionProfile permissionProfile = default, string @alias = default)
+        public static DevOpsAzureOrganizationProfile DevOpsAzureOrganizationProfile(string description = default, bool? updateDescription = default, IEnumerable<DevOpsOrganization> organizations = default, DevOpsAzurePermissionProfile permissionProfile = default, string @alias = default)
         {
             organizations ??= new ChangeTrackingList<DevOpsOrganization>();
 
-            return new DevOpsAzureOrganizationProfile(default, default, (organizations ?? new ChangeTrackingList<DevOpsOrganization>()).ToList(), permissionProfile, @alias);
+            return new DevOpsAzureOrganizationProfile(
+                default,
+                default,
+                description,
+                updateDescription,
+                (organizations ?? new ChangeTrackingList<DevOpsOrganization>()).ToList(),
+                permissionProfile,
+                @alias);
         }
 
         /// <param name="uri"> The Azure DevOps organization URL in which the pool should be created. </param>
@@ -198,25 +208,43 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             return new UnknownDevOpsFabricProfile(kind, default);
         }
 
-        /// <param name="skuName"> The Azure SKU name of the machines in the pool. </param>
+        /// <param name="sku"> The Azure SKU of the machines in the pool. </param>
         /// <param name="images"> The VM images of the machines in the pool. </param>
         /// <param name="osProfile"> The OS profile of the machines in the pool. </param>
         /// <param name="storageProfile"> The storage profile of the machines in the pool. </param>
         /// <param name="networkProfile"> The network profile of the machines in the pool. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         /// <returns> A new <see cref="Models.DevOpsVmssFabricProfile"/> instance for mocking. </returns>
-        public static DevOpsVmssFabricProfile DevOpsVmssFabricProfile(string skuName = default, IEnumerable<DevOpsPoolVmImage> images = default, DevOpsOSProfile osProfile = default, DevOpsStorageProfile storageProfile = default, DevOpsNetworkProfile networkProfile = default)
+        public static DevOpsVmssFabricProfile DevOpsVmssFabricProfile(DevOpsAzureSku sku = default, IEnumerable<DevOpsPoolVmImage> images = default, DevOpsOSProfile osProfile = default, DevOpsStorageProfile storageProfile = default, DevOpsNetworkProfile networkProfile = default)
         {
             images ??= new ChangeTrackingList<DevOpsPoolVmImage>();
 
             return new DevOpsVmssFabricProfile(
                 default,
                 default,
-                skuName is null ? default : new DevOpsAzureSku(skuName, default),
+                sku,
                 (images ?? new ChangeTrackingList<DevOpsPoolVmImage>()).ToList(),
                 osProfile,
                 storageProfile,
                 networkProfile);
+        }
+
+        /// <param name="name"> The Azure SKU name of the machines in the pool. </param>
+        /// <param name="windowsNvmeDrive"> The drive letter for the NVMe striped volume on Windows (e.g., 'N'). Defaults to 'N' when not specified. </param>
+        /// <param name="linuxNvmePath"> The mount path for the NVMe striped volume on Linux (e.g., '/mnt/azure_nvme_temp'). Defaults to '/mnt/azure_nvme_temp' when not specified. </param>
+        /// <param name="vmSizes"> Specifies VM sizes for instance-mix allocation. </param>
+        /// <returns> A new <see cref="Models.DevOpsAzureSku"/> instance for mocking. </returns>
+        public static DevOpsAzureSku DevOpsAzureSku(string name = default, string windowsNvmeDrive = default, string linuxNvmePath = default, IEnumerable<VmSize> vmSizes = default)
+        {
+            vmSizes ??= new ChangeTrackingList<VmSize>();
+
+            return new DevOpsAzureSku(name, windowsNvmeDrive, linuxNvmePath, (vmSizes ?? new ChangeTrackingList<VmSize>()).ToList(), default);
+        }
+
+        /// <param name="name"> Specifies the name of the VM Size. </param>
+        /// <returns> A new <see cref="Models.VmSize"/> instance for mocking. </returns>
+        public static VmSize VmSize(string name = default)
+        {
+            return new VmSize(name, default);
         }
 
         /// <param name="resourceId"> The resource id of the image. </param>
@@ -225,8 +253,12 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="buffer"> The percentage of the buffer to be allocated to this image. </param>
         /// <param name="ephemeralType"> The ephemeral type of the image. </param>
         /// <param name="isEphemeral"> Read only. Determines if the image is ephemeral. </param>
+        /// <param name="provisioningScriptStorageAccountResourceId"> The ARM resource ID of the storage account hosting provisioning scripts for this image. </param>
+        /// <param name="provisioningScriptManagedIdentityClientId"> The managed identity client ID used to access provisioning script content for this image. </param>
+        /// <param name="provisioningScriptShouldRestart"> Determines whether the machine should be restarted after provisioning script execution for this image. </param>
+        /// <param name="provisioningScriptEntryPoint"> The provisioning script entry point for this image. </param>
         /// <returns> A new <see cref="Models.DevOpsPoolVmImage"/> instance for mocking. </returns>
-        public static DevOpsPoolVmImage DevOpsPoolVmImage(string resourceId = default, string wellKnownImageName = default, IEnumerable<string> aliases = default, string buffer = default, DevOpsEphemeralType? ephemeralType = default, bool? isEphemeral = default)
+        public static DevOpsPoolVmImage DevOpsPoolVmImage(string resourceId = default, string wellKnownImageName = default, IEnumerable<string> aliases = default, string buffer = default, DevOpsEphemeralType? ephemeralType = default, bool? isEphemeral = default, ResourceIdentifier provisioningScriptStorageAccountResourceId = default, string provisioningScriptManagedIdentityClientId = default, bool? provisioningScriptShouldRestart = default, string provisioningScriptEntryPoint = default)
         {
             aliases ??= new ChangeTrackingList<string>();
 
@@ -237,6 +269,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 buffer,
                 ephemeralType,
                 isEphemeral,
+                provisioningScriptStorageAccountResourceId,
+                provisioningScriptManagedIdentityClientId,
+                provisioningScriptShouldRestart,
+                provisioningScriptEntryPoint,
                 default);
         }
 
@@ -514,6 +550,68 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 resourceType,
                 systemData,
                 imageVersion is null ? default : new ImageVersionProperties(imageVersion, default),
+                default);
+        }
+
+        /// <summary> Azure DevOps organization profile. </summary>
+        /// <param name="organizations"> The list of Azure DevOps organizations the pool should be present in. </param>
+        /// <param name="permissionProfile"> The type of permission which determines which accounts are admins on the Azure DevOps pool. </param>
+        /// <param name="alias"> An alias to reference the Azure DevOps pool name. </param>
+        /// <returns> A new <see cref="Models.DevOpsAzureOrganizationProfile"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevOpsAzureOrganizationProfile DevOpsAzureOrganizationProfile(IEnumerable<DevOpsOrganization> organizations = default, DevOpsAzurePermissionProfile permissionProfile = default, string @alias = default)
+        {
+            return new DevOpsAzureOrganizationProfile(
+                default,
+                default,
+                default,
+                default,
+                (organizations ?? new ChangeTrackingList<DevOpsOrganization>()).ToList(),
+                permissionProfile,
+                @alias);
+        }
+
+        /// <param name="skuName"> The Azure SKU name of the machines in the pool. </param>
+        /// <param name="images"> The VM images of the machines in the pool. </param>
+        /// <param name="osProfile"> The OS profile of the machines in the pool. </param>
+        /// <param name="storageProfile"> The storage profile of the machines in the pool. </param>
+        /// <param name="networkProfile"> The network profile of the machines in the pool. </param>
+        /// <returns> A new <see cref="Models.DevOpsVmssFabricProfile"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevOpsVmssFabricProfile DevOpsVmssFabricProfile(string skuName = default, IEnumerable<DevOpsPoolVmImage> images = default, DevOpsOSProfile osProfile = default, DevOpsStorageProfile storageProfile = default, DevOpsNetworkProfile networkProfile = default)
+        {
+            return new DevOpsVmssFabricProfile(
+                default,
+                default,
+                skuName is null ? default : new DevOpsAzureSku(skuName, default, default, default, default),
+                (images ?? new ChangeTrackingList<DevOpsPoolVmImage>()).ToList(),
+                osProfile,
+                storageProfile,
+                networkProfile);
+        }
+
+        /// <summary> The VM image of the machines in the pool. </summary>
+        /// <param name="resourceId"> The resource id of the image. </param>
+        /// <param name="wellKnownImageName"> The image to use from a well-known set of images made available to customers. </param>
+        /// <param name="aliases"> List of aliases to reference the image by. </param>
+        /// <param name="buffer"> The percentage of the buffer to be allocated to this image. </param>
+        /// <param name="ephemeralType"> The ephemeral type of the image. </param>
+        /// <param name="isEphemeral"> Read only. Determines if the image is ephemeral. </param>
+        /// <returns> A new <see cref="Models.DevOpsPoolVmImage"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevOpsPoolVmImage DevOpsPoolVmImage(string resourceId = default, string wellKnownImageName = default, IEnumerable<string> aliases = default, string buffer = default, DevOpsEphemeralType? ephemeralType = default, bool? isEphemeral = default)
+        {
+            return new DevOpsPoolVmImage(
+                resourceId,
+                wellKnownImageName,
+                (aliases ?? new ChangeTrackingList<string>()).ToList(),
+                buffer,
+                ephemeralType,
+                isEphemeral,
+                default,
+                default,
+                default,
+                default,
                 default);
         }
     }
