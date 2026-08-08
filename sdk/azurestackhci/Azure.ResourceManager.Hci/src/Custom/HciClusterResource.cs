@@ -16,6 +16,41 @@ namespace Azure.ResourceManager.Hci
         public virtual AsyncPageable<HciClusterOfferResource> GetHciClusterOffersAsync(string expand = default, CancellationToken cancellationToken = default)
             => GetByClusterAsync(expand, cancellationToken);
 
+        // Publisher was removed from stable APIs starting with 2026-02-01 and is now preview-only.
+        // This release targets a stable API, so these resource entry points are maintained as customization code.
+        /// <summary> Gets a collection of HciClusterPublishers in the <see cref="HciClusterResource"/>. </summary>
+        /// <returns> An object representing collection of HciClusterPublishers and their operations over a HciClusterPublisherResource. </returns>
+        public virtual HciClusterPublisherCollection GetHciClusterPublishers()
+        {
+            return GetCachedClient(client => new HciClusterPublisherCollection(client, Id));
+        }
+
+        /// <summary> Get Publisher resource details of HCI Cluster. </summary>
+        /// <param name="publisherName"> The name of the publisher available within HCI cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<HciClusterPublisherResource>> GetHciClusterPublisherAsync(string publisherName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+
+            return await GetHciClusterPublishers().GetAsync(publisherName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get Publisher resource details of HCI Cluster. </summary>
+        /// <param name="publisherName"> The name of the publisher available within HCI cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HciClusterPublisherResource> GetHciClusterPublisher(string publisherName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+
+            return GetHciClusterPublishers().Get(publisherName, cancellationToken);
+        }
+
         /// <summary> List Offers available across publishers for the HCI Cluster (backward-compat). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<HciClusterOfferResource> GetHciClusterOffers(string expand = default, CancellationToken cancellationToken = default)
