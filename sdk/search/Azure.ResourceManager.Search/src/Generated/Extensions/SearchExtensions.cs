@@ -330,39 +330,37 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary>
-        /// Lists all of the features and SKUs offered by the Azure AI Search service in each region. Note: This API returns a non-ARM resource collection and is not RPC-compliant. It will be replaced with an action-style API in the next preview as a breaking change. Customers should avoid taking new dependencies on the current shape.
+        /// Fetches the features and SKUs offered by the Azure AI Search service in each region, along with the recommended default region for creating new services.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSearchTenantResource.GetOfferingsAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSearchTenantResource.FetchOfferingsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SearchOfferingsByRegion"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SearchOfferingsByRegion> GetOfferingsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        public static async Task<Response<SearchOfferingsResult>> FetchOfferingsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableSearchTenantResource(tenantResource).GetOfferingsAsync(cancellationToken);
+            return await GetMockableSearchTenantResource(tenantResource).FetchOfferingsAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Lists all of the features and SKUs offered by the Azure AI Search service in each region. Note: This API returns a non-ARM resource collection and is not RPC-compliant. It will be replaced with an action-style API in the next preview as a breaking change. Customers should avoid taking new dependencies on the current shape.
+        /// Fetches the features and SKUs offered by the Azure AI Search service in each region, along with the recommended default region for creating new services.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSearchTenantResource.GetOfferings(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSearchTenantResource.FetchOfferings(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SearchOfferingsByRegion"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SearchOfferingsByRegion> GetOfferings(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        public static Response<SearchOfferingsResult> FetchOfferings(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableSearchTenantResource(tenantResource).GetOfferings(cancellationToken);
+            return GetMockableSearchTenantResource(tenantResource).FetchOfferings(cancellationToken);
         }
     }
 }
