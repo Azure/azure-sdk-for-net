@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
@@ -110,6 +111,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("semanticConfigurationName"u8);
                 writer.WriteStringValue(SemanticConfigurationName);
             }
+            if (Optional.IsDefined(QueryType))
+            {
+                writer.WritePropertyName("queryType"u8);
+                writer.WriteStringValue(QueryType.Value.ToSerialString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -157,6 +163,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             IList<SearchIndexFieldReference> sourceDataFields = default;
             IList<SearchIndexFieldReference> searchFields = default;
             string semanticConfigurationName = default;
+            SearchQueryType? queryType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -203,6 +210,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     semanticConfigurationName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("queryType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    queryType = prop.Value.GetString().ToSearchQueryType();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -214,6 +230,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 sourceDataFields ?? new ChangeTrackingList<SearchIndexFieldReference>(),
                 searchFields ?? new ChangeTrackingList<SearchIndexFieldReference>(),
                 semanticConfigurationName,
+                queryType,
                 additionalBinaryDataProperties);
         }
     }

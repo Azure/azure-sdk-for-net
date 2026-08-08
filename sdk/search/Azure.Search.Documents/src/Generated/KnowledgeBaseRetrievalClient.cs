@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ComponentModel;
+using System.Net.ServerSentEvents;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -89,11 +91,12 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
+        /// <param name="queryWorkIQSourceAuthorization"> User assertion token for a customer-owned Entra app registration configured on a Work IQ knowledge source. Used for on-behalf-of authentication to the Work IQ API. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Retrieve(RequestContent content, string querySourceAuthorization = default, RequestContext context = null)
+        public virtual Response Retrieve(RequestContent content, string querySourceAuthorization = default, string queryWorkIQSourceAuthorization = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("KnowledgeBaseRetrievalClient.Retrieve");
             scope.Start();
@@ -101,7 +104,7 @@ namespace Azure.Search.Documents.KnowledgeBases
             {
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateRetrieveRequest(content, querySourceAuthorization, context);
+                using HttpMessage message = CreateRetrieveRequest(content, querySourceAuthorization, queryWorkIQSourceAuthorization, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -121,11 +124,12 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
+        /// <param name="queryWorkIQSourceAuthorization"> User assertion token for a customer-owned Entra app registration configured on a Work IQ knowledge source. Used for on-behalf-of authentication to the Work IQ API. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RetrieveAsync(RequestContent content, string querySourceAuthorization = default, RequestContext context = null)
+        public virtual async Task<Response> RetrieveAsync(RequestContent content, string querySourceAuthorization = default, string queryWorkIQSourceAuthorization = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("KnowledgeBaseRetrievalClient.Retrieve");
             scope.Start();
@@ -133,7 +137,7 @@ namespace Azure.Search.Documents.KnowledgeBases
             {
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateRetrieveRequest(content, querySourceAuthorization, context);
+                using HttpMessage message = CreateRetrieveRequest(content, querySourceAuthorization, queryWorkIQSourceAuthorization, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -146,28 +150,30 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
         /// <param name="retrievalRequest"> The retrieval request to process. </param>
         /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
+        /// <param name="queryWorkIQSourceAuthorization"> User assertion token for a customer-owned Entra app registration configured on a Work IQ knowledge source. Used for on-behalf-of authentication to the Work IQ API. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<KnowledgeBaseRetrievalResponse> Retrieve(KnowledgeBaseRetrievalRequest retrievalRequest, string querySourceAuthorization = default, CancellationToken cancellationToken = default)
+        public virtual Response<KnowledgeBaseRetrievalResponse> Retrieve(KnowledgeBaseRetrievalRequest retrievalRequest, string querySourceAuthorization = default, string queryWorkIQSourceAuthorization = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(retrievalRequest, nameof(retrievalRequest));
 
-            Response result = Retrieve(retrievalRequest, querySourceAuthorization, cancellationToken.ToRequestContext());
+            Response result = Retrieve(retrievalRequest, querySourceAuthorization, queryWorkIQSourceAuthorization, cancellationToken.ToRequestContext());
             return Response.FromValue((KnowledgeBaseRetrievalResponse)result, result);
         }
 
         /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
         /// <param name="retrievalRequest"> The retrieval request to process. </param>
         /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
+        /// <param name="queryWorkIQSourceAuthorization"> User assertion token for a customer-owned Entra app registration configured on a Work IQ knowledge source. Used for on-behalf-of authentication to the Work IQ API. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<KnowledgeBaseRetrievalResponse>> RetrieveAsync(KnowledgeBaseRetrievalRequest retrievalRequest, string querySourceAuthorization = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KnowledgeBaseRetrievalResponse>> RetrieveAsync(KnowledgeBaseRetrievalRequest retrievalRequest, string querySourceAuthorization = default, string queryWorkIQSourceAuthorization = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(retrievalRequest, nameof(retrievalRequest));
 
-            Response result = await RetrieveAsync(retrievalRequest, querySourceAuthorization, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await RetrieveAsync(retrievalRequest, querySourceAuthorization, queryWorkIQSourceAuthorization, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((KnowledgeBaseRetrievalResponse)result, result);
         }
 
@@ -178,7 +184,7 @@ namespace Azure.Search.Documents.KnowledgeBases
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<KnowledgeBaseRetrievalResponse> Retrieve(KnowledgeBaseRetrievalRequest retrievalRequest, CancellationToken cancellationToken)
         {
-            return Retrieve(retrievalRequest: retrievalRequest, querySourceAuthorization: default, cancellationToken: cancellationToken);
+            return Retrieve(retrievalRequest: retrievalRequest, querySourceAuthorization: default, queryWorkIQSourceAuthorization: default, cancellationToken: cancellationToken);
         }
 #pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
 
@@ -189,7 +195,7 @@ namespace Azure.Search.Documents.KnowledgeBases
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<KnowledgeBaseRetrievalResponse>> RetrieveAsync(KnowledgeBaseRetrievalRequest retrievalRequest, CancellationToken cancellationToken)
         {
-            return RetrieveAsync(retrievalRequest: retrievalRequest, querySourceAuthorization: default, cancellationToken: cancellationToken);
+            return RetrieveAsync(retrievalRequest: retrievalRequest, querySourceAuthorization: default, queryWorkIQSourceAuthorization: default, cancellationToken: cancellationToken);
         }
 #pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }

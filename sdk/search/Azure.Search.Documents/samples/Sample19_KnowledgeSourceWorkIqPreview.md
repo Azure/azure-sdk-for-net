@@ -11,6 +11,7 @@ using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases;
 using Azure.Search.Documents.KnowledgeBases.Models;
+using Azure.Search.Documents.Models;
 ```
 
 ## Create a Work IQ Knowledge Source
@@ -28,7 +29,14 @@ SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 // Work IQ connects the knowledge base to Microsoft 365 work data,
 // enabling retrieval from emails, documents, and other M365 content.
 string knowledgeSourceName = "my-workiq-source";
-WorkIQKnowledgeSource workIqSource = new WorkIQKnowledgeSource(knowledgeSourceName)
+// Work IQ now authenticates to Microsoft 365 through an Entra
+// application identity configured with a federated credential.
+WorkIQKnowledgeSourceParameters workIqParameters = new WorkIQKnowledgeSourceParameters(
+    new EntraAppAuthentication(
+        applicationId: Guid.Parse("00000000-0000-0000-0000-000000000000"),
+        federatedCredentialId: Guid.Parse("00000000-0000-0000-0000-000000000000")));
+
+WorkIQKnowledgeSource workIqSource = new WorkIQKnowledgeSource(knowledgeSourceName, workIqParameters)
 {
     Description = "Work IQ knowledge source for M365 content"
 };
@@ -85,8 +93,8 @@ string openAIKey = Environment.GetEnvironmentVariable("OPENAI_KEY");
             {
                 ResourceUri = new Uri(openAIEndpoint),
                 ApiKey = openAIKey,
-                DeploymentName = "gpt-5-mini",
-                ModelName = AzureOpenAIModelName.Gpt5Mini
+                DeploymentName = "gpt-5.4-mini",
+                ModelName = AzureOpenAIModelName.Gpt54Mini
             }));
 
 KnowledgeBase createdBase = await indexClient.CreateKnowledgeBaseAsync(knowledgeBase);

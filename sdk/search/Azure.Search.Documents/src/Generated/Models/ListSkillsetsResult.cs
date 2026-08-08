@@ -24,14 +24,19 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Initializes a new instance of <see cref="ListSkillsetsResult"/>. </summary>
         /// <param name="skillsets"> The skillsets defined in the Search service. </param>
+        /// <param name="odataNextLink"> The URL that can be used to fetch the next set of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListSkillsetsResult(IReadOnlyList<SearchIndexerSkillset> skillsets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListSkillsetsResult(IReadOnlyList<SearchIndexerSkillset> skillsets, string odataNextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Skillsets = skillsets;
+            OdataNextLink = odataNextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The skillsets defined in the Search service. </summary>
         public IReadOnlyList<SearchIndexerSkillset> Skillsets { get; }
+
+        /// <summary> The URL that can be used to fetch the next set of results. </summary>
+        public string OdataNextLink { get; }
     }
 }

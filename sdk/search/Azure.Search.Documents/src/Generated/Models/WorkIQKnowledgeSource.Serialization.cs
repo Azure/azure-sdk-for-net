@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -81,6 +82,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(WorkIQKnowledgeSource)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("workIQParameters"u8);
+            writer.WriteObjectValue(WorkIQParameters, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -111,9 +114,11 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             string description = default;
             KnowledgeSourceKind kind = default;
+            KnowledgeSourceResultsProcessing? resultsProcessing = default;
             ETag? eTag = default;
             SearchResourceEncryptionKey encryptionKey = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            WorkIQKnowledgeSourceParameters workIQParameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -129,6 +134,15 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (prop.NameEquals("kind"u8))
                 {
                     kind = new KnowledgeSourceKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("resultsProcessing"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resultsProcessing = new KnowledgeSourceResultsProcessing(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("@odata.etag"u8))
@@ -150,6 +164,11 @@ namespace Azure.Search.Documents.Indexes.Models
                     encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("workIQParameters"u8))
+                {
+                    workIQParameters = WorkIQKnowledgeSourceParameters.DeserializeWorkIQKnowledgeSourceParameters(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -159,9 +178,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 name,
                 description,
                 kind,
+                resultsProcessing,
                 eTag,
                 encryptionKey,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties,
+                workIQParameters);
         }
     }
 }

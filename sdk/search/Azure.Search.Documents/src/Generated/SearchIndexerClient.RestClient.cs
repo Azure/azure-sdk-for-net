@@ -112,7 +112,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateGetDataSourceConnectionsRequest(IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateGetDataSourceConnectionsRequest(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -124,6 +124,18 @@ namespace Azure.Search.Documents.Indexes
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("$select", @select, ",", escape: true);
+            }
+            if (search != null)
+            {
+                uri.AppendQuery("search", search, true);
+            }
+            if (pageSize != null)
+            {
+                uri.AppendQuery("pageSize", TypeFormatters.ConvertToString(pageSize), true);
+            }
+            if (searchType != null)
+            {
+                uri.AppendQuery("searchType", searchType, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -342,7 +354,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateGetIndexersRequest(IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateGetIndexersRequest(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -354,6 +366,18 @@ namespace Azure.Search.Documents.Indexes
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("$select", @select, ",", escape: true);
+            }
+            if (search != null)
+            {
+                uri.AppendQuery("search", search, true);
+            }
+            if (pageSize != null)
+            {
+                uri.AppendQuery("pageSize", TypeFormatters.ConvertToString(pageSize), true);
+            }
+            if (searchType != null)
+            {
+                uri.AppendQuery("searchType", searchType, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -495,7 +519,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateGetSkillsetsRequest(IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateGetSkillsetsRequest(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -507,6 +531,18 @@ namespace Azure.Search.Documents.Indexes
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("$select", @select, ",", escape: true);
+            }
+            if (search != null)
+            {
+                uri.AppendQuery("search", search, true);
+            }
+            if (pageSize != null)
+            {
+                uri.AppendQuery("pageSize", TypeFormatters.ConvertToString(pageSize), true);
+            }
+            if (searchType != null)
+            {
+                uri.AppendQuery("searchType", searchType, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

@@ -291,7 +291,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<IReadOnlyList<SearchIndexer>> GetIndexers(
             CancellationToken cancellationToken = default)
         {
-            Response<ListIndexersResult> result = GetIndexers(new[] { Constants.All }, cancellationToken);
+            Response<ListIndexersResult> result = GetIndexers(new[] { Constants.All }, cancellationToken: cancellationToken);
             return Response.FromValue(result.Value.Indexers, result.GetRawResponse());
         }
 
@@ -305,7 +305,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<IReadOnlyList<SearchIndexer>>> GetIndexersAsync(
             CancellationToken cancellationToken = default)
         {
-            Response<ListIndexersResult> result = await GetIndexersAsync(new[] { Constants.All }, cancellationToken).ConfigureAwait(false);
+            Response<ListIndexersResult> result = await GetIndexersAsync(new[] { Constants.All }, cancellationToken: cancellationToken).ConfigureAwait(false);
             return Response.FromValue(result.Value.Indexers, result.GetRawResponse());
         }
 
@@ -319,7 +319,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<IReadOnlyList<string>> GetIndexerNames(
             CancellationToken cancellationToken = default)
         {
-            Response<ListIndexersResult> result = GetIndexers(new[] { Constants.NameKey }, cancellationToken);
+            Response<ListIndexersResult> result = GetIndexers(new[] { Constants.NameKey }, cancellationToken: cancellationToken);
             IReadOnlyList<string> names = result.Value.Indexers.Select(value => value.Name).ToArray();
             return Response.FromValue(names, result.GetRawResponse());
         }
@@ -334,7 +334,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<IReadOnlyList<string>>> GetIndexerNamesAsync(
             CancellationToken cancellationToken = default)
         {
-            Response<ListIndexersResult> result = await GetIndexersAsync(new[] { Constants.NameKey }, cancellationToken).ConfigureAwait(false);
+            Response<ListIndexersResult> result = await GetIndexersAsync(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ConfigureAwait(false);
             IReadOnlyList<string> names = result.Value.Indexers.Select(value => value.Name).ToArray();
             return Response.FromValue(names, result.GetRawResponse());
         }

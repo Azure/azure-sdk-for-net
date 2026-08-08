@@ -63,12 +63,12 @@ foreach (KnowledgeBaseActivityRecord activity in retrievalResponse.Activity)
 
     if (activity is KnowledgeBaseModelQueryPlanningActivityRecord queryPlanning)
     {
-        Console.WriteLine($"  Query Planning - Model: {queryPlanning.ModelName}");
+        Console.WriteLine($"  Query Planning - Model: {queryPlanning.Model?.ModelName}");
         Console.WriteLine($"  Input tokens: {queryPlanning.InputTokens}, Output tokens: {queryPlanning.OutputTokens}");
     }
     else if (activity is KnowledgeBaseModelAnswerSynthesisActivityRecord answerSynthesis)
     {
-        Console.WriteLine($"  Answer Synthesis - Model: {answerSynthesis.ModelName}");
+        Console.WriteLine($"  Answer Synthesis - Model: {answerSynthesis.Model?.ModelName}");
         Console.WriteLine($"  Input tokens: {answerSynthesis.InputTokens}, Output tokens: {answerSynthesis.OutputTokens}");
     }
 }

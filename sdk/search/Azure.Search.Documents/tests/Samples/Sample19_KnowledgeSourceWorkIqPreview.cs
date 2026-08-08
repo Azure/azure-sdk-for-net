@@ -11,12 +11,13 @@ using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases;
 using Azure.Search.Documents.KnowledgeBases.Models;
+using Azure.Search.Documents.Models;
 #endregion Snippet:Azure_Search_Tests_Samples_Sample19_WorkIqKS_Namespaces
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
-    [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_05_01_Preview)]
+    [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_08_01_Preview)]
     public partial class KnowledgeSourceWorkIqPreview : SearchTestBase
     {
         public KnowledgeSourceWorkIqPreview(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -25,6 +26,7 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
+        [Ignore("Work IQ knowledge requires entra app authentication which requires provisioning a live app. Skipping test for now")]
         [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task CreateAndUseWorkIqKnowledgeSource()
         {
@@ -59,7 +61,13 @@ namespace Azure.Search.Documents.Tests.Samples
 #if !SNIPPET
                 knowledgeSourceName = testSourceName;
 #endif
-                WorkIQKnowledgeSource workIqSource = new WorkIQKnowledgeSource(knowledgeSourceName)
+
+                WorkIQKnowledgeSourceParameters workIqParameters = new WorkIQKnowledgeSourceParameters(
+                    new EntraAppAuthentication(
+                        applicationId: Guid.Parse("00000000-0000-0000-0000-000000000000"),
+                        federatedCredentialId: Guid.Parse("00000000-0000-0000-0000-000000000000")));
+
+                WorkIQKnowledgeSource workIqSource = new WorkIQKnowledgeSource(knowledgeSourceName, workIqParameters)
                 {
                     Description = "Work IQ knowledge source for M365 content"
                 };
@@ -120,8 +128,8 @@ namespace Azure.Search.Documents.Tests.Samples
                             {
                                 ResourceUri = new Uri(openAIEndpoint),
                                 ApiKey = openAIKey,
-                                DeploymentName = "gpt-5-mini",
-                                ModelName = AzureOpenAIModelName.Gpt5Mini
+                                DeploymentName = "gpt-5.4-mini",
+                                ModelName = AzureOpenAIModelName.Gpt54Mini
                             }));
 #if !SNIPPET
                 }

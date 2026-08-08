@@ -35,14 +35,16 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="containerName"> Specifies which SharePoint libraries to access. </param>
         /// <param name="query"> Optional query to filter SharePoint content. </param>
         /// <param name="ingestionParameters"> Consolidates all general ingestion settings. </param>
+        /// <param name="queryHints"> Default hints that guide query planning toward useful filters and boosts for this index-backed knowledge source. Request-time query hints replace these defaults as a complete object. </param>
         /// <param name="createdResources"> Resources created by the knowledge source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IndexedSharePointKnowledgeSourceParameters(string connectionString, IndexedSharePointContainerName containerName, string query, KnowledgeSourceIngestionParameters ingestionParameters, CreatedResources createdResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IndexedSharePointKnowledgeSourceParameters(string connectionString, IndexedSharePointContainerName containerName, string query, KnowledgeSourceIngestionParameters ingestionParameters, SearchIndexKnowledgeSourceQueryHints queryHints, CreatedResources createdResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             ContainerName = containerName;
             Query = query;
             IngestionParameters = ingestionParameters;
+            QueryHints = queryHints;
             CreatedResources = createdResources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -58,6 +60,9 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Consolidates all general ingestion settings. </summary>
         public KnowledgeSourceIngestionParameters IngestionParameters { get; set; }
+
+        /// <summary> Default hints that guide query planning toward useful filters and boosts for this index-backed knowledge source. Request-time query hints replace these defaults as a complete object. </summary>
+        public SearchIndexKnowledgeSourceQueryHints QueryHints { get; set; }
 
         /// <summary> Resources created by the knowledge source. </summary>
         public CreatedResources CreatedResources { get; }
