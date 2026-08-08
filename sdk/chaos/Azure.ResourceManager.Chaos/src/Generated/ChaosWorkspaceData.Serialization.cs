@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Chaos
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ManagedServiceIdentity identity = default;
-            ChaosWorkspaceProperties properties = default;
+            WorkspaceProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Chaos
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    properties = ChaosWorkspaceProperties.DeserializeChaosWorkspaceProperties(prop.Value, options);
+                    properties = WorkspaceProperties.DeserializeWorkspaceProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

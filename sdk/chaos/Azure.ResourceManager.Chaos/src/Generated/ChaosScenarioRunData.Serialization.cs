@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Chaos
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            ChaosScenarioRunProperties properties = default;
+            ScenarioRunProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Chaos
                     {
                         continue;
                     }
-                    properties = ChaosScenarioRunProperties.DeserializeChaosScenarioRunProperties(prop.Value, options);
+                    properties = ScenarioRunProperties.DeserializeScenarioRunProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
