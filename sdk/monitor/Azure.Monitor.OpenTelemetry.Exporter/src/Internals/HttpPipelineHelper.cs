@@ -36,7 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             ItemsAccepted = null
         };
 
-        private static bool IsRetriableStatus(int statusCode) => statusCode == ResponseStatusCodes.RequestTimeout
+        internal static bool IsRetriableStatus(int statusCode) => statusCode == ResponseStatusCodes.RequestTimeout
                                                                                 || statusCode == ResponseStatusCodes.ResponseCodeTooManyRequests
                                                                                 || statusCode == ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache
                                                                                 || statusCode == ResponseStatusCodes.Unauthorized
@@ -408,6 +408,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             if (partialContent == null || blobProvider == null)
             {
+                // Nothing retryable came back, so the caller is free to discard the originals.
+                result.PartialSuccessHandled = true;
+
                 // No retry possible - track everything else as dropped
                 if (retryCounter != null)
                 {
@@ -432,6 +435,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             result.ExportResult = blobProvider.SaveTelemetry(partialContent);
             result.WillRetry = (result.ExportResult == ExportResult.Success);
             result.SavedToStorage = result.WillRetry;
+            result.PartialSuccessHandled = result.WillRetry;
 
             if (result.WillRetry && retryCounter != null)
             {
