@@ -160,7 +160,7 @@ namespace Azure.Generator.Providers
             whileStatement.Add(CheckNextPageVariable(nextPageVariable));
 
             statements.Add(whileStatement);
-            return [..statements];
+            return [.. statements];
         }
 
         // Assigns the next page link/token from the current response into <paramref name="nextPageVariable"/>
