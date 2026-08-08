@@ -90,10 +90,20 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("originalId"u8);
                 writer.WriteStringValue(OriginalId);
             }
+            if (options.Format != "W" && Optional.IsDefined(OriginalResourceGroup))
+            {
+                writer.WritePropertyName("originalResourceGroup"u8);
+                writer.WriteStringValue(OriginalResourceGroup);
+            }
             if (options.Format != "W" && Optional.IsDefined(FullyQualifiedDomainName))
             {
                 writer.WritePropertyName("fullyQualifiedDomainName"u8);
                 writer.WriteStringValue(FullyQualifiedDomainName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ScheduledPurgeOn))
+            {
+                writer.WritePropertyName("scheduledPurgeTime"u8);
+                writer.WriteStringValue(ScheduledPurgeOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -140,7 +150,9 @@ namespace Azure.ResourceManager.Sql.Models
             string version = default;
             DateTimeOffset? deletedOn = default;
             ResourceIdentifier originalId = default;
+            string originalResourceGroup = default;
             string fullyQualifiedDomainName = default;
+            DateTimeOffset? scheduledPurgeOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -167,9 +179,23 @@ namespace Azure.ResourceManager.Sql.Models
                     originalId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("originalResourceGroup"u8))
+                {
+                    originalResourceGroup = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("fullyQualifiedDomainName"u8))
                 {
                     fullyQualifiedDomainName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("scheduledPurgeTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scheduledPurgeOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -177,7 +203,14 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeletedServerProperties(version, deletedOn, originalId, fullyQualifiedDomainName, additionalBinaryDataProperties);
+            return new DeletedServerProperties(
+                version,
+                deletedOn,
+                originalId,
+                originalResourceGroup,
+                fullyQualifiedDomainName,
+                scheduledPurgeOn,
+                additionalBinaryDataProperties);
         }
     }
 }

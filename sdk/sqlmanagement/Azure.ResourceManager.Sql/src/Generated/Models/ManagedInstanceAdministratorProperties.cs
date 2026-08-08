@@ -36,13 +36,15 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="login"> Login name of the managed instance administrator. </param>
         /// <param name="sid"> SID (object ID) of the managed instance administrator. </param>
         /// <param name="tenantId"> Tenant ID of the managed instance administrator. </param>
+        /// <param name="principalType"> Principal type of the managed instance administrator. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceAdministratorProperties(ManagedInstanceAdministratorType administratorType, string login, Guid sid, Guid? tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedInstanceAdministratorProperties(ManagedInstanceAdministratorType administratorType, string login, Guid sid, Guid? tenantId, ManagedInstanceAdministratorPrincipalType? principalType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdministratorType = administratorType;
             Login = login;
             Sid = sid;
             TenantId = tenantId;
+            PrincipalType = principalType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -61,5 +63,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Tenant ID of the managed instance administrator. </summary>
         [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
+
+        /// <summary> Principal type of the managed instance administrator. </summary>
+        [WirePath("principalType")]
+        public ManagedInstanceAdministratorPrincipalType? PrincipalType { get; set; }
     }
 }

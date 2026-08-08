@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct SqlPrivateEndpointProvisioningState : IEquatable<SqlPrivateEndpointProvisioningState>
     {
         private readonly string _value;
-        /// <summary> Approving. </summary>
-        private const string ApprovingValue = "Approving";
-        /// <summary> Ready. </summary>
-        private const string ReadyValue = "Ready";
-        /// <summary> Dropping. </summary>
-        private const string DroppingValue = "Dropping";
+        /// <summary> Provisioning Created. </summary>
+        private const string CreatedValue = "Created";
+        /// <summary> Provisioning InProgress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Provisioning Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
         /// <summary> Failed. </summary>
         private const string FailedValue = "Failed";
-        /// <summary> Rejecting. </summary>
-        private const string RejectingValue = "Rejecting";
+        /// <summary> Provisioning Canceled. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="SqlPrivateEndpointProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -36,20 +36,20 @@ namespace Azure.ResourceManager.Sql.Models
             _value = value;
         }
 
-        /// <summary> Approving. </summary>
-        public static SqlPrivateEndpointProvisioningState Approving { get; } = new SqlPrivateEndpointProvisioningState(ApprovingValue);
+        /// <summary> Provisioning Created. </summary>
+        public static SqlPrivateEndpointProvisioningState Created { get; } = new SqlPrivateEndpointProvisioningState(CreatedValue);
 
-        /// <summary> Ready. </summary>
-        public static SqlPrivateEndpointProvisioningState Ready { get; } = new SqlPrivateEndpointProvisioningState(ReadyValue);
+        /// <summary> Provisioning InProgress. </summary>
+        public static SqlPrivateEndpointProvisioningState InProgress { get; } = new SqlPrivateEndpointProvisioningState(InProgressValue);
 
-        /// <summary> Dropping. </summary>
-        public static SqlPrivateEndpointProvisioningState Dropping { get; } = new SqlPrivateEndpointProvisioningState(DroppingValue);
+        /// <summary> Provisioning Succeeded. </summary>
+        public static SqlPrivateEndpointProvisioningState Succeeded { get; } = new SqlPrivateEndpointProvisioningState(SucceededValue);
 
         /// <summary> Failed. </summary>
         public static SqlPrivateEndpointProvisioningState Failed { get; } = new SqlPrivateEndpointProvisioningState(FailedValue);
 
-        /// <summary> Rejecting. </summary>
-        public static SqlPrivateEndpointProvisioningState Rejecting { get; } = new SqlPrivateEndpointProvisioningState(RejectingValue);
+        /// <summary> Provisioning Canceled. </summary>
+        public static SqlPrivateEndpointProvisioningState Canceled { get; } = new SqlPrivateEndpointProvisioningState(CanceledValue);
 
         /// <summary> Determines if two <see cref="SqlPrivateEndpointProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
