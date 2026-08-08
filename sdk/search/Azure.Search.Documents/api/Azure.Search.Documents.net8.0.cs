@@ -6669,8 +6669,6 @@ namespace Azure.Search.Documents.KnowledgeBases
         public virtual System.Threading.Tasks.Task<Azure.Response> RetrieveAsync(Azure.Core.RequestContent content, string querySourceAuthorization = null, string queryWorkIQSourceAuthorization = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse>> RetrieveAsync(Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalRequest retrievalRequest, string querySourceAuthorization = null, string queryWorkIQSourceAuthorization = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse>> RetrieveAsync(Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalRequest retrievalRequest, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual Azure.Response RetrieveStream(Azure.Core.RequestContent content, string querySourceAuthorization = null, string queryWorkIQSourceAuthorization = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RetrieveStreamAsync(Azure.Core.RequestContent content, string querySourceAuthorization = null, string queryWorkIQSourceAuthorization = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Collections.Generic.IAsyncEnumerable<System.Net.ServerSentEvents.SseItem<Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalStreamEvent>> RetrieveStreamAsync(Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalRequest retrievalRequest, string querySourceAuthorization = null, string queryWorkIQSourceAuthorization = null, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
@@ -6880,6 +6878,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public string Warning { get { throw null; } }
         protected virtual Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecord JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecord (Azure.Response response) { throw null; }
         protected virtual Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecord PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecord System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecord>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6943,6 +6942,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecordType Type { get { throw null; } }
         protected virtual Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityStartedEvent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityStartedEvent (Azure.Response response) { throw null; }
         protected virtual Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityStartedEvent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityStartedEvent System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityStartedEvent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6974,6 +6974,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public int MessageIndex { get { throw null; } }
         protected virtual Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseAnswerCompletedEvent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseAnswerCompletedEvent (Azure.Response response) { throw null; }
         protected virtual Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseAnswerCompletedEvent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseAnswerCompletedEvent System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseAnswerCompletedEvent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7610,6 +7611,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalStatusCode StatusCode { get { throw null; } }
         protected virtual Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseResponseCompletedEvent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseResponseCompletedEvent (Azure.Response response) { throw null; }
         protected virtual Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseResponseCompletedEvent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseResponseCompletedEvent System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseResponseCompletedEvent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7669,6 +7671,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public string RequestId { get { throw null; } }
         protected virtual Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalStartedEvent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalStartedEvent (Azure.Response response) { throw null; }
         protected virtual Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalStartedEvent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalStartedEvent System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalStartedEvent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7757,6 +7760,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseErrorDetail Error { get { throw null; } }
         protected virtual Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseStreamErrorEvent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseStreamErrorEvent (Azure.Response response) { throw null; }
         protected virtual Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseStreamErrorEvent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseStreamErrorEvent System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseStreamErrorEvent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
