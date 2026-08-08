@@ -27,7 +27,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// Must exceed the time a single transmission can take, otherwise another process reclaims
         /// the lease mid-upload and duplicate telemetry becomes routine rather than rare.
         /// </summary>
-        private const int LeasePeriodMilliseconds = 180000;
+        internal const int LeasePeriodMilliseconds = 180000;
+        /// <summary>
+        /// Caps a single drain request. Without it a hung endpoint holds the drain for the pipeline's
+        /// network timeout, blocking later passes, and would erode the margin over the lease period.
+        /// </summary>
+        internal const int DrainPostBudgetMilliseconds = 30000;
 
         private const int MaxBlobsPerBatch = 50;
 
@@ -219,7 +224,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             var stopwatch = _networkSdkStatsManager != null ? Stopwatch.StartNew() : null;
 
-            using var httpMessage = _applicationInsightsRestClient.InternalTrackAsync(payload, CancellationToken.None).Result;
+            using var requestBudget = new CancellationTokenSource(DrainPostBudgetMilliseconds);
+            using var httpMessage = _applicationInsightsRestClient.InternalTrackAsync(payload, requestBudget.Token).Result;
 
             stopwatch?.Stop();
 
@@ -366,20 +372,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             foreach (var file in Directory.EnumerateFiles(_storageDirectory, "*.lock", SearchOption.TopDirectoryOnly))
             {
-                var separatorIndex = file.LastIndexOf('@');
+                // Located within the file name so that a storage directory containing '@' cannot
+                // skew the target path.
+                var fileName = Path.GetFileName(file);
+                var separatorIndex = fileName.LastIndexOf('@');
                 if (separatorIndex < 0)
                 {
                     continue;
                 }
 
-                if (!TryGetLeaseExpiry(file, out var expiry) || expiry > DateTime.UtcNow)
+                if (!TryGetLeaseExpiry(fileName, out var expiry) || expiry > DateTime.UtcNow)
                 {
                     continue;
                 }
 
                 try
                 {
-                    File.Move(file, file.Substring(0, separatorIndex));
+                    File.Move(file, Path.Combine(_storageDirectory, fileName.Substring(0, separatorIndex)));
                 }
                 catch (Exception)
                 {
@@ -389,19 +398,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        private static bool TryGetLeaseExpiry(string filePath, out DateTime expiry)
+        private static bool TryGetLeaseExpiry(string fileName, out DateTime expiry)
         {
             expiry = default;
 
-            var fileName = Path.GetFileNameWithoutExtension(filePath);
-            var separatorIndex = fileName.LastIndexOf('@');
+            var withoutExtension = Path.GetFileNameWithoutExtension(fileName);
+            var separatorIndex = withoutExtension.LastIndexOf('@');
             if (separatorIndex < 0)
             {
                 return false;
             }
 
             return DateTime.TryParseExact(
-                fileName.Substring(separatorIndex + 1),
+                withoutExtension.Substring(separatorIndex + 1),
                 LeaseTimestampFormat,
                 CultureInfo.InvariantCulture,
                 DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,

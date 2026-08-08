@@ -380,6 +380,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.True(transmitter._disposed);
         }
 
+        [Fact]
+        public void LeasePeriodOutlastsASingleDrainRequest()
+        {
+            // A lease that can expire while its blob is still uploading lets another process reclaim
+            // and resend it, turning rare kill-window duplicates into routine ones.
+            Assert.True(
+                TransmitFromStorageHandler.LeasePeriodMilliseconds > TransmitFromStorageHandler.DrainPostBudgetMilliseconds * 2,
+                $"Lease {TransmitFromStorageHandler.LeasePeriodMilliseconds} ms leaves too little margin over a {TransmitFromStorageHandler.DrainPostBudgetMilliseconds} ms request.");
+        }
+
         [Theory]
         [InlineData(Timeout.Infinite, 0)]
         [InlineData(-5, 0)]

@@ -10,9 +10,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ShutdownPersistence
     internal static class PersistOnShutdownHelper
     {
         /// <summary>
-        /// Runs the pipeline's own drain with the transmitter in persist-only mode so the exports it
-        /// triggers are written to storage instead of transmitted, then starts a bounded upload of
-        /// everything now stored.
+        /// Runs the pipeline's own drain with the transmitter in persist-only mode, so that the
+        /// exports triggered by that drain are written to storage rather than transmitted, then
+        /// starts a bounded upload of everything now stored.
         /// </summary>
         /// <remarks>
         /// The scope has to be opened here rather than in the exporter because
