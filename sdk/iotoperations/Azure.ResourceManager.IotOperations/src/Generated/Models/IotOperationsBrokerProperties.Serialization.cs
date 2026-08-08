@@ -99,6 +99,11 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WritePropertyName("generateResourceLimits"u8);
                 writer.WriteObjectValue(GenerateResourceLimits, options);
             }
+            if (Optional.IsDefined(HighPriorityMessagesBackpressureHandling))
+            {
+                writer.WritePropertyName("highPriorityMessagesBackpressureHandling"u8);
+                writer.WriteStringValue(HighPriorityMessagesBackpressureHandling.Value.ToString());
+            }
             if (Optional.IsDefined(MemoryProfile))
             {
                 writer.WritePropertyName("memoryProfile"u8);
@@ -113,6 +118,11 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteObjectValue(Status, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HealthState))
             {
@@ -166,9 +176,11 @@ namespace Azure.ResourceManager.IotOperations.Models
             BrokerDiagnostics diagnostics = default;
             DiskBackedMessageBuffer diskBackedMessageBuffer = default;
             GenerateResourceLimits generateResourceLimits = default;
+            HighPriorityMessagesBackpressureHandling? highPriorityMessagesBackpressureHandling = default;
             BrokerMemoryProfile? memoryProfile = default;
             BrokerPersistence persistence = default;
             IotOperationsProvisioningState? provisioningState = default;
+            BrokerStatus status = default;
             ResourceHealthState? healthState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -218,6 +230,15 @@ namespace Azure.ResourceManager.IotOperations.Models
                     generateResourceLimits = GenerateResourceLimits.DeserializeGenerateResourceLimits(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("highPriorityMessagesBackpressureHandling"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    highPriorityMessagesBackpressureHandling = new HighPriorityMessagesBackpressureHandling(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("memoryProfile"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -245,6 +266,15 @@ namespace Azure.ResourceManager.IotOperations.Models
                     provisioningState = new IotOperationsProvisioningState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("status"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = BrokerStatus.DeserializeBrokerStatus(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("healthState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -265,9 +295,11 @@ namespace Azure.ResourceManager.IotOperations.Models
                 diagnostics,
                 diskBackedMessageBuffer,
                 generateResourceLimits,
+                highPriorityMessagesBackpressureHandling,
                 memoryProfile,
                 persistence,
                 provisioningState,
+                status,
                 healthState,
                 additionalBinaryDataProperties);
         }
