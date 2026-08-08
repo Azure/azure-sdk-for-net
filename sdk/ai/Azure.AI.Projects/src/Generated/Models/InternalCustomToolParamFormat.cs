@@ -7,14 +7,14 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    internal abstract partial class InternalCustomToolParamFormat
+    internal partial class InternalCustomToolParamFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InternalCustomToolParamFormat"/>. </summary>
         /// <param name="type"></param>
-        private protected InternalCustomToolParamFormat(CustomToolParamFormatType @type)
+        internal InternalCustomToolParamFormat(CustomToolParamFormatType @type)
         {
             Type = @type;
         }

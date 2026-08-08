@@ -6,11 +6,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Apply patch tool call. </summary>
-    internal partial class InputItemApplyPatchToolCallItemParam : InputItem, IJsonModel<InputItemApplyPatchToolCallItemParam>
+    public partial class InputItemApplyPatchToolCallItemParam : InputItem, IJsonModel<InputItemApplyPatchToolCallItemParam>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemApplyPatchToolCallItemParam"/> for deserialization. </summary>
         internal InputItemApplyPatchToolCallItemParam()
@@ -84,7 +85,7 @@ namespace Azure.AI.Projects
             writer.WritePropertyName("call_id"u8);
             writer.WriteStringValue(CallId);
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToSerialString());
+            writer.WriteObjectValue(Status, options);
             writer.WritePropertyName("operation"u8);
             writer.WriteObjectValue(Operation, options);
         }
@@ -118,8 +119,8 @@ namespace Azure.AI.Projects
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string callId = default;
-            ApplyPatchCallStatusParam status = default;
-            ApplyPatchOperationParam operation = default;
+            ApplyPatchCallStatus status = default;
+            ApplyPatchOperation operation = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -144,12 +145,12 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToApplyPatchCallStatusParam();
+                    status = ModelReaderWriter.Read<ApplyPatchCallStatus>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("operation"u8))
                 {
-                    operation = ApplyPatchOperationParam.DeserializeApplyPatchOperationParam(prop.Value, options);
+                    operation = ModelReaderWriter.Read<ApplyPatchOperation>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

@@ -11,7 +11,9 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Azure.AI.Extensions.OpenAI;
 using Azure.Identity;
+using Azure.ResourceManager.CognitiveServices;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
@@ -227,9 +229,20 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             IndexName = "sample_index",
             TopK = 5,
             Filter = "category eq 'sleeping bag'",
-            QueryType = AzureAISearchQueryType.Simple
+            QueryType = AzureAISearchQueryKind.Simple
         };
         return index;
+    }
+
+    private Dictionary<string, BinaryData> GetSpecs(string file)
+    {
+        Dictionary<string, object> json = JsonSerializer.Deserialize<Dictionary<string, object>>(File.ReadAllText(GetTestFile("weather_openapi.json")));
+        Dictionary<string, BinaryData> outJson = [];
+        foreach (KeyValuePair<string, object> kv in json)
+        {
+            outJson[kv.Key] = BinaryData.FromObjectAsJson(kv.Value);
+        }
+        return outJson;
     }
 
     /// <summary>
@@ -300,9 +313,9 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             },
             ToolType.OpenAPI => new OpenApiToolboxTool(new OpenApiFunctionDefinition(
                 name: "get_weather",
-                specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(GetTestFile("weather_openapi.json"))),
-                authentication: new OpenAPIAnonymousAuthenticationDetails()
-            ))
+                spec: GetSpecs(GetTestFile("weather_openapi.json")),
+                auth: new OpenAPIAnonymousAuthenticationDetails())
+            )
             {
                 Name = "open-api",
                 Description = "Test Open API"

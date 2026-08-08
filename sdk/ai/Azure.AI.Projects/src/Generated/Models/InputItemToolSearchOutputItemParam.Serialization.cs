@@ -6,11 +6,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The InputItemToolSearchOutputItemParam. </summary>
-    internal partial class InputItemToolSearchOutputItemParam : InputItem, IJsonModel<InputItemToolSearchOutputItemParam>
+    public partial class InputItemToolSearchOutputItemParam : InputItem, IJsonModel<InputItemToolSearchOutputItemParam>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemToolSearchOutputItemParam"/> for deserialization. </summary>
         internal InputItemToolSearchOutputItemParam()
@@ -93,8 +94,13 @@ namespace Azure.AI.Projects
             }
             writer.WritePropertyName("tools"u8);
             writer.WriteStartArray();
-            foreach (InternalTool item in Tools)
+            foreach (ResponseTool item in Tools)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
@@ -135,7 +141,7 @@ namespace Azure.AI.Projects
             string id = default;
             string callId = default;
             ToolSearchExecutionType? execution = default;
-            IList<InternalTool> tools = default;
+            IList<ResponseTool> tools = default;
             FunctionCallItemStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -175,10 +181,17 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("tools"u8))
                 {
-                    List<InternalTool> array = new List<InternalTool>();
+                    List<ResponseTool> array = new List<ResponseTool>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InternalTool.DeserializeInternalTool(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<ResponseTool>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsContext.Default));
+                        }
                     }
                     tools = array;
                     continue;

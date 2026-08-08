@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
     internal partial class InternalCustomTextFormatParam : InternalCustomToolParamFormat
     {
         /// <summary> Initializes a new instance of <see cref="InternalCustomTextFormatParam"/>. </summary>
-        public InternalCustomTextFormatParam() : base(CustomToolParamFormatType.Text)
+        internal InternalCustomTextFormatParam() : base("text")
         {
         }
 

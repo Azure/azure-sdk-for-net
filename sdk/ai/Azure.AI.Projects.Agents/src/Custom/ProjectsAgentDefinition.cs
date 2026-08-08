@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects.Agents;
 

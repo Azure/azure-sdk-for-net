@@ -13,7 +13,7 @@ namespace Azure.AI.Projects
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OutputMessageContentOutputTextContent"/> and <see cref="OutputMessageContentRefusalContent"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownOutputMessageContent))]
-    internal abstract partial class OutputMessageContent : IJsonModel<OutputMessageContent>
+    public abstract partial class OutputMessageContent : IJsonModel<OutputMessageContent>
     {
         /// <summary> Initializes a new instance of <see cref="OutputMessageContent"/> for deserialization. </summary>
         internal OutputMessageContent()

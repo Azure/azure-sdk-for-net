@@ -7,6 +7,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Projects;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Evaluation
 {
@@ -94,12 +95,17 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(InternalTools))
+            if (Optional.IsCollectionDefined(Tools))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
-                foreach (InternalTool item in InternalTools)
+                foreach (ResponseTool item in Tools)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
@@ -136,7 +142,7 @@ namespace Azure.AI.Projects.Evaluation
             string name = default;
             string version = default;
             IList<ToolDescription> toolDescriptions = default;
-            IList<InternalTool> internalTools = default;
+            IList<ResponseTool> tools = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -174,12 +180,19 @@ namespace Azure.AI.Projects.Evaluation
                     {
                         continue;
                     }
-                    List<InternalTool> array = new List<InternalTool>();
+                    List<ResponseTool> array = new List<ResponseTool>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InternalTool.DeserializeInternalTool(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<ResponseTool>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsContext.Default));
+                        }
                     }
-                    internalTools = array;
+                    tools = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -193,7 +206,7 @@ namespace Azure.AI.Projects.Evaluation
                 name,
                 version,
                 toolDescriptions ?? new ChangeTrackingList<ToolDescription>(),
-                internalTools ?? new ChangeTrackingList<InternalTool>());
+                tools ?? new ChangeTrackingList<ResponseTool>());
         }
     }
 }

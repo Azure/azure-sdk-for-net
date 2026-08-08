@@ -4,13 +4,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Computer tool call. </summary>
-    internal partial class InputItemComputerToolCall : InputItem
+    public partial class InputItemComputerToolCall : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemComputerToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the computer call. </param>
@@ -21,7 +23,8 @@ namespace Azure.AI.Projects
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="callId"/> or <paramref name="pendingSafetyChecks"/> is null. </exception>
-        public InputItemComputerToolCall(string id, string callId, IEnumerable<ComputerCallSafetyCheckParam> pendingSafetyChecks, InputItemComputerToolCallStatus status) : base(InputItemType.ComputerCall)
+        [Experimental("AAIP002")]
+        public InputItemComputerToolCall(string id, string callId, IEnumerable<ComputerCallSafetyCheck> pendingSafetyChecks, InputItemComputerToolCallStatus status) : base(InputItemType.ComputerCall)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(callId, nameof(callId));
@@ -46,7 +49,8 @@ namespace Azure.AI.Projects
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal InputItemComputerToolCall(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, InternalComputerAction action, IList<InternalComputerAction> actions, IList<ComputerCallSafetyCheckParam> pendingSafetyChecks, InputItemComputerToolCallStatus status) : base(@type, additionalBinaryDataProperties)
+        [Experimental("AAIP002")]
+        internal InputItemComputerToolCall(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, InternalComputerAction action, IList<InternalComputerAction> actions, IList<ComputerCallSafetyCheck> pendingSafetyChecks, InputItemComputerToolCallStatus status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             CallId = callId;
@@ -69,7 +73,8 @@ namespace Azure.AI.Projects
         public IList<InternalComputerAction> Actions { get; }
 
         /// <summary> The pending safety checks for the computer call. </summary>
-        public IList<ComputerCallSafetyCheckParam> PendingSafetyChecks { get; }
+        [Experimental("AAIP002")]
+        public IList<ComputerCallSafetyCheck> PendingSafetyChecks { get; }
 
         /// <summary>
         /// The status of the item. One of `in_progress`, `completed`, or

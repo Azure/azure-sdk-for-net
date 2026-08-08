@@ -8,13 +8,13 @@ using System.Collections.Generic;
 namespace OpenAI
 {
     /// <summary> The EmptyModelParam. </summary>
-    public partial class EmptyModelParam
+    internal partial class EmptyModelParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EmptyModelParam"/>. </summary>
-        public EmptyModelParam()
+        internal EmptyModelParam()
         {
         }
 

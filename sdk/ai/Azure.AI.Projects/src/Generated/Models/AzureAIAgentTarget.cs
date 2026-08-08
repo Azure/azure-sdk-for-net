@@ -4,7 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Evaluation
 {
@@ -20,7 +22,7 @@ namespace Azure.AI.Projects.Evaluation
 
             Name = name;
             ToolDescriptions = new ChangeTrackingList<ToolDescription>();
-            InternalTools = new ChangeTrackingList<InternalTool>();
+            Tools = new ChangeTrackingList<ResponseTool>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/>. </summary>
@@ -29,13 +31,14 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="name"> The unique identifier of the Azure AI agent. </param>
         /// <param name="version"> The version of the Azure AI agent. </param>
         /// <param name="toolDescriptions"> The parameters used to control the sampling behavior of the agent during text generation. </param>
-        /// <param name="internalTools"></param>
-        internal AzureAIAgentTarget(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string version, IList<ToolDescription> toolDescriptions, IList<InternalTool> internalTools) : base(@type, additionalBinaryDataProperties)
+        /// <param name="tools"></param>
+        [Experimental("AAIP002")]
+        internal AzureAIAgentTarget(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string version, IList<ToolDescription> toolDescriptions, IList<ResponseTool> tools) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Version = version;
             ToolDescriptions = toolDescriptions;
-            InternalTools = internalTools;
+            Tools = tools;
         }
 
         /// <summary> The unique identifier of the Azure AI agent. </summary>
@@ -46,5 +49,9 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> The parameters used to control the sampling behavior of the agent during text generation. </summary>
         public IList<ToolDescription> ToolDescriptions { get; }
+
+        /// <summary> Gets the Tools. </summary>
+        [Experimental("AAIP002")]
+        public IList<ResponseTool> Tools { get; }
     }
 }

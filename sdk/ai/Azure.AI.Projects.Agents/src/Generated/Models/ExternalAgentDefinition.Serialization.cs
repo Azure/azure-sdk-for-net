@@ -6,7 +6,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -109,7 +108,7 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             ProjectsAgentKind kind = default;
-            Extensions.OpenAI.ContentFilterConfiguration contentFilterConfiguration = default;
+            ContentFilterConfiguration contentFilterConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string otelAgentId = default;
             foreach (var prop in element.EnumerateObject())
@@ -125,7 +124,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    contentFilterConfiguration = Extensions.OpenAI.ContentFilterConfiguration.DeserializeContentFilterConfiguration(prop.Value, options);
+                    contentFilterConfiguration = ContentFilterConfiguration.DeserializeContentFilterConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("otel_agent_id"u8))

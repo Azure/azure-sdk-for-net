@@ -5,7 +5,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -84,7 +83,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(ContentFilterConfiguration))
             {
                 writer.WritePropertyName("rai_config"u8);
-                writer.WriteObjectValue<Extensions.OpenAI.ContentFilterConfiguration>(ContentFilterConfiguration, options);
+                writer.WriteObjectValue(ContentFilterConfiguration, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
