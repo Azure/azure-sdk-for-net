@@ -65,6 +65,11 @@ namespace Azure.Generator.Providers
         private string CreateRequestMethodName
             => Client.RestClient.GetCreateRequestMethod(_operation).Signature.Name;
 
+        private ValueExpression ProtocolSerializationOptions
+            => _operation.Responses.First(r => !r.IsErrorResponse).SerializationOptions?.Xml != null
+                ? Static<ModelReaderWriterOptions>().Property(nameof(ModelReaderWriterOptions.Xml))
+                : Static<ModelReaderWriterOptions>().Property(nameof(ModelReaderWriterOptions.Json));
+
         // We use "_diagnosticScope" rather than "_scope" to reduce collision risk with API parameters.
         // If a collision does occur, the framework's CodeWriter dedup renames declarations but not
         // AsValueExpression references, causing incorrect codegen. See: https://github.com/microsoft/typespec/issues/10130
@@ -229,7 +234,7 @@ namespace Azure.Generator.Providers
                     itemsVariable.Invoke("Add", Static(typeof(ModelReaderWriter)).Invoke(nameof(ModelReaderWriter.Write),
                         [
                             itemVariable,
-                            Static<ModelReaderWriterOptions>().Property(nameof(ModelReaderWriterOptions.Json)),
+                            ProtocolSerializationOptions,
                             Static<ModelReaderWriterContextDefinition>().Property("Default")
                         ])).Terminate()
                 }
