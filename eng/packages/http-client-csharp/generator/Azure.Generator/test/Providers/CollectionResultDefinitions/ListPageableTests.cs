@@ -42,6 +42,21 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
         }
 
         [Test]
+        public void ProtocolPageableUsesJsonSerializationOptions()
+        {
+            CreatePagingOperation();
+
+            var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
+                t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResult");
+            Assert.IsNotNull(collectionResultDefinition);
+
+            var writer = new TypeProviderWriter(collectionResultDefinition!);
+            var file = writer.Write();
+            Assert.That(file.Content, Does.Contain("ModelReaderWriterOptions.Json"));
+            Assert.That(file.Content, Does.Not.Contain("ModelSerializationExtensions.WireOptions"));
+        }
+
+        [Test]
         public void NoNextLinkOrContinuationTokenOfT()
         {
             CreatePagingOperation();

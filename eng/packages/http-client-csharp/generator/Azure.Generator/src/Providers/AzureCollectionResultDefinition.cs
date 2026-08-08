@@ -160,7 +160,7 @@ namespace Azure.Generator.Providers
             whileStatement.Add(CheckNextPageVariable(nextPageVariable));
 
             statements.Add(whileStatement);
-            return [.. statements];
+            return [..statements];
         }
 
         // Assigns the next page link/token from the current response into <paramref name="nextPageVariable"/>
@@ -229,7 +229,7 @@ namespace Azure.Generator.Providers
                     itemsVariable.Invoke("Add", Static(typeof(ModelReaderWriter)).Invoke(nameof(ModelReaderWriter.Write),
                         [
                             itemVariable,
-                            Static<ModelSerializationExtensionsDefinition>().Property(ModelSerializationExtensionsDefinition.WireOptionsFieldName),
+                            Static<ModelReaderWriterOptions>().Property(nameof(ModelReaderWriterOptions.Json)),
                             Static<ModelReaderWriterContextDefinition>().Property("Default")
                         ])).Terminate()
                 }
@@ -257,7 +257,7 @@ namespace Azure.Generator.Providers
                 statements.Add(YieldReturn(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [BuildGetPropertyExpression(Paging.ItemPropertySegments, resultVariable).CastTo(new CSharpType(typeof(IReadOnlyList<>), _itemModelType)), Null, responseVariable])));
             }
 
-            return [..statements];
+            return [.. statements];
         }
 
         private MethodProvider BuildGetNextResponseMethod()
