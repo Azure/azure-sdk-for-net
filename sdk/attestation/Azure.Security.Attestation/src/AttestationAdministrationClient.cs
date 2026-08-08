@@ -74,10 +74,10 @@ namespace Azure.Security.Attestation
             Endpoint = endpoint;
 
             // Initialize the Policy Rest Client.
-            _policyClient = new PolicyRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri, options.Version);
+            _policyClient = new PolicyRestClient(_clientDiagnostics, _pipeline, Endpoint, options.Version);
 
             // Initialize the Certificates Rest Client.
-            _policyManagementClient = new PolicyCertificatesRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri, options.Version);
+            _policyManagementClient = new PolicyCertificatesRestClient(_clientDiagnostics, _pipeline, Endpoint, options.Version);
 
             // Initialize the Attestation Rest Client.
             _attestationClient = new AttestationClient(endpoint, credential, options);
@@ -485,12 +485,12 @@ namespace Azure.Security.Attestation
                     }
                 }
                 List<X509Certificate2> certificates = new List<X509Certificate2>();
-                foreach (var cert in token.GetBody<PolicyCertificatesResult>().InternalPolicyCertificates.Keys)
+                foreach (var cert in token.GetBody<PolicyCertificatesResult>().PolicyCertificates.Keys)
                 {
 #if NET9_0_OR_GREATER
-                    certificates.Add(X509CertificateLoader.LoadCertificate(Convert.FromBase64String(cert.X5C[0])));
+                    certificates.Add(X509CertificateLoader.LoadCertificate(Convert.FromBase64String(cert.X5c[0])));
 #else
-                    certificates.Add(new X509Certificate2(Convert.FromBase64String(cert.X5C[0])));
+                    certificates.Add(new X509Certificate2(Convert.FromBase64String(cert.X5c[0])));
 #endif
                 }
                 return new AttestationResponse<IReadOnlyList<X509Certificate2>>(result.GetRawResponse(), token, certificates.AsReadOnly());

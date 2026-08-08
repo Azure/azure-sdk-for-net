@@ -3,27 +3,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.Attestation
 {
-    [CodeGenModel("PolicyCertificatesResult")]
+    [CodeGenType("PolicyCertificatesResult")]
     internal partial class PolicyCertificatesResult
     {
         private IReadOnlyList<X509Certificate2> _certificateList;
         private object _statelock = new object();
-
-        /// <summary>
-        /// Creates a new instance of a <see cref="PolicyCertificatesResult"/> object.
-        /// </summary>
-        public PolicyCertificatesResult()
-        {
-        }
 
         /// <summary>
         /// Returns the list of policy management certificates for this attestation instance.
@@ -36,17 +25,17 @@ namespace Azure.Security.Attestation
                 if (_certificateList == null)
                 {
                     List<X509Certificate2> certificates = new List<X509Certificate2>();
-                    foreach (var key in InternalPolicyCertificates.Keys)
+                    foreach (var key in PolicyCertificates.Keys)
                     {
-                        if (key.X5C == null)
+                        if (key.X5c == null)
                         {
                             // the key returned must have a X5c property.
                             throw new InvalidOperationException(Azure_Security_Attestation.PolicyCertificatesRequireX5C);
                         }
 #if NET9_0_OR_GREATER
-                        certificates.Add(X509CertificateLoader.LoadCertificate(Convert.FromBase64String(key.X5C[0])));
+                        certificates.Add(X509CertificateLoader.LoadCertificate(Convert.FromBase64String(key.X5c[0])));
 #else
-                        certificates.Add(new X509Certificate2(Convert.FromBase64String(key.X5C[0])));
+                        certificates.Add(new X509Certificate2(Convert.FromBase64String(key.X5c[0])));
 #endif
                     }
                     _certificateList = certificates;
@@ -54,12 +43,5 @@ namespace Azure.Security.Attestation
                 return _certificateList;
             }
         }
-
-        /// <summary>
-        /// Returns the X.509 certificates used to manage policy on the instance.
-        /// </summary>
-        [CodeGenMember("PolicyCertificates")]
-        internal JsonWebKeySet InternalPolicyCertificates
-        { get; private set; }
     }
 }

@@ -6,233 +6,286 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Security.Attestation
 {
-    internal partial class PolicyCertificatesRestClient
+    /// <summary> The PolicyCertificatesRestClient sub-client. </summary>
+    public partial class PolicyCertificatesRestClient
     {
-        private readonly HttpPipeline _pipeline;
-        private readonly string _instanceUrl;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
+
+        /// <summary> Initializes a new instance of PolicyCertificatesRestClient for mocking. </summary>
+        protected PolicyCertificatesRestClient()
+        {
+        }
+
+        /// <summary> Initializes a new instance of PolicyCertificatesRestClient. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal PolicyCertificatesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
+        }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of PolicyCertificatesRestClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="instanceUrl"> The attestation instance base URI, for example https://mytenant.attest.azure.net. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="instanceUrl"/> or <paramref name="apiVersion"/> is null. </exception>
-        public PolicyCertificatesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string instanceUrl, string apiVersion = "2020-10-01")
+        /// <summary>
+        /// [Protocol Method] Retrieves the set of certificates used to express policy for the current tenant.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response Get(RequestContext context)
         {
-            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _instanceUrl = instanceUrl ?? throw new ArgumentNullException(nameof(instanceUrl));
-            _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PolicyCertificatesRestClient.Get");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        internal HttpMessage CreateGetRequest()
+        /// <summary>
+        /// [Protocol Method] Retrieves the set of certificates used to express policy for the current tenant.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetAsync(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_instanceUrl, false);
-            uri.AppendPath("/certificates", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PolicyCertificatesRestClient.Get");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves the set of certificates used to express policy for the current tenant. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<PolicyCertificatesResponse>> GetAsync(CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<PolicyCertificatesResponse> Get(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetRequest();
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyCertificatesResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyCertificatesResponse.DeserializePolicyCertificatesResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            Response result = Get(cancellationToken.ToRequestContext());
+            return Response.FromValue((PolicyCertificatesResponse)result, result);
         }
 
         /// <summary> Retrieves the set of certificates used to express policy for the current tenant. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<PolicyCertificatesResponse> Get(CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<PolicyCertificatesResponse>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetRequest();
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            Response result = await GetAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((PolicyCertificatesResponse)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Adds a new attestation policy certificate to the set of policy management
+        /// certificates.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response Add(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PolicyCertificatesRestClient.Add");
+            scope.Start();
+            try
             {
-                case 200:
-                    {
-                        PolicyCertificatesResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyCertificatesResponse.DeserializePolicyCertificatesResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateAddRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateAddRequest(string policyCertificateToAdd)
+        /// <summary>
+        /// [Protocol Method] Adds a new attestation policy certificate to the set of policy management
+        /// certificates.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> AddAsync(RequestContent content, RequestContext context = null)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_instanceUrl, false);
-            uri.AppendPath("/certificates:add", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteStringValue(policyCertificateToAdd);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Adds a new attestation policy certificate to the set of policy management certificates. </summary>
-        /// <param name="policyCertificateToAdd"> An RFC7519 JSON Web Token whose body is an RFC7517 JSON Web Key object. The RFC7519 JWT must be signed with one of the existing signing certificates. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyCertificateToAdd"/> is null. </exception>
-        public async Task<Response<PolicyCertificatesModifyResponse>> AddAsync(string policyCertificateToAdd, CancellationToken cancellationToken = default)
-        {
-            if (policyCertificateToAdd == null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PolicyCertificatesRestClient.Add");
+            scope.Start();
+            try
             {
-                throw new ArgumentNullException(nameof(policyCertificateToAdd));
+                using HttpMessage message = CreateAddRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-
-            using var message = CreateAddRequest(policyCertificateToAdd);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            catch (Exception e)
             {
-                case 200:
-                    {
-                        PolicyCertificatesModifyResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyCertificatesModifyResponse.DeserializePolicyCertificatesModifyResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Adds a new attestation policy certificate to the set of policy management certificates. </summary>
-        /// <param name="policyCertificateToAdd"> An RFC7519 JSON Web Token whose body is an RFC7517 JSON Web Key object. The RFC7519 JWT must be signed with one of the existing signing certificates. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyCertificateToAdd"/> is null. </exception>
-        public Response<PolicyCertificatesModifyResponse> Add(string policyCertificateToAdd, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Adds a new attestation policy certificate to the set of policy management
+        /// certificates.
+        /// </summary>
+        /// <param name="policyCertificateToAdd"> The certificate to add, as a string (e.g., PEM or JWK). </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<PolicyCertificatesModifyResponse> Add(string policyCertificateToAdd, CancellationToken cancellationToken = default)
         {
-            if (policyCertificateToAdd == null)
-            {
-                throw new ArgumentNullException(nameof(policyCertificateToAdd));
-            }
+            AddRequest spreadModel = new AddRequest(policyCertificateToAdd, default);
+            Response result = Add(spreadModel, cancellationToken.ToRequestContext());
+            return Response.FromValue((PolicyCertificatesModifyResponse)result, result);
+        }
 
-            using var message = CreateAddRequest(policyCertificateToAdd);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+        /// <summary>
+        /// Adds a new attestation policy certificate to the set of policy management
+        /// certificates.
+        /// </summary>
+        /// <param name="policyCertificateToAdd"> The certificate to add, as a string (e.g., PEM or JWK). </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<PolicyCertificatesModifyResponse>> AddAsync(string policyCertificateToAdd, CancellationToken cancellationToken = default)
+        {
+            AddRequest spreadModel = new AddRequest(policyCertificateToAdd, default);
+            Response result = await AddAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((PolicyCertificatesModifyResponse)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Removes the specified policy management certificate. Note that the final policy
+        /// management certificate cannot be removed.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response Remove(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PolicyCertificatesRestClient.Remove");
+            scope.Start();
+            try
             {
-                case 200:
-                    {
-                        PolicyCertificatesModifyResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyCertificatesModifyResponse.DeserializePolicyCertificatesModifyResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateRemoveRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateRemoveRequest(string policyCertificateToRemove)
+        /// <summary>
+        /// [Protocol Method] Removes the specified policy management certificate. Note that the final policy
+        /// management certificate cannot be removed.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> RemoveAsync(RequestContent content, RequestContext context = null)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_instanceUrl, false);
-            uri.AppendPath("/certificates:remove", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteStringValue(policyCertificateToRemove);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Removes the specified policy management certificate. Note that the final policy management certificate cannot be removed. </summary>
-        /// <param name="policyCertificateToRemove"> An RFC7519 JSON Web Token whose body is an AttestationCertificateManagementBody object. The RFC7519 JWT must be signed with one of the existing signing certificates. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyCertificateToRemove"/> is null. </exception>
-        public async Task<Response<PolicyCertificatesModifyResponse>> RemoveAsync(string policyCertificateToRemove, CancellationToken cancellationToken = default)
-        {
-            if (policyCertificateToRemove == null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PolicyCertificatesRestClient.Remove");
+            scope.Start();
+            try
             {
-                throw new ArgumentNullException(nameof(policyCertificateToRemove));
+                using HttpMessage message = CreateRemoveRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-
-            using var message = CreateRemoveRequest(policyCertificateToRemove);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            catch (Exception e)
             {
-                case 200:
-                    {
-                        PolicyCertificatesModifyResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyCertificatesModifyResponse.DeserializePolicyCertificatesModifyResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Removes the specified policy management certificate. Note that the final policy management certificate cannot be removed. </summary>
-        /// <param name="policyCertificateToRemove"> An RFC7519 JSON Web Token whose body is an AttestationCertificateManagementBody object. The RFC7519 JWT must be signed with one of the existing signing certificates. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyCertificateToRemove"/> is null. </exception>
-        public Response<PolicyCertificatesModifyResponse> Remove(string policyCertificateToRemove, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Removes the specified policy management certificate. Note that the final policy
+        /// management certificate cannot be removed.
+        /// </summary>
+        /// <param name="policyCertificateToRemove"> The certificate to remove, as a string (e.g., PEM or JWK). </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<PolicyCertificatesModifyResponse> Remove(string policyCertificateToRemove, CancellationToken cancellationToken = default)
         {
-            if (policyCertificateToRemove == null)
-            {
-                throw new ArgumentNullException(nameof(policyCertificateToRemove));
-            }
+            RemoveRequest spreadModel = new RemoveRequest(policyCertificateToRemove, default);
+            Response result = Remove(spreadModel, cancellationToken.ToRequestContext());
+            return Response.FromValue((PolicyCertificatesModifyResponse)result, result);
+        }
 
-            using var message = CreateRemoveRequest(policyCertificateToRemove);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyCertificatesModifyResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyCertificatesModifyResponse.DeserializePolicyCertificatesModifyResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+        /// <summary>
+        /// Removes the specified policy management certificate. Note that the final policy
+        /// management certificate cannot be removed.
+        /// </summary>
+        /// <param name="policyCertificateToRemove"> The certificate to remove, as a string (e.g., PEM or JWK). </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<PolicyCertificatesModifyResponse>> RemoveAsync(string policyCertificateToRemove, CancellationToken cancellationToken = default)
+        {
+            RemoveRequest spreadModel = new RemoveRequest(policyCertificateToRemove, default);
+            Response result = await RemoveAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((PolicyCertificatesModifyResponse)result, result);
         }
     }
 }

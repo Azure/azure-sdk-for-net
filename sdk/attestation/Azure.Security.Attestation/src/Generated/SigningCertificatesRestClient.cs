@@ -6,87 +6,114 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Security.Attestation
 {
-    internal partial class SigningCertificatesRestClient
+    /// <summary> The SigningCertificatesRestClient sub-client. </summary>
+    public partial class SigningCertificatesRestClient
     {
-        private readonly HttpPipeline _pipeline;
-        private readonly string _instanceUrl;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> Initializes a new instance of SigningCertificatesRestClient for mocking. </summary>
+        protected SigningCertificatesRestClient()
+        {
+        }
+
+        /// <summary> Initializes a new instance of SigningCertificatesRestClient. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal SigningCertificatesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
+        }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of SigningCertificatesRestClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="instanceUrl"> The attestation instance base URI, for example https://mytenant.attest.azure.net. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="instanceUrl"/> is null. </exception>
-        public SigningCertificatesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string instanceUrl)
+        /// <summary>
+        /// [Protocol Method] Retrieves metadata signing certificates in use by the attestation service
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response Get(RequestContext context)
         {
-            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _instanceUrl = instanceUrl ?? throw new ArgumentNullException(nameof(instanceUrl));
-        }
-
-        internal HttpMessage CreateGetRequest()
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_instanceUrl, false);
-            uri.AppendPath("/certs", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/jwk+json, application/json");
-            return message;
-        }
-
-        /// <summary> Retrieves the attestation signing keys in use by the attestation service. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Retrieves metadata signing certificates in use by the attestation service. </remarks>
-        public async Task<Response<JsonWebKeySet>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetRequest();
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SigningCertificatesRestClient.Get");
+            scope.Start();
+            try
             {
-                case 200:
-                    {
-                        JsonWebKeySet value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = JsonWebKeySet.DeserializeJsonWebKeySet(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateGetRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Retrieves the attestation signing keys in use by the attestation service. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Retrieves metadata signing certificates in use by the attestation service. </remarks>
-        public Response<JsonWebKeySet> Get(CancellationToken cancellationToken = default)
+        /// <summary>
+        /// [Protocol Method] Retrieves metadata signing certificates in use by the attestation service
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetAsync(RequestContext context)
         {
-            using var message = CreateGetRequest();
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SigningCertificatesRestClient.Get");
+            scope.Start();
+            try
             {
-                case 200:
-                    {
-                        JsonWebKeySet value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = JsonWebKeySet.DeserializeJsonWebKeySet(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateGetRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves metadata signing certificates in use by the attestation service. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<JsonWebKeySet> Get(CancellationToken cancellationToken = default)
+        {
+            Response result = Get(cancellationToken.ToRequestContext());
+            return Response.FromValue((JsonWebKeySet)result, result);
+        }
+
+        /// <summary> Retrieves metadata signing certificates in use by the attestation service. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<JsonWebKeySet>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            Response result = await GetAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((JsonWebKeySet)result, result);
         }
     }
 }
