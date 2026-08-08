@@ -22,5 +22,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         /// </summary>
         [JsonProperty("accessToken")]
         public string AccessToken { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of seconds after which the client should refresh its authentication.
+        /// </summary>
+        [JsonProperty("tokenLifetimeSeconds", NullValueHandling = NullValueHandling.Ignore)]
+        public int? TokenLifetimeSeconds { get; set; }
     }
 }
