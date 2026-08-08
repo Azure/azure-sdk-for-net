@@ -53,6 +53,87 @@ jobs:
             const owner = context.repo.owner;
             const repo = context.repo.repo;
             const dryRun = process.env.DRY_RUN === "true";
+            const closureCommentMarker =
+              "<!-- stale-generator-upgrade-pr-closure -->";
+            // Stay below GitHub's 80 content-generating requests per minute limit.
+            const minimumWriteIntervalMs = 1100;
+            let lastWriteAt = 0;
+
+            function sleep(milliseconds) {
+              return new Promise((resolve) => setTimeout(resolve, milliseconds));
+            }
+
+            async function paceWrite() {
+              const waitMilliseconds = Math.max(
+                0,
+                lastWriteAt + minimumWriteIntervalMs - Date.now(),
+              );
+              if (waitMilliseconds > 0) {
+                await sleep(waitMilliseconds);
+              }
+              lastWriteAt = Date.now();
+            }
+
+            function getRetryDelayMilliseconds(error) {
+              const retryAfter = Number(
+                error.response?.headers?.["retry-after"],
+              );
+              if (Number.isFinite(retryAfter) && retryAfter >= 0) {
+                return (retryAfter + 1) * 1000;
+              }
+
+              const rateLimitReset = Number(
+                error.response?.headers?.["x-ratelimit-reset"],
+              );
+              if (
+                (error.status === 403 || error.status === 429) &&
+                Number.isFinite(rateLimitReset)
+              ) {
+                return Math.max(1000, rateLimitReset * 1000 - Date.now() + 1000);
+              }
+
+              return undefined;
+            }
+
+            async function runContentWrite({
+              description,
+              operation,
+              isComplete,
+            }) {
+              const maximumAttempts = 4;
+              for (let attempt = 1; attempt <= maximumAttempts; attempt++) {
+                if (isComplete && (await isComplete())) {
+                  core.info(`${description} was already completed`);
+                  return;
+                }
+
+                await paceWrite();
+                try {
+                  await operation();
+                  return;
+                } catch (error) {
+                  if (isComplete && (await isComplete())) {
+                    core.info(`${description} completed despite an API error`);
+                    return;
+                  }
+
+                  const retryDelayMilliseconds =
+                    getRetryDelayMilliseconds(error);
+                  if (
+                    retryDelayMilliseconds === undefined ||
+                    attempt === maximumAttempts
+                  ) {
+                    throw error;
+                  }
+
+                  core.warning(
+                    `${description} was rate limited; retrying in ` +
+                      `${Math.ceil(retryDelayMilliseconds / 1000)} seconds`,
+                  );
+                  await sleep(retryDelayMilliseconds);
+                }
+              }
+            }
 
             function parseSemVer(version) {
               const match = version.match(
@@ -213,6 +294,7 @@ jobs:
 
               staleCount++;
               const message =
+                `${closureCommentMarker}\n` +
                 `Closing because this PR updates the ${match.generator} generator ` +
                 `to ${proposedVersion}, which is older than ${currentVersion} on ` +
                 `\`${context.payload.repository.default_branch}\`.\n\n` +
@@ -223,17 +305,42 @@ jobs:
                 continue;
               }
 
-              await github.rest.issues.createComment({
-                owner,
-                repo,
-                issue_number: pull.number,
-                body: message,
+              const hasClosureComment = async () => {
+                const comments = await github.paginate(
+                  github.rest.issues.listComments,
+                  {
+                    owner,
+                    repo,
+                    issue_number: pull.number,
+                    per_page: 100,
+                  },
+                );
+                return comments.some((comment) =>
+                  comment.body?.includes(closureCommentMarker),
+                );
+              };
+
+              await runContentWrite({
+                description: `Commenting on stale PR #${pull.number}`,
+                isComplete: hasClosureComment,
+                operation: () =>
+                  github.rest.issues.createComment({
+                    owner,
+                    repo,
+                    issue_number: pull.number,
+                    body: message,
+                  }),
               });
-              await github.rest.pulls.update({
-                owner,
-                repo,
-                pull_number: pull.number,
-                state: "closed",
+
+              await runContentWrite({
+                description: `Closing stale PR #${pull.number}`,
+                operation: () =>
+                  github.rest.pulls.update({
+                    owner,
+                    repo,
+                    pull_number: pull.number,
+                    state: "closed",
+                  }),
               });
               core.info(`Closed stale generator upgrade PR #${pull.number}`);
             }
