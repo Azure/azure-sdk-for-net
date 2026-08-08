@@ -12,6 +12,7 @@ on:
     paths:
       - eng/azure-typespec-http-client-csharp-emitter-package.json
       - eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
+      - eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json
       - eng/centralpackagemanagement/Directory.Generation.Packages.props
   schedule:
     - cron: "17 4 * * *"
@@ -123,6 +124,7 @@ jobs:
             const [
               brandedEmitterPackage,
               managementEmitterPackage,
+              provisioningEmitterPackage,
               generationPackages,
             ] = await Promise.all([
               getMainFile(
@@ -130,6 +132,9 @@ jobs:
               ),
               getMainFile(
                 "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json",
+              ),
+              getMainFile(
+                "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json",
               ),
               getMainFile(
                 "eng/centralpackagemanagement/Directory.Generation.Packages.props",
@@ -142,6 +147,9 @@ jobs:
               ],
               management: JSON.parse(managementEmitterPackage).dependencies[
                 "@azure-typespec/http-client-csharp-mgmt"
+              ],
+              provisioning: JSON.parse(provisioningEmitterPackage).dependencies[
+                "@azure-typespec/http-client-csharp-provisioning"
               ],
               unbranded: generationPackages.match(
                 /<UnbrandedGeneratorVersion>([^<]+)<\/UnbrandedGeneratorVersion>/,
@@ -157,6 +165,11 @@ jobs:
             }
 
             const titlePatterns = [
+              {
+                generator: "provisioning",
+                pattern:
+                  /^(?:Failed: )?Update azure-typespec\/http-client-csharp-provisioning version to prerelease (\S+)$/,
+              },
               {
                 generator: "management",
                 pattern:
