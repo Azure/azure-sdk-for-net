@@ -108,6 +108,12 @@
 # ServiceLabel: %AI Projects
 # ServiceOwners: @dargilco @nick863 @trangevi
 
+# PRLabel: %Discovery
+/sdk/discovery/Azure.AI.Discovery/    @ahall-msft @mike-menaker
+
+# ServiceLabel: %Discovery
+# ServiceOwners: @ahall-msft @mike-menaker
+
 # PRLabel: %App Configuration
 /sdk/appconfiguration/    @avanigupta @jimmyca15 @linglingye001 @mrm9084 @zhiyuanliang-ms
 
