@@ -4,6 +4,7 @@
 #nullable enable
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -18,15 +19,9 @@ namespace Azure.AI.ContentUnderstanding
     /// </summary>
     public static class LlmInputHelper
     {
-        private static readonly HashSet<string> s_reservedMetadataKeys = new HashSet<string>(StringComparer.Ordinal)
-        {
-            "contentType",
-            "timeRange",
-            "category",
-            "pages",
-            "fields",
-            "rai_warnings"
-        };
+        // YAML front-matter key for the optional caller-supplied dictionary.
+        // Kept distinct from service AnalysisContent.Metadata ("metadata").
+        private const string CustomMetadataFrontMatterKey = "customMetadata";
 
         // Marker emitted by ToLlmInput at each page boundary. Future Content
         // Understanding service versions emit this same marker directly in the
@@ -35,7 +30,6 @@ namespace Azure.AI.ContentUnderstanding
         // the service as having already paginated the content and skips its own
         // injection to avoid duplicate markers.
         private const string InputPageMarkerPrefix = "<!-- InputPageNumber:";
-
         // Message prefixes the Content Understanding service has been observed
         // to emit into the warnings collection that are not real Responsible-AI
         // warnings (they are internal telemetry counters). The helper drops any
@@ -57,12 +51,13 @@ namespace Azure.AI.ContentUnderstanding
         /// <para>
         /// The YAML front matter (delimited by <c>---</c>) may include:
         /// <c>contentType</c> (document, image, audio, video),
+        /// <c>customMetadata</c> (caller-supplied key-value pairs from <paramref name="customMetadata"/>),
+        /// <c>metadata</c> (analysis-result metadata from <see cref="AnalysisContent.Metadata"/>),
         /// <c>pages</c> (page range),
         /// <c>timeRange</c> (media time span),
         /// <c>category</c> (classification label),
         /// <c>fields</c> (extracted structured fields as YAML),
-        /// <c>rai_warnings</c> (content safety flags),
-        /// and any caller-supplied <paramref name="metadata"/> entries.
+        /// and <c>rai_warnings</c> (content safety flags).
         /// </para>
         /// <para>
         /// The markdown body contains the extracted text with page-break markers
@@ -86,30 +81,29 @@ namespace Azure.AI.ContentUnderstanding
         /// </para>
         /// </summary>
         /// <param name="result">The <see cref="AnalysisResult"/> from a Content Understanding analyze operation.</param>
-        /// <param name="metadata">Optional user-supplied key-value pairs to include in the YAML front matter.
-        /// Keys must not conflict with helper-generated front matter keys
-        /// (<c>contentType</c>, <c>timeRange</c>, <c>category</c>, <c>pages</c>, <c>fields</c>, <c>rai_warnings</c>).</param>
+        /// <param name="customMetadata">Optional caller-supplied key-value pairs emitted under a nested
+        /// <c>customMetadata</c> YAML front-matter block (kept separate from service
+        /// <see cref="AnalysisContent.Metadata"/> / <c>metadata</c>). Common keys include
+        /// <c>source</c>, <c>documentId</c>, or <c>department</c>.</param>
         /// <param name="options">Optional rendering options controlling field/markdown inclusion.</param>
         /// <returns>A formatted text string with YAML front matter followed by markdown content.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="result"/> is <c>null</c>.</exception>
-        /// <exception cref="ArgumentException"><paramref name="metadata"/> contains a reserved front matter key.</exception>
         public static string ToLlmInput(
             this AnalysisResult result,
-            IDictionary<string, object>? metadata = null,
+            IDictionary<string, object>? customMetadata = null,
             LlmInputOptions? options = null)
         {
             options ??= new LlmInputOptions();
-            return ToLlmInputCore(result, options.IncludeFields, options.IncludeMarkdown, metadata);
+            return ToLlmInputCore(result, options.IncludeFields, options.IncludeMarkdown, customMetadata);
         }
 
         private static string ToLlmInputCore(
             AnalysisResult result,
             bool includeFields,
             bool includeMarkdown,
-            IDictionary<string, object>? metadata)
+            IDictionary<string, object>? customMetadata)
         {
             Argument.AssertNotNull(result, nameof(result));
-            ValidateMetadata(metadata);
 
             if (result.Contents == null || result.Contents.Count == 0)
             {
@@ -132,7 +126,7 @@ namespace Azure.AI.ContentUnderstanding
                     result,
                     includeFields,
                     includeMarkdown,
-                    metadata,
+                    customMetadata,
                     isMultiSegment: avCount > 1);
                 if (!string.IsNullOrEmpty(block))
                 {
@@ -142,26 +136,70 @@ namespace Azure.AI.ContentUnderstanding
 
             return string.Join("\n\n*****\n\n", blocks);
         }
-
-        private static void ValidateMetadata(IDictionary<string, object>? metadata)
+        private static bool TryNormalizeMetadataValue(object? value, out object normalized)
         {
-            if (metadata == null || metadata.Count == 0)
+            if (value == null)
             {
-                return;
+                normalized = string.Empty;
+                return false;
             }
 
-            string[] reservedKeys = metadata.Keys
-                .Where(key => s_reservedMetadataKeys.Contains(key))
-                .OrderBy(key => key, StringComparer.Ordinal)
-                .ToArray();
-
-            if (reservedKeys.Length > 0)
+            if (value is JsonElement jsonElement)
             {
-                throw new ArgumentException(
-                    $"Metadata contains reserved front matter key(s): {string.Join(", ", reservedKeys)}. " +
-                    "Use custom keys such as 'source', 'documentId', or 'department' instead.",
-                    nameof(metadata));
+                object? resolved = ResolveJsonElement(jsonElement);
+                if (resolved == null)
+                {
+                    normalized = string.Empty;
+                    return false;
+                }
+
+                normalized = resolved;
+                return true;
             }
+
+            if (value is string stringValue)
+            {
+                // Keep strings opaque — do not sniff / parse JSON from string values.
+                // Nested structure must be supplied as real objects (dictionaries, lists,
+                // or JsonElement), not as JSON text. Field values are likewise not
+                // auto-parsed; ContentJsonField is the structured path for fields.
+                normalized = stringValue;
+                return true;
+            }
+
+            if (value is IDictionary dictionary)
+            {
+                var map = new Dictionary<string, object>(StringComparer.Ordinal);
+                foreach (DictionaryEntry entry in dictionary)
+                {
+                    if (entry.Key is string key &&
+                        TryNormalizeMetadataValue(entry.Value, out object nestedValue))
+                    {
+                        map[key] = nestedValue;
+                    }
+                }
+
+                normalized = map;
+                return map.Count > 0;
+            }
+
+            if (value is IEnumerable sequence && value is not string)
+            {
+                var list = new List<object>();
+                foreach (object? item in sequence)
+                {
+                    if (TryNormalizeMetadataValue(item, out object nestedItem))
+                    {
+                        list.Add(nestedItem);
+                    }
+                }
+
+                normalized = list;
+                return list.Count > 0;
+            }
+
+            normalized = value;
+            return true;
         }
 
         // ---------------------------------------------------------------
@@ -411,7 +449,7 @@ namespace Azure.AI.ContentUnderstanding
             AnalysisResult result,
             bool includeFields,
             bool includeMarkdown,
-            IDictionary<string, object>? metadata,
+            IDictionary<string, object>? customMetadata,
             bool isMultiSegment)
         {
             // Build ordered front matter data
@@ -422,36 +460,63 @@ namespace Azure.AI.ContentUnderstanding
                              content is AudioVisualContent ? "audioVisual" : "unknown";
             fm.Add(new KeyValuePair<string, object>("contentType", kindStr));
 
-            // 2. User metadata
-            if (metadata != null)
+            // 2. Caller-supplied customMetadata (nested block — no top-level key collisions)
+            if (customMetadata != null && customMetadata.Count > 0)
             {
-                foreach (var kvp in metadata)
+                var normalizedCustom = new Dictionary<string, object>(StringComparer.Ordinal);
+                foreach (var kvp in customMetadata)
                 {
-                    fm.Add(new KeyValuePair<string, object>(kvp.Key, kvp.Value));
+                    if (TryNormalizeMetadataValue(kvp.Value, out object normalized))
+                    {
+                        normalizedCustom[kvp.Key] = normalized;
+                    }
+                }
+
+                if (normalizedCustom.Count > 0)
+                {
+                    fm.Add(new KeyValuePair<string, object>(CustomMetadataFrontMatterKey, normalizedCustom));
                 }
             }
 
-            // 3. timeRange (audioVisual — only for multi-segment)
+            // 3. Analysis metadata (service AnalysisContent.Metadata)
+            if (content.Metadata != null && content.Metadata.Count > 0)
+            {
+                var analysisMetadata = new Dictionary<string, object>(StringComparer.Ordinal);
+                foreach (KeyValuePair<string, string> kvp in content.Metadata)
+                {
+                    if (TryNormalizeMetadataValue(kvp.Value, out object normalized))
+                    {
+                        analysisMetadata[kvp.Key] = normalized;
+                    }
+                }
+
+                if (analysisMetadata.Count > 0)
+                {
+                    fm.Add(new KeyValuePair<string, object>("metadata", analysisMetadata));
+                }
+            }
+
+            // 4. timeRange (audioVisual — only for multi-segment)
             if (content is AudioVisualContent av && isMultiSegment)
             {
                 string timeRange = FormatTimeRange(av.StartTime, av.EndTime);
                 fm.Add(new KeyValuePair<string, object>("timeRange", timeRange));
             }
 
-            // 4. category (classified documents)
+            // 5. category (classified documents)
             if (!string.IsNullOrEmpty(content.Category))
             {
                 fm.Add(new KeyValuePair<string, object>("category", content.Category));
             }
 
-            // 5. pages (documents)
+            // 6. pages (documents)
             object? pagesVal = FormatPages(content);
             if (pagesVal != null)
             {
                 fm.Add(new KeyValuePair<string, object>("pages", pagesVal));
             }
 
-            // 6. fields
+            // 7. fields
             if (includeFields && content.Fields != null && content.Fields.Count > 0)
             {
                 var resolved = ResolveFields(content.Fields);
@@ -461,7 +526,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
             }
 
-            // 7. rai_warnings
+            // 8. rai_warnings
             if (result.Warnings != null && result.Warnings.Count > 0)
             {
                 var warningsList = FormatWarnings(result.Warnings);
@@ -470,7 +535,6 @@ namespace Azure.AI.ContentUnderstanding
                     fm.Add(new KeyValuePair<string, object>("rai_warnings", warningsList));
                 }
             }
-
             // Build output string
             string frontMatter = BuildFrontMatter(fm);
 

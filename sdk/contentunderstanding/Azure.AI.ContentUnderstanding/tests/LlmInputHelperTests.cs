@@ -122,7 +122,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         // ---------------------------------------------------------------
 
         [Test]
-        public void ToLlmInput_WithMetadata_IncludesAfterContentType()
+        public void ToLlmInput_WithCustomMetadata_NestsUnderCustomMetadataBlock()
         {
             var content = ContentUnderstandingModelFactory.DocumentContent(
                 mimeType: "application/pdf",
@@ -133,29 +133,86 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new[] { content });
 
-            var metadata = new Dictionary<string, object>
+            var customMetadata = new Dictionary<string, object>
             {
                 ["source"] = "invoice.pdf",
                 ["department"] = "finance"
             };
 
-            string output = result.ToLlmInput(metadata);
+            string output = result.ToLlmInput(customMetadata);
 
+            Assert.That(output, Does.Contain("customMetadata:"));
             Assert.That(output, Does.Contain("source: invoice.pdf"));
             Assert.That(output, Does.Contain("department: finance"));
-            // metadata should appear after contentType
-            int ctIdx = output.IndexOf("contentType:");
-            int srcIdx = output.IndexOf("source:");
-            Assert.That(srcIdx, Is.GreaterThan(ctIdx));
+            int ctIdx = output.IndexOf("contentType:", StringComparison.Ordinal);
+            int customIdx = output.IndexOf("customMetadata:", StringComparison.Ordinal);
+            int srcIdx = output.IndexOf("source:", StringComparison.Ordinal);
+            Assert.That(customIdx, Is.GreaterThan(ctIdx));
+            Assert.That(srcIdx, Is.GreaterThan(customIdx));
+        }
+
+        [Test]
+        public void ToLlmInput_WithAnalysisContentMetadata_IncludesMetadataBlock()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "text",
+                metadata: new Dictionary<string, string>
+                {
+                    ["author"] = "Contoso Metadata Team",
+                    ["title"] = "Contoso Metadata Extraction Sample",
+                },
+                startPageNumber: 1,
+                endPageNumber: 1);
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+
+            string output = result.ToLlmInput();
+
+            Assert.That(output, Does.Contain("metadata:"));
+            Assert.That(output, Does.Contain("author: Contoso Metadata Team"));
+            Assert.That(output, Does.Contain("title: Contoso Metadata Extraction Sample"));
+            Assert.That(output.IndexOf("metadata:", StringComparison.Ordinal),
+                Is.GreaterThan(output.IndexOf("contentType:", StringComparison.Ordinal)));
+            Assert.That(output.IndexOf("pages:", StringComparison.Ordinal),
+                Is.GreaterThan(output.IndexOf("metadata:", StringComparison.Ordinal)));
+        }
+
+        [Test]
+        public void ToLlmInput_WithAnalysisContentMetadataJsonString_RemainsOpaque()
+        {
+            const string jsonValue =
+                "{\"document\":{\"createdAt\":\"2026-07-16T19:00:00Z\",\"tags\":[\"finance\",\"invoice\"],\"properties\":{\"pageCount\":1}}}";
+
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "text",
+                metadata: new Dictionary<string, string>
+                {
+                    ["xmp"] = jsonValue,
+                },
+                startPageNumber: 1,
+                endPageNumber: 1);
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+
+            string output = result.ToLlmInput();
+
+            // String metadata values are not auto-parsed as JSON; they stay a single scalar.
+            Assert.That(output, Does.Contain("metadata:"));
+            Assert.That(output, Does.Contain("xmp:"));
+            Assert.That(output, Does.Contain(jsonValue));
+            Assert.That(output, Does.Not.Contain("\n  document:"));
+            Assert.That(output, Does.Not.Contain("pageCount: 1"));
         }
 
         [TestCase("contentType")]
-        [TestCase("timeRange")]
-        [TestCase("category")]
-        [TestCase("pages")]
+        [TestCase("metadata")]
         [TestCase("fields")]
-        [TestCase("rai_warnings")]
-        public void ToLlmInput_WithReservedMetadataKey_ThrowsArgumentException(string reservedKey)
+        [TestCase("pages")]
+        public void ToLlmInput_WithCustomMetadata_AllowsKeysMatchingHelperOwnedNames(string helperOwnedKey)
         {
             var content = ContentUnderstandingModelFactory.DocumentContent(
                 mimeType: "application/pdf",
@@ -166,18 +223,24 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new[] { content });
 
-            var metadata = new Dictionary<string, object>
+            var customMetadata = new Dictionary<string, object>
             {
-                [reservedKey] = "custom"
+                [helperOwnedKey] = "caller-value"
             };
 
-            ArgumentException? ex = Assert.Throws<ArgumentException>(() => result.ToLlmInput(metadata));
+            string output = result.ToLlmInput(customMetadata);
 
-            Assert.That(ex!.ParamName, Is.EqualTo("metadata"));
-            Assert.That(ex.Message, Does.Contain("reserved front matter key"));
-            Assert.That(ex.Message, Does.Contain(reservedKey));
+            // Nested under customMetadata — does not replace top-level helper keys.
+            Assert.That(output, Does.Contain("customMetadata:"));
+            Assert.That(output, Does.Contain($"{helperOwnedKey}: caller-value"));
+            Assert.That(output, Does.Contain("contentType: document"));
+            // Top-level pages from the document still present; caller's "pages" is nested only.
+            if (helperOwnedKey == "pages")
+            {
+                Assert.That(output, Does.Match(@"(?m)^pages: 1$"));
+                Assert.That(output, Does.Match(@"(?m)^  pages: caller-value$"));
+            }
         }
-
         // ---------------------------------------------------------------
         // Multi-page document
         // ---------------------------------------------------------------
