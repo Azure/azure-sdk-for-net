@@ -260,5 +260,33 @@ namespace Azure.ResourceManager.StorageMover
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
+
+        internal HttpMessage CreateReconcileJobRequest(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StorageMover/storageMovers/", false);
+            uri.AppendPath(storageMoverName, true);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/jobDefinitions/", false);
+            uri.AppendPath(jobDefinitionName, true);
+            uri.AppendPath("/reconcileJob", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
     }
 }
