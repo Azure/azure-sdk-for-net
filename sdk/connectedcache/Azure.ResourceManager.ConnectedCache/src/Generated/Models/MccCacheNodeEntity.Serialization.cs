@@ -205,6 +205,11 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("cidrCsvLastUpdateTime"u8);
                 writer.WriteStringValue(CidrCsvLastUpdatedOn.Value, "O");
             }
+            if (Optional.IsDefined(BgpNetworkInterface))
+            {
+                writer.WritePropertyName("bgpNetworkInterface"u8);
+                writer.WriteStringValue(BgpNetworkInterface);
+            }
             if (options.Format != "W" && Optional.IsDefined(BgpCidrCsvLastUpdatedOn))
             {
                 writer.WritePropertyName("bgpCidrCsvLastUpdateTime"u8);
@@ -345,6 +350,31 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("autoUpdateRequestedTime"u8);
                 writer.WriteStringValue(AutoUpdateRequestedTime);
             }
+            if (Optional.IsDefined(OpenFirewallPort80))
+            {
+                writer.WritePropertyName("openFirewallPort80"u8);
+                writer.WriteBooleanValue(OpenFirewallPort80.Value);
+            }
+            if (Optional.IsDefined(OpenFirewallPort443))
+            {
+                writer.WritePropertyName("openFirewallPort443"u8);
+                writer.WriteBooleanValue(OpenFirewallPort443.Value);
+            }
+            if (Optional.IsDefined(OpenFirewallPort5000))
+            {
+                writer.WritePropertyName("openFirewallPort5000"u8);
+                writer.WriteBooleanValue(OpenFirewallPort5000.Value);
+            }
+            if (Optional.IsDefined(OpenFirewallPort5001))
+            {
+                writer.WritePropertyName("openFirewallPort5001"u8);
+                writer.WriteBooleanValue(OpenFirewallPort5001.Value);
+            }
+            if (Optional.IsDefined(RuntimeAccountType))
+            {
+                writer.WritePropertyName("runtimeAccountType"u8);
+                writer.WriteStringValue(RuntimeAccountType);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -411,6 +441,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             string containerConfigurations = default;
             IList<string> cidrCsv = default;
             DateTimeOffset? cidrCsvLastUpdatedOn = default;
+            string bgpNetworkInterface = default;
             DateTimeOffset? bgpCidrCsvLastUpdatedOn = default;
             DateTimeOffset? bgpLastReportedOn = default;
             string bgpReviewStateText = default;
@@ -439,6 +470,11 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             int? autoUpdateRequestedWeek = default;
             int? autoUpdateRequestedDay = default;
             string autoUpdateRequestedTime = default;
+            bool? openFirewallPort80 = default;
+            bool? openFirewallPort443 = default;
+            bool? openFirewallPort5000 = default;
+            bool? openFirewallPort5001 = default;
+            string runtimeAccountType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -620,6 +656,11 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                         continue;
                     }
                     cidrCsvLastUpdatedOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("bgpNetworkInterface"u8))
+                {
+                    bgpNetworkInterface = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("bgpCidrCsvLastUpdateTime"u8))
@@ -846,6 +887,47 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                     autoUpdateRequestedTime = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("openFirewallPort80"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    openFirewallPort80 = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("openFirewallPort443"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    openFirewallPort443 = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("openFirewallPort5000"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    openFirewallPort5000 = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("openFirewallPort5001"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    openFirewallPort5001 = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("runtimeAccountType"u8))
+                {
+                    runtimeAccountType = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -876,6 +958,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 containerConfigurations,
                 cidrCsv ?? new ChangeTrackingList<string>(),
                 cidrCsvLastUpdatedOn,
+                bgpNetworkInterface,
                 bgpCidrCsvLastUpdatedOn,
                 bgpLastReportedOn,
                 bgpReviewStateText,
@@ -904,6 +987,11 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 autoUpdateRequestedWeek,
                 autoUpdateRequestedDay,
                 autoUpdateRequestedTime,
+                openFirewallPort80,
+                openFirewallPort443,
+                openFirewallPort5000,
+                openFirewallPort5001,
+                runtimeAccountType,
                 additionalBinaryDataProperties);
         }
     }

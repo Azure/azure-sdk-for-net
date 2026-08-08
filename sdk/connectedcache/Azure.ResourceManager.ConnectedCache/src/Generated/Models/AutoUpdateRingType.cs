@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         private const string SlowValue = "Slow";
         /// <summary> customer selection of fast / auto update to install mcc on their physical vm. </summary>
         private const string FastValue = "Fast";
+        /// <summary> customer selection of stable update to install mcc on their physical vm. </summary>
+        private const string StableValue = "Stable";
+        /// <summary> customer selection of beta update to install mcc on their physical vm. </summary>
+        private const string BetaValue = "Beta";
 
         /// <summary> Initializes a new instance of <see cref="AutoUpdateRingType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -40,6 +44,12 @@ namespace Azure.ResourceManager.ConnectedCache.Models
 
         /// <summary> customer selection of fast / auto update to install mcc on their physical vm. </summary>
         public static AutoUpdateRingType Fast { get; } = new AutoUpdateRingType(FastValue);
+
+        /// <summary> customer selection of stable update to install mcc on their physical vm. </summary>
+        public static AutoUpdateRingType Stable { get; } = new AutoUpdateRingType(StableValue);
+
+        /// <summary> customer selection of beta update to install mcc on their physical vm. </summary>
+        public static AutoUpdateRingType Beta { get; } = new AutoUpdateRingType(BetaValue);
 
         /// <summary> Determines if two <see cref="AutoUpdateRingType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
