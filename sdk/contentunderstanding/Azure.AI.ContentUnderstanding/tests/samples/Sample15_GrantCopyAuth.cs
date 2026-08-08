@@ -19,7 +19,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
     public partial class ContentUnderstandingSamples
     {
         [RecordedTest]
-        [ServiceVersion(Max = ContentUnderstandingClientOptions.ServiceVersion.V2025_11_01)]
         public async Task GrantCopyAuthAsync()
         {
 #if !SNIPPET
