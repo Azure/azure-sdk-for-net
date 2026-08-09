@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Streaming;
@@ -9,23 +10,23 @@ using Azure.AI.AgentServer.Responses.Models;
 namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
-/// Adapts a Core <see cref="IEventStream"/> to the orchestrator's push-based
+/// Adapts a Core <see cref="AgentEventStream"/> to the orchestrator's push-based
 /// <see cref="IAsyncObserver{T}"/> publisher contract. The Responses layer no longer owns an
 /// event-stream store; it publishes response events onto the Core event-stream primitive
-/// (obtained from <see cref="IEventStreamRegistry"/>), mirroring the Python implementation.
+/// (obtained from <see cref="AgentEventStreamRegistry"/>), mirroring the Python implementation.
 /// </summary>
 /// <remarks>
 /// <para>
 /// Sequence numbers are assigned here (monotonic) before an event is published, mirroring
 /// <see cref="NullPublisher"/> — the orchestrator reads back
 /// <see cref="ResponseStreamEvent.SequenceNumber"/> to track
-/// <see cref="ResponseExecution.LastEmittedSequenceNumber"/> (B9), and the Core stream's cursor
-/// function reads the same field from the payload for replay/reconnect.
+/// <see cref="ResponseExecution.LastEmittedSequenceNumber"/> (B9), and the sequence number is carried
+/// as the Core stream item's event id so replay/reconnect can resume after it.
 /// </para>
 /// <para>
 /// When the stream is a durable rehydrated stream from a prior (crashed) lifetime — created via
 /// <see cref="CreateAsync"/>, which reads the rehydrated watermark from
-/// <see cref="IEventStream.GetLastCursorAsync"/> — two crash-recovery invariants are preserved so
+/// <see cref="AgentEventStream.GetLastEventIdAsync"/> — two crash-recovery invariants are preserved so
 /// the durable stream a client replays stays contiguous with exactly one logical
 /// <c>response.created</c> across lifetimes (US3, T036):
 /// (1) new events continue numbering past the pre-crash watermark rather than restarting at 0;
@@ -39,11 +40,11 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// </remarks>
 internal sealed class EventStreamObserver : IAsyncObserver<ResponseStreamEvent>
 {
-    private readonly IEventStream _stream;
+    private readonly AgentEventStream _stream;
     private long _nextSequenceNumber;
     private bool _hasCreated;
 
-    private EventStreamObserver(IEventStream stream, long nextSequenceNumber, bool hasCreated)
+    private EventStreamObserver(AgentEventStream stream, long nextSequenceNumber, bool hasCreated)
     {
         _stream = stream;
         _nextSequenceNumber = nextSequenceNumber;
@@ -58,10 +59,10 @@ internal sealed class EventStreamObserver : IAsyncObserver<ResponseStreamEvent>
     /// watermark continues numbering and the re-emitted created is deduplicated.
     /// </summary>
     public static async ValueTask<EventStreamObserver> CreateAsync(
-        IEventStream stream, CancellationToken cancellationToken = default)
+        AgentEventStream stream, CancellationToken cancellationToken = default)
     {
-        var lastCursor = await stream.GetLastCursorAsync(cancellationToken).ConfigureAwait(false);
-        return lastCursor is int watermark
+        var lastEventId = await stream.GetLastEventIdAsync(cancellationToken).ConfigureAwait(false);
+        return long.TryParse(lastEventId, NumberStyles.Integer, CultureInfo.InvariantCulture, out var watermark)
             ? new EventStreamObserver(stream, watermark + 1, hasCreated: true)
             : new EventStreamObserver(stream, nextSequenceNumber: 0, hasCreated: false);
     }
@@ -84,7 +85,7 @@ internal sealed class EventStreamObserver : IAsyncObserver<ResponseStreamEvent>
         }
 
         value.SequenceNumber = _nextSequenceNumber++;
-        return _stream.EmitAsync(value);
+        return _stream.EmitAsync(ResponseWireStreamCodec.ToWireItem(value, SharedJsonOptions.Instance));
     }
 
     public ValueTask OnErrorAsync(Exception error)

@@ -91,7 +91,7 @@ public class TestSteerableConversationContractTests
 
         var invoker = new FakeTaskInvoker
         {
-            ThrowOnStart = new LastInputIdPreconditionFailedException("resp-latest"),
+            ThrowOnStart = new ResilientTaskException(ResilientTaskErrorCode.PreconditionFailed) { ActualLastInputId = "resp-latest" },
         };
 
         try
@@ -147,7 +147,7 @@ public class TestSteerableConversationContractTests
     {
         var invoker = new FakeTaskInvoker
         {
-            ThrowOnStart = new TaskConflictException(Azure.AI.AgentServer.Core.Tasks.TaskStatus.InProgress),
+            ThrowOnStart = new ResilientTaskException(ResilientTaskErrorCode.Conflict) { CurrentStatus = TaskRunStatus.InProgress },
         };
         using var factory = NewFactory(
             invoker,
@@ -183,7 +183,7 @@ public class TestSteerableConversationContractTests
         // lock conflict → HTTP 409 conversation_locked — independent of both feature options.
         var invoker = new FakeTaskInvoker
         {
-            ThrowOnStart = new TaskConflictException(Azure.AI.AgentServer.Core.Tasks.TaskStatus.InProgress),
+            ThrowOnStart = new ResilientTaskException(ResilientTaskErrorCode.Conflict) { CurrentStatus = TaskRunStatus.InProgress },
         };
         using var factory = NewFactory(
             invoker,
@@ -214,7 +214,7 @@ public class TestSteerableConversationContractTests
         // → HTTP 409 conversation_locked, even with DEFAULT options.
         var invoker = new FakeTaskInvoker
         {
-            ThrowOnStart = new TaskConflictException(Azure.AI.AgentServer.Core.Tasks.TaskStatus.InProgress),
+            ThrowOnStart = new ResilientTaskException(ResilientTaskErrorCode.Conflict) { CurrentStatus = TaskRunStatus.InProgress },
         };
         using var factory = NewFactory(
             invoker,
@@ -258,7 +258,7 @@ public class TestSteerableConversationContractTests
 
         var invoker = new FakeTaskInvoker
         {
-            ThrowOnStart = new LastInputIdPreconditionFailedException("resp-latest"),
+            ThrowOnStart = new ResilientTaskException(ResilientTaskErrorCode.PreconditionFailed) { ActualLastInputId = "resp-latest" },
         };
 
         try
@@ -347,7 +347,7 @@ public class TestSteerableConversationContractTests
     {
         var invoker = new FakeTaskInvoker
         {
-            ThrowOnStart = new SteeringQueueFullException(),
+            ThrowOnStart = new ResilientTaskException(ResilientTaskErrorCode.QueueFull),
         };
         using var factory = NewFactory(
             invoker,
@@ -985,7 +985,6 @@ public class TestSteerableConversationContractTests
 
         public override bool IsQueued => _isQueued;
 
-        public override Task<TOutput> GetResultAsync(CancellationToken cancellationToken = default)
-            => new TaskCompletionSource<TOutput>().Task;
+        public override Task<TOutput> Completion => new TaskCompletionSource<TOutput>().Task;
     }
 }

@@ -89,7 +89,7 @@ public class ServiceRegistrationTests
         // SSE streaming now composes the Core event-stream primitive. The durable
         // file-backed replay is an internal Core selection; from the Responses layer
         // we assert the registry is available for the orchestrator/replay to use.
-        Assert.That(sp.GetService<Core.Streaming.IEventStreamRegistry>(), Is.Not.Null);
+        Assert.That(sp.GetService<Core.Streaming.AgentEventStreamRegistry>(), Is.Not.Null);
     }
 
     [Test]

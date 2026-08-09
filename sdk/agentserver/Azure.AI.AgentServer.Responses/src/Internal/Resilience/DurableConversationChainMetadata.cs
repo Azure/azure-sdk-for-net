@@ -33,7 +33,7 @@ internal sealed class DurableConversationChainMetadata : ConversationChainMetada
     private TaskMetadata Target(string namespaceName)
         => string.Equals(namespaceName, DefaultNamespaceName, StringComparison.Ordinal)
             ? _root
-            : _root.Namespace(namespaceName);
+            : _root.GetNamespace(namespaceName);
 
     public override void Set(string namespaceName, string key, string value)
     {

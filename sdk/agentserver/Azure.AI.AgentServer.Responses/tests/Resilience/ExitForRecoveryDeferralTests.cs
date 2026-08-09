@@ -195,7 +195,7 @@ public sealed class ExitForRecoveryDeferralTests : IDisposable
         // "__terminal__":true line only when the stream is closed on completion.
         var streamFiles = Directory.GetFiles(Path.Combine(_responsesDir, "streams"), "*.jsonl");
         Assert.That(streamFiles, Has.Length.EqualTo(1), "the durable stream file should exist");
-        var contents = await File.ReadAllTextAsync(streamFiles[0]);
+        var contents = await ReadStreamFileSharedAsync(streamFiles[0]);
         Assert.That(contents, Does.Not.Contain("\"__terminal__\":true"),
             "a deferred (not crashed) streaming response must not write a terminal sentinel");
         Assert.That(contents, Does.Not.Contain("\"__terminal__\": true"));
@@ -321,7 +321,7 @@ public sealed class ExitForRecoveryDeferralTests : IDisposable
         // lifetime, and a "__terminal__":true line would close a reconnect prematurely (FR-041).
         var streamFiles = Directory.GetFiles(Path.Combine(_responsesDir, "streams"), "*.jsonl");
         Assert.That(streamFiles, Has.Length.EqualTo(1), "the durable stream file should exist");
-        var contents = await File.ReadAllTextAsync(streamFiles[0]);
+        var contents = await ReadStreamFileSharedAsync(streamFiles[0]);
         Assert.That(contents, Does.Not.Contain("\"__terminal__\":true"),
             "a swallowed-deferral streaming response must not persist a terminal sentinel");
         Assert.That(contents, Does.Not.Contain("\"__terminal__\": true"));
@@ -553,5 +553,15 @@ public sealed class ExitForRecoveryDeferralTests : IDisposable
 
         public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, PlatformContext context, CancellationToken cancellationToken = default)
             => _inner.GetHistoryItemIdsAsync(previousResponseId, conversationId, limit, context, cancellationToken);
+    }
+
+    // Reads a durable stream log the Core file-backed backing may still hold open for append
+    // (it opens the file with FileShare.Read). Opening with FileShare.ReadWrite avoids a Windows
+    // "used by another process" conflict with that live writer while inspecting the file contents.
+    private static async Task<string> ReadStreamFileSharedAsync(string path)
+    {
+        using var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+        using var reader = new StreamReader(fs);
+        return await reader.ReadToEndAsync();
     }
 }

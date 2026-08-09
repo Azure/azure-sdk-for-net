@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Primitives;
+using System.Linq;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Core.Streaming;
 using Azure.AI.AgentServer.Core.Tasks;
@@ -80,7 +80,7 @@ public static class ResponsesServerServiceCollectionExtensions
             new InMemoryCancellationSignalProvider(sp.GetRequiredService<InMemoryResponsesProvider>()));
 
         // SSE streaming is composed on the Core event-stream primitive (registered via
-        // AddEventStreams below), not a pluggable Responses stream provider.
+        // AddAgentEventStreams below), not a pluggable Responses stream provider.
 
         TokenCredential? resilientTaskCredential = null;
 
@@ -140,40 +140,34 @@ public static class ResponsesServerServiceCollectionExtensions
         }
 
         // The Responses layer does not own an event-stream store. SSE events are published onto
-        // the Core event-stream primitive (IEventStreamRegistry/IEventStream) — matching Python,
+        // the Core event-stream primitive (AgentEventStreamRegistry/AgentEventStream) — matching Python,
         // which uses the core EventStream registry directly. Register it once here. The backing is
         // chosen eagerly: local + ResilientBackground uses a durable file-backed replay so a
         // reconnecting client can replay pre-restart SSE events after a single-sandbox recovery;
-        // otherwise an in-memory replay buffer is sufficient. TryAddSingleton in AddEventStreams
-        // preserves consumer precedence (a custom IEventStreamRegistry registered first wins).
+        // otherwise an in-memory replay buffer is sufficient. Core's AddAgentEventStreams selects the
+        // backing exactly once per process and throws on a second configuring call, so only register
+        // when no backing has been chosen yet — a consumer (or test) that registered its own backing
+        // first wins, preserving the prior override semantics.
         var eagerOptions = new ResponsesServerOptions();
         configure?.Invoke(eagerOptions);
         var useDurableStreams = eagerOptions.ResilientBackground && !FoundryEnvironment.IsHosted;
         var streamTtl = new InMemoryProviderOptions().EventStreamTtl;
-        services.AddEventStreams(o =>
+        if (!services.Any(d => d.ServiceType == typeof(AgentEventStreamRegistry)))
         {
-            if (useDurableStreams)
+            services.AddAgentEventStreams(o =>
             {
-                o.UseFileBackedReplay(
-                    storageDirectory: Internal.Resilience.ResponsesStatePaths.StreamsRoot(),
-                    cursor: payload => (int)((ResponseStreamEvent)payload).SequenceNumber,
-                    ttl: streamTtl,
-                    serializer: payload => ModelReaderWriter.Write(
-                        (ResponseStreamEvent)payload,
-                        ModelReaderWriterOptions.Json,
-                        AzureAIAgentServerResponsesContext.Default).ToArray(),
-                    deserializer: bytes => ModelReaderWriter.Read<ResponseStreamEvent>(
-                        new BinaryData(bytes),
-                        ModelReaderWriterOptions.Json,
-                        AzureAIAgentServerResponsesContext.Default)!);
-            }
-            else
-            {
-                o.UseInMemoryReplay(
-                    cursor: payload => (int)((ResponseStreamEvent)payload).SequenceNumber,
-                    ttl: streamTtl);
-            }
-        });
+                if (useDurableStreams)
+                {
+                    o.UseFileBackedReplay(
+                        storageDirectory: Internal.Resilience.ResponsesStatePaths.StreamsRoot(),
+                        ttl: streamTtl);
+                }
+                else
+                {
+                    o.UseInMemoryReplay(ttl: streamTtl);
+                }
+            });
+        }
 
         services.AddSingleton<ResponseExecutionTracker>();
         services.AddHostedService(sp => sp.GetRequiredService<ResponseExecutionTracker>());
@@ -193,15 +187,26 @@ public static class ResponsesServerServiceCollectionExtensions
         // (→ HTTP 409 conversation_locked), which is exactly the concurrency protection a plain
         // conversation_id chain requires. Checkpoint/durable-stream backing stays resilient-only
         // (see the useDurableStreams gate above) — this registration does not change that.
-        IResilientTaskBuilder taskBuilder = resilientTaskCredential is null
+        // Core invokes a resilient-task body as (ctx, ct) and does not inject DI into it. Capture the
+        // root provider at host startup so the handler can open a per-turn scope — including on the
+        // recovery path, which runs under the Core recovery scan with no request scope. Registered
+        // before AddResilientTasks so the provider is captured ahead of the Core recovery engine.
+        var taskRootProvider = new ResponsesResilientTaskRootProvider();
+        services.AddHostedService(sp =>
+        {
+            taskRootProvider.Attach(sp);
+            return taskRootProvider;
+        });
+
+        ResilientTaskBuilder taskBuilder = resilientTaskCredential is null
             ? services.AddResilientTasks()
             : services.AddResilientTasks(resilientTaskCredential);
         taskBuilder.AddTask<ResponseTaskInput, ResponseTaskOutput>(
             ResponsesResilientTaskHandler.OneShotTaskName,
-            (sp, ctx, ct) => ResponsesResilientTaskHandler.RunTurnAsync(sp, ctx, ct));
+            (ctx, ct) => ResponsesResilientTaskHandler.RunTurnAsync(taskRootProvider.Require(), ctx, ct));
         taskBuilder.AddMultiTurnTask<ResponseTaskInput, ResponseTaskOutput>(
             ResponsesResilientTaskHandler.MultiTurnTaskName,
-            (sp, ctx, ct) => ResponsesResilientTaskHandler.RunTurnAsync(sp, ctx, ct),
+            (ctx, ct) => ResponsesResilientTaskHandler.RunTurnAsync(taskRootProvider.Require(), ctx, ct),
             steerable: eagerOptions.SteerableConversations);
 
         services.AddScoped<ResponseOrchestrator>();

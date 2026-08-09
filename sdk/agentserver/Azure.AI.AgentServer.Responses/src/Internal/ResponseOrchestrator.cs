@@ -23,7 +23,7 @@ internal sealed class ResponseOrchestrator
     private readonly ResponseHandler _handler;
     private readonly ResponsesProvider _provider;
     private readonly ResponsesCancellationSignalProvider _cancellationProvider;
-    private readonly IEventStreamRegistry _eventStreamRegistry;
+    private readonly AgentEventStreamRegistry _eventStreamRegistry;
     private readonly ResponseExecutionTracker _tracker;
     private readonly ILogger<ResponseOrchestrator> _logger;
     private readonly bool _resilientBackground;
@@ -35,7 +35,7 @@ internal sealed class ResponseOrchestrator
         ResponseHandler handler,
         ResponsesProvider provider,
         ResponsesCancellationSignalProvider cancellationProvider,
-        IEventStreamRegistry eventStreamRegistry,
+        AgentEventStreamRegistry eventStreamRegistry,
         ResponseExecutionTracker tracker,
         ILogger<ResponseOrchestrator> logger,
         IOptions<ResponsesServerOptions> options)

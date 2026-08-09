@@ -85,7 +85,7 @@ public class DurableConversationChainMetadataFlushIsolationTests
             _flushed = flushed;
         }
 
-        public override TaskMetadata Namespace(string name)
+        public override TaskMetadata GetNamespace(string name)
         {
             if (!_children.TryGetValue(name, out var child))
             {

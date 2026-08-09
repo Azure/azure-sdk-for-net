@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Net.ServerSentEvents;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -34,7 +35,7 @@ internal sealed class ResponseEndpointHandler
     private readonly ResponseExecutionTracker _tracker;
     private readonly ResponsesProvider _provider;
     private readonly ResponsesCancellationSignalProvider _cancellationProvider;
-    private readonly IEventStreamRegistry _eventStreamRegistry;
+    private readonly AgentEventStreamRegistry _eventStreamRegistry;
     private readonly IOptions<ResponsesServerOptions> _options;
     private readonly ILogger<ResponseEndpointHandler> _logger;
 
@@ -47,7 +48,7 @@ internal sealed class ResponseEndpointHandler
         ResponseExecutionTracker tracker,
         ResponsesProvider provider,
         ResponsesCancellationSignalProvider cancellationProvider,
-        IEventStreamRegistry eventStreamRegistry,
+        AgentEventStreamRegistry eventStreamRegistry,
         IOptions<ResponsesServerOptions> options,
         ILogger<ResponseEndpointHandler> logger)
     {
@@ -345,8 +346,8 @@ internal sealed class ResponseEndpointHandler
                     // would otherwise get a NullPublisher if the drain created a fresh execution. The SSE
                     // result below subscribes to that wire stream immediately (GetOrCreateAsync) and stays
                     // open, relaying nothing until the turn starts, then emitting events as they arrive.
-                    // run.GetResultAsync resolves when the queued turn's steered re-entry completes.
-                    execution.ExecutionTask = run.GetResultAsync(CancellationToken.None);
+                    // run.Completion resolves when the queued turn's steered re-entry completes.
+                    execution.ExecutionTask = run.Completion;
 
                     // Relay the per-response wire stream immediately — do NOT await
                     // ResponseCreatedSignal. The handler runs inside the task body and writes events
@@ -408,7 +409,8 @@ internal sealed class ResponseEndpointHandler
                 // SseResult takes ownership of linkedCts — it will dispose it when
                 // the SSE stream completes.
                 var sseResult = new SseResult(
-                    result.Events!, execution, linkedCts,
+                    ResponseWireStreamCodec.ToWireItems(result.Events!, SharedJsonOptions.Instance),
+                    execution, linkedCts,
                     SharedJsonOptions.Instance, _logger, FoundryEnvironment.SseKeepAliveInterval);
 
                 // Ownership transferred — prevent the catch/finally from disposing.
@@ -442,7 +444,7 @@ internal sealed class ResponseEndpointHandler
                     return JsonForClient(BuildQueuedEnvelope(request, context, responseId));
                 }
 
-                execution.ExecutionTask = run.GetResultAsync(CancellationToken.None);
+                execution.ExecutionTask = run.Completion;
             }
             else
             {
@@ -510,7 +512,7 @@ internal sealed class ResponseEndpointHandler
                     }
                 });
 
-                execution.ExecutionTask = run.GetResultAsync(CancellationToken.None);
+                execution.ExecutionTask = run.Completion;
 
                 // Block until the task turn reaches a terminal state, then return the FINAL response.
                 // The Core task handler reuses this endpoint-created execution (tracker.TryGet), so
@@ -637,7 +639,7 @@ internal sealed class ResponseEndpointHandler
         return payload;
     }
 
-    private async IAsyncEnumerable<ResponseStreamEvent> SubscribeBackgroundStreamAsync(
+    private async IAsyncEnumerable<SseItem<string>> SubscribeBackgroundStreamAsync(
         string responseId,
         ResponseExecution execution,
         [EnumeratorCancellation] CancellationToken cancellationToken)
@@ -667,13 +669,13 @@ internal sealed class ResponseEndpointHandler
                     throw execution.PreCreatedRelayFailure;
                 }
 
-                var evt = (ResponseStreamEvent)enumerator.Current;
-                if (evt is ResponseCreatedEvent)
+                var item = enumerator.Current;
+                if (string.Equals(item.EventType, "response.created", StringComparison.Ordinal))
                 {
                     createdSeen = true;
                 }
 
-                yield return evt;
+                yield return item;
             }
 
             // The wire stream closed cleanly. If the handler failed BEFORE emitting response.created
@@ -755,7 +757,7 @@ internal sealed class ResponseEndpointHandler
                 runOptions,
                 CancellationToken.None).ConfigureAwait(false);
         }
-        catch (LastInputIdPreconditionFailedException)
+        catch (ResilientTaskException ex) when (ex.ErrorCode == ResilientTaskErrorCode.PreconditionFailed)
         {
             // A previous_response_id that does not reference the most recent turn is a conversation
             // fork (Core precondition failure) — reject rather than branch the chain. Body shape
@@ -769,20 +771,20 @@ internal sealed class ResponseEndpointHandler
                 },
                 StatusCodes.Status409Conflict);
         }
-        catch (TaskConflictException ex)
+        catch (ResilientTaskException ex) when (ex.ErrorCode == ResilientTaskErrorCode.Conflict)
         {
             // A concurrent turn on a non-steerable conversation overlaps the active turn. Body shape
             // matches Python `_endpoint_handler` exactly: `Conversation is locked — task is {status}`
             // with the lower-case snake-case wire status and no trailing period.
             throw new ResponsesApiException(
                 new Error("conversation_locked",
-                    $"Conversation is locked — task is {ToWireStatus(ex.CurrentStatus)}")
+                    $"Conversation is locked — task is {ToWireStatus(ex.CurrentStatus ?? Core.Tasks.TaskRunStatus.InProgress)}")
                 {
                     Type = "conflict",
                 },
                 StatusCodes.Status409Conflict);
         }
-        catch (SteeringQueueFullException)
+        catch (ResilientTaskException ex) when (ex.ErrorCode == ResilientTaskErrorCode.QueueFull)
         {
             // The steering queue for the active turn is at capacity. Python does not document a
             // distinct queue-full code; surfaced as conversation_locked (409 conflict) — recorded as a
@@ -808,12 +810,12 @@ internal sealed class ResponseEndpointHandler
         }
     }
 
-    private static string ToWireStatus(Core.Tasks.TaskStatus status) => status switch
+    private static string ToWireStatus(Core.Tasks.TaskRunStatus status) => status switch
     {
-        Core.Tasks.TaskStatus.Pending => "pending",
-        Core.Tasks.TaskStatus.InProgress => "in_progress",
-        Core.Tasks.TaskStatus.Suspended => "suspended",
-        Core.Tasks.TaskStatus.Completed => "completed",
+        Core.Tasks.TaskRunStatus.Pending => "pending",
+        Core.Tasks.TaskRunStatus.InProgress => "in_progress",
+        Core.Tasks.TaskRunStatus.Suspended => "suspended",
+        Core.Tasks.TaskRunStatus.Completed => "completed",
         _ => status.ToString().ToLowerInvariant(),
     };
     /// <summary>
