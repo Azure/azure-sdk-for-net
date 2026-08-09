@@ -56,6 +56,7 @@ public class RunStepDetailsUpdate : StreamingUpdate
     /// <inheritdoc cref="RunStepDeltaFunction.Output"/>
     public string FunctionOutput => _asFunctionCall?.Function?.Output;
 
+    /// <summary> Gets the underlying delta tool call details for this update. </summary>
     public RunStepDeltaToolCall GetDeltaToolCall => _toolCall;
 
     internal RunStepDetailsUpdate(

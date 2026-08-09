@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -103,7 +104,7 @@ namespace Azure.AI.Projects.Agents
             }
             writer.WriteEndObject();
             writer.WritePropertyName("auth"u8);
-            writer.WriteObjectValue(AuthenticationDetails, options);
+            writer.WriteObjectValue(Auth, options);
             if (Optional.IsCollectionDefined(DefaultParams))
             {
                 writer.WritePropertyName("default_params"u8);
@@ -174,7 +175,7 @@ namespace Azure.AI.Projects.Agents
             string name = default;
             string description = default;
             IDictionary<string, BinaryData> spec = default;
-            OpenApiAuthenticationDetails authenticationDetails = default;
+            OpenApiAuthenticationDetails auth = default;
             IList<string> defaultParams = default;
             IReadOnlyList<OpenAPIFunctionEntry> functions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -209,7 +210,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("auth"u8))
                 {
-                    authenticationDetails = OpenApiAuthenticationDetails.DeserializeOpenApiAuthenticationDetails(prop.Value, options);
+                    auth = ModelReaderWriter.Read<OpenApiAuthenticationDetails>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("default_params"u8))
@@ -256,7 +257,7 @@ namespace Azure.AI.Projects.Agents
                 name,
                 description,
                 spec,
-                authenticationDetails,
+                auth,
                 defaultParams ?? new ChangeTrackingList<string>(),
                 functions ?? new ChangeTrackingList<OpenAPIFunctionEntry>(),
                 additionalBinaryDataProperties);

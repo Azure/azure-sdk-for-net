@@ -23,11 +23,19 @@ namespace Azure.AI.Extensions.OpenAI;
 /// <summary>
 /// The class containing various extension methods.
 /// </summary>
-[Experimental("OPENAI001")]
+[Experimental("AAIP001")]
 public static partial class CreateResponseOptionsExtensions
 {
     extension(CreateResponseOptions options)
     {
+        /// <summary> Session used to get the response. </summary>
+        [Experimental("SCME0001")]
+        public string SessionId
+        {
+            get => options.Patch.GetStringEx("$.agent_session_id"u8);
+            set => options.Patch.SetOrClearEx("$.agent_session_id"u8, "$.agent_session_id"u8, value);
+        }
+
         /// <summary> Gets or sets the agent associated with the response options. </summary>
         [Experimental("SCME0001")]
         public AgentReference Agent

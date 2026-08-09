@@ -4,32 +4,34 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Security details for OpenApi managed_identity authentication. </summary>
     public partial class OpenAPIManagedAuthenticationDetails : OpenApiAuthenticationDetails
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="OpenAPIManagedAuthenticationDetails"/>. </summary>
         /// <param name="securityScheme"> Connection auth security details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityScheme"/> is null. </exception>
-        public OpenAPIManagedAuthenticationDetails(OpenAPIManagedSecurityScheme securityScheme) : base(OpenApiAuthType.ManagedIdentity)
+        internal OpenAPIManagedAuthenticationDetails(OpenAPIManagedSecurityScheme securityScheme) : base("managed_identity")
         {
-            Argument.AssertNotNull(securityScheme, nameof(securityScheme));
-
             SecurityScheme = securityScheme;
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAPIManagedAuthenticationDetails"/>. </summary>
         /// <param name="type"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="securityScheme"> Connection auth security details. </param>
-        internal OpenAPIManagedAuthenticationDetails(OpenApiAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, OpenAPIManagedSecurityScheme securityScheme) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OpenAPIManagedAuthenticationDetails(OpenApiAuthenticationKind @type, OpenAPIManagedSecurityScheme securityScheme, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             SecurityScheme = securityScheme;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Connection auth security details. </summary>
-        public OpenAPIManagedSecurityScheme SecurityScheme { get; set; }
+        public OpenAPIManagedSecurityScheme SecurityScheme { get; }
     }
 }

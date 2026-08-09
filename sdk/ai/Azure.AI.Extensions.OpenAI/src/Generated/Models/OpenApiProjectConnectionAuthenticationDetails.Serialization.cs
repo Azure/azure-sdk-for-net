@@ -105,14 +105,14 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            OpenApiAuthType @type = default;
+            OpenApiAuthenticationKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             OpenApiProjectConnectionSecurityScheme securityScheme = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new OpenApiAuthType(prop.Value.GetString());
+                    kind = new OpenApiAuthenticationKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("security_scheme"u8))
@@ -125,7 +125,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OpenApiProjectConnectionAuthenticationDetails(@type, additionalBinaryDataProperties, securityScheme);
+            return new OpenApiProjectConnectionAuthenticationDetails(kind, additionalBinaryDataProperties, securityScheme);
         }
     }
 }

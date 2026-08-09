@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         private const string CreateValue = "Create";
         /// <summary> Delete operations on the resources. </summary>
         private const string DeleteValue = "Delete";
+        /// <summary> Post-Start VM agent health-check sub-operation; surfaced when the customer opts into verifyVmAgentHealth on a Start request. </summary>
+        private const string GetInstanceViewValue = "GetInstanceView";
 
         /// <summary> Initializes a new instance of <see cref="ComputeBulkOperationKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -55,6 +57,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Delete operations on the resources. </summary>
         public static ComputeBulkOperationKind Delete { get; } = new ComputeBulkOperationKind(DeleteValue);
+
+        /// <summary> Post-Start VM agent health-check sub-operation; surfaced when the customer opts into verifyVmAgentHealth on a Start request. </summary>
+        public static ComputeBulkOperationKind GetInstanceView { get; } = new ComputeBulkOperationKind(GetInstanceViewValue);
 
         /// <summary> Determines if two <see cref="ComputeBulkOperationKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

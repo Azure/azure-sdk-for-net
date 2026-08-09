@@ -4,32 +4,34 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Security details for OpenApi project connection authentication. </summary>
     public partial class OpenApiProjectConnectionAuthenticationDetails : OpenApiAuthenticationDetails
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="OpenApiProjectConnectionAuthenticationDetails"/>. </summary>
         /// <param name="securityScheme"> Project connection auth security details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityScheme"/> is null. </exception>
-        public OpenApiProjectConnectionAuthenticationDetails(OpenApiProjectConnectionSecurityScheme securityScheme) : base(OpenApiAuthType.ProjectConnection)
+        internal OpenApiProjectConnectionAuthenticationDetails(OpenApiProjectConnectionSecurityScheme securityScheme) : base("project_connection")
         {
-            Argument.AssertNotNull(securityScheme, nameof(securityScheme));
-
             SecurityScheme = securityScheme;
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenApiProjectConnectionAuthenticationDetails"/>. </summary>
         /// <param name="type"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="securityScheme"> Project connection auth security details. </param>
-        internal OpenApiProjectConnectionAuthenticationDetails(OpenApiAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, OpenApiProjectConnectionSecurityScheme securityScheme) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OpenApiProjectConnectionAuthenticationDetails(OpenApiAuthenticationKind @type, OpenApiProjectConnectionSecurityScheme securityScheme, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             SecurityScheme = securityScheme;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Project connection auth security details. </summary>
-        public OpenApiProjectConnectionSecurityScheme SecurityScheme { get; set; }
+        public OpenApiProjectConnectionSecurityScheme SecurityScheme { get; }
     }
 }

@@ -50,9 +50,9 @@ namespace Azure.AI.Extensions.OpenAI
 #pragma warning disable AAIP002 // global::Azure.AI.Extensions.OpenAI.AzureFunctionToolCallOutput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AzureFunctionToolCallOutput))]
 #pragma warning restore AAIP002 // global::Azure.AI.Extensions.OpenAI.AzureFunctionToolCallOutput is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.BingCustomSearchConfiguration is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(BingCustomSearchConfiguration))]
-#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.BingCustomSearchConfiguration is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.BingCustomSearchOptions is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(BingCustomSearchOptions))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.BingCustomSearchOptions is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.BingCustomSearchPreviewTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BingCustomSearchPreviewTool))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.BingCustomSearchPreviewTool is experimental and may change in future versions.
@@ -65,7 +65,7 @@ namespace Azure.AI.Extensions.OpenAI
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BingCustomSearchToolOptions))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolOptions is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(BingGroundingSearchConfiguration))]
+    [ModelReaderWriterBuildable(typeof(BingGroundingSearchOptions))]
     [ModelReaderWriterBuildable(typeof(BingGroundingSearchToolOptions))]
 #pragma warning disable AAIP002 // global::Azure.AI.Extensions.OpenAI.BingGroundingTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BingGroundingTool))]
@@ -85,9 +85,9 @@ namespace Azure.AI.Extensions.OpenAI
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolCallOutput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BrowserAutomationToolCallOutput))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolCallOutput is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionParameters is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(BrowserAutomationToolConnectionParameters))]
-#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionParameters is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionOptions is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(BrowserAutomationToolConnectionOptions))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionOptions is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BrowserAutomationToolOptions))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions is experimental and may change in future versions.
@@ -138,7 +138,7 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(OpenApiAuthenticationDetails))]
     [ModelReaderWriterBuildable(typeof(OpenApiFunctionDefinition))]
     [ModelReaderWriterBuildable(typeof(OpenApiFunctionDefinitionFunction))]
-    [ModelReaderWriterBuildable(typeof(OpenApiManagedAuthDetails))]
+    [ModelReaderWriterBuildable(typeof(OpenApiManagedAuthenticationDetails))]
     [ModelReaderWriterBuildable(typeof(OpenApiManagedSecurityScheme))]
     [ModelReaderWriterBuildable(typeof(OpenApiProjectConnectionAuthenticationDetails))]
     [ModelReaderWriterBuildable(typeof(OpenApiProjectConnectionSecurityScheme))]

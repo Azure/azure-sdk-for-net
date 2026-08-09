@@ -10,7 +10,7 @@ namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary>
     /// authentication details for OpenApiFunctionDefinition
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAPIAnonymousAuthenticationDetails"/>, <see cref="OpenApiProjectConnectionAuthenticationDetails"/>, and <see cref="OpenApiManagedAuthDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAPIAnonymousAuthenticationDetails"/>, <see cref="OpenApiProjectConnectionAuthenticationDetails"/>, and <see cref="OpenApiManagedAuthenticationDetails"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownOpenApiAuthenticationDetails))]
     public abstract partial class OpenApiAuthenticationDetails : IJsonModel<OpenApiAuthenticationDetails>
@@ -79,7 +79,7 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(OpenApiAuthenticationDetails)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -131,7 +131,7 @@ namespace Azure.AI.Extensions.OpenAI
                     case "project_connection":
                         return OpenApiProjectConnectionAuthenticationDetails.DeserializeOpenApiProjectConnectionAuthenticationDetails(element, options);
                     case "managed_identity":
-                        return OpenApiManagedAuthDetails.DeserializeOpenApiManagedAuthDetails(element, options);
+                        return OpenApiManagedAuthenticationDetails.DeserializeOpenApiManagedAuthenticationDetails(element, options);
                 }
             }
             return UnknownOpenApiAuthenticationDetails.DeserializeUnknownOpenApiAuthenticationDetails(element, options);

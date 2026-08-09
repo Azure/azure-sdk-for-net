@@ -15,11 +15,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="OpenAPIManagedSecurityScheme"/>. </summary>
         /// <param name="audience"> Authentication scope for managed_identity auth type. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="audience"/> is null. </exception>
-        public OpenAPIManagedSecurityScheme(string audience)
+        internal OpenAPIManagedSecurityScheme(string audience)
         {
-            Argument.AssertNotNull(audience, nameof(audience));
-
             Audience = audience;
         }
 
@@ -33,6 +30,6 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Authentication scope for managed_identity auth type. </summary>
-        public string Audience { get; set; }
+        public string Audience { get; }
     }
 }

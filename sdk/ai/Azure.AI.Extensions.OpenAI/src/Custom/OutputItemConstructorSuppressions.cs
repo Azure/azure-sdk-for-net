@@ -244,10 +244,10 @@ public partial class MemorySearchToolCall
 [CodeGenSuppress(nameof(Id))]
 public partial class OAuthConsentRequestResponseItem
 {
-    internal OAuthConsentRequestResponseItem(ResponseItemKind type, AgentReference agentReference, string responseId, string id, string internalConsentLink, string serverLabel, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
+    internal OAuthConsentRequestResponseItem(ResponseItemKind type, AgentReference agentReference, string responseId, string id, Uri consentLink, string serverLabel, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
         Id = id;
-        InternalConsentLink = internalConsentLink;
+        ConsentLink = consentLink;
         ServerLabel = serverLabel;
         _additionalBinaryDataProperties = additionalBinaryDataProperties;
     }

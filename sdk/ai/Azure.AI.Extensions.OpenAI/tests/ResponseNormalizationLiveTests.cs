@@ -403,7 +403,7 @@ public class ResponseNormalizationLiveTests : ProjectsOpenAITestBase
 
         return new BingGroundingTool(
             new BingGroundingSearchToolOptions(
-                searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnection.Id)]));
+                searchConfigurations: [new BingGroundingSearchOptions(projectConnectionId: bingConnection.Id)]));
     }
 
     private CreateResponseOptions CreateBingResponseOptions(BingGroundingTool bingGroundingTool, bool includeModel = true)

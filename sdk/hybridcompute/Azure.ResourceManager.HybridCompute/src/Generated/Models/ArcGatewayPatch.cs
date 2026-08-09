@@ -11,7 +11,7 @@ using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    /// <summary> Describes a License Update. </summary>
+    /// <summary> Describes a Gateway Update. </summary>
     public partial class ArcGatewayPatch : HybridComputeResourceUpdate
     {
         /// <summary> Initializes a new instance of <see cref="ArcGatewayPatch"/>. </summary>
@@ -43,6 +43,20 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     Properties = new GatewayUpdateProperties();
                 }
                 return Properties.AllowedFeatures;
+            }
+        }
+
+        /// <summary> Specifies the list of domain names that should bypass the gateway. Each entry must be a valid DNS hostname. </summary>
+        [WirePath("properties.gatewayBypass")]
+        public IList<string> GatewayBypass
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new GatewayUpdateProperties();
+                }
+                return Properties.GatewayBypass;
             }
         }
     }

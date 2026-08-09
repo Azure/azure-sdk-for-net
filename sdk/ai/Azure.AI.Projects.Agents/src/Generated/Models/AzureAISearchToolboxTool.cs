@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -13,7 +14,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="AzureAISearchToolboxTool"/>. </summary>
         /// <param name="azureAiSearch"> The azure ai search index resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureAiSearch"/> is null. </exception>
-        public AzureAISearchToolboxTool(AzureAISearchToolResource azureAiSearch) : base(ToolboxToolType.AzureAiSearch)
+        public AzureAISearchToolboxTool(AzureAISearchToolOptions azureAiSearch) : base(ToolboxToolType.AzureAiSearch)
         {
             Argument.AssertNotNull(azureAiSearch, nameof(azureAiSearch));
 
@@ -31,12 +32,12 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="azureAiSearch"> The azure ai search index resource. </param>
-        internal AzureAISearchToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureAISearchToolResource azureAiSearch) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
+        internal AzureAISearchToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureAISearchToolOptions azureAiSearch) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
         {
             AzureAiSearch = azureAiSearch;
         }
 
         /// <summary> The azure ai search index resource. </summary>
-        public AzureAISearchToolResource AzureAiSearch { get; set; }
+        public AzureAISearchToolOptions AzureAiSearch { get; set; }
     }
 }

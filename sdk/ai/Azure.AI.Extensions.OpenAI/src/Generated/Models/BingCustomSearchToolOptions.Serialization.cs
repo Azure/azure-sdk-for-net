@@ -77,7 +77,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             writer.WritePropertyName("search_configurations"u8);
             writer.WriteStartArray();
-            foreach (BingCustomSearchConfiguration item in SearchConfigurations)
+            foreach (BingCustomSearchOptions item in SearchConfigurations)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -124,16 +124,16 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            IList<BingCustomSearchConfiguration> searchConfigurations = default;
+            IList<BingCustomSearchOptions> searchConfigurations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("search_configurations"u8))
                 {
-                    List<BingCustomSearchConfiguration> array = new List<BingCustomSearchConfiguration>();
+                    List<BingCustomSearchOptions> array = new List<BingCustomSearchOptions>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BingCustomSearchConfiguration.DeserializeBingCustomSearchConfiguration(item, options));
+                        array.Add(BingCustomSearchOptions.DeserializeBingCustomSearchOptions(item, options));
                     }
                     searchConfigurations = array;
                     continue;

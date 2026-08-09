@@ -77,7 +77,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             writer.WritePropertyName("search_configurations"u8);
             writer.WriteStartArray();
-            foreach (BingGroundingSearchConfiguration item in SearchConfigurations)
+            foreach (BingGroundingSearchOptions item in SearchConfigurations)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -124,16 +124,16 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            IList<BingGroundingSearchConfiguration> searchConfigurations = default;
+            IList<BingGroundingSearchOptions> searchConfigurations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("search_configurations"u8))
                 {
-                    List<BingGroundingSearchConfiguration> array = new List<BingGroundingSearchConfiguration>();
+                    List<BingGroundingSearchOptions> array = new List<BingGroundingSearchOptions>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BingGroundingSearchConfiguration.DeserializeBingGroundingSearchConfiguration(item, options));
+                        array.Add(BingGroundingSearchOptions.DeserializeBingGroundingSearchOptions(item, options));
                     }
                     searchConfigurations = array;
                     continue;

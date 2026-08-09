@@ -6,17 +6,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Security details for OpenApi project connection authentication. </summary>
     public partial class OpenApiProjectConnectionAuthenticationDetails : OpenApiAuthenticationDetails, IJsonModel<OpenApiProjectConnectionAuthenticationDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="OpenApiProjectConnectionAuthenticationDetails"/> for deserialization. </summary>
-        internal OpenApiProjectConnectionAuthenticationDetails()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override OpenApiAuthenticationDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -78,6 +74,21 @@ namespace Azure.AI.Projects.Agents
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("security_scheme"u8);
             writer.WriteObjectValue(SecurityScheme, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -105,14 +116,14 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            OpenApiAuthType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            OpenApiAuthenticationKind @type = "project_connection";
             OpenApiProjectConnectionSecurityScheme securityScheme = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new OpenApiAuthType(prop.Value.GetString());
+                    @type = new OpenApiAuthenticationKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("security_scheme"u8))
@@ -125,7 +136,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OpenApiProjectConnectionAuthenticationDetails(@type, additionalBinaryDataProperties, securityScheme);
+            return new OpenApiProjectConnectionAuthenticationDetails(@type, securityScheme, additionalBinaryDataProperties);
         }
     }
 }

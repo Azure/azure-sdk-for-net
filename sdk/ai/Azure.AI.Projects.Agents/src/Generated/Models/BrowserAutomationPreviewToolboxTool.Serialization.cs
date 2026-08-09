@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -144,7 +145,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("browser_automation_preview"u8))
                 {
-                    toolParameters = BrowserAutomationToolOptions.DeserializeBrowserAutomationToolOptions(prop.Value, options);
+                    toolParameters = ModelReaderWriter.Read<BrowserAutomationToolOptions>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
