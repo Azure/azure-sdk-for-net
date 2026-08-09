@@ -30,13 +30,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="restoredLogs"> Parameters of the restore operation that initiated this table. </param>
         /// <param name="resultStatistics"> Search job execution statistics. </param>
         /// <param name="plan"> Instruct the system how to handle and charge the logs ingested to this table. </param>
+        /// <param name="protectionLevel"> The protection level of the table. Determines the default data access isolation behavior. </param>
         /// <param name="lastPlanModifiedDate"> The timestamp that table plan was last modified (UTC). </param>
         /// <param name="schema"> Table schema. </param>
         /// <param name="provisioningState"> Table's current provisioning state. If set to 'updating', indicates a resource lock due to ongoing operation, forbidding any update to the table until the ongoing operation is concluded. </param>
         /// <param name="isRetentionInDaysAsDefault"> True - Value originates from workspace retention in days, False - Customer specific. </param>
         /// <param name="isTotalRetentionInDaysAsDefault"> True - Value originates from retention in days, False - Customer specific. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TableProperties(int? retentionInDays, int? totalRetentionInDays, int? archiveRetentionInDays, OperationalInsightsTableSearchResults searchResults, OperationalInsightsTableRestoredLogs restoredLogs, OperationalInsightsTableResultStatistics resultStatistics, OperationalInsightsTablePlan? plan, string lastPlanModifiedDate, OperationalInsightsSchema schema, OperationalInsightsTableProvisioningState? provisioningState, bool? isRetentionInDaysAsDefault, bool? isTotalRetentionInDaysAsDefault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TableProperties(int? retentionInDays, int? totalRetentionInDays, int? archiveRetentionInDays, OperationalInsightsTableSearchResults searchResults, OperationalInsightsTableRestoredLogs restoredLogs, OperationalInsightsTableResultStatistics resultStatistics, OperationalInsightsTablePlan? plan, TableProtectionLevelEnum? protectionLevel, string lastPlanModifiedDate, OperationalInsightsSchema schema, OperationalInsightsTableProvisioningState? provisioningState, bool? isRetentionInDaysAsDefault, bool? isTotalRetentionInDaysAsDefault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RetentionInDays = retentionInDays;
             TotalRetentionInDays = totalRetentionInDays;
@@ -45,6 +46,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             RestoredLogs = restoredLogs;
             ResultStatistics = resultStatistics;
             Plan = plan;
+            ProtectionLevel = protectionLevel;
             LastPlanModifiedDate = lastPlanModifiedDate;
             Schema = schema;
             ProvisioningState = provisioningState;
@@ -80,6 +82,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Instruct the system how to handle and charge the logs ingested to this table. </summary>
         [WirePath("plan")]
         public OperationalInsightsTablePlan? Plan { get; set; }
+
+        /// <summary> The protection level of the table. Determines the default data access isolation behavior. </summary>
+        [WirePath("protectionLevel")]
+        public TableProtectionLevelEnum? ProtectionLevel { get; set; }
 
         /// <summary> The timestamp that table plan was last modified (UTC). </summary>
         [WirePath("lastPlanModifiedDate")]
