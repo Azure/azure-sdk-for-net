@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Tasks.Providers;
@@ -73,13 +74,81 @@ internal sealed class TaskWriteSerializer : IDisposable
         }
     }
 
-    /// <summary>Tears down the per-task gate on active-task teardown (no leaked semaphores).</summary>
+    /// <summary>Drops the per-task entry on active-task teardown.</summary>
     /// <param name="taskId">The task id.</param>
+    /// <remarks>
+    /// The entry — and its single <see cref="ActiveTaskEntry.WriteGate"/> — is detached from the map
+    /// only once nothing can still reference it: no in-flight serialized write holds a reference
+    /// (<see cref="ActiveTaskEntry.RefCount"/> is zero) and the gate is not currently held. While a
+    /// write is in progress the entry is merely marked for removal and the last releaser detaches it,
+    /// so a concurrent <see cref="UpdateAsync"/> keeps observing the SAME gate and mutual exclusion is
+    /// never broken by replacing the gate underneath a live writer. The gate is never disposed here
+    /// (a caller that fetched the entry just before detachment may still await it); deterministic
+    /// disposal happens at serializer teardown (<see cref="Dispose"/>), when no callers remain.
+    /// </remarks>
     public void Remove(string taskId)
     {
-        if (_entries.TryRemove(taskId, out ActiveTaskEntry? entry))
+        if (!_entries.TryGetValue(taskId, out ActiveTaskEntry? entry))
         {
-            entry.Dispose();
+            return;
+        }
+
+        lock (entry.ReapLock)
+        {
+            entry.RemovalRequested = true;
+            TryDetachLocked(entry);
+        }
+    }
+
+    // Pins the live per-task entry for the duration of a serialized write, incrementing its
+    // reference count so a concurrent Remove cannot detach (and a later GetOrAdd cannot replace) the
+    // gate while this write still needs it. Retries if it races a detachment of the entry it fetched.
+    private ActiveTaskEntry AcquireForWrite(string taskId)
+    {
+        while (true)
+        {
+            ActiveTaskEntry entry = _entries.GetOrAdd(taskId, static id => new ActiveTaskEntry(id));
+            lock (entry.ReapLock)
+            {
+                if (entry.Removed)
+                {
+                    // Detached from the map between GetOrAdd and here; fetch/create the live entry.
+                    continue;
+                }
+
+                // A fresh write means the task is in use again, so cancel any pending teardown from a
+                // prior Remove rather than detaching this entry out from under the new writer.
+                entry.RemovalRequested = false;
+                entry.RefCount++;
+                return entry;
+            }
+        }
+    }
+
+    // Releases a write's reference and detaches the entry if a removal was requested while it was
+    // still in use.
+    private void ReleaseAfterWrite(ActiveTaskEntry entry)
+    {
+        lock (entry.ReapLock)
+        {
+            entry.RefCount--;
+            TryDetachLocked(entry);
+        }
+    }
+
+    // Detaches the entry from the map once removal was requested AND nothing can still reference its
+    // gate: no in-flight serialized write (RefCount == 0) and the gate is not held (CurrentCount == 1,
+    // which also implies no waiters — a waiter would have driven the count to 0). The gate is not
+    // disposed (see Remove remarks). Must be called under entry.ReapLock.
+    private void TryDetachLocked(ActiveTaskEntry entry)
+    {
+        if (entry.RemovalRequested
+            && !entry.Removed
+            && entry.RefCount == 0
+            && entry.WriteGate.CurrentCount == 1)
+        {
+            entry.Removed = true;
+            _entries.TryRemove(new KeyValuePair<string, ActiveTaskEntry>(entry.TaskId, entry));
         }
     }
 
@@ -99,15 +168,22 @@ internal sealed class TaskWriteSerializer : IDisposable
         WriteIntent intent,
         CancellationToken cancellationToken = default)
     {
-        ActiveTaskEntry entry = GetOrAddEntry(taskId);
-        await entry.WriteGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        ActiveTaskEntry entry = AcquireForWrite(taskId);
         try
         {
-            return await UpdateLockedAsync(taskId, compute, intent, cancellationToken).ConfigureAwait(false);
+            await entry.WriteGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+            try
+            {
+                return await UpdateLockedAsync(taskId, compute, intent, cancellationToken).ConfigureAwait(false);
+            }
+            finally
+            {
+                entry.WriteGate.Release();
+            }
         }
         finally
         {
-            entry.WriteGate.Release();
+            ReleaseAfterWrite(entry);
         }
     }
 
@@ -147,21 +223,20 @@ internal sealed class TaskWriteSerializer : IDisposable
                     .PatchAsync(taskId, patch, ifMatch: entry.TrackedEtag, cancellationToken)
                     .ConfigureAwait(false);
                 entry.TrackedEtag = updated.Etag;
-                if (updated.Lease is not null)
+                bool refreshedLease = patch.LeaseOwner is not null && patch.LeaseDurationSeconds > 0;
+                if (updated.Lease is not null && refreshedLease)
                 {
                     entry.CachedExpiryCount = updated.Lease.ExpiryCount;
 
                     // Remember the lease identity we just wrote so the resolver can fence a
                     // same-owner takeover (a restarted process reacquiring under a new instance
                     // id) even when the lease never expired and the expiry count did not advance.
-                    if (intent == WriteIntent.LeaseHeartbeat)
-                    {
-                        entry.HeldInstanceId = updated.Lease.InstanceId;
-                        entry.HeldGeneration = updated.Lease.Generation;
-                    }
+                    entry.HeldInstanceId = updated.Lease.InstanceId;
+                    entry.HeldGeneration = updated.Lease.Generation;
 
-                    // A write that leaves the lease held refreshed it as a side effect; record the
-                    // time so the renewal loop can shadow a redundant heartbeat (Python parity).
+                    // A write that carries lease parameters refreshed the lease as a side effect;
+                    // record the time so the renewal loop can shadow a redundant heartbeat.
+                    // Payload-only writes may return a leased record without extending expires_at.
                     entry.LastRefreshUtc = DateTimeOffset.UtcNow;
                 }
 

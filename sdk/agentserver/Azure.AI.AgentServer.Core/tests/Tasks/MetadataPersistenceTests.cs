@@ -78,7 +78,7 @@ public sealed class MetadataPersistenceTests
         using var host = TaskTestHost.Create();
         host.Builder.AddMultiTurnTask<string, string>("counter", (ctx, ct) =>
         {
-            ctx.Metadata.Increment("turns");
+            ctx.Metadata["turns"] = BinaryData.FromObjectAsJson(1);
             return Task.FromResult(ctx.Input);
         });
 
@@ -106,25 +106,26 @@ public sealed class MetadataPersistenceTests
             {
                 // Same key name in two different namespaces must not collide.
                 ctx.Metadata["shared"] = BinaryData.FromString("\"from-default\"");
-                ctx.Metadata.Namespace("billing")["shared"] = BinaryData.FromString("\"from-billing\"");
+                ctx.Metadata.GetNamespace("billing")["shared"] = BinaryData.FromString("\"from-billing\"");
             }
             else
             {
                 defaultReadBack = ctx.Metadata["shared"]?.ToString();
-                billingReadBack = ctx.Metadata.Namespace("billing")["shared"]?.ToString();
+                billingReadBack = ctx.Metadata.GetNamespace("billing")["shared"]?.ToString();
 
                 // Cross-namespace leakage checks: neither namespace should see the other's private key.
-                ctx.Metadata.Namespace("billing")["only-billing"] = BinaryData.FromString("\"x\"");
+                ctx.Metadata.GetNamespace("billing")["only-billing"] = BinaryData.FromString("\"x\"");
                 defaultSawBillingKey = ctx.Metadata["only-billing"] is not null;
                 ctx.Metadata["only-default"] = BinaryData.FromString("\"y\"");
-                billingSawDefaultKey = ctx.Metadata.Namespace("billing")["only-default"] is not null;
+                billingSawDefaultKey = ctx.Metadata.GetNamespace("billing")["only-default"] is not null;
             }
 
             return Task.FromResult(ctx.Input);
         });
 
-        await host.Invoker.StartAsync<string, string>("iso", "a", new RunOptions { TaskId = "iso-1" });
+        TaskRun<string> firstRun = await host.Invoker.StartAsync<string, string>("iso", "a", new RunOptions { TaskId = "iso-1" });
         await host.WaitForStatusAsync("iso-1", "suspended", TimeSpan.FromSeconds(5));
+        await WaitForInactiveAsync(host, "iso", "iso-1", firstRun.InputId);
 
         await host.Invoker.StartAsync<string, string>("iso", "b", new RunOptions { TaskId = "iso-1" });
         await host.WaitForStatusAsync("iso-1", "suspended", TimeSpan.FromSeconds(5));
@@ -136,5 +137,21 @@ public sealed class MetadataPersistenceTests
             Assert.That(defaultSawBillingKey, Is.False, "the default namespace must not observe a key written to 'billing'");
             Assert.That(billingSawDefaultKey, Is.False, "the 'billing' namespace must not observe a key written to the default namespace");
         });
+    }
+
+    private static async Task WaitForInactiveAsync(TaskTestHost host, string name, string taskId, string inputId)
+    {
+        var sw = System.Diagnostics.Stopwatch.StartNew();
+        while (sw.Elapsed < TimeSpan.FromSeconds(5))
+        {
+            if (await host.Engine.GetActiveRunAsync<string>(name, taskId, inputId).ConfigureAwait(false) is null)
+            {
+                return;
+            }
+
+            await Task.Delay(20).ConfigureAwait(false);
+        }
+
+        throw new TimeoutException($"Task '{taskId}' input '{inputId}' remained active.");
     }
 }

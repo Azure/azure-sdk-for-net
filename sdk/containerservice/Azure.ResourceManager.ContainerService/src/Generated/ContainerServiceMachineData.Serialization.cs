@@ -60,6 +60,16 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ContainerServiceMachineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="containerServiceMachineData"> The <see cref="ContainerServiceMachineData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ContainerServiceMachineData containerServiceMachineData)
+        {
+            if (containerServiceMachineData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(containerServiceMachineData, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ContainerServiceMachineData"/> from. </param>
         internal static ContainerServiceMachineData FromResponse(Response response)
         {
@@ -91,7 +101,7 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Zones))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();

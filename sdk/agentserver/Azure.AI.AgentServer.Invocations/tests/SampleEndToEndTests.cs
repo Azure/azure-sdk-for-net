@@ -823,46 +823,55 @@ public class SampleEndToEndTests
     private static List<SseEvent> ParseSseEvents(string sseBody)
     {
         var events = new List<SseEvent>();
-        string? currentId = null;
-        string? currentEvent = null;
 
-        foreach (var line in sseBody.Split('\n'))
+        // Parse SSE by blocks (blank-line separated), field-order-independent, matching the
+        // BCL SseFormatter output (which writes `event:`/`data:`/`id:` per frame). Domain events
+        // carry a numeric `id:` (the sequence); the protocol `done`/`superseded` terminator frames
+        // carry no id and are skipped from the domain-event list.
+        string[] blocks = sseBody.Replace("\r\n", "\n").Split("\n\n", StringSplitOptions.RemoveEmptyEntries);
+        foreach (string block in blocks)
         {
-            if (line.StartsWith("id: "))
+            string? id = null;
+            string? evt = null;
+            string? data = null;
+            foreach (string line in block.Split('\n'))
             {
-                currentId = line["id: ".Length..];
-            }
-            else if (line.StartsWith("event: "))
-            {
-                currentEvent = line["event: ".Length..];
-            }
-            else if (line.StartsWith("data: "))
-            {
-                // Protocol terminator frames (`event: done` / `event: superseded`) carry an SSE
-                // `event:` field and no domain cursor — they mark clean stream-end vs. a dropped
-                // connection and are not domain events, so skip them from the domain-event list.
-                if (currentEvent is not null)
+                if (line.StartsWith("id:"))
                 {
-                    currentEvent = null;
-                    currentId = null;
-                    continue;
+                    id = line["id:".Length..].TrimStart();
                 }
+                else if (line.StartsWith("event:"))
+                {
+                    evt = line["event:".Length..].TrimStart();
+                }
+                else if (line.StartsWith("data:"))
+                {
+                    data = line["data:".Length..].TrimStart();
+                }
+            }
 
-                var data = line["data: ".Length..];
+            if (data is null || id is null)
+            {
+                // No data, or a protocol terminator frame (no domain id) — not a domain event.
+                continue;
+            }
+
+            int cursor = int.TryParse(id, out var c) ? c : 0;
+            string type = evt ?? "";
+            string content = string.Empty;
+            try
+            {
                 using var doc = JsonDocument.Parse(data);
                 var root = doc.RootElement;
-
-                int cursor = currentId != null && int.TryParse(currentId, out var c) ? c : 0;
-                string type = root.TryGetProperty("Type", out var t) ? t.GetString() ?? ""
-                    : root.TryGetProperty("type", out var t2) ? t2.GetString() ?? ""
-                    : "";
-                string content = root.TryGetProperty("Content", out var ct) ? ct.GetString() ?? ""
+                content = root.TryGetProperty("Content", out var ctp) ? ctp.GetString() ?? ""
                     : root.TryGetProperty("content", out var ct2) ? ct2.GetString() ?? ""
                     : "";
-
-                events.Add(new SseEvent(cursor, type, content));
-                currentId = null;
             }
+            catch (JsonException)
+            {
+            }
+
+            events.Add(new SseEvent(cursor, type, content));
         }
 
         return events;
@@ -881,20 +890,28 @@ public class SampleEndToEndTests
             Path.Combine(Path.GetTempPath(), "research-checkpoints-" + Guid.NewGuid().ToString("N")[..8]));
         var model = CreateMockResponsesClient();
 
+        ResilientTaskBuilder? tasks = null;
+
         var env = await CreateTestServerAsync<Snippets.SampleResilientResearchSnippets.ResilientResearchHandler>(
             services =>
             {
                 // In-memory replay with a TTL so retained streams are reclaimed.
-                services.AddEventStreams(o => o.UseInMemoryReplay(
-                    cursor: payload => ((Snippets.SampleResilientResearchSnippets.ResearchEvent)payload).Cursor,
+                services.AddAgentEventStreams(o => o.UseInMemoryReplay(
                     ttl: TimeSpan.FromMinutes(5)));
 
-                services.AddResilientTasks()
-                    .AddMultiTurnTask<Snippets.SampleResilientResearchSnippets.ResearchRequest,
+                tasks = services.AddResilientTasks();
+            },
+            configurePostBuild: app =>
+            {
+                // Provider-aware overloads were removed: resolve the singleton AgentEventStreamRegistry
+                // from the built container and capture it in the plain delegate (the registry is read
+                // lazily at invocation time, so registering post-build is fine).
+                AgentEventStreamRegistry streams = app.Services.GetRequiredService<AgentEventStreamRegistry>();
+                tasks!.AddMultiTurnTask<Snippets.SampleResilientResearchSnippets.ResearchRequest,
                              Snippets.SampleResilientResearchSnippets.ResearchResult>(
                         "research",
-                        (provider, ctx, ct) => Snippets.SampleResilientResearchSnippets.RunResearchAsync(
-                            provider.GetRequiredService<IEventStreamRegistry>(), model, "test-model", ctx, checkpointStore,
+                        (ctx, ct) => Snippets.SampleResilientResearchSnippets.RunResearchAsync(
+                            streams, model, "test-model", ctx, checkpointStore,
                             numPhases: 2, callsPerPhase: 2,
                             interPhaseCooldown: TimeSpan.Zero,
                             intraPhaseCooldown: TimeSpan.Zero,
@@ -1022,7 +1039,8 @@ public class SampleEndToEndTests
     /// </param>
     private static async Task<TestEnv> CreateTestServerAsync<THandler>(
         Action<IServiceCollection>? configureServices = null,
-        bool configureServerSide = false)
+        bool configureServerSide = false,
+        Action<WebApplication>? configurePostBuild = null)
         where THandler : InvocationHandler
     {
         var builder = WebApplication.CreateBuilder();
@@ -1032,6 +1050,7 @@ public class SampleEndToEndTests
         configureServices?.Invoke(builder.Services);
 
         var app = builder.Build();
+        configurePostBuild?.Invoke(app);
         if (configureServerSide)
         {
             app.UseWebSockets();

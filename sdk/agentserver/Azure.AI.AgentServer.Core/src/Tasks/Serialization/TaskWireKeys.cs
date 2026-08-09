@@ -64,6 +64,7 @@ internal static class TaskWireKeys
 
     // Steering keys
     public const string SteeringPendingInputs = "pending_inputs";
+    public const string SteeringPendingInputIds = "pending_input_ids";
     public const string SteeringNextInputSeq = "next_input_seq";
     public const string SteeringCancelRequested = "cancel_requested";
     public const string SteeringDrainInProgress = "drain_in_progress";

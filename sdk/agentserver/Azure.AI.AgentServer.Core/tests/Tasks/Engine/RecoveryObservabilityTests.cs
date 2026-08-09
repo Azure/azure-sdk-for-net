@@ -70,7 +70,10 @@ public sealed class RecoveryObservabilityTests
         host.SignalShutdown();
         TaskRun<string> handle = await host.Invoker.StartAsync<string, string>(
             "resumable", "payload", new RunOptions { TaskId = "reclaim-1" });
-        Assert.ThrowsAsync<TaskDeferredException>(async () => await handle);
+        // Recovery deferral is an internal lifecycle handoff: it never surfaces on the run handle.
+        // Wait for the engine to release the run, then confirm Completion stays pending.
+        await host.WaitUntilInactiveAsync(handle.TaskId, TimeSpan.FromSeconds(5));
+        Assert.That(handle.Completion.IsCompleted, Is.False, "deferral must not complete the run handle");
         Assert.That((await host.Store.GetAsync("reclaim-1"))!.Status, Is.EqualTo("in_progress"));
 
         var scanner = new RecoveryScanner(host.Engine);

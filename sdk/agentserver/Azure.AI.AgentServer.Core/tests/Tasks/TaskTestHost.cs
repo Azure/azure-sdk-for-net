@@ -23,7 +23,7 @@ internal sealed class TaskTestHost : IDisposable
         _tempDir = tempDir;
         Store = store;
         Registry = registry;
-        Builder = new ResilientTaskBuilder(registry, new TaskServiceProviderAccessor());
+        Builder = new DefaultResilientTaskBuilder(registry);
         AgentName = agentName;
         SessionId = sessionId;
         Engine = new TaskEngine(store, registry, agentName, sessionId, logger);
@@ -93,6 +93,28 @@ internal sealed class TaskTestHost : IDisposable
         }
 
         throw new TimeoutException($"Task '{taskId}' did not reach status '{status}' within {timeout}.");
+    }
+
+    /// <summary>
+    /// Polls until the engine no longer holds an in-memory active run for <paramref name="taskId"/>.
+    /// After a recovery deferral this becomes true once the lease has been released and the run
+    /// removed — a deterministic barrier replacing the old "await the handle until it faults" pattern
+    /// (deferral no longer surfaces on the run handle).
+    /// </summary>
+    public async Task WaitUntilInactiveAsync(string taskId, TimeSpan timeout)
+    {
+        var sw = System.Diagnostics.Stopwatch.StartNew();
+        while (sw.Elapsed < timeout)
+        {
+            if (!Engine.IsActive(taskId))
+            {
+                return;
+            }
+
+            await Task.Delay(20).ConfigureAwait(false);
+        }
+
+        throw new TimeoutException($"Task '{taskId}' was still active after {timeout}.");
     }
 
     public void Dispose()

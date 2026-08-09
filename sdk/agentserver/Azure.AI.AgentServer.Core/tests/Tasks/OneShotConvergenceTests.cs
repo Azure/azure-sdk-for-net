@@ -32,8 +32,8 @@ public sealed class OneShotConvergenceTests
         Assert.That(second.TaskId, Is.EqualTo(first.TaskId));
 
         gate.SetResult(true);
-        int r1 = await first;
-        int r2 = await second;
+        int r1 = await first.Completion;
+        int r2 = await second.Completion;
         Assert.That(r1, Is.EqualTo(7));
         Assert.That(r2, Is.EqualTo(7));
         Assert.That(invocations, Is.EqualTo(1), "handler should run once for converged callers");
@@ -47,7 +47,7 @@ public sealed class OneShotConvergenceTests
 
         TaskRun<string> handle = await host.Invoker.StartAsync<string, string>(
             "cleanup", "x", new RunOptions { TaskId = "clean-1" });
-        await handle;
+        await handle.Completion;
 
         await host.WaitUntilDeletedAsync("clean-1", TimeSpan.FromSeconds(5));
     }
@@ -60,10 +60,10 @@ public sealed class OneShotConvergenceTests
 
         TaskRun<string> handle = await host.Invoker.StartAsync<string, string>(
             "once", "x", new RunOptions { TaskId = "once-1" });
-        await handle;
+        await handle.Completion;
         await host.WaitUntilDeletedAsync("once-1", TimeSpan.FromSeconds(5));
 
-        Assert.ThrowsAsync<TaskConflictException>(async () =>
+        Assert.ThrowsAsync<ResilientTaskException>(async () =>
             await host.Invoker.StartAsync<string, string>("once", "y", new RunOptions { TaskId = "once-1" }));
     }
 }

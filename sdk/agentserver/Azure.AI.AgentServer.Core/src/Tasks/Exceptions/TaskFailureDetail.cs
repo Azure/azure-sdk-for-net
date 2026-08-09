@@ -10,7 +10,8 @@ namespace Azure.AI.AgentServer.Core.Tasks;
 /// <remarks>
 /// The original handler exception is also preserved as
 /// <see cref="System.Exception.InnerException"/> on the
-/// <see cref="TaskFailedException"/>. <see cref="Traceback"/> captures the same
+/// <see cref="ResilientTaskException"/> (with a <see cref="ResilientTaskErrorCode.HandlerError"/> or
+/// <see cref="ResilientTaskErrorCode.ExhaustedRetries"/> code). <see cref="Traceback"/> captures the same
 /// formatted stack trace as a string for cross-language parity with the persisted
 /// failure record.
 /// </remarks>

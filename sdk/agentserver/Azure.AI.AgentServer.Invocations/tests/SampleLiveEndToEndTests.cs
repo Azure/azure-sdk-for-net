@@ -308,20 +308,24 @@ public class SampleLiveEndToEndTests
         builder.Services.AddScoped<InvocationHandler,
             SampleResilientResearchSnippets.ResilientResearchHandler>();
 
-        builder.Services.AddEventStreams(o => o.UseInMemoryReplay(
-            cursor: payload => ((SampleResilientResearchSnippets.ResearchEvent)payload).Cursor,
+        builder.Services.AddAgentEventStreams(o => o.UseInMemoryReplay(
             ttl: TimeSpan.FromMinutes(5)));
 
-        builder.Services.AddResilientTasks()
-            .AddMultiTurnTask<SampleResilientResearchSnippets.ResearchRequest,
-                     SampleResilientResearchSnippets.ResearchResult>(
-                "research",
-                (provider, ctx, ct) => SampleResilientResearchSnippets.RunResearchAsync(
-                    provider.GetRequiredService<IEventStreamRegistry>(), model, _model, ctx, checkpointStore,
-                    numPhases: 2, callsPerPhase: 2, ct: ct),
-                steerable: true);
+        ResilientTaskBuilder tasks = builder.Services.AddResilientTasks();
 
         var app = builder.Build();
+
+        // Provider-aware overloads were removed: resolve the singleton AgentEventStreamRegistry from the
+        // built container and capture it in the plain delegate (registry is read lazily at invoke).
+        AgentEventStreamRegistry streams = app.Services.GetRequiredService<AgentEventStreamRegistry>();
+        tasks.AddMultiTurnTask<SampleResilientResearchSnippets.ResearchRequest,
+                 SampleResilientResearchSnippets.ResearchResult>(
+            "research",
+            (ctx, ct) => SampleResilientResearchSnippets.RunResearchAsync(
+                streams, model, _model, ctx, checkpointStore,
+                numPhases: 2, callsPerPhase: 2, ct: ct),
+            steerable: true);
+
         app.MapInvocationsServer();
         await app.StartAsync();
 

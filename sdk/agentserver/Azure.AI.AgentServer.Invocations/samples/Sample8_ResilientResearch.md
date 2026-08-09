@@ -8,10 +8,10 @@ This sample demonstrates a **resilient research agent** that bridges a durable, 
 - **Task per session, stream per turn**: the durable `TaskId` is `research-{sessionId}` (it spans the whole session), while each turn owns its own replayable event stream keyed by the per-turn invocation id.
 - **The invocations protocol**:
   - **`POST /invocations`** starts a new turn (or *steers* an in-flight one). With `Accept: text/event-stream` it streams live; otherwise it returns `202 Accepted` with the invocation id to resume later.
-  - **`GET /invocations/{invocationId}`** is **resume** — it re-attaches to the *existing* stream after `last_event_id` (SSE) or returns a JSON status snapshot. It is a read of durable state and **never starts a new run**.
+  - **`GET /invocations/{invocationId}`** is **resume** — it re-attaches to the *existing* stream after the opaque `last_event_id` / `Last-Event-ID` resume token or returns a JSON status snapshot. It is a read of durable state and **never starts a new run**.
   - **`POST /invocations/{invocationId}/cancel`** cancels the active run for the session.
-- **Subscribe-before-start**: the handler reserves the stream and subscribes *before* starting the task, so no early events are lost.
-- **Crash recovery & checkpointing**: per-sub-call metadata watermarks and a file-backed checkpoint store let the task resume mid-phase after a restart; the replay backing retains events so a reconnecting subscriber sees everything after its last cursor.
+- **Reserve-before-start**: the handler reserves the stream *before* starting the task, so no early events are lost.
+- **Crash recovery & checkpointing**: per-sub-call metadata watermarks and a file-backed checkpoint store let the task resume mid-phase after a restart; the replay backing retains `SseItem<string>` events so a reconnecting subscriber sees everything after its last event id.
 
 ## Prerequisites
 
@@ -33,13 +33,12 @@ var services = new ServiceCollection();
 services.AddSingleton(CreateModelClient());
 
 // Event streams with FILE-BACKED replay so a subscriber reconnecting AFTER A CRASH +
-// restart resumes from its last cursor with no gap — events persist as JSON to
+// restart resumes from its last event id with no gap — events persist to
 // ~/.agentserver/streams/<invocationId>.jsonl (the same state root tasks use) and
-// rehydrate on the next GetOrCreate. The typed overload defaults the storage directory,
-// a 10-minute TTL, and JSON serialization, so only the cursor is required. (In-memory
-// replay would lose the pre-crash buffer, defeating this sample's crash-resilience.)
-services.AddEventStreams(o => o.UseFileBackedReplay<ResearchEvent>(
-    cursor: e => e.Cursor));
+// rehydrate on the next GetOrCreate. The storage directory and a 10-minute TTL default,
+// and the event text is carried in SseItem<string>.Data, so no payload codec is needed.
+// (In-memory replay would lose the pre-crash buffer, defeating this sample's resilience.)
+services.AddAgentEventStreams(o => o.UseFileBackedReplay());
 
 // Heavy in-flight artifacts (partial phase output) live in a file-backed store;
 // metadata holds only small integer watermarks. Use a DURABLE state root under the
@@ -52,10 +51,16 @@ string stateRoot = Path.Combine(
 var checkpointStore = new CheckpointStore(stateRoot);
 
 // AddResilientTasks records registrations into a live registry that the engine reads
-// when a task is invoked. The provider-aware overload hands the handler the application
-// IServiceProvider at invocation time, so dependencies are resolved from DI without a
-// premature BuildServiceProvider() call or a forward-declared, captured provider.
-IResilientTaskBuilder tasks = services.AddResilientTasks();
+// when a task is invoked. The provider-aware overloads were removed (the service-locator
+// shape is being retired ahead of GA), so resolve the handler's singleton dependencies
+// from the built container once and capture them in the plain delegate — a DI-resolved
+// handler wrapped in the delegate. The registry is read lazily at invocation time, so
+// registering after the provider is built is fine.
+ResilientTaskBuilder tasks = services.AddResilientTasks();
+
+ServiceProvider provider = services.BuildServiceProvider();
+AgentEventStreamRegistry streams = provider.GetRequiredService<AgentEventStreamRegistry>();
+ResponsesClient model = provider.GetRequiredService<ResponsesClient>();
 
 // The resilient "research" task is session-scoped and steerable: one durable
 // chain per session (TaskId = research-{sessionId}), and a POST while a turn is
@@ -63,9 +68,9 @@ IResilientTaskBuilder tasks = services.AddResilientTasks();
 // into the event stream keyed by that turn's invocation id (carried on the input).
 tasks.AddMultiTurnTask<ResearchRequest, ResearchResult>(
     "research",
-    (provider, ctx, ct) => RunResearchAsync(
-        provider.GetRequiredService<IEventStreamRegistry>(),
-        provider.GetRequiredService<ResponsesClient>(),
+    (ctx, ct) => RunResearchAsync(
+        streams,
+        model,
         ModelDeployment,
         ctx,
         checkpointStore,
@@ -122,7 +127,7 @@ public class CheckpointStore
 
     public void Save(string key, string content)
     {
-        string path = Path.Combine(_directory, key + ".json");
+        string path = PathForKey(key);
         string tmp = path + ".tmp";
         File.WriteAllText(tmp, content);
         File.Move(tmp, path, overwrite: true);
@@ -130,15 +135,22 @@ public class CheckpointStore
 
     public string? Load(string key)
     {
-        string path = Path.Combine(_directory, key + ".json");
+        string path = PathForKey(key);
         return File.Exists(path) ? File.ReadAllText(path) : null;
     }
 
     public void Delete(string key)
     {
-        string path = Path.Combine(_directory, key + ".json");
+        string path = PathForKey(key);
         if (File.Exists(path))
             File.Delete(path);
+    }
+
+    private string PathForKey(string key)
+    {
+        byte[] hash = System.Security.Cryptography.SHA256.HashData(Encoding.UTF8.GetBytes(key));
+        string safeKey = Convert.ToHexString(hash).ToLowerInvariant();
+        return Path.Combine(_directory, safeKey + ".json");
     }
 }
 
@@ -158,7 +170,7 @@ public class CheckpointStore
 /// owns its own replayable stream while the durable task spans the whole session.
 /// </summary>
 public static async Task<ResearchResult> RunResearchAsync(
-    IEventStreamRegistry registry,
+    AgentEventStreamRegistry registry,
     ResponsesClient model,
     string modelName,
     TaskContext<ResearchRequest> ctx,
@@ -173,17 +185,26 @@ public static async Task<ResearchResult> RunResearchAsync(
     // The stream id is the per-turn invocation id (one stream per turn), while the
     // durable TaskId spans the whole session.
     string invId = ctx.Input.InvocationId;
-    IEventStream stream = await registry.GetOrCreateAsync(invId, ct);
+    AgentEventStream stream = await registry.GetOrCreateAsync(invId, ct);
 
-    // On crash recovery, last_cursor rehydrates the sequence counter.
-    int? lastCursor = await stream.GetLastCursorAsync(ct);
-    int seq = lastCursor ?? 0;
+    // On crash recovery, the last event id rehydrates the sequence counter.
+    string? lastEventId = await stream.GetLastEventIdAsync(ct);
+    int seq = lastEventId is not null && int.TryParse(lastEventId, NumberStyles.Integer, CultureInfo.InvariantCulture, out int parsed)
+        ? parsed
+        : 0;
 
     async Task<ResearchEvent> Emit(string type, string content, string? phase = null)
     {
         seq++;
         var evt = new ResearchEvent(seq, type, content, phase);
-        await stream.EmitAsync(evt, cancellationToken: ct);
+        // The caller now owns serialization: the event JSON is the SseItem's Data, the
+        // event type is the SSE event name, and the sequence is the opaque resume id.
+        await stream.EmitAsync(
+            new SseItem<string>(JsonSerializer.Serialize(evt), type)
+            {
+                EventId = seq.ToString(CultureInfo.InvariantCulture),
+            },
+            cancellationToken: ct);
         return evt;
     }
 
@@ -354,13 +375,18 @@ public static async Task<ResearchResult> RunResearchAsync(
         // sees a clean failure event before the stream drops.
         seq++;
         var failEvt = new ResearchEvent(seq, "run_failed", ex.Message);
-        await stream.EmitAsync(failEvt, close: true, cancellationToken: CancellationToken.None);
+        await stream.EmitAsync(
+            new SseItem<string>(JsonSerializer.Serialize(failEvt), "run_failed")
+            {
+                EventId = seq.ToString(CultureInfo.InvariantCulture),
+            },
+            close: true, cancellationToken: CancellationToken.None);
         throw;
     }
 }
 
 private static async Task FinishTurn(
-    IEventStream stream, TaskContext<ResearchRequest> ctx,
+    AgentEventStream stream, TaskContext<ResearchRequest> ctx,
     string invId, CheckpointStore store)
 {
     await stream.CloseAsync();
@@ -412,7 +438,7 @@ public class ResilientResearchHandler : InvocationHandler
             ?? new ResearchStartRequest("general knowledge");
 
         var registry = request.HttpContext.RequestServices
-            .GetRequiredService<IEventStreamRegistry>();
+            .GetRequiredService<AgentEventStreamRegistry>();
         var invoker = request.HttpContext.RequestServices
             .GetRequiredService<ITaskInvoker>();
 
@@ -422,7 +448,7 @@ public class ResilientResearchHandler : InvocationHandler
 
         // Reserve the per-turn stream BEFORE starting the task so a live subscriber
         // attaches without missing early events.
-        IEventStream stream = await registry.GetOrCreateAsync(invId, cancellationToken);
+        AgentEventStream stream = await registry.GetOrCreateAsync(invId, cancellationToken);
 
         // Start a new turn or steer the running one. With the same TaskId, the engine
         // transparently enqueues this input as steering while a turn is in flight.
@@ -457,14 +483,14 @@ public class ResilientResearchHandler : InvocationHandler
         CancellationToken cancellationToken)
     {
         var registry = request.HttpContext.RequestServices
-            .GetRequiredService<IEventStreamRegistry>();
+            .GetRequiredService<AgentEventStreamRegistry>();
 
-        IEventStream stream;
+        AgentEventStream stream;
         try
         {
             stream = await registry.GetAsync(invocationId, cancellationToken);
         }
-        catch (EventStreamNotFoundException)
+        catch (AgentEventStreamNotFoundException)
         {
             response.StatusCode = StatusCodes.Status404NotFound;
             return;
@@ -472,17 +498,17 @@ public class ResilientResearchHandler : InvocationHandler
 
         if (AcceptsEventStream(request))
         {
-            int? after = ResumeCursor(request);
+            string? after = ResumeEventId(request);
             await WriteSseAsync(response, stream, after, cancellationToken);
             return;
         }
 
         // JSON snapshot of progress for polling clients.
-        int? lastCursor = await stream.GetLastCursorAsync(cancellationToken);
+        string? lastEventId = await stream.GetLastEventIdAsync(cancellationToken);
         await response.WriteAsJsonAsync(new
         {
             invocation_id = invocationId,
-            last_event_id = lastCursor,
+            last_event_id = lastEventId,
         }, cancellationToken);
     }
 
@@ -510,7 +536,7 @@ public class ResilientResearchHandler : InvocationHandler
             return;
         }
 
-        await run.CancelAsync(cancellationToken);
+        await run.RequestCancellationAsync();
         response.StatusCode = StatusCodes.Status202Accepted;
         await response.WriteAsJsonAsync(new { invocation_id = invocationId, status = "cancelling" },
             cancellationToken);
@@ -520,50 +546,47 @@ public class ResilientResearchHandler : InvocationHandler
         request.Headers.TryGetValue("Accept", out var accept)
         && accept.ToString().Contains("text/event-stream", StringComparison.OrdinalIgnoreCase);
 
-    private static int? ResumeCursor(HttpRequest request)
+    private static string? ResumeEventId(HttpRequest request)
     {
-        if (request.Query.TryGetValue("last_event_id", out var q)
-            && int.TryParse(q, out var qn))
-            return qn;
-        if (request.Headers.TryGetValue("Last-Event-ID", out var h)
-            && int.TryParse(h, out var hn))
-            return hn;
+        if (request.Query.TryGetValue("last_event_id", out var q) && !string.IsNullOrEmpty(q))
+            return q.ToString();
+        if (request.Headers.TryGetValue("Last-Event-ID", out var h) && !string.IsNullOrEmpty(h))
+            return h.ToString();
         return null;
     }
 
     private static async Task WriteSseAsync(
-        HttpResponse response, IEventStream stream, int? after, CancellationToken ct)
+        HttpResponse response, AgentEventStream stream, string? after, CancellationToken ct)
     {
         response.ContentType = "text/event-stream";
         response.Headers.CacheControl = "no-cache";
 
         try
         {
-            await foreach (object evt in stream.Subscribe(after, ct))
-            {
-                var researchEvent = (ResearchEvent)evt;
-                await response.WriteAsync($"id: {researchEvent.Cursor}\n", ct);
-                await response.WriteAsync(
-                    $"data: {JsonSerializer.Serialize(researchEvent)}\n\n", ct);
-                await response.Body.FlushAsync(ct);
-            }
+            // Delegate SSE framing (id:/event:/data: lines) to the BCL SseFormatter — the
+            // stream already yields SseItem<string> with the event text in Data, the event
+            // name in EventType, and the opaque resume id in EventId.
+            await SseFormatter.WriteAsync(stream.Subscribe(after, ct), response.Body, ct);
 
             // Clean close: emit a terminal `done` frame so the client can distinguish
-            // end-of-stream from a dropped connection (Python parity: resilient_research
-            // app emits an `event: done` terminator after the subscribe loop).
-            await response.WriteAsync("event: done\n", ct);
-            await response.WriteAsync("data: {\"type\":\"done\"}\n\n", ct);
-            await response.Body.FlushAsync(ct);
+            // end-of-stream from a dropped connection.
+            await SseFormatter.WriteAsync(
+                SingleItem(new SseItem<string>("{\"type\":\"done\"}", "done")), response.Body, ct);
         }
-        catch (EventStreamNotFoundException)
+        catch (AgentEventStreamNotFoundException)
         {
             // The stream was destroyed under us (superseded / TTL-evicted). Emit a
             // `superseded` frame so the consumer can tell stream-end from "you got cut
-            // off" (Python parity: EventStreamNotFoundError -> `event: superseded`).
-            await response.WriteAsync("event: superseded\n", ct);
-            await response.WriteAsync("data: {\"type\":\"superseded\"}\n\n", ct);
-            await response.Body.FlushAsync(ct);
+            // off" (AgentEventStreamNotFoundException -> `event: superseded`).
+            await SseFormatter.WriteAsync(
+                SingleItem(new SseItem<string>("{\"type\":\"superseded\"}", "superseded")), response.Body, ct);
         }
+    }
+
+    private static async IAsyncEnumerable<SseItem<string>> SingleItem(SseItem<string> item)
+    {
+        yield return item;
+        await Task.CompletedTask;
     }
 }
 
@@ -602,17 +625,17 @@ returns `202 Accepted` with `{ "invocation_id": "...", "status": "running" }`.
 
 ### Resume after disconnect (GET)
 
-Resume is a **`GET`** against the same invocation id with `last_event_id` set to your last
-seen cursor. This re-attaches to the existing durable stream and replays everything after
-your cursor — it never starts a new run.
+Resume is a **`GET`** against the same invocation id with `last_event_id` set to the opaque
+event id you last saw. This re-attaches to the existing durable stream and replays
+everything after that event id — it never starts a new run.
 
 ```bash
 curl -N "http://localhost:8088/invocations/research-001?last_event_id=3" \
   -H "Accept: text/event-stream"
 ```
 
-The client receives only events with cursor > 3, then continues live. Omit the `Accept`
-header to instead get a JSON snapshot (`{ "invocation_id": "...", "last_event_id": N }`).
+The client receives only events after event id `"3"`, then continues live. Omit the
+`Accept` header to instead get a JSON snapshot (`{ "invocation_id": "...", "last_event_id": "3" }`).
 
 ### Cancel a turn
 
@@ -630,16 +653,18 @@ This is the **Task ⇄ Stream bridge** pattern. The durable producer is the
    starts the durable task with `TaskId = research-{sessionId}`. With the same `TaskId`, a
    `POST` while a turn is running is transparently enqueued as *steering*. The replay backing
    covers late subscribers, so attaching after the producer starts loses nothing.
-2. The producer makes **real streaming model calls** per sub-call and emits each token delta
-   as a `token` event; `id:` is set to each event's cursor.
-3. **`GET` (`GetAsync`)** is resume: it passes `last_event_id` as `after` to `Subscribe`, and
-   the replay backing fills in missed events — or returns a JSON snapshot when SSE isn't
-   requested. A late reconnect (run already finished) replays the retained stream.
+2. The producer makes **real streaming model calls** per sub-call, serializes each
+   `ResearchEvent` into `SseItem<string>.Data`, and emits it with the SSE event name and
+   opaque `EventId` resume token.
+3. **`GET` (`GetAsync`)** is resume: it passes `last_event_id` / `Last-Event-ID` as
+   `afterEventId` to `Subscribe`, and the replay backing fills in missed events — or returns
+   a JSON snapshot with `GetLastEventIdAsync` when SSE isn't requested. HTTP framing is
+   delegated to `SseFormatter`. A late reconnect (run already finished) replays the retained stream.
 4. **`POST .../cancel` (`CancelAsync`)** resolves the active run via `GetActiveRunAsync` and
    calls `CancelAsync`, which the producer observes as a cooperative wind-down.
 
-> **Cleanup:** the in-memory replay backing is configured with a `ttl` so retained streams
-> are reclaimed; long-lived hosts can also call `IEventStreamRegistry.DeleteAsync` once a
+> **Cleanup:** the file-backed replay backing uses its retention settings to reclaim
+> retained streams; long-lived hosts can also call `AgentEventStreamRegistry.DeleteAsync` once a
 > client has fully drained a stream.
 
 This composes with the [Resilient Tasks guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/tasks-guide.md) and the [Streaming guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/streaming-guide.md).

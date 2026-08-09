@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ServerSentEvents;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Streaming;
 using Azure.AI.AgentServer.Core.Streaming.Backings;
@@ -13,17 +14,17 @@ namespace Azure.AI.AgentServer.Core.Tests.Streaming;
 [TestFixture]
 public sealed class ReplayEventStreamTests
 {
-    private static EventStreamRegistry NewReplayRegistry(TimeSpan? ttl = null)
+    private static AgentEventStreamRegistry NewReplayRegistry(TimeSpan? ttl = null)
     {
-        var options = new EventStreamOptions();
-        options.UseInMemoryReplay(cursor: p => ((CursoredEvent)p).N, ttl: ttl);
-        return new EventStreamRegistry(options);
+        var options = new AgentEventStreamOptions();
+        options.UseInMemoryReplay(ttl: ttl);
+        return new InMemoryEventStreamRegistry(options);
     }
 
-    private static async Task<List<object>> DrainAsync(IEventStream stream, int? after = null)
+    private static async Task<List<SseItem<string>>> DrainAsync(AgentEventStream stream, string? afterEventId = null)
     {
-        var items = new List<object>();
-        await foreach (object item in stream.Subscribe(after))
+        var items = new List<SseItem<string>>();
+        await foreach (SseItem<string> item in stream.Subscribe(afterEventId))
         {
             items.Add(item);
         }
@@ -34,68 +35,62 @@ public sealed class ReplayEventStreamTests
     [Test]
     public async Task LateSubscriberCatchesUpFromHistory()
     {
-        EventStreamRegistry registry = NewReplayRegistry();
-        IEventStream stream = await registry.GetOrCreateAsync("r1");
+        AgentEventStreamRegistry registry = NewReplayRegistry();
+        AgentEventStream stream = await registry.GetOrCreateAsync("r1");
 
-        await stream.EmitAsync(new CursoredEvent(0));
-        await stream.EmitAsync(new CursoredEvent(1));
-        await stream.EmitAsync(new CursoredEvent(2), close: true);
+        await stream.EmitAsync(new SseItem<string>("0") { EventId = "0" });
+        await stream.EmitAsync(new SseItem<string>("1") { EventId = "1" });
+        await stream.EmitAsync(new SseItem<string>("2") { EventId = "2" }, close: true);
 
         // A subscriber attaching after close still sees the full retained history.
-        List<object> items = await DrainAsync(stream);
+        List<SseItem<string>> items = await DrainAsync(stream);
         Assert.That(items.Count, Is.EqualTo(3));
-        Assert.That(((CursoredEvent)items[0]).N, Is.EqualTo(0));
-        Assert.That(((CursoredEvent)items[2]).N, Is.EqualTo(2));
+        Assert.That(items[0].Data, Is.EqualTo("0"));
+        Assert.That(items[2].Data, Is.EqualTo("2"));
     }
 
     [Test]
     public async Task ReconnectAfterCursorDeliversOnlyLaterEvents()
     {
-        EventStreamRegistry registry = NewReplayRegistry();
-        IEventStream stream = await registry.GetOrCreateAsync("r2");
+        AgentEventStreamRegistry registry = NewReplayRegistry();
+        AgentEventStream stream = await registry.GetOrCreateAsync("r2");
 
         for (int n = 0; n < 5; n++)
         {
-            await stream.EmitAsync(new CursoredEvent(n));
+            string value = n.ToString();
+            await stream.EmitAsync(new SseItem<string>(value) { EventId = value });
         }
 
         await stream.CloseAsync();
 
-        List<object> items = await DrainAsync(stream, after: 2);
+        List<SseItem<string>> items = await DrainAsync(stream, afterEventId: "2");
         Assert.That(items.Count, Is.EqualTo(2));
-        Assert.That(((CursoredEvent)items[0]).N, Is.EqualTo(3));
-        Assert.That(((CursoredEvent)items[1]).N, Is.EqualTo(4));
+        Assert.That(items[0].Data, Is.EqualTo("3"));
+        Assert.That(items[1].Data, Is.EqualTo("4"));
     }
 
     [Test]
-    public async Task GetLastCursorReturnsHighestSeen()
+    public async Task GetLastEventIdReturnsLastSeen()
     {
-        EventStreamRegistry registry = NewReplayRegistry();
-        IEventStream stream = await registry.GetOrCreateAsync("r3");
+        AgentEventStreamRegistry registry = NewReplayRegistry();
+        AgentEventStream stream = await registry.GetOrCreateAsync("r3");
 
-        Assert.That(await stream.GetLastCursorAsync(), Is.Null);
+        Assert.That(await stream.GetLastEventIdAsync(), Is.Null);
 
-        await stream.EmitAsync(new CursoredEvent(7));
-        await stream.EmitAsync(new CursoredEvent(9));
+        await stream.EmitAsync(new SseItem<string>("7") { EventId = "7" });
+        await stream.EmitAsync(new SseItem<string>("9") { EventId = "9" });
 
-        Assert.That(await stream.GetLastCursorAsync(), Is.EqualTo(9));
+        Assert.That(await stream.GetLastEventIdAsync(), Is.EqualTo("9"));
     }
 
     [Test]
-    public async Task LiveBackingIgnoresAfterAndHasNoCursor()
+    public async Task LiveBackingIgnoresAfterAndHasNoEventId()
     {
-        var options = new EventStreamOptions();
+        var options = new AgentEventStreamOptions();
         options.UseInMemoryLive();
-        var registry = new EventStreamRegistry(options);
-        IEventStream stream = await registry.GetOrCreateAsync("r4");
+        var registry = new InMemoryEventStreamRegistry(options);
+        AgentEventStream stream = await registry.GetOrCreateAsync("r4");
 
-        Assert.That(await stream.GetLastCursorAsync(), Is.Null);
-    }
-
-    private sealed class CursoredEvent
-    {
-        public CursoredEvent(int n) => N = n;
-
-        public int N { get; }
+        Assert.That(await stream.GetLastEventIdAsync(), Is.Null);
     }
 }

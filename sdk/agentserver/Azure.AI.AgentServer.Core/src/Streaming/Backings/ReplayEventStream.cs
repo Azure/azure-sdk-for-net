@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ServerSentEvents;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Channels;
@@ -12,27 +13,25 @@ namespace Azure.AI.AgentServer.Core.Streaming.Backings;
 
 /// <summary>
 /// The in-memory replay backing: retains emitted events (with optional per-event
-/// TTL) so late subscribers catch up and reconnecting clients resume after a
-/// cursor. A close-clock auto-tombstone fires <c>ttl</c> after close. Mirrors
-/// Python's in-memory replay backing.
+/// TTL) so late subscribers catch up and reconnecting clients resume after an
+/// <see cref="SseItem{T}.EventId"/>. A close-clock auto-tombstone fires <c>ttl</c>
+/// after close.
 /// </summary>
-internal class ReplayEventStream : IEventStream, IDestroyableStream
+internal class ReplayEventStream : AgentEventStream, IDestroyableStream
 {
     private readonly object _gate = new();
     private readonly SubscriberHub _hub = new();
     private readonly List<HistoryEntry> _history = new();
-    private readonly Func<object, int>? _cursor;
     private readonly double? _ttlSeconds;
     private readonly Action _onDestroy;
 
     private StreamState _state = StreamState.Active;
-    private int? _lastCursor;
+    private string? _lastEventId;
     private double _closeTime;
 
-    public ReplayEventStream(string id, Func<object, int>? cursor, TimeSpan? ttl, Action onDestroy)
+    public ReplayEventStream(string id, TimeSpan? ttl, Action onDestroy)
     {
         Id = id;
-        _cursor = cursor;
         _ttlSeconds = ttl?.TotalSeconds;
         _onDestroy = onDestroy;
     }
@@ -40,10 +39,7 @@ internal class ReplayEventStream : IEventStream, IDestroyableStream
     /// <summary>The stream id.</summary>
     protected string Id { get; }
 
-    /// <summary>Whether a cursor function is configured.</summary>
-    protected bool HasCursor => _cursor is not null;
-
-    public ValueTask EmitAsync(object payload, bool close = false, CancellationToken cancellationToken = default)
+    public override ValueTask EmitAsync(SseItem<string> item, bool close = false, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
         bool selfDestroyed = false;
@@ -55,15 +51,13 @@ internal class ReplayEventStream : IEventStream, IDestroyableStream
                 selfDestroyed = EvictExpired(now);
                 if (_state == StreamState.Destroyed)
                 {
-                    throw new EventStreamNotFoundException($"Stream '{Id}' is not a live stream.");
+                    throw new AgentEventStreamNotFoundException($"Stream '{Id}' is not a live stream.");
                 }
 
                 if (_state == StreamState.Closed)
                 {
-                    throw new EventStreamClosedException($"Stream '{Id}' is closed; emit is not allowed.");
+                    throw new AgentEventStreamClosedException($"Stream '{Id}' is closed; emit is not allowed.");
                 }
-
-                int? cursor = _cursor?.Invoke(payload);
 
                 // Persist before mutating in-memory state so a disk failure does not leave
                 // an event that subscribers can see but that never reached durable storage. On
@@ -71,20 +65,17 @@ internal class ReplayEventStream : IEventStream, IDestroyableStream
                 // crash cannot leave the event without its terminal sentinel.
                 if (close)
                 {
-                    PersistEmitAndClose(payload, now);
+                    PersistEmitAndClose(item, now);
                 }
                 else
                 {
-                    PersistEmit(payload, now);
+                    PersistEmit(item, now);
                 }
 
-                _history.Add(new HistoryEntry(payload, now, cursor));
-                if (cursor.HasValue)
-                {
-                    _lastCursor = _lastCursor.HasValue ? Math.Max(_lastCursor.Value, cursor.Value) : cursor.Value;
-                }
+                _history.Add(new HistoryEntry(item, now));
+                _lastEventId = item.EventId ?? _lastEventId;
 
-                _hub.Publish(payload);
+                _hub.Publish(item);
 
                 if (close)
                 {
@@ -105,7 +96,7 @@ internal class ReplayEventStream : IEventStream, IDestroyableStream
         return default;
     }
 
-    public ValueTask CloseAsync(CancellationToken cancellationToken = default)
+    public override ValueTask CloseAsync(CancellationToken cancellationToken = default)
     {
         lock (_gate)
         {
@@ -121,29 +112,29 @@ internal class ReplayEventStream : IEventStream, IDestroyableStream
         return default;
     }
 
-    public IAsyncEnumerable<object> Subscribe(
-        int? after = null, CancellationToken cancellationToken = default)
+    public override IAsyncEnumerable<SseItem<string>> Subscribe(
+        string? afterEventId = null, CancellationToken cancellationToken = default)
     {
-        // Validate eagerly (mirroring Python's synchronous `subscribe`): a NotFound for a destroyed
+        // Validate eagerly (mirroring a synchronous `subscribe`): a NotFound for a destroyed
         // stream must surface at the call site, not be deferred until the caller begins enumerating.
-        Channel<object> channel = BeginSubscription(after, out List<object> backlog);
+        Channel<SseItem<string>> channel = BeginSubscription(afterEventId, out List<SseItem<string>> backlog);
         return Iterate(channel, backlog, cancellationToken);
     }
 
-    private async IAsyncEnumerable<object> Iterate(
-        Channel<object> channel,
-        List<object> backlog,
+    private async IAsyncEnumerable<SseItem<string>> Iterate(
+        Channel<SseItem<string>> channel,
+        List<SseItem<string>> backlog,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         try
         {
-            foreach (object item in backlog)
+            foreach (SseItem<string> item in backlog)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 yield return item;
             }
 
-            await foreach (object item in channel.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
+            await foreach (SseItem<string> item in channel.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
             {
                 yield return item;
             }
@@ -157,7 +148,7 @@ internal class ReplayEventStream : IEventStream, IDestroyableStream
         }
     }
 
-    private Channel<object> BeginSubscription(int? after, out List<object> backlog)
+    private Channel<SseItem<string>> BeginSubscription(string? afterEventId, out List<SseItem<string>> backlog)
     {
         bool selfDestroyed = false;
         try
@@ -168,12 +159,12 @@ internal class ReplayEventStream : IEventStream, IDestroyableStream
                 selfDestroyed = EvictExpired(now);
                 if (_state == StreamState.Destroyed)
                 {
-                    backlog = new List<object>();
-                    throw new EventStreamNotFoundException($"Stream '{Id}' is not a live stream.");
+                    backlog = new List<SseItem<string>>();
+                    throw new AgentEventStreamNotFoundException($"Stream '{Id}' is not a live stream.");
                 }
 
-                Channel<object> channel = _hub.Add();
-                backlog = SnapshotHistory(after);
+                Channel<SseItem<string>> channel = _hub.Add();
+                backlog = SnapshotHistory(afterEventId);
                 if (_state == StreamState.Closed)
                 {
                     _hub.Remove(channel);
@@ -192,7 +183,7 @@ internal class ReplayEventStream : IEventStream, IDestroyableStream
         }
     }
 
-    public ValueTask<int?> GetLastCursorAsync(CancellationToken cancellationToken = default)
+    public override ValueTask<string?> GetLastEventIdAsync(CancellationToken cancellationToken = default)
     {
         // Side-effect-free: never evicts and never triggers the close-clock tombstone,
         // so a recovering producer can read it during the close window.
@@ -200,10 +191,10 @@ internal class ReplayEventStream : IEventStream, IDestroyableStream
         {
             if (_state == StreamState.Destroyed)
             {
-                throw new EventStreamNotFoundException($"Stream '{Id}' is not a live stream.");
+                throw new AgentEventStreamNotFoundException($"Stream '{Id}' is not a live stream.");
             }
 
-            return new ValueTask<int?>(_lastCursor);
+            return new ValueTask<string?>(_lastEventId);
         }
     }
 
@@ -242,7 +233,7 @@ internal class ReplayEventStream : IEventStream, IDestroyableStream
     }
 
     /// <summary>Persists an emitted event (no-op for the in-memory backing).</summary>
-    protected virtual void PersistEmit(object payload, double emitTime)
+    protected virtual void PersistEmit(SseItem<string> item, double emitTime)
     {
     }
 
@@ -257,9 +248,9 @@ internal class ReplayEventStream : IEventStream, IDestroyableStream
     /// <see cref="PersistClose"/>; durable backings override this to append both records in one
     /// write+flush so a crash cannot leave the event without its terminal marker.
     /// </summary>
-    protected virtual void PersistEmitAndClose(object payload, double emitTime)
+    protected virtual void PersistEmitAndClose(SseItem<string> item, double emitTime)
     {
-        PersistEmit(payload, emitTime);
+        PersistEmit(item, emitTime);
         PersistClose();
     }
 
@@ -269,14 +260,10 @@ internal class ReplayEventStream : IEventStream, IDestroyableStream
     }
 
     /// <summary>Seeds a rehydrated event into history (used by the file-backed subclass on construction).</summary>
-    protected void SeedHistory(object payload, double emitTime)
+    protected void SeedHistory(SseItem<string> item, double emitTime)
     {
-        int? cursor = _cursor?.Invoke(payload);
-        _history.Add(new HistoryEntry(payload, emitTime, cursor));
-        if (cursor.HasValue)
-        {
-            _lastCursor = _lastCursor.HasValue ? Math.Max(_lastCursor.Value, cursor.Value) : cursor.Value;
-        }
+        _history.Add(new HistoryEntry(item, emitTime));
+        _lastEventId = item.EventId ?? _lastEventId;
     }
 
     /// <summary>Marks a rehydrated stream as already closed (terminal sentinel was present).</summary>
@@ -286,29 +273,45 @@ internal class ReplayEventStream : IEventStream, IDestroyableStream
         _closeTime = _history.Count > 0 ? _history[_history.Count - 1].EmitTime : Now();
     }
 
-    /// <summary>Returns the still-retained events (payload + emit time) for on-disk compaction. Must be called under the backing lock.</summary>
-    protected IReadOnlyList<KeyValuePair<object, double>> RetainedForCompaction()
+    /// <summary>Returns the still-retained events (item + emit time) for on-disk compaction. Must be called under the backing lock.</summary>
+    protected IReadOnlyList<KeyValuePair<SseItem<string>, double>> RetainedForCompaction()
     {
-        var list = new List<KeyValuePair<object, double>>(_history.Count);
+        var list = new List<KeyValuePair<SseItem<string>, double>>(_history.Count);
         foreach (HistoryEntry entry in _history)
         {
-            list.Add(new KeyValuePair<object, double>(entry.Payload, entry.EmitTime));
+            list.Add(new KeyValuePair<SseItem<string>, double>(entry.Item, entry.EmitTime));
         }
 
         return list;
     }
 
-    private List<object> SnapshotHistory(int? after)
+    // Resume strictly after the retained item whose EventId matches afterEventId. A null id yields
+    // all retained items; an id no longer in the retained window (evicted, or never seen) replays
+    // all retained items — best-effort, matching SSE Last-Event-ID semantics.
+    private List<SseItem<string>> SnapshotHistory(string? afterEventId)
     {
-        var snapshot = new List<object>(_history.Count);
-        foreach (HistoryEntry entry in _history)
+        int startIndex = 0;
+        if (afterEventId is not null)
         {
-            if (HasCursor && after.HasValue && entry.Cursor.HasValue && entry.Cursor.Value <= after.Value)
+            int matchIndex = -1;
+            for (int i = 0; i < _history.Count; i++)
             {
-                continue;
+                if (string.Equals(_history[i].Item.EventId, afterEventId, StringComparison.Ordinal))
+                {
+                    matchIndex = i;
+                }
             }
 
-            snapshot.Add(entry.Payload);
+            if (matchIndex >= 0)
+            {
+                startIndex = matchIndex + 1;
+            }
+        }
+
+        var snapshot = new List<SseItem<string>>(_history.Count - startIndex);
+        for (int i = startIndex; i < _history.Count; i++)
+        {
+            snapshot.Add(_history[i].Item);
         }
 
         return snapshot;
@@ -364,17 +367,14 @@ internal class ReplayEventStream : IEventStream, IDestroyableStream
 
     private readonly struct HistoryEntry
     {
-        public HistoryEntry(object payload, double emitTime, int? cursor)
+        public HistoryEntry(SseItem<string> item, double emitTime)
         {
-            Payload = payload;
+            Item = item;
             EmitTime = emitTime;
-            Cursor = cursor;
         }
 
-        public object Payload { get; }
+        public SseItem<string> Item { get; }
 
         public double EmitTime { get; }
-
-        public int? Cursor { get; }
     }
 }

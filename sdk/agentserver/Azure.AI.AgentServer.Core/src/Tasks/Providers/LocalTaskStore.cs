@@ -123,9 +123,61 @@ internal sealed class LocalTaskStore : ITaskStore
 
     private static void WriteAllTextShared(string path, string contents)
     {
-        using var stream = new FileStream(path, FileMode.Create, FileAccess.Write, ShareWithDelete);
-        using var writer = new StreamWriter(stream, new UTF8Encoding(false));
-        writer.Write(contents);
+        // Write to a sibling temp file then atomically replace the target, so a crash mid-write
+        // can never leave a truncated/half-written record that GetAsync would parse as a
+        // JsonException and treat as "not found" (leaving the task id permanently unusable).
+        // The temp file is created in the same directory to keep File.Move atomic (same volume),
+        // and ShareWithDelete lets a concurrent reader/delete race the replace (POSIX-like).
+        string tempPath = path + ".tmp-" + Guid.NewGuid().ToString("N");
+        try
+        {
+            using (var stream = new FileStream(tempPath, FileMode.Create, FileAccess.Write, ShareWithDelete))
+            using (var writer = new StreamWriter(stream, new UTF8Encoding(false)))
+            {
+                writer.Write(contents);
+            }
+
+            MoveWithRetry(tempPath, path);
+        }
+        catch
+        {
+            try
+            {
+                if (File.Exists(tempPath))
+                {
+                    File.Delete(tempPath);
+                }
+            }
+            catch (IOException)
+            {
+                // Best-effort cleanup of the temp file; the original target is untouched.
+            }
+
+            throw;
+        }
+    }
+
+    // Atomically replaces the target with a bounded retry. On Windows File.Move(overwrite) can fail
+    // transiently with UnauthorizedAccessException or a sharing IOException when an external handle
+    // (antivirus / search indexer) or a concurrent reader momentarily holds the target — even though
+    // our own handles use FileShare.Delete. These conditions clear within milliseconds, so a short
+    // bounded backoff lets the replace succeed instead of surfacing a spurious write failure. On
+    // POSIX the rename is atomic and never hits this, so the first attempt succeeds.
+    private static void MoveWithRetry(string tempPath, string path)
+    {
+        const int maxAttempts = 10;
+        for (int attempt = 1; ; attempt++)
+        {
+            try
+            {
+                File.Move(tempPath, path, overwrite: true);
+                return;
+            }
+            catch (Exception ex) when ((ex is UnauthorizedAccessException || ex is IOException) && attempt < maxAttempts)
+            {
+                Thread.Sleep(attempt * 5);
+            }
+        }
     }
 
     private static string GenerateEtag(TaskRecord task)
@@ -189,12 +241,6 @@ internal sealed class LocalTaskStore : ITaskStore
                 "Lease parameters must not be provided when status is pending.", taskId);
         }
 
-        if (FindTaskPath(taskId) is not null)
-        {
-            throw new TaskStoreException(
-                TaskStoreException.CodeTaskAlreadyExists, 409, $"Task '{taskId}' already exists.", taskId);
-        }
-
         Lease? lease = null;
         string? startedAt = null;
         string? completedAt = status == TaskWireKeys.StatusCompleted ? now : null;
@@ -243,7 +289,20 @@ internal sealed class LocalTaskStore : ITaskStore
             }
         }
 
-        WriteTask(record);
+        // Serialize the existence check and the write under the same lock as Patch/Delete so two
+        // concurrent creates for the same id cannot both pass the check and have the later write
+        // truncate the earlier record; the second caller observes the 409 instead.
+        lock (_ioLock)
+        {
+            if (FindTaskPath(taskId) is not null)
+            {
+                throw new TaskStoreException(
+                    TaskStoreException.CodeTaskAlreadyExists, 409, $"Task '{taskId}' already exists.", taskId);
+            }
+
+            WriteTask(record);
+        }
+
         return Task.FromResult(record);
     }
 

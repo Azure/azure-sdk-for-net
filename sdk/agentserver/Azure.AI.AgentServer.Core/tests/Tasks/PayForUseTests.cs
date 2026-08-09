@@ -35,7 +35,7 @@ public sealed class PayForUseTests
             typeof(TaskRunState<string>),
             typeof(RunOptions),
             typeof(TaskMetadata),
-            typeof(ResilientTaskBuilder),
+            typeof(DefaultResilientTaskBuilder),
         };
 
         foreach (Type type in taskTypes)

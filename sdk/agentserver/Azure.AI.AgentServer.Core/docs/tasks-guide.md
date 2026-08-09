@@ -120,7 +120,7 @@ There are two shapes:
 | `DeleteAsync(taskId)` | not available (auto-cleans on terminal) | available — chain-level delete |
 | Handler `return` | finishes the run; the awaited `TaskRun<TOutput>` resolves | finishes the **turn**; chain parks; caller receives the value |
 | Steering queue | n/a | `steerable: true` opt-in |
-| Concurrent start on same `TaskId` while in-flight | converges on the in-flight run | if `steerable: true`: queued; else `TaskConflictException` |
+| Concurrent start on same `TaskId` while in-flight | converges on the in-flight run | if `steerable: true`: queued; else a `ResilientTaskException` (`Conflict`) |
 
 A **one-shot** task takes one input, produces one output, and is then terminal. A
 **multi-turn** task keeps the same `TaskId` across many inputs (think: a
@@ -188,7 +188,7 @@ await multiTurn.DeleteAsync(chatId);
   `ArgumentException`. For a **one-shot** task, two invocations with the same `TaskId`
   converge to the same run; for a **multi-turn** task the `TaskId` identifies the chain,
   and a concurrent start on an in-flight chain either queues as the next turn (steerable)
-  or throws `TaskConflictException` (non-steerable).
+  or throws a `ResilientTaskException` with `ErrorCode.Conflict` (non-steerable).
 - **`InputId`** — the resilient name of one input within the task. Used for idempotent
   retries and for the last-input-id precondition (§4.8, §6.6).
   - One-shot: defaults to the `TaskId` (one run, one input — the 1:1 invariant).
@@ -226,11 +226,11 @@ Inputs and outputs are your own types, serialized to JSON.
   recovery rests on: a recovered handler is invoked with the same `Input` it would
   have seen in the lost lifetime.
 - **Outputs are not persisted.** When the handler returns, the value resolves the
-  awaiting caller's `GetResultAsync()` — that is the only place it appears. If you
+  awaiting caller's `Completion` task — that is the only place it appears. If you
   want a per-turn artifact to survive a crash, write it to `Metadata` (or your own
   store) *before* you return.
 - **Per-input size limit ≈ 10 MiB** (after JSON serialization). A larger input is
-  rejected with `InputTooLargeException` at the caller, before any network round-trip.
+  rejected with `ArgumentException` at the caller, before any network round-trip.
   Externalize bigger payloads (blob store + reference). Inputs above an internal
   inline threshold are transparently promoted to an out-of-band attachment by the
   framework — you do not manage that, but it is why the ceiling is a serialized-size
@@ -277,7 +277,7 @@ if (ctx.Metadata.TryGetValue("charged", out var raw) && raw.ToObjectFromJson<boo
 Keys beginning with `_` are reserved for the framework **by convention** (SOT §17) but
 are not rejected by the primitive — metadata is namespaced under `payload["metadata"]`, so
 it cannot collide with the framework's top-level `_`-prefixed payload keys. Use
-`Metadata.Namespace("billing")` for an isolated sibling namespace with the same surface.
+`Metadata.GetNamespace("billing")` for an isolated sibling namespace with the same surface.
 
 ### 4.6 The result handle (`TaskRun<TOutput>`)
 
@@ -289,9 +289,9 @@ TaskRun<string> run = await invoker.StartAsync<string, string>("echo", "hi");
 run.TaskId;            // the run's id
 run.InputId;          // the input id assigned to this run
 run.IsQueued;         // true if this input was queued as steering, not a fresh run
-await run;            // await the handle directly to get the result
-string r = await run.GetResultAsync();   // equivalent
-await run.CancelAsync();                  // request cancellation
+string r = await run.Completion;                        // await the result
+string c = await run.Completion.WaitAsync(token);       // cancel only your wait
+await run.RequestCancellationAsync();                   // request cancellation of the run
 ```
 
 `RunAsync` is the convenience that starts a run and awaits it to completion in one
@@ -318,7 +318,7 @@ var r2 = await invoker.StartAsync<string, string>(
     new RunOptions { TaskId = chatId });
 ```
 
-If the steering queue is full, the enqueue fails with `SteeringQueueFullException`.
+If the steering queue is full, the enqueue fails with a `ResilientTaskException` whose `ErrorCode` is `QueueFull`.
 
 **Reacting to a steering nudge.** When an input is queued for a running turn, the
 library bumps `ctx.PendingInputCount` **and signals `ctx.Cancellation`** so a handler
@@ -356,8 +356,8 @@ If you let the `OperationCanceledException` from a bare nudge escape the handler
 turn ends without a result and the queued input still drains as the next turn — but
 because a bare nudge carries no cancel cause (no explicit cancel and no timeout), the
 escaping exception is treated as a **handler failure**, so the interrupted turn's caller
-observes a `TaskFailedException` (subject to any retry policy) rather than a clean
-result. Catch the nudge and return cooperatively instead.
+observes a `ResilientTaskException` (`ErrorCode.HandlerError`, subject to any retry policy)
+rather than a clean result. Catch the nudge and return cooperatively instead.
 
 > **Note (Python parity):** the Python library signals steering through an
 > `asyncio.Event`, so a handler's in-flight `await` completes naturally and the handler
@@ -382,22 +382,23 @@ not counted as an extra retry. Only an actual handler *throw* advances the count
 The counter also resets at every new turn boundary (multi-turn), so each turn starts
 with a fresh budget.
 
-When retries are exhausted the invoker throws `TaskFailedException`, whose `Error`
+When retries are exhausted the invoker throws a `ResilientTaskException` (`ErrorCode.ExhaustedRetries`;
+a single unretried throw uses `ErrorCode.HandlerError`), whose `Failure`
 (`TaskFailureDetail`) reports the `Kind` (`HandlerError` or `ExhaustedRetries`),
 the `ErrorType`, `Message`, `Attempts`, and the last error.
 
 ```csharp
-var policy = TaskRetryPolicy.ExponentialBackoff(maxAttempts: 5);
+var policy = new TaskRetryPolicy { MaxAttempts = 5 };
 builder.AddTask<Order, Receipt>("charge", handler, o => o.Retry = policy);
 ```
 
-`TaskRetryPolicy` ships with `ExponentialBackoff`, `FixedDelay`, `LinearBackoff`, and
-`NoRetry` factories. You can scope which exceptions are retryable with `RetryOn`.
+`TaskRetryPolicy` expresses the delay between attempts as an `Azure.Core.DelayStrategy` (the `Delay`
+property, defaulting to exponential); use `DelayStrategy.CreateExponentialDelayStrategy`,
+`DelayStrategy.CreateFixedDelayStrategy`, or a custom derived strategy for linear/service-specific
+backoff. You can scope which exceptions are retryable with `RetryOn`.
 
-**Hard limits — invalid values throw.** Two values are hard-capped so a misconfiguration cannot
-cause a task turn to retry unboundedly: `MaxAttempts` must be **1–10** (inclusive) and `MaxDelay`
-must be **0–1 hour**. A value outside those ranges — like a negative `InitialDelay`/`MaxDelay`, a
-`MaxAttempts` below 1 or above 10, a `MaxDelay` above 1 hour, or a `BackoffCoefficient` below 1.0 —
+**Hard limit — invalid values throw.** `MaxAttempts` is hard-capped so a misconfiguration cannot
+cause a task turn to retry unboundedly: it must be **1–10** (inclusive); a value below 1 or above 10
 throws `ArgumentOutOfRangeException` when the `TaskRetryPolicy` is constructed. These are configuration
 bugs, so they fail fast rather than being silently clamped. Combined with the per-turn timeout
 (§4.10), the bounded attempt count and delay keep the total time spent retrying a single turn
@@ -405,9 +406,9 @@ bounded.
 
 ### 4.9 Cancellation
 
-`await run.CancelAsync()` requests cancellation. Inside the handler this surfaces as
+`await run.RequestCancellationAsync()` requests cancellation. Inside the handler this surfaces as
 `ctx.Cancellation` being signaled and `ctx.CancelRequested == true`. A cancelled run
-completes by throwing `TaskCancelledException` to the awaiting caller. Honor
+completes by throwing `OperationCanceledException` to the awaiting caller. Honor
 cancellation by passing the token into your async work.
 
 ### 4.10 Timeout
@@ -449,13 +450,18 @@ builder.AddTask<Doc, Summary>("summarize", handler, o => o.Timeout = TimeSpan.Fr
 
 When the host begins a graceful shutdown, `ctx.Shutdown` is signaled. A long-running
 handler should stop promptly and **leave its work resumable** by calling
-`ctx.ExitForRecoveryAsync()`, which unwinds the handler without a terminal result so
-the run is picked up and continued elsewhere (or after restart):
+`ctx.ExitForRecoveryAsync()` and then returning. The call does not throw — it flushes
+metadata, releases the lease, and sets a signal the engine reconciles once the handler
+returns; the run is then picked up and continued elsewhere (or after restart). Deferral
+is a lifecycle handoff, not a failure: it never surfaces as an exception on the run handle
+(the handle's `Completion` simply stays pending; a caller can bail its own wait with
+`Completion.WaitAsync(shutdownToken)`).
 
 ```csharp
 if (ctx.Shutdown.IsCancellationRequested)
 {
-    await ctx.ExitForRecoveryAsync();   // throws to unwind; resumes later
+    await ctx.ExitForRecoveryAsync();   // no throw: signals deferral, then return
+    return default!;                    // returned value is ignored for a deferred turn
 }
 ```
 
@@ -478,20 +484,24 @@ no-op if the chain is already gone.
 ### 5.1 Registration
 
 ```csharp
-IResilientTaskBuilder AddResilientTasks(this IServiceCollection services,
+ResilientTaskBuilder AddResilientTasks(this IServiceCollection services,
                                         TokenCredential? credential = null);
 
-IResilientTaskBuilder AddTask<TInput, TOutput>(
+ResilientTaskBuilder AddTask<TInput, TOutput>(
     string name,
     Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
     Action<TaskRegistrationOptions>? configure = null);
 
-IResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(
+ResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(
     string name,
     Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
     bool steerable = false,
     Action<TaskRegistrationOptions>? configure = null);
 ```
+
+`credential` is required when the host is running in Foundry hosted mode and the
+framework selects hosted task storage. Local development uses the file-backed
+store and does not require a credential.
 
 ### 5.2 `ITaskInvoker`
 
@@ -513,8 +523,8 @@ turn's `inputId` and want that turn's handle; it is required for multi-turn task
 
 ### 5.3 `TaskRun<TOutput>`
 
-`TaskId`, `InputId`, `Metadata`, `IsQueued`, `GetResultAsync(ct)`, `CancelAsync(ct)`,
-and `GetAwaiter()` (so you can `await` the handle directly).
+`TaskId`, `InputId`, `IsQueued`, `Completion` (a `Task<TOutput>` — await it for the result,
+or `Completion.WaitAsync(token)` to cancel only your wait), and `RequestCancellationAsync()`.
 
 ### 5.4 `TaskContext<TInput>`
 
@@ -532,22 +542,24 @@ string? IfLastInputId;   // precondition: require the task's last input id to eq
 
 | Exception | When |
 |---|---|
-| `TaskException` | base type for all task errors |
-| `TaskFailedException` | handler failed / retries exhausted (carries `TaskFailureDetail`) |
-| `TaskCancelledException` | the run was cancelled |
-| `TaskConflictException` | the task is in a state that forbids the operation (carries `CurrentStatus`) |
-| `TaskDeferredException` | thrown by `ExitForRecoveryAsync` to unwind for later recovery |
-| `InputTooLargeException` | the input exceeded the allowed size |
-| `LastInputIdPreconditionFailedException` | `IfLastInputId` did not match (carries `ActualLastInputId`) |
-| `SteeringQueueFullException` | a steering input could not be queued |
+| `ResilientTaskException` | the single task-framework exception; carries an `ErrorCode` and code-specific nullable data |
+| &nbsp;&nbsp;`ErrorCode.HandlerError` | the handler threw and was not retried (carries `Failure` = `TaskFailureDetail`) |
+| &nbsp;&nbsp;`ErrorCode.ExhaustedRetries` | the handler exhausted its retry budget (carries `Failure`) |
+| &nbsp;&nbsp;`ErrorCode.Conflict` | the task is in a state that forbids the operation (carries `CurrentStatus`) |
+| &nbsp;&nbsp;`ErrorCode.PreconditionFailed` | `IfLastInputId` did not match (carries `ActualLastInputId`) |
+| &nbsp;&nbsp;`ErrorCode.QueueFull` | a steering input could not be queued |
+| `ArgumentException` | invalid arguments, including an input that exceeds the allowed size |
+| `OperationCanceledException` | the run was cancelled |
+
+Recovery deferral (`ExitForRecoveryAsync`) is an internal lifecycle handoff and is **not**
+represented by an exception.
 
 ### 5.7 `TaskRetryPolicy`
 
-Fields: `InitialDelay`, `BackoffCoefficient`, `MaxDelay`, `MaxAttempts`, `Jitter`,
-`RetryOn`. Factories: `ExponentialBackoff`, `FixedDelay`, `LinearBackoff`, `NoRetry`.
-`MaxAttempts` must be 1–10 and `MaxDelay` 0–1 hour; a value outside those hard caps — like
-negative delays, `MaxAttempts` < 1 or > 10, `MaxDelay` > 1 hour, or `BackoffCoefficient` < 1.0 —
-throws `ArgumentOutOfRangeException` at construction. Retries are off unless a policy
+Members: `MaxAttempts`, `Delay` (an `Azure.Core.DelayStrategy`), and `RetryOn`.
+`MaxAttempts` must be 1–10; a value outside that cap throws `ArgumentOutOfRangeException` at
+construction. The delay bounds (max delay, jitter) are owned by the composed `DelayStrategy`.
+Retries are off unless a policy
 is set (§4.8).
 
 ### 5.8 `TaskMetadata`
@@ -638,7 +650,10 @@ builder.AddTask<Job, Result>("batch", async (ctx, ct) =>
     foreach (var item in ctx.Input.Items)
     {
         if (ctx.Shutdown.IsCancellationRequested)
-            await ctx.ExitForRecoveryAsync();    // resume the remaining items later
+        {
+            await ctx.ExitForRecoveryAsync();    // signal deferral, then return to resume later
+            return Result.Done;                  // returned value is ignored for a deferred turn
+        }
         await ProcessAsync(item, ct);
     }
     return Result.Done;
@@ -651,14 +666,14 @@ builder.AddTask<Job, Result>("batch", async (ctx, ct) =>
 // Another caller already started "echo" with this taskId; attach to it.
 TaskRun<string>? existing = await invoker.GetActiveRunAsync<string>("echo", taskId);
 if (existing is not null)
-    string result = await existing;
+    string result = await existing.Completion;
 ```
 
 ### 6.6 Optimistic concurrency on the input queue
 
 Use `IfLastInputId` to make a turn conditional on the chain not having advanced since
-you last observed it. If another input landed first, the call fails with
-`LastInputIdPreconditionFailedException`, whose `ActualLastInputId` tells you the
+you last observed it. If another input landed first, the call fails with a
+`ResilientTaskException` (`ErrorCode.PreconditionFailed`), whose `ActualLastInputId` tells you the
 current head so you can retry against it.
 
 Pair it with an explicit `InputId` for the turn you are appending: `IfLastInputId` is
@@ -727,11 +742,11 @@ the handle and the task keeps running resiliently. A later caller can attach via
 
 **Can two callers run the same `taskId` concurrently?** No — `taskId` is the identity.
 The second caller either attaches to the first's in-flight run (one-shot convergence),
-gets queued (multi-turn, when steering is enabled), or sees `TaskConflictException`.
+gets queued (multi-turn, when steering is enabled), or sees a `ResilientTaskException` (`Conflict`).
 
 **Does the framework retry by default?** No. Configure retry at registration via
 `TaskRegistrationOptions.Retry` (e.g. `builder.AddTask<TIn, TOut>(name, handler,
-o => o.Retry = TaskRetryPolicy.ExponentialBackoff());`) to opt in. Without a policy a handler
+o => o.Retry = new TaskRetryPolicy());`) to opt in. Without a policy a handler
 runs once and surfaces the exception.
 
 **Can I store conversation history in `ctx.Metadata`?** Small histories fit, but

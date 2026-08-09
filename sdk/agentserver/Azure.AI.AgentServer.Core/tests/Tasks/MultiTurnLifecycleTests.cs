@@ -27,7 +27,7 @@ public sealed class MultiTurnLifecycleTests
         // Turn 1.
         TaskRun<string> t1 = await host.Invoker.StartAsync<string, string>(
             "chat", "hello", new RunOptions { TaskId = "chain-1" });
-        Assert.That(await t1, Is.EqualTo("HELLO"));
+        Assert.That(await t1.Completion, Is.EqualTo("HELLO"));
 
         // The chain parks at suspended (not deleted, not completed).
         var suspended = await host.WaitForStatusAsync("chain-1", "suspended", TimeSpan.FromSeconds(5));
@@ -39,7 +39,7 @@ public sealed class MultiTurnLifecycleTests
         // neither equals the chain's task_id.
         TaskRun<string> t2 = await host.Invoker.StartAsync<string, string>(
             "chat", "world", new RunOptions { TaskId = "chain-1" });
-        Assert.That(await t2, Is.EqualTo("WORLD"));
+        Assert.That(await t2.Completion, Is.EqualTo("WORLD"));
         await host.WaitForStatusAsync("chain-1", "suspended", TimeSpan.FromSeconds(5));
 
         Assert.That(entries.Count, Is.EqualTo(2));
@@ -70,7 +70,7 @@ public sealed class MultiTurnLifecycleTests
         // so a subsequent turn can pin it via ifLastInputId. The handle exposes the same id.
         TaskRun<string> t1 = await host.Invoker.StartAsync<string, string>(
             "chat", "hi", new RunOptions { TaskId = "c-omit" });
-        await t1;
+        await t1.Completion;
         var suspended = await host.WaitForStatusAsync("c-omit", "suspended", TimeSpan.FromSeconds(5));
 
         string? persisted = (string?)suspended.Payload[TaskWireKeys.PayloadLastInputId];

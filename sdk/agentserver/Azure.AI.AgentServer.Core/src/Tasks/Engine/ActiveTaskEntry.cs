@@ -39,6 +39,25 @@ internal sealed class ActiveTaskEntry : IDisposable
     /// <summary>The non-reentrant per-task write gate (C# analog of Python's asyncio.Lock).</summary>
     public SemaphoreSlim WriteGate { get; } = new(1, 1);
 
+    /// <summary>
+    /// Synchronizes the gate-lifetime reference counting below. Kept separate from the lock-free
+    /// ETag/lease fields (which read without the write gate per §25.2) so those paths are unaffected.
+    /// </summary>
+    internal object ReapLock { get; } = new();
+
+    /// <summary>
+    /// The number of in-flight serialized writes that still reference this entry (guarded by
+    /// <see cref="ReapLock"/>). The entry — and its single <see cref="WriteGate"/> — must outlive
+    /// every referencing write so a concurrent <c>Remove</c> cannot split writers across two gates.
+    /// </summary>
+    internal int RefCount { get; set; }
+
+    /// <summary>Whether teardown was requested; the entry is detached once nothing can reference its gate (guarded by <see cref="ReapLock"/>).</summary>
+    internal bool RemovalRequested { get; set; }
+
+    /// <summary>Whether the entry has been detached from the serializer map (guarded by <see cref="ReapLock"/>).</summary>
+    internal bool Removed { get; set; }
+
     /// <summary>The latest ETag observed from a create/get/patch response, passed verbatim as <c>If-Match</c>.</summary>
     public string? TrackedEtag
     {

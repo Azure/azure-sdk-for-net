@@ -41,12 +41,12 @@ public sealed class SteeringCancelAndFullTests
         Assert.That(run2.IsQueued, Is.True);
 
         // The queued caller cancels its slot before promotion.
-        await run2.CancelAsync();
-        Assert.ThrowsAsync<TaskCancelledException>(async () => await run2.GetResultAsync());
+        await run2.RequestCancellationAsync();
+        Assert.ThrowsAsync<OperationCanceledException>(async () => await run2.Completion);
 
         // The active turn is undisturbed and there is nothing left to promote.
         gate.SetResult();
-        Assert.That(await run1.GetResultAsync(), Is.EqualTo("F:in1"));
+        Assert.That(await run1.Completion, Is.EqualTo("F:in1"));
         await host.WaitForStatusAsync("t1", "suspended", TimeSpan.FromSeconds(5));
     }
 
@@ -83,11 +83,11 @@ public sealed class SteeringCancelAndFullTests
         }
 
         // The 10th queued input exceeds the cap.
-        Assert.ThrowsAsync<SteeringQueueFullException>(async () =>
+        Assert.ThrowsAsync<ResilientTaskException>(async () =>
             await host.Invoker.StartAsync<string, string>(
                 "chat", "overflow", new RunOptions { TaskId = "t1", InputId = "overflow" }));
 
         gate.SetResult();
-        Assert.That(await run1.GetResultAsync(), Is.EqualTo("F:in1"));
+        Assert.That(await run1.Completion, Is.EqualTo("F:in1"));
     }
 }

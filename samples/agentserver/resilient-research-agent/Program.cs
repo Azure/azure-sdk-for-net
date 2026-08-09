@@ -60,7 +60,7 @@ using OpenAI.Responses;
 
 // ── Host bootstrap ─────────────────────────────────────────────────────────────
 // AgentHost wires Kestrel on port 8088, OpenTelemetry, and health probes. AddInvocations
-// registers the Invocations HTTP host + our handler. AddEventStreams gives per-turn SSE
+// registers the Invocations HTTP host + our handler. AddAgentEventStreams gives per-turn SSE
 // streams FILE-BACKED so a subscriber reconnecting after a crash resumes from its last
 // cursor with no gap. AddResilientTasks registers the durable task engine AND the
 // cold-start recovery scan (a hosted service) that re-enters in-progress tasks on restart
@@ -81,7 +81,7 @@ builder.Services.AddSingleton(_ => new UpstreamModel());
 // accessor reads each event's sequence_number so ?last_event_id=N reconnects skip
 // already-delivered events (whether served live, from on-disk replay, or after a crash
 // rehydrate). In-memory replay would lose the pre-crash buffer, defeating crash-resilience.
-builder.Services.AddEventStreams(o => o.UseFileBackedReplay<ResearchEvent>(
+builder.Services.AddAgentEventStreams(o => o.UseFileBackedReplay<ResearchEvent>(
     cursor: e => e.SequenceNumber,
     ttl: TimeSpan.FromMinutes(10)));
 
@@ -100,7 +100,7 @@ builder.Services.AddResilientTasks(new DefaultAzureCredential())
     .AddMultiTurnTask<ResearchRequest, ResearchResult>(
         "research",
         (provider, ctx, ct) => ResilientResearchHandler.RunResearchAsync(
-            provider.GetRequiredService<IEventStreamRegistry>(),
+            provider.GetRequiredService<AgentEventStreamRegistry>(),
             provider.GetRequiredService<UpstreamModel>(),
             ctx,
             checkpointStore,

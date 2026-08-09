@@ -27,7 +27,7 @@ public sealed class InputSizeLimitTests
         // Exceed the per-attachment ceiling (10 MiB) so the serialized input is rejected up front.
         string huge = new string('x', AttachmentPromoter.MaxAttachmentValueBytes + (1024 * 1024));
 
-        Assert.ThrowsAsync<InputTooLargeException>(async () =>
+        Assert.ThrowsAsync<ArgumentException>(async () =>
             await host.Invoker.RunAsync<string, int>("big", huge));
         Assert.That(handlerRan, Is.False, "handler must not run when input is rejected");
     }

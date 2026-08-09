@@ -96,15 +96,13 @@ public class RoutinesTests : ProjectsClientTestBase
         {
             AgentName = agentVersion.Name
         };
-        CustomRoutineTrigger trigger = new(
-            provider: "sample-provider",
-            parameters: new Dictionary<string, BinaryData>
+        CustomRoutineTrigger trigger = new CustomRoutineTrigger(provider: "teams", parameters: new Dictionary<string, BinaryData>()
             {
-                ["source"] = BinaryData.FromString("\"sample_routines_crud\"")
-            })
-        {
-            EventName = "sample-event"
-        };
+                { "connection_id", BinaryData.FromString(JsonSerializer.Serialize(TestEnvironment.TEAMS_CONNECTION_NAME)) },
+                { "thread_type", BinaryData.FromString(JsonSerializer.Serialize("channel")) },
+                { "group_id", BinaryData.FromString(JsonSerializer.Serialize(TestEnvironment.TEAMS_GROUP_ID))},
+                { "channel_id", BinaryData.FromString(JsonSerializer.Serialize(TestEnvironment.TEAMS_CHANNEL_ID))},
+            });
         for (int i=0; i< PAGE_SIZE + 1; i++)
         {
             ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine created by unit test.", enabled: false);
@@ -115,8 +113,8 @@ public class RoutinesTests : ProjectsClientTestBase
         }
         List<ProjectsRoutine> records = await projectClient.Routines.GetRoutinesAsync(limit: PAGE_SIZE, order: "asc").Where(x => x.Name.StartsWith(ROUTINE_NAME_PREFIX)).ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
-        // Blocked by ADO work item 5337919.
-        // Go forward.
+        //// Blocked by ADO work item 5337919.
+        //// Go forward.
         //List<ProjectsRoutine> forward = await projectClient.Routines.GetRoutinesAsync(order: "asc", after: records[0].Name, limit: PAGE_SIZE).Where(x => x.Name.StartsWith(ROUTINE_NAME_PREFIX)).ToListAsync();
         //Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
         //Assert.That(forward[0].Name, Is.EqualTo(records[1].Name));
@@ -292,24 +290,24 @@ public class RoutinesTests : ProjectsClientTestBase
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
         // Blocked by the ADO item 5337751
         // Go forward.
-        //List<RoutineRun> forward = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name, order: "asc", after: records[0].Id, limit: PAGE_SIZE).ToListAsync();
+        //List<RoutineRun> forward = await projectClient.Routines.GetRoutineRunsAsync(name: created.Name, order: "asc", after: records[0].Id, limit: PAGE_SIZE).ToListAsync();
         //Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
         //Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         //Assert.That(forward[forward.Count - 1].Id, Is.EqualTo(records[records.Count - 1].Id));
         ////// Two limits:
         //// Pagination via before is not supported.
-        //forward = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name, order: "asc", after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE).ToListAsync();
+        //forward = await projectClient.Routines.GetRoutineRunsAsync(name: created.Name, order: "asc", after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE).ToListAsync();
         //Assert.That(forward.Count, Is.EqualTo(2));
         //Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         //Assert.That(forward[1].Id, Is.EqualTo(records[2].Id));
         //// Go backwards.
-        //List<RoutineRun> backwards = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name, order: "desc", after: records[3].Id, limit: PAGE_SIZE).ToListAsync();
+        //List<RoutineRun> backwards = await projectClient.Routines.GetRoutineRunsAsync(name: created.Name, order: "desc", after: records[3].Id, limit: PAGE_SIZE).ToListAsync();
         //Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
         //Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
         //Assert.That(backwards[backwards.Count - 1].Id, Is.EqualTo(records[0].Id));
         ////// Two limits.
         //// Pagination via before is not supported.
-        //backwards = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name, order: "desc", after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).ToListAsync();
+        //backwards = await projectClient.Routines.GetRoutineRunsAsync(name: created.Name, order: "desc", after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).ToListAsync();
         //Assert.That(backwards.Count, Is.EqualTo(2));
         //Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
         //Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));

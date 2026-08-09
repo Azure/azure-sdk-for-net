@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Core.Tests.Tasks;
 public sealed class OneShotCancellationTests
 {
     [Test]
-    public async Task CancelAsyncPublishesCauseBeforeSignallingToken()
+    public async Task RequestCancellationAsyncPublishesCauseBeforeSignallingToken()
     {
         using var host = TaskTestHost.Create();
         var started = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -40,9 +40,9 @@ public sealed class OneShotCancellationTests
             "cancellable", "v", new RunOptions { TaskId = "cancel-1" });
 
         await started.Task;
-        await handle.CancelAsync();
+        await handle.RequestCancellationAsync();
 
-        Assert.ThrowsAsync<TaskCancelledException>(async () => await handle);
+        Assert.ThrowsAsync<OperationCanceledException>(async () => await handle.Completion);
         Assert.That(sawCause, Is.True, "handler must observe CancelRequested on cancellation");
     }
 }

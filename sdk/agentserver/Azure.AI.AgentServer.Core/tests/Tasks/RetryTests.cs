@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Core.Tasks.Engine;
 using NUnit.Framework;
@@ -32,8 +33,9 @@ public sealed class RetryTests
         TaskRun<string> run = await host.Invoker.StartAsync<string, string>(
             "no-retry", "in", new RunOptions { TaskId = "t1" });
 
-        TaskFailedException ex = Assert.ThrowsAsync<TaskFailedException>(async () => await run.GetResultAsync());
-        Assert.That(ex.Error.Kind, Is.EqualTo(TaskFailureKind.HandlerError));
+        ResilientTaskException ex = Assert.ThrowsAsync<ResilientTaskException>(async () => await run.Completion);
+        Assert.That(ex.ErrorCode, Is.EqualTo(ResilientTaskErrorCode.HandlerError));
+        Assert.That(ex.Failure!.Kind, Is.EqualTo(TaskFailureKind.HandlerError));
         Assert.That(attempts, Is.EqualTo(new[] { 0 }));
     }
 
@@ -50,14 +52,15 @@ public sealed class RetryTests
                 attempts.Add(ctx.RetryAttempt);
                 throw new InvalidOperationException("always fails");
             },
-            configure: o => o.Retry = TaskRetryPolicy.FixedDelay(maxAttempts: 3, delay: TimeSpan.FromMilliseconds(1)));
+            configure: o => o.Retry = new TaskRetryPolicy { MaxAttempts = 3, Delay = DelayStrategy.CreateFixedDelayStrategy(TimeSpan.FromMilliseconds(1)) });
 
         TaskRun<string> run = await host.Invoker.StartAsync<string, string>(
             "flaky", "in", new RunOptions { TaskId = "t1" });
 
-        TaskFailedException ex = Assert.ThrowsAsync<TaskFailedException>(async () => await run.GetResultAsync());
-        Assert.That(ex.Error.Kind, Is.EqualTo(TaskFailureKind.ExhaustedRetries));
-        Assert.That(ex.Error.Attempts, Is.EqualTo(3));
+        ResilientTaskException ex = Assert.ThrowsAsync<ResilientTaskException>(async () => await run.Completion);
+        Assert.That(ex.ErrorCode, Is.EqualTo(ResilientTaskErrorCode.ExhaustedRetries));
+        Assert.That(ex.Failure!.Kind, Is.EqualTo(TaskFailureKind.ExhaustedRetries));
+        Assert.That(ex.Failure!.Attempts, Is.EqualTo(3));
         Assert.That(attempts, Is.EqualTo(new[] { 0, 1, 2 }));
     }
 
@@ -83,14 +86,17 @@ public sealed class RetryTests
                 await ctx.ExitForRecoveryAsync(ct);
                 return "unreached";
             },
-            configure: o => o.Retry = TaskRetryPolicy.FixedDelay(maxAttempts: 5, delay: TimeSpan.FromMilliseconds(1)));
+            configure: o => o.Retry = new TaskRetryPolicy { MaxAttempts = 5, Delay = DelayStrategy.CreateFixedDelayStrategy(TimeSpan.FromMilliseconds(1)) });
 
         // ExitForRecovery is gated on graceful shutdown — signal it before dispatch so the crash
         // simulation (Fresh turn bailing for recovery) is the documented production path.
         host1.SignalShutdown();
         TaskRun<string> run = await host1.Invoker.StartAsync<string, string>(
             "flaky", "in", new RunOptions { TaskId = "t1" });
-        Assert.ThrowsAsync<TaskDeferredException>(async () => await run.GetResultAsync());
+        // Recovery deferral is an internal lifecycle handoff: it never surfaces on the run handle.
+        // Wait for the engine to release the run, then confirm Completion stays pending.
+        await host1.WaitUntilInactiveAsync(run.TaskId, TimeSpan.FromSeconds(5));
+        Assert.That(run.Completion.IsCompleted, Is.False, "deferral must not complete the run handle");
         Assert.That(lifetime1Attempts, Is.EqualTo(new[] { 0, 1, 2 }));
 
         // Restart and recover: the recovered turn must resume at attempt 2 (the crash did not
@@ -106,7 +112,7 @@ public sealed class RetryTests
                 recovered.TrySetResult(ctx.RetryAttempt);
                 return Task.FromResult("ok");
             },
-            configure: o => o.Retry = TaskRetryPolicy.FixedDelay(maxAttempts: 5, delay: TimeSpan.FromMilliseconds(1)));
+            configure: o => o.Retry = new TaskRetryPolicy { MaxAttempts = 5, Delay = DelayStrategy.CreateFixedDelayStrategy(TimeSpan.FromMilliseconds(1)) });
 
         int dispatched = await host2.Engine.ScanAndRecoverAsync();
         Assert.That(dispatched, Is.EqualTo(1));

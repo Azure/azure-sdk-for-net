@@ -40,37 +40,6 @@ public sealed class ResilientTaskRegistrationTests
         Assert.That(hosted, Is.Not.Empty, "resolved IHostedService set must contain TaskDurabilityService");
     }
 
-    private sealed class Dependency
-    {
-        public string Value => "resolved-from-di";
-    }
-
-    [Test]
-    public async Task ProviderAwareHandlerResolvesServicesWithoutBuildServiceProvider()
-    {
-        // The provider-aware overload must let a handler resolve a DI-registered dependency at
-        // invocation time — no caller-side BuildServiceProvider() hack, no forward-declared
-        // captured IServiceProvider.
-        var services = new ServiceCollection();
-        services.AddSingleton<Dependency>();
-
-        IResilientTaskBuilder tasks = services.AddResilientTasks();
-        tasks.AddTask<string, string>(
-            "echo-dep",
-            (provider, ctx, ct) =>
-            {
-                Dependency dep = provider.GetRequiredService<Dependency>();
-                return Task.FromResult($"{ctx.Input}:{dep.Value}");
-            });
-
-        await using var sp = services.BuildServiceProvider();
-        var invoker = sp.GetRequiredService<ITaskInvoker>();
-
-        string result = await invoker.RunAsync<string, string>("echo-dep", "hello");
-
-        Assert.That(result, Is.EqualTo("hello:resolved-from-di"));
-    }
-
     [TestCase("")]
     [TestCase(" ")]
     [TestCase("\t")]

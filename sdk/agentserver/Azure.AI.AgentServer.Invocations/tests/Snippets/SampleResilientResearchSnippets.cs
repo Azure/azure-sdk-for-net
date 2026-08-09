@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Net.ServerSentEvents;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -45,13 +47,12 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             services.AddSingleton(CreateModelClient());
 
             // Event streams with FILE-BACKED replay so a subscriber reconnecting AFTER A CRASH +
-            // restart resumes from its last cursor with no gap — events persist as JSON to
+            // restart resumes from its last event id with no gap — events persist to
             // ~/.agentserver/streams/<invocationId>.jsonl (the same state root tasks use) and
-            // rehydrate on the next GetOrCreate. The typed overload defaults the storage directory,
-            // a 10-minute TTL, and JSON serialization, so only the cursor is required. (In-memory
-            // replay would lose the pre-crash buffer, defeating this sample's crash-resilience.)
-            services.AddEventStreams(o => o.UseFileBackedReplay<ResearchEvent>(
-                cursor: e => e.Cursor));
+            // rehydrate on the next GetOrCreate. The storage directory and a 10-minute TTL default,
+            // and the event text is carried in SseItem<string>.Data, so no payload codec is needed.
+            // (In-memory replay would lose the pre-crash buffer, defeating this sample's resilience.)
+            services.AddAgentEventStreams(o => o.UseFileBackedReplay());
 
             // Heavy in-flight artifacts (partial phase output) live in a file-backed store;
             // metadata holds only small integer watermarks. Use a DURABLE state root under the
@@ -64,10 +65,16 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             var checkpointStore = new CheckpointStore(stateRoot);
 
             // AddResilientTasks records registrations into a live registry that the engine reads
-            // when a task is invoked. The provider-aware overload hands the handler the application
-            // IServiceProvider at invocation time, so dependencies are resolved from DI without a
-            // premature BuildServiceProvider() call or a forward-declared, captured provider.
-            IResilientTaskBuilder tasks = services.AddResilientTasks();
+            // when a task is invoked. The provider-aware overloads were removed (the service-locator
+            // shape is being retired ahead of GA), so resolve the handler's singleton dependencies
+            // from the built container once and capture them in the plain delegate — a DI-resolved
+            // handler wrapped in the delegate. The registry is read lazily at invocation time, so
+            // registering after the provider is built is fine.
+            ResilientTaskBuilder tasks = services.AddResilientTasks();
+
+            ServiceProvider provider = services.BuildServiceProvider();
+            AgentEventStreamRegistry streams = provider.GetRequiredService<AgentEventStreamRegistry>();
+            ResponsesClient model = provider.GetRequiredService<ResponsesClient>();
 
             // The resilient "research" task is session-scoped and steerable: one durable
             // chain per session (TaskId = research-{sessionId}), and a POST while a turn is
@@ -75,9 +82,9 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             // into the event stream keyed by that turn's invocation id (carried on the input).
             tasks.AddMultiTurnTask<ResearchRequest, ResearchResult>(
                 "research",
-                (provider, ctx, ct) => RunResearchAsync(
-                    provider.GetRequiredService<IEventStreamRegistry>(),
-                    provider.GetRequiredService<ResponsesClient>(),
+                (ctx, ct) => RunResearchAsync(
+                    streams,
+                    model,
                     ModelDeployment,
                     ctx,
                     checkpointStore,
@@ -148,7 +155,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 
             public void Save(string key, string content)
             {
-                string path = Path.Combine(_directory, key + ".json");
+                string path = PathForKey(key);
                 string tmp = path + ".tmp";
                 File.WriteAllText(tmp, content);
                 File.Move(tmp, path, overwrite: true);
@@ -156,15 +163,22 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 
             public string? Load(string key)
             {
-                string path = Path.Combine(_directory, key + ".json");
+                string path = PathForKey(key);
                 return File.Exists(path) ? File.ReadAllText(path) : null;
             }
 
             public void Delete(string key)
             {
-                string path = Path.Combine(_directory, key + ".json");
+                string path = PathForKey(key);
                 if (File.Exists(path))
                     File.Delete(path);
+            }
+
+            private string PathForKey(string key)
+            {
+                byte[] hash = System.Security.Cryptography.SHA256.HashData(Encoding.UTF8.GetBytes(key));
+                string safeKey = Convert.ToHexString(hash).ToLowerInvariant();
+                return Path.Combine(_directory, safeKey + ".json");
             }
         }
 
@@ -184,7 +198,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
         /// owns its own replayable stream while the durable task spans the whole session.
         /// </summary>
         public static async Task<ResearchResult> RunResearchAsync(
-            IEventStreamRegistry registry,
+            AgentEventStreamRegistry registry,
             ResponsesClient model,
             string modelName,
             TaskContext<ResearchRequest> ctx,
@@ -199,17 +213,26 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             // The stream id is the per-turn invocation id (one stream per turn), while the
             // durable TaskId spans the whole session.
             string invId = ctx.Input.InvocationId;
-            IEventStream stream = await registry.GetOrCreateAsync(invId, ct);
+            AgentEventStream stream = await registry.GetOrCreateAsync(invId, ct);
 
-            // On crash recovery, last_cursor rehydrates the sequence counter.
-            int? lastCursor = await stream.GetLastCursorAsync(ct);
-            int seq = lastCursor ?? 0;
+            // On crash recovery, the last event id rehydrates the sequence counter.
+            string? lastEventId = await stream.GetLastEventIdAsync(ct);
+            int seq = lastEventId is not null && int.TryParse(lastEventId, NumberStyles.Integer, CultureInfo.InvariantCulture, out int parsed)
+                ? parsed
+                : 0;
 
             async Task<ResearchEvent> Emit(string type, string content, string? phase = null)
             {
                 seq++;
                 var evt = new ResearchEvent(seq, type, content, phase);
-                await stream.EmitAsync(evt, cancellationToken: ct);
+                // The caller now owns serialization: the event JSON is the SseItem's Data, the
+                // event type is the SSE event name, and the sequence is the opaque resume id.
+                await stream.EmitAsync(
+                    new SseItem<string>(JsonSerializer.Serialize(evt), type)
+                    {
+                        EventId = seq.ToString(CultureInfo.InvariantCulture),
+                    },
+                    cancellationToken: ct);
                 return evt;
             }
 
@@ -380,13 +403,18 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 // sees a clean failure event before the stream drops.
                 seq++;
                 var failEvt = new ResearchEvent(seq, "run_failed", ex.Message);
-                await stream.EmitAsync(failEvt, close: true, cancellationToken: CancellationToken.None);
+                await stream.EmitAsync(
+                    new SseItem<string>(JsonSerializer.Serialize(failEvt), "run_failed")
+                    {
+                        EventId = seq.ToString(CultureInfo.InvariantCulture),
+                    },
+                    close: true, cancellationToken: CancellationToken.None);
                 throw;
             }
         }
 
         private static async Task FinishTurn(
-            IEventStream stream, TaskContext<ResearchRequest> ctx,
+            AgentEventStream stream, TaskContext<ResearchRequest> ctx,
             string invId, CheckpointStore store)
         {
             await stream.CloseAsync();
@@ -438,7 +466,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                     ?? new ResearchStartRequest("general knowledge");
 
                 var registry = request.HttpContext.RequestServices
-                    .GetRequiredService<IEventStreamRegistry>();
+                    .GetRequiredService<AgentEventStreamRegistry>();
                 var invoker = request.HttpContext.RequestServices
                     .GetRequiredService<ITaskInvoker>();
 
@@ -448,7 +476,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 
                 // Reserve the per-turn stream BEFORE starting the task so a live subscriber
                 // attaches without missing early events.
-                IEventStream stream = await registry.GetOrCreateAsync(invId, cancellationToken);
+                AgentEventStream stream = await registry.GetOrCreateAsync(invId, cancellationToken);
 
                 // Start a new turn or steer the running one. With the same TaskId, the engine
                 // transparently enqueues this input as steering while a turn is in flight.
@@ -483,14 +511,14 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 CancellationToken cancellationToken)
             {
                 var registry = request.HttpContext.RequestServices
-                    .GetRequiredService<IEventStreamRegistry>();
+                    .GetRequiredService<AgentEventStreamRegistry>();
 
-                IEventStream stream;
+                AgentEventStream stream;
                 try
                 {
                     stream = await registry.GetAsync(invocationId, cancellationToken);
                 }
-                catch (EventStreamNotFoundException)
+                catch (AgentEventStreamNotFoundException)
                 {
                     response.StatusCode = StatusCodes.Status404NotFound;
                     return;
@@ -498,17 +526,17 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 
                 if (AcceptsEventStream(request))
                 {
-                    int? after = ResumeCursor(request);
+                    string? after = ResumeEventId(request);
                     await WriteSseAsync(response, stream, after, cancellationToken);
                     return;
                 }
 
                 // JSON snapshot of progress for polling clients.
-                int? lastCursor = await stream.GetLastCursorAsync(cancellationToken);
+                string? lastEventId = await stream.GetLastEventIdAsync(cancellationToken);
                 await response.WriteAsJsonAsync(new
                 {
                     invocation_id = invocationId,
-                    last_event_id = lastCursor,
+                    last_event_id = lastEventId,
                 }, cancellationToken);
             }
 
@@ -536,7 +564,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                     return;
                 }
 
-                await run.CancelAsync(cancellationToken);
+                await run.RequestCancellationAsync();
                 response.StatusCode = StatusCodes.Status202Accepted;
                 await response.WriteAsJsonAsync(new { invocation_id = invocationId, status = "cancelling" },
                     cancellationToken);
@@ -546,50 +574,47 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 request.Headers.TryGetValue("Accept", out var accept)
                 && accept.ToString().Contains("text/event-stream", StringComparison.OrdinalIgnoreCase);
 
-            private static int? ResumeCursor(HttpRequest request)
+            private static string? ResumeEventId(HttpRequest request)
             {
-                if (request.Query.TryGetValue("last_event_id", out var q)
-                    && int.TryParse(q, out var qn))
-                    return qn;
-                if (request.Headers.TryGetValue("Last-Event-ID", out var h)
-                    && int.TryParse(h, out var hn))
-                    return hn;
+                if (request.Query.TryGetValue("last_event_id", out var q) && !string.IsNullOrEmpty(q))
+                    return q.ToString();
+                if (request.Headers.TryGetValue("Last-Event-ID", out var h) && !string.IsNullOrEmpty(h))
+                    return h.ToString();
                 return null;
             }
 
             private static async Task WriteSseAsync(
-                HttpResponse response, IEventStream stream, int? after, CancellationToken ct)
+                HttpResponse response, AgentEventStream stream, string? after, CancellationToken ct)
             {
                 response.ContentType = "text/event-stream";
                 response.Headers.CacheControl = "no-cache";
 
                 try
                 {
-                    await foreach (object evt in stream.Subscribe(after, ct))
-                    {
-                        var researchEvent = (ResearchEvent)evt;
-                        await response.WriteAsync($"id: {researchEvent.Cursor}\n", ct);
-                        await response.WriteAsync(
-                            $"data: {JsonSerializer.Serialize(researchEvent)}\n\n", ct);
-                        await response.Body.FlushAsync(ct);
-                    }
+                    // Delegate SSE framing (id:/event:/data: lines) to the BCL SseFormatter — the
+                    // stream already yields SseItem<string> with the event text in Data, the event
+                    // name in EventType, and the opaque resume id in EventId.
+                    await SseFormatter.WriteAsync(stream.Subscribe(after, ct), response.Body, ct);
 
                     // Clean close: emit a terminal `done` frame so the client can distinguish
-                    // end-of-stream from a dropped connection (Python parity: resilient_research
-                    // app emits an `event: done` terminator after the subscribe loop).
-                    await response.WriteAsync("event: done\n", ct);
-                    await response.WriteAsync("data: {\"type\":\"done\"}\n\n", ct);
-                    await response.Body.FlushAsync(ct);
+                    // end-of-stream from a dropped connection.
+                    await SseFormatter.WriteAsync(
+                        SingleItem(new SseItem<string>("{\"type\":\"done\"}", "done")), response.Body, ct);
                 }
-                catch (EventStreamNotFoundException)
+                catch (AgentEventStreamNotFoundException)
                 {
                     // The stream was destroyed under us (superseded / TTL-evicted). Emit a
                     // `superseded` frame so the consumer can tell stream-end from "you got cut
-                    // off" (Python parity: EventStreamNotFoundError -> `event: superseded`).
-                    await response.WriteAsync("event: superseded\n", ct);
-                    await response.WriteAsync("data: {\"type\":\"superseded\"}\n\n", ct);
-                    await response.Body.FlushAsync(ct);
+                    // off" (AgentEventStreamNotFoundException -> `event: superseded`).
+                    await SseFormatter.WriteAsync(
+                        SingleItem(new SseItem<string>("{\"type\":\"superseded\"}", "superseded")), response.Body, ct);
                 }
+            }
+
+            private static async IAsyncEnumerable<SseItem<string>> SingleItem(SseItem<string> item)
+            {
+                yield return item;
+                await Task.CompletedTask;
             }
         }
 

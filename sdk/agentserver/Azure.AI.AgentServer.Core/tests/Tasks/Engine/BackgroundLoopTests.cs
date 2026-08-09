@@ -36,7 +36,10 @@ public sealed class BackgroundLoopTests
         host.SignalShutdown();
         TaskRun<string> handle = await host.Invoker.StartAsync<string, string>(
             "resumable", "payload", new RunOptions { TaskId = "abandoned-1" });
-        Assert.ThrowsAsync<TaskDeferredException>(async () => await handle);
+        // Recovery deferral is an internal lifecycle handoff: it never surfaces on the run handle.
+        // Wait for the engine to release the run, then confirm Completion stays pending.
+        await host.WaitUntilInactiveAsync(handle.TaskId, TimeSpan.FromSeconds(5));
+        Assert.That(handle.Completion.IsCompleted, Is.False, "deferral must not complete the run handle");
 
         TaskRecord? mid = await host.Store.GetAsync("abandoned-1");
         Assert.That(mid!.Status, Is.EqualTo("in_progress"));
@@ -70,7 +73,10 @@ public sealed class BackgroundLoopTests
         host.SignalShutdown();
         TaskRun<string> handle = await host.Invoker.StartAsync<string, string>(
             "resumable", "payload", new RunOptions { TaskId = "startup-1" });
-        Assert.ThrowsAsync<TaskDeferredException>(async () => await handle);
+        // Recovery deferral is an internal lifecycle handoff: it never surfaces on the run handle.
+        // Wait for the engine to release the run, then confirm Completion stays pending.
+        await host.WaitUntilInactiveAsync(handle.TaskId, TimeSpan.FromSeconds(5));
+        Assert.That(handle.Completion.IsCompleted, Is.False, "deferral must not complete the run handle");
         Assert.That((await host.Store.GetAsync("startup-1"))!.Status, Is.EqualTo("in_progress"));
 
         // A deliberately long interval: recovery must still happen promptly because the loop scans
@@ -115,7 +121,7 @@ public sealed class BackgroundLoopTests
         Assert.That(after.Status, Is.EqualTo("in_progress"));
 
         gate.SetResult();
-        Assert.That(await handle.GetResultAsync(), Is.EqualTo("done:payload"));
+        Assert.That(await handle.Completion, Is.EqualTo("done:payload"));
     }
 
     private static DateTimeOffset ParseIso(string iso)

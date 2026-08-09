@@ -18,8 +18,8 @@ namespace Azure.AI.AgentServer.Core.Tasks;
 /// Registration entry point for the resilient-tasks feature. There is no global
 /// configuration object: backend selection (local/hosted), lease durations, and
 /// retry/timeout defaults are not developer-configurable (Python parity). The
-/// optional <see cref="TokenCredential"/> is the only knob (hosted-mode auth;
-/// defaults to <c>DefaultAzureCredential</c> when omitted).
+/// optional <see cref="TokenCredential"/> is the only knob; it is required when
+/// running against hosted task storage and ignored by the local file-backed store.
 /// </summary>
 public static class ResilientTaskServiceCollectionExtensions
 {
@@ -27,19 +27,37 @@ public static class ResilientTaskServiceCollectionExtensions
     /// Adds the resilient-tasks services and returns a builder for registering tasks.
     /// </summary>
     /// <param name="services">The service collection.</param>
-    /// <param name="credential">An optional credential for hosted-mode authentication.</param>
-    /// <returns>An <see cref="IResilientTaskBuilder"/> for registering tasks.</returns>
-    public static IResilientTaskBuilder AddResilientTasks(
+    /// <param name="credential">A credential for hosted-mode authentication. Required when running in a hosted environment.</param>
+    /// <returns>An <see cref="ResilientTaskBuilder"/> for registering tasks.</returns>
+    public static ResilientTaskBuilder AddResilientTasks(
         this IServiceCollection services,
         TokenCredential? credential = null)
     {
         ArgumentNullException.ThrowIfNull(services);
 
+        // Resilient-tasks services are registered once per process. Everything below uses
+        // TryAddSingleton (first-wins), but AddHostedService is NOT idempotent — a second call
+        // would register a duplicate TaskDurabilityService, running the recovery scan twice. Guard
+        // the whole method: on a repeat call, register nothing further and hand back a builder over
+        // the already-registered registry. A repeat call that supplies a credential cannot be
+        // honored (the first registration wins), so surface that as an error rather than discarding
+        // it silently.
+        if (IsAlreadyRegistered(services))
+        {
+            if (credential is not null)
+            {
+                throw new InvalidOperationException(
+                    "AddResilientTasks has already been called; resilient-tasks services are " +
+                    "registered once per process. Remove the duplicate call, or pass the credential " +
+                    "only on the first call.");
+            }
+
+            TaskRegistry existingRegistry = ResolveRegistered(services) ?? new TaskRegistry();
+            return new DefaultResilientTaskBuilder(existingRegistry);
+        }
+
         var registry = new TaskRegistry();
         services.TryAddSingleton(registry);
-
-        var providerAccessor = new TaskServiceProviderAccessor();
-        services.TryAddSingleton(providerAccessor);
 
         var environment = new TaskHostEnvironment(credential);
         services.TryAddSingleton(environment);
@@ -102,7 +120,6 @@ public static class ResilientTaskServiceCollectionExtensions
         // no-op if one was already registered, so the builder must wrap that instance (not the
         // freshly-constructed local) or registrations would target an orphaned registry.
         TaskRegistry canonical = ResolveRegistered(services) ?? registry;
-        TaskServiceProviderAccessor canonicalAccessor = ResolveRegisteredAccessor(services) ?? providerAccessor;
 
         services.TryAddSingleton<TaskEngine>(sp =>
         {
@@ -112,11 +129,6 @@ public static class ResilientTaskServiceCollectionExtensions
             ILogger logger = loggerFactory?.CreateLogger(TaskTelemetry.Category)
                 ?? NullLogger.Instance;
             (string agentName, string sessionId) = ResolveScope();
-
-            // Late-bind the container so provider-aware handler overloads can resolve services at
-            // invocation time. The engine is always resolved before any handler runs (invocation
-            // flows through it), so populating here guarantees the accessor is ready.
-            sp.GetRequiredService<TaskServiceProviderAccessor>().Provider = sp;
 
             return new TaskEngine(store, reg, agentName, sessionId, logger);
         });
@@ -142,7 +154,7 @@ public static class ResilientTaskServiceCollectionExtensions
         });
         services.AddHostedService(sp => sp.GetRequiredService<TaskDurabilityService>());
 
-        return new ResilientTaskBuilder(canonical, canonicalAccessor);
+        return new DefaultResilientTaskBuilder(canonical);
     }
 
     private static (string AgentName, string SessionId) ResolveScope()
@@ -156,6 +168,19 @@ public static class ResilientTaskServiceCollectionExtensions
         return (agentName, sessionId);
     }
 
+    private static bool IsAlreadyRegistered(IServiceCollection services)
+    {
+        for (int i = 0; i < services.Count; i++)
+        {
+            if (services[i].ServiceType == typeof(TaskEngine))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private static TaskRegistry? ResolveRegistered(IServiceCollection services)
     {
         for (int i = 0; i < services.Count; i++)
@@ -163,21 +188,6 @@ public static class ResilientTaskServiceCollectionExtensions
             ServiceDescriptor descriptor = services[i];
             if (descriptor.ServiceType == typeof(TaskRegistry) &&
                 descriptor.ImplementationInstance is TaskRegistry existing)
-            {
-                return existing;
-            }
-        }
-
-        return null;
-    }
-
-    private static TaskServiceProviderAccessor? ResolveRegisteredAccessor(IServiceCollection services)
-    {
-        for (int i = 0; i < services.Count; i++)
-        {
-            ServiceDescriptor descriptor = services[i];
-            if (descriptor.ServiceType == typeof(TaskServiceProviderAccessor) &&
-                descriptor.ImplementationInstance is TaskServiceProviderAccessor existing)
             {
                 return existing;
             }

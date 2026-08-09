@@ -31,6 +31,6 @@ public sealed class MultiTurnIdentityTests
 
         TaskRun<string> run = await host.Invoker.StartAsync<string, string>("auto-id", "a");
         Assert.That(run.TaskId, Is.Not.Null.And.Not.Empty);
-        await run;
+        await run.Completion;
     }
 }

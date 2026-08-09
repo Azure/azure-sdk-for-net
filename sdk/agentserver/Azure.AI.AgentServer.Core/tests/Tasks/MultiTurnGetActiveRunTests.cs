@@ -37,7 +37,7 @@ public sealed class MultiTurnGetActiveRunTests
         Assert.That(mismatch, Is.Null);
 
         release.TrySetResult(true);
-        await run;
+        await run.Completion;
 
         TaskRun<string>? afterDone = await host.Invoker.GetActiveRunAsync<string>("introspect", "i-1", "in-1");
         Assert.That(afterDone, Is.Null);

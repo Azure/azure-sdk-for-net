@@ -70,9 +70,9 @@ internal static class TaskEngineConstants
     public const int MaxRetryAttempts = 10;
 
     /// <summary>
-    /// The hard ceiling on the delay between retry attempts. A developer-configured
-    /// <see cref="TaskRetryPolicy.MaxDelay"/> above this value is rejected at construction so backoff
-    /// growth cannot produce an arbitrarily long wait (1 hour).
+    /// The hard ceiling on the delay between retry attempts (1 hour). Retained as a bound for
+    /// delay-strategy configuration; the per-turn timeout and cancellable backoff keep the total
+    /// time spent retrying a single turn bounded.
     /// </summary>
     public static readonly System.TimeSpan MaxRetryDelay = System.TimeSpan.FromHours(1);
 }

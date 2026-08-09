@@ -46,7 +46,7 @@ public sealed class MultiTurnDeleteTests
 
         await host.Engine.DeleteAsync("d-2");
 
-        Assert.ThrowsAsync<TaskCancelledException>(async () => await run);
+        Assert.ThrowsAsync<OperationCanceledException>(async () => await run.Completion);
         Assert.That(await host.Store.GetAsync("d-2"), Is.Null);
     }
 }

@@ -59,14 +59,14 @@ public class AttachmentTests
         var (slot, attachments) = AttachmentPromoter.Promote(null, value, AttachmentPromoter.InputAttachmentKey, AttachmentPromoter.InputThresholdBytes);
 
         attachments![AttachmentPromoter.InputAttachmentKey] = JsonValue.Create("tampered");
-        Assert.Throws<TaskException>(() => AttachmentPromoter.Resolve(slot, attachments));
+        Assert.Throws<InvalidOperationException>(() => AttachmentPromoter.Resolve(slot, attachments));
     }
 
     [Test]
     public void OverlargeValueRaisesInputTooLarge()
     {
         var value = BigString(AttachmentPromoter.MaxAttachmentValueBytes + 1);
-        Assert.Throws<InputTooLargeException>(() =>
+        Assert.Throws<ArgumentException>(() =>
             AttachmentPromoter.Promote(null, value, AttachmentPromoter.InputAttachmentKey, AttachmentPromoter.InputThresholdBytes));
     }
 
@@ -82,7 +82,7 @@ public class AttachmentTests
         Assert.That(attachments, Is.Not.Null, "a value under the 10 MiB cap must promote to an attachment");
 
         var overCap = BigString(AttachmentPromoter.MaxAttachmentValueBytes + 1);
-        Assert.Throws<InputTooLargeException>(() =>
+        Assert.Throws<ArgumentException>(() =>
             AttachmentPromoter.Promote(null, overCap, AttachmentPromoter.InputAttachmentKey, AttachmentPromoter.InputThresholdBytes));
     }
 
@@ -113,7 +113,7 @@ public class AttachmentTests
         }
 
         Assert.That(attachments.Count, Is.EqualTo(AttachmentPromoter.MaxAttachmentsPerTask));
-        Assert.Throws<InputTooLargeException>(() =>
+        Assert.Throws<ArgumentException>(() =>
             AttachmentPromoter.Promote(
                 attachments, oversized, AttachmentPromoter.SteeringAttachmentKeyPrefix + "overflow", AttachmentPromoter.SteeringThresholdBytes),
             "promoting a 21st distinct attachment must exceed the per-task cap");

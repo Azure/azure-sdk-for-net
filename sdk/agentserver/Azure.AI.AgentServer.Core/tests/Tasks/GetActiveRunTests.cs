@@ -30,7 +30,7 @@ public sealed class GetActiveRunTests
         Assert.That(inflight!.TaskId, Is.EqualTo("act-1"));
 
         gate.SetResult(true);
-        await handle;
+        await handle.Completion;
         await host.WaitUntilDeletedAsync("act-1", System.TimeSpan.FromSeconds(5));
 
         TaskRun<string>? after = await host.Invoker.GetActiveRunAsync<string>("active", "act-1");

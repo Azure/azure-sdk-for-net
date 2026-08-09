@@ -1,16 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.AI.AgentServer.Core.Tasks;
 
 /// <summary>
-/// An awaitable handle to a started task run. <c>await</c>-ing the handle yields the
-/// typed result (equivalent to <see cref="GetResultAsync"/>). The protected
-/// constructor supports mocking; the engine returns populated instances.
+/// A handle to a started task run. Await <see cref="Completion"/> to observe the typed
+/// result; to cancel only your wait (without affecting the durable run) use
+/// <c>Completion.WaitAsync(cancellationToken)</c>. The protected constructor supports
+/// mocking; the engine returns populated instances.
 /// </summary>
 /// <typeparam name="TOutput">The task output type.</typeparam>
 public class TaskRun<TOutput>
@@ -33,25 +32,18 @@ public class TaskRun<TOutput>
     /// <summary>The input id assigned to the input that started this run.</summary>
     public virtual string InputId => State.InputId;
 
-    /// <summary>The live metadata reference while the run is in-flight.</summary>
-    public virtual TaskMetadata Metadata => State.Metadata;
-
     /// <summary>Whether the input was queued as steering rather than starting a fresh run.</summary>
     public virtual bool IsQueued => State.IsQueued;
 
-    /// <summary>Awaits the run to completion and returns the typed result.</summary>
-    /// <param name="cancellationToken">A cancellation token.</param>
-    /// <returns>The typed result.</returns>
-    public virtual Task<TOutput> GetResultAsync(CancellationToken cancellationToken = default)
-        => State.GetResultAsync(cancellationToken);
+    /// <summary>
+    /// A task that completes with the run's typed result. Await it to observe the result;
+    /// use <c>Completion.WaitAsync(cancellationToken)</c> to cancel only your wait. If the run
+    /// is deferred for recovery, this task remains pending — the durable run resumes elsewhere.
+    /// </summary>
+    public virtual Task<TOutput> Completion => State.ResultTask;
 
-    /// <summary>Requests cancellation of the run.</summary>
-    /// <param name="cancellationToken">A cancellation token.</param>
+    /// <summary>Requests cooperative cancellation of the run.</summary>
     /// <returns>A task that completes when cancellation has been requested.</returns>
-    public virtual Task CancelAsync(CancellationToken cancellationToken = default)
-        => State.CancelAsync(cancellationToken);
-
-    /// <summary>Gets an awaiter so the handle can be <c>await</c>-ed directly.</summary>
-    /// <returns>An awaiter for the run result.</returns>
-    public TaskAwaiter<TOutput> GetAwaiter() => GetResultAsync().GetAwaiter();
+    public virtual Task RequestCancellationAsync()
+        => State.RequestCancellationAsync();
 }

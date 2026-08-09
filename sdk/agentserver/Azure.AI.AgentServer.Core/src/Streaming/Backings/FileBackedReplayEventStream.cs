@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.ServerSentEvents;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -12,56 +13,75 @@ namespace Azure.AI.AgentServer.Core.Streaming.Backings;
 
 /// <summary>
 /// The file-backed replay backing: persists events to
-/// <c>&lt;storageDirectory&gt;/&lt;id&gt;.jsonl</c> using the SOT wire format so the
-/// on-disk shape is consistent across implementations, and rehydrates on
-/// construction so a fresh process resuming the same turn recovers its history.
+/// <c>&lt;storageDirectory&gt;/&lt;id&gt;.jsonl</c> and rehydrates on construction so a fresh
+/// process resuming the same turn recovers its history. Each line records the emitted
+/// <see cref="SseItem{T}"/> (its <see cref="SseItem{T}.Data"/>, opaque
+/// <see cref="SseItem{T}.EventId"/>, and <see cref="SseItem{T}.EventType"/>); the data is already a
+/// string, so no payload codec is required.
 /// </summary>
 internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposable
 {
     private const string TerminalKey = "__terminal__";
     private const string EmitTimeKey = "emit_time";
-    private const string PayloadKey = "payload";
+    private const string DataKey = "data";
+    private const string IdKey = "id";
+    private const string EventKey = "event";
+    private const string RetryKey = "retry";
     private const int CompactionThreshold = 1000;
 
     private readonly object _fileGate = new();
     private readonly string _filePath;
     private readonly string _lockPath;
-    private readonly Func<object, byte[]>? _serializer;
-    private readonly Func<byte[], object>? _deserializer;
     private FileStream? _lock;
+    private FileStream? _data;
     private int _evictionsSinceCompaction;
     private bool _disposed;
 
     public FileBackedReplayEventStream(
         string id,
         string storageDirectory,
-        Func<object, int>? cursor,
         TimeSpan? ttl,
-        Func<object, byte[]>? serializer,
-        Func<byte[], object>? deserializer,
         Action onDestroy)
-        : base(id, cursor, ttl, onDestroy)
+        : base(id, ttl, onDestroy)
     {
         Directory.CreateDirectory(storageDirectory);
         string stem = ToSafeFileStem(id);
         _filePath = Path.Combine(storageDirectory, stem + ".jsonl");
         _lockPath = Path.Combine(storageDirectory, stem + ".lock");
-        _serializer = serializer;
-        _deserializer = deserializer;
 
         AcquireWriterLock();
-        Rehydrate();
+        try
+        {
+            Rehydrate();
+
+            // Open ONE long-lived append handle after any rehydrate-time truncation rewrite, and
+            // reuse it for every emit (write + fsync) instead of opening/closing a fresh handle per
+            // event. The per-event fsync durability contract (persist-before-fan-out) is preserved;
+            // only the redundant open/close syscalls per event are removed. The separate `_lock`
+            // file keeps the single-writer guarantee independent of this data handle, so compaction
+            // can freely close and reopen it across the atomic replace without releasing exclusivity.
+            _data = OpenAppendHandle();
+        }
+        catch
+        {
+            _data?.Dispose();
+            _data = null;
+            ReleaseWriterLock();
+            throw;
+        }
     }
+
+    private FileStream OpenAppendHandle()
+        => new FileStream(_filePath, FileMode.Append, FileAccess.Write, FileShare.Read);
 
     // Maps a stream id to a single, safe on-disk filename stem. Well-formed ids (GUIDs and other
     // tokens using [A-Za-z0-9._-], with no "."/".." path segment, that are not already shaped like
     // the reserved "h_<64 lowercase hex>" hash stem) are used verbatim so on-disk names stay
-    // readable and match the cross-language wire contract. Any other id — one containing a path
-    // separator, a reserved "."/".." segment, a filesystem-invalid character, or the reserved
-    // hash shape — is deterministically SHA-256 hash-encoded to an "h_<64 lowercase hex>" stem so
-    // it can never escape the storage directory (path traversal) or collide with a sibling stream
-    // (the verbatim and hashed namespaces stay disjoint). The hex is lowercase to stay
-    // byte-identical with the Python implementation's hexdigest() output.
+    // readable. Any other id — one containing a path separator, a reserved "."/".." segment, a
+    // filesystem-invalid character, or the reserved hash shape — is deterministically SHA-256
+    // hash-encoded to an "h_<64 lowercase hex>" stem so it can never escape the storage directory
+    // (path traversal) or collide with a sibling stream (the verbatim and hashed namespaces stay
+    // disjoint).
     private static string ToSafeFileStem(string id)
     {
         bool safe = id.Length > 0 && id != "." && id != "..";
@@ -94,7 +114,7 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
     }
 
     // True when the id is exactly "h_" followed by 64 lowercase hex characters (the reserved shape
-    // produced by the hash-encoding branch), matching Python's ^h_[0-9a-f]{64}$.
+    // produced by the hash-encoding branch).
     private static bool IsReservedHashStem(string id)
     {
         if (id.Length != 66 || id[0] != 'h' || id[1] != '_')
@@ -115,36 +135,26 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
         return true;
     }
 
-    protected override void PersistEmit(object payload, double emitTime)
-    {
-        var line = new JsonObject
-        {
-            [EmitTimeKey] = emitTime,
-            [PayloadKey] = EncodePayload(payload),
-        };
-        AppendLine(line.ToJsonString());
-    }
+    protected override void PersistEmit(SseItem<string> item, double emitTime)
+        => AppendLine(EncodeItemLine(item, emitTime));
 
     protected override void PersistClose()
         => AppendLine(new JsonObject { [TerminalKey] = true }.ToJsonString());
 
-    protected override void PersistEmitAndClose(object payload, double emitTime)
+    protected override void PersistEmitAndClose(SseItem<string> item, double emitTime)
     {
         // Append the event line and the terminal sentinel in a single write+flush so a crash can
         // never leave a durable event without its terminal marker (atomic emit-and-close).
-        var eventLine = new JsonObject
-        {
-            [EmitTimeKey] = emitTime,
-            [PayloadKey] = EncodePayload(payload),
-        };
         var terminalLine = new JsonObject { [TerminalKey] = true };
-        AppendLines(eventLine.ToJsonString(), terminalLine.ToJsonString());
+        AppendLines(EncodeItemLine(item, emitTime), terminalLine.ToJsonString());
     }
 
     protected override void PersistDelete()
     {
         lock (_fileGate)
         {
+            _data?.Dispose();
+            _data = null;
             TryDeleteFile(_filePath);
             ReleaseWriterLock();
         }
@@ -170,6 +180,8 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
         _disposed = true;
         lock (_fileGate)
         {
+            _data?.Dispose();
+            _data = null;
             ReleaseWriterLock();
         }
     }
@@ -213,7 +225,7 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
             JsonNode? node = TryParse(lines[i]);
             if (node is not JsonObject obj)
             {
-                throw new EventStreamException($"Corrupted line {i + 1} in stream log '{_filePath}'.");
+                throw new AgentEventStreamException($"Corrupted line {i + 1} in stream log '{_filePath}'.");
             }
 
             if (obj.TryGetPropertyValue(TerminalKey, out JsonNode? terminal) && terminal is JsonValue tv && tv.GetValue<bool>())
@@ -230,16 +242,16 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
             }
             else
             {
-                // A payload record without 'emit_time' is structurally malformed (the wire format
-                // requires {"emit_time": <float>, "payload": ...}). Raising is a corruption signal —
+                // A record without 'emit_time' is structurally malformed (the wire format requires
+                // {"emit_time": <float>, "data": <string>, ...}). Raising is a corruption signal —
                 // silently defaulting to epoch would either drop the event on the next TTL sweep or
-                // resurrect it with a wildly wrong timestamp (matches Python's rehydrate contract).
-                throw new EventStreamException(
+                // resurrect it with a wildly wrong timestamp.
+                throw new AgentEventStreamException(
                     $"Record at line {i + 1} of stream log '{_filePath}' is missing the 'emit_time' field.");
             }
 
-            object payload = DecodePayload(obj[PayloadKey]);
-            SeedHistory(payload, emitTime);
+            SseItem<string> item = DecodeItem(obj, i + 1);
+            SeedHistory(item, emitTime);
         }
 
         if (hadPartialTail)
@@ -271,20 +283,15 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
     {
         lock (_fileGate)
         {
-            IReadOnlyList<KeyValuePair<object, double>> retained = RetainedForCompaction();
+            IReadOnlyList<KeyValuePair<SseItem<string>, double>> retained = RetainedForCompaction();
             var sb = new StringBuilder();
-            foreach (KeyValuePair<object, double> entry in retained)
+            foreach (KeyValuePair<SseItem<string>, double> entry in retained)
             {
-                var line = new JsonObject
-                {
-                    [EmitTimeKey] = entry.Value,
-                    [PayloadKey] = EncodePayload(entry.Key),
-                };
-                sb.Append(line.ToJsonString()).Append('\n');
+                sb.Append(EncodeItemLine(entry.Key, entry.Value)).Append('\n');
             }
 
             // Preserve the terminal marker across compaction when the stream is closed, so a future
-            // process rehydrating the compacted file still recognizes it as closed (matches Python).
+            // process rehydrating the compacted file still recognizes it as closed.
             if (IsClosedSnapshot)
             {
                 sb.Append(new JsonObject { [TerminalKey] = true }.ToJsonString()).Append('\n');
@@ -296,8 +303,7 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
 
     // Rewrites the log via a temp-file + atomic rename so a crash mid-rewrite can never leave a
     // truncated/empty file (a plain File.WriteAllText truncates in place first — the window between
-    // truncate and write would permanently destroy the event history). Mirrors Python's
-    // os.replace()-based compaction (crash-recovery friendly, C-STR-FBR-2).
+    // truncate and write would permanently destroy the event history).
     private void AtomicOverwrite(string content)
     {
         string tempPath = _filePath + ".compact";
@@ -308,64 +314,92 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
             fs.Flush(flushToDisk: true);
         }
 
-        File.Move(tempPath, _filePath, overwrite: true);
-    }
-
-    // Custom-serializer payloads are stored as a UTF-8 JSON string (NOT base64) so the on-disk
-    // format is byte-compatible with the Python file-backed replay backing and the two runtimes
-    // can read each other's stream files.
-    private JsonNode? EncodePayload(object payload)
-    {
-        if (_serializer is not null)
+        // The atomic replace swaps _filePath to a brand-new file. The long-lived append handle
+        // (if open) still points at the old, now-replaced file, so every subsequent emit would land
+        // in the orphaned file and be lost on the next process lifetime. Close it before the replace
+        // (Windows also forbids File.Move over an open handle) and reopen against the live path after
+        // — the single-writer `_lock` file stays held throughout, so exclusivity is never released
+        // across the swap.
+        bool reopen = _data is not null;
+        if (reopen)
         {
-            return Encoding.UTF8.GetString(_serializer(payload));
+            _data!.Dispose();
+            _data = null;
         }
 
-        return JsonSerializer.SerializeToNode(payload);
+        try
+        {
+            File.Move(tempPath, _filePath, overwrite: true);
+        }
+        finally
+        {
+            // Always restore a usable writer, even if the move threw (e.g. a transient sharing
+            // failure): on success the reopened handle points at the compacted file; on a failed
+            // move the original log is left intact, so it points at that. Without this a transient
+            // compaction failure would permanently disable the stream. Also delete any leftover
+            // temp file so a failed move can't orphan it (a successful move already consumed it).
+            if (reopen)
+            {
+                _data = OpenAppendHandle();
+            }
+
+            TryDeleteFile(tempPath);
+        }
     }
 
-    private object DecodePayload(JsonNode? node)
+    // Encodes one emitted item as a JSON-object line: the event text ('data'), the opaque event id
+    // ('id', omitted when null), the SSE event type ('event'), and the SSE reconnection interval
+    // ('retry', in whole milliseconds, omitted when unset), plus the emit time used for TTL.
+    private static string EncodeItemLine(SseItem<string> item, double emitTime)
     {
-        if (_deserializer is not null)
+        var line = new JsonObject
         {
-            string serialized = node is JsonValue value && value.TryGetValue(out string? s)
-                ? s
-                : node?.ToJsonString() ?? string.Empty;
-            return _deserializer(Encoding.UTF8.GetBytes(serialized));
+            [EmitTimeKey] = emitTime,
+            [DataKey] = item.Data,
+            [EventKey] = item.EventType,
+        };
+        if (item.EventId is not null)
+        {
+            line[IdKey] = item.EventId;
         }
 
-        return Normalize(node);
+        if (item.ReconnectionInterval is { } retry)
+        {
+            line[RetryKey] = (long)retry.TotalMilliseconds;
+        }
+
+        return line.ToJsonString();
     }
 
-    // Maps a parsed JSON node back to a CLR value: scalars become primitives so a
-    // cursor function written against the live payload keeps working after rehydration;
-    // objects and arrays stay as JsonNode.
-    private static object Normalize(JsonNode? node)
+    private SseItem<string> DecodeItem(JsonObject obj, int lineNumber)
     {
-        if (node is JsonValue value)
+        if (!obj.TryGetPropertyValue(DataKey, out JsonNode? dataNode) || dataNode is not JsonValue dataValue
+            || !dataValue.TryGetValue(out string? data) || data is null)
         {
-            if (value.TryGetValue(out long l))
-            {
-                return l <= int.MaxValue && l >= int.MinValue ? (int)l : l;
-            }
-
-            if (value.TryGetValue(out double d))
-            {
-                return d;
-            }
-
-            if (value.TryGetValue(out bool b))
-            {
-                return b;
-            }
-
-            if (value.TryGetValue(out string? s) && s is not null)
-            {
-                return s;
-            }
+            throw new AgentEventStreamException(
+                $"Record at line {lineNumber} of stream log '{_filePath}' is missing the 'data' field.");
         }
 
-        return node ?? (object)string.Empty;
+        string? eventType = null;
+        if (obj.TryGetPropertyValue(EventKey, out JsonNode? eventNode) && eventNode is JsonValue eventValue)
+        {
+            eventValue.TryGetValue(out eventType);
+        }
+
+        string? eventId = null;
+        if (obj.TryGetPropertyValue(IdKey, out JsonNode? idNode) && idNode is JsonValue idValue)
+        {
+            idValue.TryGetValue(out eventId);
+        }
+
+        TimeSpan? reconnectionInterval = null;
+        if (obj.TryGetPropertyValue(RetryKey, out JsonNode? retryNode) && retryNode is JsonValue retryValue
+            && retryValue.TryGetValue(out long retryMs))
+        {
+            reconnectionInterval = TimeSpan.FromMilliseconds(retryMs);
+        }
+
+        return new SseItem<string>(data, eventType) { EventId = eventId, ReconnectionInterval = reconnectionInterval };
     }
 
     private void AppendLine(string line) => AppendLines(line);
@@ -381,11 +415,11 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
 
             try
             {
-                // Persist-before-fan-out durability (C-STR-FBR-5): flush the OS buffer to disk so a
-                // crash after emit() returns cannot silently lose an event that a subscriber already
-                // observed. File.AppendAllText only reaches the OS cache. Mirrors Python's fsync.
-                // Multiple lines are written under a single open+flush so an emit-and-close pair is
-                // an atomic durable unit.
+                // Persist-before-fan-out durability: flush the OS buffer to disk so a crash after
+                // emit() returns cannot silently lose an event that a subscriber already observed.
+                // Write through the single long-lived append handle and fsync per event. Multiple
+                // lines are written under a single flush so an emit-and-close pair is an atomic
+                // durable unit.
                 var sb = new StringBuilder();
                 foreach (string line in lines)
                 {
@@ -393,13 +427,24 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
                 }
 
                 var bytes = Encoding.UTF8.GetBytes(sb.ToString());
-                using var fs = new FileStream(_filePath, FileMode.Append, FileAccess.Write, FileShare.Read);
+
+                // Self-heal: if a prior compaction's atomic replace failed to restore the writer,
+                // reopen it here (the single-writer lock is still held) rather than failing every
+                // subsequent emit. A null handle with no lock means the stream was deleted, so it
+                // stays null and the write below fails loud instead of resurrecting the file.
+                if (_data is null && _lock is not null)
+                {
+                    _data = OpenAppendHandle();
+                }
+
+                FileStream fs = _data
+                    ?? throw new AgentEventStreamException($"The write handle for stream '{Id}' is not open.");
                 fs.Write(bytes, 0, bytes.Length);
                 fs.Flush(flushToDisk: true);
             }
             catch (IOException ex)
             {
-                throw new EventStreamException($"Failed to persist event for stream '{Id}'.", ex);
+                throw new AgentEventStreamException($"Failed to persist event for stream '{Id}'.", ex);
             }
         }
     }
@@ -412,7 +457,7 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
         }
         catch (IOException ex)
         {
-            throw new EventStreamException(
+            throw new AgentEventStreamException(
                 $"Stream log '{_filePath}' is already opened by another writer.", ex);
         }
     }

@@ -27,7 +27,7 @@ the in-flight turn early:
 /// Uses TWO metadata namespaces:
 /// <list type="bullet">
 ///   <item><c>ctx.Metadata</c> (default) — per-invocation state (status, output).</item>
-///   <item><c>ctx.Metadata.Namespace("session")</c> — session-level state that persists
+///   <item><c>ctx.Metadata.GetNamespace("session")</c> — session-level state that persists
 ///         across many invocations: conversation <c>history</c> and <c>turn_count</c>.</item>
 /// </list>
 /// On <c>EntryMode.Recovered</c>, the handler reads persisted session history from the
@@ -47,7 +47,7 @@ public static async Task<ConversationOutput> RunConversationTurnAsync(
 {
     // Session-level state lives in a named namespace — logically separate from
     // per-invocation ephemeral state. Both survive crashes.
-    TaskMetadata session = ctx.Metadata.Namespace("session");
+    TaskMetadata session = ctx.Metadata.GetNamespace("session");
 
     List<ConversationMessage> history;
     if (session.TryGetValue("history", out var histRaw) && histRaw is not null)
@@ -189,7 +189,7 @@ public class ResilientMultiturnHandler : InvocationHandler
             new RunOptions { TaskId = taskId },
             cancellationToken);
 
-        ConversationOutput result = await run.GetResultAsync(cancellationToken);
+        ConversationOutput result = await run.Completion.WaitAsync(cancellationToken);
 
         await response.WriteAsJsonAsync(new
         {

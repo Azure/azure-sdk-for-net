@@ -1,0 +1,51 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes", "src\Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.csproj", "{A1B2C3D4-1111-2222-3333-444455556666}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Tests", "tests\Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Tests.csproj", "{A1B2C3D4-1111-2222-3333-444455557777}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1B2C3D4-1111-2222-3333-444455556666}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1B2C3D4-1111-2222-3333-444455556666}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1B2C3D4-1111-2222-3333-444455556666}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A1B2C3D4-1111-2222-3333-444455556666}.Debug|x64.Build.0 = Debug|Any CPU
+		{A1B2C3D4-1111-2222-3333-444455556666}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A1B2C3D4-1111-2222-3333-444455556666}.Debug|x86.Build.0 = Debug|Any CPU
+		{A1B2C3D4-1111-2222-3333-444455556666}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1B2C3D4-1111-2222-3333-444455556666}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1B2C3D4-1111-2222-3333-444455556666}.Release|x64.ActiveCfg = Release|Any CPU
+		{A1B2C3D4-1111-2222-3333-444455556666}.Release|x64.Build.0 = Release|Any CPU
+		{A1B2C3D4-1111-2222-3333-444455556666}.Release|x86.ActiveCfg = Release|Any CPU
+		{A1B2C3D4-1111-2222-3333-444455556666}.Release|x86.Build.0 = Release|Any CPU
+		{A1B2C3D4-1111-2222-3333-444455557777}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1B2C3D4-1111-2222-3333-444455557777}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1B2C3D4-1111-2222-3333-444455557777}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A1B2C3D4-1111-2222-3333-444455557777}.Debug|x64.Build.0 = Debug|Any CPU
+		{A1B2C3D4-1111-2222-3333-444455557777}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A1B2C3D4-1111-2222-3333-444455557777}.Debug|x86.Build.0 = Debug|Any CPU
+		{A1B2C3D4-1111-2222-3333-444455557777}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1B2C3D4-1111-2222-3333-444455557777}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1B2C3D4-1111-2222-3333-444455557777}.Release|x64.ActiveCfg = Release|Any CPU
+		{A1B2C3D4-1111-2222-3333-444455557777}.Release|x64.Build.0 = Release|Any CPU
+		{A1B2C3D4-1111-2222-3333-444455557777}.Release|x86.ActiveCfg = Release|Any CPU
+		{A1B2C3D4-1111-2222-3333-444455557777}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B1C2D3E4-1111-2222-3333-444455556666}
+	EndGlobalSection
+EndGlobal

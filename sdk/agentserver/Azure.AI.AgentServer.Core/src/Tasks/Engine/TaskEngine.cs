@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Tasks.Providers;
@@ -61,6 +62,8 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
 
     internal string Owner => _owner;
 
+    internal bool IsActive(string taskId) => _activeRuns.ContainsKey(taskId);
+
     internal string InstanceId => _lease.InstanceId;
 
     internal LeaseManager Lease => _lease;
@@ -73,7 +76,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
     {
         TaskRun<TOutput> handle = await StartAsync<TInput, TOutput>(name, input, options, cancellationToken)
             .ConfigureAwait(false);
-        return await handle.GetResultAsync(cancellationToken).ConfigureAwait(false);
+        return await handle.Completion.WaitAsync(cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -130,18 +133,20 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             // A steerable chain queues a concurrent start as the next turn instead of rejecting it.
             if (existing.Steerable)
             {
-                return await EnqueueSteeringAsync<TInput, TOutput>(existing, input, inputId, persistInputId, cancellationToken)
+                return await EnqueueSteeringAsync<TInput, TOutput>(existing, input, inputId, persistInputId, registration, cancellationToken)
                     .ConfigureAwait(false);
             }
 
-            throw new TaskConflictException(TaskStatus.InProgress,
-                $"Task '{taskId}' already has a turn in progress.");
+            throw new ResilientTaskException(ResilientTaskErrorCode.Conflict,
+                $"Task '{taskId}' already has a turn in progress.")
+            { CurrentStatus = TaskRunStatus.InProgress };
         }
 
         if (!multiTurn && _terminatedOneShot.ContainsKey(taskId))
         {
-            throw new TaskConflictException(TaskStatus.Completed,
-                $"Task '{taskId}' has already completed.");
+            throw new ResilientTaskException(ResilientTaskErrorCode.Conflict,
+                $"Task '{taskId}' has already completed.")
+            { CurrentStatus = TaskRunStatus.Completed };
         }
 
         return multiTurn
@@ -164,7 +169,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         CancellationToken cancellationToken)
     {
         // Serialize + size-check input BEFORE network (FR-011); promotion keeps payload small.
-        JsonNode? inputNode = SerializeInput(input);
+        JsonNode? inputNode = SerializeInput(input, registration);
         var payload = new JsonObject();
         (JsonNode? inputSlot, JsonObject? attachments) = AttachmentPromoter.Promote(
             attachments: null,
@@ -221,11 +226,12 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         {
             // The record already exists: converge or conflict.
             TaskRecord? current = await _store.GetAsync(taskId, cancellationToken).ConfigureAwait(false)
-                ?? throw new TaskConflictException(TaskStatus.Completed, $"Task '{taskId}' is gone.");
+                ?? throw new ResilientTaskException(ResilientTaskErrorCode.Conflict, $"Task '{taskId}' is gone.") { CurrentStatus = TaskRunStatus.Completed };
             if (current.Status == TaskWireKeys.StatusCompleted)
             {
-                throw new TaskConflictException(TaskStatus.Completed,
-                    $"Task '{taskId}' has already completed.");
+                throw new ResilientTaskException(ResilientTaskErrorCode.Conflict,
+                    $"Task '{taskId}' has already completed.")
+                { CurrentStatus = TaskRunStatus.Completed };
             }
 
             // Not terminal: reclaim and re-invoke as a recovered run.
@@ -233,7 +239,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             entryMode = EntryMode.Recovered;
             inputId = (string?)current.Payload[TaskWireKeys.PayloadLastInputId] ?? inputId;
             runState.InputId = inputId;
-            input = ResolveInput<TInput>(current);
+            input = ResolveInput<TInput>(current, registration);
         }
 
         HydrateMetadata(metadata, record);
@@ -289,7 +295,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         RunOptions? options, CancellationToken cancellationToken)
     {
         // Serialize + size-check input BEFORE network (FR-011).
-        JsonNode? inputNode = SerializeInput(input);
+        JsonNode? inputNode = SerializeInput(input, registration);
         (JsonNode? inputSlot, JsonObject? attachments) = AttachmentPromoter.Promote(
             attachments: null,
             value: inputNode,
@@ -345,14 +351,15 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                 string? actual = (string?)current.Payload[TaskWireKeys.PayloadLastInputId];
                 if (!string.Equals(actual, expected, StringComparison.Ordinal))
                 {
-                    throw new LastInputIdPreconditionFailedException(actual);
+                    throw new ResilientTaskException(ResilientTaskErrorCode.PreconditionFailed) { ActualLastInputId = actual };
                 }
             }
 
             if (current.Status == TaskWireKeys.StatusCompleted)
             {
-                throw new TaskConflictException(TaskStatus.Completed,
-                    $"Task '{taskId}' has already completed.");
+                throw new ResilientTaskException(ResilientTaskErrorCode.Conflict,
+                    $"Task '{taskId}' has already completed.")
+                { CurrentStatus = TaskRunStatus.Completed };
             }
 
             if (current.Status == TaskWireKeys.StatusInProgress)
@@ -368,8 +375,9 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                     || string.Equals(leaseOwner, _owner, StringComparison.Ordinal);
                 if (!reclaimableByUs)
                 {
-                    throw new TaskConflictException(TaskStatus.InProgress,
-                        $"Task '{taskId}' already has a turn in progress.");
+                    throw new ResilientTaskException(ResilientTaskErrorCode.Conflict,
+                        $"Task '{taskId}' already has a turn in progress.")
+                    { CurrentStatus = TaskRunStatus.InProgress };
                 }
 
                 // Dead lease owned by us: recover the in-flight turn rather than starting a new
@@ -378,7 +386,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                 record = current;
                 entryMode = EntryMode.Recovered;
                 inputId = (string?)current.Payload[TaskWireKeys.PayloadLastInputId] ?? inputId;
-                input = ResolveInput<TInput>(current);
+                input = ResolveInput<TInput>(current, registration);
 
                 // Mid-drain steering recovery (FR-023a): re-enter as a steered turn using the
                 // persisted active_input when the crash happened mid-drain.
@@ -391,7 +399,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                         steering[TaskWireKeys.SteeringActiveInput], current.Attachments);
                     if (resolvedActive is not null)
                     {
-                        input = resolvedActive.Deserialize<TInput>()!;
+                        input = DeserializeInput<TInput>(resolvedActive, registration);
                         recoveredSteeredTurn = true;
                     }
                 }
@@ -412,6 +420,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         if (registration.Steerable && HasPersistedSteering(record))
         {
             SeedSteeringSeq(activeRun.Steering, record);
+            RehydratePendingInputs(activeRun.Steering, record, taskId);
         }
 
         if (entryMode == EntryMode.Fresh)
@@ -505,7 +514,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
     // Serializes a steering input, queues it in-process, durably appends it to the
     // record's _steering.pending_inputs, then nudges the running turn to wind down.
     private async Task<TaskRun<TOutput>> EnqueueSteeringAsync<TInput, TOutput>(
-        IActiveRun existing, TInput input, string inputId, bool persistInputId, CancellationToken cancellationToken)
+        IActiveRun existing, TInput input, string inputId, bool persistInputId, TaskRegistration registration, CancellationToken cancellationToken)
     {
         var run = (ActiveRun<TOutput>)existing;
         string taskId = run.TaskId;
@@ -515,7 +524,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         // _append_steering_input routes through _resolve_input_storage). This keeps the persisted
         // `payload._steering` bounded no matter how many large inputs are queued, so the queue can
         // never blow the 1 MiB payload cap, and keeps the wire schema cross-language compatible.
-        JsonNode? inputNode = SerializeInput(input);
+        JsonNode? inputNode = SerializeInput(input, registration);
         (JsonNode? inputSlot, JsonObject? inputAttachments) = run.Steering.PromoteInput(seq =>
             AttachmentPromoter.Promote(
                 attachments: null,
@@ -532,7 +541,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         // Remove returns false and we route to the active-turn cancel path — either immediately
         // (if the promoted turn is already current) or deferred until SetCurrent rewires it, so a
         // cancel arriving inside the promotion window is never silently dropped.
-        runState.Cancel = async ct =>
+        runState.Cancel = async () =>
         {
             if (!run.Steering.Remove(queued))
             {
@@ -552,13 +561,13 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                     Attachments = DeletionPatch(queued.Attachments),
                 },
                 WriteIntent.SteeringAppend,
-                ct).ConfigureAwait(false);
+                CancellationToken.None).ConfigureAwait(false);
 
-            runState.SetException(new TaskCancelledException(
+            runState.SetException(new OperationCanceledException(
                 $"Task '{taskId}' input '{inputId}' was cancelled before the queued input was promoted."));
         };
 
-        // Capacity is enforced here (throws SteeringQueueFullException before any persist).
+        // Capacity is enforced here (throws ResilientTaskException/QueueFull before any persist).
         run.Steering.Enqueue(queued);
 
         try
@@ -675,7 +684,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         var handler = (Func<TaskContext<TInput>, CancellationToken, Task<TOutput>>)registration.Handler;
         // Retry is opt-in (spec §15): a handler with no configured TaskRetryPolicy fails on the first
         // raise, matching the Python reference (retry only applies when a policy is supplied).
-        TaskRetryPolicy retry = registration.Options?.Retry ?? TaskRetryPolicy.NoRetry();
+        TaskRetryPolicy retry = registration.Options?.Retry ?? new TaskRetryPolicy { MaxAttempts = 1 };
 
         TaskRunState<TOutput> currentRun = runState;
         TInput currentInput = input;
@@ -694,10 +703,12 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
 
                 if (outcome.Kind == TurnOutcomeKind.Deferred)
                 {
-                    // Exit-for-recovery: lease already released, record stays in_progress.
+                    // Exit-for-recovery: lease already released, record stays in_progress. Deferral is
+                    // an internal lifecycle handoff — the run handle's Completion is intentionally left
+                    // pending (never faulted) so the durable run can resume in a future process. A
+                    // caller that does not want to wait can bail via Completion.WaitAsync(token).
                     _activeRuns.TryRemove(taskId, out _);
                     _serializer.Remove(taskId);
-                    currentRun.SetException(new TaskDeferredException($"Task '{taskId}' deferred for recovery."));
                     return;
                 }
 
@@ -709,7 +720,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                         // does not re-invoke a cancelled handler.
                         await TryDeleteAsync(taskId).ConfigureAwait(false);
                         FinishTurn(taskId, multiTurn);
-                        currentRun.SetException(new TaskCancelledException($"Task '{taskId}' was cancelled."));
+                        currentRun.SetException(new OperationCanceledException($"Task '{taskId}' was cancelled."));
                         return;
                     }
 
@@ -722,13 +733,13 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
 
                     if (cancelDrained is { } cancelPromotion)
                     {
-                        currentRun.SetException(new TaskCancelledException($"Task '{taskId}' was cancelled."));
+                        currentRun.SetException(new OperationCanceledException($"Task '{taskId}' was cancelled."));
 
                         var nextCts = new CancellationTokenSource();
                         currentRun = cancelPromotion.Input.RunState;
                         currentInput = cancelPromotion.Input.Slot is null
                             ? default!
-                            : cancelPromotion.Input.Slot.Deserialize<TInput>()!;
+                            : DeserializeInput<TInput>(cancelPromotion.Input.Slot, registration);
                         currentInputId = cancelPromotion.Input.InputId;
                         currentMode = EntryMode.Resumed;
                         steered = true;
@@ -751,26 +762,50 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                     }
 
                     FinishTurn(taskId, multiTurn);
-                    currentRun.SetException(new TaskCancelledException($"Task '{taskId}' was cancelled."));
+                    currentRun.SetException(new OperationCanceledException($"Task '{taskId}' was cancelled."));
                     return;
                 }
 
                 if (!multiTurn)
                 {
-                    // One-shot terminal: best-effort store write so a transient failure can't
-                    // turn a completed run into a failure.
-                    try
+                    // One-shot terminal. The durable completion write must succeed before the caller
+                    // observes success: if CompleteAsync fails the record stays in_progress and a
+                    // later recovery scan could re-run the turn, so surface the failure to the caller
+                    // instead of reporting a completion that is not durable.
+                    if (outcome.Kind == TurnOutcomeKind.Completed)
                     {
-                        if (outcome.Kind == TurnOutcomeKind.Completed)
+                        try
                         {
                             await CompleteAsync(taskId, CancellationToken.None).ConfigureAwait(false);
                         }
+                        catch (Exception completionEx)
+                        {
+                            _logger.HandlerFailure(taskId, 0, completionEx.GetType().Name);
+                            FinishTurn(taskId, multiTurn);
+                            currentRun.SetException(new ResilientTaskException(
+                                ResilientTaskErrorCode.HandlerError,
+                                $"Task '{taskId}' completed its handler but the durable completion write failed.",
+                                completionEx)
+                            {
+                                Failure = new TaskFailureDetail(
+                                    TaskFailureKind.HandlerError,
+                                    completionEx.GetType().Name,
+                                    $"Task '{taskId}' completed its handler but the durable completion write failed."),
+                            });
+                            return;
+                        }
+                    }
 
+                    // The record is now durably completed (or the outcome was not a completion). The
+                    // delete is best-effort cleanup — a failure here leaves a completed record that
+                    // recovery will not re-run, so it must not fail the caller.
+                    try
+                    {
                         await TryDeleteAsync(taskId).ConfigureAwait(false);
                     }
-                    catch (Exception completionEx)
+                    catch (Exception deleteEx)
                     {
-                        _logger.HandlerFailure(taskId, 0, completionEx.GetType().Name);
+                        _logger.HandlerFailure(taskId, 0, deleteEx.GetType().Name);
                     }
 
                     FinishTurn(taskId, multiTurn);
@@ -791,7 +826,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                     currentRun = promotion.Input.RunState;
                     currentInput = promotion.Input.Slot is null
                         ? default!
-                        : promotion.Input.Slot.Deserialize<TInput>()!;
+                        : DeserializeInput<TInput>(promotion.Input.Slot, registration);
                     currentInputId = promotion.Input.InputId;
                     currentMode = EntryMode.Resumed;
                     steered = true;
@@ -812,7 +847,22 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                 }
                 catch (Exception suspendEx)
                 {
+                    // Durable suspend failed: the record stays in_progress, so a recovery scan could
+                    // re-run this turn. Surface the failure rather than reporting the turn outcome as
+                    // durably suspended.
                     _logger.HandlerFailure(taskId, 0, suspendEx.GetType().Name);
+                    FinishTurn(taskId, multiTurn);
+                    currentRun.SetException(new ResilientTaskException(
+                        ResilientTaskErrorCode.HandlerError,
+                        $"Task '{taskId}' finished its turn but the durable suspend write failed.",
+                        suspendEx)
+                    {
+                        Failure = new TaskFailureDetail(
+                            TaskFailureKind.HandlerError,
+                            suspendEx.GetType().Name,
+                            $"Task '{taskId}' finished its turn but the durable suspend write failed."),
+                    });
+                    return;
                 }
 
                 FinishTurn(taskId, multiTurn);
@@ -854,25 +904,27 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             PendingInputCount = activeRun.SteeringCount,
             Cancellation = handlerCts.Token,
             Shutdown = _shutdownCts.Token,
-            ExitForRecovery = async ct =>
+        };
+        ctxState.ExitForRecovery = async ct =>
+        {
+            if (!_shutdownCts.IsCancellationRequested)
             {
-                if (!_shutdownCts.IsCancellationRequested)
-                {
-                    // Misuse-as-failed: exit-for-recovery is only valid during graceful shutdown.
-                    // Calling it otherwise is a handler bug — surface it loudly as a failure so it
-                    // shows up in operator logs rather than silently deferring (mirrors Python's
-                    // RuntimeError that ends the task in `failed`).
-                    throw new InvalidOperationException(
-                        "ExitForRecovery may only be called when ctx.Shutdown is signaled.");
-                }
+                // Misuse-as-failed: exit-for-recovery is only valid during graceful shutdown.
+                // Calling it otherwise is a handler bug — surface it loudly as a failure so it
+                // shows up in operator logs rather than silently deferring (mirrors Python's
+                // RuntimeError that ends the task in `failed`).
+                throw new InvalidOperationException(
+                    "ExitForRecovery may only be called when ctx.Shutdown is signaled.");
+            }
 
-                // Graceful shutdown: flush metadata, force-expire the lease (duration 0, status
-                // stays in_progress), and defer for recovery. Queued steering inputs remain in the
-                // persisted state; the next process re-enters the handler with EntryMode.Recovered.
-                await runState.Metadata.FlushAllAsync(ct).ConfigureAwait(false);
-                await _lease.ReleaseAsync(taskId, _owner, ct).ConfigureAwait(false);
-                throw new TaskDeferredException($"Task '{taskId}' exited for recovery.");
-            },
+            // Graceful shutdown: flush metadata, force-expire the lease (duration 0, status
+            // stays in_progress), and mark the turn for recovery. Queued steering inputs remain
+            // in the persisted state; the next process re-enters the handler with
+            // EntryMode.Recovered. This sets a post-return signal (no throw) that the engine
+            // reconciles once the handler returns — deferral is a lifecycle handoff, not a fault.
+            await runState.Metadata.FlushAllAsync(ct).ConfigureAwait(false);
+            await _lease.ReleaseAsync(taskId, _owner, ct).ConfigureAwait(false);
+            ctxState.DeferredForRecovery = true;
         };
 
         // Publish causes (C-CAN-2) so a handler waking on the cancelled token always observes
@@ -927,11 +979,14 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                 {
                     TOutput result = await handler(
                         new TaskContext<TInput>(ctxState), handlerCts.Token).ConfigureAwait(false);
+                    if (ctxState.DeferredForRecovery)
+                    {
+                        // The handler voluntarily yielded for recovery (ExitForRecovery set a
+                        // post-return signal). Reconcile it as a deferral, ignoring any returned value.
+                        return new TurnOutcome<TOutput> { Kind = TurnOutcomeKind.Deferred };
+                    }
+
                     return new TurnOutcome<TOutput> { Kind = TurnOutcomeKind.Completed, Result = result };
-                }
-                catch (TaskDeferredException)
-                {
-                    return new TurnOutcome<TOutput> { Kind = TurnOutcomeKind.Deferred };
                 }
                 catch (OperationCanceledException) when (handlerCts.IsCancellationRequested && leaseLost.Value)
                 {
@@ -1064,7 +1119,11 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         }
         else
         {
-            runState.SetException(new TaskFailedException(outcome.Detail!, outcome.Error));
+            TaskFailureDetail detail = outcome.Detail!;
+            ResilientTaskErrorCode code = detail.Kind == TaskFailureKind.ExhaustedRetries
+                ? ResilientTaskErrorCode.ExhaustedRetries
+                : ResilientTaskErrorCode.HandlerError;
+            runState.SetException(new ResilientTaskException(code, detail.Message, outcome.Error) { Failure = detail });
         }
     }
 
@@ -1397,16 +1456,27 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         [TaskWireKeys.TagTaskName] = name,
     };
 
-    private static JsonNode? SerializeInput<TInput>(TInput input)
+    private static JsonNode? SerializeInput<TInput>(TInput input, TaskRegistration registration)
     {
         if (input is null)
         {
             return null;
         }
 
-        byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(input);
+        // Use the caller-supplied source-generated metadata when present (Native-AOT / trimming
+        // path), otherwise fall back to the reflection-based serializer.
+        byte[] bytes = registration.InputTypeInfo is JsonTypeInfo<TInput> typeInfo
+            ? JsonSerializer.SerializeToUtf8Bytes(input, typeInfo)
+            : JsonSerializer.SerializeToUtf8Bytes(input);
         return JsonNode.Parse(bytes);
     }
+
+    // Deserializes a task input node through the registration's source-generated metadata when
+    // present (Native-AOT / trimming path), otherwise via the reflection-based serializer.
+    private static TInput DeserializeInput<TInput>(JsonNode node, TaskRegistration registration)
+        => registration.InputTypeInfo is JsonTypeInfo<TInput> typeInfo
+            ? node.Deserialize(typeInfo)!
+            : node.Deserialize<TInput>()!;
 
     // Builds an attachments patch that DELETES every key present in <paramref name="attachments"/>
     // (a null value per key is the store's delete sentinel). Returns null when there is nothing to
@@ -1427,7 +1497,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         return patch;
     }
 
-    private static TInput ResolveInput<TInput>(TaskRecord record)
+    private static TInput ResolveInput<TInput>(TaskRecord record, TaskRegistration registration)
     {
         JsonNode? slot = record.Payload[TaskWireKeys.PayloadInput];
         JsonNode? resolved = AttachmentPromoter.Resolve(slot, record.Attachments);
@@ -1436,7 +1506,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             return default!;
         }
 
-        return resolved.Deserialize<TInput>()!;
+        return DeserializeInput<TInput>(resolved, registration);
     }
 
     // Restores the monotonic steering seq from a persisted record so attachment keys stay
@@ -1452,6 +1522,80 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             // (Python parity: `if existing_steering:`), even if the queue has drained back to empty.
             queue.MarkPersistedSteering();
         }
+    }
+
+    // Rehydrates the in-process steering FIFO from the persisted `pending_inputs` on recovery so
+    // inputs that were queued-but-not-drained when the process crashed survive and still drain,
+    // instead of stranding in the record forever. Python is record-driven (the queue lives in the
+    // record and every drain reads `pending_inputs` fresh), so it needs no equivalent step; the C#
+    // drain pops from this in-memory queue, which is empty after a restart unless we repopulate it.
+    //
+    // Recovered inputs are caller-less: the process that awaited each handle is gone, so the steered
+    // turn advances the conversation and resolves a detached handle that nobody observes (Python
+    // parity: `_pending_steering_futures` is likewise lost on crash and the input drains on its data
+    // alone). Each entry's per-turn id is restored from the parallel `pending_input_ids` array so the
+    // recovered turn keeps its `ctx.InputId` and advances `last_input_id` exactly as it would have
+    // without a crash (recovery is transparent). When that array is absent or length-mismatched (an
+    // older or cross-language record that only persisted slots) the recovered turn falls back to
+    // inheriting the current `last_input_id` without advancing it.
+    private void RehydratePendingInputs<TOutput>(SteeringQueue<TOutput> queue, TaskRecord record, string taskId)
+    {
+        if (record.Payload[TaskWireKeys.PayloadSteering] is not JsonObject steering
+            || steering[TaskWireKeys.SteeringPendingInputs] is not JsonArray pending
+            || pending.Count == 0)
+        {
+            return;
+        }
+
+        string inheritedInputId = string.Empty;
+        if (record.Payload[TaskWireKeys.PayloadLastInputId] is JsonValue idValue
+            && idValue.TryGetValue(out string? persistedId)
+            && persistedId is not null)
+        {
+            inheritedInputId = persistedId;
+        }
+
+        // Only trust the parallel id array when it lines up 1:1 with the slots; otherwise fall back
+        // to the inherited chain head so a skewed/older record degrades to the prior behavior.
+        JsonArray? pendingIds = steering[TaskWireKeys.SteeringPendingInputIds] as JsonArray;
+        bool idsUsable = pendingIds is not null && pendingIds.Count == pending.Count;
+
+        var restored = new List<QueuedInput<TOutput>>(pending.Count);
+        for (int i = 0; i < pending.Count; i++)
+        {
+            JsonNode? slotClone = pending[i]?.DeepClone();
+
+            // For an oversized queued input the slot is a `_steering_input_<seq>` ref whose content
+            // lives in the record's attachments. Carry that content on the QueuedInput exactly as
+            // the append path did, so the existing drain (DriveSteeredTurnAsync) resolves the ref and
+            // deletes the consumed attachment unchanged. A dangling ref (missing attachment) is left
+            // as-is and fails loud at drain, matching how any corrupt record is treated.
+            JsonObject? attachments = null;
+            if (AttachmentRef.TryParse(slotClone, out AttachmentRef? attachmentRef)
+                && record.Attachments is { } recordAttachments
+                && recordAttachments.TryGetPropertyValue(attachmentRef!.Key, out JsonNode? content))
+            {
+                attachments = new JsonObject { [attachmentRef.Key] = content?.DeepClone() };
+            }
+
+            string inputId = inheritedInputId;
+            bool persistInputId = false;
+            if (idsUsable
+                && pendingIds![i] is JsonValue entryIdValue
+                && entryIdValue.TryGetValue(out string? entryId)
+                && !string.IsNullOrEmpty(entryId))
+            {
+                // The durably-persisted per-turn id: restore it and re-enable the chain-head advance
+                // so the recovered turn is indistinguishable from the non-crash drain.
+                inputId = entryId;
+                persistInputId = true;
+            }
+
+            var runState = new TaskRunState<TOutput>(taskId, inputId, CreateMetadata(taskId), isQueued: true);
+            restored.Add(new QueuedInput<TOutput>(slotClone, attachments, inputId, persistInputId, runState));
+        }
+
+        queue.SeedPendingInputs(restored);
     }
 
     /// <summary>Whether the persisted record already carries steering state worth restoring.
@@ -1501,27 +1645,10 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         => $"{prefix}-{Guid.NewGuid():N}";
 
     private static TimeSpan ComputeDelay(TaskRetryPolicy retry, int attempt)
-    {
-        double baseMs;
-        if (retry.LinearIncrement is { } increment)
-        {
-            baseMs = retry.InitialDelay.TotalMilliseconds + (increment.TotalMilliseconds * attempt);
-        }
-        else
-        {
-            baseMs = retry.InitialDelay.TotalMilliseconds * Math.Pow(retry.BackoffCoefficient, attempt);
-        }
-
-        // MaxDelay is validated in [0, MaxRetryDelay] at TaskRetryPolicy construction.
-        baseMs = Math.Min(baseMs, retry.MaxDelay.TotalMilliseconds);
-        if (retry.Jitter)
-        {
-            double factor = 0.75 + (Random.Shared.NextDouble() * 0.5);
-            baseMs *= factor;
-        }
-
-        return TimeSpan.FromMilliseconds(baseMs);
-    }
+        // Delegate to the policy's DelayStrategy (retry number is 1-based). The strategy owns jitter
+        // and max-delay clamping; the backoff itself is awaited under the handler's cooperative token
+        // so shutdown/cancel/timeout still interrupt a long delay.
+        => retry.Delay.GetNextDelay(null, attempt + 1);
 
     /// <inheritdoc/>
     public async Task<TaskRun<TOutput>?> GetActiveRunAsync<TOutput>(
@@ -1653,7 +1780,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         // the task_id when absent (Python parity: `input_id=(payload or {}).get("last_input_id")`
         // with TaskContext defaulting a missing id to task_id). Never fabricate an input-<guid>.
         string inputId = (string?)record.Payload[TaskWireKeys.PayloadLastInputId] ?? taskId;
-        TInput input = ResolveInput<TInput>(record);
+        TInput input = ResolveInput<TInput>(record, registration);
 
         // FR-023a recovery mid-drain: if the crash happened after popping a steering input
         // but before the steered turn finished, re-enter the handler as a steered turn using
@@ -1668,7 +1795,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             JsonNode? resolved = AttachmentPromoter.Resolve(activeSlot, record.Attachments);
             if (resolved is not null)
             {
-                input = resolved.Deserialize<TInput>()!;
+                input = DeserializeInput<TInput>(resolved, registration);
                 isSteeredTurn = true;
             }
         }
@@ -1681,6 +1808,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         if (registration.Steerable && HasPersistedSteering(record))
         {
             SeedSteeringSeq(activeRun.Steering, record);
+            RehydratePendingInputs(activeRun.Steering, record, taskId);
         }
         if (!_activeRuns.TryAdd(taskId, activeRun))
         {
@@ -1727,15 +1855,25 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
     /// <returns>The number of tasks dispatched for recovery.</returns>
     internal async Task<int> ScanAndRecoverAsync(CancellationToken cancellationToken = default)
     {
-        TaskListResult listed = await _store.ListAsync(new TaskListQuery
-        {
-            AgentName = _agentName,
-            SessionId = _sessionId,
-            Status = TaskWireKeys.StatusInProgress,
-        }, cancellationToken).ConfigureAwait(false);
-
         int dispatched = 0;
-        foreach (TaskRecordRef item in listed.Items)
+        var candidates = new List<TaskRecordRef>();
+        string? after = null;
+        do
+        {
+            TaskListResult listed = await _store.ListAsync(new TaskListQuery
+            {
+                AgentName = _agentName,
+                SessionId = _sessionId,
+                Status = TaskWireKeys.StatusInProgress,
+                After = after,
+            }, cancellationToken).ConfigureAwait(false);
+
+            candidates.AddRange(listed.Items);
+            after = listed.NextAfter;
+        }
+        while (after is not null);
+
+        foreach (TaskRecordRef item in candidates)
         {
             TaskRecord record = item.Record;
             // Only dispatch records owned by this stable lease owner and stamped with our
@@ -2012,7 +2150,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             // popped but before this rewire) is honored now via the active-turn cancel path.
             if (honorPending)
             {
-                _ = state.CancelAsync(CancellationToken.None);
+                _ = state.RequestCancellationAsync();
             }
         }
 
@@ -2032,7 +2170,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                 }
             }
 
-            return state.CancelAsync(CancellationToken.None);
+            return state.RequestCancellationAsync();
         }
 
         /// <summary>
@@ -2043,9 +2181,32 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         public async Task SignalSteeringAsync()
         {
             PublishPendingInputCount?.Invoke(Steering.Count);
-            if (HandlerCts is { } cts)
+            await CancelCurrentHandlerAsync().ConfigureAwait(false);
+        }
+
+        // Cancels the current turn's cooperative token, re-signalling across any concurrent turn
+        // transition that swaps HandlerCts. Reading the source once and cancelling it lets a
+        // transition install a NEW source in between, leaving the turn that is now current
+        // unsignalled — so a steering nudge or cancel could complete against a superseded (and maybe
+        // disposed) source while the running handler never wakes. Re-read after each cancel and
+        // signal the replacement too, until the source is unchanged; bounded by the finite number of
+        // turn transitions.
+        private async Task CancelCurrentHandlerAsync()
+        {
+            CancellationTokenSource? signalled = null;
+            while (HandlerCts is { } cts && !ReferenceEquals(cts, signalled))
             {
-                await cts.CancelAsync().ConfigureAwait(false);
+                try
+                {
+                    await cts.CancelAsync().ConfigureAwait(false);
+                }
+                catch (ObjectDisposedException)
+                {
+                    // This source was replaced and disposed by a concurrent transition after we read
+                    // it; loop to signal the source that replaced it (the now-current turn).
+                }
+
+                signalled = cts;
             }
         }
 
@@ -2053,7 +2214,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         {
             // Resolve every still-queued caller as cancelled, then cancel the active turn.
             DrainQueuedAsCancelled();
-            return _state.CancelAsync(CancellationToken.None);
+            return _state.RequestCancellationAsync();
         }
 
         /// <summary>
@@ -2113,7 +2274,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             while (Steering.Promote() is { } promoted)
             {
                 promoted.RunState.SetException(
-                    new TaskCancelledException($"Task '{TaskId}' was cancelled before the queued input was promoted."));
+                    new OperationCanceledException($"Task '{TaskId}' was cancelled before the queued input was promoted."));
                 Steering.CompleteDrain();
             }
         }
@@ -2131,16 +2292,13 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
 
         private void WireCancel(TaskRunState<TOutput> state)
         {
-            state.Cancel = async ct =>
+            state.Cancel = async () =>
             {
                 // Publish the cause before signalling the token so a handler that wakes on
                 // cancellation always observes CancelRequested (C-CAN-2 ordering).
                 CancelRequested = true;
                 PublishCancelCause?.Invoke();
-                if (HandlerCts is { } cts)
-                {
-                    await cts.CancelAsync().ConfigureAwait(false);
-                }
+                await CancelCurrentHandlerAsync().ConfigureAwait(false);
             };
         }
     }

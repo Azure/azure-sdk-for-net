@@ -38,7 +38,7 @@ public sealed class TimeoutTests
             configure: o =>
             {
                 o.Timeout = TimeSpan.FromMilliseconds(150);
-                o.Retry = TaskRetryPolicy.NoRetry();
+                o.Retry = new TaskRetryPolicy { MaxAttempts = 1 };
             });
 
         TaskRun<string> run = await host.Invoker.StartAsync<string, string>(
@@ -46,6 +46,6 @@ public sealed class TimeoutTests
 
         bool sawCause = await observedTimeout.Task.WaitAsync(TimeSpan.FromSeconds(5));
         Assert.That(sawCause, Is.True, "TimeoutExceeded must be set before the cancellation signal.");
-        Assert.ThrowsAsync<TaskCancelledException>(async () => await run.GetResultAsync());
+        Assert.ThrowsAsync<OperationCanceledException>(async () => await run.Completion);
     }
 }

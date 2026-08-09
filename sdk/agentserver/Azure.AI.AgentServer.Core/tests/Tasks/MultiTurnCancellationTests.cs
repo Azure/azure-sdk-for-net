@@ -15,7 +15,7 @@ public sealed class MultiTurnCancellationTests
     [Test]
     public async Task CancellingMultiTurnTurnParksChainAtSuspended()
     {
-        // Spec §16: a multi-turn turn cancelled mid-flight surfaces TaskCancelledException to the
+        // Spec §16: a multi-turn turn cancelled mid-flight surfaces OperationCanceledException to the
         // caller, but the chain itself stays alive (parked at suspended), never dangling in_progress.
         using var host = TaskTestHost.Create();
         var started = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -31,9 +31,9 @@ public sealed class MultiTurnCancellationTests
             "mt-cancel", "v", new RunOptions { TaskId = "mtc-1" });
 
         await started.Task;
-        await handle.CancelAsync();
+        await handle.RequestCancellationAsync();
 
-        Assert.ThrowsAsync<TaskCancelledException>(async () => await handle);
+        Assert.ThrowsAsync<OperationCanceledException>(async () => await handle.Completion);
 
         // The chain remains alive at suspended (not in_progress, not deleted).
         var record = await host.WaitForStatusAsync("mtc-1", "suspended", TimeSpan.FromSeconds(5));

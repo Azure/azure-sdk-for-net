@@ -22,9 +22,9 @@ namespace Specs.Azure.ClientGenerator.Core.Override
 
         public virtual HttpPipeline Pipeline => throw null;
 
-        public virtual Response Group(string param1, string param2, RequestContext context = null) => throw null;
+        public virtual Response Group(GroupParametersOptions options, RequestContext context) => throw null;
 
-        public virtual Task<Response> GroupAsync(string param1, string param2, RequestContext context = null) => throw null;
+        public virtual Task<Response> GroupAsync(GroupParametersOptions options, RequestContext context) => throw null;
 
         public virtual Response Group(GroupParametersOptions options, CancellationToken cancellationToken = default) => throw null;
 

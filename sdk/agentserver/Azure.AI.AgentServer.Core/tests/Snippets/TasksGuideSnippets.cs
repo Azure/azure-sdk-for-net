@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.AI.AgentServer.Core.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -45,12 +46,12 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
                 });
 
             TaskRun<string> turn1 = await invoker.StartAsync<string, string>("chat", "hi");
-            string a1 = await turn1;
+            string a1 = await turn1.Completion;
 
             TaskRun<string> turn2 = await invoker.StartAsync<string, string>(
                 "chat", "and again",
                 new RunOptions { TaskId = turn1.TaskId });
-            string a2 = await turn2;
+            string a2 = await turn2.Completion;
 
             await multiTurn.DeleteAsync(turn1.TaskId);
             _ = (a1, a2);
@@ -78,7 +79,7 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
                 // already done — skip the side effect.
             }
 
-            TaskMetadata billing = ctx.Metadata.Namespace("billing");
+            TaskMetadata billing = ctx.Metadata.GetNamespace("billing");
             _ = billing;
         }
 
@@ -90,9 +91,9 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
             _ = run.TaskId;
             _ = run.InputId;
             _ = run.IsQueued;
-            string r = await run;
-            string r2 = await run.GetResultAsync();
-            await run.CancelAsync();
+            string r = await run.Completion;
+            string r2 = await run.Completion;
+            await run.RequestCancellationAsync();
             _ = (r, r2);
         }
 
@@ -117,13 +118,14 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
             IServiceCollection services,
             Func<TaskContext<string>, CancellationToken, Task<string>> handler)
         {
-            TaskRetryPolicy policy = TaskRetryPolicy.ExponentialBackoff(maxAttempts: 5);
+            // Retries compose an Azure.Core DelayStrategy — exponential is the default.
+            TaskRetryPolicy policy = new() { MaxAttempts = 5 };
             services.AddResilientTasks()
                 .AddTask<string, string>("charge", handler, o => o.Retry = policy);
 
-            _ = TaskRetryPolicy.FixedDelay(maxAttempts: 3, delay: TimeSpan.FromSeconds(1));
-            _ = TaskRetryPolicy.LinearBackoff(maxAttempts: 3, initialDelay: TimeSpan.FromSeconds(1));
-            _ = TaskRetryPolicy.NoRetry();
+            _ = new TaskRetryPolicy { MaxAttempts = 3, Delay = DelayStrategy.CreateFixedDelayStrategy(TimeSpan.FromSeconds(1)) };
+            _ = new TaskRetryPolicy { MaxAttempts = 3, Delay = DelayStrategy.CreateExponentialDelayStrategy(TimeSpan.FromSeconds(1)) };
+            _ = new TaskRetryPolicy { MaxAttempts = 1 }; // no retries
         }
 
         // §4.10 Timeout.

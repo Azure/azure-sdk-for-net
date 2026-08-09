@@ -7,57 +7,85 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The AlertsSummaryGroupByField. </summary>
+    /// <summary></summary>
     public readonly partial struct AlertsSummaryGroupByField : IEquatable<AlertsSummaryGroupByField>
     {
         private readonly string _value;
+        /// <summary> severity. </summary>
+        private const string SeverityValue = "severity";
+        /// <summary> alertState. </summary>
+        private const string AlertStateValue = "alertState";
+        /// <summary> monitorCondition. </summary>
+        private const string MonitorConditionValue = "monitorCondition";
+        /// <summary> monitorService. </summary>
+        private const string MonitorServiceValue = "monitorService";
+        /// <summary> signalType. </summary>
+        private const string SignalTypeValue = "signalType";
+        /// <summary> alertRule. </summary>
+        private const string AlertRuleValue = "alertRule";
 
         /// <summary> Initializes a new instance of <see cref="AlertsSummaryGroupByField"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AlertsSummaryGroupByField(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SeverityValue = "severity";
-        private const string AlertStateValue = "alertState";
-        private const string MonitorConditionValue = "monitorCondition";
-        private const string MonitorServiceValue = "monitorService";
-        private const string SignalTypeValue = "signalType";
-        private const string AlertRuleValue = "alertRule";
+            _value = value;
+        }
 
         /// <summary> severity. </summary>
         public static AlertsSummaryGroupByField Severity { get; } = new AlertsSummaryGroupByField(SeverityValue);
+
         /// <summary> alertState. </summary>
         public static AlertsSummaryGroupByField AlertState { get; } = new AlertsSummaryGroupByField(AlertStateValue);
+
         /// <summary> monitorCondition. </summary>
         public static AlertsSummaryGroupByField MonitorCondition { get; } = new AlertsSummaryGroupByField(MonitorConditionValue);
+
         /// <summary> monitorService. </summary>
         public static AlertsSummaryGroupByField MonitorService { get; } = new AlertsSummaryGroupByField(MonitorServiceValue);
+
         /// <summary> signalType. </summary>
         public static AlertsSummaryGroupByField SignalType { get; } = new AlertsSummaryGroupByField(SignalTypeValue);
+
         /// <summary> alertRule. </summary>
         public static AlertsSummaryGroupByField AlertRule { get; } = new AlertsSummaryGroupByField(AlertRuleValue);
+
         /// <summary> Determines if two <see cref="AlertsSummaryGroupByField"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AlertsSummaryGroupByField left, AlertsSummaryGroupByField right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AlertsSummaryGroupByField"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AlertsSummaryGroupByField left, AlertsSummaryGroupByField right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AlertsSummaryGroupByField"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AlertsSummaryGroupByField"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AlertsSummaryGroupByField(string value) => new AlertsSummaryGroupByField(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AlertsSummaryGroupByField"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AlertsSummaryGroupByField?(string value) => value == null ? null : new AlertsSummaryGroupByField(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AlertsSummaryGroupByField other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AlertsSummaryGroupByField other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
