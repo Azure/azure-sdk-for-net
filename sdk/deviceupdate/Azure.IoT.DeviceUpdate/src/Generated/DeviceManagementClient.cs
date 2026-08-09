@@ -28,28 +28,18 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Initializes a new instance of DeviceManagementClient. </summary>
-        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
-        /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public DeviceManagementClient(string endpoint, string instanceId, TokenCredential credential) : this(endpoint, instanceId, credential, new DeviceUpdateClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of DeviceManagementClient. </summary>
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
-        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
+        /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal DeviceManagementClient(HttpPipelinePolicy authenticationPolicy, string endpoint, string instanceId, DeviceUpdateClientOptions options)
+        internal DeviceManagementClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string instanceId, DeviceUpdateClientOptions options)
         {
-            Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             options ??= new DeviceUpdateClientOptions();
 
-            _endpoint = new Uri($"https://{endpoint}");
+            _endpoint = endpoint;
             _instanceId = instanceId;
             if (authenticationPolicy != null)
             {
@@ -63,21 +53,10 @@ namespace Azure.IoT.DeviceUpdate
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
-        /// <summary> Initializes a new instance of DeviceManagementClient. </summary>
-        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
-        /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public DeviceManagementClient(string endpoint, string instanceId, TokenCredential credential, DeviceUpdateClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, instanceId, options)
-        {
-        }
-
         /// <summary> Initializes a new instance of DeviceManagementClient from a <see cref="DeviceManagementClientSettings"/>. </summary>
         /// <param name="settings"> The settings for DeviceManagementClient. </param>
         [Experimental("SCME0002")]
-        public DeviceManagementClient(DeviceManagementClientSettings settings) : this(settings?.Endpoint, settings?.InstanceId, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        public DeviceManagementClient(DeviceManagementClientSettings settings) : this(null, settings?.Endpoint, settings?.InstanceId, settings?.Options)
         {
         }
 
