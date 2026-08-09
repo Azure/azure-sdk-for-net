@@ -67,6 +67,16 @@ internal sealed class TaskDurabilityService : IHostedService, IAsyncDisposable
             _stopCts = new CancellationTokenSource();
         }
 
+        // The task subsystem is opt-in: with no registered handlers there is nothing to recover,
+        // so keep the durability loop inert instead of listing the store on every boot and interval
+        // (Python parity — the recovery loop is gated on the task registry being non-empty). All
+        // registrations complete before the host starts hosted services, so this check is stable.
+        if (!_engine.HasRegisteredTasks)
+        {
+            _logger.RecoveryLoopDisabledNoRegisteredTasks();
+            return;
+        }
+
         // Emit the operator-facing startup marker once per process boot, carrying the stable lease
         // instance id (worker-<pid>-<hex>-<epoch>). A cross-process restart therefore surfaces as a
         // NEW instance in the logs — parity with Python's "TaskManager starting (owner, instance,

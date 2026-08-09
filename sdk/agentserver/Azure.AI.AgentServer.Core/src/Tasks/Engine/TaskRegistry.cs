@@ -15,6 +15,14 @@ internal sealed class TaskRegistry
     private readonly ConcurrentDictionary<string, TaskRegistration> _registrations =
         new(StringComparer.Ordinal);
 
+    /// <summary>
+    /// <see langword="true"/> when no task handlers have been registered. The durability
+    /// recovery loop uses this to stay inert when the task API is unused (Python parity: no
+    /// registered tasks means nothing to recover, so the startup scan and periodic sweep are
+    /// skipped rather than listing the store on every boot/interval).
+    /// </summary>
+    public bool IsEmpty => _registrations.IsEmpty;
+
     /// <summary>Adds a registration, rejecting duplicate names.</summary>
     /// <param name="registration">The registration to add.</param>
     /// <exception cref="InvalidOperationException">A task with the same name is already registered.</exception>

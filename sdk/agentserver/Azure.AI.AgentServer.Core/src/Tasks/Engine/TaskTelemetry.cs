@@ -64,4 +64,11 @@ internal static partial class TaskTelemetry
         Level = LogLevel.Information,
         Message = "Reclaimed stale task {TaskId} (generation will increment).")]
     public static partial void StaleTaskReclaimed(this ILogger logger, string taskId);
+
+    [LoggerMessage(
+        EventId = 13,
+        EventName = "resilient_task_recovery_loop_disabled",
+        Level = LogLevel.Information,
+        Message = "Resilient-task recovery loop disabled: no task handlers are registered, so the startup scan and periodic recovery sweep are skipped.")]
+    public static partial void RecoveryLoopDisabledNoRegisteredTasks(this ILogger logger);
 }

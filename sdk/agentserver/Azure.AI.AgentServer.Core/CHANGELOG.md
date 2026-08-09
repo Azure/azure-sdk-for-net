@@ -29,6 +29,8 @@
 
 ### Other Changes
 
+- The resilient-task durability recovery loop is now opt-in: the cold-start recovery scan and the periodic reclaim sweep only run when at least one task handler is registered. A process that adds `AddResilientTasks()` but registers no tasks no longer lists the task store on every startup and interval (Python parity — with no registered tasks there is nothing to recover).
+
 ## 1.0.0-beta.27 (2026-07-29)
 
 ### Features Added
