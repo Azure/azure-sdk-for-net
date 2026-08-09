@@ -14,19 +14,19 @@ using Azure.Core.Pipeline;
 
 namespace Azure.IoT.DeviceUpdate
 {
-    internal partial class DeviceManagementClientGetInstallableUpdatesForDeviceClassesCollectionResult : Pageable<BinaryData>
+    internal partial class DeviceManagementClientGetInstallableUpdatesForDeviceClassCollectionResult : Pageable<BinaryData>
     {
         private readonly DeviceManagementClient _client;
         private readonly string _deviceClassId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of DeviceManagementClientGetInstallableUpdatesForDeviceClassesCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of DeviceManagementClientGetInstallableUpdatesForDeviceClassCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DeviceManagementClient client used to send requests. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DeviceManagementClientGetInstallableUpdatesForDeviceClassesCollectionResult(DeviceManagementClient client, string deviceClassId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DeviceManagementClientGetInstallableUpdatesForDeviceClassCollectionResult(DeviceManagementClient client, string deviceClassId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _deviceClassId = deviceClassId;
@@ -34,10 +34,10 @@ namespace Azure.IoT.DeviceUpdate
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of DeviceManagementClientGetInstallableUpdatesForDeviceClassesCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DeviceManagementClientGetInstallableUpdatesForDeviceClassCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DeviceManagementClientGetInstallableUpdatesForDeviceClassesCollectionResult as an enumerable collection. </returns>
+        /// <returns> The pages of DeviceManagementClientGetInstallableUpdatesForDeviceClassCollectionResult as an enumerable collection. </returns>
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -68,7 +68,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetInstallableUpdatesForDeviceClassesRequest(nextLink, _deviceClassId, _context) : _client.CreateGetInstallableUpdatesForDeviceClassesRequest(_deviceClassId, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetInstallableUpdatesForDeviceClassRequest(nextLink, _deviceClassId, _context) : _client.CreateGetInstallableUpdatesForDeviceClassRequest(_deviceClassId, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

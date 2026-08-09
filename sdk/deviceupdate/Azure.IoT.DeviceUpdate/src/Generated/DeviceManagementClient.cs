@@ -28,28 +28,18 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Initializes a new instance of DeviceManagementClient. </summary>
-        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
-        /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public DeviceManagementClient(string endpoint, string instanceId, TokenCredential credential) : this(endpoint, instanceId, credential, new DeviceUpdateClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of DeviceManagementClient. </summary>
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
-        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
+        /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal DeviceManagementClient(HttpPipelinePolicy authenticationPolicy, string endpoint, string instanceId, DeviceUpdateClientOptions options)
+        internal DeviceManagementClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string instanceId, DeviceUpdateClientOptions options)
         {
-            Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             options ??= new DeviceUpdateClientOptions();
 
-            _endpoint = new Uri($"https://{endpoint}");
+            _endpoint = endpoint;
             _instanceId = instanceId;
             if (authenticationPolicy != null)
             {
@@ -63,21 +53,10 @@ namespace Azure.IoT.DeviceUpdate
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
-        /// <summary> Initializes a new instance of DeviceManagementClient. </summary>
-        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
-        /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public DeviceManagementClient(string endpoint, string instanceId, TokenCredential credential, DeviceUpdateClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, instanceId, options)
-        {
-        }
-
         /// <summary> Initializes a new instance of DeviceManagementClient from a <see cref="DeviceManagementClientSettings"/>. </summary>
         /// <param name="settings"> The settings for DeviceManagementClient. </param>
         [Experimental("SCME0002")]
-        public DeviceManagementClient(DeviceManagementClientSettings settings) : this(settings?.Endpoint, settings?.InstanceId, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        public DeviceManagementClient(DeviceManagementClientSettings settings) : this(null, settings?.Endpoint, settings?.InstanceId, settings?.Options)
         {
         }
 
@@ -349,11 +328,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetInstallableUpdatesForDeviceClasses(string deviceClassId, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetInstallableUpdatesForDeviceClass(string deviceClassId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
-            return new DeviceManagementClientGetInstallableUpdatesForDeviceClassesCollectionResult(this, deviceClassId, context, "DeviceManagementClient.GetInstallableUpdatesForDeviceClasses");
+            return new DeviceManagementClientGetInstallableUpdatesForDeviceClassCollectionResult(this, deviceClassId, context, "DeviceManagementClient.GetInstallableUpdatesForDeviceClass");
         }
 
         /// <summary>
@@ -370,11 +349,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetInstallableUpdatesForDeviceClassesAsync(string deviceClassId, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetInstallableUpdatesForDeviceClassAsync(string deviceClassId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
-            return new DeviceManagementClientGetInstallableUpdatesForDeviceClassesAsyncCollectionResult(this, deviceClassId, context, "DeviceManagementClient.GetInstallableUpdatesForDeviceClasses");
+            return new DeviceManagementClientGetInstallableUpdatesForDeviceClassAsyncCollectionResult(this, deviceClassId, context, "DeviceManagementClient.GetInstallableUpdatesForDeviceClass");
         }
 
         /// <summary>
@@ -932,11 +911,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetBestUpdatesForGroups(string groupId, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetBestUpdatesForGroup(string groupId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            return new DeviceManagementClientGetBestUpdatesForGroupsCollectionResult(this, groupId, context, "DeviceManagementClient.GetBestUpdatesForGroups");
+            return new DeviceManagementClientGetBestUpdatesForGroupCollectionResult(this, groupId, context, "DeviceManagementClient.GetBestUpdatesForGroup");
         }
 
         /// <summary>
@@ -954,11 +933,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetBestUpdatesForGroupsAsync(string groupId, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetBestUpdatesForGroupAsync(string groupId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            return new DeviceManagementClientGetBestUpdatesForGroupsAsyncCollectionResult(this, groupId, context, "DeviceManagementClient.GetBestUpdatesForGroups");
+            return new DeviceManagementClientGetBestUpdatesForGroupAsyncCollectionResult(this, groupId, context, "DeviceManagementClient.GetBestUpdatesForGroup");
         }
 
         /// <summary>
@@ -976,11 +955,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetDeploymentsForGroups(string groupId, string orderBy = default, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetDeploymentsForGroup(string groupId, string orderBy = default, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            return new DeviceManagementClientGetDeploymentsForGroupsCollectionResult(this, groupId, orderBy, context, "DeviceManagementClient.GetDeploymentsForGroups");
+            return new DeviceManagementClientGetDeploymentsForGroupCollectionResult(this, groupId, orderBy, context, "DeviceManagementClient.GetDeploymentsForGroup");
         }
 
         /// <summary>
@@ -998,11 +977,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetDeploymentsForGroupsAsync(string groupId, string orderBy = default, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetDeploymentsForGroupAsync(string groupId, string orderBy = default, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            return new DeviceManagementClientGetDeploymentsForGroupsAsyncCollectionResult(this, groupId, orderBy, context, "DeviceManagementClient.GetDeploymentsForGroups");
+            return new DeviceManagementClientGetDeploymentsForGroupAsyncCollectionResult(this, groupId, orderBy, context, "DeviceManagementClient.GetDeploymentsForGroup");
         }
 
         /// <summary>
@@ -1304,11 +1283,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetDeviceClassSubgroupsForGroups(string groupId, string filter = default, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetDeviceClassSubgroupsForGroup(string groupId, string filter = default, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            return new DeviceManagementClientGetDeviceClassSubgroupsForGroupsCollectionResult(this, groupId, filter, context, "DeviceManagementClient.GetDeviceClassSubgroupsForGroups");
+            return new DeviceManagementClientGetDeviceClassSubgroupsForGroupCollectionResult(this, groupId, filter, context, "DeviceManagementClient.GetDeviceClassSubgroupsForGroup");
         }
 
         /// <summary>
@@ -1332,11 +1311,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetDeviceClassSubgroupsForGroupsAsync(string groupId, string filter = default, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetDeviceClassSubgroupsForGroupAsync(string groupId, string filter = default, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            return new DeviceManagementClientGetDeviceClassSubgroupsForGroupsAsyncCollectionResult(this, groupId, filter, context, "DeviceManagementClient.GetDeviceClassSubgroupsForGroups");
+            return new DeviceManagementClientGetDeviceClassSubgroupsForGroupAsyncCollectionResult(this, groupId, filter, context, "DeviceManagementClient.GetDeviceClassSubgroupsForGroup");
         }
 
         /// <summary>
@@ -1651,18 +1630,18 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetDeploymentsForDeviceClassSubgroups(string groupId, string deviceClassId, string orderBy = default, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetDeploymentsForDeviceClassSubgroup(string groupId, string deviceClassId, string orderBy = default, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
-            return new DeviceManagementClientGetDeploymentsForDeviceClassSubgroupsCollectionResult(
+            return new DeviceManagementClientGetDeploymentsForDeviceClassSubgroupCollectionResult(
                 this,
                 groupId,
                 deviceClassId,
                 orderBy,
                 context,
-                "DeviceManagementClient.GetDeploymentsForDeviceClassSubgroups");
+                "DeviceManagementClient.GetDeploymentsForDeviceClassSubgroup");
         }
 
         /// <summary>
@@ -1681,18 +1660,18 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetDeploymentsForDeviceClassSubgroupsAsync(string groupId, string deviceClassId, string orderBy = default, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetDeploymentsForDeviceClassSubgroupAsync(string groupId, string deviceClassId, string orderBy = default, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
-            return new DeviceManagementClientGetDeploymentsForDeviceClassSubgroupsAsyncCollectionResult(
+            return new DeviceManagementClientGetDeploymentsForDeviceClassSubgroupAsyncCollectionResult(
                 this,
                 groupId,
                 deviceClassId,
                 orderBy,
                 context,
-                "DeviceManagementClient.GetDeploymentsForDeviceClassSubgroups");
+                "DeviceManagementClient.GetDeploymentsForDeviceClassSubgroup");
         }
 
         /// <summary>
@@ -2078,20 +2057,20 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetDeviceStatesForDeviceClassSubgroupDeployments(string groupId, string deviceClassId, string deploymentId, string filter = default, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetDeviceStatesForDeviceClassSubgroupDeployment(string groupId, string deviceClassId, string deploymentId, string filter = default, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
 
-            return new DeviceManagementClientGetDeviceStatesForDeviceClassSubgroupDeploymentsCollectionResult(
+            return new DeviceManagementClientGetDeviceStatesForDeviceClassSubgroupDeploymentCollectionResult(
                 this,
                 groupId,
                 deviceClassId,
                 deploymentId,
                 filter,
                 context,
-                "DeviceManagementClient.GetDeviceStatesForDeviceClassSubgroupDeployments");
+                "DeviceManagementClient.GetDeviceStatesForDeviceClassSubgroupDeployment");
         }
 
         /// <summary>
@@ -2115,20 +2094,20 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetDeviceStatesForDeviceClassSubgroupDeploymentsAsync(string groupId, string deviceClassId, string deploymentId, string filter = default, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetDeviceStatesForDeviceClassSubgroupDeploymentAsync(string groupId, string deviceClassId, string deploymentId, string filter = default, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
 
-            return new DeviceManagementClientGetDeviceStatesForDeviceClassSubgroupDeploymentsAsyncCollectionResult(
+            return new DeviceManagementClientGetDeviceStatesForDeviceClassSubgroupDeploymentAsyncCollectionResult(
                 this,
                 groupId,
                 deviceClassId,
                 deploymentId,
                 filter,
                 context,
-                "DeviceManagementClient.GetDeviceStatesForDeviceClassSubgroupDeployments");
+                "DeviceManagementClient.GetDeviceStatesForDeviceClassSubgroupDeployment");
         }
 
         /// <summary>

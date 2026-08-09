@@ -15,36 +15,30 @@ using Azure.Core.Pipeline;
 
 namespace Azure.IoT.DeviceUpdate
 {
-    internal partial class DeviceManagementClientGetDeploymentsForDeviceClassSubgroupsAsyncCollectionResult : AsyncPageable<BinaryData>
+    internal partial class DeviceManagementClientGetBestUpdatesForGroupAsyncCollectionResult : AsyncPageable<BinaryData>
     {
         private readonly DeviceManagementClient _client;
         private readonly string _groupId;
-        private readonly string _deviceClassId;
-        private readonly string _orderBy;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of DeviceManagementClientGetDeploymentsForDeviceClassSubgroupsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of DeviceManagementClientGetBestUpdatesForGroupAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DeviceManagementClient client used to send requests. </param>
         /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="orderBy"> Orders the set of deployments returned. You can order by start date. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DeviceManagementClientGetDeploymentsForDeviceClassSubgroupsAsyncCollectionResult(DeviceManagementClient client, string groupId, string deviceClassId, string orderBy, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DeviceManagementClientGetBestUpdatesForGroupAsyncCollectionResult(DeviceManagementClient client, string groupId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _groupId = groupId;
-            _deviceClassId = deviceClassId;
-            _orderBy = orderBy;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of DeviceManagementClientGetDeploymentsForDeviceClassSubgroupsAsyncCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DeviceManagementClientGetBestUpdatesForGroupAsyncCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DeviceManagementClientGetDeploymentsForDeviceClassSubgroupsAsyncCollectionResult as an enumerable collection. </returns>
+        /// <returns> The pages of DeviceManagementClientGetBestUpdatesForGroupAsyncCollectionResult as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -55,7 +49,7 @@ namespace Azure.IoT.DeviceUpdate
                 {
                     yield break;
                 }
-                DeploymentsList result = (DeploymentsList)response;
+                DeviceClassSubgroupUpdatableDevicesList result = (DeviceClassSubgroupUpdatableDevicesList)response;
                 nextPage = result.NextLink;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)
@@ -75,7 +69,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetDeploymentsForDeviceClassSubgroupsRequest(nextLink, _groupId, _deviceClassId, _orderBy, _context) : _client.CreateGetDeploymentsForDeviceClassSubgroupsRequest(_groupId, _deviceClassId, _orderBy, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetBestUpdatesForGroupRequest(nextLink, _groupId, _context) : _client.CreateGetBestUpdatesForGroupRequest(_groupId, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
