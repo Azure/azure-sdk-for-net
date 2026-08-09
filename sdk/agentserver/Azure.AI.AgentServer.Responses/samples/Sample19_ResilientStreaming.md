@@ -1,10 +1,9 @@
 # Sample 19 — Resilient streaming with handler-managed phase checkpoints
 
-The .NET port of Python `sample_19_resilient_streaming.py`. A resilient response
-handler with **no** upstream framework — checkpoints are managed entirely via
-`context.ConversationChainMetadata`. This is the teaching shape of the recovery
-contract; samples that wrap a real upstream framework layer additional
-reconciliation on top of the same pattern.
+A resilient response handler with **no** upstream framework — checkpoints are
+managed entirely via `context.ConversationChainMetadata`. This is the teaching
+shape of the recovery contract; samples that wrap a real upstream framework layer
+additional reconciliation on top of the same pattern.
 
 The handler runs three phases (`analyze` → `generate` → `refine`) and emits one
 output item per phase. After each phase finishes it stamps a `phase_complete`
@@ -33,11 +32,10 @@ The handler is a `ResponseHandler` whose `CreateAsync` is an async iterator: it
 `yield return`s events produced by `ResponseEventStream`. Each `Emit*` /
 `OutputItemMessage` / `Checkpoint` call **returns** the event(s) to yield.
 
-```csharp
-using System.Runtime.CompilerServices;
-using Azure.AI.AgentServer.Responses;
-using Azure.AI.AgentServer.Responses.Models;
-
+```C# Snippet:Responses_Sample19_ResilientStreamingHandler
+// Sample 19 — resilient streaming with handler-managed phase checkpoints.
+// Checkpoints are managed entirely via context.ConversationChainMetadata; the
+// handler seeds a ResponseEventStream and resumes at the first incomplete phase.
 public class ResilientStreamingHandler : ResponseHandler
 {
     private static readonly string[] PhaseOrder = { "analyze", "generate", "refine" };
@@ -49,21 +47,19 @@ public class ResilientStreamingHandler : ResponseHandler
     {
         string prompt = await context.GetInputTextAsync(cancellationToken: cancellationToken);
 
-        // Recovery-aware stream seeding. On a recovered entry, seed the stream from the last
-        // durable checkpoint (context.PersistedResponse) so the output items for the phases that
-        // completed before the crash are carried forward and replayed on the reset. On a fresh
-        // entry, start from the request.
+        // Recovery-aware stream seeding. On a recovered entry, seed the stream from the
+        // last durable checkpoint (context.PersistedResponse) so the completed phases'
+        // output items are carried forward and replayed on the reset. On a fresh entry,
+        // start from the request.
         ResponseEventStream stream =
             context.IsRecovery && context.PersistedResponse is not null
                 ? new ResponseEventStream(context, context.PersistedResponse)
                 : new ResponseEventStream(context, request);
 
         // Always emit response.created — even on recovery. The framework keeps exactly one
-        // response.created on the durable stream across all lifetimes: on a recovered entry the
-        // pre-crash created is already durable, so this duplicate is dropped and the following
-        // response.in_progress becomes the client-visible reset point carrying the seeded prior
-        // output. (This mirrors the Python handler pattern — the handler never branches on
-        // IsRecovery to decide whether to emit created.)
+        // response.created on the durable stream across lifetimes: on a recovered entry the
+        // duplicate is dropped and the following response.in_progress becomes the
+        // client-visible reset carrying the seeded prior output.
         yield return stream.EmitCreated();
         yield return stream.EmitInProgress();
 
@@ -96,14 +92,14 @@ public class ResilientStreamingHandler : ResponseHandler
             context.ConversationChainMetadata.Set("stream", "phase_complete", phase);
             await context.ConversationChainMetadata.FlushAsync(cancellationToken);
 
-            // Persist a durable snapshot at the phase boundary (no-op unless resilient background).
+            // Persist a durable snapshot at the phase boundary
+            // (no-op unless resilient background).
             yield return stream.Checkpoint();
         }
 
         yield return stream.EmitCompleted();
     }
 
-    // Index of the next phase to run; 0 if nothing has been checkpointed yet.
     private static int NextPhaseIndex(ResponseContext context)
     {
         if (context.ConversationChainMetadata.TryGet("stream", "phase_complete", out var done)
@@ -125,21 +121,13 @@ public class ResilientStreamingHandler : ResponseHandler
 
 Enable resilient background responses via `ResponsesServerOptions`:
 
-```csharp
-using Azure.AI.AgentServer.Core;
-using Azure.AI.AgentServer.Responses;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddAgentServerCore();
-builder.Services.AddResponsesServer(o => o.ResilientBackground = true);
-builder.Services.AddScoped<ResponseHandler, ResilientStreamingHandler>();
-
-var app = builder.Build();
-app.UseAgentServerCore();
-app.MapResponsesServer();
-app.Run();
+```C# Snippet:Responses_Sample19_StartServer
+// Resilient background responses are composed on the Core durable-task /
+// event-stream primitives; enabling the option is all the handler needs.
+AgentHost.CreateBuilder()
+    .AddResponses<ResilientStreamingHandler>(o => o.ResilientBackground = true)
+    .Build()
+    .Run();
 ```
 
 ## Try it

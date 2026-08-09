@@ -3,6 +3,7 @@
 
 using System.Runtime.CompilerServices;
 using System.Text;
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,15 +12,14 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 {
     /// <summary>
-    /// Compile-guards backing the resilient responses samples
+    /// Code snippets backing the resilient responses samples
     /// (Sample19_ResilientStreaming.md, Sample20_ResilientSteering.md,
-    /// Sample22_ResilientMultiTurn.md). These are compiled to prevent the public
-    /// API surface used by those samples from silently drifting. Every member
-    /// referenced here is confirmed against
-    /// <c>api/Azure.AI.AgentServer.Responses.net8.0.cs</c>. The regions are named
-    /// without the <c>Snippet:</c> prefix: the sample docs illustrate a fuller
-    /// hosting shape (<c>WebApplication</c> plus <c>using</c> context) than a
-    /// bare embedded snippet, so these guards are not injected into the markdown.
+    /// Sample22_ResilientMultiTurn.md). Compiled to prevent the public API surface
+    /// used by those samples from silently drifting; every member referenced here is
+    /// confirmed against <c>api/Azure.AI.AgentServer.Responses.net8.0.cs</c>. The
+    /// <c>Snippet:</c>-prefixed regions are injected into the sample markdown by
+    /// <c>eng/scripts/Update-Snippets.ps1</c>, so the docs and these compile guards
+    /// stay in lockstep.
     /// </summary>
     [TestFixture]
     [Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]
@@ -47,66 +47,60 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         }
 
         [Test]
-        public void Register_ResilientBackground()
+        [Explicit("Starts a blocking host; compiled as a snippet guard only.")]
+        public void StartServer_ResilientStreaming()
         {
-            #region Sample19_RegisterResilientBackground
-
-            var services = new ServiceCollection();
-            services.AddLogging();
+            #region Snippet:Responses_Sample19_StartServer
 
             // Resilient background responses are composed on the Core durable-task /
             // event-stream primitives; enabling the option is all the handler needs.
-            services.AddResponsesServer(o => o.ResilientBackground = true);
-            services.AddScoped<ResponseHandler, ResilientStreamingHandler>();
+            AgentHost.CreateBuilder()
+                .AddResponses<ResilientStreamingHandler>(o => o.ResilientBackground = true)
+                .Build()
+                .Run();
 
             #endregion
-
-            Assert.That(services, Is.Not.Empty);
         }
 
         [Test]
-        public void Register_SteerableConversations()
+        [Explicit("Starts a blocking host; compiled as a snippet guard only.")]
+        public void StartServer_SteerableConversations()
         {
-            #region Sample20_RegisterSteerableConversations
+            #region Snippet:Responses_Sample20_StartServer
 
-            var services = new ServiceCollection();
-            services.AddLogging();
-
-            services.AddResponsesServer(o =>
-            {
-                o.ResilientBackground = true;
-                o.SteerableConversations = true;
-            });
-            services.AddScoped<ResponseHandler, ResilientSteeringHandler>();
+            AgentHost.CreateBuilder()
+                .AddResponses<ResilientSteeringHandler>(o =>
+                {
+                    o.ResilientBackground = true;
+                    o.SteerableConversations = true;
+                })
+                .Build()
+                .Run();
 
             #endregion
-
-            Assert.That(services, Is.Not.Empty);
         }
 
         [Test]
-        public void Register_SerialMultiTurn()
+        [Explicit("Starts a blocking host; compiled as a snippet guard only.")]
+        public void StartServer_SerialMultiTurn()
         {
-            #region Sample22_RegisterSerialMultiTurn
-
-            var services = new ServiceCollection();
-            services.AddLogging();
+            #region Snippet:Responses_Sample22_StartServer
 
             // Serial multi-turn: resilient background without steering keeps turns
             // serialized by the conversation lock.
-            services.AddResponsesServer(o =>
-            {
-                o.ResilientBackground = true;
-                o.SteerableConversations = false;
-            });
-            services.AddScoped<ResponseHandler, ResilientMultiTurnHandler>();
+            AgentHost.CreateBuilder()
+                .AddResponses<ResilientMultiTurnHandler>(o =>
+                {
+                    o.ResilientBackground = true;
+                    o.SteerableConversations = false;
+                })
+                .Build()
+                .Run();
 
             #endregion
-
-            Assert.That(services, Is.Not.Empty);
         }
 
-        #region Sample19_ResilientStreamingHandler
+        #region Snippet:Responses_Sample19_ResilientStreamingHandler
 
         // Sample 19 — resilient streaming with handler-managed phase checkpoints.
         // Checkpoints are managed entirely via context.ConversationChainMetadata; the
@@ -134,7 +128,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 // Always emit response.created — even on recovery. The framework keeps exactly one
                 // response.created on the durable stream across lifetimes: on a recovered entry the
                 // duplicate is dropped and the following response.in_progress becomes the
-                // client-visible reset carrying the seeded prior output. (Mirrors Python.)
+                // client-visible reset carrying the seeded prior output.
                 yield return stream.EmitCreated();
                 yield return stream.EmitInProgress();
 
@@ -193,7 +187,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
         #endregion
 
-        #region Sample20_ResilientSteeringHandler
+        #region Snippet:Responses_Sample20_ResilientSteeringHandler
 
         // Sample 20 — steering composed with cancellation × recovery. A superseded turn
         // observes IsSteeredTurn on the re-entry and drains the enqueued input.
@@ -275,7 +269,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
         #endregion
 
-        #region Sample22_ResilientMultiTurnHandler
+        #region Snippet:Responses_Sample22_ResilientMultiTurnHandler
 
         // Sample 22 — serial multi-turn (no steering). Durable per-conversation state is
         // written through a MetadataNamespace on the stable ConversationChainId.

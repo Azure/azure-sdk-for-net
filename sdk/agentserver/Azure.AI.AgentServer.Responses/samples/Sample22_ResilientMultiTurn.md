@@ -1,9 +1,8 @@
 # Sample 22 — Resilient Multi-turn (serial conversation, no steering)
 
-A self-contained multi-turn handler with no external LLM dependency. This is the
-.NET port of Python `sample_22_resilient_multiturn.py`. It demonstrates the
-perpetual-task lifecycle: each turn completes, the task suspends, and the next
-turn resumes it.
+A self-contained multi-turn handler with no external LLM dependency. It
+demonstrates the perpetual-task lifecycle: each turn completes, the task
+suspends, and the next turn resumes it.
 
 Without steering, the framework serializes turns via a conversation lock. If
 turn A is executing when turn B arrives, turn B waits (it does not cancel A).
@@ -18,10 +17,9 @@ Key concepts:
 
 ## Handler
 
-```csharp
-using Azure.AI.AgentServer.Responses;
-using Azure.AI.AgentServer.Responses.Models;
-
+```C# Snippet:Responses_Sample22_ResilientMultiTurnHandler
+// Sample 22 — serial multi-turn (no steering). Durable per-conversation state is
+// written through a MetadataNamespace on the stable ConversationChainId.
 public class ResilientMultiTurnHandler : ResponseHandler
 {
     public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
@@ -33,17 +31,19 @@ public class ResilientMultiTurnHandler : ResponseHandler
         {
             string inputText = await context.GetInputTextAsync(cancellationToken: ct);
 
+            // Durable per-conversation state is scoped to the stable chain id.
+            ConversationChainMetadataNamespace state = context.MetadataNamespace("state");
+            string chainId = context.ConversationChainId;
+
             int turnCount = 1;
-            if (context.ConversationChainMetadata.TryGet("state", "turn_count", out var raw)
-                && int.TryParse(raw, out var prior))
+            if (state.TryGet("turn_count", out var raw) && int.TryParse(raw, out var prior))
             {
                 turnCount = prior + 1;
             }
 
-            // Explicit session termination.
             if (string.Equals(inputText.Trim(), "done", StringComparison.OrdinalIgnoreCase))
             {
-                return $"Done! Session complete after {turnCount - 1} turns. Goodbye!";
+                return $"Done! Session complete after {turnCount - 1} turns on {chainId}. Goodbye!";
             }
 
             // Framework-managed conversation history.
@@ -53,8 +53,8 @@ public class ResilientMultiTurnHandler : ResponseHandler
                 $"Turn {turnCount}: You said '{inputText}'. " +
                 $"I have {history.Count} items of conversation context.";
 
-            context.ConversationChainMetadata.Set("state", "turn_count", turnCount.ToString());
-            await context.ConversationChainMetadata.FlushAsync(ct);
+            state.Set("turn_count", turnCount.ToString());
+            await state.FlushAsync(ct);
 
             return reply;
         });
@@ -68,25 +68,17 @@ A `conversation` id routes the serial turns through the multi-turn task while
 `SteerableConversations = false` keeps them serialized by the conversation lock
 (a new turn waits for the in-progress one rather than superseding it).
 
-```csharp
-using Azure.AI.AgentServer.Core;
-using Azure.AI.AgentServer.Responses;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddAgentServerCore();
-builder.Services.AddResponsesServer(o =>
-{
-    o.ResilientBackground = true;
-    o.SteerableConversations = false;
-});
-builder.Services.AddScoped<ResponseHandler, ResilientMultiTurnHandler>();
-
-var app = builder.Build();
-app.UseAgentServerCore();
-app.MapResponsesServer();
-app.Run();
+```C# Snippet:Responses_Sample22_StartServer
+// Serial multi-turn: resilient background without steering keeps turns
+// serialized by the conversation lock.
+AgentHost.CreateBuilder()
+    .AddResponses<ResilientMultiTurnHandler>(o =>
+    {
+        o.ResilientBackground = true;
+        o.SteerableConversations = false;
+    })
+    .Build()
+    .Run();
 ```
 
 ## Try it

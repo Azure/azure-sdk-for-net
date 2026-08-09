@@ -1,9 +1,8 @@
 # Sample 20 — Resilient steering with cancellation × recovery composition
 
-The .NET port of Python `sample_20_resilient_steering.py`. A steerable resilient
-handler with **no** upstream framework. It demonstrates how the cancellation
-policy and the crash-recovery contract compose when steering, client cancel, and
-shutdown interleave with crash recovery.
+A steerable resilient handler with **no** upstream framework. It demonstrates how
+the cancellation policy and the crash-recovery contract compose when steering,
+client cancel, and shutdown interleave with crash recovery.
 
 Options: `ResilientBackground = true`, `SteerableConversations = true`.
 
@@ -32,12 +31,9 @@ When the cancellation token is signaled, inspect the context to find the cause:
 
 ## Handler
 
-```csharp
-using System.Runtime.CompilerServices;
-using System.Text;
-using Azure.AI.AgentServer.Responses;
-using Azure.AI.AgentServer.Responses.Models;
-
+```C# Snippet:Responses_Sample20_ResilientSteeringHandler
+// Sample 20 — steering composed with cancellation × recovery. A superseded turn
+// observes IsSteeredTurn on the re-entry and drains the enqueued input.
 public class ResilientSteeringHandler : ResponseHandler
 {
     public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
@@ -47,6 +43,10 @@ public class ResilientSteeringHandler : ResponseHandler
     {
         string prompt = await context.GetInputTextAsync(cancellationToken: cancellationToken);
 
+        // A steered re-entry drains any pending superseding input.
+        bool steered = context.IsSteeredTurn;
+        int pending = context.PendingInputCount;
+
         int turnCount = 1;
         if (context.ConversationChainMetadata.TryGet("state", "turn_count", out var raw)
             && int.TryParse(raw, out var prior))
@@ -55,19 +55,17 @@ public class ResilientSteeringHandler : ResponseHandler
         }
 
         context.ConversationChainMetadata.Set("state", "turn_count", turnCount.ToString());
+        context.ConversationChainMetadata.Set("state", "steered", (steered && pending >= 0).ToString());
         await context.ConversationChainMetadata.FlushAsync(cancellationToken);
 
         var stream = new ResponseEventStream(context, request);
 
-        // This handler re-runs from scratch on recovery: the upstream generation is
-        // non-deterministic, so there is no meaningful partial state to replay (the single
-        // message output item is only emitted at completion, so a mid-stream crash leaves no
-        // durable output items to seed). Always emit response.created — even on recovery. The
-        // framework keeps exactly one response.created on the durable stream across lifetimes,
-        // so on a recovered entry it drops this duplicate and the following (empty)
-        // response.in_progress becomes the client-visible reset, telling the client to redraw
-        // from here. The handler never branches on IsRecovery to decide whether to emit created.
-        // (Mirrors the Python steering sample's empty-resumption pattern.)
+        // Re-runs from scratch on recovery (non-deterministic upstream; the single message
+        // item is only emitted at completion, so a mid-stream crash leaves no durable output
+        // to seed). Always emit response.created — even on recovery. The framework keeps
+        // exactly one response.created across lifetimes, so the recovered duplicate is dropped
+        // and the following (empty) response.in_progress is the client-visible reset. The
+        // handler never branches on IsRecovery to decide whether to emit created.
         yield return stream.EmitCreated();
         yield return stream.EmitInProgress();
 
@@ -89,8 +87,8 @@ public class ResilientSteeringHandler : ResponseHandler
                     yield break; // shutdown — re-run next lifetime
                 }
 
-                // Steering pressure: end this turn cleanly with partial content so it is valid
-                // context for the superseding turn.
+                // Steering pressure: end this turn cleanly with partial content so it is
+                // valid context for the superseding turn.
                 foreach (var evt in stream.OutputItemMessage(partial.ToString()))
                 {
                     yield return evt;
@@ -115,25 +113,15 @@ public class ResilientSteeringHandler : ResponseHandler
 
 ## Start the server
 
-```csharp
-using Azure.AI.AgentServer.Core;
-using Azure.AI.AgentServer.Responses;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddAgentServerCore();
-builder.Services.AddResponsesServer(o =>
-{
-    o.ResilientBackground = true;
-    o.SteerableConversations = true;
-});
-builder.Services.AddScoped<ResponseHandler, ResilientSteeringHandler>();
-
-var app = builder.Build();
-app.UseAgentServerCore();
-app.MapResponsesServer();
-app.Run();
+```C# Snippet:Responses_Sample20_StartServer
+AgentHost.CreateBuilder()
+    .AddResponses<ResilientSteeringHandler>(o =>
+    {
+        o.ResilientBackground = true;
+        o.SteerableConversations = true;
+    })
+    .Build()
+    .Run();
 ```
 
 ## Try it
