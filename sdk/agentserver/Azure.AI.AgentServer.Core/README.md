@@ -150,7 +150,7 @@ A `/readiness` endpoint is registered by default, responding to liveness and rea
 
 ### Resilient tasks and streaming
 
-The library provides durable **task** and resumable **streaming** primitives for long-running agents. Register tasks with `AddResilientTasks()` and event streams with `AddAgentEventStreams()`, then run work through `ITaskInvoker` and emit progress through `AgentEventStreamRegistry`. Tasks survive process restarts, support multi-turn conversations and steering, and persist idempotent state via `TaskMetadata`. See the [Tasks guide][tasks_guide] and the [Streaming guide][streaming_guide] for full walkthroughs.
+The library provides durable **task** and resumable **streaming** primitives for long-running agents. Register tasks with `AddResilientTasks()` and event streams with `AddAgentEventStreams()`, then run work through the typed `TaskDefinition<TInput, TOutput>` handle returned at registration and emit progress through `AgentEventStreamRegistry`. Tasks survive process restarts, support multi-turn conversations and steering, and persist idempotent state via `TaskMetadata`. See the [Tasks guide][tasks_guide] and the [Streaming guide][streaming_guide] for full walkthroughs.
 
 ### Durable state store
 

@@ -311,20 +311,22 @@ public class SampleLiveEndToEndTests
         builder.Services.AddAgentEventStreams(o => o.UseInMemoryReplay(
             ttl: TimeSpan.FromMinutes(5)));
 
-        ResilientTaskBuilder tasks = builder.Services.AddResilientTasks();
-
-        var app = builder.Build();
-
-        // Provider-aware overloads were removed: resolve the singleton AgentEventStreamRegistry from the
-        // built container and capture it in the plain delegate (registry is read lazily at invoke).
-        AgentEventStreamRegistry streams = app.Services.GetRequiredService<AgentEventStreamRegistry>();
-        tasks.AddMultiTurnTask<SampleResilientResearchSnippets.ResearchRequest,
+        AgentEventStreamRegistry? streamsRef = null;
+        var research = builder.Services.AddResilientTasks()
+            .AddMultiTurnTask<SampleResilientResearchSnippets.ResearchRequest,
                  SampleResilientResearchSnippets.ResearchResult>(
             "research",
             (ctx, ct) => SampleResilientResearchSnippets.RunResearchAsync(
-                streams, model, _model, ctx, checkpointStore,
+                streamsRef!, model, _model, ctx, checkpointStore,
                 numPhases: 2, callsPerPhase: 2, ct: ct),
             steerable: true);
+        builder.Services.AddSingleton(research);
+
+        var app = builder.Build();
+
+        // Resolve the singleton AgentEventStreamRegistry from the built container so the captured
+        // delegate can reach it (registry is read lazily when a turn runs).
+        streamsRef = app.Services.GetRequiredService<AgentEventStreamRegistry>();
 
         app.MapInvocationsServer();
         await app.StartAsync();
@@ -340,7 +342,7 @@ public class SampleLiveEndToEndTests
         builder.Services.AddScoped<InvocationHandler,
             SampleResilientMultiturnSnippets.ResilientMultiturnHandler>();
 
-        builder.Services.AddResilientTasks()
+        var conversation = builder.Services.AddResilientTasks()
             .AddMultiTurnTask<SampleResilientMultiturnSnippets.ConversationInput,
                               SampleResilientMultiturnSnippets.ConversationOutput>(
                 "conversation",
@@ -349,6 +351,7 @@ public class SampleLiveEndToEndTests
                     (history, msg, c) => AggregateModelReplyAsync(msg, c),
                     ct),
                 steerable: true);
+        builder.Services.AddSingleton(conversation);
 
         var app = builder.Build();
         app.MapInvocationsServer();

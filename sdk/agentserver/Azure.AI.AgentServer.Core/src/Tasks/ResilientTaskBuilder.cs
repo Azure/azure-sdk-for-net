@@ -37,10 +37,10 @@ public abstract class ResilientTaskBuilder
     /// <param name="name">The unique task name.</param>
     /// <param name="handler">The handler delegate.</param>
     /// <param name="configure">An optional callback to configure per-task options.</param>
-    /// <returns>The same builder for chaining.</returns>
+    /// <returns>A typed <see cref="TaskDefinition{TInput, TOutput}"/> for running the registered task.</returns>
     [RequiresUnreferencedCode(ReflectionTrimWarning)]
     [RequiresDynamicCode(ReflectionAotWarning)]
-    public abstract ResilientTaskBuilder AddTask<TInput, TOutput>(
+    public abstract TaskDefinition<TInput, TOutput> AddTask<TInput, TOutput>(
         string name,
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
         Action<TaskRegistrationOptions>? configure = null);
@@ -54,10 +54,10 @@ public abstract class ResilientTaskBuilder
     /// <param name="handler">The handler delegate.</param>
     /// <param name="steerable">Whether the task accepts steering input.</param>
     /// <param name="configure">An optional callback to configure per-task options.</param>
-    /// <returns>The same builder for chaining.</returns>
+    /// <returns>A typed <see cref="TaskDefinition{TInput, TOutput}"/> for running the registered task.</returns>
     [RequiresUnreferencedCode(ReflectionTrimWarning)]
     [RequiresDynamicCode(ReflectionAotWarning)]
-    public abstract ResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(
+    public abstract TaskDefinition<TInput, TOutput> AddMultiTurnTask<TInput, TOutput>(
         string name,
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
         bool steerable = false,
@@ -75,8 +75,8 @@ public abstract class ResilientTaskBuilder
     /// <param name="handler">The handler delegate.</param>
     /// <param name="inputTypeInfo">The source-generated serialization metadata for <typeparamref name="TInput"/>.</param>
     /// <param name="configure">An optional callback to configure per-task options.</param>
-    /// <returns>The same builder for chaining.</returns>
-    public abstract ResilientTaskBuilder AddTask<TInput, TOutput>(
+    /// <returns>A typed <see cref="TaskDefinition{TInput, TOutput}"/> for running the registered task.</returns>
+    public abstract TaskDefinition<TInput, TOutput> AddTask<TInput, TOutput>(
         string name,
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
 #pragma warning disable AZC0014 // JsonTypeInfo<T> is the sanctioned Native-AOT escape hatch (see Azure.Search.Documents).
@@ -97,8 +97,8 @@ public abstract class ResilientTaskBuilder
     /// <param name="inputTypeInfo">The source-generated serialization metadata for <typeparamref name="TInput"/>.</param>
     /// <param name="steerable">Whether the task accepts steering input.</param>
     /// <param name="configure">An optional callback to configure per-task options.</param>
-    /// <returns>The same builder for chaining.</returns>
-    public abstract ResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(
+    /// <returns>A typed <see cref="TaskDefinition{TInput, TOutput}"/> for running the registered task.</returns>
+    public abstract TaskDefinition<TInput, TOutput> AddMultiTurnTask<TInput, TOutput>(
         string name,
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
 #pragma warning disable AZC0014 // JsonTypeInfo<T> is the sanctioned Native-AOT escape hatch (see Azure.Search.Documents).

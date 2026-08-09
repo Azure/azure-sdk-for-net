@@ -17,16 +17,18 @@ namespace Azure.AI.AgentServer.Core.Tasks;
 internal sealed class DefaultResilientTaskBuilder : ResilientTaskBuilder
 {
     private readonly TaskRegistry _registry;
+    private readonly TaskEngineAccessor _engine;
 
-    public DefaultResilientTaskBuilder(TaskRegistry registry)
+    public DefaultResilientTaskBuilder(TaskRegistry registry, TaskEngineAccessor engine)
     {
         _registry = registry;
+        _engine = engine;
     }
 
     /// <inheritdoc/>
     [RequiresUnreferencedCode(ReflectionTrimWarning)]
     [RequiresDynamicCode(ReflectionAotWarning)]
-    public override ResilientTaskBuilder AddTask<TInput, TOutput>(
+    public override TaskDefinition<TInput, TOutput> AddTask<TInput, TOutput>(
         string name,
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
         Action<TaskRegistrationOptions>? configure = null)
@@ -35,7 +37,7 @@ internal sealed class DefaultResilientTaskBuilder : ResilientTaskBuilder
     /// <inheritdoc/>
     [RequiresUnreferencedCode(ReflectionTrimWarning)]
     [RequiresDynamicCode(ReflectionAotWarning)]
-    public override ResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(
+    public override TaskDefinition<TInput, TOutput> AddMultiTurnTask<TInput, TOutput>(
         string name,
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
         bool steerable = false,
@@ -43,7 +45,7 @@ internal sealed class DefaultResilientTaskBuilder : ResilientTaskBuilder
         => Add(name, handler, multiTurn: true, steerable, configure);
 
     /// <inheritdoc/>
-    public override ResilientTaskBuilder AddTask<TInput, TOutput>(
+    public override TaskDefinition<TInput, TOutput> AddTask<TInput, TOutput>(
         string name,
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
 #pragma warning disable AZC0014 // JsonTypeInfo<T> is the sanctioned Native-AOT escape hatch (see Azure.Search.Documents).
@@ -56,7 +58,7 @@ internal sealed class DefaultResilientTaskBuilder : ResilientTaskBuilder
     }
 
     /// <inheritdoc/>
-    public override ResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(
+    public override TaskDefinition<TInput, TOutput> AddMultiTurnTask<TInput, TOutput>(
         string name,
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
 #pragma warning disable AZC0014 // JsonTypeInfo<T> is the sanctioned Native-AOT escape hatch (see Azure.Search.Documents).
@@ -69,7 +71,7 @@ internal sealed class DefaultResilientTaskBuilder : ResilientTaskBuilder
         return Add(name, handler, multiTurn: true, steerable, configure, inputTypeInfo);
     }
 
-    private ResilientTaskBuilder Add<TInput, TOutput>(
+    private TaskDefinition<TInput, TOutput> Add<TInput, TOutput>(
         string name,
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
         bool multiTurn,
@@ -124,6 +126,6 @@ internal sealed class DefaultResilientTaskBuilder : ResilientTaskBuilder
 
         _registry.Add(registration);
 
-        return this;
+        return new TaskDefinition<TInput, TOutput>(name, _engine);
     }
 }

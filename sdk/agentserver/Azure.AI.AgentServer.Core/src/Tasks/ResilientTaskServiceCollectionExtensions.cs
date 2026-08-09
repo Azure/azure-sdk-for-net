@@ -53,11 +53,15 @@ public static class ResilientTaskServiceCollectionExtensions
             }
 
             TaskRegistry existingRegistry = ResolveRegistered(services) ?? new TaskRegistry();
-            return new DefaultResilientTaskBuilder(existingRegistry);
+            TaskEngineAccessor existingAccessor = ResolveRegisteredAccessor(services) ?? new TaskEngineAccessor();
+            return new DefaultResilientTaskBuilder(existingRegistry, existingAccessor);
         }
 
         var registry = new TaskRegistry();
         services.TryAddSingleton(registry);
+
+        var engineAccessor = new TaskEngineAccessor();
+        services.TryAddSingleton(engineAccessor);
 
         var environment = new TaskHostEnvironment(credential);
         services.TryAddSingleton(environment);
@@ -120,6 +124,7 @@ public static class ResilientTaskServiceCollectionExtensions
         // no-op if one was already registered, so the builder must wrap that instance (not the
         // freshly-constructed local) or registrations would target an orphaned registry.
         TaskRegistry canonical = ResolveRegistered(services) ?? registry;
+        TaskEngineAccessor canonicalAccessor = ResolveRegisteredAccessor(services) ?? engineAccessor;
 
         services.TryAddSingleton<TaskEngine>(sp =>
         {
@@ -130,10 +135,15 @@ public static class ResilientTaskServiceCollectionExtensions
                 ?? NullLogger.Instance;
             (string agentName, string sessionId) = ResolveScope();
 
-            return new TaskEngine(store, reg, agentName, sessionId, logger);
+            var engine = new TaskEngine(store, reg, agentName, sessionId, logger);
+
+            // Late-bind the engine so a TaskDefinition (created at registration time, before the
+            // container existed) can resolve it at invocation time. The engine is always resolved
+            // before any task runs, so populating here guarantees the accessor is ready.
+            sp.GetRequiredService<TaskEngineAccessor>().Engine = engine;
+
+            return engine;
         });
-        services.TryAddSingleton<ITaskInvoker>(sp => sp.GetRequiredService<TaskEngine>());
-        services.TryAddSingleton<IMultiTurnTask>(sp => sp.GetRequiredService<TaskEngine>());
 
         // FR-022 durability: the recovery scanner + background service must be driven by the host
         // lifespan. Without this wiring the cold-start recovery scan (SOT §49) and the periodic
@@ -154,7 +164,7 @@ public static class ResilientTaskServiceCollectionExtensions
         });
         services.AddHostedService(sp => sp.GetRequiredService<TaskDurabilityService>());
 
-        return new DefaultResilientTaskBuilder(canonical);
+        return new DefaultResilientTaskBuilder(canonical, canonicalAccessor);
     }
 
     private static (string AgentName, string SessionId) ResolveScope()
@@ -188,6 +198,21 @@ public static class ResilientTaskServiceCollectionExtensions
             ServiceDescriptor descriptor = services[i];
             if (descriptor.ServiceType == typeof(TaskRegistry) &&
                 descriptor.ImplementationInstance is TaskRegistry existing)
+            {
+                return existing;
+            }
+        }
+
+        return null;
+    }
+
+    private static TaskEngineAccessor? ResolveRegisteredAccessor(IServiceCollection services)
+    {
+        for (int i = 0; i < services.Count; i++)
+        {
+            ServiceDescriptor descriptor = services[i];
+            if (descriptor.ServiceType == typeof(TaskEngineAccessor) &&
+                descriptor.ImplementationInstance is TaskEngineAccessor existing)
             {
                 return existing;
             }

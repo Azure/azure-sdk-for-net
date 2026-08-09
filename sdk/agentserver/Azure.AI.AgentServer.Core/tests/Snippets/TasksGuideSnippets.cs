@@ -19,10 +19,10 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
     [Explicit("Snippets are compiled to prevent doc rot; they are not executed.")]
     public class TasksGuideSnippets
     {
-        // §3 Hello world — one-shot registration + RunAsync.
-        public static async Task<string> OneShotHelloWorld(IServiceCollection services, ITaskInvoker invoker)
+        // §3 Hello world — one-shot registration returns a typed TaskDefinition.
+        public static async Task<string> OneShotHelloWorld(IServiceCollection services)
         {
-            services
+            TaskDefinition<string, string> echo = services
                 .AddResilientTasks()
                 .AddTask<string, string>("echo", async (ctx, ct) =>
                 {
@@ -30,14 +30,14 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
                     return $"you said: {ctx.Input}";
                 });
 
-            string result = await invoker.RunAsync<string, string>("echo", "hello");
+            string result = await echo.RunAsync("hello");
             return result;
         }
 
         // §3 Hello world — multi-turn chain.
-        public static async Task MultiTurnChain(IServiceCollection services, ITaskInvoker invoker, IMultiTurnTask multiTurn)
+        public static async Task MultiTurnChain(IServiceCollection services)
         {
-            services
+            TaskDefinition<string, string> chat = services
                 .AddResilientTasks()
                 .AddMultiTurnTask<string, string>("chat", async (ctx, ct) =>
                 {
@@ -45,15 +45,15 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
                     return $"reply to: {ctx.Input}";
                 });
 
-            TaskRun<string> turn1 = await invoker.StartAsync<string, string>("chat", "hi");
+            TaskRun<string> turn1 = await chat.StartAsync("hi");
             string a1 = await turn1.Completion;
 
-            TaskRun<string> turn2 = await invoker.StartAsync<string, string>(
-                "chat", "and again",
+            TaskRun<string> turn2 = await chat.StartAsync(
+                "and again",
                 new RunOptions { TaskId = turn1.TaskId });
             string a2 = await turn2.Completion;
 
-            await multiTurn.DeleteAsync(turn1.TaskId);
+            await chat.DeleteAsync(turn1.TaskId);
             _ = (a1, a2);
         }
 
@@ -84,9 +84,9 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
         }
 
         // §4.6 The result handle.
-        public static async Task ResultHandle(ITaskInvoker invoker)
+        public static async Task ResultHandle(TaskDefinition<string, string> echo)
         {
-            TaskRun<string> run = await invoker.StartAsync<string, string>("echo", "hi");
+            TaskRun<string> run = await echo.StartAsync("hi");
 
             _ = run.TaskId;
             _ = run.InputId;
@@ -100,15 +100,14 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
         // §4.7 Steering (multi-turn only).
         public static async Task Steering(
             IServiceCollection services,
-            ITaskInvoker invoker,
             Func<TaskContext<string>, CancellationToken, Task<string>> handler)
         {
-            services.AddResilientTasks()
+            TaskDefinition<string, string> assistant = services.AddResilientTasks()
                 .AddMultiTurnTask<string, string>("assistant", handler, steerable: true);
 
-            TaskRun<string> r1 = await invoker.StartAsync<string, string>("assistant", "write a long essay");
-            TaskRun<string> r2 = await invoker.StartAsync<string, string>(
-                "assistant", "actually, just one sentence",
+            TaskRun<string> r1 = await assistant.StartAsync("write a long essay");
+            TaskRun<string> r2 = await assistant.StartAsync(
+                "actually, just one sentence",
                 new RunOptions { TaskId = r1.TaskId });
             _ = r2;
         }

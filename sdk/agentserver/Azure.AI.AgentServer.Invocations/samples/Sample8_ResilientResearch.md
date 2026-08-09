@@ -66,7 +66,7 @@ ResponsesClient model = provider.GetRequiredService<ResponsesClient>();
 // chain per session (TaskId = research-{sessionId}), and a POST while a turn is
 // in flight is enqueued as steering. Each turn streams a real model per sub-call
 // into the event stream keyed by that turn's invocation id (carried on the input).
-tasks.AddMultiTurnTask<ResearchRequest, ResearchResult>(
+TaskDefinition<ResearchRequest, ResearchResult> research = tasks.AddMultiTurnTask<ResearchRequest, ResearchResult>(
     "research",
     (ctx, ct) => RunResearchAsync(
         streams,
@@ -76,6 +76,11 @@ tasks.AddMultiTurnTask<ResearchRequest, ResearchResult>(
         checkpointStore,
         ct: ct),
     steerable: true);
+
+// The typed TaskDefinition returned at registration is the invocation handle.
+// Register it so the handler resolves TaskDefinition<ResearchRequest, ResearchResult>
+// instead of the retired service-locator.
+services.AddSingleton(research);
 ```
 
 ## The durable producer task
@@ -439,8 +444,8 @@ public class ResilientResearchHandler : InvocationHandler
 
         var registry = request.HttpContext.RequestServices
             .GetRequiredService<AgentEventStreamRegistry>();
-        var invoker = request.HttpContext.RequestServices
-            .GetRequiredService<ITaskInvoker>();
+        var research = request.HttpContext.RequestServices
+            .GetRequiredService<TaskDefinition<ResearchRequest, ResearchResult>>();
 
         string taskId = TaskIdForSession(context.SessionId);
         string invId = context.InvocationId;
@@ -452,8 +457,7 @@ public class ResilientResearchHandler : InvocationHandler
 
         // Start a new turn or steer the running one. With the same TaskId, the engine
         // transparently enqueues this input as steering while a turn is in flight.
-        _ = await invoker.StartAsync<ResearchRequest, ResearchResult>(
-            "research",
+        _ = await research.StartAsync(
             new ResearchRequest(body.Topic, invId),
             new RunOptions { TaskId = taskId },
             cancellationToken);
@@ -520,15 +524,15 @@ public class ResilientResearchHandler : InvocationHandler
         InvocationContext context,
         CancellationToken cancellationToken)
     {
-        var invoker = request.HttpContext.RequestServices
-            .GetRequiredService<ITaskInvoker>();
+        var research = request.HttpContext.RequestServices
+            .GetRequiredService<TaskDefinition<ResearchRequest, ResearchResult>>();
 
         string taskId = s_taskIdByInvocation.TryGetValue(invocationId, out var mapped)
             ? mapped
             : TaskIdForSession(context.SessionId);
 
-        TaskRun<ResearchResult>? run = await invoker
-            .GetActiveRunAsync<ResearchResult>("research", taskId, cancellationToken);
+        TaskRun<ResearchResult>? run = await research
+            .GetActiveRunAsync(taskId, cancellationToken);
 
         if (run is null)
         {
