@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -18,7 +17,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workflowYaml"> The CSDL YAML definition of the workflow. </param>
-        internal WorkflowAgentDefinition(ProjectsAgentKind kind, Extensions.OpenAI.ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string workflowYaml) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        internal WorkflowAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string workflowYaml) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             WorkflowYaml = workflowYaml;
         }

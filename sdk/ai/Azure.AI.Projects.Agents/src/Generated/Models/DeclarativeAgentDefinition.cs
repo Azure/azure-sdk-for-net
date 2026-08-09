@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
-using Azure.AI.Extensions.OpenAI;
 using OpenAI;
 using OpenAI.Responses;
 
@@ -44,7 +43,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="textOptions"> Configuration options for a text response from the model. Can be plain text or structured JSON data. </param>
         /// <param name="structuredInputs"> Set of structured inputs that can participate in prompt template substitution or tool argument bindings. </param>
         [Experimental("AAIP002")]
-        internal DeclarativeAgentDefinition(ProjectsAgentKind kind, Extensions.OpenAI.ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string model, string instructions, float? temperature, float? topP, ResponseReasoningOptions reasoningOptions, IList<ResponseTool> tools, BinaryData toolChoice, ResponseTextOptions textOptions, IDictionary<string, StructuredInputDefinition> structuredInputs) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        internal DeclarativeAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string model, string instructions, float? temperature, float? topP, ResponseReasoningOptions reasoningOptions, IList<ResponseTool> tools, BinaryData toolChoice, ResponseTextOptions textOptions, IDictionary<string, StructuredInputDefinition> structuredInputs) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             Model = model;
             Instructions = instructions;

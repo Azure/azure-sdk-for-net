@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Azure.AI.Extensions.OpenAI;
 using OpenAI;
 using OpenAI.Responses;
 
@@ -74,7 +73,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="kind"></param>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <returns> A new <see cref="Agents.ProjectsAgentDefinition"/> instance for mocking. </returns>
-        public static ProjectsAgentDefinition ProjectsAgentDefinition(string kind = default, Extensions.OpenAI.ContentFilterConfiguration contentFilterConfiguration = default)
+        public static ProjectsAgentDefinition ProjectsAgentDefinition(string kind = default, ContentFilterConfiguration contentFilterConfiguration = default)
         {
             return new UnknownAgentDefinition(new ProjectsAgentKind(kind), contentFilterConfiguration, additionalBinaryDataProperties: null);
         }
@@ -97,7 +96,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="codeConfiguration"> Code-based deployment configuration. Provide this for code-based deployments. Mutually exclusive with container_configuration — the service validates that exactly one is set. </param>
         /// <param name="telemetryConfig"> Optional customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </param>
         /// <returns> A new <see cref="Agents.HostedAgentDefinition"/> instance for mocking. </returns>
-        public static HostedAgentDefinition HostedAgentDefinition(Extensions.OpenAI.ContentFilterConfiguration contentFilterConfiguration = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default, ContainerConfiguration containerConfiguration = default, IEnumerable<ProtocolVersionRecord> versions = default, CodeConfiguration codeConfiguration = default, TelemetryConfig telemetryConfig = default)
+        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default, ContainerConfiguration containerConfiguration = default, IEnumerable<ProtocolVersionRecord> versions = default, CodeConfiguration codeConfiguration = default, TelemetryConfig telemetryConfig = default)
         {
             environmentVariables ??= new ChangeTrackingDictionary<string, string>();
             versions ??= new ChangeTrackingList<ProtocolVersionRecord>();
@@ -243,7 +242,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="structuredInputs"> Set of structured inputs that can participate in prompt template substitution or tool argument bindings. </param>
         /// <returns> A new <see cref="Agents.DeclarativeAgentDefinition"/> instance for mocking. </returns>
         [Experimental("AAIP002")]
-        public static DeclarativeAgentDefinition DeclarativeAgentDefinition(Extensions.OpenAI.ContentFilterConfiguration contentFilterConfiguration = default, string model = default, string instructions = default, float? temperature = default, float? topP = default, ResponseReasoningOptions reasoningOptions = default, IEnumerable<ResponseTool> tools = default, BinaryData toolChoice = default, ResponseTextOptions textOptions = default, IDictionary<string, StructuredInputDefinition> structuredInputs = default)
+        public static DeclarativeAgentDefinition DeclarativeAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, string model = default, string instructions = default, float? temperature = default, float? topP = default, ResponseReasoningOptions reasoningOptions = default, IEnumerable<ResponseTool> tools = default, BinaryData toolChoice = default, ResponseTextOptions textOptions = default, IDictionary<string, StructuredInputDefinition> structuredInputs = default)
         {
             tools ??= new ChangeTrackingList<ResponseTool>();
             structuredInputs ??= new ChangeTrackingDictionary<string, StructuredInputDefinition>();
@@ -869,7 +868,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="workflowYaml"> The CSDL YAML definition of the workflow. </param>
         /// <returns> A new <see cref="Agents.WorkflowAgentDefinition"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static WorkflowAgentDefinition WorkflowAgentDefinition(Extensions.OpenAI.ContentFilterConfiguration contentFilterConfiguration = default, string workflowYaml = default)
+        public static WorkflowAgentDefinition WorkflowAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, string workflowYaml = default)
         {
             return new WorkflowAgentDefinition(ProjectsAgentKind.Workflow, contentFilterConfiguration, additionalBinaryDataProperties: null, workflowYaml);
         }
@@ -889,7 +888,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <returns> A new <see cref="Agents.ExternalAgentDefinition"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ExternalAgentDefinition ExternalAgentDefinition(Extensions.OpenAI.ContentFilterConfiguration contentFilterConfiguration = default, string otelAgentId = default)
+        public static ExternalAgentDefinition ExternalAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, string otelAgentId = default)
         {
             return new ExternalAgentDefinition(ProjectsAgentKind.External, contentFilterConfiguration, additionalBinaryDataProperties: null, otelAgentId);
         }
