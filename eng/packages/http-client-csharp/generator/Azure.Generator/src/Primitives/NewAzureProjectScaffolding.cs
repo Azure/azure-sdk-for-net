@@ -85,9 +85,9 @@ namespace Azure.Generator.Primitives
             "XmlWriterContent.cs",
         ];
 
-        private static void TraverseInput(InputClient rootClient, ref bool hasOperation, ref bool hasLongRunningOperation)
+        private static void TraverseInput(InputClient rootClient, ref bool hasOperation, ref bool hasLongRunningOperation, ref bool hasStreamingOperation)
         {
-            if (hasOperation && hasLongRunningOperation)
+            if (hasOperation && hasLongRunningOperation && hasStreamingOperation)
             {
                 return;
             }
@@ -98,12 +98,15 @@ namespace Azure.Generator.Primitives
                 if (method is InputLongRunningServiceMethod || method is InputLongRunningPagingServiceMethod)
                 {
                     hasLongRunningOperation = true;
-                    return;
+                }
+                if (method.Response.Type is InputStreamingType)
+                {
+                    hasStreamingOperation = true;
                 }
             }
             foreach (var inputClient in rootClient.Children)
             {
-                TraverseInput(inputClient, ref hasOperation, ref hasLongRunningOperation);
+                TraverseInput(inputClient, ref hasOperation, ref hasLongRunningOperation, ref hasStreamingOperation);
             }
         }
 
@@ -162,9 +165,10 @@ namespace Azure.Generator.Primitives
             // Analyze clients to determine what shared files are needed
             bool hasOperation = false;
             bool hasLongRunningOperation = false;
+            bool hasStreamingOperation = false;
             foreach (var client in AzureClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
             {
-                TraverseInput(client, ref hasOperation, ref hasLongRunningOperation);
+                TraverseInput(client, ref hasOperation, ref hasLongRunningOperation, ref hasStreamingOperation);
             }
 
             // Add operation-related shared files if operations are present
@@ -183,6 +187,11 @@ namespace Azure.Generator.Primitives
                 {
                     compileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude(file), SharedSourceLinkBase));
                 }
+            }
+
+            if (hasStreamingOperation)
+            {
+                compileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude("AzurePipelineResponse.cs"), SharedSourceLinkBase));
             }
 
             // Add TaskExtensions if there are multipart form data operations and it hasn't already been added for LRO
