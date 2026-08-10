@@ -81,6 +81,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             writer.WritePropertyName("defaultAction"u8);
             writer.WriteStringValue(DefaultAction.ToString());
+            if (Optional.IsCollectionDefined(VirtualNetworkRules))
+            {
+                writer.WritePropertyName("virtualNetworkRules"u8);
+                writer.WriteStartArray();
+                foreach (ContainerRegistryVirtualNetworkRule item in VirtualNetworkRules)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
@@ -134,6 +144,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ContainerRegistryNetworkRuleDefaultAction defaultAction = default;
+            IList<ContainerRegistryVirtualNetworkRule> virtualNetworkRules = default;
             IList<ContainerRegistryIPRule> ipRules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -141,6 +152,20 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 if (prop.NameEquals("defaultAction"u8))
                 {
                     defaultAction = new ContainerRegistryNetworkRuleDefaultAction(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("virtualNetworkRules"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ContainerRegistryVirtualNetworkRule> array = new List<ContainerRegistryVirtualNetworkRule>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ContainerRegistryVirtualNetworkRule.DeserializeContainerRegistryVirtualNetworkRule(item, options));
+                    }
+                    virtualNetworkRules = array;
                     continue;
                 }
                 if (prop.NameEquals("ipRules"u8))
@@ -162,7 +187,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerRegistryNetworkRuleSet(defaultAction, ipRules ?? new ChangeTrackingList<ContainerRegistryIPRule>(), additionalBinaryDataProperties);
+            return new ContainerRegistryNetworkRuleSet(defaultAction, virtualNetworkRules ?? new ChangeTrackingList<ContainerRegistryVirtualNetworkRule>(), ipRules ?? new ChangeTrackingList<ContainerRegistryIPRule>(), additionalBinaryDataProperties);
         }
     }
 }

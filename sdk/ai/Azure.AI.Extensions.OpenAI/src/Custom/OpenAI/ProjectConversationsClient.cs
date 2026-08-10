@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Extensions.OpenAI.Telemetry;
 using OpenAI;
 using OpenAI.Conversations;
 using OpenAI.Responses;
@@ -40,8 +41,19 @@ public partial class ProjectConversationsClient : ConversationClient
     public virtual ClientResult<ProjectConversation> CreateProjectConversation(ProjectConversationCreationOptions options = null, CancellationToken cancellationToken = default)
     {
         options ??= new();
-        ClientResult protocolResult = base.CreateConversation(BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default)), cancellationToken.ToRequestOptions());
-        return protocolResult.ToAgentClientResult<ProjectConversation>();
+        using var scope = OpenTelemetryResponseScope.StartCreateConversation(_endpoint, agentName: null);
+        try
+        {
+            ClientResult protocolResult = base.CreateConversation(BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default)), cancellationToken.ToRequestOptions());
+            var result = protocolResult.ToAgentClientResult<ProjectConversation>();
+            scope?.RecordConversationId(result.Value?.Id);
+            return result;
+        }
+        catch (Exception ex)
+        {
+            scope?.RecordError(ex);
+            throw;
+        }
     }
 
     /// <summary> Asynchronously creates a project conversation. </summary>
@@ -51,8 +63,19 @@ public partial class ProjectConversationsClient : ConversationClient
     public virtual async Task<ClientResult<ProjectConversation>> CreateProjectConversationAsync(ProjectConversationCreationOptions options = null, CancellationToken cancellationToken = default)
     {
         options ??= new();
-        ClientResult protocolResult = await base.CreateConversationAsync(BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default)), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        return protocolResult.ToAgentClientResult<ProjectConversation>();
+        using var scope = OpenTelemetryResponseScope.StartCreateConversation(_endpoint, agentName: null);
+        try
+        {
+            ClientResult protocolResult = await base.CreateConversationAsync(BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default)), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            var result = protocolResult.ToAgentClientResult<ProjectConversation>();
+            scope?.RecordConversationId(result.Value?.Id);
+            return result;
+        }
+        catch (Exception ex)
+        {
+            scope?.RecordError(ex);
+            throw;
+        }
     }
 
     /// <summary> Gets the project conversations. </summary>
