@@ -550,30 +550,6 @@ namespace Azure.AI.Projects.Agents
             return new SharePointGroundingToolOptions(projectConnections.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The input definition information for an openapi function. </summary>
-        /// <param name="name"> The name of the function to be called. </param>
-        /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
-        /// <param name="spec"> The openapi function shape, described as a JSON Schema object. </param>
-        /// <param name="auth"> Open API authentication details. </param>
-        /// <param name="defaultParams"> List of OpenAPI spec parameters that will use user-provided defaults. </param>
-        /// <param name="functions"> List of function definitions used by OpenApi tool. </param>
-        /// <returns> A new <see cref="Agents.OpenApiFunctionDefinition"/> instance for mocking. </returns>
-        public static OpenApiFunctionDefinition OpenApiFunctionDefinition(string name = default, string description = default, IDictionary<string, BinaryData> spec = default, OpenApiAuthenticationDetails auth = default, IEnumerable<string> defaultParams = default, IEnumerable<OpenAPIFunctionEntry> functions = default)
-        {
-            spec ??= new ChangeTrackingDictionary<string, BinaryData>();
-            defaultParams ??= new ChangeTrackingList<string>();
-            functions ??= new ChangeTrackingList<OpenAPIFunctionEntry>();
-
-            return new OpenApiFunctionDefinition(
-                name,
-                description,
-                spec,
-                auth,
-                defaultParams.ToList(),
-                functions.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The OpenAPIFunctionEntry. </summary>
         /// <param name="name"> The name of the function to be called. </param>
         /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>

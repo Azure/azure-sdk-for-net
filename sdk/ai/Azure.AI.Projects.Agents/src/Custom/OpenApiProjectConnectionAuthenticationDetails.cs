@@ -14,7 +14,7 @@ namespace Azure.AI.Projects.Agents
     public partial class OpenApiProjectConnectionAuthenticationDetails
     {
         /// <summary> Initializes a new instance of <see cref="OpenApiProjectConnectionAuthenticationDetails"/> for deserialization. </summary>
-        internal OpenApiProjectConnectionAuthenticationDetails(): base(OpenApiAuthenticationKind.ProjectConnection)
+        internal OpenApiProjectConnectionAuthenticationDetails() : base(OpenApiAuthenticationKind.ProjectConnection)
         {
         }
     }

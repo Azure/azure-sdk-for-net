@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -144,7 +145,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("openapi"u8))
                 {
-                    functionDefinition = OpenApiFunctionDefinition.DeserializeOpenApiFunctionDefinition(prop.Value, options);
+                    functionDefinition = ModelReaderWriter.Read<OpenApiFunctionDefinition>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

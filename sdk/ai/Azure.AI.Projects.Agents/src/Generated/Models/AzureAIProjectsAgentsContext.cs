@@ -90,6 +90,7 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(MCPToolboxTool))]
     [ModelReaderWriterBuildable(typeof(OpenApiAuthenticationDetails))]
     [ModelReaderWriterBuildable(typeof(OpenApiFunctionDefinition))]
+    [ModelReaderWriterBuildable(typeof(OpenApiFunctionDefinitionFunction))]
     [ModelReaderWriterBuildable(typeof(OpenAPIFunctionEntry))]
     [ModelReaderWriterBuildable(typeof(OpenAPIManagedAuthenticationDetails))]
     [ModelReaderWriterBuildable(typeof(OpenAPIManagedSecurityScheme))]

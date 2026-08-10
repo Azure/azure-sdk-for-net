@@ -14,7 +14,7 @@ namespace Azure.AI.Projects.Agents
     public partial class OpenAPIManagedAuthenticationDetails
     {
         /// <summary> Initializes a new instance of <see cref="OpenAPIManagedAuthenticationDetails"/> for deserialization. </summary>
-        internal OpenAPIManagedAuthenticationDetails(): base(OpenApiAuthenticationKind.ManagedIdentity)
+        internal OpenAPIManagedAuthenticationDetails() : base(OpenApiAuthenticationKind.ManagedIdentity)
         {
         }
     }

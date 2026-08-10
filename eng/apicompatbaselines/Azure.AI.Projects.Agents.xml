@@ -91,6 +91,10 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.AI.Projects.Agents.OpenApiFunctionDefinition</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
     <Target>T:Azure.AI.Projects.Agents.OpenAPITool</Target>
   </Suppression>
   <Suppression>
@@ -220,22 +224,6 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Azure.AI.Projects.Agents.HostedAgentDefinition.get_Tools</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.OpenApiFunctionDefinition.#ctor(System.String,System.BinaryData,Azure.AI.Projects.Agents.OpenApiAuthenticationDetails)</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.OpenApiFunctionDefinition.#ctor(System.String,System.Collections.Generic.IDictionary{System.String,System.BinaryData},Azure.AI.Projects.Agents.OpenApiAuthenticationDetails)</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.OpenApiFunctionDefinition.get_AuthenticationDetails</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.OpenApiFunctionDefinition.set_AuthenticationDetails(Azure.AI.Projects.Agents.OpenApiAuthenticationDetails)</Target>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
