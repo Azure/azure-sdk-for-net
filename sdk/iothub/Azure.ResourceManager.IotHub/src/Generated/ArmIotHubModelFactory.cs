@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <returns> A new <see cref="Models.EventHubConsumerGroupInfoCreateOrUpdateContent"/> instance for mocking. </returns>
         public static EventHubConsumerGroupInfoCreateOrUpdateContent EventHubConsumerGroupInfoCreateOrUpdateContent(string name = default)
         {
-            return new EventHubConsumerGroupInfoCreateOrUpdateContent(default, default);
+            return new EventHubConsumerGroupInfoCreateOrUpdateContent(name is null ? default : new EventHubConsumerGroupName(name, default), default);
         }
 
         /// <param name="name"> The name of the IoT hub to check. </param>
