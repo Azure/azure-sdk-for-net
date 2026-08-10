@@ -51,21 +51,21 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppServiceValidateContent"/> instance for mocking. </returns>
         public static AppServiceValidateContent AppServiceValidateContent(string name = default, ValidateResourceType validateResourceType = default, AzureLocation location = default, ResourceIdentifier serverFarmId = default, string skuName = default, bool? needLinuxWorkers = default, bool? isSpot = default, int? capacity = default, string hostingEnvironment = default, bool? isXenon = default, Uri containerRegistryBaseUri = default, string containerRegistryUsername = default, string containerRegistryPassword = default, string containerImageRepository = default, string containerImageTag = default, string containerImagePlatform = default, AppServiceEnvironmentProperties appServiceEnvironment = default)
         {
-            return new AppServiceValidateContent(name, validateResourceType, location, needLinuxWorkers is null && isSpot is null && isXenon is null ? default : new ValidateProperties(
-                default,
-                default,
+            return new AppServiceValidateContent(name, validateResourceType, location, serverFarmId is null && skuName is null && needLinuxWorkers is null && isSpot is null && capacity is null && hostingEnvironment is null && isXenon is null && containerRegistryBaseUri is null && containerRegistryUsername is null && containerRegistryPassword is null && containerImageRepository is null && containerImageTag is null && containerImagePlatform is null && appServiceEnvironment is null ? default : new ValidateProperties(
+                serverFarmId,
+                skuName,
                 needLinuxWorkers,
                 isSpot,
-                default,
-                default,
+                capacity,
+                hostingEnvironment,
                 isXenon,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
+                containerRegistryBaseUri,
+                containerRegistryUsername,
+                containerRegistryPassword,
+                containerImageRepository,
+                containerImageTag,
+                containerImagePlatform,
+                appServiceEnvironment,
                 default), default);
         }
 
@@ -368,10 +368,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="value"> String representation of the identity. </param>
         /// <param name="kind"> Kind of resource. </param>
+        /// <param name="value"> String representation of the identity. </param>
         /// <returns> A new <see cref="AppService.AppServiceIdentifierData"/> instance for mocking. </returns>
-        public static AppServiceIdentifierData AppServiceIdentifierData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string value = default, string kind = default)
+        public static AppServiceIdentifierData AppServiceIdentifierData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string value = default)
         {
             return new AppServiceIdentifierData(
                 id,
@@ -3049,14 +3049,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="sku"> Premier add on SKU. </param>
         /// <param name="product"> Premier add on Product. </param>
         /// <param name="vendor"> Premier add on Vendor. </param>
         /// <param name="marketplacePublisher"> Premier add on Marketplace publisher. </param>
         /// <param name="marketplaceOffer"> Premier add on Marketplace offer. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.PremierAddOnData"/> instance for mocking. </returns>
-        public static PremierAddOnData PremierAddOnData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string sku = default, string product = default, string vendor = default, string marketplacePublisher = default, string marketplaceOffer = default, string kind = default)
+        public static PremierAddOnData PremierAddOnData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string kind = default, string sku = default, string product = default, string vendor = default, string marketplacePublisher = default, string marketplaceOffer = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3896,10 +3896,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="description"> Description of the diagnostic category. </param>
         /// <param name="kind"> Kind of resource. </param>
+        /// <param name="description"> Description of the diagnostic category. </param>
         /// <returns> A new <see cref="AppService.DiagnosticCategoryData"/> instance for mocking. </returns>
-        public static DiagnosticCategoryData DiagnosticCategoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, string kind = default)
+        public static DiagnosticCategoryData DiagnosticCategoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string description = default)
         {
             return new DiagnosticCategoryData(
                 id,
@@ -3915,10 +3915,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="description"> Description of the Analysis. </param>
         /// <param name="kind"> Kind of resource. </param>
+        /// <param name="description"> Description of the Analysis. </param>
         /// <returns> A new <see cref="AppService.WebSiteAnalysisDefinitionData"/> instance for mocking. </returns>
-        public static WebSiteAnalysisDefinitionData WebSiteAnalysisDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, string kind = default)
+        public static WebSiteAnalysisDefinitionData WebSiteAnalysisDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string description = default)
         {
             return new WebSiteAnalysisDefinitionData(
                 id,
@@ -7456,22 +7456,22 @@ namespace Azure.ResourceManager.AppService.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                repetitionIndexes is null ? default : new WorkflowRunActionRepetitionProperties(
+                startOn is null && endOn is null && correlation is null && status is null && code is null && error is null && trackingId is null && inputs is null && inputsLink is null && outputs is null && outputsLink is null && trackedProperties is null && retryHistory is null && iterationCount is null && repetitionIndexes is null ? default : new WorkflowRunActionRepetitionProperties(
+                    startOn,
+                    endOn,
+                    correlation,
+                    status,
+                    code,
+                    error,
                     default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    trackingId,
+                    inputs,
+                    inputsLink,
+                    outputs,
+                    outputsLink,
+                    trackedProperties,
+                    (retryHistory ?? new ChangeTrackingList<WebAppRetryHistory>()).ToList(),
+                    iterationCount,
                     (repetitionIndexes ?? new ChangeTrackingList<WorkflowRunActionRepetitionIndex>()).ToList()),
                 default);
         }
