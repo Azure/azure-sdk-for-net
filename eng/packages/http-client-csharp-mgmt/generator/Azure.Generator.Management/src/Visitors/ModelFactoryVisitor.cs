@@ -35,6 +35,7 @@ namespace Azure.Generator.Management.Visitors
                         && IsModelType(returnType)
                         && !IsModelFactoryModelType(returnType))
                     {
+                        UpdateParameterNames(method);
                         updatedMethods.Add(method);
                     }
                     else if (returnType is not null && IsModelFactoryModelType(returnType))
@@ -202,7 +203,7 @@ namespace Azure.Generator.Management.Visitors
         {
             if (PreservePreviousParameterNames(method))
             {
-                // Update the method signature to refresh documentation after parameter renames.
+                // Update the method signature to refresh documentation after parameter restoration.
                 method.Update(signature: method.Signature);
             }
         }
@@ -236,19 +237,62 @@ namespace Azure.Generator.Management.Visitors
                 return false;
             }
 
+            var reorderedParameters = new ParameterProvider[currentParameters.Count];
+            var usedParameters = new HashSet<ParameterProvider>();
+            // Move existing providers as a unit so their descriptions, property metadata, and body references stay semantic.
+            for (int i = 0; i < previousParameters.Count; i++)
+            {
+                var previousParameter = previousParameters[i];
+                var matchingParameter = currentParameters.FirstOrDefault(parameter =>
+                    !usedParameters.Contains(parameter)
+                    && parameter.Name == previousParameter.Name
+                    && parameter.Type.AreNamesEqual(previousParameter.Type));
+                if (matchingParameter is not null)
+                {
+                    reorderedParameters[i] = matchingParameter;
+                    usedParameters.Add(matchingParameter);
+                }
+            }
+
+            // Any remaining targets are true renames rather than permutations.
+            for (int i = 0; i < previousParameters.Count; i++)
+            {
+                if (reorderedParameters[i] is not null)
+                {
+                    continue;
+                }
+
+                var previousParameter = previousParameters[i];
+                var matchingParameter = currentParameters.FirstOrDefault(parameter =>
+                    !usedParameters.Contains(parameter)
+                    && parameter.Type.AreNamesEqual(previousParameter.Type));
+                if (matchingParameter is null)
+                {
+                    return false;
+                }
+
+                reorderedParameters[i] = matchingParameter;
+                usedParameters.Add(matchingParameter);
+            }
+
             var updated = false;
-            // Intermediate names may collide during swaps or rotations, but the validated final name set is unique.
-            for (int i = 0; i < currentParameters.Count; i++)
+            for (int i = 0; i < reorderedParameters.Length; i++)
             {
                 var previousName = previousParameterNames[i];
-                var currentParameter = currentParameters[i];
+                var currentParameter = reorderedParameters[i];
                 if (currentParameter.Name == previousName)
                 {
+                    updated |= !ReferenceEquals(currentParameter, currentParameters[i]);
                     continue;
                 }
 
                 currentParameter.Update(name: previousName);
                 updated = true;
+            }
+
+            if (updated)
+            {
+                method.Signature.Update(parameters: reorderedParameters);
             }
 
             return updated;

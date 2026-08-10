@@ -478,7 +478,11 @@ namespace Azure.Generator.Management.Visitors
 
         private static HashSet<string> GetParameterNamesUsedByOriginalArguments(IReadOnlyList<ParameterProvider> parameters, IReadOnlyList<ValueExpression> originalArguments)
             => parameters
-                .Where(parameter => IsParameterUsedByOriginalArgument(parameter, originalArguments))
+                .Where(parameter => originalArguments.Any(argument =>
+                    // Parameters inside a nested model argument must remain available when that same argument is rebuilt.
+                    argument is not NewInstanceExpression
+                    && !IsDefaultExpression(argument)
+                    && ReferencesParameter(argument, parameter)))
                 .Select(parameter => parameter.Name)
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
