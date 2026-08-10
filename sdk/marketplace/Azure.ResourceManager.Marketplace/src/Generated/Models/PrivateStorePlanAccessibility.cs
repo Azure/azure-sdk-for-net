@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.Marketplace.Models
     public readonly partial struct PrivateStorePlanAccessibility : IEquatable<PrivateStorePlanAccessibility>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PrivateStorePlanAccessibility"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PrivateStorePlanAccessibility(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string PublicValue = "Public";
         private const string PrivateTenantOnLevelValue = "PrivateTenantOnLevel";
         private const string PrivateSubscriptionOnLevelValue = "PrivateSubscriptionOnLevel";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStorePlanAccessibility"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PrivateStorePlanAccessibility(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static PrivateStorePlanAccessibility Unknown { get; } = new PrivateStorePlanAccessibility(UnknownValue);
-        /// <summary> Public. </summary>
+
+        /// <summary> Gets the Public. </summary>
         public static PrivateStorePlanAccessibility Public { get; } = new PrivateStorePlanAccessibility(PublicValue);
-        /// <summary> PrivateTenantOnLevel. </summary>
+
+        /// <summary> Gets the PrivateTenantOnLevel. </summary>
         public static PrivateStorePlanAccessibility PrivateTenantOnLevel { get; } = new PrivateStorePlanAccessibility(PrivateTenantOnLevelValue);
-        /// <summary> PrivateSubscriptionOnLevel. </summary>
+
+        /// <summary> Gets the PrivateSubscriptionOnLevel. </summary>
         public static PrivateStorePlanAccessibility PrivateSubscriptionOnLevel { get; } = new PrivateStorePlanAccessibility(PrivateSubscriptionOnLevelValue);
+
         /// <summary> Determines if two <see cref="PrivateStorePlanAccessibility"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PrivateStorePlanAccessibility left, PrivateStorePlanAccessibility right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PrivateStorePlanAccessibility"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PrivateStorePlanAccessibility left, PrivateStorePlanAccessibility right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PrivateStorePlanAccessibility"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PrivateStorePlanAccessibility"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PrivateStorePlanAccessibility(string value) => new PrivateStorePlanAccessibility(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PrivateStorePlanAccessibility"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PrivateStorePlanAccessibility?(string value) => value == null ? null : new PrivateStorePlanAccessibility(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PrivateStorePlanAccessibility other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PrivateStorePlanAccessibility other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -13,6 +13,25 @@ namespace System.ClientModel
         public System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected abstract System.Collections.Generic.IAsyncEnumerable<T> GetValuesFromPageAsync(System.ClientModel.ClientResult page);
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0005")]
+    public static partial class AsyncStreamingClientResult
+    {
+        public static System.ClientModel.AsyncStreamingClientResult<System.BinaryData> CreateJsonLines(System.ClientModel.Primitives.PipelineResponse response, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ClientModel.AsyncStreamingClientResult<T> CreateJsonLines<T>(System.ClientModel.Primitives.PipelineResponse response, System.Func<System.BinaryData, T> itemParser, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ClientModel.AsyncStreamingClientResult<System.Net.ServerSentEvents.SseItem<System.BinaryData>> CreateSse(System.ClientModel.Primitives.PipelineResponse response, System.Func<System.Net.ServerSentEvents.SseItem<System.BinaryData>, bool>? isTerminal = null, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ClientModel.AsyncStreamingClientResult<System.Net.ServerSentEvents.SseItem<T>> CreateSse<T>(System.ClientModel.Primitives.PipelineResponse response, System.Net.ServerSentEvents.SseItemParser<T> itemParser, System.Func<System.Net.ServerSentEvents.SseItem<System.BinaryData>, bool>? isTerminal = null, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ClientModel.AsyncStreamingClientResult<T> Create<T>(System.ClientModel.Primitives.PipelineResponse response, System.Func<System.IO.Stream, System.Threading.CancellationToken, System.Collections.Generic.IAsyncEnumerable<T>> producer, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0005")]
+    public sealed partial class AsyncStreamingClientResult<T> : System.Collections.Generic.IAsyncEnumerable<T>, System.IAsyncDisposable
+    {
+        internal AsyncStreamingClientResult() { }
+        public System.ClientModel.Primitives.PipelineResponseHeaders Headers { get { throw null; } }
+        public string ReasonPhrase { get { throw null; } }
+        public int Status { get { throw null; } }
+        public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<T> System.Collections.Generic.IAsyncEnumerable<T>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
     public abstract partial class AuthenticationTokenProvider
     {
         protected AuthenticationTokenProvider() { }
@@ -71,9 +90,16 @@ namespace System.ClientModel
     {
         public static System.ClientModel.Primitives.IClientBuilder AddClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
         public static System.ClientModel.Primitives.IClientBuilder AddClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<TSettings> configureSettings) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddCredentialResolver<T>(this Microsoft.Extensions.DependencyInjection.IServiceCollection services) where T : System.ClientModel.Primitives.CredentialResolver, new() { throw null; }
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddCredentialResolver<T>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder builder) where T : System.ClientModel.Primitives.CredentialResolver, new() { throw null; }
         public static System.ClientModel.Primitives.IClientBuilder AddKeyedClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
         public static System.ClientModel.Primitives.IClientBuilder AddKeyedClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<TSettings> configureSettings) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
         public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, params System.ClientModel.Primitives.CredentialResolver[] resolvers) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.CredentialResolver> resolvers, System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configureOverrides) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static System.ClientModel.Primitives.CredentialSettings? GetCredentialSettings(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.CredentialSettings? GetCredentialSettings(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, params System.ClientModel.Primitives.CredentialResolver[] resolvers) { throw null; }
+        public static System.ClientModel.Primitives.CredentialSettings? GetCredentialSettings(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.CredentialResolver> resolvers, System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configureOverrides) { throw null; }
     }
     public partial class ContinuationToken
     {
@@ -81,6 +107,46 @@ namespace System.ClientModel
         protected ContinuationToken(System.BinaryData bytes) { }
         public static System.ClientModel.ContinuationToken FromBytes(System.BinaryData bytes) { throw null; }
         public virtual System.BinaryData ToBytes() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
+    public sealed partial class FileBinaryContent : System.ClientModel.BinaryContent
+    {
+        public FileBinaryContent(System.BinaryData data, string? mediaType = "application/octet-stream") { }
+        public FileBinaryContent(System.IO.Stream stream, string? mediaType = "application/octet-stream") { }
+        public FileBinaryContent(string path, string? mediaType = "application/octet-stream") { }
+        public string? Filename { get { throw null; } set { } }
+        public override void Dispose() { }
+        public override bool TryComputeLength(out long length) { throw null; }
+        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
+    public sealed partial class MultiPartFormContent : System.ClientModel.BinaryContent
+    {
+        public MultiPartFormContent() { }
+        public void Add(string name, System.BinaryData content) { }
+        public void Add(string name, bool content, string? mediaType = "text/plain") { }
+        public void Add(string name, byte content, string? mediaType = "text/plain") { }
+        public void Add(string name, byte[] content, string? mediaType = "application/octet-stream") { }
+        public void Add(string name, char content, string? mediaType = "text/plain") { }
+        public void Add(string name, System.ClientModel.FileBinaryContent fileContent) { }
+        public void Add(string name, decimal content, string? mediaType = "text/plain") { }
+        public void Add(string name, double content, string? mediaType = "text/plain") { }
+        public void Add(string name, short content, string? mediaType = "text/plain") { }
+        public void Add(string name, int content, string? mediaType = "text/plain") { }
+        public void Add(string name, long content, string? mediaType = "text/plain") { }
+        public void Add(string name, sbyte content, string? mediaType = "text/plain") { }
+        public void Add(string name, float content, string? mediaType = "text/plain") { }
+        public void Add(string name, string content, string? mediaType = "text/plain") { }
+        public void Add(string name, ushort content, string? mediaType = "text/plain") { }
+        public void Add(string name, uint content, string? mediaType = "text/plain") { }
+        public void Add(string name, ulong content, string? mediaType = "text/plain") { }
+        public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model) { }
+        public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model, System.ClientModel.Primitives.ModelReaderWriterContext context, System.ClientModel.Primitives.ModelReaderWriterOptions options, string mediaType) { }
+        public override void Dispose() { }
+        public override bool TryComputeLength(out long length) { throw null; }
+        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace System.ClientModel.Primitives
@@ -249,12 +315,22 @@ namespace System.ClientModel.Primitives
         TokenCredential = 2,
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public abstract partial class CredentialResolver
+    {
+        protected CredentialResolver() { }
+        public abstract bool TryResolve(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.AuthenticationTokenProvider? provider);
+        public bool TryResolve(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, System.Func<Microsoft.Extensions.Configuration.IConfigurationSection, System.ClientModel.AuthenticationTokenProvider?> resolveChild, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.AuthenticationTokenProvider? provider) { throw null; }
+        protected virtual bool TryResolveCore(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, System.Func<Microsoft.Extensions.Configuration.IConfigurationSection, System.ClientModel.AuthenticationTokenProvider?> resolveChild, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.AuthenticationTokenProvider? provider) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public sealed partial class CredentialSettings
     {
         public CredentialSettings(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
         public Microsoft.Extensions.Configuration.IConfigurationSection? AdditionalProperties { get { throw null; } set { } }
         public string? CredentialSource { get { throw null; } set { } }
+        public string? this[string key] { get { throw null; } }
         public string? Key { get { throw null; } set { } }
+        public System.ClientModel.AuthenticationTokenProvider? TokenProvider { get { throw null; } set { } }
     }
     public partial class GetTokenOptions
     {
@@ -282,6 +358,7 @@ namespace System.ClientModel.Primitives
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public partial interface IClientBuilder
     {
+        System.ClientModel.Primitives.IClientBuilder ConfigureCredential(System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configureOverrides);
         System.ClientModel.Primitives.IClientBuilder PostConfigure(System.Action<System.ClientModel.Primitives.ClientSettings> configure);
     }
     public partial interface IJsonModel<out T> : System.ClientModel.Primitives.IPersistableModel<T>

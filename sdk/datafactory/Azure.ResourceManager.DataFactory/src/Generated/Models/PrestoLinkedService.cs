@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,15 +20,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="catalog"> The catalog context for all request against the server. </param>
         /// <param name="authenticationType"> The authentication mechanism used to connect to the Presto server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="catalog"/> is null. </exception>
-        public PrestoLinkedService(DataFactoryElement<string> host, DataFactoryElement<string> catalog, PrestoAuthenticationType authenticationType)
+        public PrestoLinkedService(DataFactoryElement<string> host, DataFactoryElement<string> catalog, PrestoAuthenticationType authenticationType) : base("Presto")
         {
             Argument.AssertNotNull(host, nameof(host));
             Argument.AssertNotNull(catalog, nameof(catalog));
 
-            Host = host;
-            Catalog = catalog;
-            AuthenticationType = authenticationType;
-            LinkedServiceType = "Presto";
+            TypeProperties = new PrestoLinkedServiceTypeProperties(host, catalog, authenticationType);
         }
 
         /// <summary> Initializes a new instance of <see cref="PrestoLinkedService"/>. </summary>
@@ -37,76 +35,254 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="host"> The IP address or host name of the Presto server. (i.e. 192.168.222.160). </param>
-        /// <param name="serverVersion"> The version of the Presto server. (i.e. 0.148-t) Only used for Version 1.0. </param>
-        /// <param name="catalog"> The catalog context for all request against the server. </param>
-        /// <param name="port"> The TCP port that the Presto server uses to listen for client connections. The default value is 8080 when disable SSL, default value is 443 when enable SSL. </param>
-        /// <param name="authenticationType"> The authentication mechanism used to connect to the Presto server. </param>
-        /// <param name="username"> The user name used to connect to the Presto server. </param>
-        /// <param name="password"> The password corresponding to the user name. </param>
-        /// <param name="enableSsl"> Specifies whether the connections to the server are encrypted using SSL. The default value for legacy version is False. The default value for version 2.0 is True. </param>
-        /// <param name="enableServerCertificateValidation"> Specifies whether the connections to the server will validate server certificate, the default value is True. Only used for Version 2.0. </param>
-        /// <param name="trustedCertPath"> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. Only used for Version 1.0. </param>
-        /// <param name="useSystemTrustStore"> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. Only used for Version 1.0. </param>
-        /// <param name="allowHostNameCNMismatch"> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. Only used for Version 1.0. </param>
-        /// <param name="allowSelfSignedServerCert"> Specifies whether to allow self-signed certificates from the server. The default value is false. Only used for Version 1.0. </param>
-        /// <param name="timeZoneId"> The local time zone used by the connection. Valid values for this option are specified in the IANA Time Zone Database. The default value for Version 1.0 is the client system time zone. The default value for Version 2.0 is server system timeZone. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal PrestoLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<string> serverVersion, DataFactoryElement<string> catalog, DataFactoryElement<int> port, PrestoAuthenticationType authenticationType, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<bool> enableSsl, DataFactoryElement<bool> enableServerCertificateValidation, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, DataFactoryElement<bool> allowHostNameCNMismatch, DataFactoryElement<bool> allowSelfSignedServerCert, DataFactoryElement<string> timeZoneId, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Presto server linked service properties. </param>
+        /// <param name="password"></param>
+        internal PrestoLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, PrestoLinkedServiceTypeProperties typeProperties, DataFactorySecret password) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            Host = host;
-            ServerVersion = serverVersion;
-            Catalog = catalog;
-            Port = port;
-            AuthenticationType = authenticationType;
-            Username = username;
+            TypeProperties = typeProperties;
             Password = password;
-            EnableSsl = enableSsl;
-            EnableServerCertificateValidation = enableServerCertificateValidation;
-            TrustedCertPath = trustedCertPath;
-            UseSystemTrustStore = useSystemTrustStore;
-            AllowHostNameCNMismatch = allowHostNameCNMismatch;
-            AllowSelfSignedServerCert = allowSelfSignedServerCert;
-            TimeZoneId = timeZoneId;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "Presto";
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrestoLinkedService"/> for deserialization. </summary>
-        internal PrestoLinkedService()
-        {
-        }
+        /// <summary> Presto server linked service properties. </summary>
+        internal PrestoLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> The IP address or host name of the Presto server. (i.e. 192.168.222.160). </summary>
-        public DataFactoryElement<string> Host { get; set; }
+        public DataFactoryElement<string> Host
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Host;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new PrestoLinkedServiceTypeProperties();
+                }
+                TypeProperties.Host = value;
+            }
+        }
+
         /// <summary> The version of the Presto server. (i.e. 0.148-t) Only used for Version 1.0. </summary>
-        public DataFactoryElement<string> ServerVersion { get; set; }
+        public DataFactoryElement<string> ServerVersion
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServerVersion;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new PrestoLinkedServiceTypeProperties();
+                }
+                TypeProperties.ServerVersion = value;
+            }
+        }
+
         /// <summary> The catalog context for all request against the server. </summary>
-        public DataFactoryElement<string> Catalog { get; set; }
+        public DataFactoryElement<string> Catalog
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Catalog;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new PrestoLinkedServiceTypeProperties();
+                }
+                TypeProperties.Catalog = value;
+            }
+        }
+
         /// <summary> The TCP port that the Presto server uses to listen for client connections. The default value is 8080 when disable SSL, default value is 443 when enable SSL. </summary>
-        public DataFactoryElement<int> Port { get; set; }
+        public DataFactoryElement<int> Port
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Port;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new PrestoLinkedServiceTypeProperties();
+                }
+                TypeProperties.Port = value;
+            }
+        }
+
         /// <summary> The authentication mechanism used to connect to the Presto server. </summary>
-        public PrestoAuthenticationType AuthenticationType { get; set; }
+        public PrestoAuthenticationType AuthenticationType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AuthenticationType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new PrestoLinkedServiceTypeProperties();
+                }
+                TypeProperties.AuthenticationType = value;
+            }
+        }
+
         /// <summary> The user name used to connect to the Presto server. </summary>
-        public DataFactoryElement<string> Username { get; set; }
-        /// <summary> The password corresponding to the user name. </summary>
-        public DataFactorySecret Password { get; set; }
+        public DataFactoryElement<string> Username
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Username;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new PrestoLinkedServiceTypeProperties();
+                }
+                TypeProperties.Username = value;
+            }
+        }
+
         /// <summary> Specifies whether the connections to the server are encrypted using SSL. The default value for legacy version is False. The default value for version 2.0 is True. </summary>
-        public DataFactoryElement<bool> EnableSsl { get; set; }
+        public DataFactoryElement<bool> EnableSsl
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EnableSsl;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new PrestoLinkedServiceTypeProperties();
+                }
+                TypeProperties.EnableSsl = value;
+            }
+        }
+
         /// <summary> Specifies whether the connections to the server will validate server certificate, the default value is True. Only used for Version 2.0. </summary>
-        public DataFactoryElement<bool> EnableServerCertificateValidation { get; set; }
+        public DataFactoryElement<bool> EnableServerCertificateValidation
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EnableServerCertificateValidation;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new PrestoLinkedServiceTypeProperties();
+                }
+                TypeProperties.EnableServerCertificateValidation = value;
+            }
+        }
+
         /// <summary> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. Only used for Version 1.0. </summary>
-        public DataFactoryElement<string> TrustedCertPath { get; set; }
+        public DataFactoryElement<string> TrustedCertPath
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.TrustedCertPath;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new PrestoLinkedServiceTypeProperties();
+                }
+                TypeProperties.TrustedCertPath = value;
+            }
+        }
+
         /// <summary> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. Only used for Version 1.0. </summary>
-        public DataFactoryElement<bool> UseSystemTrustStore { get; set; }
+        public DataFactoryElement<bool> UseSystemTrustStore
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UseSystemTrustStore;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new PrestoLinkedServiceTypeProperties();
+                }
+                TypeProperties.UseSystemTrustStore = value;
+            }
+        }
+
         /// <summary> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. Only used for Version 1.0. </summary>
-        public DataFactoryElement<bool> AllowHostNameCNMismatch { get; set; }
+        public DataFactoryElement<bool> AllowHostNameCNMismatch
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AllowHostNameCNMismatch;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new PrestoLinkedServiceTypeProperties();
+                }
+                TypeProperties.AllowHostNameCNMismatch = value;
+            }
+        }
+
         /// <summary> Specifies whether to allow self-signed certificates from the server. The default value is false. Only used for Version 1.0. </summary>
-        public DataFactoryElement<bool> AllowSelfSignedServerCert { get; set; }
+        public DataFactoryElement<bool> AllowSelfSignedServerCert
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AllowSelfSignedServerCert;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new PrestoLinkedServiceTypeProperties();
+                }
+                TypeProperties.AllowSelfSignedServerCert = value;
+            }
+        }
+
         /// <summary> The local time zone used by the connection. Valid values for this option are specified in the IANA Time Zone Database. The default value for Version 1.0 is the client system time zone. The default value for Version 2.0 is server system timeZone. </summary>
-        public DataFactoryElement<string> TimeZoneId { get; set; }
+        public DataFactoryElement<string> TimeZoneId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.TimeZoneId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new PrestoLinkedServiceTypeProperties();
+                }
+                TypeProperties.TimeZoneId = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new PrestoLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct BackupProtectionLevel : IEquatable<BackupProtectionLevel>
     {
         private readonly string _value;
+        /// <summary> Protected at database level. </summary>
         private const string DatabaseValue = "Database";
+        /// <summary> Database protected under an instance. </summary>
         private const string DatabaseUnderInstanceValue = "DatabaseUnderInstance";
 
         /// <summary> Initializes a new instance of <see cref="BackupProtectionLevel"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             _value = value;
         }
 
-        /// <summary> Gets the Database. </summary>
+        /// <summary> Protected at database level. </summary>
         public static BackupProtectionLevel Database { get; } = new BackupProtectionLevel(DatabaseValue);
 
-        /// <summary> Gets the DatabaseUnderInstance. </summary>
+        /// <summary> Database protected under an instance. </summary>
         public static BackupProtectionLevel DatabaseUnderInstance { get; } = new BackupProtectionLevel(DatabaseUnderInstanceValue);
 
         /// <summary> Determines if two <see cref="BackupProtectionLevel"/> values are the same. </summary>

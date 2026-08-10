@@ -84,6 +84,16 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WritePropertyName("search_context_size"u8);
                 writer.WriteStringValue(SearchContextSize.Value.ToSerialString());
             }
+            if (Optional.IsCollectionDefined(SearchContentTypes))
+            {
+                writer.WritePropertyName("search_content_types"u8);
+                writer.WriteStartArray();
+                foreach (SearchContentType item in SearchContentTypes)
+                {
+                    writer.WriteStringValue(item.ToSerialString());
+                }
+                writer.WriteEndArray();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -115,6 +125,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ApproximateLocation userLocation = default;
             SearchContextSize? searchContextSize = default;
+            IList<SearchContentType> searchContentTypes = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -141,12 +152,26 @@ namespace Azure.AI.AgentServer.Responses.Models
                     searchContextSize = prop.Value.GetString().ToSearchContextSize();
                     continue;
                 }
+                if (prop.NameEquals("search_content_types"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SearchContentType> array = new List<SearchContentType>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString().ToSearchContentType());
+                    }
+                    searchContentTypes = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WebSearchPreviewTool(@type, additionalBinaryDataProperties, userLocation, searchContextSize);
+            return new WebSearchPreviewTool(@type, additionalBinaryDataProperties, userLocation, searchContextSize, searchContentTypes ?? new ChangeTrackingList<SearchContentType>());
         }
     }
 }

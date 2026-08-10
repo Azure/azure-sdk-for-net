@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             TryGetApiVersion(DynatraceTagRuleResource.ResourceType, out string dynatraceTagRuleApiVersion);
             _tagRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dynatrace", DynatraceTagRuleResource.ResourceType.Namespace, Diagnostics);
-            _tagRulesRestClient = new TagRules(_tagRulesClientDiagnostics, Pipeline, Endpoint, dynatraceTagRuleApiVersion ?? "2024-04-24");
+            _tagRulesRestClient = new TagRules(_tagRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dynatraceTagRuleApiVersion ?? "2024-04-24");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Dynatrace
                 HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, DynatraceTagRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DynatraceArmOperation<DynatraceTagRuleResource> operation = new DynatraceArmOperation<DynatraceTagRuleResource>(
-                    new DynatraceTagRuleOperationSource(Client),
+                    new DynatraceTagRuleResourceOperationSource(Client),
                     _tagRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Dynatrace
                 HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, DynatraceTagRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DynatraceArmOperation<DynatraceTagRuleResource> operation = new DynatraceArmOperation<DynatraceTagRuleResource>(
-                    new DynatraceTagRuleOperationSource(Client),
+                    new DynatraceTagRuleResourceOperationSource(Client),
                     _tagRulesClientDiagnostics,
                     Pipeline,
                     message.Request,

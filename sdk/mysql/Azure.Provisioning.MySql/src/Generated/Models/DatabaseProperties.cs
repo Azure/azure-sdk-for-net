@@ -57,6 +57,10 @@ namespace Azure.Provisioning.MySql
             base.DefineProvisionableProperties();
             _charset = DefineProperty<string>(nameof(Charset), new string[] { "charset" });
             _collation = DefineProperty<string>(nameof(Collation), new string[] { "collation" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DatabaseProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

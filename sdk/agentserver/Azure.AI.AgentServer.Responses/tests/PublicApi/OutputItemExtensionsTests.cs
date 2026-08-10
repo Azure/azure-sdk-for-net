@@ -40,7 +40,7 @@ public class OutputItemExtensionsTests
         var item = new OutputItemOutputMessage(
             id: "msg_output_001",
             content: Array.Empty<OutputMessageContent>(),
-            status: OutputItemOutputMessageStatus.Completed);
+            status: ItemOutputMessageStatus.Completed);
 
         Assert.That(item.GetId(), Is.EqualTo("msg_output_001"));
     }
@@ -48,11 +48,7 @@ public class OutputItemExtensionsTests
     [Test]
     public void GetId_OutputItemFunctionToolCall_ReturnsFastPathId()
     {
-        var item = new OutputItemFunctionToolCall(
-            callId: "call_xyz",
-            name: "get_weather",
-            arguments: @"{""city"":""Seattle""}");
-        item.Id = "fc_001";
+        var item = CreateFunctionToolCallWithId("fc_001");
 
         Assert.That(item.GetId(), Is.EqualTo("fc_001"));
     }
@@ -76,7 +72,8 @@ public class OutputItemExtensionsTests
         var item = new OutputItemCustomToolCall(
             callId: "call_custom",
             name: "my_tool",
-            input: "{}");
+            input: "{}",
+            status: FunctionCallStatus.InProgress);
         item.Id = "ct_001";
 
         Assert.That(item.GetId(), Is.EqualTo("ct_001"));
@@ -87,7 +84,7 @@ public class OutputItemExtensionsTests
     {
         var item = new OutputItemWebSearchToolCall(
             id: "ws_001",
-            status: OutputItemWebSearchToolCallStatus.Completed,
+            status: ItemWebSearchToolCallStatus.Completed,
             action: BinaryData.FromObjectAsJson(new { type = "search", query = "test" }));
 
         Assert.That(item.GetId(), Is.EqualTo("ws_001"));
@@ -143,9 +140,9 @@ public class OutputItemExtensionsTests
             name: "fn",
             arguments: "{}");
 
-        // Id starts null (not set in ctor), set it explicitly
-        item.Id = "fc_updated";
-        Assert.That(item.GetId(), Is.EqualTo("fc_updated"));
+        // Id is read-only — create a new instance with the desired Id
+        var updated = CreateFunctionToolCallWithId("fc_updated");
+        Assert.That(updated.GetId(), Is.EqualTo("fc_updated"));
     }
 
     // ── Multiple subclasses all return correct Id ──────────────────────
@@ -168,8 +165,8 @@ public class OutputItemExtensionsTests
 
     private static OutputItemFunctionToolCall CreateFunctionToolCallWithId(string id)
     {
-        var item = new OutputItemFunctionToolCall("call", "fn", "{}");
-        item.Id = id;
-        return item;
+        return new OutputItemFunctionToolCall(
+            OutputItemType.FunctionCall, null, null, null, new Dictionary<string, BinaryData>(),
+            id, "call", null, "fn", "{}", null);
     }
 }

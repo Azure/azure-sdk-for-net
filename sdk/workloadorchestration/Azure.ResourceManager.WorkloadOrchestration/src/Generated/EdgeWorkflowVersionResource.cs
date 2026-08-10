@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(ResourceType, out string edgeWorkflowVersionApiVersion);
             _workflowVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", ResourceType.Namespace, Diagnostics);
-            _workflowVersionsRestClient = new WorkflowVersions(_workflowVersionsClientDiagnostics, Pipeline, Endpoint, edgeWorkflowVersionApiVersion ?? "2025-06-01");
+            _workflowVersionsRestClient = new WorkflowVersions(_workflowVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeWorkflowVersionApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _workflowVersionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, EdgeWorkflowVersionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeWorkflowVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeWorkflowVersionResource>(
-                    new EdgeWorkflowVersionOperationSource(Client),
+                    new EdgeWorkflowVersionResourceOperationSource(Client),
                     _workflowVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _workflowVersionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, EdgeWorkflowVersionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeWorkflowVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeWorkflowVersionResource>(
-                    new EdgeWorkflowVersionOperationSource(Client),
+                    new EdgeWorkflowVersionResourceOperationSource(Client),
                     _workflowVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,

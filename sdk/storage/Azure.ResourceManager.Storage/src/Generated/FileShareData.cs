@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Storage
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fileShareProperties"> Properties of the file share. </param>
         /// <param name="eTag"> Resource Etag. </param>
-        internal FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, FileShareProperties fileShareProperties, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FileShareProperties fileShareProperties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             FileShareProperties = fileShareProperties;
             ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of the file share. </summary>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     FileShareProperties = new FileShareProperties();
                 }
-                FileShareProperties.ShareQuota = value.Value;
+                FileShareProperties.ShareQuota = value;
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     FileShareProperties = new FileShareProperties();
                 }
-                FileShareProperties.ProvisionedIops = value.Value;
+                FileShareProperties.ProvisionedIops = value;
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     FileShareProperties = new FileShareProperties();
                 }
-                FileShareProperties.ProvisionedBandwidthMibps = value.Value;
+                FileShareProperties.ProvisionedBandwidthMibps = value;
             }
         }
 
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     FileShareProperties = new FileShareProperties();
                 }
-                FileShareProperties.EnabledProtocol = value.Value;
+                FileShareProperties.EnabledProtocol = value;
             }
         }
 
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     FileShareProperties = new FileShareProperties();
                 }
-                FileShareProperties.RootSquash = value.Value;
+                FileShareProperties.RootSquash = value;
             }
         }
 
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     FileShareProperties = new FileShareProperties();
                 }
-                FileShareProperties.AccessTier = value.Value;
+                FileShareProperties.AccessTier = value;
             }
         }
 

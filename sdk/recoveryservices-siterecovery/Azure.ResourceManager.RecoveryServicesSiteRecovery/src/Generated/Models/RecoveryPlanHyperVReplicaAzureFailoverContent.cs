@@ -14,29 +14,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class RecoveryPlanHyperVReplicaAzureFailoverContent : RecoveryPlanProviderSpecificFailoverContent
     {
         /// <summary> Initializes a new instance of <see cref="RecoveryPlanHyperVReplicaAzureFailoverContent"/>. </summary>
-        public RecoveryPlanHyperVReplicaAzureFailoverContent()
+        public RecoveryPlanHyperVReplicaAzureFailoverContent() : base("HyperVReplicaAzure")
         {
-            InstanceType = "HyperVReplicaAzure";
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryPlanHyperVReplicaAzureFailoverContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="primaryKekCertificatePfx"> The primary KEK certificate PFX. </param>
         /// <param name="secondaryKekCertificatePfx"> The secondary KEK certificate PFX. </param>
         /// <param name="recoveryPointType"> The recovery point type. </param>
-        internal RecoveryPlanHyperVReplicaAzureFailoverContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string primaryKekCertificatePfx, string secondaryKekCertificatePfx, HyperVReplicaAzureRpRecoveryPointType? recoveryPointType) : base(instanceType, serializedAdditionalRawData)
+        internal RecoveryPlanHyperVReplicaAzureFailoverContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string primaryKekCertificatePfx, string secondaryKekCertificatePfx, HyperVReplicaAzureRpRecoveryPointType? recoveryPointType) : base(instanceType, additionalBinaryDataProperties)
         {
             PrimaryKekCertificatePfx = primaryKekCertificatePfx;
             SecondaryKekCertificatePfx = secondaryKekCertificatePfx;
             RecoveryPointType = recoveryPointType;
-            InstanceType = instanceType ?? "HyperVReplicaAzure";
         }
 
         /// <summary> The primary KEK certificate PFX. </summary>
         public string PrimaryKekCertificatePfx { get; set; }
+
         /// <summary> The secondary KEK certificate PFX. </summary>
         public string SecondaryKekCertificatePfx { get; set; }
+
         /// <summary> The recovery point type. </summary>
         public HyperVReplicaAzureRpRecoveryPointType? RecoveryPointType { get; set; }
     }

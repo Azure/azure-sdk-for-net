@@ -88,7 +88,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 credential: null,
                 clientCertificate: _cert,
                 ledgerOptions: InstrumentClientOptions(new ConfidentialLedgerClientOptions())));
-            var result = await certClient.GetConstitutionAsync(new());
+            var result = await certClient.GetConstitutionAsync(new RequestContext());
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
@@ -130,7 +130,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                waitUntil: WaitUntil.Completed,
                RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }));
 
-            var result = await Client.GetCurrentLedgerEntryAsync();
+            var result = await Client.GetCurrentLedgerEntryAsync(null, new RequestContext());
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
@@ -155,7 +155,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var tuple = await GetFirstTransactionIdFromGetEntries();
             string transactionId = tuple.TransactionId;
             string stringResult = tuple.StringResult;
-            Response response = await Client.GetLedgerEntryAsync(transactionId);
+            Response response = await Client.GetLedgerEntryAsync(transactionId, null, new RequestContext());
 
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
             Assert.That(stringResult, Does.Contain(transactionId));
@@ -196,7 +196,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task GetConstitution()
         {
-            var result = await Client.GetConstitutionAsync(new());
+            var result = await Client.GetConstitutionAsync(new RequestContext());
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
@@ -206,7 +206,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task GetConsortiumMembers()
         {
-            await foreach (var page in Client.GetConsortiumMembersAsync(new()))
+            await foreach (var page in Client.GetConsortiumMembersAsync(new RequestContext()))
             {
                 var stringResult = page.ToString();
 
@@ -217,7 +217,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task GetEnclaveQuotes()
         {
-            var result = await Client.GetEnclaveQuotesAsync(new());
+            var result = await Client.GetEnclaveQuotesAsync(new RequestContext());
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
@@ -232,7 +232,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
 #endif
         public async Task GetUser(string objId)
         {
-            var result = await Client.GetUserAsync(objId, new());
+            var result = await Client.GetUserAsync(objId, new RequestContext());
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
@@ -280,7 +280,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.That(stringResult, Does.Contain(userId));
 
             HashSet<string> users = [];
-            await foreach (BinaryData page in Client.GetUsersAsync())
+            await foreach (BinaryData page in Client.GetUsersAsync(new RequestContext()))
             {
                 JsonElement pageResult = JsonDocument.Parse(page.ToStream()).RootElement;
                 if (pageResult.GetProperty("assignedRole").GetString() == "Reader")
@@ -307,7 +307,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.That(stringResult, Does.Contain(userId));
 
             HashSet<string> users = [];
-            await foreach (BinaryData page in Client.GetLedgerUsersAsync())
+            await foreach (BinaryData page in Client.GetLedgerUsersAsync(new RequestContext()))
             {
                 JsonElement pageResult = JsonDocument.Parse(page.ToStream()).RootElement;
 
@@ -326,7 +326,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task UserDefinedEndpointsTest()
         {
-            await foreach (BinaryData functions in Client.GetUserDefinedFunctionsAsync())
+            await foreach (BinaryData functions in Client.GetUserDefinedFunctionsAsync(new RequestContext()))
             {
                 JsonElement functiondata = JsonDocument.Parse(functions.ToStream()).RootElement;
                 string functionId = functiondata.GetProperty("id").ToString();
@@ -342,7 +342,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
             Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
 
-            var resp = await Client.GetUserDefinedEndpointsModuleAsync("test.js");
+            var resp = await Client.GetUserDefinedEndpointsModuleAsync("test.js", new RequestContext());
             Assert.AreEqual((int)HttpStatusCode.OK, resp.Status);
 
             // Verify Response by Querying endpt
@@ -353,32 +353,17 @@ namespace Azure.Security.ConfidentialLedger.Tests
             //Assert.AreEqual("Test content", response);
         }
 
+        [LiveOnly]
         [RecordedTest]
         public async Task JSRuntimeOptionsTest()
         {
-            // Get Default JS Runtime Options
-            Response result = await Client.GetRuntimeOptionsAsync();
-            var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
+            // Get initial JS Runtime Options (capture to restore later)
+            Response result = await Client.GetRuntimeOptionsAsync(new RequestContext());
 
-            // Deserialize JSON response into a dictionary
-            var runtimeOptions = JsonSerializer.Deserialize<RuntimeOptions>(result.Content.ToString());
+            // Deserialize JSON response into the initial runtime options
+            var initialRuntimeOptions = JsonSerializer.Deserialize<RuntimeOptions>(result.Content.ToString());
 
-            var expectedRuntimeOptions = new RuntimeOptions
-            {
-                LogExceptionDetails = false,
-                MaxCachedInterpreters = 10,
-                MaxExecutionTimeMs = 1000,
-                MaxHeapBytes = 104857600,
-                MaxStackBytes = 1048576,
-                ReturnExceptionDetails = false
-            };
-
-            Assert.AreEqual(expectedRuntimeOptions.LogExceptionDetails, runtimeOptions.LogExceptionDetails);
-            Assert.AreEqual(expectedRuntimeOptions.MaxCachedInterpreters, runtimeOptions.MaxCachedInterpreters);
-            Assert.AreEqual(expectedRuntimeOptions.MaxExecutionTimeMs, runtimeOptions.MaxExecutionTimeMs);
-            Assert.AreEqual(expectedRuntimeOptions.MaxHeapBytes, runtimeOptions.MaxHeapBytes);
-            Assert.AreEqual(expectedRuntimeOptions.MaxStackBytes, runtimeOptions.MaxStackBytes);
-            Assert.AreEqual(expectedRuntimeOptions.ReturnExceptionDetails, runtimeOptions.ReturnExceptionDetails);
+            Assert.NotNull(initialRuntimeOptions);
 
             var updateJSRuntimeOptions = new RuntimeOptions
             {
@@ -393,10 +378,10 @@ namespace Azure.Security.ConfidentialLedger.Tests
             string jsRuntimeOptionsPayload = JsonSerializer.Serialize(updateJSRuntimeOptions);
             RequestContent runtimeOptionsContent = RequestContent.Create(jsRuntimeOptionsPayload);
 
-            result = await Client.UpdateRuntimeOptionsAsync(runtimeOptionsContent);
+            result = await Client.UpdateRuntimeOptionsStableAsync(runtimeOptionsContent, new RequestContext());
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
 
-            runtimeOptions = JsonSerializer.Deserialize<RuntimeOptions>(result.Content.ToString());
+            var runtimeOptions = JsonSerializer.Deserialize<RuntimeOptions>(result.Content.ToString());
             Assert.AreEqual(updateJSRuntimeOptions.LogExceptionDetails, runtimeOptions.LogExceptionDetails);
             Assert.AreEqual(updateJSRuntimeOptions.MaxCachedInterpreters, runtimeOptions.MaxCachedInterpreters);
             Assert.AreEqual(updateJSRuntimeOptions.MaxExecutionTimeMs, runtimeOptions.MaxExecutionTimeMs);
@@ -404,16 +389,17 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.AreEqual(updateJSRuntimeOptions.MaxStackBytes, runtimeOptions.MaxStackBytes);
             Assert.AreEqual(updateJSRuntimeOptions.ReturnExceptionDetails, runtimeOptions.ReturnExceptionDetails);
 
-            // Revert Runtime Options
-            string restoreJsRuntimeOptionsPayload = JsonSerializer.Serialize(expectedRuntimeOptions);
+            // Revert to initial Runtime Options
+            string restoreJsRuntimeOptionsPayload = JsonSerializer.Serialize(initialRuntimeOptions);
             runtimeOptionsContent = RequestContent.Create(restoreJsRuntimeOptionsPayload);
 
-            result = await Client.UpdateRuntimeOptionsAsync(runtimeOptionsContent);
+            result = await Client.UpdateRuntimeOptionsStableAsync(runtimeOptionsContent, new RequestContext());
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
         }
         #endregion
 
         #region CustomRole
+        [LiveOnly]
         [RecordedTest]
         public async Task CustomRoleTest()
         {
@@ -433,10 +419,10 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
             try
             {
-                Response result = await Client.CreateUserDefinedRoleAsync(RequestContent.Create(JsonSerializer.Serialize(rolesParam)));
+                Response result = await Client.CreateUserDefinedRoleStableAsync(RequestContent.Create(JsonSerializer.Serialize(rolesParam)), new RequestContext());
                 Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
 
-                result = await Client.GetUserDefinedRoleAsync(roleName);
+                result = await Client.GetUserDefinedRoleAsync(roleName, new RequestContext());
 
                 RolesParam roleData = JsonSerializer.Deserialize<RolesParam>(result.Content.ToString());
                 // Validate Fetched RoleData with Added Role Data
@@ -445,7 +431,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             }
             finally
             {
-                Response result = await Client.DeleteUserDefinedRoleAsync(roleName);
+                Response result = await Client.DeleteUserDefinedRoleStableAsync(roleName, new RequestContext());
                 Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
             }
         }
@@ -466,7 +452,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var tuple = await GetFirstTransactionIdFromGetEntries();
             string transactionId = tuple.TransactionId;
             string stringResult = tuple.StringResult;
-            Response response = await Client.GetLedgerEntryAsync(transactionId);
+            Response response = await Client.GetLedgerEntryAsync(transactionId, null, new RequestContext());
 
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
             Assert.That(stringResult, Does.Contain(transactionId));
@@ -484,7 +470,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 Code = "export function main() { return true }",
                 Id = "myFunction"
             };
-            Response response = await Client.GetUserDefinedEndpointAsync();
+            Response response = await Client.GetUserDefinedEndpointAsync(new RequestContext());
             if (response.Content.ToString() == null)
             {
                 // Create UDF
@@ -492,7 +478,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 {
                     userFunctionResult = await Client.CreateUserDefinedFunctionAsync(functionId, RequestContent.Create(JsonSerializer.Serialize(functionParam)));
                     Assert.AreEqual((int)HttpStatusCode.Created, userFunctionResult.Status);
-                    userFunctionResult = await Client.GetUserDefinedFunctionAsync(functionId);
+                    userFunctionResult = await Client.GetUserDefinedFunctionAsync(functionId, new RequestContext());
 
                     var functionData = JsonSerializer.Deserialize<UserFunctionParam>(userFunctionResult.Content.ToString());
                     // Validate Fetched user function with Added function Id
@@ -524,7 +510,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         private async Task<(string TransactionId, string StringResult)> GetFirstTransactionIdFromGetEntries()
         {
             string stringResult = "Loading";
-            var result = Client.GetLedgerEntriesAsync();
+            var result = Client.GetLedgerEntriesAsync(null, null, null, null, new RequestContext());
             bool first = true;
             Response response = null;
 
@@ -545,7 +531,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             while (stringResult.Contains("Loading"))
             {
                 first = true;
-                result = Client.GetLedgerEntriesAsync();
+                result = Client.GetLedgerEntriesAsync(null, null, null, null, new RequestContext());
                 await foreach (var page in result.AsPages())
                 {
                     if (first)

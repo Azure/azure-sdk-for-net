@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Batch
         {
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
@@ -32,14 +32,9 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _name;
             }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the AccessRulesVersion. </summary>
+        /// <summary> Gets the AccessRulesVersion. </summary>
         public BicepValue<int> AccessRulesVersion
         {
             get
@@ -47,14 +42,9 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _accessRulesVersion;
             }
-            set
-            {
-                Initialize();
-                _accessRulesVersion.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the AccessRules. </summary>
+        /// <summary> Gets the AccessRules. </summary>
         public BicepList<BatchAccessRule> AccessRules
         {
             get
@@ -62,14 +52,9 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _accessRules;
             }
-            set
-            {
-                Initialize();
-                _accessRules.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the DiagnosticSettingsVersion. </summary>
+        /// <summary> Gets the DiagnosticSettingsVersion. </summary>
         public BicepValue<int> DiagnosticSettingsVersion
         {
             get
@@ -77,25 +62,15 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _diagnosticSettingsVersion;
             }
-            set
-            {
-                Initialize();
-                _diagnosticSettingsVersion.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the EnabledLogCategories. </summary>
+        /// <summary> Gets the EnabledLogCategories. </summary>
         public BicepList<string> EnabledLogCategories
         {
             get
             {
                 Initialize();
                 return _enabledLogCategories;
-            }
-            set
-            {
-                Initialize();
-                _enabledLogCategories.Assign(value);
             }
         }
 
@@ -108,6 +83,10 @@ namespace Azure.Provisioning.Batch
             _accessRules = DefineListProperty<BatchAccessRule>(nameof(AccessRules), new string[] { "accessRules" });
             _diagnosticSettingsVersion = DefineProperty<int>(nameof(DiagnosticSettingsVersion), new string[] { "diagnosticSettingsVersion" });
             _enabledLogCategories = DefineListProperty<string>(nameof(EnabledLogCategories), new string[] { "enabledLogCategories" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for NetworkSecurityProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

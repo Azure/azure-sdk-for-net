@@ -7,5 +7,6 @@ using Azure.ClientGenerator.Core;
 @client({
   name: "MultiServiceClient",
   service: [ServiceOne, ServiceTwo],
+  autoMergeService: true,
 })
 namespace MultiServiceCombine;

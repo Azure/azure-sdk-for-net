@@ -193,6 +193,13 @@ namespace Azure.AI.Vision.ImageAnalysis
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult>> AnalyzeAsync(System.BinaryData imageData, Azure.AI.Vision.ImageAnalysis.VisualFeatures visualFeatures, Azure.AI.Vision.ImageAnalysis.ImageAnalysisOptions options = default(Azure.AI.Vision.ImageAnalysis.ImageAnalysisOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult>> AnalyzeAsync(System.Uri imageUri, Azure.AI.Vision.ImageAnalysis.VisualFeatures visualFeatures, Azure.AI.Vision.ImageAnalysis.ImageAnalysisOptions options = default(Azure.AI.Vision.ImageAnalysis.ImageAnalysisOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public static partial class ImageAnalysisClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddImageAnalysisClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddImageAnalysisClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.Vision.ImageAnalysis.ImageAnalysisClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedImageAnalysisClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedImageAnalysisClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.Vision.ImageAnalysis.ImageAnalysisClientSettings> configureSettings) { throw null; }
+    }
     public partial class ImageAnalysisClientOptions : Azure.Core.ClientOptions
     {
         public ImageAnalysisClientOptions(Azure.AI.Vision.ImageAnalysis.ImageAnalysisClientOptions.ServiceVersion version = Azure.AI.Vision.ImageAnalysis.ImageAnalysisClientOptions.ServiceVersion.V2023_10_01) { }

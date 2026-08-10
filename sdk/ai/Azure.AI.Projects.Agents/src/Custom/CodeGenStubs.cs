@@ -20,6 +20,8 @@ public partial class ProjectsAgentRecord
 
 // Internal types
 [CodeGenType("ApproximateLocation")] internal partial class InternalApproximateLocation { }
+[CodeGenType("AgentVersionStatus ")] public partial struct AgentVersionStatus { }
+[CodeGenType("FoundryFeaturesOptInKeys")] internal partial struct FoundryFeaturesOptInKeys { }
 [CodeGenType("CodeInterpreterTool")] internal partial class InternalCodeInterpreterTool { }
 [CodeGenType("CodeInterpreterToolAuto")] internal partial class InternalCodeInterpreterToolAuto { }
 [CodeGenType("CodeInterpreterToolCallItemParam")] internal partial class InternalCodeInterpreterToolCallItemParam { }
@@ -49,14 +51,12 @@ public partial class ProjectsAgentRecord
 [CodeGenType("MCPToolRequireApproval1")] internal partial class InternalMCPToolRequireApproval1 { }
 [CodeGenType("MCPToolRequireApprovalAlways")] internal partial class InternalMCPToolRequireApprovalAlways { }
 [CodeGenType("MCPToolRequireApprovalNever")] internal partial class InternalMCPToolRequireApprovalNever { }
-[CodeGenType("RankingOptions")] internal partial class InternalRankingOptions { }
 [CodeGenType("RankingOptionsRanker")] internal readonly partial struct RankingOptionsRanker { }
 [CodeGenType("TopLogProb")] internal partial class InternalTopLogProb { }
 [CodeGenType("VectorStoreFileAttributes")] internal partial class InternalVectorStoreFileAttributes { }
 [CodeGenType("WebSearchPreviewToolSearchContextSize")] internal readonly partial struct WebSearchPreviewToolSearchContextSize { }
 [CodeGenType("ComputerTool")] internal partial class InternalComputerTool { }
-[CodeGenType("EmptyModelParam")] internal partial class InternalEmptyModelParam { }
 [CodeGenType("FunctionToolParam")] internal partial class InternalFunctionToolParam { }
 [CodeGenType("NamespaceToolParam")] internal partial class InternalNamespaceToolParam { }
-[CodeGenType("ToolSearchExecutionType")] internal readonly partial struct InternalToolSearchExecutionType { }
-[CodeGenType("ToolSearchToolParam")] internal partial class InternalToolSearchToolParam { }
+[CodeGenType("ToolSearchToolParam")] public partial class ToolSearchTool { }
+[CodeGenType("ToolSearchExecutionType")] public partial struct ToolSearchExecutionKind { }

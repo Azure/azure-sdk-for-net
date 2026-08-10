@@ -305,6 +305,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(0, 10)]
         [TestCase(DataMovementTestConstants.KB / 2, 10)]
         [TestCase(DataMovementTestConstants.KB, 10)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/59220")]
         public async Task DirectoryToDirectory_SmallSize(long size, int waitTimeInSec)
         {
             // Arrange
@@ -382,6 +383,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/59220")]
         public async Task DirectoryToDirectory_EmptyFolder()
         {
             // Arrange
@@ -971,6 +973,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase((int)TransferPropertiesTestType.Preserve)]
         [TestCase((int)TransferPropertiesTestType.NoPreserve)]
         [TestCase((int)TransferPropertiesTestType.NewProperties)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/59220")]
         public async Task CopyRemoteObjects_VerifyProperties(int propertiesType)
         {
             // Arrange

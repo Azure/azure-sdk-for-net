@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities
 {
+    /// <summary></summary>
     public partial class SystemAssignedIdentityResource : IJsonModel<SystemAssignedIdentityData>
     {
-        private static SystemAssignedIdentityData s_dataDeserializationInstance;
-        private static SystemAssignedIdentityData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SystemAssignedIdentityData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SystemAssignedIdentityData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SystemAssignedIdentityData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SystemAssignedIdentityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SystemAssignedIdentityData>)Data).Write(writer, options);
 
-        SystemAssignedIdentityData IJsonModel<SystemAssignedIdentityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SystemAssignedIdentityData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SystemAssignedIdentityData IJsonModel<SystemAssignedIdentityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SystemAssignedIdentityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SystemAssignedIdentityData>(Data, options, AzureResourceManagerManagedServiceIdentitiesContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SystemAssignedIdentityData IPersistableModel<SystemAssignedIdentityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SystemAssignedIdentityData>(data, options, AzureResourceManagerManagedServiceIdentitiesContext.Default);
 
-        string IPersistableModel<SystemAssignedIdentityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SystemAssignedIdentityData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SystemAssignedIdentityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

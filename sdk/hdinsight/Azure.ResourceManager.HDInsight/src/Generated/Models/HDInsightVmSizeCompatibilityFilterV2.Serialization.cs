@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightVmSizeCompatibilityFilterV2 : IUtf8JsonSerializable, IJsonModel<HDInsightVmSizeCompatibilityFilterV2>
+    /// <summary> This class represent a single filter object that defines a multidimensional set. The dimensions of this set are Regions, ClusterFlavors, NodeTypes and ClusterVersions. The constraint should be defined based on the following: FilterMode (Exclude vs Include), VMSizes (the vm sizes in affect of exclusion/inclusion) and the ordering of the Filters. Later filters override previous settings if conflicted. </summary>
+    public partial class HDInsightVmSizeCompatibilityFilterV2 : IJsonModel<HDInsightVmSizeCompatibilityFilterV2>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightVmSizeCompatibilityFilterV2>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HDInsightVmSizeCompatibilityFilterV2 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HDInsightVmSizeCompatibilityFilterV2>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHDInsightVmSizeCompatibilityFilterV2(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightVmSizeCompatibilityFilterV2)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HDInsightVmSizeCompatibilityFilterV2>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightVmSizeCompatibilityFilterV2)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HDInsightVmSizeCompatibilityFilterV2>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HDInsightVmSizeCompatibilityFilterV2 IPersistableModel<HDInsightVmSizeCompatibilityFilterV2>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HDInsightVmSizeCompatibilityFilterV2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HDInsightVmSizeCompatibilityFilterV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HDInsightVmSizeCompatibilityFilterV2>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HDInsightVmSizeCompatibilityFilterV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HDInsightVmSizeCompatibilityFilterV2)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(FilterMode))
             {
                 writer.WritePropertyName("filterMode"u8);
@@ -43,8 +83,13 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
-                foreach (var item in Regions)
+                foreach (string item in Regions)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -53,8 +98,13 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 writer.WritePropertyName("clusterFlavors"u8);
                 writer.WriteStartArray();
-                foreach (var item in ClusterFlavors)
+                foreach (string item in ClusterFlavors)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -63,8 +113,13 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 writer.WritePropertyName("nodeTypes"u8);
                 writer.WriteStartArray();
-                foreach (var item in NodeTypes)
+                foreach (string item in NodeTypes)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -73,8 +128,13 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 writer.WritePropertyName("clusterVersions"u8);
                 writer.WriteStartArray();
-                foreach (var item in ClusterVersions)
+                foreach (string item in ClusterVersions)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -83,7 +143,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStartArray();
-                foreach (var item in OSType)
+                foreach (HDInsightOSType item in OSType)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -93,8 +153,13 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 writer.WritePropertyName("vmSizes"u8);
                 writer.WriteStartArray();
-                foreach (var item in VmSizes)
+                foreach (string item in VmSizes)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -109,15 +174,15 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("computeIsolationSupported"u8);
                 writer.WriteStringValue(IsComputeIsolationSupported);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -126,22 +191,27 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
         }
 
-        HDInsightVmSizeCompatibilityFilterV2 IJsonModel<HDInsightVmSizeCompatibilityFilterV2>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HDInsightVmSizeCompatibilityFilterV2 IJsonModel<HDInsightVmSizeCompatibilityFilterV2>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HDInsightVmSizeCompatibilityFilterV2 JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HDInsightVmSizeCompatibilityFilterV2>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HDInsightVmSizeCompatibilityFilterV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HDInsightVmSizeCompatibilityFilterV2)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHDInsightVmSizeCompatibilityFilterV2(document.RootElement, options);
         }
 
-        internal static HDInsightVmSizeCompatibilityFilterV2 DeserializeHDInsightVmSizeCompatibilityFilterV2(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HDInsightVmSizeCompatibilityFilterV2 DeserializeHDInsightVmSizeCompatibilityFilterV2(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -154,120 +224,153 @@ namespace Azure.ResourceManager.HDInsight.Models
             IReadOnlyList<HDInsightOSType> osType = default;
             IReadOnlyList<string> vmSizes = default;
             string espApplied = default;
-            string computeIsolationSupported = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string isComputeIsolationSupported = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("filterMode"u8))
+                if (prop.NameEquals("filterMode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    filterMode = new HDInsightFilterMode(property.Value.GetString());
+                    filterMode = new HDInsightFilterMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("regions"u8))
+                if (prop.NameEquals("regions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     regions = array;
                     continue;
                 }
-                if (property.NameEquals("clusterFlavors"u8))
+                if (prop.NameEquals("clusterFlavors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     clusterFlavors = array;
                     continue;
                 }
-                if (property.NameEquals("nodeTypes"u8))
+                if (prop.NameEquals("nodeTypes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     nodeTypes = array;
                     continue;
                 }
-                if (property.NameEquals("clusterVersions"u8))
+                if (prop.NameEquals("clusterVersions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     clusterVersions = array;
                     continue;
                 }
-                if (property.NameEquals("osType"u8))
+                if (prop.NameEquals("osType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<HDInsightOSType> array = new List<HDInsightOSType>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new HDInsightOSType(item.GetString()));
                     }
                     osType = array;
                     continue;
                 }
-                if (property.NameEquals("vmSizes"u8))
+                if (prop.NameEquals("vmSizes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     vmSizes = array;
                     continue;
                 }
-                if (property.NameEquals("espApplied"u8))
+                if (prop.NameEquals("espApplied"u8))
                 {
-                    espApplied = property.Value.GetString();
+                    espApplied = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("computeIsolationSupported"u8))
+                if (prop.NameEquals("computeIsolationSupported"u8))
                 {
-                    computeIsolationSupported = property.Value.GetString();
+                    isComputeIsolationSupported = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new HDInsightVmSizeCompatibilityFilterV2(
                 filterMode,
                 regions ?? new ChangeTrackingList<string>(),
@@ -277,39 +380,8 @@ namespace Azure.ResourceManager.HDInsight.Models
                 osType ?? new ChangeTrackingList<HDInsightOSType>(),
                 vmSizes ?? new ChangeTrackingList<string>(),
                 espApplied,
-                computeIsolationSupported,
-                serializedAdditionalRawData);
+                isComputeIsolationSupported,
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<HDInsightVmSizeCompatibilityFilterV2>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HDInsightVmSizeCompatibilityFilterV2>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HDInsightVmSizeCompatibilityFilterV2)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HDInsightVmSizeCompatibilityFilterV2 IPersistableModel<HDInsightVmSizeCompatibilityFilterV2>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HDInsightVmSizeCompatibilityFilterV2>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHDInsightVmSizeCompatibilityFilterV2(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HDInsightVmSizeCompatibilityFilterV2)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HDInsightVmSizeCompatibilityFilterV2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

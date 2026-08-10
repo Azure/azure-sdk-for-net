@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct ProfileResourceState : IEquatable<ProfileResourceState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ProfileResourceState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProfileResourceState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CreatingValue = "Creating";
         private const string ActiveValue = "Active";
         private const string DeletingValue = "Deleting";
@@ -32,41 +25,73 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string CommittingMigrationValue = "CommittingMigration";
         private const string AbortingMigrationValue = "AbortingMigration";
 
-        /// <summary> Creating. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ProfileResourceState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Creating. </summary>
         public static ProfileResourceState Creating { get; } = new ProfileResourceState(CreatingValue);
-        /// <summary> Active. </summary>
+
+        /// <summary> Gets the Active. </summary>
         public static ProfileResourceState Active { get; } = new ProfileResourceState(ActiveValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static ProfileResourceState Deleting { get; } = new ProfileResourceState(DeletingValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static ProfileResourceState Disabled { get; } = new ProfileResourceState(DisabledValue);
-        /// <summary> Migrating. </summary>
+
+        /// <summary> Gets the Migrating. </summary>
         public static ProfileResourceState Migrating { get; } = new ProfileResourceState(MigratingValue);
-        /// <summary> Migrated. </summary>
+
+        /// <summary> Gets the Migrated. </summary>
         public static ProfileResourceState Migrated { get; } = new ProfileResourceState(MigratedValue);
-        /// <summary> PendingMigrationCommit. </summary>
+
+        /// <summary> Gets the PendingMigrationCommit. </summary>
         public static ProfileResourceState PendingMigrationCommit { get; } = new ProfileResourceState(PendingMigrationCommitValue);
-        /// <summary> CommittingMigration. </summary>
+
+        /// <summary> Gets the CommittingMigration. </summary>
         public static ProfileResourceState CommittingMigration { get; } = new ProfileResourceState(CommittingMigrationValue);
-        /// <summary> AbortingMigration. </summary>
+
+        /// <summary> Gets the AbortingMigration. </summary>
         public static ProfileResourceState AbortingMigration { get; } = new ProfileResourceState(AbortingMigrationValue);
+
         /// <summary> Determines if two <see cref="ProfileResourceState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProfileResourceState left, ProfileResourceState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ProfileResourceState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProfileResourceState left, ProfileResourceState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProfileResourceState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ProfileResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ProfileResourceState(string value) => new ProfileResourceState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ProfileResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProfileResourceState?(string value) => value == null ? null : new ProfileResourceState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProfileResourceState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ProfileResourceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Definition of input parameters for the connection used by the Browser Automation Tool. </summary>
+    [Experimental("AAIP001")]
     internal partial class BrowserAutomationToolConnectionParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -33,6 +35,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The ID of the project connection to your Azure Playwright resource. </summary>
-        public string ProjectConnectionId { get; }
+        public string ProjectConnectionId { get; set; }
     }
 }

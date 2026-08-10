@@ -43,7 +43,7 @@ public class OutputItemReasoningItemBuilder : OutputItemBuilder<OutputItemReason
         var item = new OutputItemReasoningItem(
             id: _itemId,
             summary: Array.Empty<SummaryTextContent>());
-        item.Status = OutputItemReasoningItemStatus.InProgress;
+        item.Status = ItemReasoningItemStatus.InProgress;
         return EmitAdded(item);
     }
 
@@ -131,7 +131,7 @@ public class OutputItemReasoningItemBuilder : OutputItemBuilder<OutputItemReason
         var item = new OutputItemReasoningItem(
             id: _itemId,
             summary: completedSummaries);
-        item.Status = OutputItemReasoningItemStatus.Completed;
+        item.Status = ItemReasoningItemStatus.Completed;
         return EmitDone(item);
     }
 }

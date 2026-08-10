@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -21,8 +22,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            Scripts = new ChangeTrackingList<ScriptActivityScriptBlock>();
-            ActivityType = "Script";
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryScriptActivity"/>. </summary>
@@ -33,38 +32,97 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
-        /// <param name="scriptBlockExecutionTimeout"> ScriptBlock execution timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="scripts"> Array of script blocks. Type: array. </param>
-        /// <param name="logSettings"> Log settings of script activity. </param>
-        /// <param name="returnMultistatementResult"> Enable to retrieve result sets from multiple SQL statements and the number of rows affected by the DML statement. Supported connector: SnowflakeV2. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="treatDecimalAsString"> Indicates whether to treat decimal values as strings to avoid value overflow issue. This option is enabled for SnowflakeV2 connector only. Type: boolean (or Expression with resultType boolean). </param>
-        internal DataFactoryScriptActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, DataFactoryElement<string> scriptBlockExecutionTimeout, IList<ScriptActivityScriptBlock> scripts, ScriptActivityTypeLogSettings logSettings, DataFactoryElement<bool> returnMultistatementResult, DataFactoryElement<bool> treatDecimalAsString) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="typeProperties"> Script activity properties. </param>
+        internal DataFactoryScriptActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, ScriptActivityTypeProperties typeProperties) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
-            ScriptBlockExecutionTimeout = scriptBlockExecutionTimeout;
-            Scripts = scripts;
-            LogSettings = logSettings;
-            ReturnMultistatementResult = returnMultistatementResult;
-            TreatDecimalAsString = treatDecimalAsString;
-            ActivityType = activityType ?? "Script";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataFactoryScriptActivity"/> for deserialization. </summary>
-        internal DataFactoryScriptActivity()
-        {
-        }
+        /// <summary> Script activity properties. </summary>
+        internal ScriptActivityTypeProperties TypeProperties { get; set; }
 
         /// <summary> ScriptBlock execution timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
-        public DataFactoryElement<string> ScriptBlockExecutionTimeout { get; set; }
+        public DataFactoryElement<string> ScriptBlockExecutionTimeout
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ScriptBlockExecutionTimeout;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ScriptActivityTypeProperties();
+                }
+                TypeProperties.ScriptBlockExecutionTimeout = value;
+            }
+        }
+
         /// <summary> Array of script blocks. Type: array. </summary>
-        public IList<ScriptActivityScriptBlock> Scripts { get; }
+        public IList<ScriptActivityScriptBlock> Scripts
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ScriptActivityTypeProperties();
+                }
+                return TypeProperties.Scripts;
+            }
+        }
+
         /// <summary> Log settings of script activity. </summary>
-        public ScriptActivityTypeLogSettings LogSettings { get; set; }
+        public ScriptActivityTypeLogSettings LogSettings
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.LogSettings;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ScriptActivityTypeProperties();
+                }
+                TypeProperties.LogSettings = value;
+            }
+        }
+
         /// <summary> Enable to retrieve result sets from multiple SQL statements and the number of rows affected by the DML statement. Supported connector: SnowflakeV2. Type: boolean (or Expression with resultType boolean). </summary>
-        public DataFactoryElement<bool> ReturnMultistatementResult { get; set; }
+        public DataFactoryElement<bool> ReturnMultistatementResult
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ReturnMultistatementResult;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ScriptActivityTypeProperties();
+                }
+                TypeProperties.ReturnMultistatementResult = value;
+            }
+        }
+
         /// <summary> Indicates whether to treat decimal values as strings to avoid value overflow issue. This option is enabled for SnowflakeV2 connector only. Type: boolean (or Expression with resultType boolean). </summary>
-        public DataFactoryElement<bool> TreatDecimalAsString { get; set; }
+        public DataFactoryElement<bool> TreatDecimalAsString
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.TreatDecimalAsString;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ScriptActivityTypeProperties();
+                }
+                TypeProperties.TreatDecimalAsString = value;
+            }
+        }
     }
 }

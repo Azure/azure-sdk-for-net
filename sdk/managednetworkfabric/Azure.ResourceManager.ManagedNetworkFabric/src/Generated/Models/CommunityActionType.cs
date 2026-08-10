@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> community action types. Example: Permit | Deny. </summary>
+    /// <summary> Community action types. Example: Permit | Deny. </summary>
     public readonly partial struct CommunityActionType : IEquatable<CommunityActionType>
     {
         private readonly string _value;
+        /// <summary> Permit Community Action Types. </summary>
+        private const string PermitValue = "Permit";
+        /// <summary> Deny Community Action Types. </summary>
+        private const string DenyValue = "Deny";
 
         /// <summary> Initializes a new instance of <see cref="CommunityActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CommunityActionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string PermitValue = "Permit";
-        private const string DenyValue = "Deny";
-
-        /// <summary> Permit. </summary>
+        /// <summary> Permit Community Action Types. </summary>
         public static CommunityActionType Permit { get; } = new CommunityActionType(PermitValue);
-        /// <summary> Deny. </summary>
+
+        /// <summary> Deny Community Action Types. </summary>
         public static CommunityActionType Deny { get; } = new CommunityActionType(DenyValue);
+
         /// <summary> Determines if two <see cref="CommunityActionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CommunityActionType left, CommunityActionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CommunityActionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CommunityActionType left, CommunityActionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CommunityActionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CommunityActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CommunityActionType(string value) => new CommunityActionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CommunityActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CommunityActionType?(string value) => value == null ? null : new CommunityActionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CommunityActionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CommunityActionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

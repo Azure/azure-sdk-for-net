@@ -16,6 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             DetailEnum.Low => "low",
             DetailEnum.High => "high",
             DetailEnum.Auto => "auto",
+            DetailEnum.Original => "original",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DetailEnum value.")
         };
 
@@ -33,6 +34,10 @@ namespace Azure.AI.AgentServer.Responses.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
             {
                 return DetailEnum.Auto;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "original"))
+            {
+                return DetailEnum.Original;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DetailEnum value.");
         }

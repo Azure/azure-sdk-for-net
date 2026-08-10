@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Resources.Policy
                     yield break;
                 }
                 VariableValueListResult result = VariableValueListResult.FromResponse(response);
-                yield return Page<VariableValueData>.FromValues((IReadOnlyList<VariableValueData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<VariableValueData>.FromValues((IReadOnlyList<VariableValueData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

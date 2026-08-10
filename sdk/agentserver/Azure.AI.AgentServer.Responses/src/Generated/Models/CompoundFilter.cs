@@ -22,7 +22,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="type"> Type of operation: `and` or `or`. </param>
         /// <param name="filters"> Array of filters to combine. Items can be `ComparisonFilter` or `CompoundFilter`. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filters"/> is null. </exception>
-        public CompoundFilter(CompoundFilterType @type, IEnumerable<BinaryData> filters)
+        public CompoundFilter(FileSearchToolFiltersType1 @type, IEnumerable<BinaryData> filters)
         {
             Argument.AssertNotNull(filters, nameof(filters));
 
@@ -34,7 +34,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="type"> Type of operation: `and` or `or`. </param>
         /// <param name="filters"> Array of filters to combine. Items can be `ComparisonFilter` or `CompoundFilter`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CompoundFilter(CompoundFilterType @type, IList<BinaryData> filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CompoundFilter(FileSearchToolFiltersType1 @type, IList<BinaryData> filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Filters = filters;
@@ -42,7 +42,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> Type of operation: `and` or `or`. </summary>
-        public CompoundFilterType Type { get; set; }
+        public FileSearchToolFiltersType1 Type { get; set; }
 
         /// <summary>
         /// Array of filters to combine. Items can be `ComparisonFilter` or `CompoundFilter`.

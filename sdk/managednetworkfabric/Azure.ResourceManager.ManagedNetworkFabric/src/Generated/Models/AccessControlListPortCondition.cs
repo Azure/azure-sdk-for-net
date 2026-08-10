@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -25,19 +26,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="layer4Protocol"> Layer4 protocol type that needs to be matched. </param>
         /// <param name="ports"> List of the Ports that need to be matched. </param>
         /// <param name="portGroupNames"> List of the port Group Names that need to be matched. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="flags"> List of protocol flags that need to be matched. </param>
-        internal AccessControlListPortCondition(NetworkFabricPortType? portType, Layer4Protocol layer4Protocol, IList<string> ports, IList<string> portGroupNames, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> flags) : base(portType, layer4Protocol, ports, portGroupNames, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="flags"> List of protocol flags that need to be matched. Example: established | initial | &lt;List-of-TCP-flags&gt;. List of eligible TCP Flags are ack, fin, not-ack, not-fin, not-psh, not-rst, not-syn, not-urg, psh, rst, syn, urg. </param>
+        internal AccessControlListPortCondition(NetworkFabricPortType? portType, Layer4Protocol layer4Protocol, IList<string> ports, IList<string> portGroupNames, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> flags) : base(portType, layer4Protocol, ports, portGroupNames, additionalBinaryDataProperties)
         {
             Flags = flags;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessControlListPortCondition"/> for deserialization. </summary>
-        internal AccessControlListPortCondition()
-        {
-        }
-
-        /// <summary> List of protocol flags that need to be matched. </summary>
+        /// <summary> List of protocol flags that need to be matched. Example: established | initial | &lt;List-of-TCP-flags&gt;. List of eligible TCP Flags are ack, fin, not-ack, not-fin, not-psh, not-rst, not-syn, not-urg, psh, rst, syn, urg. </summary>
         public IList<string> Flags { get; }
     }
 }

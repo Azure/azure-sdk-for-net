@@ -116,6 +116,55 @@ public class ErrorHandlingTests : IDisposable
         XAssert.DoesNotContain("Handler failure simulation", errorMessage!);
     }
 
+    // ── x-request-id header and additional_info enrichment ──
+
+    [Test]
+    public async Task ErrorResponse_IncludesXRequestIdHeader()
+    {
+        var content = new StringContent("{ invalid json", Encoding.UTF8, "application/json");
+
+        var response = await _client.PostAsync("/responses", content);
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        Assert.That(response.Headers.Contains("x-request-id"), Is.True);
+        var requestId = response.Headers.GetValues("x-request-id").First();
+        Assert.That(requestId, Is.Not.Empty);
+    }
+
+    [Test]
+    public async Task ErrorResponse_IncludesRequestIdInAdditionalInfo()
+    {
+        var content = new StringContent("{ invalid json", Encoding.UTF8, "application/json");
+
+        var response = await _client.PostAsync("/responses", content);
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+
+        // Get the x-request-id header value
+        var headerRequestId = response.Headers.GetValues("x-request-id").First();
+
+        // Verify error.additionalInfo.request_id matches the response header
+        var body = await response.Content.ReadFromJsonAsync<JsonElement>();
+        var error = body.GetProperty("error");
+        Assert.That(error.TryGetProperty("additionalInfo", out var additionalInfo), Is.True);
+        Assert.That(additionalInfo.TryGetProperty("request_id", out var requestIdProp), Is.True);
+        Assert.That(requestIdProp.GetString(), Is.EqualTo(headerRequestId));
+    }
+
+    [Test]
+    public async Task SuccessResponse_IncludesXRequestIdHeader()
+    {
+        var requestBody = JsonSerializer.Serialize(new { model = "test-model" });
+        var content = new StringContent(requestBody, Encoding.UTF8, "application/json");
+
+        var response = await _client.PostAsync("/responses", content);
+
+        // Regardless of the status (the handler will succeed), the header should be present
+        Assert.That(response.Headers.Contains("x-request-id"), Is.True);
+        var requestId = response.Headers.GetValues("x-request-id").First();
+        Assert.That(requestId, Is.Not.Empty);
+    }
+
     // ── Helper ──
 
     private static async IAsyncEnumerable<ResponseStreamEvent> ThrowingAsyncEnumerable(

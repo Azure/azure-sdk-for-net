@@ -8,6 +8,7 @@ $GithubUri = "https://github.com/Azure/azure-sdk-for-net"
 $PackageRepositoryUri = "https://www.nuget.org/packages"
 
 . "$PSScriptRoot/docs/Docs-ToC.ps1"
+. "$PSScriptRoot/ProjectScopedEngFiles.ps1"
 function Get-AllPackageInfoFromRepo($serviceDirectory)
 {
   $allPackageProps = @()
@@ -94,6 +95,21 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
 {
   $additionalValidationPackages = @()
 
+  # Changes to a package's project-scoped engineering files (ApiCompat baselines,
+  # analyzer/NoWarn allow-lists, CPM overrides) live under eng/ and so are invisible to
+  # the eng/common diff-to-package detection, which only maps files under a package's
+  # sdk/<service>/<package> directory. Map those changes back to their owning package so
+  # validation rebuilds it (and re-runs ApiCompat). Without this a baseline deletion can
+  # silently ship an ApiCompat regression because the package is never rebuilt (see #60837).
+  foreach ($pkg in (Get-PackagesFromEngFileChanges -DiffObj $diffObj -AllPkgProps $AllPkgProps)) {
+    if ($LocatedPackages -notcontains $pkg -and $additionalValidationPackages -notcontains $pkg) {
+      $pkgDisplayName = if ($pkg.ArtifactName) { $pkg.ArtifactName } else { $pkg.Name }
+      Write-Host "Including '$pkgDisplayName' because one of its project-scoped engineering files changed."
+      $pkg.IncludedForValidation = $true
+      $additionalValidationPackages += $pkg
+    }
+  }
+
   # Use all directly changed packages for dependency calculation. This ensures that
   # when any package changes, all cross-service packages that depend on it are included
   # as indirect packages for validation testing.
@@ -129,7 +145,7 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
         continue
       }
 
-      if ($pkg -and $LocatedPackages -notcontains $pkg) {
+      if ($pkg -and $LocatedPackages -notcontains $pkg -and $additionalValidationPackages -notcontains $pkg) {
         $pkg.IncludedForValidation = $true
         $additionalValidationPackages += $pkg
       }
@@ -142,33 +158,22 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
 # Returns the nuget publish status of a package id and version.
 function IsNugetPackageVersionPublished ($pkgId, $pkgVersion)
 {
-  $nugetUri = "https://api.nuget.org/v3-flatcontainer/$($pkgId.ToLowerInvariant())/index.json"
+  $existingVersions = GetExistingPackageVersions -PackageName $pkgId
 
-  try
-  {
-    $nugetVersions = Invoke-RestMethod -MaximumRetryCount 3 -RetryIntervalSec 10 -uri $nugetUri -Method "GET"
-    return $nugetVersions.versions.Contains($pkgVersion)
+  # If the feed returned nothing, the package has not been published.
+  if (!$existingVersions) {
+    return $False
   }
-  catch
-  {
-    $statusCode = $_.Exception.Response.StatusCode.value__
-    $statusDescription = $_.Exception.Response.ReasonPhrase
 
-    # if this is 404ing, then this pkg has never been published before
-    if ($statusCode -eq 404) {
-      return $False
-    }
-
-    Write-Host "Nuget Invocation failed:"
-    Write-Host "StatusCode:" $statusCode
-    Write-Host "StatusDescription:" $statusDescription
-    exit(1)
-  }
+  # Normalize to an array so a single returned version is checked as an exact item, not a substring.
+  return @($existingVersions).Contains($pkgVersion)
 }
 
 # Parse out package publishing information given a nupkg ZIP format.
 function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
 {
+  Write-Host "Parsing package file $($pkg.FullName)"
+
   $workFolder = "$workingDirectory$($pkg.Basename)"
   $zipFileLocation = "$workFolder/$($pkg.Basename).zip"
   $releaseNotes = ""
@@ -354,13 +359,15 @@ function GetExistingPackageVersions ($PackageName, $GroupId=$null)
 {
   try {
     $PackageName = $PackageName.ToLower()
-    $existingVersion = Invoke-RestMethod -Method GET -Uri "https://api.nuget.org/v3-flatcontainer/${PackageName}/index.json"
-    return $existingVersion.versions
+    $uri = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/flat2/${PackageName}/index.json"
+    $existingVersion = Invoke-RestMethod -MaximumRetryCount 3 -RetryIntervalSec 10 -Method GET -Uri $uri
+    return @($existingVersion.versions)
   }
   catch {
-    if ($_.Exception.Response.StatusCode -ne 404)
+    if ($_.Exception.Response.StatusCode -notin (401, 404))
     {
       LogError "Failed to retrieve package versions for ${PackageName}. $($_.Exception.Message)"
+      throw
     }
     return $null
   }

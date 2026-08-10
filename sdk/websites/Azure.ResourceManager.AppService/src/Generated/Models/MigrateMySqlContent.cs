@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -15,37 +16,8 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> MySQL migration request. </summary>
     public partial class MigrateMySqlContent : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MigrateMySqlContent"/>. </summary>
         public MigrateMySqlContent()
@@ -53,30 +25,65 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateMySqlContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="connectionString"> Connection string to the remote MySQL database. </param>
-        /// <param name="migrationType"> The type of migration operation to be done. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> MigrateMySqlRequest resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateMySqlContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string connectionString, MySqlMigrationType? migrationType, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateMySqlContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MigrateMySqlRequestProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            ConnectionString = connectionString;
-            MigrationType = migrationType;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Connection string to the remote MySQL database. </summary>
-        [WirePath("properties.connectionString")]
-        public string ConnectionString { get; set; }
-        /// <summary> The type of migration operation to be done. </summary>
-        [WirePath("properties.migrationType")]
-        public MySqlMigrationType? MigrationType { get; set; }
+        /// <summary> MigrateMySqlRequest resource specific properties. </summary>
+        [WirePath("properties")]
+        internal MigrateMySqlRequestProperties Properties { get; set; }
+
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> Connection string to the remote MySQL database. </summary>
+        [WirePath("properties.connectionString")]
+        public string ConnectionString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionString;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MigrateMySqlRequestProperties();
+                }
+                Properties.ConnectionString = value;
+            }
+        }
+
+        /// <summary> The type of migration operation to be done. </summary>
+        [WirePath("properties.migrationType")]
+        public MySqlMigrationType? MigrationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MigrationType;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new MigrateMySqlRequestProperties();
+                    }
+                    Properties.MigrationType = value.Value;
+                }
+            }
+        }
     }
 }

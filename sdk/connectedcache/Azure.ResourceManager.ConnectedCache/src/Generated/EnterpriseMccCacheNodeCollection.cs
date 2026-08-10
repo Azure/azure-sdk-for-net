@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             TryGetApiVersion(EnterpriseMccCacheNodeResource.ResourceType, out string enterpriseMccCacheNodeApiVersion);
             _enterpriseMccCacheNodesOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", EnterpriseMccCacheNodeResource.ResourceType.Namespace, Diagnostics);
-            _enterpriseMccCacheNodesOperationsRestClient = new EnterpriseMccCacheNodesOperations(_enterpriseMccCacheNodesOperationsClientDiagnostics, Pipeline, Endpoint, enterpriseMccCacheNodeApiVersion ?? "2024-11-30-preview");
+            _enterpriseMccCacheNodesOperationsRestClient = new EnterpriseMccCacheNodesOperations(_enterpriseMccCacheNodesOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, enterpriseMccCacheNodeApiVersion ?? "2024-11-30-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ConnectedCache
                 HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, EnterpriseMccCacheNodeData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ConnectedCacheArmOperation<EnterpriseMccCacheNodeResource> operation = new ConnectedCacheArmOperation<EnterpriseMccCacheNodeResource>(
-                    new EnterpriseMccCacheNodeOperationSource(Client),
+                    new EnterpriseMccCacheNodeResourceOperationSource(Client),
                     _enterpriseMccCacheNodesOperationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ConnectedCache
                 HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, EnterpriseMccCacheNodeData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ConnectedCacheArmOperation<EnterpriseMccCacheNodeResource> operation = new ConnectedCacheArmOperation<EnterpriseMccCacheNodeResource>(
-                    new EnterpriseMccCacheNodeOperationSource(Client),
+                    new EnterpriseMccCacheNodeResourceOperationSource(Client),
                     _enterpriseMccCacheNodesOperationsClientDiagnostics,
                     Pipeline,
                     message.Request,

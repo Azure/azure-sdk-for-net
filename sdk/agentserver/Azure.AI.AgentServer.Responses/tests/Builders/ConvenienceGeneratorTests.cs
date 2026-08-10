@@ -394,7 +394,7 @@ public class ConvenienceGeneratorTests
         var events = stream.OutputItemFunctionCallOutput("call_1", output).ToList();
 
         var done = XAssert.IsType<ResponseOutputItemDoneEvent>(events[1]);
-        var fco = XAssert.IsType<FunctionToolCallOutputResource>(done.Item);
+        var fco = XAssert.IsType<OutputItemFunctionToolCallOutput>(done.Item);
         Assert.That(fco.CallId, Is.EqualTo("call_1"));
         Assert.That(fco.Output.ToString(), Is.EqualTo("\"72 degrees\""));
     }
@@ -545,7 +545,7 @@ public class ConvenienceGeneratorTests
         XAssert.IsType<ResponseImageGenCallCompletedEvent>(events[3]);
         var done = XAssert.IsType<ResponseOutputItemDoneEvent>(events[4]);
         var item = XAssert.IsType<OutputItemImageGenToolCall>(done.Item);
-        Assert.That(item.Status, Is.EqualTo(OutputItemImageGenToolCallStatus.Completed));
+        Assert.That(item.Status, Is.EqualTo(ItemImageGenToolCallStatus.Completed));
         Assert.That(item.Result, Is.EqualTo(resultBase64));
     }
 

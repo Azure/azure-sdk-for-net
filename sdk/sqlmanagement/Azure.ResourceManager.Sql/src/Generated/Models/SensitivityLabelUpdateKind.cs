@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The SensitivityLabelUpdateKind. </summary>
+    /// <summary></summary>
     public enum SensitivityLabelUpdateKind
     {
         /// <summary> set. </summary>

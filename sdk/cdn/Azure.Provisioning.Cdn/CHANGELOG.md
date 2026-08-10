@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,23 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.3 (2026-06-25)
+
+### Other Changes
+
+- Migrated to the new TypeSpec-based provisioning generator
+  (`@azure-typespec/http-client-csharp-provisioning`).
+
+## 1.0.0-beta.2 (2026-04-30)
+
+### Bugs Fixed
+
+- Implemented `GetResourceNameRequirements` for `CdnProfile`,
+  `FrontDoorEndpoint`, `FrontDoorOriginGroup`, `FrontDoorOrigin`, and
+  `FrontDoorRoute` so generated Bicep names use each resource's actual
+  Azure length limit instead of the default 24-character cap
+  ([#58181](https://github.com/Azure/azure-sdk-for-net/issues/58181)).
 
 ## 1.0.0-beta.1 (2026-03-13)
 

@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class BgpConfiguration : IUtf8JsonSerializable, IJsonModel<BgpConfiguration>
+    /// <summary> BGP configuration properties. </summary>
+    public partial class BgpConfiguration : AnnotationResourceProperties, IJsonModel<BgpConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BgpConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AnnotationResourceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BgpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBgpConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BgpConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BgpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BgpConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BgpConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BgpConfiguration IPersistableModel<BgpConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => (BgpConfiguration)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BgpConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BgpConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BgpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BgpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BgpConfiguration)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(BfdConfiguration))
             {
@@ -60,17 +100,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("fabricASN"u8);
                 writer.WriteNumberValue(FabricAsn.Value);
             }
-            if (Optional.IsDefined(PeerAsn))
-            {
-                writer.WritePropertyName("peerASN"u8);
-                writer.WriteNumberValue(PeerAsn.Value);
-            }
+            writer.WritePropertyName("peerASN"u8);
+            writer.WriteNumberValue(PeerAsn.Value);
             if (Optional.IsCollectionDefined(IPv4ListenRangePrefixes))
             {
                 writer.WritePropertyName("ipv4ListenRangePrefixes"u8);
                 writer.WriteStartArray();
-                foreach (var item in IPv4ListenRangePrefixes)
+                foreach (string item in IPv4ListenRangePrefixes)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -79,8 +121,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("ipv6ListenRangePrefixes"u8);
                 writer.WriteStartArray();
-                foreach (var item in IPv6ListenRangePrefixes)
+                foreach (string item in IPv6ListenRangePrefixes)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -89,7 +136,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("ipv4NeighborAddress"u8);
                 writer.WriteStartArray();
-                foreach (var item in IPv4NeighborAddress)
+                foreach (NeighborAddress item in IPv4NeighborAddress)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -99,214 +146,244 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("ipv6NeighborAddress"u8);
                 writer.WriteStartArray();
-                foreach (var item in IPv6NeighborAddress)
+                foreach (NeighborAddress item in IPv6NeighborAddress)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(BmpConfiguration))
+            {
+                writer.WritePropertyName("bmpConfiguration"u8);
+                writer.WriteObjectValue(BmpConfiguration, options);
+            }
+            if (Optional.IsDefined(V4OverV6BgpSession))
+            {
+                writer.WritePropertyName("v4OverV6BgpSession"u8);
+                writer.WriteStringValue(V4OverV6BgpSession.Value.ToString());
+            }
+            if (Optional.IsDefined(V6OverV4BgpSession))
+            {
+                writer.WritePropertyName("v6OverV4BgpSession"u8);
+                writer.WriteStringValue(V6OverV4BgpSession.Value.ToString());
+            }
         }
 
-        BgpConfiguration IJsonModel<BgpConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BgpConfiguration IJsonModel<BgpConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BgpConfiguration)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AnnotationResourceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BgpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BgpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BgpConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBgpConfiguration(document.RootElement, options);
         }
 
-        internal static BgpConfiguration DeserializeBgpConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BgpConfiguration DeserializeBgpConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string annotation = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             BfdConfiguration bfdConfiguration = default;
             NetworkFabricBooleanValue? defaultRouteOriginate = default;
             int? allowAS = default;
             AllowASOverride? allowASOverride = default;
             long? fabricAsn = default;
             long? peerAsn = default;
-            IList<string> ipv4ListenRangePrefixes = default;
-            IList<string> ipv6ListenRangePrefixes = default;
-            IList<NeighborAddress> ipv4NeighborAddress = default;
-            IList<NeighborAddress> ipv6NeighborAddress = default;
-            string annotation = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<string> iPv4ListenRangePrefixes = default;
+            IList<string> iPv6ListenRangePrefixes = default;
+            IList<NeighborAddress> iPv4NeighborAddress = default;
+            IList<NeighborAddress> iPv6NeighborAddress = default;
+            InternalNetworkBmpProperties bmpConfiguration = default;
+            NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = default;
+            NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("bfdConfiguration"u8))
+                if (prop.NameEquals("annotation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    annotation = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("bfdConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value, options);
+                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("defaultRouteOriginate"u8))
+                if (prop.NameEquals("defaultRouteOriginate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    defaultRouteOriginate = new NetworkFabricBooleanValue(property.Value.GetString());
+                    defaultRouteOriginate = new NetworkFabricBooleanValue(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("allowAS"u8))
+                if (prop.NameEquals("allowAS"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    allowAS = property.Value.GetInt32();
+                    allowAS = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("allowASOverride"u8))
+                if (prop.NameEquals("allowASOverride"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    allowASOverride = new AllowASOverride(property.Value.GetString());
+                    allowASOverride = new AllowASOverride(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("fabricASN"u8))
+                if (prop.NameEquals("fabricASN"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fabricAsn = property.Value.GetInt64();
+                    fabricAsn = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("peerASN"u8))
+                if (prop.NameEquals("peerASN"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    peerAsn = property.Value.GetInt64();
+                    peerAsn = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("ipv4ListenRangePrefixes"u8))
+                if (prop.NameEquals("ipv4ListenRangePrefixes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    ipv4ListenRangePrefixes = array;
-                    continue;
-                }
-                if (property.NameEquals("ipv6ListenRangePrefixes"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
-                    ipv6ListenRangePrefixes = array;
+                    iPv4ListenRangePrefixes = array;
                     continue;
                 }
-                if (property.NameEquals("ipv4NeighborAddress"u8))
+                if (prop.NameEquals("ipv6ListenRangePrefixes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    iPv6ListenRangePrefixes = array;
+                    continue;
+                }
+                if (prop.NameEquals("ipv4NeighborAddress"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<NeighborAddress> array = new List<NeighborAddress>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(NeighborAddress.DeserializeNeighborAddress(item, options));
                     }
-                    ipv4NeighborAddress = array;
+                    iPv4NeighborAddress = array;
                     continue;
                 }
-                if (property.NameEquals("ipv6NeighborAddress"u8))
+                if (prop.NameEquals("ipv6NeighborAddress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<NeighborAddress> array = new List<NeighborAddress>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(NeighborAddress.DeserializeNeighborAddress(item, options));
                     }
-                    ipv6NeighborAddress = array;
+                    iPv6NeighborAddress = array;
                     continue;
                 }
-                if (property.NameEquals("annotation"u8))
+                if (prop.NameEquals("bmpConfiguration"u8))
                 {
-                    annotation = property.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bmpConfiguration = InternalNetworkBmpProperties.DeserializeInternalNetworkBmpProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("v4OverV6BgpSession"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    v4OverV6BgpSession = new NetworkFabricV4OverV6BgpSessionState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("v6OverV4BgpSession"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    v6OverV4BgpSession = new NetworkFabricV6OverV4BgpSessionState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new BgpConfiguration(
                 annotation,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 bfdConfiguration,
                 defaultRouteOriginate,
                 allowAS,
                 allowASOverride,
                 fabricAsn,
                 peerAsn,
-                ipv4ListenRangePrefixes ?? new ChangeTrackingList<string>(),
-                ipv6ListenRangePrefixes ?? new ChangeTrackingList<string>(),
-                ipv4NeighborAddress ?? new ChangeTrackingList<NeighborAddress>(),
-                ipv6NeighborAddress ?? new ChangeTrackingList<NeighborAddress>());
+                iPv4ListenRangePrefixes ?? new ChangeTrackingList<string>(),
+                iPv6ListenRangePrefixes ?? new ChangeTrackingList<string>(),
+                iPv4NeighborAddress ?? new ChangeTrackingList<NeighborAddress>(),
+                iPv6NeighborAddress ?? new ChangeTrackingList<NeighborAddress>(),
+                bmpConfiguration,
+                v4OverV6BgpSession,
+                v6OverV4BgpSession);
         }
-
-        BinaryData IPersistableModel<BgpConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BgpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BgpConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        BgpConfiguration IPersistableModel<BgpConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BgpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBgpConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BgpConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<BgpConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

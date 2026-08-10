@@ -20,6 +20,10 @@ namespace Azure.AI.VoiceLive
         private const string PhoenixLatestNeuralValue = "PhoenixLatestNeural";
         /// <summary> Use the Phoenix V2 model. </summary>
         private const string PhoenixV2NeuralValue = "PhoenixV2Neural";
+        /// <summary> Use the latest Dragon HD Omni model. </summary>
+        private const string DragonHDOmniLatestNeuralValue = "DragonHDOmniLatestNeural";
+        /// <summary> Use the MAI-Voice-1 model. </summary>
+        private const string MaiVoice1Value = "MAI-Voice-1";
 
         /// <summary> Initializes a new instance of <see cref="PersonalVoiceModels"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -39,6 +43,12 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Use the Phoenix V2 model. </summary>
         public static PersonalVoiceModels PhoenixV2Neural { get; } = new PersonalVoiceModels(PhoenixV2NeuralValue);
+
+        /// <summary> Use the latest Dragon HD Omni model. </summary>
+        public static PersonalVoiceModels DragonHDOmniLatestNeural { get; } = new PersonalVoiceModels(DragonHDOmniLatestNeuralValue);
+
+        /// <summary> Use the MAI-Voice-1 model. </summary>
+        public static PersonalVoiceModels MaiVoice1 { get; } = new PersonalVoiceModels(MaiVoice1Value);
 
         /// <summary> Determines if two <see cref="PersonalVoiceModels"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

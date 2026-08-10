@@ -135,7 +135,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             ItemType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
-            OutputItemFileSearchToolCallStatus status = default;
+            ItemFileSearchToolCallStatus status = default;
             IList<string> queries = default;
             IList<FileSearchToolCallResults> results = default;
             foreach (var prop in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToOutputItemFileSearchToolCallStatus();
+                    status = prop.Value.GetString().ToItemFileSearchToolCallStatus();
                     continue;
                 }
                 if (prop.NameEquals("queries"u8))

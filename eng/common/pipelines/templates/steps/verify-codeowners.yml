@@ -1,0 +1,106 @@
+parameters:
+  - name: ArtifactPath
+    type: string
+    default: $(Build.ArtifactStagingDirectory)/PackageInfo
+  - name: Artifacts
+    # Compatibility: Removing the Artifacts param breaks eng/common. Keeping it 
+    # here for now to avoid breaking changes. This can be removed once the .NET 
+    # invocation of this template is updated to omit Artifacts
+    type: object
+    default: []
+  - name: EnablePrValidation
+    type: boolean
+    default: false
+  - name: DiffDirectory
+    type: string
+    default: $(Build.ArtifactStagingDirectory)/CodeownersPrDiff
+  - name: Repo
+    type: string
+    default: $(Build.Repository.Name)
+  - name: SdkTypes
+    type: object
+    default:
+      - client
+      - compat
+      - data
+      - functions
+      - datamovement
+  # Comma separated list of emails allowed to skip codeowners validation. User 
+  # must queue the pipeline manually with the 'Skip.VerifyCodeowners' variable 
+  # set to 'true'.
+  - name: AllowSkipEmails
+    type: string
+    default: ''
+
+steps:
+  - ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.EnablePrValidation, true)) }}:
+    - task: PowerShell@2
+      displayName: Evaluate Codeowners Skip
+      condition: succeeded()
+      inputs:
+        pwsh: true
+        filePath: $(Build.SourcesDirectory)/eng/common/scripts/Set-VerifyCodeownersSkip.ps1
+        arguments: >-
+          -RequestedForEmail '$(Build.RequestedForEmail)'
+          -SkipVerifyCodeowners '$(Skip.VerifyCodeowners)'
+          -AdditionalSkipEmails '${{ parameters.AllowSkipEmails }}'
+        workingDirectory: $(Build.SourcesDirectory)
+
+    - template: /eng/common/pipelines/templates/steps/install-azsdk-cli.yml
+      parameters:
+        Condition: and(succeeded(), ne(variables['ShouldSkipVerifyCodeowners'], 'true'))
+
+    - task: PowerShell@2
+      displayName: Generate PR Diff for Codeowners
+      condition: and(succeeded(), ne(variables['ShouldSkipVerifyCodeowners'], 'true'))
+      inputs:
+        pwsh: true
+        filePath: $(Build.SourcesDirectory)/eng/common/scripts/Generate-PR-Diff.ps1
+        arguments: >-
+          -ArtifactPath '${{ parameters.DiffDirectory }}'
+          -TargetPath '$(Build.SourcesDirectory)'
+        workingDirectory: $(Build.SourcesDirectory)
+
+    - task: PowerShell@2
+      displayName: Verify Codeowners
+      condition: and(succeeded(), ne(variables['ShouldSkipVerifyCodeowners'], 'true'))
+      inputs:
+        pwsh: true
+        filePath: $(Build.SourcesDirectory)/eng/common/scripts/Test-CodeownersForArtifacts.ps1
+        arguments: >-
+          -AzsdkPath '$(AZSDK)'
+          -PackageInfoDirectory '${{ parameters.ArtifactPath }}'
+          -SdkTypes ${{ join(',', parameters.SdkTypes) }}
+          -Repo '${{ parameters.Repo }}'
+          -PrDiffFile '${{ parameters.DiffDirectory }}/diff.json'
+        workingDirectory: $(Build.SourcesDirectory)
+
+  - ${{ elseif eq(variables['Build.Reason'], 'Manual') }}:
+    - task: PowerShell@2
+      displayName: Evaluate Codeowners Skip
+      condition: succeeded()
+      inputs:
+        pwsh: true
+        filePath: $(Build.SourcesDirectory)/eng/common/scripts/Set-VerifyCodeownersSkip.ps1
+        arguments: >-
+          -RequestedForEmail '$(Build.RequestedForEmail)'
+          -SkipVerifyCodeowners '$(Skip.VerifyCodeowners)'
+          -AdditionalSkipEmails '${{ parameters.AllowSkipEmails }}'
+        workingDirectory: $(Build.SourcesDirectory)
+
+    - template: /eng/common/pipelines/templates/steps/install-azsdk-cli.yml
+      parameters:
+        Condition: and(succeeded(), ne(variables['ShouldSkipVerifyCodeowners'], 'true'))
+
+    - task: PowerShell@2
+      displayName: Verify Codeowners
+      condition: and(succeeded(), ne(variables['ShouldSkipVerifyCodeowners'], 'true'))
+      inputs:
+        pwsh: true
+        filePath: $(Build.SourcesDirectory)/eng/common/scripts/Test-CodeownersForArtifacts.ps1
+        arguments: >-
+          -AzsdkPath '$(AZSDK)'
+          -PackageInfoDirectory '${{ parameters.ArtifactPath }}'
+          -SdkTypes ${{ join(',', parameters.SdkTypes) }}
+          -Repo '${{ parameters.Repo }}'
+        workingDirectory: $(Build.SourcesDirectory)

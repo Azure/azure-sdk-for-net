@@ -9,15 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureSqlSink : IUtf8JsonSerializable, IJsonModel<AzureSqlSink>
+    /// <summary> A copy activity Azure SQL sink. </summary>
+    public partial class AzureSqlSink : CopySink, IJsonModel<AzureSqlSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureSqlSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CopySink PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureSqlSink>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAzureSqlSink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureSqlSink)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureSqlSink>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AzureSqlSink)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AzureSqlSink>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureSqlSink IPersistableModel<AzureSqlSink>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureSqlSink)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AzureSqlSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureSqlSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,35 +70,34 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureSqlSink>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureSqlSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureSqlSink)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(SqlWriterStoredProcedureName))
             {
                 writer.WritePropertyName("sqlWriterStoredProcedureName"u8);
-                JsonSerializer.Serialize(writer, SqlWriterStoredProcedureName);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SqlWriterStoredProcedureName, options);
             }
             if (Optional.IsDefined(SqlWriterTableType))
             {
                 writer.WritePropertyName("sqlWriterTableType"u8);
-                JsonSerializer.Serialize(writer, SqlWriterTableType);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SqlWriterTableType, options);
             }
             if (Optional.IsDefined(PreCopyScript))
             {
                 writer.WritePropertyName("preCopyScript"u8);
-                JsonSerializer.Serialize(writer, PreCopyScript);
+                writer.WriteObjectValue<DataFactoryElement<string>>(PreCopyScript, options);
             }
             if (Optional.IsDefined(StoredProcedureParameters))
             {
                 writer.WritePropertyName("storedProcedureParameters"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(StoredProcedureParameters);
+                writer.WriteRawValue(StoredProcedureParameters);
 #else
-                using (JsonDocument document = JsonDocument.Parse(StoredProcedureParameters, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(StoredProcedureParameters))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -66,25 +106,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(StoredProcedureTableTypeParameterName))
             {
                 writer.WritePropertyName("storedProcedureTableTypeParameterName"u8);
-                JsonSerializer.Serialize(writer, StoredProcedureTableTypeParameterName);
+                writer.WriteObjectValue<DataFactoryElement<string>>(StoredProcedureTableTypeParameterName, options);
             }
             if (Optional.IsDefined(TableOption))
             {
                 writer.WritePropertyName("tableOption"u8);
-                JsonSerializer.Serialize(writer, TableOption);
+                writer.WriteObjectValue<DataFactoryElement<string>>(TableOption, options);
             }
             if (Optional.IsDefined(SqlWriterUseTableLock))
             {
                 writer.WritePropertyName("sqlWriterUseTableLock"u8);
-                JsonSerializer.Serialize(writer, SqlWriterUseTableLock);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(SqlWriterUseTableLock, options);
             }
             if (Optional.IsDefined(WriteBehavior))
             {
                 writer.WritePropertyName("writeBehavior"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(WriteBehavior);
+                writer.WriteRawValue(WriteBehavior);
 #else
-                using (JsonDocument document = JsonDocument.Parse(WriteBehavior, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(WriteBehavior))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -95,40 +135,41 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("upsertSettings"u8);
                 writer.WriteObjectValue(UpsertSettings, options);
             }
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
         }
 
-        AzureSqlSink IJsonModel<AzureSqlSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureSqlSink IJsonModel<AzureSqlSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureSqlSink)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CopySink JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureSqlSink>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureSqlSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureSqlSink)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAzureSqlSink(document.RootElement, options);
         }
 
-        internal static AzureSqlSink DeserializeAzureSqlSink(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AzureSqlSink DeserializeAzureSqlSink(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string copySinkType = "AzureSqlSink";
+            DataFactoryElement<int> writeBatchSize = default;
+            DataFactoryElement<string> writeBatchTimeout = default;
+            DataFactoryElement<int> sinkRetryCount = default;
+            DataFactoryElement<string> sinkRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DataFactoryElement<string> sqlWriterStoredProcedureName = default;
             DataFactoryElement<string> sqlWriterTableType = default;
             DataFactoryElement<string> preCopyScript = default;
@@ -138,162 +179,104 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<bool> sqlWriterUseTableLock = default;
             BinaryData writeBehavior = default;
             SqlUpsertSettings upsertSettings = default;
-            string type = default;
-            DataFactoryElement<int> writeBatchSize = default;
-            DataFactoryElement<string> writeBatchTimeout = default;
-            DataFactoryElement<int> sinkRetryCount = default;
-            DataFactoryElement<string> sinkRetryWait = default;
-            DataFactoryElement<int> maxConcurrentConnections = default;
-            DataFactoryElement<bool> disableMetricsCollection = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sqlWriterStoredProcedureName"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    copySinkType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("writeBatchSize"u8))
+                {
+                    ReadWriteBatchSize(prop, ref writeBatchSize);
+                    continue;
+                }
+                if (prop.NameEquals("writeBatchTimeout"u8))
+                {
+                    ReadWriteBatchTimeout(prop, ref writeBatchTimeout);
+                    continue;
+                }
+                if (prop.NameEquals("sinkRetryCount"u8))
+                {
+                    ReadSinkRetryCount(prop, ref sinkRetryCount);
+                    continue;
+                }
+                if (prop.NameEquals("sinkRetryWait"u8))
+                {
+                    ReadSinkRetryWait(prop, ref sinkRetryWait);
+                    continue;
+                }
+                if (prop.NameEquals("maxConcurrentConnections"u8))
+                {
+                    ReadMaxConcurrentConnections(prop, ref maxConcurrentConnections);
+                    continue;
+                }
+                if (prop.NameEquals("disableMetricsCollection"u8))
+                {
+                    ReadDisableMetricsCollection(prop, ref disableMetricsCollection);
+                    continue;
+                }
+                if (prop.NameEquals("sqlWriterStoredProcedureName"u8))
+                {
+                    ReadSqlWriterStoredProcedureName(prop, ref sqlWriterStoredProcedureName);
+                    continue;
+                }
+                if (prop.NameEquals("sqlWriterTableType"u8))
+                {
+                    ReadSqlWriterTableType(prop, ref sqlWriterTableType);
+                    continue;
+                }
+                if (prop.NameEquals("preCopyScript"u8))
+                {
+                    ReadPreCopyScript(prop, ref preCopyScript);
+                    continue;
+                }
+                if (prop.NameEquals("storedProcedureParameters"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sqlWriterStoredProcedureName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    storedProcedureParameters = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("sqlWriterTableType"u8))
+                if (prop.NameEquals("storedProcedureTableTypeParameterName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    ReadStoredProcedureTableTypeParameterName(prop, ref storedProcedureTableTypeParameterName);
+                    continue;
+                }
+                if (prop.NameEquals("tableOption"u8))
+                {
+                    ReadTableOption(prop, ref tableOption);
+                    continue;
+                }
+                if (prop.NameEquals("sqlWriterUseTableLock"u8))
+                {
+                    ReadSqlWriterUseTableLock(prop, ref sqlWriterUseTableLock);
+                    continue;
+                }
+                if (prop.NameEquals("writeBehavior"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sqlWriterTableType = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    writeBehavior = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("preCopyScript"u8))
+                if (prop.NameEquals("upsertSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    preCopyScript = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    upsertSettings = SqlUpsertSettings.DeserializeSqlUpsertSettings(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("storedProcedureParameters"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    storedProcedureParameters = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("storedProcedureTableTypeParameterName"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    storedProcedureTableTypeParameterName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("tableOption"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    tableOption = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("sqlWriterUseTableLock"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sqlWriterUseTableLock = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("writeBehavior"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    writeBehavior = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("upsertSettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    upsertSettings = SqlUpsertSettings.DeserializeSqlUpsertSettings(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("writeBatchSize"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    writeBatchSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("writeBatchTimeout"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    writeBatchTimeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("sinkRetryCount"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sinkRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("sinkRetryWait"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sinkRetryWait = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("maxConcurrentConnections"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("disableMetricsCollection"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            additionalProperties = additionalPropertiesDictionary;
             return new AzureSqlSink(
-                type,
+                copySinkType,
                 writeBatchSize,
                 writeBatchTimeout,
                 sinkRetryCount,
@@ -311,36 +294,5 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writeBehavior,
                 upsertSettings);
         }
-
-        BinaryData IPersistableModel<AzureSqlSink>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureSqlSink>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AzureSqlSink)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AzureSqlSink IPersistableModel<AzureSqlSink>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureSqlSink>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAzureSqlSink(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AzureSqlSink)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AzureSqlSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

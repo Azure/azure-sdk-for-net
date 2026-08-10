@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Storage
                     yield break;
                 }
                 StorageAccountListResult result = StorageAccountListResult.FromResponse(response);
-                yield return Page<StorageAccountData>.FromValues((IReadOnlyList<StorageAccountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<StorageAccountData>.FromValues((IReadOnlyList<StorageAccountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct AutomationTriggeringRuleOperator : IEquatable<AutomationTriggeringRuleOperator>
     {
         private readonly string _value;
+        /// <summary> Applies for decimal and non-decimal operands. </summary>
+        private const string EqualsValueValue = "Equals";
+        /// <summary> Applies only for decimal operands. </summary>
+        private const string GreaterThanValue = "GreaterThan";
+        /// <summary> Applies only for decimal operands. </summary>
+        private const string GreaterThanOrEqualToValue = "GreaterThanOrEqualTo";
+        /// <summary> Applies only for decimal operands. </summary>
+        private const string LesserThanValue = "LesserThan";
+        /// <summary> Applies only for decimal operands. </summary>
+        private const string LesserThanOrEqualToValue = "LesserThanOrEqualTo";
+        /// <summary> Applies  for decimal and non-decimal operands. </summary>
+        private const string NotEqualsValue = "NotEquals";
+        /// <summary> Applies only for non-decimal operands. </summary>
+        private const string ContainsValue = "Contains";
+        /// <summary> Applies only for non-decimal operands. </summary>
+        private const string StartsWithValue = "StartsWith";
+        /// <summary> Applies only for non-decimal operands. </summary>
+        private const string EndsWithValue = "EndsWith";
 
         /// <summary> Initializes a new instance of <see cref="AutomationTriggeringRuleOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutomationTriggeringRuleOperator(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EqualsValueValue = "Equals";
-        private const string GreaterThanValue = "GreaterThan";
-        private const string GreaterThanOrEqualToValue = "GreaterThanOrEqualTo";
-        private const string LesserThanValue = "LesserThan";
-        private const string LesserThanOrEqualToValue = "LesserThanOrEqualTo";
-        private const string NotEqualsValue = "NotEquals";
-        private const string ContainsValue = "Contains";
-        private const string StartsWithValue = "StartsWith";
-        private const string EndsWithValue = "EndsWith";
+            _value = value;
+        }
 
         /// <summary> Applies for decimal and non-decimal operands. </summary>
         public static AutomationTriggeringRuleOperator EqualsValue { get; } = new AutomationTriggeringRuleOperator(EqualsValueValue);
+
         /// <summary> Applies only for decimal operands. </summary>
         public static AutomationTriggeringRuleOperator GreaterThan { get; } = new AutomationTriggeringRuleOperator(GreaterThanValue);
+
         /// <summary> Applies only for decimal operands. </summary>
         public static AutomationTriggeringRuleOperator GreaterThanOrEqualTo { get; } = new AutomationTriggeringRuleOperator(GreaterThanOrEqualToValue);
+
         /// <summary> Applies only for decimal operands. </summary>
         public static AutomationTriggeringRuleOperator LesserThan { get; } = new AutomationTriggeringRuleOperator(LesserThanValue);
+
         /// <summary> Applies only for decimal operands. </summary>
         public static AutomationTriggeringRuleOperator LesserThanOrEqualTo { get; } = new AutomationTriggeringRuleOperator(LesserThanOrEqualToValue);
+
         /// <summary> Applies  for decimal and non-decimal operands. </summary>
         public static AutomationTriggeringRuleOperator NotEquals { get; } = new AutomationTriggeringRuleOperator(NotEqualsValue);
+
         /// <summary> Applies only for non-decimal operands. </summary>
         public static AutomationTriggeringRuleOperator Contains { get; } = new AutomationTriggeringRuleOperator(ContainsValue);
+
         /// <summary> Applies only for non-decimal operands. </summary>
         public static AutomationTriggeringRuleOperator StartsWith { get; } = new AutomationTriggeringRuleOperator(StartsWithValue);
+
         /// <summary> Applies only for non-decimal operands. </summary>
         public static AutomationTriggeringRuleOperator EndsWith { get; } = new AutomationTriggeringRuleOperator(EndsWithValue);
+
         /// <summary> Determines if two <see cref="AutomationTriggeringRuleOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutomationTriggeringRuleOperator left, AutomationTriggeringRuleOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutomationTriggeringRuleOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutomationTriggeringRuleOperator left, AutomationTriggeringRuleOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutomationTriggeringRuleOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutomationTriggeringRuleOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutomationTriggeringRuleOperator(string value) => new AutomationTriggeringRuleOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutomationTriggeringRuleOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutomationTriggeringRuleOperator?(string value) => value == null ? null : new AutomationTriggeringRuleOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutomationTriggeringRuleOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutomationTriggeringRuleOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct PrestoAuthenticationType : IEquatable<PrestoAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> Anonymous. </summary>
+        private const string AnonymousValue = "Anonymous";
+        /// <summary> LDAP. </summary>
+        private const string LdapValue = "LDAP";
 
         /// <summary> Initializes a new instance of <see cref="PrestoAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PrestoAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AnonymousValue = "Anonymous";
-        private const string LdapValue = "LDAP";
+            _value = value;
+        }
 
         /// <summary> Anonymous. </summary>
         public static PrestoAuthenticationType Anonymous { get; } = new PrestoAuthenticationType(AnonymousValue);
+
         /// <summary> LDAP. </summary>
         public static PrestoAuthenticationType Ldap { get; } = new PrestoAuthenticationType(LdapValue);
+
         /// <summary> Determines if two <see cref="PrestoAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PrestoAuthenticationType left, PrestoAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PrestoAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PrestoAuthenticationType left, PrestoAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PrestoAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PrestoAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PrestoAuthenticationType(string value) => new PrestoAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PrestoAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PrestoAuthenticationType?(string value) => value == null ? null : new PrestoAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PrestoAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PrestoAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

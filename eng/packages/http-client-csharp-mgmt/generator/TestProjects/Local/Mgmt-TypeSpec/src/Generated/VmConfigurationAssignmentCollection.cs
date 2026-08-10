@@ -37,7 +37,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(VmConfigurationAssignmentResource.ResourceType, out string vmConfigurationAssignmentApiVersion);
             _vmConfigurationAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", VmConfigurationAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _vmConfigurationAssignmentsRestClient = new VmConfigurationAssignments(_vmConfigurationAssignmentsClientDiagnostics, Pipeline, Endpoint, vmConfigurationAssignmentApiVersion ?? "2024-05-01");
+            _vmConfigurationAssignmentsRestClient = new VmConfigurationAssignments(_vmConfigurationAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, vmConfigurationAssignmentApiVersion ?? "2024-05-01");
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vmConfigurationAssignmentsRestClient.CreateGetRequest(Id, vmConfigAssignmentName, context);
+                HttpMessage message = _vmConfigurationAssignmentsRestClient.CreateGetRequest(Id.ToString(), vmConfigAssignmentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VmConfigurationAssignmentData> response = Response.FromValue(VmConfigurationAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -122,7 +122,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vmConfigurationAssignmentsRestClient.CreateGetRequest(Id, vmConfigAssignmentName, context);
+                HttpMessage message = _vmConfigurationAssignmentsRestClient.CreateGetRequest(Id.ToString(), vmConfigAssignmentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VmConfigurationAssignmentData> response = Response.FromValue(VmConfigurationAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vmConfigurationAssignmentsRestClient.CreateGetRequest(Id, vmConfigAssignmentName, context);
+                HttpMessage message = _vmConfigurationAssignmentsRestClient.CreateGetRequest(Id.ToString(), vmConfigAssignmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VmConfigurationAssignmentData> response = default;
@@ -228,7 +228,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vmConfigurationAssignmentsRestClient.CreateGetRequest(Id, vmConfigAssignmentName, context);
+                HttpMessage message = _vmConfigurationAssignmentsRestClient.CreateGetRequest(Id.ToString(), vmConfigAssignmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VmConfigurationAssignmentData> response = default;
@@ -285,7 +285,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vmConfigurationAssignmentsRestClient.CreateGetRequest(Id, vmConfigAssignmentName, context);
+                HttpMessage message = _vmConfigurationAssignmentsRestClient.CreateGetRequest(Id.ToString(), vmConfigAssignmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VmConfigurationAssignmentData> response = default;
@@ -346,7 +346,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vmConfigurationAssignmentsRestClient.CreateGetRequest(Id, vmConfigAssignmentName, context);
+                HttpMessage message = _vmConfigurationAssignmentsRestClient.CreateGetRequest(Id.ToString(), vmConfigAssignmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VmConfigurationAssignmentData> response = default;

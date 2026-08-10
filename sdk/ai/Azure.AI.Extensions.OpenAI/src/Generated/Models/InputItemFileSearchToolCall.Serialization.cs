@@ -132,7 +132,7 @@ namespace Azure.AI.Extensions.OpenAI
             InputItemType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
-            OutputItemFileSearchToolCallStatus status = default;
+            InputItemFileSearchToolCallStatus status = default;
             IList<string> queries = default;
             IList<FileSearchToolCallResults> results = default;
             foreach (var prop in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToOutputItemFileSearchToolCallStatus();
+                    status = prop.Value.GetString().ToInputItemFileSearchToolCallStatus();
                     continue;
                 }
                 if (prop.NameEquals("queries"u8))

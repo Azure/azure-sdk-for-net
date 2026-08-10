@@ -9,7 +9,12 @@ using Azure.ResourceManager.HealthBot.Models;
 
 namespace Azure.ResourceManager.HealthBot
 {
-    // Add it back manually to ensure compatibility
+    // Customization rationale:
+    // The previous SDK declared a constructor `HealthBotData(AzureLocation location, HealthBotSku sku)`
+    // with `sku` as a required (non-nullable) parameter. The TypeSpec-generated constructor only
+    // accepts `location` because `sku` is modeled as optional in the spec. Removing the original
+    // 2-arg constructor is a breaking change for callers, so we re-add it here as a partial-class
+    // customization with the same null-check semantics as before.
     public partial class HealthBotData
     {
         /// <summary> Initializes a new instance of <see cref="HealthBotData"/>. </summary>

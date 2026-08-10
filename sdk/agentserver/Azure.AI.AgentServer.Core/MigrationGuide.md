@@ -22,7 +22,7 @@ The new package architecture provides:
 - **Dramatically simpler API** — the old approach required manually constructing SSE events, tracking sequence numbers, and building response objects from raw model types. The new API provides a `ResponseHandler` base class with builder methods that handle all of this automatically.
 - **Type-safe builder pattern** — `ResponseEventStream` and its child builders manage event sequencing, output indices, and content indices. You cannot accidentally emit events in the wrong order.
 - **Built-in convenience methods** — common patterns like "emit a text message" or "stream tokens" are one-liners via `ResponseEventStream` convenience generators.
-- **Zero-config startup** — `ResponsesServer.Run<T>()` or `InvocationsServer.Run<T>()` replaces `AgentServerApplication.RunAsync()` with sensible defaults including OpenTelemetry, health endpoints, and user-agent headers.
+- **Zero-config startup** — `ResponsesServer.Run<T>()` or `InvocationsServer.Run<T>()` replaces `AgentServerApplication.RunAsync()` with sensible defaults including OpenTelemetry, health endpoints, and server version headers.
 - **Multi-protocol support** — a single server can host both Responses and Invocations endpoints via `AgentHostBuilder`.
 
 ## Package changes
@@ -181,7 +181,7 @@ await AgentServerApplication.RunAsync(new ApplicationOptions(
 **After (beta.21):**
 
 ```csharp
-// One-liner startup with built-in OpenTelemetry, health endpoint, and user-agent
+// One-liner startup with built-in OpenTelemetry, health endpoint, and server version
 ResponsesServer.Run<MyAgent>();
 ```
 

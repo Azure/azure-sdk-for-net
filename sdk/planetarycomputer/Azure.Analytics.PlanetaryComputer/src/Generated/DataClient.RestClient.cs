@@ -268,7 +268,7 @@ namespace Azure.Analytics.PlanetaryComputer
             request.Uri = uri;
             request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/x-binary, image/jp2, image/jpeg, image/jpg, image/png, image/tiff; application=geotiff, image/webp");
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
             request.Content = content;
             return message;
         }
@@ -366,7 +366,7 @@ namespace Azure.Analytics.PlanetaryComputer
             request.Uri = uri;
             request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/x-binary, image/jp2, image/jpeg, image/jpg, image/png, image/tiff; application=geotiff, image/webp");
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
             request.Content = content;
             return message;
         }
@@ -617,7 +617,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/x-binary, image/jp2, image/jpeg, image/jpg, image/png, image/tiff; application=geotiff, image/webp");
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
             return message;
         }
 
@@ -725,7 +725,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/x-binary, image/jp2, image/jpeg, image/jpg, image/png, image/tiff; application=geotiff, image/webp");
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
             return message;
         }
 
@@ -887,7 +887,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/x-binary, image/jp2, image/jpeg, image/jpg, image/png, image/tiff; application=geotiff, image/webp");
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
             return message;
         }
 
@@ -987,7 +987,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/x-binary, image/jp2, image/jpeg, image/jpg, image/png, image/tiff; application=geotiff, image/webp");
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
             return message;
         }
 
@@ -1315,7 +1315,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/x-binary, image/jp2, image/jpeg, image/jpg, image/png, image/tiff; application=geotiff, image/webp");
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
             return message;
         }
 
@@ -1894,7 +1894,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/x-binary, image/jp2, image/jpeg, image/jpg, image/png, image/tiff; application=geotiff, image/webp");
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
             return message;
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
-using Service.MultipleServices.ServiceA;
 
 namespace Service.MultipleServices.ServiceB
 {
@@ -22,7 +21,7 @@ namespace Service.MultipleServices.ServiceB
             set => throw null;
         }
 
-        public ServiceMultipleServicesServiceAClientOptions Options
+        public ServiceBClientOptions Options
         {
             get => throw null;
             set => throw null;

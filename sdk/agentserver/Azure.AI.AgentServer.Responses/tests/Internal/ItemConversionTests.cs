@@ -47,7 +47,7 @@ public class ItemConversionTests
         {
             new OutputMessageContentOutputTextContent("Hello from assistant", Array.Empty<Annotation>(), Array.Empty<LogProb>()),
         };
-        var outputMsg = new ItemOutputMessage("om_1", content, OutputItemOutputMessageStatus.Completed);
+        var outputMsg = new ItemOutputMessage("om_1", content, ItemOutputMessageStatus.Completed);
 
         var result = ItemConversion.ToOutputItem(outputMsg, PartitionKeyHint);
 
@@ -71,21 +71,21 @@ public class ItemConversionTests
         Assert.That(converted.CallId, Is.EqualTo("call_func"));
         Assert.That(converted.Name, Is.EqualTo("get_weather"));
         Assert.That(converted.Arguments, Is.EqualTo("{\"city\":\"Seattle\"}"));
-        Assert.That(converted.Status, Is.EqualTo(OutputItemFunctionToolCallStatus.Completed));
+        Assert.That(converted.Status, Is.EqualTo(ItemFunctionToolCallStatus.Completed));
     }
 
     [Test]
-    public void ToOutputItem_FunctionCallOutputItemParam_ReturnsFunctionToolCallOutputResource()
+    public void ToOutputItem_FunctionCallOutputItemParam_ReturnsOutputItemFunctionToolCallOutput()
     {
         var output = BinaryData.FromObjectAsJson("function result");
         var funcOutput = new FunctionCallOutputItemParam("call_123", output);
 
         var result = ItemConversion.ToOutputItem(funcOutput, PartitionKeyHint);
 
-        var outputFunc = XAssert.IsType<FunctionToolCallOutputResource>(result);
+        var outputFunc = XAssert.IsType<OutputItemFunctionToolCallOutput>(result);
         XAssert.StartsWith("fco_", outputFunc.Id);
         Assert.That(outputFunc.CallId, Is.EqualTo("call_123"));
-        Assert.That(outputFunc.Status, Is.EqualTo(FunctionToolCallOutputResourceStatus.Completed));
+        Assert.That(outputFunc.Status, Is.EqualTo(OutputItemFunctionToolCallOutputStatus.Completed));
     }
 
     // ── Custom tool calls ───────────────────────────────────────────────
@@ -122,31 +122,32 @@ public class ItemConversionTests
     [Test]
     public void ToOutputItem_ItemComputerToolCall_ReturnsOutputItemComputerToolCall()
     {
-        var action = new DoubleClickAction(100, 200);
-        var computerCall = new ItemComputerToolCall("comp_id", "call_comp", action,
+        var action = new DoubleClickAction(100, 200, Array.Empty<string>());
+        var computerCall = new ItemComputerToolCall("comp_id", "call_comp",
             Array.Empty<ComputerCallSafetyCheckParam>(),
-            OutputItemComputerToolCallStatus.Completed);
+            ItemComputerToolCallStatus.Completed);
+        computerCall.Action = action;
 
         var result = ItemConversion.ToOutputItem(computerCall, PartitionKeyHint);
 
         var converted = XAssert.IsType<OutputItemComputerToolCall>(result);
         XAssert.StartsWith("cu_", converted.Id);
         Assert.That(converted.CallId, Is.EqualTo("call_comp"));
-        Assert.That(converted.Status, Is.EqualTo(OutputItemComputerToolCallStatus.Completed));
+        Assert.That(converted.Status, Is.EqualTo(ItemComputerToolCallStatus.Completed));
     }
 
     [Test]
-    public void ToOutputItem_ComputerCallOutputItemParam_ReturnsOutputItemComputerToolCallOutputResource()
+    public void ToOutputItem_ComputerCallOutputItemParam_ReturnsOutputItemComputerToolCallOutput()
     {
         var screenshot = new ComputerScreenshotImage();
         var computerOutput = new ComputerCallOutputItemParam("call_456", screenshot);
 
         var result = ItemConversion.ToOutputItem(computerOutput, PartitionKeyHint);
 
-        var outputComputer = XAssert.IsType<OutputItemComputerToolCallOutputResource>(result);
+        var outputComputer = XAssert.IsType<OutputItemComputerToolCallOutput>(result);
         XAssert.StartsWith("cuo_", outputComputer.Id);
         Assert.That(outputComputer.CallId, Is.EqualTo("call_456"));
-        Assert.That(outputComputer.Status, Is.EqualTo(OutputItemComputerToolCallOutputResourceStatus.Completed));
+        Assert.That(outputComputer.Status, Is.EqualTo(OutputItemComputerToolCallOutputStatus.Completed));
     }
 
     // ── File search ─────────────────────────────────────────────────────
@@ -155,14 +156,14 @@ public class ItemConversionTests
     public void ToOutputItem_ItemFileSearchToolCall_ReturnsOutputItemFileSearchToolCall()
     {
         var fileSearch = new ItemFileSearchToolCall("fs_id",
-            OutputItemFileSearchToolCallStatus.Completed,
+            ItemFileSearchToolCallStatus.Completed,
             new List<string> { "query1" });
 
         var result = ItemConversion.ToOutputItem(fileSearch, PartitionKeyHint);
 
         var converted = XAssert.IsType<OutputItemFileSearchToolCall>(result);
         XAssert.StartsWith("fs_", converted.Id);
-        Assert.That(converted.Status, Is.EqualTo(OutputItemFileSearchToolCallStatus.Completed));
+        Assert.That(converted.Status, Is.EqualTo(ItemFileSearchToolCallStatus.Completed));
         XAssert.Single(converted.Queries);
         Assert.That(converted.Queries[0], Is.EqualTo("query1"));
     }
@@ -174,13 +175,13 @@ public class ItemConversionTests
     {
         var action = BinaryData.FromObjectAsJson(new { type = "search", query = "test" });
         var webSearch = new ItemWebSearchToolCall("ws_id",
-            OutputItemWebSearchToolCallStatus.Completed, action);
+            ItemWebSearchToolCallStatus.Completed, action);
 
         var result = ItemConversion.ToOutputItem(webSearch, PartitionKeyHint);
 
         var converted = XAssert.IsType<OutputItemWebSearchToolCall>(result);
         XAssert.StartsWith("ws_", converted.Id);
-        Assert.That(converted.Status, Is.EqualTo(OutputItemWebSearchToolCallStatus.Completed));
+        Assert.That(converted.Status, Is.EqualTo(ItemWebSearchToolCallStatus.Completed));
     }
 
     // ── Image generation ────────────────────────────────────────────────
@@ -189,13 +190,13 @@ public class ItemConversionTests
     public void ToOutputItem_ItemImageGenToolCall_ReturnsOutputItemImageGenToolCall()
     {
         var imageGen = new ItemImageGenToolCall("ig_id",
-            OutputItemImageGenToolCallStatus.Completed, "base64data");
+            ItemImageGenToolCallStatus.Completed, "base64data");
 
         var result = ItemConversion.ToOutputItem(imageGen, PartitionKeyHint);
 
         var converted = XAssert.IsType<OutputItemImageGenToolCall>(result);
         XAssert.StartsWith("ig_", converted.Id);
-        Assert.That(converted.Status, Is.EqualTo(OutputItemImageGenToolCallStatus.Completed));
+        Assert.That(converted.Status, Is.EqualTo(ItemImageGenToolCallStatus.Completed));
         Assert.That(converted.Result, Is.EqualTo("base64data"));
     }
 
@@ -205,7 +206,7 @@ public class ItemConversionTests
     public void ToOutputItem_ItemCodeInterpreterToolCall_ReturnsOutputItemCodeInterpreterToolCall()
     {
         var codeInterpreter = new ItemCodeInterpreterToolCall("ci_id",
-            OutputItemCodeInterpreterToolCallStatus.Completed,
+            ItemCodeInterpreterToolCallStatus.Completed,
             "container_1",
             "print('hello')",
             new List<BinaryData> { BinaryData.FromObjectAsJson("output") });
@@ -214,7 +215,7 @@ public class ItemConversionTests
 
         var converted = XAssert.IsType<OutputItemCodeInterpreterToolCall>(result);
         XAssert.StartsWith("ci_", converted.Id);
-        Assert.That(converted.Status, Is.EqualTo(OutputItemCodeInterpreterToolCallStatus.Completed));
+        Assert.That(converted.Status, Is.EqualTo(ItemCodeInterpreterToolCallStatus.Completed));
         Assert.That(converted.ContainerId, Is.EqualTo("container_1"));
         Assert.That(converted.Code, Is.EqualTo("print('hello')"));
         XAssert.Single(converted.Outputs);
@@ -227,14 +228,14 @@ public class ItemConversionTests
     {
         var action = new LocalShellExecAction(new List<string> { "ls" }, new Dictionary<string, string>());
         var localShell = new ItemLocalShellToolCall("ls_id", "call_ls", action,
-            OutputItemLocalShellToolCallStatus.Completed);
+            ItemLocalShellToolCallStatus.Completed);
 
         var result = ItemConversion.ToOutputItem(localShell, PartitionKeyHint);
 
         var converted = XAssert.IsType<OutputItemLocalShellToolCall>(result);
         XAssert.StartsWith("lsh_", converted.Id);
         Assert.That(converted.CallId, Is.EqualTo("call_ls"));
-        Assert.That(converted.Status, Is.EqualTo(OutputItemLocalShellToolCallStatus.Completed));
+        Assert.That(converted.Status, Is.EqualTo(ItemLocalShellToolCallStatus.Completed));
     }
 
     [Test]
@@ -247,7 +248,7 @@ public class ItemConversionTests
         var converted = XAssert.IsType<OutputItemLocalShellToolCallOutput>(result);
         XAssert.StartsWith("lsho_", converted.Id);
         Assert.That(converted.Output, Is.EqualTo("some output"));
-        Assert.That(converted.Status, Is.EqualTo(OutputItemLocalShellToolCallOutputStatus.Completed));
+        Assert.That(converted.Status, Is.EqualTo(ItemLocalShellToolCallOutputStatus.Completed));
     }
 
     // ── Function shell ──────────────────────────────────────────────────
@@ -477,7 +478,7 @@ public class ItemConversionTests
         XAssert.Single(converted.Summary);
         Assert.That(converted.Summary[0].Text, Is.EqualTo("thinking..."));
         Assert.That(converted.EncryptedContent, Is.EqualTo("encrypted_blob"));
-        Assert.That(converted.Status, Is.EqualTo(OutputItemReasoningItemStatus.Completed));
+        Assert.That(converted.Status, Is.EqualTo(ItemReasoningItemStatus.Completed));
     }
 
     // ── Compaction ──────────────────────────────────────────────────────
@@ -523,7 +524,7 @@ public class ItemConversionTests
         Assert.That(results.Count, Is.EqualTo(2));
         var msg = XAssert.IsType<OutputItemMessage>(results[0]);
         XAssert.StartsWith("msg_", msg.Id);
-        var fco = XAssert.IsType<FunctionToolCallOutputResource>(results[1]);
+        var fco = XAssert.IsType<OutputItemFunctionToolCallOutput>(results[1]);
         XAssert.StartsWith("fco_", fco.Id);
     }
 
@@ -544,7 +545,7 @@ public class ItemConversionTests
         {
             new ItemFunctionToolCall("call_f", "func", "{}"),
             new ItemCustomToolCall("call_c", "custom", "in"),
-            new ItemWebSearchToolCall("ws_id", OutputItemWebSearchToolCallStatus.Completed, BinaryData.FromObjectAsJson("search")),
+            new ItemWebSearchToolCall("ws_id", ItemWebSearchToolCallStatus.Completed, BinaryData.FromObjectAsJson("search")),
             new CompactionSummaryItemParam("enc"),
         };
 

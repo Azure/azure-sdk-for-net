@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             //Validate ActiveDirectory
             Assert.IsNotEmpty(account2.Data.ActiveDirectories);
             Assert.NotNull(account2.Data.ActiveDirectories[0]);
-            account2.Data.ActiveDirectories[0].Should().BeEquivalentTo(account1.Data.ActiveDirectories[0]);
+            account2.Data.ActiveDirectories[0].Should().BeEquivalentTo(account1.Data.ActiveDirectories[0], options => options.IncludingAllDeclaredProperties());
 
             //remove ad
             account1.Data.ActiveDirectories.Clear();

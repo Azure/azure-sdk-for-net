@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
     internal partial class AddParticipantRequestInternal
     {
         /// <summary> Initializes a new instance of <see cref="AddParticipantRequestInternal"/>. </summary>
-        /// <param name="participantToAdd"> The participant to invite. </param>
+        /// <param name="participantToAdd"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="participantToAdd"/> is null. </exception>
         public AddParticipantRequestInternal(CommunicationIdentifierModel participantToAdd)
         {
@@ -23,15 +23,12 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="AddParticipantRequestInternal"/>. </summary>
-        /// <param name="sourceCallerIdNumber">
-        /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
-        /// Required only when inviting a PSTN participant.
-        /// </param>
+        /// <param name="sourceCallerIdNumber"> A phone number. </param>
         /// <param name="sourceDisplayName">
         /// (Optional) The display name of the source that is associated with this invite operation when
         /// adding a PSTN participant or teams user.  Note: Will not update the display name in the roster.
         /// </param>
-        /// <param name="participantToAdd"> The participant to invite. </param>
+        /// <param name="participantToAdd"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <param name="invitationTimeoutInSeconds">
         /// Gets or sets the timeout to wait for the invited participant to pickup.
         /// The maximum value of this is 180 seconds
@@ -41,7 +38,7 @@ namespace Azure.Communication.CallAutomation
         /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </param>
-        /// <param name="customCallingContext"> Used by customer to send custom calling context to targets. </param>
+        /// <param name="customCallingContext"> The custom calling context which will be sent to the target. </param>
         internal AddParticipantRequestInternal(PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel participantToAdd, int? invitationTimeoutInSeconds, string operationContext, string operationCallbackUri, CustomCallingContextInternal customCallingContext)
         {
             SourceCallerIdNumber = sourceCallerIdNumber;
@@ -53,17 +50,14 @@ namespace Azure.Communication.CallAutomation
             CustomCallingContext = customCallingContext;
         }
 
-        /// <summary>
-        /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
-        /// Required only when inviting a PSTN participant.
-        /// </summary>
+        /// <summary> A phone number. </summary>
         public PhoneNumberIdentifierModel SourceCallerIdNumber { get; set; }
         /// <summary>
         /// (Optional) The display name of the source that is associated with this invite operation when
         /// adding a PSTN participant or teams user.  Note: Will not update the display name in the roster.
         /// </summary>
         public string SourceDisplayName { get; set; }
-        /// <summary> The participant to invite. </summary>
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
         public CommunicationIdentifierModel ParticipantToAdd { get; }
         /// <summary>
         /// Gets or sets the timeout to wait for the invited participant to pickup.
@@ -77,7 +71,7 @@ namespace Azure.Communication.CallAutomation
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </summary>
         public string OperationCallbackUri { get; set; }
-        /// <summary> Used by customer to send custom calling context to targets. </summary>
+        /// <summary> The custom calling context which will be sent to the target. </summary>
         public CustomCallingContextInternal CustomCallingContext { get; set; }
     }
 }

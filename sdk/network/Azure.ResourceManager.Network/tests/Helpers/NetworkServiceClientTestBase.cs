@@ -410,7 +410,6 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         {
             var sku = new ExpressRouteCircuitSku
             {
-                Name = "Premium_MeteredData",
                 Tier = "Premium",
                 Family = "MeteredData"
             };
@@ -444,7 +443,6 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         {
             var peering = new ExpressRouteCircuitPeeringData()
             {
-                Name = ExpressRoutePeeringType.MicrosoftPeering.ToString(),
                 PeeringType = ExpressRoutePeeringType.MicrosoftPeering,
                 PeerASN = Convert.ToInt32(ExpressRouteTests.MS_PeerASN),
                 VlanId = Convert.ToInt32(ExpressRouteTests.MS_VlanId),
@@ -485,7 +483,6 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
             var peering = new ExpressRouteCircuitPeeringData()
             {
-                Name = ExpressRoutePeeringType.MicrosoftPeering.ToString(),
                 PeeringType = ExpressRoutePeeringType.MicrosoftPeering,
                 PeerASN = Convert.ToInt32(ExpressRouteTests.MS_PeerASN),
                 VlanId = Convert.ToInt32(ExpressRouteTests.MS_VlanId),
@@ -506,7 +503,6 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         {
             var peering = new ExpressRouteCircuitPeeringData()
             {
-                Name = ExpressRoutePeeringType.MicrosoftPeering.ToString(),
                 PeeringType = ExpressRoutePeeringType.MicrosoftPeering,
                 PeerASN = Convert.ToInt32(ExpressRouteTests.MS_PeerASN),
                 PrimaryPeerAddressPrefix = ExpressRouteTests.MS_PrimaryPrefix,
@@ -557,7 +553,6 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Tags = { { "key", "value" } },
                 Sku = new PublicIPAddressSku()
                 {
-                    Name = PublicIPAddressSkuName.Standard,
                     Tier = PublicIPAddressSkuTier.Regional
                 },
                 PublicIPAllocationMethod = NetworkIPAllocationMethod.Static,
@@ -602,9 +597,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Tags = { { "key", "value" } },
                 IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
-                    {
-                         Name = ipConfigName,
-                         PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                          Subnet = new SubnetData() { Id = new ResourceIdentifier(subnetId) }
                     }
                 }
@@ -638,9 +631,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Tags = { { "key", "value" } },
                 IPConfigurations = {
                     new NetworkInterfaceIPConfigurationData()
-                    {
-                         Name = ipConfigName,
-                         PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                    {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                          Subnet = new SubnetData() { Id = new ResourceIdentifier(subnetId) }
                     }
                 }
@@ -679,7 +670,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 {
                     DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
+                Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24", } }
             };
 
             var virtualNetworkCollection = GetResourceGroup(resourceGroupName).GetVirtualNetworks();
@@ -703,7 +694,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 {
                     DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
+                Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24", } }
             };
 
             await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);

@@ -83,6 +83,11 @@ namespace Azure.Search.Documents.Models
             {
                 throw new FormatException($"The model {nameof(ListIndexesSelectedResult)} does not support writing '{format}' format.");
             }
+            if (options.Format != "W" && Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("@odata.count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("value"u8);
@@ -92,6 +97,11 @@ namespace Azure.Search.Documents.Models
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("@odata.nextLink"u8);
+                writer.WriteStringValue(NextLink);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -135,10 +145,21 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
+            long? count = default;
             IReadOnlyList<SearchIndexResponse> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("@odata.count"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    count = prop.Value.GetInt64();
+                    continue;
+                }
                 if (prop.NameEquals("value"u8))
                 {
                     List<SearchIndexResponse> array = new List<SearchIndexResponse>();
@@ -149,12 +170,17 @@ namespace Azure.Search.Documents.Models
                     value = array;
                     continue;
                 }
+                if (prop.NameEquals("@odata.nextLink"u8))
+                {
+                    nextLink = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ListIndexesSelectedResult(value, additionalBinaryDataProperties);
+            return new ListIndexesSelectedResult(count, value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             TryGetApiVersion(WebPubSubHubResource.ResourceType, out string webPubSubHubApiVersion);
             _webPubSubHubsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSubHubResource.ResourceType.Namespace, Diagnostics);
-            _webPubSubHubsRestClient = new WebPubSubHubs(_webPubSubHubsClientDiagnostics, Pipeline, Endpoint, webPubSubHubApiVersion ?? "2025-08-01-preview");
+            _webPubSubHubsRestClient = new WebPubSubHubs(_webPubSubHubsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webPubSubHubApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.WebPubSub
                 HttpMessage message = _webPubSubHubsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hubName, WebPubSubHubData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WebPubSubArmOperation<WebPubSubHubResource> operation = new WebPubSubArmOperation<WebPubSubHubResource>(
-                    new WebPubSubHubOperationSource(Client),
+                    new WebPubSubHubResourceOperationSource(Client),
                     _webPubSubHubsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.WebPubSub
                 HttpMessage message = _webPubSubHubsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hubName, WebPubSubHubData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WebPubSubArmOperation<WebPubSubHubResource> operation = new WebPubSubArmOperation<WebPubSubHubResource>(
-                    new WebPubSubHubOperationSource(Client),
+                    new WebPubSubHubResourceOperationSource(Client),
                     _webPubSubHubsClientDiagnostics,
                     Pipeline,
                     message.Request,

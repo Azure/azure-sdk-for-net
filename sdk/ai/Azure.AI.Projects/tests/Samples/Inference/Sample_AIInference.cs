@@ -34,7 +34,7 @@ public class Sample_AIInference : SamplesBase
         AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
 
         var credential = new DefaultAzureCredential();
-        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, "https://ai.azure.com/.default");
         clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
 
         ChatCompletionsClient chatClient = new ChatCompletionsClient(new Uri(inferenceEndpoint), credential, clientOptions);
@@ -70,7 +70,7 @@ public class Sample_AIInference : SamplesBase
         AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
 
         var credential = new DefaultAzureCredential();
-        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, "https://ai.azure.com/.default");
         clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
 
         ChatCompletionsClient chatClient = new ChatCompletionsClient(new Uri(inferenceEndpoint), credential, clientOptions);
@@ -106,7 +106,7 @@ public class Sample_AIInference : SamplesBase
         AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
 
         var credential = new DefaultAzureCredential();
-        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, "https://ai.azure.com/.default");
         clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
 
         EmbeddingsClient embeddingsClient = new EmbeddingsClient(new Uri(inferenceEndpoint), credential, clientOptions);
@@ -143,7 +143,7 @@ public class Sample_AIInference : SamplesBase
         AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
 
         var credential = new DefaultAzureCredential();
-        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, "https://ai.azure.com/.default");
         clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
 
         EmbeddingsClient embeddingsClient = new EmbeddingsClient(new Uri(inferenceEndpoint), credential, clientOptions);
@@ -180,7 +180,7 @@ public class Sample_AIInference : SamplesBase
         AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
 
         var credential = new DefaultAzureCredential();
-        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, "https://ai.azure.com/.default");
         clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
 
         ImageEmbeddingsClient imageEmbeddingsClient = new ImageEmbeddingsClient(new Uri(inferenceEndpoint), credential, clientOptions);
@@ -237,7 +237,7 @@ public class Sample_AIInference : SamplesBase
         AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
 
         var credential = new DefaultAzureCredential();
-        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, "https://ai.azure.com/.default");
         clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
 
         ImageEmbeddingsClient imageEmbeddingsClient = new ImageEmbeddingsClient(new Uri(inferenceEndpoint), credential, clientOptions);

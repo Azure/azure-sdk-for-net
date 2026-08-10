@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Define a match condition. </summary>
     public partial class WebApplicationRuleMatchCondition
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebApplicationRuleMatchCondition"/>. </summary>
         /// <param name="matchVariable"> Request variable to compare with. </param>
@@ -68,8 +40,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="isNegateCondition"> Describes if the result of this condition should be negated. </param>
         /// <param name="matchValue"> List of possible match values. </param>
         /// <param name="transforms"> List of transforms. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebApplicationRuleMatchCondition(WebApplicationRuleMatchVariable matchVariable, string selector, WebApplicationRuleMatchOperator @operator, bool? isNegateCondition, IList<string> matchValue, IList<WebApplicationRuleMatchTransformType> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WebApplicationRuleMatchCondition(WebApplicationRuleMatchVariable matchVariable, string selector, WebApplicationRuleMatchOperator @operator, bool? isNegateCondition, IList<string> matchValue, IList<WebApplicationRuleMatchTransformType> transforms, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MatchVariable = matchVariable;
             Selector = selector;
@@ -77,29 +49,29 @@ namespace Azure.ResourceManager.FrontDoor.Models
             IsNegateCondition = isNegateCondition;
             MatchValue = matchValue;
             Transforms = transforms;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WebApplicationRuleMatchCondition"/> for deserialization. </summary>
-        internal WebApplicationRuleMatchCondition()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Request variable to compare with. </summary>
         [WirePath("matchVariable")]
         public WebApplicationRuleMatchVariable MatchVariable { get; set; }
+
         /// <summary> Match against a specific key from the QueryString, PostArgs, RequestHeader or Cookies variables. Default is null. </summary>
         [WirePath("selector")]
         public string Selector { get; set; }
+
         /// <summary> Comparison type to use for matching with the variable value. </summary>
         [WirePath("operator")]
         public WebApplicationRuleMatchOperator Operator { get; set; }
+
         /// <summary> Describes if the result of this condition should be negated. </summary>
         [WirePath("negateCondition")]
         public bool? IsNegateCondition { get; set; }
+
         /// <summary> List of possible match values. </summary>
         [WirePath("matchValue")]
         public IList<string> MatchValue { get; }
+
         /// <summary> List of transforms. </summary>
         [WirePath("transforms")]
         public IList<WebApplicationRuleMatchTransformType> Transforms { get; }

@@ -11,21 +11,35 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class WorkflowHealthStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this WorkflowHealthState value) => value switch
         {
-            WorkflowHealthState.Unknown => "Unknown",
             WorkflowHealthState.NotSpecified => "NotSpecified",
             WorkflowHealthState.Healthy => "Healthy",
             WorkflowHealthState.Unhealthy => "Unhealthy",
+            WorkflowHealthState.Unknown => "Unknown",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WorkflowHealthState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static WorkflowHealthState ToWorkflowHealthState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown")) return WorkflowHealthState.Unknown;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSpecified")) return WorkflowHealthState.NotSpecified;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Healthy")) return WorkflowHealthState.Healthy;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unhealthy")) return WorkflowHealthState.Unhealthy;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSpecified"))
+            {
+                return WorkflowHealthState.NotSpecified;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Healthy"))
+            {
+                return WorkflowHealthState.Healthy;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unhealthy"))
+            {
+                return WorkflowHealthState.Unhealthy;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown"))
+            {
+                return WorkflowHealthState.Unknown;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WorkflowHealthState value.");
         }
     }

@@ -10,14 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class MasterTargetServer : IUtf8JsonSerializable, IJsonModel<MasterTargetServer>
+    /// <summary> Details of a Master Target Server. </summary>
+    public partial class MasterTargetServer : IJsonModel<MasterTargetServer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MasterTargetServer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MasterTargetServer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MasterTargetServer>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMasterTargetServer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MasterTargetServer)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MasterTargetServer>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MasterTargetServer)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MasterTargetServer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MasterTargetServer IPersistableModel<MasterTargetServer>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MasterTargetServer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MasterTargetServer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +70,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MasterTargetServer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MasterTargetServer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MasterTargetServer)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -74,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("retentionVolumes"u8);
                 writer.WriteStartArray();
-                foreach (var item in RetentionVolumes)
+                foreach (SiteRecoveryRetentionVolume item in RetentionVolumes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -84,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("dataStores"u8);
                 writer.WriteStartArray();
-                foreach (var item in DataStores)
+                foreach (SiteRecoveryDataStore item in DataStores)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -94,7 +134,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();
-                foreach (var item in ValidationErrors)
+                foreach (SiteRecoveryHealthError item in ValidationErrors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -104,7 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
-                foreach (var item in HealthErrors)
+                foreach (SiteRecoveryHealthError item in HealthErrors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -145,15 +185,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("marsAgentVersionDetails"u8);
                 writer.WriteObjectValue(MarsAgentVersionDetails, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -162,22 +202,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        MasterTargetServer IJsonModel<MasterTargetServer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MasterTargetServer IJsonModel<MasterTargetServer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MasterTargetServer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MasterTargetServer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MasterTargetServer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MasterTargetServer)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMasterTargetServer(document.RootElement, options);
         }
 
-        internal static MasterTargetServer DeserializeMasterTargetServer(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MasterTargetServer DeserializeMasterTargetServer(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -187,7 +232,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string name = default;
             string osType = default;
             string agentVersion = default;
-            DateTimeOffset? lastHeartbeat = default;
+            DateTimeOffset? lastHeartbeatReceivedOn = default;
             string versionStatus = default;
             IReadOnlyList<SiteRecoveryRetentionVolume> retentionVolumes = default;
             IReadOnlyList<SiteRecoveryDataStore> dataStores = default;
@@ -200,177 +245,175 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DateTimeOffset? marsAgentExpireOn = default;
             SiteRecoveryVersionDetails agentVersionDetails = default;
             SiteRecoveryVersionDetails marsAgentVersionDetails = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipAddress"u8))
+                if (prop.NameEquals("ipAddress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ipAddress = IPAddress.Parse(property.Value.GetString());
+                    ipAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osType"u8))
+                if (prop.NameEquals("osType"u8))
                 {
-                    osType = property.Value.GetString();
+                    osType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentVersion"u8))
+                if (prop.NameEquals("agentVersion"u8))
                 {
-                    agentVersion = property.Value.GetString();
+                    agentVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastHeartbeat"u8))
+                if (prop.NameEquals("lastHeartbeat"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastHeartbeat = property.Value.GetDateTimeOffset("O");
+                    lastHeartbeatReceivedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("versionStatus"u8))
+                if (prop.NameEquals("versionStatus"u8))
                 {
-                    versionStatus = property.Value.GetString();
+                    versionStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("retentionVolumes"u8))
+                if (prop.NameEquals("retentionVolumes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SiteRecoveryRetentionVolume> array = new List<SiteRecoveryRetentionVolume>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SiteRecoveryRetentionVolume.DeserializeSiteRecoveryRetentionVolume(item, options));
                     }
                     retentionVolumes = array;
                     continue;
                 }
-                if (property.NameEquals("dataStores"u8))
+                if (prop.NameEquals("dataStores"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SiteRecoveryDataStore> array = new List<SiteRecoveryDataStore>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SiteRecoveryDataStore.DeserializeSiteRecoveryDataStore(item, options));
                     }
                     dataStores = array;
                     continue;
                 }
-                if (property.NameEquals("validationErrors"u8))
+                if (prop.NameEquals("validationErrors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     validationErrors = array;
                     continue;
                 }
-                if (property.NameEquals("healthErrors"u8))
+                if (prop.NameEquals("healthErrors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     healthErrors = array;
                     continue;
                 }
-                if (property.NameEquals("diskCount"u8))
+                if (prop.NameEquals("diskCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    diskCount = property.Value.GetInt32();
+                    diskCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("osVersion"u8))
+                if (prop.NameEquals("osVersion"u8))
                 {
-                    osVersion = property.Value.GetString();
+                    osVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentExpiryDate"u8))
+                if (prop.NameEquals("agentExpiryDate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    agentExpireOn = property.Value.GetDateTimeOffset("O");
+                    agentExpireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("marsAgentVersion"u8))
+                if (prop.NameEquals("marsAgentVersion"u8))
                 {
-                    marsAgentVersion = property.Value.GetString();
+                    marsAgentVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("marsAgentExpiryDate"u8))
+                if (prop.NameEquals("marsAgentExpiryDate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    marsAgentExpireOn = property.Value.GetDateTimeOffset("O");
+                    marsAgentExpireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("agentVersionDetails"u8))
+                if (prop.NameEquals("agentVersionDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    agentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value, options);
+                    agentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("marsAgentVersionDetails"u8))
+                if (prop.NameEquals("marsAgentVersionDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    marsAgentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value, options);
+                    marsAgentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MasterTargetServer(
                 id,
                 ipAddress,
                 name,
                 osType,
                 agentVersion,
-                lastHeartbeat,
+                lastHeartbeatReceivedOn,
                 versionStatus,
                 retentionVolumes ?? new ChangeTrackingList<SiteRecoveryRetentionVolume>(),
                 dataStores ?? new ChangeTrackingList<SiteRecoveryDataStore>(),
@@ -383,38 +426,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 marsAgentExpireOn,
                 agentVersionDetails,
                 marsAgentVersionDetails,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<MasterTargetServer>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MasterTargetServer>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MasterTargetServer)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MasterTargetServer IPersistableModel<MasterTargetServer>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MasterTargetServer>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMasterTargetServer(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MasterTargetServer)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MasterTargetServer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

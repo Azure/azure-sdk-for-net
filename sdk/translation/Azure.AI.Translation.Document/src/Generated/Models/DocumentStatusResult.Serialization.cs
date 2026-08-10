@@ -117,6 +117,21 @@ namespace Azure.AI.Translation.Document
                 writer.WritePropertyName("totalImageScansFailed"u8);
                 writer.WriteNumberValue(TotalImageScansFailed.Value);
             }
+            if (Optional.IsDefined(ImagesCharged))
+            {
+                writer.WritePropertyName("imageCharged"u8);
+                writer.WriteNumberValue(ImagesCharged.Value);
+            }
+            if (Optional.IsDefined(ImageCharactersDetected))
+            {
+                writer.WritePropertyName("imageCharacterDetected"u8);
+                writer.WriteNumberValue(ImageCharactersDetected.Value);
+            }
+            if (Optional.IsDefined(DeploymentName))
+            {
+                writer.WritePropertyName("deploymentName"u8);
+                writer.WriteStringValue(DeploymentName);
+            }
             if (Optional.IsDefined(_error))
             {
                 writer.WritePropertyName("error"u8);
@@ -175,6 +190,9 @@ namespace Azure.AI.Translation.Document
             long charactersCharged = default;
             int? totalImageScansSucceeded = default;
             int? totalImageScansFailed = default;
+            int? imagesCharged = default;
+            int? imageCharactersDetected = default;
+            string deploymentName = default;
             JsonElement error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -250,6 +268,29 @@ namespace Azure.AI.Translation.Document
                     totalImageScansFailed = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("imageCharged"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    imagesCharged = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("imageCharacterDetected"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    imageCharactersDetected = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("deploymentName"u8))
+                {
+                    deploymentName = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("error"u8))
                 {
                     error = prop.Value.Clone();
@@ -272,6 +313,9 @@ namespace Azure.AI.Translation.Document
                 charactersCharged,
                 totalImageScansSucceeded,
                 totalImageScansFailed,
+                imagesCharged,
+                imageCharactersDetected,
+                deploymentName,
                 error,
                 additionalBinaryDataProperties);
         }

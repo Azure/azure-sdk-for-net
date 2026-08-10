@@ -30,6 +30,10 @@ namespace Azure.Storage.Internal.Avro
             bool async,
             CancellationToken cancellationToken)
         {
+            if (length < 0 || length > int.MaxValue)
+            {
+                throw Errors.InvalidAvroFieldSize(length, int.MaxValue);
+            }
             byte[] data = new byte[length];
             int start = 0;
             while (length > 0)
@@ -150,10 +154,14 @@ namespace Azure.Storage.Internal.Avro
             bool async,
             CancellationToken cancellationToken)
         {
-            // Note that byte array length is actually defined as a long in the Avro spec.
-            // This is fine for now, but may need to be changed in the future.
-            int size = await ReadIntAsync(stream, async, cancellationToken).ConfigureAwait(false);
-            return await ReadFixedBytesAsync(stream, size, async, cancellationToken).ConfigureAwait(false);
+            // The Avro spec defines byte array length as a long.
+            // Read as long and validate before casting to int.
+            long size = await ReadLongAsync(stream, async, cancellationToken).ConfigureAwait(false);
+            if (size < 0 || size > int.MaxValue)
+            {
+                throw Errors.InvalidAvroFieldSize(size, int.MaxValue);
+            }
+            return await ReadFixedBytesAsync(stream, (int)size, async, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

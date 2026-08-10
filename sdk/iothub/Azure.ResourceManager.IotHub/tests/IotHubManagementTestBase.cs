@@ -13,6 +13,8 @@ namespace Azure.ResourceManager.IotHub.Tests
 {
     public class IotHubManagementTestBase : ManagementRecordedTestBase<IotHubManagementTestEnvironment>
     {
+        private const string RecordedApiVersion = "2021-07-02";
+
         protected ArmClient Client { get; private set; }
 
         protected IotHubManagementTestBase(bool isAsync, RecordedTestMode mode)
@@ -28,7 +30,18 @@ namespace Azure.ResourceManager.IotHub.Tests
         [SetUp]
         public void CreateCommonClient()
         {
-            Client = GetArmClient();
+            Client = GetArmClient(CreateRecordedClientOptions());
+        }
+
+        private static ArmClientOptions CreateRecordedClientOptions()
+        {
+            ArmClientOptions options = new ArmClientOptions();
+            options.SetApiVersion(IotHubDescriptionResource.ResourceType, RecordedApiVersion);
+            options.SetApiVersion(IotHubCertificateDescriptionResource.ResourceType, RecordedApiVersion);
+            options.SetApiVersion(EventHubConsumerGroupInfoResource.ResourceType, RecordedApiVersion);
+            options.SetApiVersion(IotHubPrivateEndpointConnectionResource.ResourceType, RecordedApiVersion);
+            options.SetApiVersion(IotHubPrivateEndpointGroupInformationResource.ResourceType, RecordedApiVersion);
+            return options;
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)

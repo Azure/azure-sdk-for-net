@@ -31,16 +31,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"></param>
-        internal ZooData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ZooProperties properties, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ZooData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ZooProperties properties, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ExtendedLocation = extendedLocation;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
@@ -53,7 +53,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> something. </summary>
         [WirePath("properties.something")]
-        public string ZooSomething
+        public string Something
         {
             get
             {
@@ -66,6 +66,96 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Properties = new ZooProperties();
                 }
                 Properties.Something = value;
+            }
+        }
+
+        /// <summary>
+        /// Required value-type property. Used to validate that required value types
+        ///       flattened from an optional ``properties?:`` parent (default-optional
+        ///       `properties?`) surface as Nullable&lt;T&gt; on the public property while
+        ///       remaining non-nullable T on the inner model and the model factory body.
+        /// </summary>
+        [WirePath("properties.requiredInt")]
+        public int? RequiredInt
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequiredInt;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new ZooProperties();
+                    }
+                    Properties.RequiredInt = value.Value;
+                }
+            }
+        }
+
+        /// <summary> Required fixed (closed) enum. </summary>
+        [WirePath("properties.requiredFixedEnum")]
+        public ZooFixedMode? RequiredFixedEnum
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequiredFixedEnum;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new ZooProperties();
+                    }
+                    Properties.RequiredFixedEnum = value.Value;
+                }
+            }
+        }
+
+        /// <summary> Required extensible enum (union). </summary>
+        [WirePath("properties.requiredExtensibleEnum")]
+        public ZooProvisioningState? RequiredExtensibleEnum
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequiredExtensibleEnum;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new ZooProperties();
+                    }
+                    Properties.RequiredExtensibleEnum = value.Value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Required reference-type property. Used to validate that required reference
+        ///       types flattened from an optional ``properties?:`` parent surface as nullable
+        ///       on the public property under the unified wrapper-optionality rule.
+        /// </summary>
+        [WirePath("properties.requiredString")]
+        public string RequiredString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequiredString;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ZooProperties();
+                }
+                Properties.RequiredString = value;
             }
         }
     }

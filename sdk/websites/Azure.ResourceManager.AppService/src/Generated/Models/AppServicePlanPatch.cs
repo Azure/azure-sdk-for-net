@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -15,37 +16,8 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> ARM resource for a app service plan. </summary>
     public partial class AppServicePlanPatch : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppServicePlanPatch"/>. </summary>
         public AppServicePlanPatch()
@@ -53,147 +25,388 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServicePlanPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="workerTierName"> Target worker tier assigned to the App Service plan. </param>
-        /// <param name="status"> App Service plan status. </param>
-        /// <param name="subscription"> App Service plan subscription. </param>
-        /// <param name="hostingEnvironmentProfile"> Specification for the App Service Environment to use for the App Service plan. </param>
-        /// <param name="maximumNumberOfWorkers"> Maximum number of instances that can be assigned to this App Service plan. </param>
-        /// <param name="numberOfWorkers"> The number of instances that are assigned to this App Service plan. </param>
-        /// <param name="geoRegion"> Geographical location for the App Service plan. </param>
-        /// <param name="isPerSiteScaling">
-        /// If &lt;code&gt;true&lt;/code&gt;, apps assigned to this App Service plan can be scaled independently.
-        /// If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App Service plan will scale to all instances of the plan.
-        /// </param>
-        /// <param name="isElasticScaleEnabled"> ServerFarm supports ElasticScale. Apps in this plan will scale as if the ServerFarm was ElasticPremium sku. </param>
-        /// <param name="maximumElasticWorkerCount"> Maximum number of total workers allowed for this ElasticScaleEnabled App Service Plan. </param>
-        /// <param name="numberOfSites"> Number of apps assigned to this App Service plan. </param>
-        /// <param name="isSpot"> If &lt;code&gt;true&lt;/code&gt;, this App Service Plan owns spot instances. </param>
-        /// <param name="spotExpirationOn"> The time when the server farm expires. Valid only if it is a spot server farm. </param>
-        /// <param name="freeOfferExpirationOn"> The time when the server farm free offer expires. </param>
-        /// <param name="resourceGroup"> Resource group of the App Service plan. </param>
-        /// <param name="isReserved"> If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
-        /// <param name="isXenon"> Obsolete: If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
-        /// <param name="isHyperV"> If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
-        /// <param name="targetWorkerCount"> Scaling worker count. </param>
-        /// <param name="targetWorkerSizeId"> Scaling worker size ID. </param>
-        /// <param name="provisioningState"> Provisioning state of the App Service Plan. </param>
-        /// <param name="kubeEnvironmentProfile"> Specification for the Kubernetes Environment to use for the App Service plan. </param>
-        /// <param name="isZoneRedundant">
-        /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will perform availability zone balancing.
-        /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
-        /// </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> AppServicePlanPatchResource resource specific properties. </param>
+        /// <param name="identity"> Managed service identity. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServicePlanPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string workerTierName, AppServicePlanStatus? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, int? numberOfWorkers, string geoRegion, bool? isPerSiteScaling, bool? isElasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpirationOn, DateTimeOffset? freeOfferExpirationOn, string resourceGroup, bool? isReserved, bool? isXenon, bool? isHyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? isZoneRedundant, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppServicePlanPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppServicePlanPatchResourceProperties properties, ManagedServiceIdentity identity, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            WorkerTierName = workerTierName;
-            Status = status;
-            Subscription = subscription;
-            HostingEnvironmentProfile = hostingEnvironmentProfile;
-            MaximumNumberOfWorkers = maximumNumberOfWorkers;
-            NumberOfWorkers = numberOfWorkers;
-            GeoRegion = geoRegion;
-            IsPerSiteScaling = isPerSiteScaling;
-            IsElasticScaleEnabled = isElasticScaleEnabled;
-            MaximumElasticWorkerCount = maximumElasticWorkerCount;
-            NumberOfSites = numberOfSites;
-            IsSpot = isSpot;
-            SpotExpirationOn = spotExpirationOn;
-            FreeOfferExpirationOn = freeOfferExpirationOn;
-            ResourceGroup = resourceGroup;
-            IsReserved = isReserved;
-            IsXenon = isXenon;
-            IsHyperV = isHyperV;
-            TargetWorkerCount = targetWorkerCount;
-            TargetWorkerSizeId = targetWorkerSizeId;
-            ProvisioningState = provisioningState;
-            KubeEnvironmentProfile = kubeEnvironmentProfile;
-            IsZoneRedundant = isZoneRedundant;
+            Properties = properties;
+            Identity = identity;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> AppServicePlanPatchResource resource specific properties. </summary>
+        [WirePath("properties")]
+        internal AppServicePlanPatchResourceProperties Properties { get; set; }
+
+        /// <summary> Managed service identity. </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
 
         /// <summary> Target worker tier assigned to the App Service plan. </summary>
         [WirePath("properties.workerTierName")]
-        public string WorkerTierName { get; set; }
+        public string WorkerTierName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WorkerTierName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServicePlanPatchResourceProperties();
+                }
+                Properties.WorkerTierName = value;
+            }
+        }
+
         /// <summary> App Service plan status. </summary>
         [WirePath("properties.status")]
-        public AppServicePlanStatus? Status { get; }
+        public AppServicePlanStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
         /// <summary> App Service plan subscription. </summary>
         [WirePath("properties.subscription")]
-        public string Subscription { get; }
+        public string Subscription
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Subscription;
+            }
+        }
+
         /// <summary> Specification for the App Service Environment to use for the App Service plan. </summary>
         [WirePath("properties.hostingEnvironmentProfile")]
-        public HostingEnvironmentProfile HostingEnvironmentProfile { get; set; }
+        public HostingEnvironmentProfile HostingEnvironmentProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostingEnvironmentProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServicePlanPatchResourceProperties();
+                }
+                Properties.HostingEnvironmentProfile = value;
+            }
+        }
+
         /// <summary> Maximum number of instances that can be assigned to this App Service plan. </summary>
         [WirePath("properties.maximumNumberOfWorkers")]
-        public int? MaximumNumberOfWorkers { get; }
+        public int? MaximumNumberOfWorkers
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaximumNumberOfWorkers;
+            }
+        }
+
         /// <summary> The number of instances that are assigned to this App Service plan. </summary>
         [WirePath("properties.numberOfWorkers")]
-        public int? NumberOfWorkers { get; }
+        public int? NumberOfWorkers
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NumberOfWorkers;
+            }
+        }
+
         /// <summary> Geographical location for the App Service plan. </summary>
         [WirePath("properties.geoRegion")]
-        public string GeoRegion { get; }
+        public string GeoRegion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GeoRegion;
+            }
+        }
+
         /// <summary>
         /// If &lt;code&gt;true&lt;/code&gt;, apps assigned to this App Service plan can be scaled independently.
         /// If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App Service plan will scale to all instances of the plan.
         /// </summary>
         [WirePath("properties.perSiteScaling")]
-        public bool? IsPerSiteScaling { get; set; }
+        public bool? IsPerSiteScaling
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsPerSiteScaling;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServicePlanPatchResourceProperties();
+                }
+                Properties.IsPerSiteScaling = value;
+            }
+        }
+
         /// <summary> ServerFarm supports ElasticScale. Apps in this plan will scale as if the ServerFarm was ElasticPremium sku. </summary>
         [WirePath("properties.elasticScaleEnabled")]
-        public bool? IsElasticScaleEnabled { get; set; }
+        public bool? IsElasticScaleEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsElasticScaleEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServicePlanPatchResourceProperties();
+                }
+                Properties.IsElasticScaleEnabled = value;
+            }
+        }
+
         /// <summary> Maximum number of total workers allowed for this ElasticScaleEnabled App Service Plan. </summary>
         [WirePath("properties.maximumElasticWorkerCount")]
-        public int? MaximumElasticWorkerCount { get; set; }
+        public int? MaximumElasticWorkerCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaximumElasticWorkerCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServicePlanPatchResourceProperties();
+                }
+                Properties.MaximumElasticWorkerCount = value;
+            }
+        }
+
         /// <summary> Number of apps assigned to this App Service plan. </summary>
         [WirePath("properties.numberOfSites")]
-        public int? NumberOfSites { get; }
+        public int? NumberOfSites
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NumberOfSites;
+            }
+        }
+
         /// <summary> If &lt;code&gt;true&lt;/code&gt;, this App Service Plan owns spot instances. </summary>
         [WirePath("properties.isSpot")]
-        public bool? IsSpot { get; set; }
+        public bool? IsSpot
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsSpot;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServicePlanPatchResourceProperties();
+                }
+                Properties.IsSpot = value;
+            }
+        }
+
         /// <summary> The time when the server farm expires. Valid only if it is a spot server farm. </summary>
         [WirePath("properties.spotExpirationTime")]
-        public DateTimeOffset? SpotExpirationOn { get; set; }
+        public DateTimeOffset? SpotExpirationOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SpotExpirationOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServicePlanPatchResourceProperties();
+                }
+                Properties.SpotExpirationOn = value;
+            }
+        }
+
         /// <summary> The time when the server farm free offer expires. </summary>
         [WirePath("properties.freeOfferExpirationTime")]
-        public DateTimeOffset? FreeOfferExpirationOn { get; set; }
+        public DateTimeOffset? FreeOfferExpirationOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FreeOfferExpirationOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServicePlanPatchResourceProperties();
+                }
+                Properties.FreeOfferExpirationOn = value;
+            }
+        }
+
         /// <summary> Resource group of the App Service plan. </summary>
         [WirePath("properties.resourceGroup")]
-        public string ResourceGroup { get; }
+        public string ResourceGroup
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGroup;
+            }
+        }
+
         /// <summary> If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
         [WirePath("properties.reserved")]
-        public bool? IsReserved { get; set; }
+        public bool? IsReserved
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsReserved;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServicePlanPatchResourceProperties();
+                }
+                Properties.IsReserved = value;
+            }
+        }
+
         /// <summary> Obsolete: If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
         [WirePath("properties.isXenon")]
-        public bool? IsXenon { get; set; }
+        public bool? IsXenon
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsXenon;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServicePlanPatchResourceProperties();
+                }
+                Properties.IsXenon = value;
+            }
+        }
+
         /// <summary> If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
         [WirePath("properties.hyperV")]
-        public bool? IsHyperV { get; set; }
+        public bool? IsHyperV
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsHyperV;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServicePlanPatchResourceProperties();
+                }
+                Properties.IsHyperV = value;
+            }
+        }
+
         /// <summary> Scaling worker count. </summary>
         [WirePath("properties.targetWorkerCount")]
-        public int? TargetWorkerCount { get; set; }
+        public int? TargetWorkerCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetWorkerCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServicePlanPatchResourceProperties();
+                }
+                Properties.TargetWorkerCount = value;
+            }
+        }
+
         /// <summary> Scaling worker size ID. </summary>
         [WirePath("properties.targetWorkerSizeId")]
-        public int? TargetWorkerSizeId { get; set; }
+        public int? TargetWorkerSizeId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetWorkerSizeId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServicePlanPatchResourceProperties();
+                }
+                Properties.TargetWorkerSizeId = value;
+            }
+        }
+
         /// <summary> Provisioning state of the App Service Plan. </summary>
         [WirePath("properties.provisioningState")]
-        public ProvisioningState? ProvisioningState { get; }
+        public ProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Specification for the Kubernetes Environment to use for the App Service plan. </summary>
         [WirePath("properties.kubeEnvironmentProfile")]
-        public KubeEnvironmentProfile KubeEnvironmentProfile { get; set; }
+        public KubeEnvironmentProfile KubeEnvironmentProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KubeEnvironmentProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServicePlanPatchResourceProperties();
+                }
+                Properties.KubeEnvironmentProfile = value;
+            }
+        }
+
         /// <summary>
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will perform availability zone balancing.
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </summary>
         [WirePath("properties.zoneRedundant")]
-        public bool? IsZoneRedundant { get; set; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
+        public bool? IsZoneRedundant
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsZoneRedundant;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServicePlanPatchResourceProperties();
+                }
+                Properties.IsZoneRedundant = value;
+            }
+        }
     }
 }

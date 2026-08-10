@@ -181,11 +181,6 @@ namespace Azure.Compute.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AuthenticationTokenSettings))
-            {
-                writer.WritePropertyName("authenticationTokenSettings"u8);
-                writer.WriteObjectValue(AuthenticationTokenSettings, options);
-            }
             if (Optional.IsDefined(AllowLowPriorityNode))
             {
                 writer.WritePropertyName("allowLowPriorityNode"u8);
@@ -246,7 +241,6 @@ namespace Azure.Compute.Batch
             UserIdentity userIdentity = default;
             bool? runExclusive = default;
             IList<BatchApplicationPackageReference> applicationPackageReferences = default;
-            AuthenticationTokenSettings authenticationTokenSettings = default;
             bool? allowLowPriorityNode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -376,15 +370,6 @@ namespace Azure.Compute.Batch
                     applicationPackageReferences = array;
                     continue;
                 }
-                if (prop.NameEquals("authenticationTokenSettings"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    authenticationTokenSettings = AuthenticationTokenSettings.DeserializeAuthenticationTokenSettings(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("allowLowPriorityNode"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -413,7 +398,6 @@ namespace Azure.Compute.Batch
                 userIdentity,
                 runExclusive,
                 applicationPackageReferences ?? new ChangeTrackingList<BatchApplicationPackageReference>(),
-                authenticationTokenSettings,
                 allowLowPriorityNode,
                 additionalBinaryDataProperties);
         }

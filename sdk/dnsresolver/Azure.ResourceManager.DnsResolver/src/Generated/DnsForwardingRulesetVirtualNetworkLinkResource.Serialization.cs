@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DnsResolver
 {
+    /// <summary></summary>
     public partial class DnsForwardingRulesetVirtualNetworkLinkResource : IJsonModel<DnsForwardingRulesetVirtualNetworkLinkData>
     {
-        private static DnsForwardingRulesetVirtualNetworkLinkData s_dataDeserializationInstance;
-        private static DnsForwardingRulesetVirtualNetworkLinkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DnsForwardingRulesetVirtualNetworkLinkData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DnsForwardingRulesetVirtualNetworkLinkData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DnsForwardingRulesetVirtualNetworkLinkData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DnsForwardingRulesetVirtualNetworkLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DnsForwardingRulesetVirtualNetworkLinkData>)Data).Write(writer, options);
 
-        DnsForwardingRulesetVirtualNetworkLinkData IJsonModel<DnsForwardingRulesetVirtualNetworkLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DnsForwardingRulesetVirtualNetworkLinkData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DnsForwardingRulesetVirtualNetworkLinkData IJsonModel<DnsForwardingRulesetVirtualNetworkLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DnsForwardingRulesetVirtualNetworkLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DnsForwardingRulesetVirtualNetworkLinkData>(Data, options, AzureResourceManagerDnsResolverContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DnsForwardingRulesetVirtualNetworkLinkData IPersistableModel<DnsForwardingRulesetVirtualNetworkLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnsForwardingRulesetVirtualNetworkLinkData>(data, options, AzureResourceManagerDnsResolverContext.Default);
 
-        string IPersistableModel<DnsForwardingRulesetVirtualNetworkLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DnsForwardingRulesetVirtualNetworkLinkData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DnsForwardingRulesetVirtualNetworkLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

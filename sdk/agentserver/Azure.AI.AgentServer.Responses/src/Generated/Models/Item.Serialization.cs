@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary>
     /// Content item used to generate a response.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MemorySearchToolCallItemParam"/>, <see cref="ComputerCallOutputItemParam"/>, <see cref="FunctionCallOutputItemParam"/>, <see cref="CompactionSummaryItemParam"/>, <see cref="FunctionShellCallItemParam"/>, <see cref="FunctionShellCallOutputItemParam"/>, <see cref="ApplyPatchToolCallItemParam"/>, <see cref="ApplyPatchToolCallOutputItemParam"/>, <see cref="MCPApprovalResponse"/>, <see cref="ItemReferenceParam"/>, <see cref="ItemMessage"/>, <see cref="ItemFileSearchToolCall"/>, <see cref="ItemComputerToolCall"/>, <see cref="ItemWebSearchToolCall"/>, <see cref="ItemFunctionToolCall"/>, <see cref="ItemReasoningItem"/>, <see cref="ItemImageGenToolCall"/>, <see cref="ItemCodeInterpreterToolCall"/>, <see cref="ItemLocalShellToolCall"/>, <see cref="ItemLocalShellToolCallOutput"/>, <see cref="ItemMcpListTools"/>, <see cref="ItemMcpApprovalRequest"/>, <see cref="ItemMcpToolCall"/>, <see cref="ItemCustomToolCallOutput"/>, and <see cref="ItemCustomToolCall"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MemorySearchToolCallItemParam"/>, <see cref="ComputerCallOutputItemParam"/>, <see cref="FunctionCallOutputItemParam"/>, <see cref="CompactionSummaryItemParam"/>, <see cref="FunctionShellCallItemParam"/>, <see cref="FunctionShellCallOutputItemParam"/>, <see cref="ApplyPatchToolCallItemParam"/>, <see cref="ApplyPatchToolCallOutputItemParam"/>, <see cref="MCPApprovalResponse"/>, <see cref="ItemReferenceParam"/>, <see cref="ItemMessage"/>, <see cref="ItemFileSearchToolCall"/>, <see cref="ItemComputerToolCall"/>, <see cref="ItemWebSearchToolCall"/>, <see cref="ItemFunctionToolCall"/>, <see cref="ItemReasoningItem"/>, <see cref="ItemImageGenToolCall"/>, <see cref="ItemCodeInterpreterToolCall"/>, <see cref="ItemLocalShellToolCall"/>, <see cref="ItemLocalShellToolCallOutput"/>, <see cref="ItemMcpListTools"/>, <see cref="ItemMcpApprovalRequest"/>, <see cref="ItemMcpToolCall"/>, <see cref="ItemCustomToolCallOutput"/>, <see cref="ItemCustomToolCall"/>, <see cref="ToolSearchCallItemParam"/>, and <see cref="ToolSearchOutputItemParam"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownItem))]
     public abstract partial class Item : IJsonModel<Item>
@@ -181,6 +181,10 @@ namespace Azure.AI.AgentServer.Responses.Models
                         return ItemCustomToolCallOutput.DeserializeItemCustomToolCallOutput(element, options);
                     case "custom_tool_call":
                         return ItemCustomToolCall.DeserializeItemCustomToolCall(element, options);
+                    case "tool_search_call":
+                        return ToolSearchCallItemParam.DeserializeToolSearchCallItemParam(element, options);
+                    case "tool_search_output":
+                        return ToolSearchOutputItemParam.DeserializeToolSearchOutputItemParam(element, options);
                 }
             }
             return UnknownItem.DeserializeUnknownItem(element, options);

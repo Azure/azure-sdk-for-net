@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The TranscriptionResultType. </summary>
+    /// <summary> Transcription result types. </summary>
     public readonly partial struct TranscriptionResultState : IEquatable<TranscriptionResultState>
     {
         private readonly string _value;

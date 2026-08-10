@@ -24,16 +24,16 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyPar
 
         public virtual HttpPipeline Pipeline => throw null;
 
-        public virtual IndividuallyParentNestedWithPathClient GetIndividuallyParentNestedWithPathClient(string blobName) => throw null;
+        public virtual NestedWithPathClient GetNestedWithPathClient(string blobName) => throw null;
 
-        public virtual IndividuallyParentNestedWithQueryClient GetIndividuallyParentNestedWithQueryClient(string blobName) => throw null;
+        public virtual NestedWithQueryClient GetNestedWithQueryClient(string blobName) => throw null;
 
-        public virtual IndividuallyParentNestedWithHeaderClient GetIndividuallyParentNestedWithHeaderClient(string name) => throw null;
+        public virtual NestedWithHeaderClient GetNestedWithHeaderClient(string name) => throw null;
 
-        public virtual IndividuallyParentNestedWithMultipleClient GetIndividuallyParentNestedWithMultipleClient(string name, string region) => throw null;
+        public virtual NestedWithMultipleClient GetNestedWithMultipleClient(string name, string region) => throw null;
 
-        public virtual IndividuallyParentNestedWithMixedClient GetIndividuallyParentNestedWithMixedClient(string name) => throw null;
+        public virtual NestedWithMixedClient GetNestedWithMixedClient(string name) => throw null;
 
-        public virtual IndividuallyParentNestedWithParamAliasClient GetIndividuallyParentNestedWithParamAliasClient(string blobName) => throw null;
+        public virtual NestedWithParamAliasClient GetNestedWithParamAliasClient(string blobName) => throw null;
     }
 }

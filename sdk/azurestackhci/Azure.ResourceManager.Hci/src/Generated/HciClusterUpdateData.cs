@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.Hci
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Update properties. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal HciClusterUpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, UpdateProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciClusterUpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UpdateProperties properties, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Location = location;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Update properties. </summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new UpdateProperties();
                 }
-                Properties.InstalledOn = value.Value;
+                Properties.InstalledOn = value;
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new UpdateProperties();
                 }
-                Properties.State = value.Value;
+                Properties.State = value;
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new UpdateProperties();
                 }
-                Properties.RebootRequired = value.Value;
+                Properties.RebootRequired = value;
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new UpdateProperties();
                 }
-                Properties.HealthState = value.Value;
+                Properties.HealthState = value;
             }
         }
 
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new UpdateProperties();
                 }
-                Properties.HealthCheckOn = value.Value;
+                Properties.HealthCheckOn = value;
             }
         }
 
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new UpdateProperties();
                 }
-                Properties.PackageSizeInMb = value.Value;
+                Properties.PackageSizeInMb = value;
             }
         }
 
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new UpdateProperties();
                 }
-                Properties.AvailabilityType = value.Value;
+                Properties.AvailabilityType = value;
             }
         }
 
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new UpdateProperties();
                 }
-                Properties.ProgressPercentage = value.Value;
+                Properties.ProgressPercentage = value;
             }
         }
 

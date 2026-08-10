@@ -119,7 +119,7 @@ namespace Azure.AI.Extensions.OpenAI
             InputItemType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
-            OutputItemImageGenToolCallStatus status = default;
+            InputItemImageGenToolCallStatus status = default;
             string result = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -135,7 +135,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToOutputItemImageGenToolCallStatus();
+                    status = prop.Value.GetString().ToInputItemImageGenToolCallStatus();
                     continue;
                 }
                 if (prop.NameEquals("result"u8))

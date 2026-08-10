@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct ConnectivityStatusType : IEquatable<ConnectivityStatusType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ConnectivityStatusType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConnectivityStatusType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InitializingValue = "initializing";
         private const string SuccessValue = "success";
         private const string FailureValue = "failure";
 
-        /// <summary> initializing. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ConnectivityStatusType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Initializing. </summary>
         public static ConnectivityStatusType Initializing { get; } = new ConnectivityStatusType(InitializingValue);
-        /// <summary> success. </summary>
+
+        /// <summary> Gets the Success. </summary>
         public static ConnectivityStatusType Success { get; } = new ConnectivityStatusType(SuccessValue);
-        /// <summary> failure. </summary>
+
+        /// <summary> Gets the Failure. </summary>
         public static ConnectivityStatusType Failure { get; } = new ConnectivityStatusType(FailureValue);
+
         /// <summary> Determines if two <see cref="ConnectivityStatusType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectivityStatusType left, ConnectivityStatusType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConnectivityStatusType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectivityStatusType left, ConnectivityStatusType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectivityStatusType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConnectivityStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConnectivityStatusType(string value) => new ConnectivityStatusType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConnectivityStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConnectivityStatusType?(string value) => value == null ? null : new ConnectivityStatusType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectivityStatusType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConnectivityStatusType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

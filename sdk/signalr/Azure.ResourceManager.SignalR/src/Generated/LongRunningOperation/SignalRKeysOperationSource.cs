@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.SignalR
         SignalRKeys IOperationSource<SignalRKeys>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            SignalRKeys result = SignalRKeys.DeserializeSignalRKeys(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return SignalRKeys.DeserializeSignalRKeys(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.SignalR
         async ValueTask<SignalRKeys> IOperationSource<SignalRKeys>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            SignalRKeys result = SignalRKeys.DeserializeSignalRKeys(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return SignalRKeys.DeserializeSignalRKeys(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

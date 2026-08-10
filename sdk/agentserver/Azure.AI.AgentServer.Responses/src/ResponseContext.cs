@@ -31,6 +31,26 @@ public class ResponseContext
     public string ResponseId { get; }
 
     /// <summary>
+    /// Gets the stable identifier for the multi-turn conversation chain this response belongs to.
+    /// <para>
+    /// Every response in the same logical conversation shares this value, so handlers can use it
+    /// as a key into their own application-side conversation state (e.g., upstream SDK session IDs,
+    /// per-conversation rate limits, conversation indexes). When derived from the request's
+    /// conversation context, it is a native identifier that embeds the chain's partition key and
+    /// carries a deterministic <c>(agent, session)</c> scope: <c>cchain_{partition}{scope}</c> for a
+    /// conversation-scoped chain, or <c>rchain_{partition}{scope}</c> for a response-linkage chain.
+    /// The partition is extracted from the request's conversation ID, the <c>previous_response_id</c>
+    /// chain, or this response's own ID, and the prefix namespaces the chain kinds. Including the
+    /// agent name and session ID in the scope makes the value distinct across agents and sessions.
+    /// </para>
+    /// <para>
+    /// The base implementation returns <see cref="ResponseId"/>; enhanced contexts override this to
+    /// derive the value from the request's conversation context.
+    /// </para>
+    /// </summary>
+    public virtual string ConversationChainId => ResponseId;
+
+    /// <summary>
     /// Gets or sets whether the server is shutting down.
     /// Handlers can use this to distinguish shutdown from explicit cancel or client disconnect.
     /// </summary>
@@ -91,12 +111,13 @@ public class ResponseContext
     }
 
     /// <summary>
-    /// Gets the platform-injected isolation keys for this request.
-    /// Handlers use these opaque partition keys to scope user-private and
-    /// conversation-shared state. Returns <see cref="IsolationContext.Empty"/>
-    /// when the platform headers are absent (e.g., local development).
+    /// Gets the platform-injected identity context for this request.
+    /// Handlers use the user ID key to scope per-user state, and the SDK forwards
+    /// the per-request call ID to Foundry platform services. Returns
+    /// <see cref="PlatformContext.Empty"/> when the platform headers are absent
+    /// (e.g., local development).
     /// </summary>
-    public virtual IsolationContext Isolation { get; } = IsolationContext.Empty;
+    public virtual PlatformContext PlatformContext { get; } = PlatformContext.Empty;
 
     /// <summary>
     /// Gets the forwarded client headers (those prefixed with <c>x-client-</c>)

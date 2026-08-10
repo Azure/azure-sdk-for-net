@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct CdnEndpointProvisioningState : IEquatable<CdnEndpointProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CdnEndpointProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CdnEndpointProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
         private const string UpdatingValue = "Updating";
         private const string DeletingValue = "Deleting";
         private const string CreatingValue = "Creating";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnEndpointProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CdnEndpointProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Succeeded. </summary>
         public static CdnEndpointProvisioningState Succeeded { get; } = new CdnEndpointProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static CdnEndpointProvisioningState Failed { get; } = new CdnEndpointProvisioningState(FailedValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> Gets the Updating. </summary>
         public static CdnEndpointProvisioningState Updating { get; } = new CdnEndpointProvisioningState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static CdnEndpointProvisioningState Deleting { get; } = new CdnEndpointProvisioningState(DeletingValue);
-        /// <summary> Creating. </summary>
+
+        /// <summary> Gets the Creating. </summary>
         public static CdnEndpointProvisioningState Creating { get; } = new CdnEndpointProvisioningState(CreatingValue);
+
         /// <summary> Determines if two <see cref="CdnEndpointProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CdnEndpointProvisioningState left, CdnEndpointProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CdnEndpointProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CdnEndpointProvisioningState left, CdnEndpointProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CdnEndpointProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CdnEndpointProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CdnEndpointProvisioningState(string value) => new CdnEndpointProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CdnEndpointProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CdnEndpointProvisioningState?(string value) => value == null ? null : new CdnEndpointProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CdnEndpointProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CdnEndpointProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

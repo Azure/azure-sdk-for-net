@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             TryGetApiVersion(DevTestLabEnvironmentResource.ResourceType, out string devTestLabEnvironmentApiVersion);
             _environmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabEnvironmentResource.ResourceType.Namespace, Diagnostics);
-            _environmentsRestClient = new Environments(_environmentsClientDiagnostics, Pipeline, Endpoint, devTestLabEnvironmentApiVersion ?? "2018-09-15");
+            _environmentsRestClient = new Environments(_environmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabEnvironmentApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 HttpMessage message = _environmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, DevTestLabEnvironmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation<DevTestLabEnvironmentResource> operation = new DevTestLabsArmOperation<DevTestLabEnvironmentResource>(
-                    new DevTestLabEnvironmentOperationSource(Client),
+                    new DevTestLabEnvironmentResourceOperationSource(Client),
                     _environmentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 HttpMessage message = _environmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, DevTestLabEnvironmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation<DevTestLabEnvironmentResource> operation = new DevTestLabsArmOperation<DevTestLabEnvironmentResource>(
-                    new DevTestLabEnvironmentOperationSource(Client),
+                    new DevTestLabEnvironmentResourceOperationSource(Client),
                     _environmentsClientDiagnostics,
                     Pipeline,
                     message.Request,

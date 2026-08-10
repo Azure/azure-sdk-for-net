@@ -147,7 +147,7 @@ namespace Azure.AI.Extensions.OpenAI
             InputItemType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
-            OutputItemCodeInterpreterToolCallStatus status = default;
+            InputItemCodeInterpreterToolCallStatus status = default;
             string containerId = default;
             string code = default;
             IList<BinaryData> outputs = default;
@@ -165,7 +165,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToOutputItemCodeInterpreterToolCallStatus();
+                    status = prop.Value.GetString().ToInputItemCodeInterpreterToolCallStatus();
                     continue;
                 }
                 if (prop.NameEquals("container_id"u8))

@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    /// <summary> The type of resource, Microsoft.Kusto/clusters/databases/principalAssignments. </summary>
+    /// <summary></summary>
     public readonly partial struct KustoDatabasePrincipalAssignmentType : IEquatable<KustoDatabasePrincipalAssignmentType>
     {
         private readonly string _value;
+        /// <summary> Microsoft.Kusto/clusters/databases/principalAssignments. </summary>
+        private const string MicrosoftKustoClustersDatabasesPrincipalAssignmentsValue = "Microsoft.Kusto/clusters/databases/principalAssignments";
 
         /// <summary> Initializes a new instance of <see cref="KustoDatabasePrincipalAssignmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KustoDatabasePrincipalAssignmentType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MicrosoftKustoClustersDatabasesPrincipalAssignmentsValue = "Microsoft.Kusto/clusters/databases/principalAssignments";
+            _value = value;
+        }
 
         /// <summary> Microsoft.Kusto/clusters/databases/principalAssignments. </summary>
         public static KustoDatabasePrincipalAssignmentType MicrosoftKustoClustersDatabasesPrincipalAssignments { get; } = new KustoDatabasePrincipalAssignmentType(MicrosoftKustoClustersDatabasesPrincipalAssignmentsValue);
+
         /// <summary> Determines if two <see cref="KustoDatabasePrincipalAssignmentType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KustoDatabasePrincipalAssignmentType left, KustoDatabasePrincipalAssignmentType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KustoDatabasePrincipalAssignmentType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KustoDatabasePrincipalAssignmentType left, KustoDatabasePrincipalAssignmentType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoDatabasePrincipalAssignmentType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KustoDatabasePrincipalAssignmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KustoDatabasePrincipalAssignmentType(string value) => new KustoDatabasePrincipalAssignmentType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KustoDatabasePrincipalAssignmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KustoDatabasePrincipalAssignmentType?(string value) => value == null ? null : new KustoDatabasePrincipalAssignmentType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KustoDatabasePrincipalAssignmentType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KustoDatabasePrincipalAssignmentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Batch;
 using Azure.ResourceManager.Resources.Models;
@@ -101,6 +102,11 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (SubResource item in Subscriptions)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
@@ -244,7 +250,23 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (prop.NameEquals("subscriptions"u8))
                 {
-                    DeserializeSubscriptionsList(prop, ref subscriptions);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SubResource> array = new List<SubResource>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerBatchContext.Default));
+                        }
+                    }
+                    subscriptions = array;
                     continue;
                 }
                 if (prop.NameEquals("networkSecurityPerimeters"u8))

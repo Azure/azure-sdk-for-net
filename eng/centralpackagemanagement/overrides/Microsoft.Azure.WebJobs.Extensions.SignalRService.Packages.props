@@ -5,5 +5,17 @@
   <ItemGroup Condition="'$(IsTestProject)' == 'true'">
     <PackageVersion Include="xunit" Version="$(XunitVersion)" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="$(XunitRunnerVersion)" />
+    <!--
+      Pin Azure.Identity to the 1.21+ facade (which type-forwards everything to Azure.Core 1.53)
+      to resolve CS0433 with the older Azure.Identity 1.11.4 transitively pulled in via
+      Microsoft.Azure.SignalR.Management. The central Azure.Identity PackageVersion was removed
+      from Directory.Packages.props once all other consumers stopped needing it; this override
+      keeps it scoped to just this test project. Remove the override once
+      Microsoft.Azure.SignalR.Management updates to depend on Azure.Core 1.53+ directly
+      (see https://github.com/Azure/azure-signalr/blob/dev/src/Directory.Build.props which
+      currently injects Azure.Identity 1.11.4 into every SignalR library project).
+    -->
+    <PackageVersion Include="Azure.Identity" Version="1.21.0" />
   </ItemGroup>
 </Project>
+

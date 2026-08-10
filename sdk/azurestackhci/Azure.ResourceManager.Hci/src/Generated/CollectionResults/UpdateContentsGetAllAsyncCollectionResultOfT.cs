@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Hci
                     yield break;
                 }
                 UpdateContentListResult result = UpdateContentListResult.FromResponse(response);
-                yield return Page<UpdateContentData>.FromValues((IReadOnlyList<UpdateContentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<UpdateContentData>.FromValues((IReadOnlyList<UpdateContentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
