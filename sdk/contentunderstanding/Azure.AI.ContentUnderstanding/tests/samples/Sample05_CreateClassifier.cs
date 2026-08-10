@@ -440,7 +440,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 #region Assertion:ContentUnderstandingClassifierToLlmInput
                 Assert.IsNotNull(llmText, "LLM input text should not be null");
                 Assert.That(llmText, Does.StartWith("---\n"));
-                Assert.That(llmText, Does.Contain("contentType: document"));
+                Assert.That(llmText, Does.Contain("mimeType: application/pdf"));
                 if (documentContent.Segments != null && documentContent.Segments.Count > 1)
                 {
                     Assert.That(llmText, Does.Contain("*****"));

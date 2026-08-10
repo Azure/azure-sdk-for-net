@@ -55,7 +55,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             #region Assertion:ContentUnderstandingToLlmInput
             Assert.IsNotNull(text, "LLM input text should not be null");
-            Assert.That(text, Does.Contain("contentType: document"));
+            Assert.That(text, Does.Contain("mimeType: application/pdf"));
             Assert.That(text, Does.Contain("fields:"));
             Assert.That(text, Does.Contain("VendorName:"));
             Assert.That(text, Does.Contain("<!-- InputPageNumber: 1 -->"));
@@ -76,7 +76,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine(markdownOnly);
 
             // Custom metadata — nested under customMetadata: so it never collides with
-            // helper-owned keys (contentType, fields, metadata, …). Useful for RAG pipelines
+            // helper-owned keys (mimeType, fields, metadata, …). Useful for RAG pipelines
             // to track document source, department, batch, etc.
             string withCustomMetadata = result.ToLlmInput(
                 new Dictionary<string, object>
@@ -98,14 +98,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.That(markdownOnly, Does.Not.Contain("fields:"));
             Assert.That(markdownOnly, Does.Contain("<!-- InputPageNumber: 1 -->"));
 
-            // customMetadata appears between contentType and fields
+            // customMetadata appears between mimeType and fields
             Assert.That(withCustomMetadata, Does.Contain("customMetadata:"));
             Assert.That(withCustomMetadata, Does.Contain("source: invoice.pdf"));
             Assert.That(withCustomMetadata, Does.Contain("department: finance"));
-            int ctIdx = withCustomMetadata.IndexOf("contentType:");
+            int mimeIdx = withCustomMetadata.IndexOf("mimeType:");
             int customIdx = withCustomMetadata.IndexOf("customMetadata:");
             int fieldsIdx = withCustomMetadata.IndexOf("fields:");
-            Assert.That(customIdx, Is.GreaterThan(ctIdx));
+            Assert.That(customIdx, Is.GreaterThan(mimeIdx));
             Assert.That(fieldsIdx, Is.GreaterThan(customIdx));
             Console.WriteLine("Output options verified");
             #endregion
@@ -137,7 +137,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 #endregion
 
                 #region Assertion:ContentUnderstandingToLlmInputMetadataFromAnalysisResultPreview
-                Assert.That(metadataText, Does.Contain("contentType: document"));
+                Assert.That(metadataText, Does.Contain("mimeType: application/pdf"));
                 Assert.That(metadataText, Does.Contain("metadata:"));
                 Assert.That(metadataText, Does.Contain("author: Contoso Metadata Team"));
                 Assert.That(metadataText, Does.Contain("contentType: application/pdf"));
@@ -178,7 +178,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
 
             #region Assertion:ContentUnderstandingToLlmInputContentRange
-            Assert.That(multiPageText, Does.Contain("contentType: document"));
+            Assert.That(multiPageText, Does.Contain("mimeType: application/pdf"));
             Assert.That(multiPageText, Does.Contain("pages:"));
             Assert.That(multiPageText, Does.Contain("2-3").Or.Contains("'2-3'"),
                 "'pages' value should include '2-3' (original page numbers preserved)");
@@ -222,7 +222,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
 
             #region Assertion:ContentUnderstandingToLlmInputVideo
-            Assert.That(videoText, Does.Contain("contentType: audioVisual"));
+            Assert.That(videoText, Does.Contain("mimeType: video/mp4"));
             Assert.IsTrue(videoResult.Contents!.Count >= 1, "Video should produce 1 or more segments");
             if (videoResult.Contents!.Count > 1)
             {
@@ -265,7 +265,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
 
             #region Assertion:ContentUnderstandingToLlmInputAudio
-            Assert.That(audioText, Does.Contain("contentType: audioVisual"));
+            Assert.That(audioText, Does.Contain("mimeType: audio/mpeg"));
             Assert.That(audioText, Does.Contain("customMetadata:"));
             Assert.That(audioText, Does.Contain("source: callCenterRecording.mp3"));
             Console.WriteLine("Audio with content range output verified");

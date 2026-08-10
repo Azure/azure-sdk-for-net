@@ -206,7 +206,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #region Assertion:ContentUnderstandingConvertToLlmInput
             Assert.IsNotNull(llmText, "LLM input text should not be null");
             Assert.That(llmText, Does.StartWith("---\n"));
-            Assert.That(llmText, Does.Contain("contentType: document"));
+            Assert.That(llmText, Does.Contain("mimeType: application/pdf"));
             Console.WriteLine($"LLM input text generated ({llmText.Length} characters)");
             #endregion
 

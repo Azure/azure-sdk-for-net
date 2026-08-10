@@ -77,7 +77,7 @@ Console.WriteLine("\n--- Markdown only (includeFields: false) ---");
 Console.WriteLine(markdownOnly);
 
 // Custom metadata — nested under customMetadata: so it never collides with
-// helper-owned keys (contentType, fields, metadata, …). Useful for RAG pipelines
+// helper-owned keys (mimeType, fields, metadata, …). Useful for RAG pipelines
 // to track document source, department, batch, etc.
 string withCustomMetadata = result.ToLlmInput(
     new Dictionary<string, object>
@@ -93,7 +93,7 @@ Example front matter showing the nested `customMetadata` block (fields/markdown 
 
 ```text
 ---
-contentType: document
+mimeType: application/pdf
 customMetadata:
   source: invoice.pdf
   department: finance
@@ -129,7 +129,7 @@ Example output from the sample metadata PDF:
 
 ```text
 ---
-contentType: document
+mimeType: application/pdf
 metadata:
   author: Contoso Metadata Team
   contentType: application/pdf

@@ -283,7 +283,7 @@ string text = result.ToLlmInput();
 Console.WriteLine(text);
 // Output:
 //   ---
-//   contentType: document
+//   mimeType: application/pdf
 //   pages: 1
 //   fields:
 //     Summary: The document provides an overview of Latin, includes a sample
