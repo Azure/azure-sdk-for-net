@@ -79,6 +79,57 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void ModelFactoryParametersPreserveSwappedLastContractNames()
+        {
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+
+            var createdOnParameter = new ParameterProvider("createdOn", $"Created on description", typeof(DateTimeOffset?));
+            var lastUpdatedOnParameter = new ParameterProvider("lastUpdatedOn", $"Last updated on description", typeof(DateTimeOffset?));
+            var signature = new MethodSignature(
+                "TestResource",
+                $"Creates a test resource.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"A test resource.",
+                [createdOnParameter, lastUpdatedOnParameter]);
+            var method = new MethodProvider(signature, MethodBodyStatement.Empty, modelFactory);
+
+            var lastContractView = new TestModelFactoryView(modelFactory.Name);
+            var previousSignature = new MethodSignature(
+                "TestResource",
+                $"Creates a test resource.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"A test resource.",
+                [
+                    new ParameterProvider("lastUpdatedOn", $"Last updated on description", typeof(DateTimeOffset?)),
+                    new ParameterProvider("createdOn", $"Created on description", typeof(DateTimeOffset?))
+                ]);
+            lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
+
+            SetLastContractView(modelFactory, lastContractView);
+            modelFactory.Update(methods: [method]);
+
+            var updateParameterNames = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                "UpdateParameterNames",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(updateParameterNames, Is.Not.Null);
+
+            updateParameterNames!.Invoke(new Management.Visitors.ModelFactoryVisitor(), [method]);
+
+            Assert.That(
+                modelFactory.Methods.Single().Signature.Parameters.Select(p => p.Name),
+                Is.EqualTo(new[] { "lastUpdatedOn", "createdOn" }));
+        }
+
+        [Test]
         public void KeepsExistingFactoryMethodsForSdkModels()
         {
             var inputModel = InputFactory.Model(
