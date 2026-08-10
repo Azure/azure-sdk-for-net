@@ -35,7 +35,7 @@ namespace Azure.Provisioning.CosmosDB
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _generatedOn = DefineProperty<DateTimeOffset>(nameof(GeneratedOn), new string[] { "generationTime" }, isOutput: true);
+            _generatedOn = DefineProperty<DateTimeOffset>(nameof(GeneratedOn), new string[] { "generationTime" }, isOutput: true, format: "O");
             DefineAdditionalProperties();
         }
 

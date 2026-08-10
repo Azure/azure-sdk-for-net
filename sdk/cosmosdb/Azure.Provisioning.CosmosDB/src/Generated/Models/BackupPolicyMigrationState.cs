@@ -74,7 +74,7 @@ namespace Azure.Provisioning.CosmosDB
             base.DefineProvisionableProperties();
             _status = DefineProperty<BackupPolicyMigrationStatus>(nameof(Status), new string[] { "status" });
             _targetType = DefineProperty<BackupPolicyType>(nameof(TargetType), new string[] { "targetType" });
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" });
+            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, format: "O");
             DefineAdditionalProperties();
         }
 

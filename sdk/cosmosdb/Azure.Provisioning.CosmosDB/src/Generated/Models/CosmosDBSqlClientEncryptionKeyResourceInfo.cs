@@ -90,7 +90,7 @@ namespace Azure.Provisioning.CosmosDB
             base.DefineProvisionableProperties();
             _id = DefineProperty<string>(nameof(Id), new string[] { "id" });
             _encryptionAlgorithm = DefineProperty<string>(nameof(EncryptionAlgorithm), new string[] { "encryptionAlgorithm" });
-            _wrappedDataEncryptionKey = DefineProperty<BinaryData>(nameof(WrappedDataEncryptionKey), new string[] { "wrappedDataEncryptionKey" });
+            _wrappedDataEncryptionKey = DefineProperty<BinaryData>(nameof(WrappedDataEncryptionKey), new string[] { "wrappedDataEncryptionKey" }, format: "base64");
             _keyWrapMetadata = DefineModelProperty<CosmosDBKeyWrapMetadata>(nameof(KeyWrapMetadata), new string[] { "keyWrapMetadata" });
             DefineAdditionalProperties();
         }

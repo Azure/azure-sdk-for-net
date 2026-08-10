@@ -91,9 +91,9 @@ namespace Azure.Provisioning.CosmosDB
         {
             base.DefineProvisionableProperties();
             _accountName = DefineProperty<string>(nameof(AccountName), new string[] { "accountName" });
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationTime" });
-            _oldestRestorableOn = DefineProperty<DateTimeOffset>(nameof(OldestRestorableOn), new string[] { "oldestRestorableTime" });
-            _deletedOn = DefineProperty<DateTimeOffset>(nameof(DeletedOn), new string[] { "deletionTime" });
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationTime" }, format: "O");
+            _oldestRestorableOn = DefineProperty<DateTimeOffset>(nameof(OldestRestorableOn), new string[] { "oldestRestorableTime" }, format: "O");
+            _deletedOn = DefineProperty<DateTimeOffset>(nameof(DeletedOn), new string[] { "deletionTime" }, format: "O");
             _apiType = DefineProperty<CosmosDBApiType>(nameof(ApiType), new string[] { "apiType" }, isOutput: true);
             _restorableLocations = DefineListProperty<RestorableLocationResourceInfo>(nameof(RestorableLocations), new string[] { "restorableLocations" }, isOutput: true);
             DefineAdditionalProperties();

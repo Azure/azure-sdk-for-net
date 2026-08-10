@@ -81,7 +81,7 @@ namespace Azure.Provisioning.CosmosDB
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationTime" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationTime" }, isOutput: true, format: "O");
             _instanceSize = DefineProperty<CosmosDBServiceSize>(nameof(InstanceSize), new string[] { "instanceSize" });
             _instanceCount = DefineProperty<int>(nameof(InstanceCount), new string[] { "instanceCount" });
             _status = DefineProperty<CosmosDBServiceStatus>(nameof(Status), new string[] { "status" }, isOutput: true);

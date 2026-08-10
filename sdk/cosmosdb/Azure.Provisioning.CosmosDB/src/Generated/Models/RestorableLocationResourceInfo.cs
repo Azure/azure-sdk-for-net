@@ -71,8 +71,8 @@ namespace Azure.Provisioning.CosmosDB
             base.DefineProvisionableProperties();
             _locationName = DefineProperty<AzureLocation>(nameof(LocationName), new string[] { "locationName" }, isOutput: true);
             _regionalDatabaseAccountInstanceId = DefineProperty<string>(nameof(RegionalDatabaseAccountInstanceId), new string[] { "regionalDatabaseAccountInstanceId" }, isOutput: true);
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationTime" }, isOutput: true);
-            _deletedOn = DefineProperty<DateTimeOffset>(nameof(DeletedOn), new string[] { "deletionTime" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationTime" }, isOutput: true, format: "O");
+            _deletedOn = DefineProperty<DateTimeOffset>(nameof(DeletedOn), new string[] { "deletionTime" }, isOutput: true, format: "O");
             DefineAdditionalProperties();
         }
 

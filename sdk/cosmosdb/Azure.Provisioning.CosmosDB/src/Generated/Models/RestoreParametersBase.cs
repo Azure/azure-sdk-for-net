@@ -73,7 +73,7 @@ namespace Azure.Provisioning.CosmosDB
         {
             base.DefineProvisionableProperties();
             _restoreSource = DefineProperty<string>(nameof(RestoreSource), new string[] { "restoreSource" });
-            _restoreTimestampInUtc = DefineProperty<DateTimeOffset>(nameof(RestoreTimestampInUtc), new string[] { "restoreTimestampInUtc" });
+            _restoreTimestampInUtc = DefineProperty<DateTimeOffset>(nameof(RestoreTimestampInUtc), new string[] { "restoreTimestampInUtc" }, format: "O");
             _isRestoreWithTtlDisabled = DefineProperty<bool>(nameof(IsRestoreWithTtlDisabled), new string[] { "restoreWithTtlDisabled" });
             DefineAdditionalProperties();
         }
