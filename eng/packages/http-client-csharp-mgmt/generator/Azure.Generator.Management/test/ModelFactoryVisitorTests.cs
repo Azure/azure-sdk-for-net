@@ -109,6 +109,188 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void ModelFactoryParameterDocsPreserveLastContractDescriptions()
+        {
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [parentModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            ParameterProvider[] currentParameters =
+            [
+                new ParameterProvider("createdOn", $"Created on description", typeof(DateTimeOffset?)),
+                new ParameterProvider("lastUpdatedOn", $"Last updated on description", typeof(DateTimeOffset?))
+            ];
+            var method = new MethodProvider(
+                new MethodSignature(
+                    "TestResource",
+                    $"Creates a test resource.",
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                    model.Type,
+                    $"A test resource.",
+                    currentParameters),
+                MethodBodyStatement.Empty,
+                modelFactory);
+            var lastContractView = new TestModelFactoryView(modelFactory.Name);
+            lastContractView.MethodsToBuild =
+            [
+                new MethodProvider(
+                    new MethodSignature(
+                        "TestResource",
+                        $"Creates a test resource.",
+                        MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                        model.Type,
+                        $"A test resource.",
+                        [
+                            new ParameterProvider("lastUpdatedOn", $"Last updated on description", typeof(DateTimeOffset?)),
+                            new ParameterProvider("createdOn", $"Created on description", typeof(DateTimeOffset?))
+                        ]),
+                    MethodBodyStatement.Empty,
+                    lastContractView)
+            ];
+
+            SetLastContractView(modelFactory, lastContractView);
+            modelFactory.Update(methods: [method]);
+            UpdateParameterNames(method);
+
+            Assert.That(method.Signature.Parameters[0].Description?.ToString(), Is.EqualTo("Last updated on description"));
+            Assert.That(method.Signature.Parameters[1].Description?.ToString(), Is.EqualTo("Created on description"));
+        }
+
+        [Test]
+        public void ModelFactoryParameterRenamesPreserveFlattenedArguments()
+        {
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("properties", propertiesModel),
+                    InputFactory.Property("kind", InputPrimitiveType.String)
+                ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [parentModel, propertiesModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var properties = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var valueParameter = new ParameterProvider("value", $"Value description", typeof(string));
+            var kindParameter = new ParameterProvider("kind", $"Kind description", typeof(string));
+            var propertiesArguments = properties.FullConstructor.Signature.Parameters
+                .Select(parameter => parameter.Name == "value" ? valueParameter : parameter.DefaultValue ?? Default)
+                .ToArray();
+            var modelArguments = model.FullConstructor.Signature.Parameters
+                .Select(parameter => parameter.Name switch
+                {
+                    "properties" => New.Instance(properties.Type, propertiesArguments),
+                    "kind" => kindParameter,
+                    _ => parameter.DefaultValue ?? Default
+                })
+                .ToArray();
+            var method = new MethodProvider(
+                new MethodSignature(
+                    "TestResource",
+                    $"Creates a test resource.",
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                    model.Type,
+                    $"A test resource.",
+                    [valueParameter, kindParameter]),
+                Return(New.Instance(model.Type, modelArguments)),
+                modelFactory);
+            var lastContractView = new TestModelFactoryView(modelFactory.Name);
+            lastContractView.MethodsToBuild =
+            [
+                new MethodProvider(
+                    new MethodSignature(
+                        "TestResource",
+                        $"Creates a test resource.",
+                        MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                        model.Type,
+                        $"A test resource.",
+                        [
+                            new ParameterProvider("kind", $"Kind description", typeof(string)),
+                            new ParameterProvider("value", $"Value description", typeof(string))
+                        ]),
+                    MethodBodyStatement.Empty,
+                    lastContractView)
+            ];
+
+            SetLastContractView(modelFactory, lastContractView);
+            modelFactory.Update(methods: [method]);
+            UpdateParameterNames(method);
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+
+            var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("new global::Samples.Models.TestProperties(value"));
+            Assert.That(rendered, Does.Contain("kind,"));
+        }
+
+        [Test]
+        public void ModelFactoryParametersPreserveLastContractNamesForSdkModels()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("firstValue", InputPrimitiveType.String),
+                    InputFactory.Property("secondValue", InputPrimitiveType.String),
+                    InputFactory.Property("jobTier", InputPrimitiveType.String)
+                ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var method = new MethodProvider(
+                new MethodSignature(
+                    "TestModel",
+                    $"Creates a test model.",
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                    model.Type,
+                    $"A test model.",
+                    [
+                        new ParameterProvider("firstValue", $"First value description", typeof(string)),
+                        new ParameterProvider("secondValue", $"Second value description", typeof(string)),
+                        new ParameterProvider("jobTier", $"Job tier description", typeof(string))
+                    ]),
+                MethodBodyStatement.Empty,
+                modelFactory);
+            var lastContractView = new TestModelFactoryView(modelFactory.Name);
+            lastContractView.MethodsToBuild =
+            [
+                new MethodProvider(
+                    new MethodSignature(
+                        "TestModel",
+                        $"Creates a test model.",
+                        MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                        model.Type,
+                        $"A test model.",
+                        [
+                            new ParameterProvider("secondValue", $"Second value description", typeof(string)),
+                            new ParameterProvider("firstValue", $"First value description", typeof(string)),
+                            new ParameterProvider("queueJobTier", $"Queue job tier description", typeof(string))
+                        ]),
+                    MethodBodyStatement.Empty,
+                    lastContractView)
+            ];
+
+            SetLastContractView(modelFactory, lastContractView);
+            modelFactory.Update(methods: [method]);
+
+            var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                "VisitType",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitType, Is.Not.Null);
+            visitType!.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
+
+            Assert.That(
+                modelFactory.Methods.Single().Signature.Parameters.Select(parameter => parameter.Name),
+                Is.EqualTo(new[] { "secondValue", "firstValue", "queueJobTier" }));
+        }
+
+        [Test]
         public void KeepsExistingFactoryMethodsForSdkModels()
         {
             var inputModel = InputFactory.Model(
@@ -382,13 +564,18 @@ namespace Azure.Generator.Mgmt.Tests
             SetLastContractView(modelFactory, lastContractView);
             modelFactory.Update(methods: [method]);
 
+            UpdateParameterNames(method);
+
+            return modelFactory.Methods.Single().Signature.Parameters.Select(parameter => parameter.Name).ToArray();
+        }
+
+        private static void UpdateParameterNames(MethodProvider method)
+        {
             var updateParameterNames = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
                 "UpdateParameterNames",
                 BindingFlags.NonPublic | BindingFlags.Instance);
             Assert.That(updateParameterNames, Is.Not.Null);
             updateParameterNames!.Invoke(new Management.Visitors.ModelFactoryVisitor(), [method]);
-
-            return modelFactory.Methods.Single().Signature.Parameters.Select(parameter => parameter.Name).ToArray();
         }
 
         private class TestModelFactoryView : TypeProvider
