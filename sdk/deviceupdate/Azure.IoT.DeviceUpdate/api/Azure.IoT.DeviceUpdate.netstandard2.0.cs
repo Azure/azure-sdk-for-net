@@ -10,8 +10,6 @@ namespace Azure.IoT.DeviceUpdate
     {
         protected DeviceManagementClient() { }
         public DeviceManagementClient(Azure.IoT.DeviceUpdate.DeviceManagementClientSettings settings) { }
-        public DeviceManagementClient(string endpoint, string instanceId, Azure.Core.TokenCredential credential) { }
-        public DeviceManagementClient(string endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options) { }
         public DeviceManagementClient(System.Uri endpoint, string instanceId, Azure.Core.TokenCredential credential) { }
         public DeviceManagementClient(System.Uri endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -113,8 +111,6 @@ namespace Azure.IoT.DeviceUpdate
     {
         protected DeviceUpdateClient() { }
         public DeviceUpdateClient(Azure.IoT.DeviceUpdate.DeviceUpdateClientSettings settings) { }
-        public DeviceUpdateClient(string endpoint, string instanceId, Azure.Core.TokenCredential credential) { }
-        public DeviceUpdateClient(string endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options) { }
         public DeviceUpdateClient(System.Uri endpoint, string instanceId, Azure.Core.TokenCredential credential) { }
         public DeviceUpdateClient(System.Uri endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
