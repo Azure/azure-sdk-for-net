@@ -43,6 +43,4 @@ nowarn:AAIP002 M:Azure.AI.Projects.OutputMessageContentOutputTextContent.Deseria
 # callers via Azure.AI.Projects.Memory and ResponseItemHelpers. Acknowledging
 # the opt-in once at the assembly level matches the design intent.
 nowarn:OPENAI001
-
-# Temporary workaround
 nowarn:OPENAICUA001
