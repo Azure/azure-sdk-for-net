@@ -308,9 +308,9 @@ namespace Azure.Provisioning.DomainRegistration
             _provisioningState = DefineProperty<AppServiceDomainProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _nameServers = DefineListProperty<string>(nameof(NameServers), new string[] { "nameServers" }, isOutput: true);
             _isDomainPrivacyEnabled = DefineProperty<bool>(nameof(IsDomainPrivacyEnabled), new string[] { "privacy" });
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdTime" }, isOutput: true);
-            _expireOn = DefineProperty<DateTimeOffset>(nameof(ExpireOn), new string[] { "expirationTime" }, isOutput: true);
-            _lastRenewedOn = DefineProperty<DateTimeOffset>(nameof(LastRenewedOn), new string[] { "lastRenewedTime" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdTime" }, isOutput: true, format: "O");
+            _expireOn = DefineProperty<DateTimeOffset>(nameof(ExpireOn), new string[] { "expirationTime" }, isOutput: true, format: "O");
+            _lastRenewedOn = DefineProperty<DateTimeOffset>(nameof(LastRenewedOn), new string[] { "lastRenewedTime" }, isOutput: true, format: "O");
             _isAutoRenew = DefineProperty<bool>(nameof(IsAutoRenew), new string[] { "autoRenew" });
             _isDnsRecordManagementReady = DefineProperty<bool>(nameof(IsDnsRecordManagementReady), new string[] { "readyForDnsRecordManagement" }, isOutput: true);
             _managedHostNames = DefineListProperty<AppServiceHostName>(nameof(ManagedHostNames), new string[] { "managedHostNames" }, isOutput: true);

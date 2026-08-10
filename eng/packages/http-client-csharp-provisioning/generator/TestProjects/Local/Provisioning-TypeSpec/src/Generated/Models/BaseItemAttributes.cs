@@ -80,8 +80,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             base.DefineProvisionableProperties();
             _enabled = DefineProperty<bool>(nameof(Enabled), new string[] { "enabled" });
             _displayName = DefineProperty<string>(nameof(DisplayName), new string[] { "displayName" });
-            _created = DefineProperty<DateTimeOffset>(nameof(Created), new string[] { "created" }, isOutput: true);
-            _updated = DefineProperty<DateTimeOffset>(nameof(Updated), new string[] { "updated" }, isOutput: true);
+            _created = DefineProperty<DateTimeOffset>(nameof(Created), new string[] { "created" }, isOutput: true, format: "O");
+            _updated = DefineProperty<DateTimeOffset>(nameof(Updated), new string[] { "updated" }, isOutput: true, format: "O");
             DefineAdditionalProperties();
         }
 

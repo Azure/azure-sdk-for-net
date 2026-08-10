@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `AIInferenceModelFactory.ChatCompletions` so `ChatCompletions` instances can be created for mocking.
+
 ### Breaking Changes
 
 ### Bugs Fixed
