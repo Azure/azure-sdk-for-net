@@ -1529,11 +1529,12 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken)
         {
             HttpRange requestedRange = range;
+            long cseStartRegion = 0;
             if (UsingClientSideEncryption)
             {
                 if ((await GetPropertiesInternal(conditions, async, new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false)).Value.Metadata.TryGetValue(Constants.ClientSideEncryption.EncryptionDataKey, out string rawEncryptiondata))
                 {
-                    range = BlobClientSideDecryptor.GetEncryptedBlobRange(range, rawEncryptiondata);
+                    (range, cseStartRegion) = BlobClientSideDecryptor.GetEncryptedBlobRange(range, rawEncryptiondata);
                 }
             }
 
@@ -1549,6 +1550,7 @@ namespace Azure.Storage.Blobs.Specialized
                         response.Value.Details.Metadata,
                         requestedRange,
                         response.Value.Details.ContentRange,
+                        cseStartRegion,
                         async,
                         cancellationToken).ConfigureAwait(false);
             }
@@ -3427,10 +3429,11 @@ namespace Azure.Storage.Blobs.Specialized
                         CancellationToken cancellationToken) =>
                         {
                             HttpRange requestedRange = range;
+                            long cseStartRegion = 0;
                             if (UsingClientSideEncryption)
                             {
                                 ClientSideDecryptor.BeginContentEncryptionKeyCaching(contentEncryptionKeyCache);
-                                range = rangeAdjustmentFunc(requestedRange);
+                                (range, cseStartRegion) = rangeAdjustmentFunc(requestedRange);
                             }
                             Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
                                 range,
@@ -3449,6 +3452,7 @@ namespace Azure.Storage.Blobs.Specialized
                                         response.Value.Details.Metadata,
                                         requestedRange,
                                         response.Value.Details.ContentRange,
+                                        cseStartRegion,
                                         async,
                                         cancellationToken).ConfigureAwait(false);
                             }
