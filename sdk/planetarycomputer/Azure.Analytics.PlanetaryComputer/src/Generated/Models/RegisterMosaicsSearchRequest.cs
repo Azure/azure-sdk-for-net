@@ -35,7 +35,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="intersects"> GeoJSON geometry to spatially filter items by intersection. </param>
         /// <param name="query"> Query. </param>
         /// <param name="filter"> Filter. </param>
-        /// <param name="datetime"> Temporal filter in RFC 3339 format or interval. </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
         /// <param name="sortBy"> Criteria for ordering items in the mosaic. </param>
         /// <param name="filterLanguage"> Query language format used in the filter parameter. </param>
         /// <param name="metadata"> Additional metadata to associate with the mosaic. </param>
@@ -123,7 +133,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         public IDictionary<string, BinaryData> Filter { get; }
 
-        /// <summary> Temporal filter in RFC 3339 format or interval. </summary>
+        /// <summary>
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </summary>
         public string Datetime { get; }
 
         /// <summary> Criteria for ordering items in the mosaic. </summary>
