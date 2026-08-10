@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                provisioningState is null && keyVaultBaseUri is null && keyVaultSecretName is null && keyVaultSecretVersion is null ? default : new CustomCertificateProperties(provisioningState, keyVaultBaseUri, keyVaultSecretName, keyVaultSecretVersion, default),
                 default);
         }
 
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 name,
                 resourceType,
                 systemData,
-                domainName is null && customCertificateId is null ? default : new CustomDomainProperties(default, domainName, new ResourceReference(customCertificateId, default), default),
+                provisioningState is null && domainName is null && customCertificateId is null ? default : new CustomDomainProperties(provisioningState, domainName, new ResourceReference(customCertificateId, default), default),
                 default);
         }
 
