@@ -11,7 +11,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Projects
 {
     /// <summary> Output text. </summary>
-    public partial class OutputMessageContentOutputTextContent : OutputMessageContent
+    internal partial class OutputMessageContentOutputTextContent : OutputMessageContent
     {
         /// <summary> Initializes a new instance of <see cref="OutputMessageContentOutputTextContent"/>. </summary>
         /// <param name="text"> The text output from the model. </param>

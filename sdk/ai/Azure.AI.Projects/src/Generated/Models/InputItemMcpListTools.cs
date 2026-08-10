@@ -11,7 +11,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Projects
 {
     /// <summary> MCP list tools. </summary>
-    public partial class InputItemMcpListTools : InputItem
+    internal partial class InputItemMcpListTools : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemMcpListTools"/>. </summary>
         /// <param name="id"> The unique ID of the list. </param>

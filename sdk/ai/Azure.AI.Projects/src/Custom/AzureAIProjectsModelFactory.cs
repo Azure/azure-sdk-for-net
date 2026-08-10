@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using Azure.AI.Projects.Evaluation;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Projects
 {

@@ -5,7 +5,7 @@
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
-    public enum InputItemImageGenToolCallStatus
+    internal enum InputItemImageGenToolCallStatus
     {
         /// <summary> InProgress. </summary>
         InProgress,

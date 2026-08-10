@@ -11,7 +11,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Projects
 {
     /// <summary> Computer tool call output. </summary>
-    public partial class InputItemComputerCallOutputItemParam : InputItem, IJsonModel<InputItemComputerCallOutputItemParam>
+    internal partial class InputItemComputerCallOutputItemParam : InputItem, IJsonModel<InputItemComputerCallOutputItemParam>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemComputerCallOutputItemParam"/> for deserialization. </summary>
         internal InputItemComputerCallOutputItemParam()

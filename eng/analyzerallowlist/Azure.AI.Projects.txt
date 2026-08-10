@@ -18,3 +18,7 @@ nowarn:AAIP001 M:Azure.AI.Projects.Evaluation.EvaluationRuleAction.DeserializeEv
 # callers via Azure.AI.Projects.Memory and ResponseItemHelpers. Acknowledging
 # the opt-in once at the assembly level matches the design intent.
 nowarn:OPENAI001
+
+# Temporary workaround
+nowarn:AAIP002
+nowarn:OPENAICUA001

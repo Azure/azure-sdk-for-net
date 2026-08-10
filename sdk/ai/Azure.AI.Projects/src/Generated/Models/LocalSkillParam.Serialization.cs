@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> The LocalSkillParam. </summary>
-    public partial class LocalSkillParam : IJsonModel<LocalSkillParam>
+    internal partial class LocalSkillParam : IJsonModel<LocalSkillParam>
     {
         /// <summary> Initializes a new instance of <see cref="LocalSkillParam"/> for deserialization. </summary>
         internal LocalSkillParam()

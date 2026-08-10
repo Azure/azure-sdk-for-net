@@ -5,7 +5,7 @@
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
-    public enum InputItemReasoningItemStatus
+    internal enum InputItemReasoningItemStatus
     {
         /// <summary> InProgress. </summary>
         InProgress,

@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Memory;

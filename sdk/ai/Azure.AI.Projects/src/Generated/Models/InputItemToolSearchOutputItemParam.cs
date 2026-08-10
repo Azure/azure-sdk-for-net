@@ -11,7 +11,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Projects
 {
     /// <summary> The InputItemToolSearchOutputItemParam. </summary>
-    public partial class InputItemToolSearchOutputItemParam : InputItem
+    internal partial class InputItemToolSearchOutputItemParam : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemToolSearchOutputItemParam"/>. </summary>
         /// <param name="tools"> The loaded tool definitions returned by the tool search output. </param>

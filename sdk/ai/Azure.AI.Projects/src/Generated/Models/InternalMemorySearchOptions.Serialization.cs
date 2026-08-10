@@ -153,7 +153,7 @@ namespace Azure.AI.Projects
             string scope = default;
             IList<InputItem> items = default;
             string previousSearchId = default;
-            MemorySearchOptions options0 = default;
+            MemorySearchResultOptions options0 = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -187,7 +187,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    options0 = ModelReaderWriter.Read<MemorySearchOptions>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsContext.Default);
+                    options0 = ModelReaderWriter.Read<MemorySearchResultOptions>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

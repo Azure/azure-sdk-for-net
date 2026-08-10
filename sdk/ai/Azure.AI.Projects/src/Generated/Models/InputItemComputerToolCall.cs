@@ -12,7 +12,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Projects
 {
     /// <summary> Computer tool call. </summary>
-    public partial class InputItemComputerToolCall : InputItem
+    internal partial class InputItemComputerToolCall : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemComputerToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the computer call. </param>

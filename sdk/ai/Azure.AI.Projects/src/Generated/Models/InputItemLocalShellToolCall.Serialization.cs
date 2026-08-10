@@ -11,7 +11,7 @@ using OpenAI;
 namespace Azure.AI.Projects
 {
     /// <summary> Local shell call. </summary>
-    public partial class InputItemLocalShellToolCall : InputItem, IJsonModel<InputItemLocalShellToolCall>
+    internal partial class InputItemLocalShellToolCall : InputItem, IJsonModel<InputItemLocalShellToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemLocalShellToolCall"/> for deserialization. </summary>
         internal InputItemLocalShellToolCall()

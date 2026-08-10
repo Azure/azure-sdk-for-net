@@ -11,7 +11,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Projects
 {
     /// <summary> Output text. </summary>
-    public partial class OutputMessageContentOutputTextContent : OutputMessageContent, IJsonModel<OutputMessageContentOutputTextContent>
+    internal partial class OutputMessageContentOutputTextContent : OutputMessageContent, IJsonModel<OutputMessageContentOutputTextContent>
     {
         /// <summary> Initializes a new instance of <see cref="OutputMessageContentOutputTextContent"/> for deserialization. </summary>
         internal OutputMessageContentOutputTextContent()

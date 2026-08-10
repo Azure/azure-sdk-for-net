@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Extensions.OpenAI;
 using OpenAI;
 using OpenAI.Responses;
 

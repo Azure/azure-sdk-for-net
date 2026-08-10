@@ -11,7 +11,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Projects
 {
     /// <summary> The InputItemToolSearchOutputItemParam. </summary>
-    public partial class InputItemToolSearchOutputItemParam : InputItem, IJsonModel<InputItemToolSearchOutputItemParam>
+    internal partial class InputItemToolSearchOutputItemParam : InputItem, IJsonModel<InputItemToolSearchOutputItemParam>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemToolSearchOutputItemParam"/> for deserialization. </summary>
         internal InputItemToolSearchOutputItemParam()

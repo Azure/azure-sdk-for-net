@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Realtime MCP tool execution error. </summary>
-    public partial class RealtimeMCPToolExecutionError : RealtimeMCPError
+    internal partial class RealtimeMCPToolExecutionError : RealtimeMCPError
     {
         /// <summary> Initializes a new instance of <see cref="RealtimeMCPToolExecutionError"/>. </summary>
         /// <param name="message"></param>

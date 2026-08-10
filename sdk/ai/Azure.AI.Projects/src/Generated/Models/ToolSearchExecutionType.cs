@@ -5,7 +5,7 @@
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
-    public enum ToolSearchExecutionType
+    internal enum ToolSearchExecutionType
     {
         /// <summary> Server. </summary>
         Server,

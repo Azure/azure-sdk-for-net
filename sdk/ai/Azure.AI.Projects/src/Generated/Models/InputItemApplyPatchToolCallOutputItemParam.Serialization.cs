@@ -11,7 +11,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Projects
 {
     /// <summary> Apply patch tool call output. </summary>
-    public partial class InputItemApplyPatchToolCallOutputItemParam : InputItem, IJsonModel<InputItemApplyPatchToolCallOutputItemParam>
+    internal partial class InputItemApplyPatchToolCallOutputItemParam : InputItem, IJsonModel<InputItemApplyPatchToolCallOutputItemParam>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemApplyPatchToolCallOutputItemParam"/> for deserialization. </summary>
         internal InputItemApplyPatchToolCallOutputItemParam()

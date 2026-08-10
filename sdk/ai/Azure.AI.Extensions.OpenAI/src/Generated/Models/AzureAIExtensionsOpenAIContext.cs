@@ -119,12 +119,12 @@ namespace Azure.AI.Extensions.OpenAI
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MemoryOutputItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemoryOutputItem))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.MemoryOutputItem is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchOptions is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(MemorySearchOptions))]
-#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchOptions is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchPreviewTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemorySearchPreviewTool))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchPreviewTool is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchResultOptions is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(MemorySearchResultOptions))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchResultOptions is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchToolCall is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemorySearchToolCall))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchToolCall is experimental and may change in future versions.
