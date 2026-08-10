@@ -4,7 +4,7 @@
 
 This sample shows how to create custom analyzers using `ContentAnalyzerConfig.Workflow`. Omit `Workflow` (or set `ContentAnalyzerWorkflow.Default`) for standard extraction, or set `ContentAnalyzerWorkflow.Agentic` when an answer must be built from evidence across the document. The sample analyzes the same 20-item invoice with each workflow so you can compare results.
 
-> **Current preview limitations:** Analysis supports **one input file per request** regardless of workflow. Agentic mode uses the **advanced contextualization** rate and typically takes longer and consumes more model tokens than the default workflow.
+> **Analysis considerations:** Analysis supports **one input file per request** regardless of service API version or workflow. Agentic mode uses the **advanced contextualization** rate and typically takes longer and consumes more model tokens than the default workflow.
 
 ## Prerequisites
 
