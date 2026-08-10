@@ -19,6 +19,22 @@ namespace Azure.AI.ContentSafety
             BlobUri = blobUri;
         }
 
+        // --- Multi-iteration repair test probe (cascading custom-code drift) ---
+        // Intentionally broken so the auto-build-repair agent must iterate more than
+        // once. Each reference below has a typo whose compiler error is HIDDEN by C#
+        // error-type suppression until the line above it is fixed:
+        //   Level1Typo_BlobUri -> BlobUri (Uri)
+        //   Level2Typo_Host    -> Host    (string)   [hidden until L1 is fixed]
+        //   Level3Typo_Length  -> Length  (int)      [hidden until L2 is fixed]
+        // `var` is required so each variable inherits the error type from its
+        // initializer, which is what suppresses the downstream diagnostic.
+        internal int RepairCascadeProbe()
+        {
+            var uri = Level1Typo_BlobUri;
+            var host = uri.Level2Typo_Host;
+            return host.Level3Typo_Length;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ContentSafetyImageData"/> class with content.
         /// </summary>
