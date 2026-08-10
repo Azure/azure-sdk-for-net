@@ -73,8 +73,8 @@ namespace Azure.Provisioning.MachineLearning
             base.DefineProvisionableProperties();
             InputDataType.Assign("Rolling");
             _preprocessingComponentId = DefineProperty<string>(nameof(PreprocessingComponentId), new string[] { "preprocessingComponentId" });
-            _windowOffset = DefineProperty<TimeSpan>(nameof(WindowOffset), new string[] { "windowOffset" }, isRequired: true);
-            _windowSize = DefineProperty<TimeSpan>(nameof(WindowSize), new string[] { "windowSize" }, isRequired: true);
+            _windowOffset = DefineProperty<TimeSpan>(nameof(WindowOffset), new string[] { "windowOffset" }, isRequired: true, format: "P");
+            _windowSize = DefineProperty<TimeSpan>(nameof(WindowSize), new string[] { "windowSize" }, isRequired: true, format: "P");
             DefineAdditionalProperties();
         }
 

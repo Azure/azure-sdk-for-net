@@ -39,6 +39,7 @@ engine:
 network:
   allowed:
     - defaults
+    - dev.azure.com
     - dotnet
     - github
     - learn.microsoft.com

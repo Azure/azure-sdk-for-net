@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct ContainerServiceLoadBalancerSku : IEquatable<ContainerServiceLoadBalancerSku>
     {
         private readonly string _value;
+        /// <summary> Use a service Load Balancer, with native pod-level load balancing. This SKU is specifically built to scale for container-based workloads, with a single instance utilized for each application. For more information, see https://aka.ms/aks/container-native-slb. </summary>
+        private const string ServiceValue = "service";
         /// <summary> Use a a standard Load Balancer. This is the recommended Load Balancer SKU. For more information about on working with the load balancer in the managed cluster, see the [standard Load Balancer](https://docs.microsoft.com/azure/aks/load-balancer-standard) article. </summary>
         private const string StandardValue = "standard";
         /// <summary> Use a basic Load Balancer with limited functionality. </summary>
@@ -29,6 +31,9 @@ namespace Azure.ResourceManager.ContainerService.Models
 
             _value = value;
         }
+
+        /// <summary> Use a service Load Balancer, with native pod-level load balancing. This SKU is specifically built to scale for container-based workloads, with a single instance utilized for each application. For more information, see https://aka.ms/aks/container-native-slb. </summary>
+        public static ContainerServiceLoadBalancerSku Service { get; } = new ContainerServiceLoadBalancerSku(ServiceValue);
 
         /// <summary> Use a a standard Load Balancer. This is the recommended Load Balancer SKU. For more information about on working with the load balancer in the managed cluster, see the [standard Load Balancer](https://docs.microsoft.com/azure/aks/load-balancer-standard) article. </summary>
         public static ContainerServiceLoadBalancerSku Standard { get; } = new ContainerServiceLoadBalancerSku(StandardValue);

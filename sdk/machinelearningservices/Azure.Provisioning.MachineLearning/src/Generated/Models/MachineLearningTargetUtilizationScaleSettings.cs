@@ -90,7 +90,7 @@ namespace Azure.Provisioning.MachineLearning
             ScaleType.Assign("TargetUtilization");
             _maxInstances = DefineProperty<int>(nameof(MaxInstances), new string[] { "maxInstances" });
             _minInstances = DefineProperty<int>(nameof(MinInstances), new string[] { "minInstances" });
-            _pollingInterval = DefineProperty<TimeSpan>(nameof(PollingInterval), new string[] { "pollingInterval" });
+            _pollingInterval = DefineProperty<TimeSpan>(nameof(PollingInterval), new string[] { "pollingInterval" }, format: "P");
             _targetUtilizationPercentage = DefineProperty<int>(nameof(TargetUtilizationPercentage), new string[] { "targetUtilizationPercentage" });
             DefineAdditionalProperties();
         }

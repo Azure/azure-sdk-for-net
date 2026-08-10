@@ -8,7 +8,6 @@
     <PackageTags>Azure Monitor OpenTelemetry Exporter Distro ApplicationInsights</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <NoWarn>$(NoWarn);SA1636;AZC0011;AZC0034</NoWarn>
     <DefineConstants>$(DefineConstants);ASP_NET_CORE_DISTRO;</DefineConstants>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>

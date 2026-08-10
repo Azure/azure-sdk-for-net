@@ -1036,28 +1036,28 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="ruleType"> SummaryRules rule type: User. </param>
+        /// <param name="summaryLogsRuleType"> SummaryRules rule type: User. </param>
         /// <param name="displayName"> The display name of the Summary rule. </param>
         /// <param name="description"> The description of the Summary rule. </param>
         /// <param name="isActive"> Indicates if Summary rule is active. If not, Summary rule execution stops. </param>
-        /// <param name="statusCode"> Indicates the reason for rule deactivation. </param>
-        /// <param name="provisioningState"> Summary rule is in provisioning state. If set to 'updating' or 'deleting', indicates a resource lock due to an ongoing operation, preventing any update to the Summary rule until the operation is complete. </param>
+        /// <param name="summaryLogsStatusCode"> Indicates the reason for rule deactivation. </param>
+        /// <param name="summaryLogsProvisioningState"> Summary rule is in provisioning state. If set to 'updating' or 'deleting', indicates a resource lock due to an ongoing operation, preventing any update to the Summary rule until the operation is complete. </param>
         /// <param name="ruleDefinition"> Rule definition parameters. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsSummaryLogsData"/> instance for mocking. </returns>
-        public static OperationalInsightsSummaryLogsData OperationalInsightsSummaryLogsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OperationalInsightsNetworkSecurityPerimeterRuleType? ruleType = default, string displayName = default, string description = default, bool? isActive = default, OperationalInsightsNetworkSecurityPerimeterStatusCode? statusCode = default, OperationalInsightsNetworkSecurityPerimeterProvisioningState? provisioningState = default, OperationalInsightsSummaryRule ruleDefinition = default)
+        public static OperationalInsightsSummaryLogsData OperationalInsightsSummaryLogsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OperationalInsightsSummaryLogsRuleType? summaryLogsRuleType = default, string displayName = default, string description = default, bool? isActive = default, OperationalInsightsSummaryLogsStatusCode? summaryLogsStatusCode = default, OperationalInsightsSummaryLogsProvisioningState? summaryLogsProvisioningState = default, OperationalInsightsSummaryRule ruleDefinition = default)
         {
             return new OperationalInsightsSummaryLogsData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                ruleType is null && displayName is null && description is null && isActive is null && statusCode is null && provisioningState is null && ruleDefinition is null ? default : new SummaryLogsProperties(
-                    ruleType,
+                summaryLogsRuleType is null && displayName is null && description is null && isActive is null && summaryLogsStatusCode is null && summaryLogsProvisioningState is null && ruleDefinition is null ? default : new SummaryLogsProperties(
+                    summaryLogsRuleType,
                     displayName,
                     description,
                     isActive,
-                    statusCode,
-                    provisioningState,
+                    summaryLogsStatusCode,
+                    summaryLogsProvisioningState,
                     ruleDefinition,
                     default),
                 default);

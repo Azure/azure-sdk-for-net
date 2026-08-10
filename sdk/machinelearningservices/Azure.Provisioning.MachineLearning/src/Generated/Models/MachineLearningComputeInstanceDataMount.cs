@@ -142,7 +142,7 @@ namespace Azure.Provisioning.MachineLearning
             _createdBy = DefineProperty<string>(nameof(CreatedBy), new string[] { "createdBy" });
             _mountPath = DefineProperty<string>(nameof(MountPath), new string[] { "mountPath" });
             _mountState = DefineProperty<MachineLearningMountState>(nameof(MountState), new string[] { "mountState" });
-            _mountedOn = DefineProperty<DateTimeOffset>(nameof(MountedOn), new string[] { "mountedOn" });
+            _mountedOn = DefineProperty<DateTimeOffset>(nameof(MountedOn), new string[] { "mountedOn" }, format: "O");
             _error = DefineProperty<string>(nameof(Error), new string[] { "error" });
             DefineAdditionalProperties();
         }

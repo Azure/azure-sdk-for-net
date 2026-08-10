@@ -34,6 +34,9 @@ namespace Azure.Generator.Provisioning.Providers
         /// <summary>Optional default value (e.g., for singleton resource names).</summary>
         public string? DefaultValue { get; }
 
+        /// <summary>Optional Bicep literal serialization format.</summary>
+        public string? Format { get; }
+
         private ProvisioningPropertyProvider(
             FieldProvider backingField,
             CSharpType type,
@@ -45,6 +48,7 @@ namespace Azure.Generator.Provisioning.Providers
             bool isSettable,
             bool isRequired,
             string? defaultValue,
+            string? format,
             PropertyWireInformation? wireInfo)
             : base(
                 null,
@@ -61,6 +65,7 @@ namespace Azure.Generator.Provisioning.Providers
             IsSettable = isSettable;
             IsRequired = isRequired;
             DefaultValue = defaultValue;
+            Format = format;
         }
 
         private ProvisioningPropertyProvider(
@@ -74,6 +79,7 @@ namespace Azure.Generator.Provisioning.Providers
             bool isOutput,
             bool isRequired,
             string? defaultValue,
+            string? format,
             PropertyWireInformation? wireInfo)
             : base(inputProperty, enclosingType)
         {
@@ -89,6 +95,7 @@ namespace Azure.Generator.Provisioning.Providers
             IsSettable = false;
             IsRequired = isRequired;
             DefaultValue = defaultValue;
+            Format = format;
         }
 
         /// <summary>
@@ -104,6 +111,7 @@ namespace Azure.Generator.Provisioning.Providers
             bool isRequired,
             string[] bicepPath,
             string? defaultValue,
+            string? format,
             PropertyWireInformation? wireInfo,
             bool isDiscriminator,
             TypeProvider enclosingType)
@@ -147,10 +155,10 @@ namespace Azure.Generator.Provisioning.Providers
             return isDiscriminator
                 ? new ProvisioningPropertyProvider(
                     inputProperty, field, bicepType, resolvedName, body, enclosingType,
-                    bicepPath, isOutput, isRequired, defaultValue, wireInfo)
+                    bicepPath, isOutput, isRequired, defaultValue, format, wireInfo)
                 : new ProvisioningPropertyProvider(
                     field, bicepType, resolvedName, body, enclosingType,
-                    bicepPath, isOutput, isSettable, isRequired, defaultValue, wireInfo);
+                    bicepPath, isOutput, isSettable, isRequired, defaultValue, format, wireInfo);
         }
     }
 }
