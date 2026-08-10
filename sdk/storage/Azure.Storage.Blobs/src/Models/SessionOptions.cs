@@ -13,7 +13,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The session authentication mode to use for blob operations.
         /// </summary>
-        public SessionMode SessionMode { get; set; } = SessionMode.Disabled;
+        public SessionMode SessionMode { get; set; } = SessionMode.Enabled;
 
         /// <summary>
         /// The Account name to use for signing the session key.
