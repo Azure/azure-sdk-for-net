@@ -1,8 +1,6 @@
 # Analyze with semantic chunking
 
 > **Supported service API version:** `2026-06-01-preview`
->
-> Configure the client with `new ContentUnderstandingClientOptions(ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview)`.
 
 This sample shows how to configure `SemanticChunkingStrategy` on a custom analyzer and read chunks from analysis results. The walkthrough uses the SDK sample file `sample_invoice.pdf` (under `tests/samples/SampleFiles/`).
 

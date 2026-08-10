@@ -1,8 +1,6 @@
 # Analyze a URL input inline without polling
 
 > **Supported service API version:** `2026-06-01-preview`
->
-> Configure the client with `new ContentUnderstandingClientOptions(ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview)`.
 
 This sample shows `AnalyzeInlineAsync` for URL-based inputs.
 

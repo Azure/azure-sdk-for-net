@@ -1,8 +1,6 @@
 # Analyze binary input inline without Long Running Operation polling
 
 > **Supported service API version:** `2026-06-01-preview`
->
-> Configure the client with `new ContentUnderstandingClientOptions(ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview)`.
 
 This sample shows `AnalyzeBinaryInlineAsync` for local binary input.
 

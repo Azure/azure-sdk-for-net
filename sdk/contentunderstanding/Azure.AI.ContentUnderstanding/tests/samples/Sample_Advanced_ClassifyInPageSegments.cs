@@ -24,7 +24,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
         public async Task ClassifyInPageSegmentsAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
             string defaultId = $"test_in_page_classifier_{Recording.Random.NewGuid():N}";

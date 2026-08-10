@@ -1,8 +1,6 @@
 # Create analyzers with workflow settings
 
 > **Supported service API version:** `2026-06-01-preview`
->
-> Configure the client with `new ContentUnderstandingClientOptions(ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview)`.
 
 This sample shows how to create custom analyzers using `ContentAnalyzerConfig.Workflow`. Omit `Workflow` (or set `ContentAnalyzerWorkflow.Default`) for standard extraction, or set `ContentAnalyzerWorkflow.Agentic` when an answer must be built from evidence across the document. The sample analyzes the same 20-item invoice with each workflow so you can compare results.
 

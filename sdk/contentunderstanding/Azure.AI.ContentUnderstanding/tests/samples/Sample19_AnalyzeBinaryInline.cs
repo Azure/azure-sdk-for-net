@@ -22,7 +22,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
         public async Task AnalyzeBinaryInlineAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
 #if SNIPPET
@@ -92,7 +92,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
         public async Task AnalyzeBinaryInlineWithContentRangeAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
             string filePath = ContentUnderstandingClientTestEnvironment.CreatePath("mixed_financial_invoices.pdf");
