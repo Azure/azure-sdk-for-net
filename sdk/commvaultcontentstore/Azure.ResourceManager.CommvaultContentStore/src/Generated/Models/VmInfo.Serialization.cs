@@ -83,10 +83,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             writer.WriteStringValue(SourceVmGuid);
             writer.WritePropertyName("storageAccountId"u8);
             writer.WriteStringValue(StorageAccountId);
-            if (Optional.IsDefined(PowerOnVmAfterRestore))
+            if (Optional.IsDefined(ShouldPowerOnVmAfterRestore))
             {
                 writer.WritePropertyName("powerOnVmAfterRestore"u8);
-                writer.WriteBooleanValue(PowerOnVmAfterRestore.Value);
+                writer.WriteBooleanValue(ShouldPowerOnVmAfterRestore.Value);
             }
             if (Optional.IsDefined(Name))
             {
@@ -113,10 +113,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsDefined(AttachAndSwapOsDisk))
+            if (Optional.IsDefined(ShouldAttachAndSwapOsDisk))
             {
                 writer.WritePropertyName("attachAndSwapOsDisk"u8);
-                writer.WriteBooleanValue(AttachAndSwapOsDisk.Value);
+                writer.WriteBooleanValue(ShouldAttachAndSwapOsDisk.Value);
             }
             if (Optional.IsDefined(TargetVmGuid))
             {
@@ -177,13 +177,13 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             }
             string sourceVmGuid = default;
             string storageAccountId = default;
-            bool? powerOnVmAfterRestore = default;
+            bool? shouldPowerOnVmAfterRestore = default;
             string name = default;
             string resourceGroup = default;
             string region = default;
             string networkId = default;
             string subnetId = default;
-            bool? attachAndSwapOsDisk = default;
+            bool? shouldAttachAndSwapOsDisk = default;
             string targetVmGuid = default;
             IList<VmTag> vmTags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    powerOnVmAfterRestore = prop.Value.GetBoolean();
+                    shouldPowerOnVmAfterRestore = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    attachAndSwapOsDisk = prop.Value.GetBoolean();
+                    shouldAttachAndSwapOsDisk = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("targetVmGuid"u8))
@@ -269,13 +269,13 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             return new VmInfo(
                 sourceVmGuid,
                 storageAccountId,
-                powerOnVmAfterRestore,
+                shouldPowerOnVmAfterRestore,
                 name,
                 resourceGroup,
                 region,
                 networkId,
                 subnetId,
-                attachAndSwapOsDisk,
+                shouldAttachAndSwapOsDisk,
                 targetVmGuid,
                 vmTags ?? new ChangeTrackingList<VmTag>(),
                 additionalBinaryDataProperties);

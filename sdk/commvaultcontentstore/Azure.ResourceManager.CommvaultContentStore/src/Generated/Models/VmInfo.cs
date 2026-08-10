@@ -34,27 +34,27 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <summary> Initializes a new instance of <see cref="VmInfo"/>. </summary>
         /// <param name="sourceVmGuid"> The GUID of VM to be restored. </param>
         /// <param name="storageAccountId"> The storage account to be used for restore. </param>
-        /// <param name="powerOnVmAfterRestore"> The identifier to check if VM needs to be powered on. </param>
+        /// <param name="shouldPowerOnVmAfterRestore"> The identifier to check if VM needs to be powered on. </param>
         /// <param name="name"> The name of the VM. </param>
         /// <param name="resourceGroup"> The resource group of the VM. </param>
         /// <param name="region"> The region of the VM. </param>
         /// <param name="networkId"> The network Id of the VM. </param>
         /// <param name="subnetId"> The subnet Id of the VM. </param>
-        /// <param name="attachAndSwapOsDisk"> The identifier to check if to attach and swap disk of the VM. </param>
+        /// <param name="shouldAttachAndSwapOsDisk"> The identifier to check if to attach and swap disk of the VM. </param>
         /// <param name="targetVmGuid"> The GUID of target VM used in DISK ATTACH. </param>
         /// <param name="vmTags"> The vmTag of the VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VmInfo(string sourceVmGuid, string storageAccountId, bool? powerOnVmAfterRestore, string name, string resourceGroup, string region, string networkId, string subnetId, bool? attachAndSwapOsDisk, string targetVmGuid, IList<VmTag> vmTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VmInfo(string sourceVmGuid, string storageAccountId, bool? shouldPowerOnVmAfterRestore, string name, string resourceGroup, string region, string networkId, string subnetId, bool? shouldAttachAndSwapOsDisk, string targetVmGuid, IList<VmTag> vmTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceVmGuid = sourceVmGuid;
             StorageAccountId = storageAccountId;
-            PowerOnVmAfterRestore = powerOnVmAfterRestore;
+            ShouldPowerOnVmAfterRestore = shouldPowerOnVmAfterRestore;
             Name = name;
             ResourceGroup = resourceGroup;
             Region = region;
             NetworkId = networkId;
             SubnetId = subnetId;
-            AttachAndSwapOsDisk = attachAndSwapOsDisk;
+            ShouldAttachAndSwapOsDisk = shouldAttachAndSwapOsDisk;
             TargetVmGuid = targetVmGuid;
             VmTags = vmTags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public string StorageAccountId { get; }
 
         /// <summary> The identifier to check if VM needs to be powered on. </summary>
-        public bool? PowerOnVmAfterRestore { get; set; }
+        public bool? ShouldPowerOnVmAfterRestore { get; set; }
 
         /// <summary> The name of the VM. </summary>
         public string Name { get; set; }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public string SubnetId { get; set; }
 
         /// <summary> The identifier to check if to attach and swap disk of the VM. </summary>
-        public bool? AttachAndSwapOsDisk { get; set; }
+        public bool? ShouldAttachAndSwapOsDisk { get; set; }
 
         /// <summary> The GUID of target VM used in DISK ATTACH. </summary>
         public string TargetVmGuid { get; set; }

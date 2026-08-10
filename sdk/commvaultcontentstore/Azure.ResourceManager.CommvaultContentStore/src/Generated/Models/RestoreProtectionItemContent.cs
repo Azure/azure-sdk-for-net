@@ -18,26 +18,26 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RestoreProtectionItemContent"/>. </summary>
-        /// <param name="inPlaceRestore"> Check whether inplace or out of place restore. </param>
+        /// <param name="isInPlaceRestore"> Check whether inplace or out of place restore. </param>
         /// <param name="vmInfoList"> List of information on VMs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmInfoList"/> is null. </exception>
-        public RestoreProtectionItemContent(bool inPlaceRestore, IEnumerable<VmInfo> vmInfoList)
+        public RestoreProtectionItemContent(bool isInPlaceRestore, IEnumerable<VmInfo> vmInfoList)
         {
             Argument.AssertNotNull(vmInfoList, nameof(vmInfoList));
 
-            InPlaceRestore = inPlaceRestore;
+            IsInPlaceRestore = isInPlaceRestore;
             VmDestinationInfo = new VmDestinationInfo(vmInfoList);
         }
 
         /// <summary> Initializes a new instance of <see cref="RestoreProtectionItemContent"/>. </summary>
-        /// <param name="inPlaceRestore"> Check whether inplace or out of place restore. </param>
+        /// <param name="isInPlaceRestore"> Check whether inplace or out of place restore. </param>
         /// <param name="restoreType"> Type of Restore. </param>
         /// <param name="toTime"> Time to restore. </param>
         /// <param name="vmDestinationInfo"> The vm destination details of the VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestoreProtectionItemContent(bool inPlaceRestore, RestoreType? restoreType, string toTime, VmDestinationInfo vmDestinationInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestoreProtectionItemContent(bool isInPlaceRestore, RestoreType? restoreType, string toTime, VmDestinationInfo vmDestinationInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            InPlaceRestore = inPlaceRestore;
+            IsInPlaceRestore = isInPlaceRestore;
             RestoreType = restoreType;
             ToTime = toTime;
             VmDestinationInfo = vmDestinationInfo;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> Check whether inplace or out of place restore. </summary>
-        public bool InPlaceRestore { get; }
+        public bool IsInPlaceRestore { get; }
 
         /// <summary> Type of Restore. </summary>
         public RestoreType? RestoreType { get; set; }

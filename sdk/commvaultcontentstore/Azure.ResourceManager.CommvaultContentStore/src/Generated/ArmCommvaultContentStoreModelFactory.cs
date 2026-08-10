@@ -385,43 +385,43 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             return new StopBackupProtectionGroupContent(reason, comment, default);
         }
 
-        /// <param name="inPlaceRestore"> Check whether inplace or out of place restore. </param>
+        /// <param name="isInPlaceRestore"> Check whether inplace or out of place restore. </param>
         /// <param name="restoreType"> Type of Restore. </param>
         /// <param name="toTime"> Time to restore. </param>
         /// <param name="vmInfoList"> List of information on VMs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmInfoList"/> is null. </exception>
         /// <returns> A new <see cref="Models.RestoreProtectionItemContent"/> instance for mocking. </returns>
-        public static RestoreProtectionItemContent RestoreProtectionItemContent(bool inPlaceRestore = default, RestoreType? restoreType = default, string toTime = default, IEnumerable<VmInfo> vmInfoList = default)
+        public static RestoreProtectionItemContent RestoreProtectionItemContent(bool isInPlaceRestore = default, RestoreType? restoreType = default, string toTime = default, IEnumerable<VmInfo> vmInfoList = default)
         {
-            return new RestoreProtectionItemContent(inPlaceRestore, restoreType, toTime, vmInfoList is null ? default : new VmDestinationInfo((vmInfoList ?? new ChangeTrackingList<VmInfo>()).ToList(), default), default);
+            return new RestoreProtectionItemContent(isInPlaceRestore, restoreType, toTime, vmInfoList is null ? default : new VmDestinationInfo((vmInfoList ?? new ChangeTrackingList<VmInfo>()).ToList(), default), default);
         }
 
         /// <param name="sourceVmGuid"> The GUID of VM to be restored. </param>
         /// <param name="storageAccountId"> The storage account to be used for restore. </param>
-        /// <param name="powerOnVmAfterRestore"> The identifier to check if VM needs to be powered on. </param>
+        /// <param name="shouldPowerOnVmAfterRestore"> The identifier to check if VM needs to be powered on. </param>
         /// <param name="name"> The name of the VM. </param>
         /// <param name="resourceGroup"> The resource group of the VM. </param>
         /// <param name="region"> The region of the VM. </param>
         /// <param name="networkId"> The network Id of the VM. </param>
         /// <param name="subnetId"> The subnet Id of the VM. </param>
-        /// <param name="attachAndSwapOsDisk"> The identifier to check if to attach and swap disk of the VM. </param>
+        /// <param name="shouldAttachAndSwapOsDisk"> The identifier to check if to attach and swap disk of the VM. </param>
         /// <param name="targetVmGuid"> The GUID of target VM used in DISK ATTACH. </param>
         /// <param name="vmTags"> The vmTag of the VM. </param>
         /// <returns> A new <see cref="Models.VmInfo"/> instance for mocking. </returns>
-        public static VmInfo VmInfo(string sourceVmGuid = default, string storageAccountId = default, bool? powerOnVmAfterRestore = default, string name = default, string resourceGroup = default, string region = default, string networkId = default, string subnetId = default, bool? attachAndSwapOsDisk = default, string targetVmGuid = default, IEnumerable<VmTag> vmTags = default)
+        public static VmInfo VmInfo(string sourceVmGuid = default, string storageAccountId = default, bool? shouldPowerOnVmAfterRestore = default, string name = default, string resourceGroup = default, string region = default, string networkId = default, string subnetId = default, bool? shouldAttachAndSwapOsDisk = default, string targetVmGuid = default, IEnumerable<VmTag> vmTags = default)
         {
             vmTags ??= new ChangeTrackingList<VmTag>();
 
             return new VmInfo(
                 sourceVmGuid,
                 storageAccountId,
-                powerOnVmAfterRestore,
+                shouldPowerOnVmAfterRestore,
                 name,
                 resourceGroup,
                 region,
                 networkId,
                 subnetId,
-                attachAndSwapOsDisk,
+                shouldAttachAndSwapOsDisk,
                 targetVmGuid,
                 (vmTags ?? new ChangeTrackingList<VmTag>()).ToList(),
                 default);

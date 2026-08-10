@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 throw new FormatException($"The model {nameof(RestoreProtectionItemContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("inPlaceRestore"u8);
-            writer.WriteBooleanValue(InPlaceRestore);
+            writer.WriteBooleanValue(IsInPlaceRestore);
             if (Optional.IsDefined(RestoreType))
             {
                 writer.WritePropertyName("restoreType"u8);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 return null;
             }
-            bool inPlaceRestore = default;
+            bool isInPlaceRestore = default;
             RestoreType? restoreType = default;
             string toTime = default;
             VmDestinationInfo vmDestinationInfo = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 if (prop.NameEquals("inPlaceRestore"u8))
                 {
-                    inPlaceRestore = prop.Value.GetBoolean();
+                    isInPlaceRestore = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("restoreType"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RestoreProtectionItemContent(inPlaceRestore, restoreType, toTime, vmDestinationInfo, additionalBinaryDataProperties);
+            return new RestoreProtectionItemContent(isInPlaceRestore, restoreType, toTime, vmDestinationInfo, additionalBinaryDataProperties);
         }
     }
 }

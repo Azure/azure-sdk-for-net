@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public static Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResources ProtectionGroupResources(System.Collections.Generic.IEnumerable<string> manual = null, Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResourcesMatchRules matchRules = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResourcesMatchRules ProtectionGroupResourcesMatchRules(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.Rule> rules = null, Azure.ResourceManager.CommvaultContentStore.Models.MatchType matchType = default(Azure.ResourceManager.CommvaultContentStore.Models.MatchType)) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.RestorePoints RestorePoints(System.Collections.Generic.IEnumerable<long> restoreTimes = null) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.RestoreProtectionItemContent RestoreProtectionItemContent(bool inPlaceRestore = false, Azure.ResourceManager.CommvaultContentStore.Models.RestoreType? restoreType = default(Azure.ResourceManager.CommvaultContentStore.Models.RestoreType?), string toTime = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.VmInfo> vmInfoList = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.RestoreProtectionItemContent RestoreProtectionItemContent(bool isInPlaceRestore = false, Azure.ResourceManager.CommvaultContentStore.Models.RestoreType? restoreType = default(Azure.ResourceManager.CommvaultContentStore.Models.RestoreType?), string toTime = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.VmInfo> vmInfoList = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.RestoreProtectionItemResult RestoreProtectionItemResult(int taskId = 0, System.Collections.Generic.IEnumerable<string> jobIds = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.RoleAssignment RoleAssignment(Azure.ResourceManager.CommvaultContentStore.Models.RoleName? roleName = default(Azure.ResourceManager.CommvaultContentStore.Models.RoleName?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.EntityInfo> entities = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.RoleMappingData RoleMappingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CommvaultContentStore.Models.RoleMappingProperties properties = null) { throw null; }
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public static Azure.ResourceManager.CommvaultContentStore.Models.StoragePlan StoragePlan(string name = null, string storagePoolId = null, string copyName = null, int? copyPrecedence = default(int?), int? retentionPeriod = default(int?), Azure.ResourceManager.CommvaultContentStore.Models.RetentionTime? retentionTime = default(Azure.ResourceManager.CommvaultContentStore.Models.RetentionTime?), Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType? backupRuleType = default(Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.ExtendedRetentionTime> extendedRetention = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.StorageProperties StorageProperties(string location = null, Azure.ResourceManager.CommvaultContentStore.Models.StorageType storageType = default(Azure.ResourceManager.CommvaultContentStore.Models.StorageType), Azure.ResourceManager.CommvaultContentStore.Models.Vendor vendor = default(Azure.ResourceManager.CommvaultContentStore.Models.Vendor), Azure.ResourceManager.CommvaultContentStore.Models.StorageClassType @class = default(Azure.ResourceManager.CommvaultContentStore.Models.StorageClassType), Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.UserDetails UserDetails(string firstName = null, string lastName = null, string emailAddress = null, string upn = null, string phoneNumber = null) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.VmInfo VmInfo(string sourceVmGuid = null, string storageAccountId = null, bool? powerOnVmAfterRestore = default(bool?), string name = null, string resourceGroup = null, string region = null, string networkId = null, string subnetId = null, bool? attachAndSwapOsDisk = default(bool?), string targetVmGuid = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.VmTag> vmTags = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.VmInfo VmInfo(string sourceVmGuid = null, string storageAccountId = null, bool? shouldPowerOnVmAfterRestore = default(bool?), string name = null, string resourceGroup = null, string region = null, string networkId = null, string subnetId = null, bool? shouldAttachAndSwapOsDisk = default(bool?), string targetVmGuid = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.VmTag> vmTags = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.VmListItem VmListItem(string vmGuid = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.VmTag VmTag(string name = null, string value = null) { throw null; }
     }
@@ -1004,8 +1004,8 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
     }
     public partial class RestoreProtectionItemContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.RestoreProtectionItemContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.RestoreProtectionItemContent>
     {
-        public RestoreProtectionItemContent(bool inPlaceRestore, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.VmInfo> vmInfoList) { }
-        public bool InPlaceRestore { get { throw null; } }
+        public RestoreProtectionItemContent(bool isInPlaceRestore, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.VmInfo> vmInfoList) { }
+        public bool IsInPlaceRestore { get { throw null; } }
         public Azure.ResourceManager.CommvaultContentStore.Models.RestoreType? RestoreType { get { throw null; } set { } }
         public string ToTime { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CommvaultContentStore.Models.VmInfo> VmInfoList { get { throw null; } }
@@ -1317,12 +1317,12 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
     public partial class VmInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.VmInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.VmInfo>
     {
         public VmInfo(string sourceVmGuid, string storageAccountId) { }
-        public bool? AttachAndSwapOsDisk { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string NetworkId { get { throw null; } set { } }
-        public bool? PowerOnVmAfterRestore { get { throw null; } set { } }
         public string Region { get { throw null; } set { } }
         public string ResourceGroup { get { throw null; } set { } }
+        public bool? ShouldAttachAndSwapOsDisk { get { throw null; } set { } }
+        public bool? ShouldPowerOnVmAfterRestore { get { throw null; } set { } }
         public string SourceVmGuid { get { throw null; } }
         public string StorageAccountId { get { throw null; } }
         public string SubnetId { get { throw null; } set { } }
