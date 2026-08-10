@@ -35,6 +35,7 @@ namespace Azure.Generator.Management.Visitors
                         && IsModelType(returnType)
                         && !IsModelFactoryModelType(returnType))
                     {
+                        UpdateParameterNames(method);
                         updatedMethods.Add(method);
                     }
                     else if (returnType is not null && IsModelFactoryModelType(returnType))
@@ -202,7 +203,7 @@ namespace Azure.Generator.Management.Visitors
         {
             if (PreservePreviousParameterNames(method))
             {
-                // Update the method signature to refresh documentation after parameter renames.
+                // Update the method signature to refresh documentation after parameter restoration.
                 method.Update(signature: method.Signature);
             }
         }
@@ -228,26 +229,70 @@ namespace Azure.Generator.Management.Visitors
                 return false;
             }
 
-            var updated = false;
-            var currentParameterNames = currentParameters.Select(parameter => parameter.Name).ToHashSet(StringComparer.Ordinal);
-            for (int i = 0; i < currentParameters.Count; i++)
+            var previousParameterNames = previousParameters.Select(parameter => parameter.Name).ToArray();
+            // Validate the complete target mapping before mutating parameters so an invalid mapping is not partially applied.
+            if (previousParameterNames.Any(string.IsNullOrEmpty)
+                || previousParameterNames.Distinct(StringComparer.Ordinal).Count() != previousParameterNames.Length)
             {
-                var previousName = previousParameters[i].Name;
-                var currentParameter = currentParameters[i];
-                if (string.IsNullOrEmpty(previousName) || currentParameter.Name == previousName)
+                return false;
+            }
+
+            var reorderedParameters = new ParameterProvider[currentParameters.Count];
+            var usedParameters = new HashSet<ParameterProvider>();
+            // Move existing providers as a unit so their descriptions, property metadata, and body references stay semantic.
+            for (int i = 0; i < previousParameters.Count; i++)
+            {
+                var previousParameter = previousParameters[i];
+                var matchingParameter = currentParameters.FirstOrDefault(parameter =>
+                    !usedParameters.Contains(parameter)
+                    && parameter.Name == previousParameter.Name
+                    && parameter.Type.AreNamesEqual(previousParameter.Type));
+                if (matchingParameter is not null)
+                {
+                    reorderedParameters[i] = matchingParameter;
+                    usedParameters.Add(matchingParameter);
+                }
+            }
+
+            // Any remaining targets are true renames rather than permutations.
+            for (int i = 0; i < previousParameters.Count; i++)
+            {
+                if (reorderedParameters[i] is not null)
                 {
                     continue;
                 }
 
-                if (currentParameterNames.Contains(previousName))
+                var previousParameter = previousParameters[i];
+                var matchingParameter = currentParameters.FirstOrDefault(parameter =>
+                    !usedParameters.Contains(parameter)
+                    && parameter.Type.AreNamesEqual(previousParameter.Type));
+                if (matchingParameter is null)
                 {
+                    return false;
+                }
+
+                reorderedParameters[i] = matchingParameter;
+                usedParameters.Add(matchingParameter);
+            }
+
+            var updated = false;
+            for (int i = 0; i < reorderedParameters.Length; i++)
+            {
+                var previousName = previousParameterNames[i];
+                var currentParameter = reorderedParameters[i];
+                if (currentParameter.Name == previousName)
+                {
+                    updated |= !ReferenceEquals(currentParameter, currentParameters[i]);
                     continue;
                 }
 
-                currentParameterNames.Remove(currentParameter.Name);
                 currentParameter.Update(name: previousName);
-                currentParameterNames.Add(previousName);
                 updated = true;
+            }
+
+            if (updated)
+            {
+                method.Signature.Update(parameters: reorderedParameters);
             }
 
             return updated;
