@@ -158,6 +158,35 @@ namespace Azure.AI.Extensions.OpenAI.Telemetry
             return scope;
         }
 
+        /// <summary>
+        /// Starts a create_conversation span.
+        /// </summary>
+        internal static OpenTelemetryResponseScope StartCreateConversation(Uri endpoint, string agentName)
+        {
+            if (!IsEnabled)
+            {
+                return null;
+            }
+
+            var scope = new OpenTelemetryResponseScope("create_conversation", "create_conversation", endpoint);
+            if (scope._activity?.IsAllDataRequested != true && !s_duration.Enabled)
+            {
+                scope._activity?.Dispose();
+                return null;
+            }
+
+            scope.SetTagIfNotEmpty("gen_ai.agent.name", agentName);
+            return scope;
+        }
+
+        /// <summary>
+        /// Records the conversation ID on the create_conversation span.
+        /// </summary>
+        internal void RecordConversationId(string conversationId)
+        {
+            SetTagIfNotEmpty("gen_ai.conversation.id", conversationId);
+        }
+
         internal static OpenTelemetryResponseScope Start(CreateResponseOptions options, Uri endpoint, string defaultModelName)
         {
             if (!IsEnabled)

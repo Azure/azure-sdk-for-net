@@ -117,15 +117,20 @@ namespace Azure.AI.Translation.Document
                 writer.WritePropertyName("totalImageScansFailed"u8);
                 writer.WriteNumberValue(TotalImageScansFailed.Value);
             }
-            if (Optional.IsDefined(ImageCharged))
+            if (Optional.IsDefined(ImagesCharged))
             {
                 writer.WritePropertyName("imageCharged"u8);
-                writer.WriteNumberValue(ImageCharged.Value);
+                writer.WriteNumberValue(ImagesCharged.Value);
             }
-            if (Optional.IsDefined(ImageCharacterDetected))
+            if (Optional.IsDefined(ImageCharactersDetected))
             {
                 writer.WritePropertyName("imageCharacterDetected"u8);
-                writer.WriteNumberValue(ImageCharacterDetected.Value);
+                writer.WriteNumberValue(ImageCharactersDetected.Value);
+            }
+            if (Optional.IsDefined(DeploymentName))
+            {
+                writer.WritePropertyName("deploymentName"u8);
+                writer.WriteStringValue(DeploymentName);
             }
             if (Optional.IsDefined(_error))
             {
@@ -185,8 +190,9 @@ namespace Azure.AI.Translation.Document
             long charactersCharged = default;
             int? totalImageScansSucceeded = default;
             int? totalImageScansFailed = default;
-            int? imageCharged = default;
-            int? imageCharacterDetected = default;
+            int? imagesCharged = default;
+            int? imageCharactersDetected = default;
+            string deploymentName = default;
             JsonElement error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -268,7 +274,7 @@ namespace Azure.AI.Translation.Document
                     {
                         continue;
                     }
-                    imageCharged = prop.Value.GetInt32();
+                    imagesCharged = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("imageCharacterDetected"u8))
@@ -277,7 +283,12 @@ namespace Azure.AI.Translation.Document
                     {
                         continue;
                     }
-                    imageCharacterDetected = prop.Value.GetInt32();
+                    imageCharactersDetected = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("deploymentName"u8))
+                {
+                    deploymentName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
@@ -302,8 +313,9 @@ namespace Azure.AI.Translation.Document
                 charactersCharged,
                 totalImageScansSucceeded,
                 totalImageScansFailed,
-                imageCharged,
-                imageCharacterDetected,
+                imagesCharged,
+                imageCharactersDetected,
+                deploymentName,
                 error,
                 additionalBinaryDataProperties);
         }
