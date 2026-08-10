@@ -74,7 +74,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateStartImportUpdateRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateImportUpdateRequest(RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

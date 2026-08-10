@@ -28,28 +28,18 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Initializes a new instance of DeviceUpdateClient. </summary>
-        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
-        /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public DeviceUpdateClient(string endpoint, string instanceId, TokenCredential credential) : this(endpoint, instanceId, credential, new DeviceUpdateClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of DeviceUpdateClient. </summary>
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
-        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
+        /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal DeviceUpdateClient(HttpPipelinePolicy authenticationPolicy, string endpoint, string instanceId, DeviceUpdateClientOptions options)
+        internal DeviceUpdateClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string instanceId, DeviceUpdateClientOptions options)
         {
-            Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             options ??= new DeviceUpdateClientOptions();
 
-            _endpoint = new Uri($"https://{endpoint}");
+            _endpoint = endpoint;
             _instanceId = instanceId;
             if (authenticationPolicy != null)
             {
@@ -63,21 +53,10 @@ namespace Azure.IoT.DeviceUpdate
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdateClient. </summary>
-        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
-        /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public DeviceUpdateClient(string endpoint, string instanceId, TokenCredential credential, DeviceUpdateClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, instanceId, options)
-        {
-        }
-
         /// <summary> Initializes a new instance of DeviceUpdateClient from a <see cref="DeviceUpdateClientSettings"/>. </summary>
         /// <param name="settings"> The settings for DeviceUpdateClient. </param>
         [Experimental("SCME0002")]
-        public DeviceUpdateClient(DeviceUpdateClientSettings settings) : this(settings?.Endpoint, settings?.InstanceId, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        public DeviceUpdateClient(DeviceUpdateClientSettings settings) : this(null, settings?.Endpoint, settings?.InstanceId, settings?.Options)
         {
         }
 
@@ -132,16 +111,16 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Operation StartImportUpdate(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        public virtual Operation ImportUpdate(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.StartImportUpdate");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.ImportUpdate");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateStartImportUpdateRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DeviceUpdateClient.StartImportUpdate", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = CreateImportUpdateRequest(content, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DeviceUpdateClient.ImportUpdate", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -159,16 +138,16 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation> StartImportUpdateAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation> ImportUpdateAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.StartImportUpdate");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.ImportUpdate");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateStartImportUpdateRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DeviceUpdateClient.StartImportUpdate", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateImportUpdateRequest(content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DeviceUpdateClient.ImportUpdate", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {

@@ -134,7 +134,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetInstallableUpdatesForDeviceClassesRequest(string deviceClassId, RequestContext context)
+        internal HttpMessage CreateGetInstallableUpdatesForDeviceClassRequest(string deviceClassId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -155,7 +155,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateNextGetInstallableUpdatesForDeviceClassesRequest(Uri nextPage, string deviceClassId, RequestContext context)
+        internal HttpMessage CreateNextGetInstallableUpdatesForDeviceClassRequest(Uri nextPage, string deviceClassId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -411,7 +411,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetBestUpdatesForGroupsRequest(string groupId, RequestContext context)
+        internal HttpMessage CreateGetBestUpdatesForGroupRequest(string groupId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -432,7 +432,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateNextGetBestUpdatesForGroupsRequest(Uri nextPage, string groupId, RequestContext context)
+        internal HttpMessage CreateNextGetBestUpdatesForGroupRequest(Uri nextPage, string groupId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -455,7 +455,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentsForGroupsRequest(string groupId, string orderBy, RequestContext context)
+        internal HttpMessage CreateGetDeploymentsForGroupRequest(string groupId, string orderBy, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -480,7 +480,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateNextGetDeploymentsForGroupsRequest(Uri nextPage, string groupId, string orderBy, RequestContext context)
+        internal HttpMessage CreateNextGetDeploymentsForGroupRequest(Uri nextPage, string groupId, string orderBy, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -593,7 +593,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetDeviceClassSubgroupsForGroupsRequest(string groupId, string filter, RequestContext context)
+        internal HttpMessage CreateGetDeviceClassSubgroupsForGroupRequest(string groupId, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -618,7 +618,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateNextGetDeviceClassSubgroupsForGroupsRequest(Uri nextPage, string groupId, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetDeviceClassSubgroupsForGroupRequest(Uri nextPage, string groupId, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -730,7 +730,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentsForDeviceClassSubgroupsRequest(string groupId, string deviceClassId, string orderBy, RequestContext context)
+        internal HttpMessage CreateGetDeploymentsForDeviceClassSubgroupRequest(string groupId, string deviceClassId, string orderBy, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -757,7 +757,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateNextGetDeploymentsForDeviceClassSubgroupsRequest(Uri nextPage, string groupId, string deviceClassId, string orderBy, RequestContext context)
+        internal HttpMessage CreateNextGetDeploymentsForDeviceClassSubgroupRequest(Uri nextPage, string groupId, string deviceClassId, string orderBy, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -902,7 +902,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetDeviceStatesForDeviceClassSubgroupDeploymentsRequest(string groupId, string deviceClassId, string deploymentId, string filter, RequestContext context)
+        internal HttpMessage CreateGetDeviceStatesForDeviceClassSubgroupDeploymentRequest(string groupId, string deviceClassId, string deploymentId, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -931,7 +931,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateNextGetDeviceStatesForDeviceClassSubgroupDeploymentsRequest(Uri nextPage, string groupId, string deviceClassId, string deploymentId, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetDeviceStatesForDeviceClassSubgroupDeploymentRequest(Uri nextPage, string groupId, string deviceClassId, string deploymentId, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
