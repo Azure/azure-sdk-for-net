@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                addressClassification is null && shippingAddress is null && addressValidationStatus is null ? default : new EdgeOrderItemAddressProperties(
+                addressClassification is null && shippingAddress is null && contactDetails is null && addressValidationStatus is null && provisioningState is null ? default : new EdgeOrderItemAddressProperties(
                     addressClassification,
                     shippingAddress,
-                    default,
+                    contactDetails,
                     addressValidationStatus,
-                    default,
+                    provisioningState,
                     default),
                 default);
         }
@@ -153,12 +153,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                orderItemDetails is null && orderId is null ? default : new OrderItemProperties(
+                orderItemDetails is null && addressDetails is null && startOn is null && orderId is null && provisioningState is null ? default : new OrderItemProperties(
                     orderItemDetails,
-                    default,
-                    default,
+                    addressDetails,
+                    startOn,
                     orderId,
-                    default,
+                    provisioningState,
                     default),
                 identity,
                 default);
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 name,
                 resourceType,
                 systemData,
-                orderItemIds is null && orderStageHistory is null && orderMode is null ? default : new OrderProperties((orderItemIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default, (orderStageHistory ?? new ChangeTrackingList<EdgeOrderStageDetails>()).ToList(), orderMode, default),
+                orderItemIds is null && currentStage is null && orderStageHistory is null && orderMode is null ? default : new OrderProperties((orderItemIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), currentStage, (orderStageHistory ?? new ChangeTrackingList<EdgeOrderStageDetails>()).ToList(), orderMode, default),
                 default);
         }
 

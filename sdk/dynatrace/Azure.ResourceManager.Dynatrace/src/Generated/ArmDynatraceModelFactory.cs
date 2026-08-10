@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                logRules is null && metricRules is null && provisioningState is null ? default : new DynatraceTagRuleProperties(logRules, metricRules, provisioningState, default),
                 default);
         }
 
@@ -146,16 +146,16 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                dynatraceEnvironmentProperties is null ? default : new DynatraceMonitorProperties(
-                    default,
-                    default,
-                    default,
+                monitoringStatus is null && marketplaceSubscriptionStatus is null && marketplaceSaasAutoRenew is null && dynatraceEnvironmentProperties is null && userInfo is null && planData is null && liftrResourceCategory is null && liftrResourcePreference is null && provisioningState is null ? default : new DynatraceMonitorProperties(
+                    monitoringStatus,
+                    marketplaceSubscriptionStatus,
+                    marketplaceSaasAutoRenew,
                     dynatraceEnvironmentProperties,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    userInfo,
+                    planData,
+                    liftrResourceCategory,
+                    liftrResourcePreference,
+                    provisioningState,
                     default),
                 identity,
                 default);
@@ -452,12 +452,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 name,
                 resourceType,
                 systemData,
-                singleSignOnState is null && singleSignOnUri is null ? default : new DynatraceSingleSignOnProperties(
+                singleSignOnState is null && enterpriseAppId is null && singleSignOnUri is null && aadDomains is null && provisioningState is null ? default : new DynatraceSingleSignOnProperties(
                     singleSignOnState,
-                    default,
+                    enterpriseAppId,
                     singleSignOnUri,
-                    default,
-                    default,
+                    (aadDomains ?? new ChangeTrackingList<string>()).ToList(),
+                    provisioningState,
                     default),
                 default);
         }
