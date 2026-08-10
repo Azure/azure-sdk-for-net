@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Cryptography;
-using Azure.Core.Pipeline;
 using Azure.Storage.Common;
 using Azure.Storage.Cryptography.Models;
 using static Azure.Storage.Cryptography.Models.ClientSideEncryptionVersionExtensions;
