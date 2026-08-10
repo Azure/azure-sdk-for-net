@@ -72,8 +72,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
             return serviceVersion switch
             {
                 ContentUnderstandingClientOptions.ServiceVersion.V2025_11_01 => new ContentUnderstandingModelProfile(
-                    GetRecordedOptionalVariable("CU_COMPLETION_MODEL") ?? "gpt-4.1", // completion model name
-                    GetRecordedOptionalVariable("GPT_4_1_DEPLOYMENT") ?? CompletionModelDeployment ?? "gpt-4.1", // completion deployment name
+                    "gpt-4.1", // completion model name
+                    GetRecordedOptionalVariable("GPT_4_1_DEPLOYMENT") ?? "gpt-4.1", // completion deployment name
                     "gpt-4.1-mini", // mini completion model name
                     GetRecordedOptionalVariable("GPT_4_1_MINI_DEPLOYMENT") ?? CompletionMiniDeployment ?? "foundrythreiscae/gpt-4.1-mini", // mini completion deployment name
                     "text-embedding-3-large", // embedding model name
