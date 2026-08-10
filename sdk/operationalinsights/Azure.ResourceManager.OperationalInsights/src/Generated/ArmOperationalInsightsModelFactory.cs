@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                resourceId is null && writeAccessResourceId is null && provisioningState is null ? default : new LinkedServiceProperties(resourceId, writeAccessResourceId, provisioningState, default),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
         }
@@ -569,7 +569,15 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                category is null && displayName is null && query is null && functionAlias is null && functionParameters is null && version is null && tags is null ? default : new SavedSearchProperties(
+                    category,
+                    displayName,
+                    query,
+                    functionAlias,
+                    functionParameters,
+                    version,
+                    (tags ?? new ChangeTrackingList<OperationalInsightsTag>()).ToList(),
+                    default),
                 eTag,
                 default);
         }
@@ -878,7 +886,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 name,
                 resourceType,
                 systemData,
-                storageAccountIds is null ? default : new LinkedStorageAccountsProperties(default, (storageAccountIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default),
+                dataSourceType is null && storageAccountIds is null ? default : new LinkedStorageAccountsProperties(dataSourceType, (storageAccountIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default),
                 default);
         }
 
@@ -977,7 +985,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                queryPackId is null ? default : new LogAnalyticsQueryPackProperties(queryPackId, default, default, default, default),
+                queryPackId is null && createdOn is null && modifiedOn is null && provisioningState is null ? default : new LogAnalyticsQueryPackProperties(queryPackId, createdOn, modifiedOn, provisioningState, default),
                 default);
         }
 

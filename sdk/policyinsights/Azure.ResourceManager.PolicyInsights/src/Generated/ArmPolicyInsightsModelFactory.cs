@@ -152,7 +152,19 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                policyAssignmentId is null && policyDefinitionReferenceId is null && complianceState is null && expireOn is null && owner is null && comments is null && evidence is null && provisioningState is null && lastComplianceStateChangeOn is null && assessOn is null && metadata is null ? default : new AttestationProperties(
+                    policyAssignmentId,
+                    policyDefinitionReferenceId,
+                    complianceState,
+                    expireOn,
+                    owner,
+                    comments,
+                    (evidence ?? new ChangeTrackingList<AttestationEvidence>()).ToList(),
+                    provisioningState,
+                    lastComplianceStateChangeOn,
+                    assessOn,
+                    metadata,
+                    default),
                 default);
         }
 

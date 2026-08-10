@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                startIPAddress is null && endIPAddress is null ? default : new FirewallRuleProperties(startIPAddress, endIPAddress, default),
                 default);
         }
 
@@ -806,7 +806,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                principalType is null && principalName is null && objectId is null && tenantId is null ? default : new AdministratorMicrosoftEntraProperties(principalType, principalName, objectId, tenantId, default),
                 default);
         }
 
@@ -1081,7 +1081,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerLtrPreBackupResult"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerLtrPreBackupResult PostgreSqlFlexibleServerLtrPreBackupResult(int numberOfContainers = default)
         {
-            return new PostgreSqlFlexibleServerLtrPreBackupResult(default, default);
+            return new PostgreSqlFlexibleServerLtrPreBackupResult(new BackupsLongTermRetentionResponseProperties(numberOfContainers, default), default);
         }
 
         /// <param name="sasUriList"> List of SAS uri of storage containers where backup data is to be streamed/copied. </param>
