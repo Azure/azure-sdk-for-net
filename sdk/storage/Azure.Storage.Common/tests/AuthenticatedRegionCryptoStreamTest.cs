@@ -2,19 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
 using Azure.Storage.Tests.Shared;
-using Iced.Intel;
 using Moq;
-using NUnit;
 using NUnit.Framework;
 
 namespace Azure.Storage.Test
@@ -446,6 +442,113 @@ namespace Azure.Storage.Test
 
             ms.Verify(s => s.Flush(), Times.Never);
             ms.Verify(s => s.FlushAsync(It.IsAny<CancellationToken>()), Times.Never);
+        }
+
+        [Test]
+        public void DetectRegionReorderWrite([Values(true, false)] bool detectReorder)
+        {
+            const int regionDataLen = 1024;
+            const int dataLen = regionDataLen * 4;
+            byte[] plaintext = GetRandomBytes(dataLen);
+            byte[] cek = GetRandomBytes(256 / 8);
+
+            // encrypt data
+            var destStream = new MemoryStream();
+            var writeStream = new AuthenticatedRegionCryptoStream(
+                destStream,
+                new GcmAuthenticatedCryptographicTransform(cek, TransformMode.Encrypt),
+                regionDataLen,
+                CryptoStreamMode.Write);
+            new MemoryStream(plaintext).CopyTo(writeStream);
+            writeStream.FlushFinalInternal(false, CancellationToken.None).EnsureCompleted();
+            var ciphertext = destStream.ToArray();
+
+            // reorder regions
+            SwapRegions(ciphertext, 2, 3, regionDataLen + _nonceLength + _tagLength);
+
+            // detect on decrypt
+            IAuthenticatedCryptographicTransform transform = new GcmAuthenticatedCryptographicTransform(cek, TransformMode.Decrypt);
+            if (detectReorder)
+            {
+                transform = new ForceSequentialNonceAuthenticatedCryptographicTransform(transform, 1);
+            }
+            destStream = new MemoryStream();
+            writeStream = new AuthenticatedRegionCryptoStream(
+                destStream,
+                transform,
+                regionDataLen,
+                CryptoStreamMode.Write);
+
+            TestDelegate action = () => new MemoryStream(ciphertext).CopyTo(writeStream);
+            if (detectReorder)
+            {
+                Assert.Throws<CryptographicException>(action);
+            }
+            else
+            {
+                Assert.DoesNotThrow(action);
+            }
+        }
+
+        [Test]
+        public void DetectRegionReorderRead([Values(true, false)] bool detectReorder)
+        {
+            const int regionDataLen = 1024;
+            const int dataLen = regionDataLen * 4;
+            byte[] plaintext = GetRandomBytes(dataLen);
+            byte[] cek = GetRandomBytes(256 / 8);
+
+            // encrypt data
+            var destStream = new MemoryStream();
+            var readStream = new AuthenticatedRegionCryptoStream(
+                new MemoryStream(plaintext),
+                new GcmAuthenticatedCryptographicTransform(cek, TransformMode.Encrypt),
+                regionDataLen,
+                CryptoStreamMode.Read);
+            readStream.CopyTo(destStream);
+            var ciphertext = destStream.ToArray();
+
+            // reorder regions
+            SwapRegions(ciphertext, 2, 3, regionDataLen + _nonceLength + _tagLength);
+
+            // detect on decrypt
+            IAuthenticatedCryptographicTransform transform = new GcmAuthenticatedCryptographicTransform(cek, TransformMode.Decrypt);
+            if (detectReorder)
+            {
+                transform = new ForceSequentialNonceAuthenticatedCryptographicTransform(transform, 1);
+            }
+            destStream = new MemoryStream();
+            readStream = new AuthenticatedRegionCryptoStream(
+                new MemoryStream(ciphertext),
+                transform,
+                regionDataLen,
+                CryptoStreamMode.Read);
+
+            TestDelegate action = () => readStream.CopyTo(destStream);
+            if (detectReorder)
+            {
+                Assert.Throws<CryptographicException>(action);
+            }
+            else
+            {
+                Assert.DoesNotThrow(action);
+            }
+        }
+
+        private void Swap(byte[] buf, int i, int j)
+        {
+            byte temp = buf[i];
+            buf[i] = buf[j];
+            buf[j] = temp;
+        }
+        private void SwapRegions(byte[] buf, int leftRegion, int rightRegion, int regionLen)
+        {
+            int leftOffset = leftRegion * regionLen;
+            int rightOffset = rightRegion * regionLen;
+            foreach (int i in Enumerable.Range(0, regionLen))
+            {
+                Swap(buf, leftOffset + i, rightOffset + i);
+            }
         }
     }
 }

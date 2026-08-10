@@ -58,7 +58,7 @@ namespace Samples
                 global::System.Collections.Generic.List<global::System.BinaryData> items = new global::System.Collections.Generic.List<global::System.BinaryData>();
                 foreach (var item in result.Cats)
                 {
-                    items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::Samples.ModelSerializationExtensions.WireOptions, global::Samples.SamplesContext.Default));
+                    items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::System.ClientModel.Primitives.ModelReaderWriterOptions.Json, global::Samples.SamplesContext.Default));
                 }
                 yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if ((nextPage == null))
