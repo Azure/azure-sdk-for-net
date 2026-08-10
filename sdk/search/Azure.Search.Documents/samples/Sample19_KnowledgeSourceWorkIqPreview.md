@@ -29,8 +29,7 @@ SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 // Work IQ connects the knowledge base to Microsoft 365 work data,
 // enabling retrieval from emails, documents, and other M365 content.
 string knowledgeSourceName = "my-workiq-source";
-// Work IQ now authenticates to Microsoft 365 through an Entra
-// application identity configured with a federated credential.
+
 WorkIQKnowledgeSourceParameters workIqParameters = new WorkIQKnowledgeSourceParameters(
     new EntraAppAuthentication(
         applicationId: Guid.Parse("00000000-0000-0000-0000-000000000000"),

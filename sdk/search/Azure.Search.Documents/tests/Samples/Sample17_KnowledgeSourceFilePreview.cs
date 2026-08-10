@@ -98,8 +98,8 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 #region Snippet:Azure_Search_Tests_Samples_Sample17_FileKS_UploadFiles
                 // Upload files directly to the File knowledge source.
-                // Files are uploaded as binary content with a Content-Disposition header
-                // specifying the filename.
+                // The file name you provide is what the service associates with the
+                // uploaded content.
                 string filePath = "path/to/azure-search-overview.txt";
 #if !SNIPPET
                 filePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Samples", "azure-search-overview.txt");
@@ -109,7 +109,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 Response<KnowledgeSourceFile> uploadResponse = await indexClient.UploadKnowledgeSourceFileAsync(
                     knowledgeSourceName,
-                    contentDisposition: $"attachment; filename=\"{fileName}\"",
+                    fileName: fileName,
                     file: fileData);
 
                 KnowledgeSourceFile uploadedFile = uploadResponse.Value;
