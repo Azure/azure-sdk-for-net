@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator;
@@ -337,6 +338,266 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(rendered, Does.Contain("new global::Samples.Models.LeftModel(value"));
             Assert.That(rendered, Does.Not.Contain("new global::Samples.Models.RightModel(value"));
             Assert.That(rendered, Does.Not.Contain("new global::Samples.Models.MiddleModel(value"));
+        }
+
+        [Test]
+        public void RebuildScopesGuardedNestedParameterAcrossReorderedAndInsertedSiblingModels()
+        {
+            var leftModel = InputFactory.Model(
+                "LeftModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+            var rightModel = InputFactory.Model(
+                "RightModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+            var middleModel = InputFactory.Model(
+                "MiddleModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+            var parentModel = InputFactory.Model(
+                "ParentModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("middle", middleModel),
+                    InputFactory.Property("right", rightModel),
+                    InputFactory.Property("left", leftModel)
+                ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [parentModel, leftModel, rightModel, middleModel]);
+            var parent = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var left = plugin.Object.TypeFactory.CreateModel(leftModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(rightModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(middleModel)!;
+            var leftProperty = parent.Properties.Single(property => property.Name == "Left");
+            var leftValueProperty = left.Properties.Single(property => property.Name == "Value");
+            var flattenedValue = new FlattenedPropertyProvider(
+                $"Value description",
+                MethodSignatureModifiers.Public,
+                leftValueProperty.Type,
+                "value",
+                leftValueProperty.Body,
+                parent,
+                leftProperty,
+                leftValueProperty);
+            var valueParameter = flattenedValue.AsParameter;
+            var leftArguments = left.FullConstructor.Signature.Parameters
+                .Select(parameter => parameter.Name == "value" ? valueParameter : parameter.DefaultValue ?? Default)
+                .ToArray();
+            var guardedLeft = new TernaryConditionalExpression(
+                valueParameter.Is(Null),
+                Default,
+                New.Instance(left.Type, leftArguments));
+            ValueExpression[] staleArguments = [guardedLeft, Default];
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var method = new MethodProvider(
+                new MethodSignature(
+                    "ParentModel",
+                    $"Creates a parent model.",
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                    parent.Type,
+                    $"A parent model.",
+                    [valueParameter]),
+                Return(New.Instance(parent.Type, staleArguments)),
+                modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+
+            var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("new global::Samples.Models.LeftModel(value"));
+            Assert.That(rendered, Does.Not.Contain("new global::Samples.Models.RightModel(value"));
+            Assert.That(rendered, Does.Not.Contain("new global::Samples.Models.MiddleModel(value"));
+        }
+
+        [Test]
+        public void RebuildScopesNestedParameterBetweenSameTypeSiblings()
+        {
+            var childModel = InputFactory.Model(
+                "ChildModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+            var parentModel = InputFactory.Model(
+                "ParentModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("right", childModel),
+                    InputFactory.Property("left", childModel)
+                ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [parentModel, childModel]);
+            var parent = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var child = plugin.Object.TypeFactory.CreateModel(childModel)!;
+            var leftProperty = parent.Properties.Single(property => property.Name == "Left");
+            var valueProperty = child.Properties.Single(property => property.Name == "Value");
+            var flattenedValue = new FlattenedPropertyProvider(
+                $"Value description",
+                MethodSignatureModifiers.Public,
+                valueProperty.Type,
+                "value",
+                valueProperty.Body,
+                parent,
+                leftProperty,
+                valueProperty);
+            var valueParameter = flattenedValue.AsParameter;
+            var childArguments = child.FullConstructor.Signature.Parameters
+                .Select(parameter => parameter.Name == "value" ? valueParameter : parameter.DefaultValue ?? Default)
+                .ToArray();
+            ValueExpression[] staleArguments = [New.Instance(child.Type, childArguments), Default];
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var method = new MethodProvider(
+                new MethodSignature(
+                    "ParentModel",
+                    $"Creates a parent model.",
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                    parent.Type,
+                    $"A parent model.",
+                    [valueParameter]),
+                Return(New.Instance(parent.Type, staleArguments)),
+                modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+
+            var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            const string childCall = "new global::Samples.Models.ChildModel(value";
+            var parentCall = rendered[rendered.IndexOf("return new global::Samples.Models.ParentModel(", StringComparison.Ordinal)..];
+            Assert.That(parentCall, Does.Contain(childCall));
+            Assert.That(parentCall.Split(childCall).Length - 1, Is.EqualTo(1));
+            Assert.That(parentCall.IndexOf("default", StringComparison.Ordinal), Is.LessThan(parentCall.IndexOf(childCall, StringComparison.Ordinal)));
+        }
+
+        [Test]
+        public void RebuildScopesNestedGrandchildParameterByPropertyPath()
+        {
+            var leafModel = InputFactory.Model(
+                "LeafModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+            var branchModel = InputFactory.Model(
+                "BranchModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("rightChild", leafModel),
+                    InputFactory.Property("leftChild", leafModel)
+                ]);
+            var rootModel = InputFactory.Model(
+                "RootModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("wrapper", branchModel)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [rootModel, branchModel, leafModel]);
+            var root = plugin.Object.TypeFactory.CreateModel(rootModel)!;
+            var branch = plugin.Object.TypeFactory.CreateModel(branchModel)!;
+            var leaf = plugin.Object.TypeFactory.CreateModel(leafModel)!;
+            var wrapperProperty = root.Properties.Single(property => property.Name == "Wrapper");
+            var leftChildProperty = branch.Properties.Single(property => property.Name == "LeftChild");
+            var valueProperty = leaf.Properties.Single(property => property.Name == "Value");
+            var childValue = new FlattenedPropertyProvider(
+                $"Value description",
+                MethodSignatureModifiers.Public,
+                valueProperty.Type,
+                "value",
+                valueProperty.Body,
+                branch,
+                leftChildProperty,
+                valueProperty);
+            var wrapperChildValue = new FlattenedPropertyProvider(
+                $"Value description",
+                MethodSignatureModifiers.Public,
+                valueProperty.Type,
+                "value",
+                valueProperty.Body,
+                root,
+                wrapperProperty,
+                childValue);
+            var valueParameter = wrapperChildValue.AsParameter;
+            var leafArguments = leaf.FullConstructor.Signature.Parameters
+                .Select(parameter => parameter.Name == "value" ? valueParameter : parameter.DefaultValue ?? Default)
+                .ToArray();
+            ValueExpression[] staleBranchArguments = [New.Instance(leaf.Type, leafArguments), Default];
+            var staleBranch = New.Instance(branch.Type, staleBranchArguments);
+            var rootArguments = root.FullConstructor.Signature.Parameters
+                .Select(parameter => parameter.Name == "wrapper" ? staleBranch : parameter.DefaultValue ?? Default)
+                .ToArray();
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var method = new MethodProvider(
+                new MethodSignature(
+                    "RootModel",
+                    $"Creates a root model.",
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                    root.Type,
+                    $"A root model.",
+                    [valueParameter]),
+                Return(New.Instance(root.Type, rootArguments)),
+                modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+
+            var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            const string leafCall = "new global::Samples.Models.LeafModel(value";
+            var branchCall = rendered[rendered.IndexOf("new global::Samples.Models.BranchModel(", StringComparison.Ordinal)..];
+            Assert.That(branchCall, Does.Contain(leafCall));
+            Assert.That(branchCall.Split(leafCall).Length - 1, Is.EqualTo(1));
+            Assert.That(branchCall.IndexOf("default", StringComparison.Ordinal), Is.LessThan(branchCall.IndexOf(leafCall, StringComparison.Ordinal)));
+        }
+
+        [Test]
+        public void RebuildConsumesDuplicateNamedParametersByIdentity()
+        {
+            var leftModel = InputFactory.Model(
+                "LeftModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+            var rightModel = InputFactory.Model(
+                "RightModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+            var parentModel = InputFactory.Model(
+                "ParentModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("left", leftModel),
+                    InputFactory.Property("right", rightModel)
+                ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [parentModel, leftModel, rightModel]);
+            var parent = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var left = plugin.Object.TypeFactory.CreateModel(leftModel)!;
+            var right = plugin.Object.TypeFactory.CreateModel(rightModel)!;
+            var leftValueProperty = left.Properties.Single(property => property.Name == "Value");
+            var rightValueProperty = right.Properties.Single(property => property.Name == "Value");
+            var leftValueParameter = new ParameterProvider(
+                "value",
+                $"Left value description",
+                leftValueProperty.Type,
+                property: leftValueProperty);
+            var rightValueParameter = new ParameterProvider(
+                "value",
+                $"Right value description",
+                rightValueProperty.Type,
+                property: rightValueProperty);
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var method = new MethodProvider(
+                new MethodSignature(
+                    "ParentModel",
+                    $"Creates a parent model.",
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                    parent.Type,
+                    $"A parent model.",
+                    [leftValueParameter, rightValueParameter]),
+                Return(New.Instance(
+                    parent.Type,
+                    parent.FullConstructor.Signature.Parameters.Select(parameter => parameter.DefaultValue ?? Default).ToArray())),
+                modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+
+            var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("new global::Samples.Models.LeftModel(value"));
+            Assert.That(rendered, Does.Contain("new global::Samples.Models.RightModel(value0"));
         }
 
         [Test]
