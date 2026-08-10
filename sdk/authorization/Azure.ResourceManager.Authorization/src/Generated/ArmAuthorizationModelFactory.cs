@@ -1197,19 +1197,19 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.RoleAssignmentCreateOrUpdateContent"/> instance for mocking. </returns>
         public static RoleAssignmentCreateOrUpdateContent RoleAssignmentCreateOrUpdateContent(string scope = default, ResourceIdentifier roleDefinitionId = default, Guid principalId = default, RoleManagementPrincipalType? principalType = default, string description = default, string condition = default, string conditionVersion = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string createdBy = default, string updatedBy = default, ResourceIdentifier delegatedManagedIdentityResourceId = default)
         {
-            return new RoleAssignmentCreateOrUpdateContent(roleDefinitionId is null ? default : new RoleAssignmentProperties(
-                default,
+            return new RoleAssignmentCreateOrUpdateContent(scope is null && roleDefinitionId is null && principalType is null && description is null && condition is null && conditionVersion is null && createdOn is null && updatedOn is null && createdBy is null && updatedBy is null && delegatedManagedIdentityResourceId is null ? default : new RoleAssignmentProperties(
+                scope,
                 roleDefinitionId,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
+                principalId,
+                principalType,
+                description,
+                condition,
+                conditionVersion,
+                createdOn,
+                updatedOn,
+                createdBy,
+                updatedBy,
+                delegatedManagedIdentityResourceId,
                 default), default);
         }
 
