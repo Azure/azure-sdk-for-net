@@ -5,7 +5,7 @@
 ### Features Added
 
 - Initial preview of `Azure.Provisioning.AlertsManagement`.
-- Added support for `Microsoft.AlertsManagement/actionRules` resources.
+- Added support for referencing `Microsoft.AlertsManagement/alerts` resources.
 
 ### Breaking Changes
 

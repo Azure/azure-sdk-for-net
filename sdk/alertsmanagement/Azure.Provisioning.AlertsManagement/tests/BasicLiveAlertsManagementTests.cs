@@ -9,14 +9,13 @@ using NUnit.Framework;
 namespace Azure.Provisioning.AlertsManagement.Tests;
 
 public class BasicLiveAlertsManagementTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true */)
+    : ProvisioningTestBase(async)
 {
     [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.recoveryservices/recovery-services-create-alert-processing-rule/main.bicep")]
     [LiveOnly]
-    public async Task CreateBackupAlertProcessingRule()
+    public async Task ReferenceExistingServiceAlert()
     {
-        await using Trycep test = BasicAlertsManagementTests.CreateAlertProcessingRuleTest();
+        await using Trycep test = BasicAlertsManagementTests.CreateServiceAlertTest();
         await test.SetupLiveCalls(this)
             .Lint()
             .ValidateAsync();

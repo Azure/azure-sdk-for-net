@@ -14,60 +14,30 @@ dotnet add package Azure.Provisioning.AlertsManagement --prerelease
 
 ### Prerequisites
 
-> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
-
-### Authenticate the Client
+* You must have a [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
 
 ## Key concepts
 
-This library allows you to specify your infrastructure in a declarative style using .NET. You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain Bicep or ARM templates.
+This library allows you to specify infrastructure in a declarative style using .NET and then deploy it with azd without maintaining Bicep or ARM templates directly.
+
+Service alerts are created by Azure services. Use `ServiceAlert.FromExisting` to reference an existing alert in a declarative model.
 
 ## Examples
 
-### Create an alert processing rule
-
-This example follows the [Azure Quickstart template for backup alert notifications](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.recoveryservices/recovery-services-create-alert-processing-rule) and adds an action group to Recovery Services vault alerts across the current subscription.
+### Reference an existing service alert
 
 ```C# Snippet:AlertsManagementBasic
 Infrastructure infra = new();
 
-AlertProcessingRule rule =
-    new(nameof(rule), AlertProcessingRule.ResourceVersions.V2021_08_08)
-    {
-        Location = new AzureLocation("global"),
-        Properties = new AlertProcessingRuleProperties
-        {
-            Scopes = { BicepFunction.GetSubscription().Id },
-            Conditions =
-            {
-                new AlertProcessingRuleCondition
-                {
-                    Field = AlertProcessingRuleField.TargetResourceType,
-                    Operator = AlertProcessingRuleOperator.EqualsValue,
-                    Values = { "microsoft.recoveryservices/vaults" },
-                },
-            },
-            Actions =
-            {
-                new AlertProcessingRuleAddGroupsAction
-                {
-                    ActionGroupIds =
-                    {
-                        new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/example-rg/providers/Microsoft.Insights/actionGroups/backupAlertsActionGroup"),
-                    },
-                },
-            },
-            Description = "Sample alert processing rule",
-            IsEnabled = true,
-        },
-    };
-infra.Add(rule);
+ServiceAlert alert = ServiceAlert.FromExisting(nameof(alert), ServiceAlert.ResourceVersions.V2025_05_25_PREVIEW);
+alert.Name = "existingAlert";
+infra.Add(alert);
 ```
 
 ## Troubleshooting
 
-- File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
-- Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
+* File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
+* Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
 
 ## Next steps
 

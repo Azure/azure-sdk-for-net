@@ -1,119 +1,104 @@
 namespace Azure.Provisioning.AlertsManagement
 {
-    public partial class AlertProcessingRule : Azure.Provisioning.Primitives.ProvisionableResource
+    public enum MonitorCondition
     {
-        public AlertProcessingRule(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        Fired = 0,
+        Resolved = 1,
+    }
+    public enum MonitorServiceSourceForAlert
+    {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="Application Insights")]
+        ApplicationInsights = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="ActivityLog Administrative")]
+        ActivityLogAdministrative = 1,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="ActivityLog Security")]
+        ActivityLogSecurity = 2,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="ActivityLog Recommendation")]
+        ActivityLogRecommendation = 3,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="ActivityLog Policy")]
+        ActivityLogPolicy = 4,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="ActivityLog Autoscale")]
+        ActivityLogAutoscale = 5,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="Log Analytics")]
+        LogAnalytics = 6,
+        Nagios = 7,
+        Platform = 8,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="SCOM")]
+        Scom = 9,
+        ServiceHealth = 10,
+        SmartDetector = 11,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="VM Insights")]
+        VmInsights = 12,
+        Zabbix = 13,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="Resource Health")]
+        ResourceHealth = 14,
+    }
+    public partial class ServiceAlert : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal ServiceAlert() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.AlertsManagement.AlertProcessingRuleProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.AlertsManagement.ServiceAlertProperties Properties { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.AlertsManagement.AlertProcessingRule FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.AlertsManagement.ServiceAlert FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2021_08_08;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2025_05_25_PREVIEW;
         }
     }
-    public partial class AlertProcessingRuleAction : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class ServiceAlertEssentials : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public AlertProcessingRuleAction() { }
+        public ServiceAlertEssentials() { }
+        public Azure.Provisioning.BicepValue<bool> ActionStatusIsSuppressed { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> AlertRule { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AlertsManagement.ServiceAlertState> AlertState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> LastModifiedBy { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastModifiedOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AlertsManagement.MonitorCondition> MonitorCondition { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> MonitorConditionResolvedOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AlertsManagement.MonitorServiceSourceForAlert> MonitorService { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AlertsManagement.ServiceAlertSeverity> Severity { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AlertsManagement.ServiceAlertSignalType> SignalType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Guid> SmartGroupId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SmartGroupingReason { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SourceCreatedId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> TargetResource { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> TargetResourceGroup { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> TargetResourceName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> TargetResourceType { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class AlertProcessingRuleAddGroupsAction : Azure.Provisioning.AlertsManagement.AlertProcessingRuleAction
+    public partial class ServiceAlertProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public AlertProcessingRuleAddGroupsAction() { }
-        public Azure.Provisioning.BicepList<Azure.Core.ResourceIdentifier> ActionGroupIds { get { throw null; } set { } }
+        public ServiceAlertProperties() { }
+        public Azure.Provisioning.BicepValue<System.BinaryData> Context { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> CustomProperties { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.BinaryData> EgressConfig { get { throw null; } }
+        public Azure.Provisioning.AlertsManagement.ServiceAlertEssentials Essentials { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class AlertProcessingRuleCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public enum ServiceAlertSeverity
     {
-        public AlertProcessingRuleCondition() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.AlertsManagement.AlertProcessingRuleField> Field { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.AlertsManagement.AlertProcessingRuleOperator> Operator { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> Values { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
+        Sev0 = 0,
+        Sev1 = 1,
+        Sev2 = 2,
+        Sev3 = 3,
+        Sev4 = 4,
     }
-    public enum AlertProcessingRuleField
+    public enum ServiceAlertSignalType
     {
-        Severity = 0,
-        MonitorService = 1,
-        MonitorCondition = 2,
-        SignalType = 3,
-        TargetResourceType = 4,
-        TargetResource = 5,
-        TargetResourceGroup = 6,
-        AlertRuleId = 7,
-        AlertRuleName = 8,
-        Description = 9,
-        AlertContext = 10,
+        Metric = 0,
+        Log = 1,
+        Unknown = 2,
     }
-    public partial class AlertProcessingRuleMonthlyRecurrence : Azure.Provisioning.AlertsManagement.AlertProcessingRuleRecurrence
+    public enum ServiceAlertState
     {
-        public AlertProcessingRuleMonthlyRecurrence() { }
-        public Azure.Provisioning.BicepList<int> DaysOfMonth { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public enum AlertProcessingRuleOperator
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="Equals")]
-        EqualsValue = 0,
-        NotEquals = 1,
-        Contains = 2,
-        DoesNotContain = 3,
-    }
-    public partial class AlertProcessingRuleProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public AlertProcessingRuleProperties() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.AlertsManagement.AlertProcessingRuleAction> Actions { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.AlertsManagement.AlertProcessingRuleCondition> Conditions { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.AlertsManagement.AlertProcessingRuleSchedule Schedule { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> Scopes { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class AlertProcessingRuleRecurrence : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public AlertProcessingRuleRecurrence() { }
-        public Azure.Provisioning.BicepValue<System.TimeSpan> EndOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.TimeSpan> StartOn { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class AlertProcessingRuleRemoveAllGroupsAction : Azure.Provisioning.AlertsManagement.AlertProcessingRuleAction
-    {
-        public AlertProcessingRuleRemoveAllGroupsAction() { }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class AlertProcessingRuleSchedule : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public AlertProcessingRuleSchedule() { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EffectiveFrom { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EffectiveUntil { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.AlertsManagement.AlertProcessingRuleRecurrence> Recurrences { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> TimeZone { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class AlertProcessingRuleWeeklyRecurrence : Azure.Provisioning.AlertsManagement.AlertProcessingRuleRecurrence
-    {
-        public AlertProcessingRuleWeeklyRecurrence() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.AlertsManagement.AlertsManagementDayOfWeek> DaysOfWeek { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public enum AlertsManagementDayOfWeek
-    {
-        Sunday = 0,
-        Monday = 1,
-        Tuesday = 2,
-        Wednesday = 3,
-        Thursday = 4,
-        Friday = 5,
-        Saturday = 6,
-    }
-    public partial class DailyRecurrence : Azure.Provisioning.AlertsManagement.AlertProcessingRuleRecurrence
-    {
-        public DailyRecurrence() { }
-        protected override void DefineProvisionableProperties() { }
+        New = 0,
+        Acknowledged = 1,
+        Closed = 2,
     }
 }
