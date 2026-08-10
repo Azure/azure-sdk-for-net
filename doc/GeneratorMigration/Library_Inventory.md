@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-07-28 01:06:41 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-08-10 06:03:55 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -16,18 +16,18 @@
 
 ## Summary
 
-- Total libraries: 433
-- Management Plane (MPG): 252
+- Total libraries: 436
+- Management Plane (MPG): 254
   - Autorest/Swagger: 46
-  - New Emitter (TypeSpec): 206
+  - New Emitter (TypeSpec): 208
   - Old TypeSpec: 0
 - Data Plane (DPG): 130
   - Autorest/Swagger: 33
   - New Emitter (TypeSpec): 50
   - Old TypeSpec: 0
-- Provisioning: 51
+- Provisioning: 52
   - Reflection-based generator: 27
-  - TypeSpec-based generator: 22
+  - TypeSpec-based generator: 23
   - No generator: 2
 - No generator: 47
 
@@ -137,7 +137,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 33
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 206 / 206 (100%)
+**Migration Status**: 208 / 208 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -174,6 +174,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | cloudhealth | Azure.ResourceManager.CloudHealth | ✅ |
 | cognitiveservices | Azure.ResourceManager.CognitiveServices | ✅ |
 | communication | Azure.ResourceManager.Communication | ✅ |
+| commvaultcontentstore | Azure.ResourceManager.CommvaultContentStore | ✅ |
 | compute | Azure.ResourceManager.Compute | ✅ |
 | compute | Azure.ResourceManager.Compute.BulkActions | ✅ |
 | computebulkactions | Azure.ResourceManager.ComputeBulkActions | ✅ |
@@ -321,6 +322,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | securitycenter | Azure.ResourceManager.SecurityCenter | ✅ |
 | securityinsights | Azure.ResourceManager.SecurityInsights | ✅ |
 | selfhelp | Azure.ResourceManager.SelfHelp | ✅ |
+| serialconsole | Azure.ResourceManager.SerialConsole | ✅ |
 | servicebus | Azure.ResourceManager.ServiceBus | ✅ |
 | servicefabric | Azure.ResourceManager.ServiceFabric | ✅ |
 | servicefabricmanagedclusters | Azure.ResourceManager.ServiceFabricManagedClusters | ✅ |
@@ -407,7 +409,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 46
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 22 / 51 migrated to TypeSpec-based generator
+**Migration Status**: 23 / 52 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
@@ -428,6 +430,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | costmanagement | Azure.Provisioning.CostManagement | Azure.ResourceManager.CostManagement ✅ | TypeSpec ✅ |
 | datafactory | Azure.Provisioning.DataFactory | Azure.ResourceManager.DataFactory ✅ | Reflection |
 | dns | Azure.Provisioning.Dns | Azure.ResourceManager.Dns ✅ | None |
+| domainregistration | Azure.Provisioning.DomainRegistration | Azure.ResourceManager.DomainRegistration ✅ | TypeSpec ✅ |
 | durabletask | Azure.Provisioning.DurableTask | Azure.ResourceManager.DurableTask ✅ | TypeSpec ✅ |
 | eventgrid | Azure.Provisioning.EventGrid | Azure.ResourceManager.EventGrid ✅ | Reflection |
 | eventhub | Azure.Provisioning.EventHubs | Azure.ResourceManager.EventHubs ✅ | Reflection |
