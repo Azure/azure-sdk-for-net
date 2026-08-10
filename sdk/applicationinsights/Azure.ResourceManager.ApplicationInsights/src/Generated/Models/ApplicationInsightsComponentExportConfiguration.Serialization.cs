@@ -8,16 +8,65 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class ApplicationInsightsComponentExportConfiguration : IUtf8JsonSerializable, IJsonModel<ApplicationInsightsComponentExportConfiguration>
+    /// <summary> Properties that define a Continuous Export configuration. </summary>
+    public partial class ApplicationInsightsComponentExportConfiguration : IJsonModel<ApplicationInsightsComponentExportConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentExportConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApplicationInsightsComponentExportConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentExportConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeApplicationInsightsComponentExportConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentExportConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApplicationInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ApplicationInsightsComponentExportConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplicationInsightsComponentExportConfiguration IPersistableModel<ApplicationInsightsComponentExportConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApplicationInsightsComponentExportConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApplicationInsightsComponentExportConfiguration"/> from. </param>
+        internal static ApplicationInsightsComponentExportConfiguration FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeApplicationInsightsComponentExportConfiguration(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApplicationInsightsComponentExportConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +78,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentExportConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentExportConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportConfiguration)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(ExportId))
             {
                 writer.WritePropertyName("ExportId"u8);
@@ -130,15 +178,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("ContainerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -147,22 +195,27 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
         }
 
-        ApplicationInsightsComponentExportConfiguration IJsonModel<ApplicationInsightsComponentExportConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplicationInsightsComponentExportConfiguration IJsonModel<ApplicationInsightsComponentExportConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApplicationInsightsComponentExportConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentExportConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentExportConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeApplicationInsightsComponentExportConfiguration(document.RootElement, options);
         }
 
-        internal static ApplicationInsightsComponentExportConfiguration DeserializeApplicationInsightsComponentExportConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ApplicationInsightsComponentExportConfiguration DeserializeApplicationInsightsComponentExportConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -178,135 +231,133 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             ResourceIdentifier destinationAccountId = default;
             string destinationType = default;
             string isUserEnabled = default;
-            DateTimeOffset? lastUserUpdate = default;
-            string notificationQueueEnabled = default;
+            DateTimeOffset? lastUserUpdatedOn = default;
+            string isNotificationQueueEnabled = default;
             string exportStatus = default;
-            DateTimeOffset? lastSuccessTime = default;
-            DateTimeOffset? lastGapTime = default;
+            DateTimeOffset? lastSucceededOn = default;
+            DateTimeOffset? lastGappedOn = default;
             string permanentErrorReason = default;
             string storageName = default;
             string containerName = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("ExportId"u8))
+                if (prop.NameEquals("ExportId"u8))
                 {
-                    exportId = property.Value.GetString();
+                    exportId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("InstrumentationKey"u8))
+                if (prop.NameEquals("InstrumentationKey"u8))
                 {
-                    instrumentationKey = property.Value.GetString();
+                    instrumentationKey = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("RecordTypes"u8))
+                if (prop.NameEquals("RecordTypes"u8))
                 {
-                    recordTypes = property.Value.GetString();
+                    recordTypes = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ApplicationName"u8))
+                if (prop.NameEquals("ApplicationName"u8))
                 {
-                    applicationName = property.Value.GetString();
+                    applicationName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("SubscriptionId"u8))
+                if (prop.NameEquals("SubscriptionId"u8))
                 {
-                    subscriptionId = property.Value.GetString();
+                    subscriptionId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ResourceGroup"u8))
+                if (prop.NameEquals("ResourceGroup"u8))
                 {
-                    resourceGroup = property.Value.GetString();
+                    resourceGroup = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("DestinationStorageSubscriptionId"u8))
+                if (prop.NameEquals("DestinationStorageSubscriptionId"u8))
                 {
-                    destinationStorageSubscriptionId = property.Value.GetString();
+                    destinationStorageSubscriptionId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("DestinationStorageLocationId"u8))
+                if (prop.NameEquals("DestinationStorageLocationId"u8))
                 {
-                    destinationStorageLocationId = property.Value.GetString();
+                    destinationStorageLocationId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("DestinationAccountId"u8))
+                if (prop.NameEquals("DestinationAccountId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    destinationAccountId = new ResourceIdentifier(property.Value.GetString());
+                    destinationAccountId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("DestinationType"u8))
+                if (prop.NameEquals("DestinationType"u8))
                 {
-                    destinationType = property.Value.GetString();
+                    destinationType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("IsUserEnabled"u8))
+                if (prop.NameEquals("IsUserEnabled"u8))
                 {
-                    isUserEnabled = property.Value.GetString();
+                    isUserEnabled = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("LastUserUpdate"u8))
+                if (prop.NameEquals("LastUserUpdate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastUserUpdate = property.Value.GetDateTimeOffset("O");
+                    lastUserUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("NotificationQueueEnabled"u8))
+                if (prop.NameEquals("NotificationQueueEnabled"u8))
                 {
-                    notificationQueueEnabled = property.Value.GetString();
+                    isNotificationQueueEnabled = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ExportStatus"u8))
+                if (prop.NameEquals("ExportStatus"u8))
                 {
-                    exportStatus = property.Value.GetString();
+                    exportStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("LastSuccessTime"u8))
+                if (prop.NameEquals("LastSuccessTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastSuccessTime = property.Value.GetDateTimeOffset("O");
+                    lastSucceededOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("LastGapTime"u8))
+                if (prop.NameEquals("LastGapTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastGapTime = property.Value.GetDateTimeOffset("O");
+                    lastGappedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("PermanentErrorReason"u8))
+                if (prop.NameEquals("PermanentErrorReason"u8))
                 {
-                    permanentErrorReason = property.Value.GetString();
+                    permanentErrorReason = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("StorageName"u8))
+                if (prop.NameEquals("StorageName"u8))
                 {
-                    storageName = property.Value.GetString();
+                    storageName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ContainerName"u8))
+                if (prop.NameEquals("ContainerName"u8))
                 {
-                    containerName = property.Value.GetString();
+                    containerName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ApplicationInsightsComponentExportConfiguration(
                 exportId,
                 instrumentationKey,
@@ -319,471 +370,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 destinationAccountId,
                 destinationType,
                 isUserEnabled,
-                lastUserUpdate,
-                notificationQueueEnabled,
+                lastUserUpdatedOn,
+                isNotificationQueueEnabled,
                 exportStatus,
-                lastSuccessTime,
-                lastGapTime,
+                lastSucceededOn,
+                lastGappedOn,
                 permanentErrorReason,
                 storageName,
                 containerName,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExportId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ExportId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ExportId))
-                {
-                    builder.Append("  ExportId: ");
-                    if (ExportId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ExportId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ExportId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstrumentationKey), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  InstrumentationKey: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(InstrumentationKey))
-                {
-                    builder.Append("  InstrumentationKey: ");
-                    if (InstrumentationKey.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{InstrumentationKey}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{InstrumentationKey}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RecordTypes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  RecordTypes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RecordTypes))
-                {
-                    builder.Append("  RecordTypes: ");
-                    if (RecordTypes.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RecordTypes}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RecordTypes}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ApplicationName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ApplicationName))
-                {
-                    builder.Append("  ApplicationName: ");
-                    if (ApplicationName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ApplicationName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ApplicationName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubscriptionId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  SubscriptionId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SubscriptionId))
-                {
-                    builder.Append("  SubscriptionId: ");
-                    if (SubscriptionId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SubscriptionId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SubscriptionId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceGroup), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ResourceGroup: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResourceGroup))
-                {
-                    builder.Append("  ResourceGroup: ");
-                    if (ResourceGroup.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ResourceGroup}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ResourceGroup}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationStorageSubscriptionId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  DestinationStorageSubscriptionId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DestinationStorageSubscriptionId))
-                {
-                    builder.Append("  DestinationStorageSubscriptionId: ");
-                    if (DestinationStorageSubscriptionId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DestinationStorageSubscriptionId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DestinationStorageSubscriptionId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationStorageLocationId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  DestinationStorageLocationId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DestinationStorageLocationId))
-                {
-                    builder.Append("  DestinationStorageLocationId: ");
-                    if (DestinationStorageLocationId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DestinationStorageLocationId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DestinationStorageLocationId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationAccountId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  DestinationAccountId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DestinationAccountId))
-                {
-                    builder.Append("  DestinationAccountId: ");
-                    builder.AppendLine($"'{DestinationAccountId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  DestinationType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DestinationType))
-                {
-                    builder.Append("  DestinationType: ");
-                    if (DestinationType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DestinationType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DestinationType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsUserEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  IsUserEnabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsUserEnabled))
-                {
-                    builder.Append("  IsUserEnabled: ");
-                    if (IsUserEnabled.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{IsUserEnabled}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{IsUserEnabled}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUserUpdatedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  LastUserUpdate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LastUserUpdatedOn))
-                {
-                    builder.Append("  LastUserUpdate: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(LastUserUpdatedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsNotificationQueueEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  NotificationQueueEnabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsNotificationQueueEnabled))
-                {
-                    builder.Append("  NotificationQueueEnabled: ");
-                    if (IsNotificationQueueEnabled.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{IsNotificationQueueEnabled}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{IsNotificationQueueEnabled}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExportStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ExportStatus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ExportStatus))
-                {
-                    builder.Append("  ExportStatus: ");
-                    if (ExportStatus.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ExportStatus}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ExportStatus}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastSucceededOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  LastSuccessTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LastSucceededOn))
-                {
-                    builder.Append("  LastSuccessTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(LastSucceededOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastGappedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  LastGapTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LastGappedOn))
-                {
-                    builder.Append("  LastGapTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(LastGappedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PermanentErrorReason), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  PermanentErrorReason: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PermanentErrorReason))
-                {
-                    builder.Append("  PermanentErrorReason: ");
-                    if (PermanentErrorReason.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PermanentErrorReason}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PermanentErrorReason}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  StorageName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StorageName))
-                {
-                    builder.Append("  StorageName: ");
-                    if (StorageName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{StorageName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{StorageName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ContainerName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ContainerName))
-                {
-                    builder.Append("  ContainerName: ");
-                    if (ContainerName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ContainerName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ContainerName}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ApplicationInsightsComponentExportConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentExportConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApplicationInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ApplicationInsightsComponentExportConfiguration IPersistableModel<ApplicationInsightsComponentExportConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentExportConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeApplicationInsightsComponentExportConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ApplicationInsightsComponentExportConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
