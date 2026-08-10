@@ -180,6 +180,7 @@ protected static string GetDirectory(string path, [CallerFilePath] string pth = 
 ```
 
 4. For brevity, we will create a method that returns the `AgentVersionFromCodeMetadata` object. It contains all environment variables needed to access the toolbox from the Hosted Agent.
+**Note:** In this example we are uploading the project. It is also possible to place source codes and a C# project file to the `Assets/AgentsCodeToolbox` folder. In this case we will need to set `dependencyResolution: CodeDependencyResolution.RemoteBuild`.
 
 ```C# Snippet:Sample_CodeAgentMetadata_ToolBoxSkill
 private static AgentVersionFromCodeMetadata GetAgentMetadata(string middlewareAgentName, string toolboxName, string foundryProjectEndpoint, string modelDeploymentName)

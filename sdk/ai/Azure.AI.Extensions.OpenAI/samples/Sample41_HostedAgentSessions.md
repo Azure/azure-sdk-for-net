@@ -206,27 +206,7 @@ ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClien
 Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
 ```
 
-6. To get the response within a specific session, we need to provide `x-agent-session-id` header with the agent session ID. Define the policy to add the header.
-
-```C# Snippet:Sample_SessionHeaderPolicy_HostedAgentSessions
-private class SessionHeaderPolicy(string agentSessionID) : PipelinePolicy
-{
-    private static readonly string _SESSION_HEADER = "x-agent-session-id";
-    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_SESSION_HEADER, agentSessionID);
-        ProcessNext(message, pipeline, currentIndex);
-    }
-
-    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_SESSION_HEADER, agentSessionID);
-        await ProcessNextAsync(message, pipeline, currentIndex);
-    }
-}
-```
-
-7. Create the session and response client to communicate with an Agent and get the response. In this case we will use `GetProjectResponsesClientForAgentEndpoint` method, we also set the `x-agent-session-id` using `SessionHeaderPolicy` defined above.
+6. Create the session and response client to communicate with an Agent and get the response. In this case we will use `GetProjectResponsesClientForAgentEndpoint` method.
 
 Synchronous sample:
 ```C# Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgentSessions_Sync
@@ -236,10 +216,13 @@ while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentS
     Thread.Sleep(500);
     session1 = projectClient.AgentAdministrationClient.GetSession(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
 }
-ProjectOpenAIClientOptions oaiOptions = new();
-oaiOptions.AddPolicy(new SessionHeaderPolicy(session1.AgentSessionId), PipelinePosition.PerCall);
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: oaiOptions);
-ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke.");
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+CreateResponseOptions responseOptions = new()
+{
+    InputItems = { ResponseItem.CreateUserMessageItem($"Hello, tell me a joke in session {session1.AgentSessionId}.") },
+    SessionId = session1.AgentSessionId
+};
+ResponseResult response = responseClient.CreateResponse(responseOptions);
 Console.WriteLine(response.GetOutputText());
 ```
 
@@ -251,14 +234,17 @@ while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentS
     await Task.Delay(500);
     session1 = await projectClient.AgentAdministrationClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
 }
-ProjectOpenAIClientOptions oaiOptions = new();
-oaiOptions.AddPolicy(new SessionHeaderPolicy(session1.AgentSessionId), PipelinePosition.PerCall);
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: oaiOptions);
-ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+CreateResponseOptions responseOptions = new()
+{
+    InputItems = { ResponseItem.CreateUserMessageItem($"Hello, tell me a joke in session {session1.AgentSessionId}.") },
+    SessionId = session1.AgentSessionId
+};
+ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
 Console.WriteLine(response.GetOutputText());
 ```
 
-8. Disable Agent and try to create a new session; this operation should fail.
+7. Disable Agent and try to create a new session; this operation should fail.
 
 Synchronous sample:
 ```C# Snippet:Sample_DisableTheAgent_HostedAgentSessions_Sync
@@ -298,7 +284,7 @@ catch (ClientResultException ex)
 }
 ```
 
-9. Enable the Agent Again. Now we can create another session and use it to get the response.
+8. Enable the Agent Again. Now we can create another session and use it to get the response.
 
 Synchronous sample:
 ```C# Snippet:Sample_EnableTheAgent_HostedAgentSessions_Sync
@@ -309,10 +295,12 @@ while (session2.Status != AgentSessionStatus.Failed && session2.Status != AgentS
     Thread.Sleep(500);
     session2 = projectClient.AgentAdministrationClient.GetSession(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
 }
-oaiOptions = new();
-oaiOptions.AddPolicy(new SessionHeaderPolicy(session2.AgentSessionId), PipelinePosition.PerCall);
-responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: oaiOptions);
-response = responseClient.CreateResponse("Hello, tell me another joke.");
+responseOptions = new()
+{
+    InputItems = { ResponseItem.CreateUserMessageItem($"Hello, tell me another joke in new session {session2.AgentSessionId}.") },
+    SessionId = session2.AgentSessionId
+};
+response = responseClient.CreateResponse(responseOptions);
 Console.WriteLine(response.GetOutputText());
 ```
 
@@ -325,14 +313,16 @@ while (session2.Status != AgentSessionStatus.Failed && session2.Status != AgentS
     await Task.Delay(500);
     session2 = await projectClient.AgentAdministrationClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
 }
-oaiOptions = new();
-oaiOptions.AddPolicy(new SessionHeaderPolicy(session2.AgentSessionId), PipelinePosition.PerCall);
-responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: oaiOptions);
-response = await responseClient.CreateResponseAsync("Hello, tell me another joke.");
+responseOptions = new()
+{
+    InputItems = { ResponseItem.CreateUserMessageItem($"Hello, tell me another joke in new session {session2.AgentSessionId}.") },
+    SessionId = session2.AgentSessionId
+};
+response = await responseClient.CreateResponseAsync(responseOptions);
 Console.WriteLine(response.GetOutputText());
 ```
 
-10. Delete the Agent we have created.
+9. Delete the Agent we have created.
 
 Synchronous sample:
 ```C# Snippet:DeleteHostedAgentSessions_HostedAgentSessions_Sync
