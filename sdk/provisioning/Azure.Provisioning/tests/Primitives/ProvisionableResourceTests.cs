@@ -430,6 +430,88 @@ namespace Azure.Provisioning.Tests.Primitives
                     """);
         }
 
+        [Test]
+        public void ExistingChildResourceRequiresParent()
+        {
+            Infrastructure infra = new();
+            infra.Add(SingletonChildResource.FromExisting("child"));
+
+            var exception = Assert.Throws<System.InvalidOperationException>(() => infra.Build());
+
+            Assert.That(exception!.Message, Does.Contain("missing required property Parent"));
+        }
+
+        [Test]
+        public void ExistingChildResourceWithParentBuilds()
+        {
+            Infrastructure infra = new();
+            var parent = ParentResource.FromExisting("parent");
+            parent.Name = "parentName";
+            var child = SingletonChildResource.FromExisting("child");
+            child.Parent = parent;
+            infra.Add(parent);
+            infra.Add(child);
+
+            Assert.DoesNotThrow(() => infra.Build());
+        }
+
+        private sealed class ParentResource : ProvisionableResource
+        {
+            private BicepValue<string>? _name;
+
+            public BicepValue<string> Name
+            {
+                get { Initialize(); return _name!; }
+                set { Initialize(); _name!.Assign(value); }
+            }
+
+            public ParentResource(string bicepIdentifier)
+                : base(bicepIdentifier, "Test.Provider/parents", "2024-01-01")
+            {
+            }
+
+            public static ParentResource FromExisting(string bicepIdentifier) =>
+                new(bicepIdentifier) { IsExistingResource = true };
+
+            protected override void DefineProvisionableProperties()
+            {
+                base.DefineProvisionableProperties();
+                _name = DefineProperty<string>(nameof(Name), ["name"], isRequired: true);
+            }
+        }
+
+        private sealed class SingletonChildResource : ProvisionableResource
+        {
+            private BicepValue<string>? _name;
+            private ResourceReference<ParentResource>? _parent;
+
+            public BicepValue<string> Name
+            {
+                get { Initialize(); return _name!; }
+            }
+
+            public ParentResource? Parent
+            {
+                get { Initialize(); return _parent!.Value; }
+                set { Initialize(); _parent!.Value = value; }
+            }
+
+            public SingletonChildResource(string bicepIdentifier)
+                : base(bicepIdentifier, "Test.Provider/parents/settings", "2024-01-01")
+            {
+            }
+
+            public static SingletonChildResource FromExisting(string bicepIdentifier) =>
+                new(bicepIdentifier) { IsExistingResource = true };
+
+            protected override void DefineProvisionableProperties()
+            {
+                base.DefineProvisionableProperties();
+                _name = DefineProperty<string>(nameof(Name), ["name"], isRequired: true, defaultValue: "default");
+                _parent = DefineResource<ParentResource>(nameof(Parent), ["parent"], isRequired: true);
+            }
+        }
+
         /// <summary>
         /// Private nested class that implements a storage account resource
         /// to validate various property types supported by the library
