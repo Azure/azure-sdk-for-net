@@ -265,7 +265,7 @@ var collection = new StacCollection(
 };
 
 // Start collection creation (asynchronous operation)
-await stacClient.CreateCollectionAsync(
+Operation createOperation = await stacClient.CreateCollectionAsync(
     WaitUntil.Started,
     collection
 );
@@ -291,18 +291,11 @@ string collectionId = "naip";
 string itemId = "tx_m_2609719_se_14_060_20201216";
 
 // Get a specific tile
-Response response = await dataClient.GetTileAsync(
-    collectionId: collectionId,
-    itemId: itemId,
-    tileMatrixSetId: "WebMercatorQuad",
-    z: 14,
-    x: 4349,
-    y: 6564,
-    scale: 1,
-    format: "png",
-    assets: new[] { "image" },
-    assetBandIndices: new[] { "image|1,2,3" }
-);
+Response response = await dataClient.GetTileByScaleAndFormatAsync(new GetTileByScaleAndFormatOptions(collectionId, itemId, "WebMercatorQuad", 14, 4349, 6564, 1, "png")
+{
+    Assets = { "image" },
+    AssetBandIndices = { "image|1,2,3" }
+});
 
 byte[] tileImage = response.Content.ToArray();
 Console.WriteLine($"Tile image: {tileImage.Length} bytes");
