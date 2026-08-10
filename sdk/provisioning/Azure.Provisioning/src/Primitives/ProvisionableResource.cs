@@ -111,14 +111,10 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
 
         if (IsExistingResource)
         {
-            // Existing resources still require their identity-defining name and structural parent.
+            // We only want to validate the name if we're linking to an existing resource
             if (ProvisionableProperties.TryGetValue("Name", out IBicepValue? name) && name.IsRequired)
             {
                 RequireProperty(name);
-            }
-            if (ProvisionableProperties.TryGetValue("Parent", out IBicepValue? parent) && parent.IsRequired)
-            {
-                RequireProperty(parent);
             }
         }
         else

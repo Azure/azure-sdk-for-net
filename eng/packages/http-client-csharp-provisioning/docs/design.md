@@ -234,7 +234,7 @@ For a non-extension resource, the generator resolves `ParentResourceId` against 
 
 A writable extension resource uses Bicep's `scope` relationship instead of `parent`. It gets a `ProvisionableResource Scope` property so any generated provisioning resource can be assigned without introducing a package dependency. A read-only extension resource does not expose writable `Scope` metadata.
 
-Because `Parent` is part of the resource identity, it remains required when the resource is created through `FromExisting()`. `Parent` and `Scope` are mutually exclusive:
+`Parent` and `Scope` are mutually exclusive:
 
 The following snippets abbreviate the generated accessor bodies to emphasize the public API and property definitions.
 
@@ -287,7 +287,7 @@ _name = DefineProperty<string>(
     defaultValue: "singletonName");
 ```
 
-If either condition is not met, the generator treats the singleton name like a regular resource name: it remains required and settable, and the fixed one-segment name is not used as a default. The caller supplies all name segments not represented by a generated `Parent`. The current dynamic resource-name resolver can generate only one segment, so callers must explicitly set composite names until segment-aware automatic naming is supported.
+If either condition is not met, the generator treats the singleton name like a regular resource name: it remains required and settable, and the fixed one-segment name is not used as a default. The caller supplies all name segments not represented by a generated `Parent`.
 
 #### Supported Shapes
 
