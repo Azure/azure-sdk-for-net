@@ -53,7 +53,7 @@ namespace Azure.Security.ConfidentialLedger
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Members)
                 {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureSecurityConfidentialLedgerContext.Default));
+                    items.Add(ModelReaderWriter.Write(item, ModelReaderWriterOptions.Json, AzureSecurityConfidentialLedgerContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
