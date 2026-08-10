@@ -16,7 +16,7 @@
 
 ## Summary
 
-- Total libraries: 442
+- Total libraries: 448
 - Management Plane (MPG): 260
   - Autorest/Swagger: 43
   - New Emitter (TypeSpec): 217
@@ -25,9 +25,9 @@
   - Autorest/Swagger: 30
   - New Emitter (TypeSpec): 51
   - Old TypeSpec: 1
-- Provisioning: 53
+- Provisioning: 59
   - Reflection-based generator: 25
-  - TypeSpec-based generator: 26
+  - TypeSpec-based generator: 32
   - No generator: 2
 - No generator: 47
 
@@ -414,10 +414,16 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 43
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 26 / 53 migrated to TypeSpec-based generator
+**Migration Status**: 32 / 59 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
+| alertsmanagement | Azure.Provisioning.AlertProcessingRules | Azure.ResourceManager.AlertProcessingRules ✅ | TypeSpec ✅ |
+| alertsmanagement | Azure.Provisioning.AlertRuleRecommendations | Azure.ResourceManager.AlertRuleRecommendations ✅ | TypeSpec ✅ |
+| alertsmanagement | Azure.Provisioning.AlertsManagement | Azure.ResourceManager.AlertsManagement ✅ | TypeSpec ✅ |
+| alertsmanagement | Azure.Provisioning.PreviewAlertRule | Azure.ResourceManager.PreviewAlertRule ✅ | TypeSpec ✅ |
+| alertsmanagement | Azure.Provisioning.PrometheusRuleGroups | Azure.ResourceManager.PrometheusRuleGroups ✅ | TypeSpec ✅ |
+| alertsmanagement | Azure.Provisioning.TenantActivityLogAlerts | Azure.ResourceManager.TenantActivityLogAlerts ✅ | TypeSpec ✅ |
 | apimanagement | Azure.Provisioning.ApiManagement | Azure.ResourceManager.ApiManagement ✅ | Reflection |
 | appconfiguration | Azure.Provisioning.AppConfiguration | Azure.ResourceManager.AppConfiguration ✅ | Reflection |
 | applicationinsights | Azure.Provisioning.ApplicationInsights | Azure.ResourceManager.ApplicationInsights ✅ | Reflection |
