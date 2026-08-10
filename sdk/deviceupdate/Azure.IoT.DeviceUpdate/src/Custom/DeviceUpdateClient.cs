@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.IoT.DeviceUpdate
 {
@@ -11,8 +13,8 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="endpoint"> The Device Update for IoT Hub account endpoint. </param>
         /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        public DeviceUpdateClient(Uri endpoint, string instanceId, global::Azure.Core.TokenCredential credential)
-            : this(new global::Azure.Core.Pipeline.BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, instanceId, null)
+        public DeviceUpdateClient(Uri endpoint, string instanceId, TokenCredential credential)
+            : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, instanceId, null)
         {
         }
 
@@ -21,8 +23,8 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public DeviceUpdateClient(Uri endpoint, string instanceId, global::Azure.Core.TokenCredential credential, DeviceUpdateClientOptions options)
-            : this(new global::Azure.Core.Pipeline.BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, instanceId, options)
+        public DeviceUpdateClient(Uri endpoint, string instanceId, TokenCredential credential, DeviceUpdateClientOptions options)
+            : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, instanceId, options)
         {
         }
     }
