@@ -52,16 +52,33 @@ namespace Azure.Messaging.ServiceBus
         public virtual DateTimeOffset SessionLockedUntil => InnerReceiver.SessionLockedUntil;
 
         /// <summary>
+        /// Gets a value indicating whether the session is locked exclusively by this receiver. This reports the mode the
+        /// session was established under, which is exclusive unless
+        /// <see cref="ServiceBusSessionReceiverOptions.EnableNonExclusiveSession"/> was set. A non-exclusive request that
+        /// the service cannot honor fails when the session is accepted rather than falling back to an exclusive lock, so
+        /// this value always matches the mode that was requested.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public virtual bool IsSessionExclusive => InnerReceiver.IsSessionExclusive;
+
+        /// <summary>
         /// Gets the session lock token assigned by the service when the session is locked non-exclusively, or <c>null</c>
         /// when the session is locked exclusively (the default). Another receiver can present this token through
-        /// <see cref="ServiceBusSessionReceiverOptions.SessionLockToken"/> to cooperatively take over the session.
+        /// <see cref="ServiceBusSessionReceiverOptions.SessionLockToken"/>, which takes it as a <see cref="Guid"/>, to
+        /// cooperatively take over the session.
         /// </summary>
         /// <remarks>
-        /// The token is assigned by the service when the session is acquired (or when this receiver takes over a
-        /// session by presenting an existing token) and remains stable for the lifetime of this receiver.
+        /// The token is assigned by the service when the session is acquired, or when this receiver takes over a session by
+        /// presenting an existing token, and this property reports that same value for the lifetime of this receiver. It is
+        /// not cleared when another receiver takes the session over, so a non-null value reports the token this receiver was
+        /// assigned rather than proof that this receiver still holds the session. A receiver that has been taken over
+        /// surfaces <see cref="ServiceBusFailureReason.SessionLockLost"/> on its next operation.
+        ///
+        /// <para>This token authorizes taking over the session lock for any caller with Listen rights on the entity, so treat
+        /// it as sensitive: do not log it, do not persist it unprotected, and transmit it only over a trusted channel.</para>
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
-        public virtual Guid? SessionLockToken => InnerReceiver.SessionLockToken;
+        public virtual string SessionLockToken => InnerReceiver.SessionLockToken?.ToString();
 
         ///  <summary>
         ///  Creates a session receiver which can be used to interact with all messages with the same sessionId.
@@ -81,19 +98,19 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken,
             bool isProcessor = false)
         {
-            if (options != null)
+            // Validation runs on every path that creates a session receiver, including when no options are supplied, so an
+            // invalid combination can never reach the transport. A null options instance carries the defaults, which are
+            // always valid, so it has nothing to reject.
+            if (options?.SessionLockToken != null)
             {
-                if (options.SessionLockToken != null)
+                if (!options.EnableNonExclusiveSession)
                 {
-                    if (options.IsSessionExclusive)
-                    {
-                        throw new ArgumentException(Resources.SessionLockTokenRequiresNonExclusiveMode, nameof(options));
-                    }
+                    throw new ArgumentException(Resources.SessionLockTokenRequiresNonExclusiveMode, nameof(options));
+                }
 
-                    if (sessionId == null)
-                    {
-                        throw new ArgumentException(Resources.SessionLockTokenRequiresSessionId, nameof(options));
-                    }
+                if (sessionId == null)
+                {
+                    throw new ArgumentException(Resources.SessionLockTokenRequiresSessionId, nameof(options));
                 }
             }
 

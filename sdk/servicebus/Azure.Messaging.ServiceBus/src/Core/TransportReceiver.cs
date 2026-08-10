@@ -39,6 +39,13 @@ namespace Azure.Messaging.ServiceBus.Core
         public abstract Guid? SessionLockToken { get; protected set; }
 
         /// <summary>
+        /// Indicates whether the session was established with an exclusive lock. This is <c>true</c> for an exclusive
+        /// session, which is the default, and <c>false</c> for a session established with non-exclusive locking. This
+        /// is only meaningful for a session receiver; a receiver that is not bound to a session reports <c>true</c>.
+        /// </summary>
+        public abstract bool IsSessionExclusive { get; }
+
+        /// <summary>
         /// The prefetch count associated with the receiver.
         /// </summary>
         public abstract int PrefetchCount { get; set; }

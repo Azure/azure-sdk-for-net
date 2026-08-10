@@ -682,6 +682,8 @@ namespace Azure.Messaging.ServiceBus
                 sessionId: null,
                 isSessionReceiver: false,
                 isProcessor: false,
+                isSessionExclusive: true,
+                sessionLockToken: null,
                 cancellationToken: cancellationToken);
 
             try

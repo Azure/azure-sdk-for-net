@@ -363,9 +363,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="sessionId">The session to connect to.</param>
         /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <param name="isSessionExclusive">Whether or not the session is locked exclusively. Only applicable for session receivers.</param>
         /// <param name="sessionLockToken">The session lock token to present when cooperatively taking over a non-exclusive session. Only applicable for session receivers.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>A link for use with consumer operations.</returns>
         public virtual async Task<ReceivingAmqpLink> OpenReceiverLinkAsync(
             string identifier,
@@ -375,9 +375,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusReceiveMode receiveMode,
             string sessionId,
             bool isSessionReceiver,
-            CancellationToken cancellationToken,
             bool isSessionExclusive = true,
-            Guid? sessionLockToken = null)
+            Guid? sessionLockToken = null,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(_disposed, nameof(AmqpConnectionScope));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -644,9 +644,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="sessionId">The session to receive from.</param>
         /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <param name="isSessionExclusive">Whether or not the session is locked exclusively. Only applicable for session receivers.</param>
         /// <param name="sessionLockToken">The session lock token to present when cooperatively taking over a non-exclusive session. Only applicable for session receivers.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>A link for use for operations related to receiving events.</returns>
         protected virtual async Task<ReceivingAmqpLink> CreateReceivingLinkAsync(
             string entityPath,
@@ -658,9 +658,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusReceiveMode receiveMode,
             string sessionId,
             bool isSessionReceiver,
-            CancellationToken cancellationToken,
             bool isSessionExclusive = true,
-            Guid? sessionLockToken = null)
+            Guid? sessionLockToken = null,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsDisposed, nameof(AmqpConnectionScope));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();

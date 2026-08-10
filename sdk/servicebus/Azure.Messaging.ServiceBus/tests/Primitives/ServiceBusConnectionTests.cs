@@ -604,9 +604,9 @@ namespace Azure.Messaging.ServiceBus.Tests
             public override TransportReceiver CreateReceiver(string entityPath, ServiceBusRetryPolicy retryPolicy,
                 ServiceBusReceiveMode receiveMode, uint prefetchCount, string identifier, string sessionId, bool isSessionReceiver,
                 bool isProcessor,
-                CancellationToken cancellationToken,
                 bool isSessionExclusive,
-                Guid? sessionLockToken)
+                Guid? sessionLockToken,
+                CancellationToken cancellationToken)
             {
                 throw new NotImplementedException();
             }

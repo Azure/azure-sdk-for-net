@@ -123,6 +123,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public override string SessionId { get; protected set; }
         public override DateTimeOffset SessionLockedUntil { get; protected set; }
         public override Guid? SessionLockToken { get; protected set; }
+        public override bool IsSessionExclusive => _isSessionExclusive;
+
+        /// <summary>
+        /// Indicates whether dispositions must be routed over the management link rather than the receive link. A
+        /// non-exclusive session can be taken over, after which the current holder settles messages that were
+        /// delivered to the previous holder's link and so have no delivery on its own link. Routing every disposition for
+        /// such a session over the management link keeps settlement working across a takeover, at the cost of a
+        /// request/response exchange on the shared management link per settlement rather than a disposition on the
+        /// receiver's own link.
+        /// </summary>
+        private bool UseRequestResponseDisposition => _isSessionReceiver && !_isSessionExclusive;
 
         public override int PrefetchCount
         {
@@ -172,10 +183,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver link.</param>
         /// <param name="isProcessor">Whether or not the receiver is being created for a processor.</param>
         /// <param name="messageConverter">The converter to use for translating <see cref="ServiceBusMessage" /> into an AMQP-specific message.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the
-        /// open link operation. Only applicable for session receivers.</param>
         /// <param name="isSessionExclusive">Whether or not the session is locked exclusively. Only applicable for session receivers.</param>
         /// <param name="sessionLockToken">The session lock token to present when cooperatively taking over a non-exclusive session. Only applicable for session receivers.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the
+        /// open link operation. Only applicable for session receivers.</param>
         ///
         /// <remarks>
         /// As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -195,9 +206,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             bool isSessionReceiver,
             bool isProcessor,
             AmqpMessageConverter messageConverter,
-            CancellationToken cancellationToken,
             bool isSessionExclusive = true,
-            Guid? sessionLockToken = null)
+            Guid? sessionLockToken = null,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
@@ -301,7 +312,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             throw new NotSupportedException(Resources.NonExclusiveSessionModeNotSupported);
                         }
 
-                        if (SessionId == null)
+                        if (string.IsNullOrEmpty(SessionId))
                         {
                             link.Session.SafeClose();
                             throw new ServiceBusException(true, Resources.AmqpFieldSessionId);
@@ -550,7 +561,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout)
         {
             ThrowIfSessionLockLost();
-            if (RequestResponseLockedMessages.Contains(lockToken))
+            if (UseRequestResponseDisposition || RequestResponseLockedMessages.Contains(lockToken))
             {
                 await DisposeMessageRequestResponseAsync(
                     lockToken,
@@ -615,26 +626,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     if (error.Condition.Equals(AmqpErrorCode.NotFound))
                     {
-                        // For a non-exclusive session, a NotFound on the receive link is the expected path for the new
-                        // holder settling the previous holder's message; fall through to the management link below.
-                        // The displaced original holder never reaches this guard: the takeover force-detaches its
-                        // receive link (session-lock-lost), so its next settle throws SessionLockLost from the
-                        // ThrowIfSessionLockLost check that runs at the start of the settle operation.
-                        if (_isSessionReceiver && _isSessionExclusive)
+                        if (_isSessionReceiver)
                         {
                             ThrowLockLostException();
                         }
 
-                        // The message was not found on the link, which can happen after a reconnect or - for a
-                        // non-exclusive session - because a different receiver took over the session and is settling
-                        // a message the original holder received. Settle over the management link, scoped by both the
-                        // associated receive-link name and the session id, the same way the other session-scoped
-                        // dispositions are.
+                        // The message was not found on the link which can occur as a result of a reconnect.
+                        // Attempt to settle the message over the management link.
                         await DisposeMessageRequestResponseAsync(
                             lockToken,
                             timeout,
                             disposition,
-                            SessionId,
                             propertiesToModify: propertiesToModify,
                             deadLetterReason: deadLetterReason,
                             deadLetterDescription: deadLetterDescription).ConfigureAwait(false);
@@ -726,7 +728,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             IDictionary<string, object> propertiesToModify = null)
         {
             ThrowIfSessionLockLost();
-            if (RequestResponseLockedMessages.Contains(lockToken))
+            if (UseRequestResponseDisposition || RequestResponseLockedMessages.Contains(lockToken))
             {
                 return DisposeMessageRequestResponseAsync(
                     lockToken,
@@ -788,7 +790,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             IDictionary<string, object> propertiesToModify = null)
         {
             ThrowIfSessionLockLost();
-            if (RequestResponseLockedMessages.Contains(lockToken))
+            if (UseRequestResponseDisposition || RequestResponseLockedMessages.Contains(lockToken))
             {
                 return DisposeMessageRequestResponseAsync(
                     lockToken,
@@ -865,7 +867,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Argument.AssertNotTooLong(deadLetterErrorDescription, Constants.MaxDeadLetterReasonLength, nameof(deadLetterErrorDescription));
             ThrowIfSessionLockLost();
 
-            if (RequestResponseLockedMessages.Contains(lockToken))
+            if (UseRequestResponseDisposition || RequestResponseLockedMessages.Contains(lockToken))
             {
                 return DisposeMessageRequestResponseAsync(
                     lockToken,

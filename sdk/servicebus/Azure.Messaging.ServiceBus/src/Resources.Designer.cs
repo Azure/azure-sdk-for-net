@@ -547,7 +547,7 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A session lock token can only be supplied when IsSessionExclusive is set to false..
+        ///   Looks up a localized string similar to A session lock token can only be supplied when EnableNonExclusiveSession is set to true..
         /// </summary>
         internal static string SessionLockTokenRequiresNonExclusiveMode {
             get {

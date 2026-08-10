@@ -54,7 +54,9 @@ namespace Azure.Messaging.ServiceBus.Amqp.Framing
 
         public override string ToString()
         {
-            return $"non-exclusive-session-filter(session-id:{SessionId},lock-token:{LockToken})";
+            // The lock token authorizes taking the session over, and this value reaches the AMQP link name, which is
+            // written to logs, management requests, and error text. Report only whether a token is present.
+            return $"non-exclusive-session-filter(session-id:{SessionId},lock-token:{(LockToken.HasValue ? "<present>" : "<none>")})";
         }
     }
 }
