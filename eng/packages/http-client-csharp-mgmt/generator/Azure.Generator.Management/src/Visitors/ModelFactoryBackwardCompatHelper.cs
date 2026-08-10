@@ -192,9 +192,14 @@ namespace Azure.Generator.Management.Visitors
 
             var arguments = new List<ValueExpression>(constructorParameters.Count);
             var changed = constructorParameters.Count != newInstanceExpression.Parameters.Count;
-            var unavailableDirectParameterNames = GetUnavailableDirectParameterNames(method, constructorParameters, newInstanceExpression.Parameters);
-            foreach (var constructorParameter in constructorParameters)
+            for (int i = 0; i < constructorParameters.Count; i++)
             {
+                var constructorParameter = constructorParameters[i];
+                var unavailableDirectParameterNames = GetUnavailableDirectParameterNames(
+                    method,
+                    constructorParameters,
+                    newInstanceExpression.Parameters,
+                    i);
                 if (TryBuildCompatibilityArgument(method, constructorParameter, unavailableDirectParameterNames, out var argument))
                 {
                     arguments.Add(argument.Argument);
@@ -387,7 +392,6 @@ namespace Azure.Generator.Management.Visitors
 
             List<ValueExpression>? arguments = null;
             List<ParameterProvider>? matched = null;
-            var unavailableDirectParameterNames = GetUnavailableDirectParameterNames(method, constructorParameters, newInstanceExpression.Parameters);
             for (int i = 0; i < newInstanceExpression.Parameters.Count; i++)
             {
                 // Only default slots are candidates for repair. Non-default arguments were intentionally present in the
@@ -398,6 +402,11 @@ namespace Azure.Generator.Management.Visitors
                     continue;
                 }
 
+                var unavailableDirectParameterNames = GetUnavailableDirectParameterNames(
+                    method,
+                    constructorParameters,
+                    newInstanceExpression.Parameters,
+                    i);
                 if (TryBuildCompatibilityArgument(method, constructorParameters[i], unavailableDirectParameterNames, out var replacement))
                 {
                     arguments ??= [.. newInstanceExpression.Parameters];
@@ -462,9 +471,13 @@ namespace Azure.Generator.Management.Visitors
                 && ReferencesParameter(argument, parameter));
         }
 
-        private static HashSet<string> GetUnavailableDirectParameterNames(MethodProvider method, IReadOnlyList<ParameterProvider> constructorParameters, IReadOnlyList<ValueExpression> originalArguments)
+        private static HashSet<string> GetUnavailableDirectParameterNames(
+            MethodProvider method,
+            IReadOnlyList<ParameterProvider> constructorParameters,
+            IReadOnlyList<ValueExpression> originalArguments,
+            int targetArgumentIndex)
         {
-            var result = GetParameterNamesUsedByOriginalArguments(method.Signature.Parameters, originalArguments);
+            var result = GetParameterNamesUsedByOtherOriginalArguments(method.Signature.Parameters, originalArguments, targetArgumentIndex);
             foreach (var constructorParameter in constructorParameters)
             {
                 if (TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type, constructorParameter.Property, out _))
@@ -476,13 +489,15 @@ namespace Azure.Generator.Management.Visitors
             return result;
         }
 
-        private static HashSet<string> GetParameterNamesUsedByOriginalArguments(IReadOnlyList<ParameterProvider> parameters, IReadOnlyList<ValueExpression> originalArguments)
+        private static HashSet<string> GetParameterNamesUsedByOtherOriginalArguments(
+            IReadOnlyList<ParameterProvider> parameters,
+            IReadOnlyList<ValueExpression> originalArguments,
+            int targetArgumentIndex)
             => parameters
-                .Where(parameter => originalArguments.Any(argument =>
-                    // Parameters inside a nested model argument must remain available when that same argument is rebuilt.
-                    argument is not NewInstanceExpression
-                    && !IsDefaultExpression(argument)
-                    && ReferencesParameter(argument, parameter)))
+                // A parameter may rebuild the nested model in its original slot, but must not leak into sibling slots.
+                .Where(parameter => originalArguments
+                    .Where((_, index) => index != targetArgumentIndex)
+                    .Any(argument => !IsDefaultExpression(argument) && ReferencesParameter(argument, parameter)))
                 .Select(parameter => parameter.Name)
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
