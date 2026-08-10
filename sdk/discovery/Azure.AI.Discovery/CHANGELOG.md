@@ -1,8 +1,8 @@
 # Release History
 
-## 1.0.0 (2026-08-06)
+## 1.0.0-beta.1 (2026-08-10)
 
-General availability of the Azure AI Discovery client library for .NET.
+Initial beta release of the Azure AI Discovery client library for .NET.
 
 ### Features Added
 

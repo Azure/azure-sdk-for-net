@@ -13,7 +13,7 @@ Discovery workspace. The client library exposes two top-level clients:
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.AI.Discovery
+dotnet add package Azure.AI.Discovery --prerelease
 ```
 
 ### Prerequisites
