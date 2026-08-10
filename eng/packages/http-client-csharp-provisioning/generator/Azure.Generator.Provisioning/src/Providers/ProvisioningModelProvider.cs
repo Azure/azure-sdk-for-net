@@ -148,16 +148,18 @@ namespace Azure.Generator.Provisioning.Providers
         {
             var properties = new Dictionary<string, PropertyProvider>(StringComparer.Ordinal);
             var visitedTypes = new HashSet<CSharpType>();
-            var baseType = BaseType;
+            TypeProvider? baseProvider = BaseModelProvider;
 
-            while (baseType != null && visitedTypes.Add(baseType))
+            // BaseModelProvider is the authoritative link for generated model bases. It is null
+            // when customization changes the C# base to a type that has no InputModelType, so only
+            // that custom-only case needs to resolve the provider from BaseType.
+            if (baseProvider == null && BaseType is CSharpType baseType)
             {
-                var baseProvider = ResolveTypeProvider(baseType);
-                if (baseProvider == null)
-                {
-                    break;
-                }
+                baseProvider = ResolveTypeProvider(baseType);
+            }
 
+            while (baseProvider != null && visitedTypes.Add(baseProvider.Type))
+            {
                 // Walk from the immediate C# base toward the root and keep the first property for
                 // each name. That is the member visible to the derived class when multiple base
                 // layers hide one another.
@@ -166,7 +168,12 @@ namespace Azure.Generator.Provisioning.Providers
                     properties.TryAdd(property.Name, property);
                 }
 
-                baseType = baseProvider.BaseType;
+                var currentBaseProvider = baseProvider;
+                baseProvider = (currentBaseProvider as ModelProvider)?.BaseModelProvider;
+                if (baseProvider == null && currentBaseProvider.BaseType is CSharpType nextBaseType)
+                {
+                    baseProvider = ResolveTypeProvider(nextBaseType);
+                }
             }
 
             return properties;

@@ -475,6 +475,7 @@ namespace Azure.Generator.Provisioning.Tests
 
             var modelProvider = new ProvisioningModelProvider(model);
 
+            Assert.That(modelProvider.BaseModelProvider, Is.Null);
             Assert.That(modelProvider.BaseType?.Name, Is.EqualTo("CustomBase"));
             Assert.That(
                 modelProvider.Properties.Select(property => property.Name),
