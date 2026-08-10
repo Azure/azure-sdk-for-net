@@ -78,7 +78,7 @@ namespace Azure.Generator.Provisioning.Tests
 
             Assert.That(projection.ResourceModel, Is.SameAs(model));
             Assert.That(projection.ResourceName, Is.EqualTo("TestResource"));
-            Assert.That(projection.ResourceType, Is.EqualTo("Microsoft.Test/widgets"));
+            Assert.That(projection.ResourceType, Is.EqualTo(new ResourceTypePattern("Microsoft.Test/widgets")));
             Assert.That(projection.SingletonResourceName, Is.EqualTo("default"));
             Assert.That(projection.ParentResourceId!.SerializedPath, Is.EqualTo(
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/parents/{parentName}"));
@@ -1090,7 +1090,7 @@ namespace Azure.Generator.Provisioning.Tests
             return new(
                 metadata.ResourceModel,
                 metadata.ResourceName,
-                metadata.ResourceType.SerializedResourceType,
+                metadata.ResourceType,
                 metadata.SingletonResourceName,
                 metadata.ParentResourceId,
                 metadata.NameConstraints,

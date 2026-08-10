@@ -96,11 +96,9 @@ namespace Azure.Generator.Provisioning.Providers
             if (parent?.ResourceProjection is not { } parentProjection)
                 return null;
 
-            return IsImmediateParentResourceType(
-                new ResourceTypePattern(resourceProjection.ResourceType),
-                new ResourceTypePattern(parentProjection.ResourceType))
-                    ? parent
-                    : null;
+            return IsImmediateParentResourceType(resourceProjection.ResourceType, parentProjection.ResourceType)
+                ? parent
+                : null;
         }
 
         private bool CanUseSingletonDefaultName()
@@ -112,7 +110,7 @@ namespace Azure.Generator.Provisioning.Providers
                 return true;
 
             // The first segment is the provider namespace.
-            return new ResourceTypePattern(_resourceProjection.ResourceType).Count == 2;
+            return _resourceProjection.ResourceType.Count == 2;
         }
 
         private static bool IsImmediateParentResourceType(ResourceTypePattern resourceType, ResourceTypePattern parentResourceType)
@@ -338,7 +336,7 @@ namespace Azure.Generator.Provisioning.Providers
                 true,
                 [
                     bicepIdentifierParam,
-                    Literal(_resourceProjection!.ResourceType),
+                    Literal(_resourceProjection!.ResourceType.SerializedResourceType),
                     resourceVersionArg
                 ]);
 
