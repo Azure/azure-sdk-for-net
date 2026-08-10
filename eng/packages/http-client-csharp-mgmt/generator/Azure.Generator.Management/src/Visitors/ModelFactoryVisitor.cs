@@ -228,25 +228,24 @@ namespace Azure.Generator.Management.Visitors
                 return false;
             }
 
+            var previousParameterNames = previousParameters.Select(parameter => parameter.Name).ToArray();
+            if (previousParameterNames.Any(string.IsNullOrEmpty)
+                || previousParameterNames.Distinct(StringComparer.Ordinal).Count() != previousParameterNames.Length)
+            {
+                return false;
+            }
+
             var updated = false;
-            var currentParameterNames = currentParameters.Select(parameter => parameter.Name).ToHashSet(StringComparer.Ordinal);
             for (int i = 0; i < currentParameters.Count; i++)
             {
-                var previousName = previousParameters[i].Name;
+                var previousName = previousParameterNames[i];
                 var currentParameter = currentParameters[i];
-                if (string.IsNullOrEmpty(previousName) || currentParameter.Name == previousName)
+                if (currentParameter.Name == previousName)
                 {
                     continue;
                 }
 
-                if (currentParameterNames.Contains(previousName))
-                {
-                    continue;
-                }
-
-                currentParameterNames.Remove(currentParameter.Name);
                 currentParameter.Update(name: previousName);
-                currentParameterNames.Add(previousName);
                 updated = true;
             }
 
