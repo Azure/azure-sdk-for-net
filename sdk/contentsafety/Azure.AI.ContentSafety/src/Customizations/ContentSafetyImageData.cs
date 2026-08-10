@@ -30,9 +30,9 @@ namespace Azure.AI.ContentSafety
         // initializer, which is what suppresses the downstream diagnostic.
         internal int RepairCascadeProbe()
         {
-            var uri = Level1Typo_BlobUri;
-            var host = uri.Level2Typo_Host;
-            return host.Level3Typo_Length;
+            var uri = BlobUri;
+            var host = uri.Host;
+            return host.Length;
         }
 
         /// <summary>
