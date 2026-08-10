@@ -15,7 +15,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Emitted once retrieval preflight validation completes, before any activity begins. </summary>
-    public partial class KnowledgeBaseRetrievalStartedEvent : IJsonModel<KnowledgeBaseRetrievalStartedEvent>
+    public partial class KnowledgeBaseRetrievalStartedEvent : KnowledgeBaseRetrievalStreamEvent, IJsonModel<KnowledgeBaseRetrievalStartedEvent>
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseRetrievalStartedEvent"/> for deserialization. </summary>
         internal KnowledgeBaseRetrievalStartedEvent()

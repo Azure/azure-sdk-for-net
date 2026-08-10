@@ -15,7 +15,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Emitted in place of `response.completed` if retrieval fails after the stream starts. </summary>
-    public partial class KnowledgeBaseStreamErrorEvent : IJsonModel<KnowledgeBaseStreamErrorEvent>
+    public partial class KnowledgeBaseStreamErrorEvent : KnowledgeBaseRetrievalStreamEvent, IJsonModel<KnowledgeBaseStreamErrorEvent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

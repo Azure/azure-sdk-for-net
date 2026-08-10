@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ComponentModel;
-using System.Net.ServerSentEvents;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;

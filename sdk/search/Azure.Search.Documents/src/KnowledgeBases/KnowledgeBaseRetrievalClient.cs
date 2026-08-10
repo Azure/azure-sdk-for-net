@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Search.Documents.KnowledgeBases.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 #pragma warning disable AZC0004, AZC0015
 
@@ -23,6 +24,8 @@ namespace Azure.Search.Documents.KnowledgeBases
     /// <summary>
     /// Azure Cognitive Search client that can be used to query an knowledge base.
     /// </summary>
+    // Bug in C# emitter for SSE code gen using incorrect PipelineMessage instead of Httpessage. Remove once fixed. ETA after 2026-08-01-preview
+    [CodeGenSuppress(nameof(RetrieveStreamAsync), typeof(RequestContent), typeof(string), typeof(string), typeof(RequestContext))]
     public partial class KnowledgeBaseRetrievalClient
     {
         /// <summary>
@@ -208,6 +211,8 @@ namespace Azure.Search.Documents.KnowledgeBases
 
             return eventType switch
             {
+                // TODO: Revisit this to see how we should model. Should have a base class for all events? Or a factory method that returns the proper type to avoid incorrect inheritance.
+                // e.g., KnowledgeBaseActivityRecord now inherits from KnowledgeBaseRetrievalStreamEvent, but it is not a stream event, it is only used as a payload for the event.
                 "retrieval.started" => KnowledgeBaseRetrievalStartedEvent.DeserializeKnowledgeBaseRetrievalStartedEvent(element, options),
                 "activity.started" => KnowledgeBaseActivityStartedEvent.DeserializeKnowledgeBaseActivityStartedEvent(element, options),
                 "activity.completed" => KnowledgeBaseActivityRecord.DeserializeKnowledgeBaseActivityRecord(element, options),
