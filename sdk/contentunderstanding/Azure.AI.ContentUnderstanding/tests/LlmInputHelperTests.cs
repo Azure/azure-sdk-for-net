@@ -8,6 +8,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using Azure;
 using Azure.AI.ContentUnderstanding;
 using NUnit.Framework;
@@ -217,6 +218,52 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 Is.GreaterThan(output.IndexOf("mimeType:", StringComparison.Ordinal)));
             Assert.That(output.IndexOf("pages:", StringComparison.Ordinal),
                 Is.GreaterThan(output.IndexOf("metadata:", StringComparison.Ordinal)));
+        }
+
+        [Test]
+        public void ToLlmInput_AnalysisMetadataWithDelimiterLine_IndentsContinuationLines()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "Document body",
+                metadata: new Dictionary<string, string>
+                {
+                    ["description"] = "Q3 notes\n---\nreviewer: bob",
+                    ["author"] = "Jane",
+                },
+                startPageNumber: 1,
+                endPageNumber: 3);
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+
+            string output = result.ToLlmInput();
+
+            Assert.That(output, Does.Contain("  description: 'Q3 notes\n    ---\n    reviewer: bob'"));
+            Assert.That(Regex.Matches(output, @"(?m)^---$").Count, Is.EqualTo(2));
+            Assert.That(output, Does.Contain("  author: Jane\npages: 1-3\n---\n"));
+            Assert.That(output, Does.Contain("Document body"));
+        }
+
+        [Test]
+        public void ToLlmInput_CustomMetadataWithDelimiterLine_IndentsContinuationLines()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "Document body",
+                startPageNumber: 1,
+                endPageNumber: 1);
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+            var customMetadata = new Dictionary<string, object>
+            {
+                ["comments"] = "First section\n---\nSecond section",
+            };
+
+            string output = result.ToLlmInput(customMetadata);
+
+            Assert.That(output, Does.Contain("  comments: 'First section\n    ---\n    Second section'"));
+            Assert.That(Regex.Matches(output, @"(?m)^---$").Count, Is.EqualTo(2));
         }
 
         [Test]

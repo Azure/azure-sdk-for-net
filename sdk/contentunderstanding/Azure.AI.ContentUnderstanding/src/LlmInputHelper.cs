@@ -865,6 +865,12 @@ namespace Azure.AI.ContentUnderstanding
             return string.Join("\n", lines);
         }
 
+        private static string IndentScalarContinuationLines(object value, int indent)
+        {
+            string scalar = YamlScalar(value);
+            return scalar.Replace("\n", $"\n{new string(' ', indent * 2)}");
+        }
+
         private static void EmitMapping(
             List<string> lines,
             IEnumerable<KeyValuePair<string, object>> mapping,
@@ -896,7 +902,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 else
                 {
-                    lines.Add($"{prefix}{safeKey}: {YamlScalar(kvp.Value)}");
+                    lines.Add($"{prefix}{safeKey}: {IndentScalarContinuationLines(kvp.Value, indent + 1)}");
                 }
             }
         }
@@ -939,14 +945,14 @@ namespace Azure.AI.ContentUnderstanding
                         }
                         else
                         {
-                            lines.Add($"{tag}{safeKey}: {YamlScalar(kvp.Value)}");
+                            lines.Add($"{tag}{safeKey}: {IndentScalarContinuationLines(kvp.Value, indent + 2)}");
                         }
                         first = false;
                     }
                 }
                 else
                 {
-                    lines.Add($"{prefix}- {YamlScalar(item)}");
+                    lines.Add($"{prefix}- {IndentScalarContinuationLines(item, indent + 1)}");
                 }
             }
         }
