@@ -199,7 +199,7 @@ namespace Azure.Generator.Management.Visitors
                     method,
                     constructorParameters,
                     newInstanceExpression.Parameters,
-                    i);
+                    constructorParameter);
                 if (TryBuildCompatibilityArgument(method, constructorParameter, unavailableDirectParameterNames, out var argument))
                 {
                     arguments.Add(argument.Argument);
@@ -406,7 +406,7 @@ namespace Azure.Generator.Management.Visitors
                     method,
                     constructorParameters,
                     newInstanceExpression.Parameters,
-                    i);
+                    constructorParameters[i]);
                 if (TryBuildCompatibilityArgument(method, constructorParameters[i], unavailableDirectParameterNames, out var replacement))
                 {
                     arguments ??= [.. newInstanceExpression.Parameters];
@@ -475,8 +475,9 @@ namespace Azure.Generator.Management.Visitors
             MethodProvider method,
             IReadOnlyList<ParameterProvider> constructorParameters,
             IReadOnlyList<ValueExpression> originalArguments,
-            int targetArgumentIndex)
+            ParameterProvider targetConstructorParameter)
         {
+            var targetArgumentIndex = GetOriginalNestedArgumentIndex(targetConstructorParameter, originalArguments);
             var result = GetParameterNamesUsedByOtherOriginalArguments(method.Signature.Parameters, originalArguments, targetArgumentIndex);
             foreach (var constructorParameter in constructorParameters)
             {
@@ -489,10 +490,24 @@ namespace Azure.Generator.Management.Visitors
             return result;
         }
 
+        private static int? GetOriginalNestedArgumentIndex(
+            ParameterProvider targetConstructorParameter,
+            IReadOnlyList<ValueExpression> originalArguments)
+        {
+            // Match the stale nested argument by model type because MPG visitors may insert or reorder constructor parameters.
+            var matchingIndexes = originalArguments
+                .Select((argument, index) => (argument, index))
+                .Where(item => item.argument is NewInstanceExpression { Type: not null } newInstance
+                    && newInstance.Type.AreNamesEqual(targetConstructorParameter.Type))
+                .Select(item => item.index)
+                .ToArray();
+            return matchingIndexes.Length == 1 ? matchingIndexes[0] : null;
+        }
+
         private static HashSet<string> GetParameterNamesUsedByOtherOriginalArguments(
             IReadOnlyList<ParameterProvider> parameters,
             IReadOnlyList<ValueExpression> originalArguments,
-            int targetArgumentIndex)
+            int? targetArgumentIndex)
             => parameters
                 // A parameter may rebuild the nested model in its original slot, but must not leak into sibling slots.
                 .Where(parameter => originalArguments

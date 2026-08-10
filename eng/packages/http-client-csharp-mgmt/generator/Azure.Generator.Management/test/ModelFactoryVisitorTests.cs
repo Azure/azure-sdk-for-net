@@ -283,6 +283,63 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void RebuildScopesNestedParameterAcrossReorderedAndInsertedSiblingModels()
+        {
+            var leftModel = InputFactory.Model(
+                "LeftModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+            var rightModel = InputFactory.Model(
+                "RightModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+            var middleModel = InputFactory.Model(
+                "MiddleModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+            var parentModel = InputFactory.Model(
+                "ParentModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("middle", middleModel),
+                    InputFactory.Property("right", rightModel),
+                    InputFactory.Property("left", leftModel)
+                ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [parentModel, leftModel, rightModel, middleModel]);
+            var parent = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var left = plugin.Object.TypeFactory.CreateModel(leftModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(rightModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(middleModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            Assert.That(parent.FullConstructor.Signature.Parameters.Take(3).Select(parameter => parameter.Name), Is.EqualTo(new[] { "middle", "right", "left" }));
+
+            var valueParameter = new ParameterProvider("value", $"Value description", typeof(string));
+            var leftArguments = left.FullConstructor.Signature.Parameters
+                .Select(parameter => parameter.Name == "value" ? valueParameter : parameter.DefaultValue ?? Default)
+                .ToArray();
+            ValueExpression[] staleArguments = [New.Instance(left.Type, leftArguments), Default];
+            var method = new MethodProvider(
+                new MethodSignature(
+                    "ParentModel",
+                    $"Creates a parent model.",
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                    parent.Type,
+                    $"A parent model.",
+                    [valueParameter]),
+                Return(New.Instance(parent.Type, staleArguments)),
+                modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+
+            var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("new global::Samples.Models.LeftModel(value"));
+            Assert.That(rendered, Does.Not.Contain("new global::Samples.Models.RightModel(value"));
+            Assert.That(rendered, Does.Not.Contain("new global::Samples.Models.MiddleModel(value"));
+        }
+
+        [Test]
         public void ModelFactoryParametersPreserveLastContractNamesForSdkModels()
         {
             var inputModel = InputFactory.Model(
