@@ -42,13 +42,13 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                isEnabled is null ? default : new PrometheusRuleGroupProperties(
-                    default,
+                description is null && isEnabled is null && clusterName is null && scopes is null && interval is null && rules is null ? default : new PrometheusRuleGroupProperties(
+                    description,
                     isEnabled,
-                    default,
-                    default,
-                    default,
-                    default,
+                    clusterName,
+                    (scopes ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    interval,
+                    (rules ?? new ChangeTrackingList<PrometheusRule>()).ToList(),
                     default),
                 default);
         }

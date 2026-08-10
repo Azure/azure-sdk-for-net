@@ -50,16 +50,16 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new LogAlertRule(tags ?? new ChangeTrackingDictionary<string, string>(), location, kind, criteriaAllOf is null ? default : new LogAlertRuleProperties(
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
+            return new LogAlertRule(tags ?? new ChangeTrackingDictionary<string, string>(), location, kind, description is null && displayName is null && severity is null && enabled is null && scopes is null && evaluationFrequency is null && windowSize is null && overrideQueryTimeRange is null && targetResourceTypes is null && criteriaAllOf is null ? default : new LogAlertRuleProperties(
+                description,
+                displayName,
+                severity,
+                enabled,
+                (scopes ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                evaluationFrequency,
+                windowSize,
+                overrideQueryTimeRange,
+                (targetResourceTypes ?? new ChangeTrackingList<string>()).ToList(),
                 new LogAlertRuleCriteria((criteriaAllOf ?? new ChangeTrackingList<LogAlertRuleCondition>()).ToList(), default),
                 default), default);
         }

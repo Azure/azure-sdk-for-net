@@ -489,7 +489,19 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                provisioningState is null && status is null && filters is null && compositionType is null && createdOn is null && expireOn is null && retentionPeriod is null && size is null && itemsCount is null && tags is null && eTag is null ? default : new SnapshotProperties(
+                    provisioningState,
+                    status,
+                    (filters ?? new ChangeTrackingList<SnapshotKeyValueFilter>()).ToList(),
+                    compositionType,
+                    createdOn,
+                    expireOn,
+                    retentionPeriod,
+                    size,
+                    itemsCount,
+                    tags ?? new ChangeTrackingDictionary<string, string>(),
+                    eTag,
+                    default),
                 default);
         }
 

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
                 name,
                 resourceType,
                 systemData,
-                alertRuleType is null && ruleArmTemplate is null ? default : new AlertRuleRecommendationProperties(alertRuleType, default, default, ruleArmTemplate, default),
+                alertRuleType is null && category is null && displayInformation is null && ruleArmTemplate is null ? default : new AlertRuleRecommendationProperties(alertRuleType, category, displayInformation ?? new ChangeTrackingDictionary<string, string>(), ruleArmTemplate, default),
                 default);
         }
 
