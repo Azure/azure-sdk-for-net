@@ -73,22 +73,22 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <returns> A new <see cref="ManagedApplications.ManagedApplicationData"/> instance for mocking. </returns>
         public static ManagedApplicationData ManagedApplicationData(ResourceIdentifier managedResourceGroupId = default, ResourceIdentifier applicationDefinitionId = default, BinaryData parameters = default, BinaryData outputs = default, ProvisioningState? provisioningState = default, ApplicationJitAccessPolicy jitAccessPolicy = default, string publisherTenantId = default, IEnumerable<ApplicationAuthorization> authorizations = default, ApplicationManagementMode? managementMode = default, ApplicationPackageContact customerSupport = default, ApplicationPackageSupportUrls supportUrls = default, IEnumerable<ApplicationArtifact> artifacts = default, ApplicationClientDetails createdBy = default, ApplicationClientDetails updatedBy = default, string billingDetailsResourceUsageId = default, ManagedApplicationsPlan plan = default, string kind = default, ManagedServiceIdentity identity = default)
         {
-            return new ManagedApplicationData(applicationDefinitionId is null && billingDetailsResourceUsageId is null ? default : new ApplicationProperties(
-                default,
+            return new ManagedApplicationData(managedResourceGroupId is null && applicationDefinitionId is null && parameters is null && outputs is null && provisioningState is null && billingDetailsResourceUsageId is null && jitAccessPolicy is null && publisherTenantId is null && authorizations is null && managementMode is null && customerSupport is null && supportUrls is null && artifacts is null && createdBy is null && updatedBy is null ? default : new ApplicationProperties(
+                managedResourceGroupId,
                 applicationDefinitionId,
-                default,
-                default,
-                default,
+                parameters,
+                outputs,
+                provisioningState,
                 new ApplicationBillingDetailsDefinition(billingDetailsResourceUsageId, default),
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
+                jitAccessPolicy,
+                publisherTenantId,
+                (authorizations ?? new ChangeTrackingList<ApplicationAuthorization>()).ToList(),
+                managementMode,
+                customerSupport,
+                supportUrls,
+                (artifacts ?? new ChangeTrackingList<ApplicationArtifact>()).ToList(),
+                createdBy,
+                updatedBy,
                 default), plan, kind, identity, default);
         }
 
@@ -405,22 +405,22 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <returns> A new <see cref="ManagedApplications.ApplicationDefinitionData"/> instance for mocking. </returns>
         public static ApplicationDefinitionData ApplicationDefinitionData(ApplicationLockLevel lockLevel = default, string displayName = default, bool? isEnabled = default, IEnumerable<ApplicationAuthorization> authorizations = default, IEnumerable<ApplicationDefinitionArtifact> artifacts = default, string description = default, string packageFileUri = default, ResourceIdentifier storageAccountId = default, BinaryData mainTemplate = default, BinaryData createUiDefinition = default, ApplicationPackageLockingPolicy lockingPolicy = default, IEnumerable<ApplicationPolicy> policies = default, IEnumerable<ApplicationNotificationEndpoint> notificationEndpoints = default, DeploymentMode? deploymentMode = default, ApplicationManagementMode? managementMode = default)
         {
-            return new ApplicationDefinitionData(isEnabled is null && createUiDefinition is null && notificationEndpoints is null && deploymentMode is null && managementMode is null ? default : new ApplicationDefinitionProperties(
-                default,
-                default,
+            return new ApplicationDefinitionData(displayName is null && isEnabled is null && authorizations is null && artifacts is null && description is null && packageFileUri is null && storageAccountId is null && mainTemplate is null && createUiDefinition is null && notificationEndpoints is null && lockingPolicy is null && deploymentMode is null && managementMode is null && policies is null ? default : new ApplicationDefinitionProperties(
+                lockLevel,
+                displayName,
                 isEnabled,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
+                (authorizations ?? new ChangeTrackingList<ApplicationAuthorization>()).ToList(),
+                (artifacts ?? new ChangeTrackingList<ApplicationDefinitionArtifact>()).ToList(),
+                description,
+                packageFileUri,
+                storageAccountId,
+                mainTemplate,
                 createUiDefinition,
                 new ApplicationNotificationPolicy((notificationEndpoints ?? new ChangeTrackingList<ApplicationNotificationEndpoint>()).ToList(), default),
-                default,
+                lockingPolicy,
                 new ApplicationDeploymentPolicy(deploymentMode.GetValueOrDefault(), default),
                 new ApplicationManagementPolicy(managementMode, default),
-                default,
+                (policies ?? new ChangeTrackingList<ApplicationPolicy>()).ToList(),
                 default), default);
         }
 

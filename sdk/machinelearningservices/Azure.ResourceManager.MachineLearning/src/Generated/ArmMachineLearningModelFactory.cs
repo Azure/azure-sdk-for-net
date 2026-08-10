@@ -712,14 +712,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="latestVersion"> The latest version inside this container. </param>
         /// <param name="nextVersion"> The next auto incremental version. </param>
         /// <param name="provisioningState"> Provisioning state for the code container. </param>
         /// <returns> A new <see cref="Models.MachineLearningCodeContainerProperties"/> instance for mocking. </returns>
-        public static MachineLearningCodeContainerProperties MachineLearningCodeContainerProperties(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, bool? isArchived = default, string latestVersion = default, string nextVersion = default, RegistryAssetProvisioningState? provisioningState = default)
+        public static MachineLearningCodeContainerProperties MachineLearningCodeContainerProperties(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, bool? isArchived = default, string latestVersion = default, string nextVersion = default, RegistryAssetProvisioningState? provisioningState = default)
         {
             properties ??= new ChangeTrackingDictionary<string, string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -736,13 +736,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="latestVersion"> The latest version inside this container. </param>
         /// <param name="nextVersion"> The next auto incremental version. </param>
         /// <returns> A new <see cref="Models.MachineLearningAssetContainer"/> instance for mocking. </returns>
-        public static MachineLearningAssetContainer MachineLearningAssetContainer(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, bool? isArchived = default, string latestVersion = default, string nextVersion = default)
+        public static MachineLearningAssetContainer MachineLearningAssetContainer(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, bool? isArchived = default, string latestVersion = default, string nextVersion = default)
         {
             properties ??= new ChangeTrackingDictionary<string, string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -804,15 +804,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                managedResourceId is null && managedResourceGroupAssignedIdentities is null && mlFlowRegistryUri is null && registryPrivateEndpointConnections is null ? default : new RegistryProperties(
-                    default,
-                    default,
+                discoveryUri is null && intellectualPropertyPublisher is null && managedResourceId is null && managedResourceGroupAssignedIdentities is null && mlFlowRegistryUri is null && registryPrivateEndpointConnections is null && publicNetworkAccess is null && regionDetails is null ? default : new RegistryProperties(
+                    discoveryUri,
+                    intellectualPropertyPublisher,
                     new ArmResourceId(managedResourceId, default),
                     new ManagedResourceGroupSettings((managedResourceGroupAssignedIdentities ?? new ChangeTrackingList<ManagedResourceGroupAssignedIdentities>()).ToList(), default),
                     mlFlowRegistryUri,
                     (registryPrivateEndpointConnections ?? new ChangeTrackingList<RegistryPrivateEndpointConnection>()).ToList(),
-                    default,
-                    default,
+                    publicNetworkAccess,
+                    (regionDetails ?? new ChangeTrackingList<RegistryRegionArmDetails>()).ToList(),
                     default),
                 identity,
                 kind,
@@ -965,14 +965,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
+        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
         /// <param name="codeUri"> Uri where code is located. </param>
         /// <param name="provisioningState"> Provisioning state for the code version. </param>
         /// <returns> A new <see cref="Models.MachineLearningCodeVersionProperties"/> instance for mocking. </returns>
-        public static MachineLearningCodeVersionProperties MachineLearningCodeVersionProperties(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, bool? isAnonymous = default, bool? isArchived = default, Uri codeUri = default, RegistryAssetProvisioningState? provisioningState = default)
+        public static MachineLearningCodeVersionProperties MachineLearningCodeVersionProperties(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, bool? isArchived = default, bool? isAnonymous = default, Uri codeUri = default, RegistryAssetProvisioningState? provisioningState = default)
         {
             properties ??= new ChangeTrackingDictionary<string, string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1078,14 +1078,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="latestVersion"> The latest version inside this container. </param>
         /// <param name="nextVersion"> The next auto incremental version. </param>
         /// <param name="provisioningState"> Provisioning state for the component container. </param>
         /// <returns> A new <see cref="Models.MachineLearningComponentContainerProperties"/> instance for mocking. </returns>
-        public static MachineLearningComponentContainerProperties MachineLearningComponentContainerProperties(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, bool? isArchived = default, string latestVersion = default, string nextVersion = default, RegistryAssetProvisioningState? provisioningState = default)
+        public static MachineLearningComponentContainerProperties MachineLearningComponentContainerProperties(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, bool? isArchived = default, string latestVersion = default, string nextVersion = default, RegistryAssetProvisioningState? provisioningState = default)
         {
             properties ??= new ChangeTrackingDictionary<string, string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1119,17 +1119,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
+        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
         /// <param name="componentSpec">
         /// Defines Component definition details.
         /// <see href="https://docs.microsoft.com/en-us/azure/machine-learning/reference-yaml-component-command" />
         /// </param>
         /// <param name="provisioningState"> Provisioning state for the component version. </param>
         /// <returns> A new <see cref="Models.MachineLearningComponentVersionProperties"/> instance for mocking. </returns>
-        public static MachineLearningComponentVersionProperties MachineLearningComponentVersionProperties(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, bool? isAnonymous = default, bool? isArchived = default, BinaryData componentSpec = default, RegistryAssetProvisioningState? provisioningState = default)
+        public static MachineLearningComponentVersionProperties MachineLearningComponentVersionProperties(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, bool? isArchived = default, bool? isAnonymous = default, BinaryData componentSpec = default, RegistryAssetProvisioningState? provisioningState = default)
         {
             properties ??= new ChangeTrackingDictionary<string, string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1163,14 +1163,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="latestVersion"> The latest version inside this container. </param>
         /// <param name="nextVersion"> The next auto incremental version. </param>
         /// <param name="dataType"> [Required] Specifies the type of data. </param>
         /// <returns> A new <see cref="Models.MachineLearningDataContainerProperties"/> instance for mocking. </returns>
-        public static MachineLearningDataContainerProperties MachineLearningDataContainerProperties(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, bool? isArchived = default, string latestVersion = default, string nextVersion = default, MachineLearningDataType dataType = default)
+        public static MachineLearningDataContainerProperties MachineLearningDataContainerProperties(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, bool? isArchived = default, string latestVersion = default, string nextVersion = default, MachineLearningDataType dataType = default)
         {
             properties ??= new ChangeTrackingDictionary<string, string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1317,14 +1317,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="latestVersion"> The latest version inside this container. </param>
         /// <param name="nextVersion"> The next auto incremental version. </param>
         /// <param name="provisioningState"> Provisioning state for the environment container. </param>
         /// <returns> A new <see cref="Models.MachineLearningEnvironmentContainerProperties"/> instance for mocking. </returns>
-        public static MachineLearningEnvironmentContainerProperties MachineLearningEnvironmentContainerProperties(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, bool? isArchived = default, string latestVersion = default, string nextVersion = default, RegistryAssetProvisioningState? provisioningState = default)
+        public static MachineLearningEnvironmentContainerProperties MachineLearningEnvironmentContainerProperties(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, bool? isArchived = default, string latestVersion = default, string nextVersion = default, RegistryAssetProvisioningState? provisioningState = default)
         {
             properties ??= new ChangeTrackingDictionary<string, string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1547,14 +1547,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="latestVersion"> The latest version inside this container. </param>
         /// <param name="nextVersion"> The next auto incremental version. </param>
         /// <param name="provisioningState"> Provisioning state for the model container. </param>
         /// <returns> A new <see cref="Models.MachineLearningModelContainerProperties"/> instance for mocking. </returns>
-        public static MachineLearningModelContainerProperties MachineLearningModelContainerProperties(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, bool? isArchived = default, string latestVersion = default, string nextVersion = default, RegistryAssetProvisioningState? provisioningState = default)
+        public static MachineLearningModelContainerProperties MachineLearningModelContainerProperties(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, bool? isArchived = default, string latestVersion = default, string nextVersion = default, RegistryAssetProvisioningState? provisioningState = default)
         {
             properties ??= new ChangeTrackingDictionary<string, string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -2368,14 +2368,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="latestVersion"> The latest version inside this container. </param>
         /// <param name="nextVersion"> The next auto incremental version. </param>
         /// <param name="provisioningState"> Provisioning state for the featureset container. </param>
         /// <returns> A new <see cref="Models.MachineLearningFeatureSetContainerProperties"/> instance for mocking. </returns>
-        public static MachineLearningFeatureSetContainerProperties MachineLearningFeatureSetContainerProperties(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, bool? isArchived = default, string latestVersion = default, string nextVersion = default, RegistryAssetProvisioningState? provisioningState = default)
+        public static MachineLearningFeatureSetContainerProperties MachineLearningFeatureSetContainerProperties(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, bool? isArchived = default, string latestVersion = default, string nextVersion = default, RegistryAssetProvisioningState? provisioningState = default)
         {
             properties ??= new ChangeTrackingDictionary<string, string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -2673,14 +2673,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="latestVersion"> The latest version inside this container. </param>
         /// <param name="nextVersion"> The next auto incremental version. </param>
         /// <param name="provisioningState"> Provisioning state for the featurestore entity container. </param>
         /// <returns> A new <see cref="Models.MachineLearningFeatureStoreEntityContainerProperties"/> instance for mocking. </returns>
-        public static MachineLearningFeatureStoreEntityContainerProperties MachineLearningFeatureStoreEntityContainerProperties(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, bool? isArchived = default, string latestVersion = default, string nextVersion = default, RegistryAssetProvisioningState? provisioningState = default)
+        public static MachineLearningFeatureStoreEntityContainerProperties MachineLearningFeatureStoreEntityContainerProperties(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, bool? isArchived = default, string latestVersion = default, string nextVersion = default, RegistryAssetProvisioningState? provisioningState = default)
         {
             properties ??= new ChangeTrackingDictionary<string, string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -3083,12 +3083,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningSkuDetail(capacity, resourceType, sku, default);
         }
 
-        /// <param name="default"> Gets or sets the default capacity. </param>
-        /// <param name="maximum"> Gets or sets the maximum. </param>
         /// <param name="minimum"> Gets or sets the minimum. </param>
+        /// <param name="maximum"> Gets or sets the maximum. </param>
+        /// <param name="default"> Gets or sets the default capacity. </param>
         /// <param name="scaleType"> Node scaling setting for the compute sku. </param>
         /// <returns> A new <see cref="Models.MachineLearningSkuCapacity"/> instance for mocking. </returns>
-        public static MachineLearningSkuCapacity MachineLearningSkuCapacity(int? @default = default, int? maximum = default, int? minimum = default, MachineLearningSkuScaleType? scaleType = default)
+        public static MachineLearningSkuCapacity MachineLearningSkuCapacity(int? minimum = default, int? maximum = default, int? @default = default, MachineLearningSkuScaleType? scaleType = default)
         {
             return new MachineLearningSkuCapacity(@default, maximum, minimum, scaleType, default);
         }
@@ -3128,11 +3128,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningMarketplaceSubscriptionProperties(marketplacePlan, marketplaceSubscriptionStatus, modelId, provisioningState, default);
         }
 
+        /// <param name="publisherId"> The identifying name of the Publisher of the Marketplace Plan. </param>
         /// <param name="offerId"> The identifying name of the Offer of the Marketplace Plan. </param>
         /// <param name="planId"> The identifying name of the Plan of the Marketplace Plan. </param>
-        /// <param name="publisherId"> The identifying name of the Publisher of the Marketplace Plan. </param>
         /// <returns> A new <see cref="Models.MachineLearningMarketplacePlan"/> instance for mocking. </returns>
-        public static MachineLearningMarketplacePlan MachineLearningMarketplacePlan(string offerId = default, string planId = default, string publisherId = default)
+        public static MachineLearningMarketplacePlan MachineLearningMarketplacePlan(string publisherId = default, string offerId = default, string planId = default)
         {
             return new MachineLearningMarketplacePlan(offerId, planId, publisherId, default);
         }
@@ -7610,21 +7610,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new AnonymousAccessCredential(default, default);
         }
 
-        /// <param name="password"> DockerCredential user password. </param>
         /// <param name="userName"> DockerCredential user name. </param>
+        /// <param name="password"> DockerCredential user password. </param>
         /// <returns> A new <see cref="Models.DockerCredential"/> instance for mocking. </returns>
-        public static DockerCredential DockerCredential(string password = default, string userName = default)
+        public static DockerCredential DockerCredential(string userName = default, string password = default)
         {
             return new DockerCredential(default, default, password, userName);
         }
 
         /// <param name="managedIdentityType"> ManagedIdentityCredential identity type. </param>
+        /// <param name="userManagedIdentityResourceId"> Full arm scope for the Id. For ManagedIdentityType = SystemManaged, this field is null. </param>
         /// <param name="userManagedIdentityClientId"> ClientId for the UAMI. For ManagedIdentityType = SystemManaged, this field is null. </param>
         /// <param name="userManagedIdentityPrincipalId"> PrincipalId for the UAMI. For ManagedIdentityType = SystemManaged, this field is null. </param>
-        /// <param name="userManagedIdentityResourceId"> Full arm scope for the Id. For ManagedIdentityType = SystemManaged, this field is null. </param>
         /// <param name="userManagedIdentityTenantId"> TenantId for the UAMI. For ManagedIdentityType = SystemManaged, this field is null. </param>
         /// <returns> A new <see cref="Models.ManagedIdentityCredential"/> instance for mocking. </returns>
-        public static ManagedIdentityCredential ManagedIdentityCredential(string managedIdentityType = default, string userManagedIdentityClientId = default, string userManagedIdentityPrincipalId = default, string userManagedIdentityResourceId = default, string userManagedIdentityTenantId = default)
+        public static ManagedIdentityCredential ManagedIdentityCredential(string managedIdentityType = default, string userManagedIdentityResourceId = default, string userManagedIdentityClientId = default, string userManagedIdentityPrincipalId = default, string userManagedIdentityTenantId = default)
         {
             return new ManagedIdentityCredential(
                 default,
