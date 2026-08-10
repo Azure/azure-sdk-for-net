@@ -725,7 +725,7 @@ namespace Azure.Storage.Blobs.Tests
         /// <summary>
         /// Every fallback-eligible CreateSession failure caches a fallback-to-bearer
         /// sentinel, so subsequent requests reuse it instead of re-attempting acquisition.
-        /// 5xx uses a 60s cooldown; 403 and 400/FeatureNotEnabled use a 24h cooldown.
+        /// 5xx, 403, and 400/FeatureNotEnabled all use the same 5 minute cooldown.
         /// All three must suppress re-acquisition within the test's time window.
         /// </summary>
         [TestCase(500, "InternalError")]

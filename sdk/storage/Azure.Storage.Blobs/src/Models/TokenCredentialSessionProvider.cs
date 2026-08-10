@@ -35,15 +35,10 @@ namespace Azure.Storage.Blobs.Models
         private static readonly TimeSpan BackgroundAcquireTimeout = TimeSpan.FromSeconds(30);
 
         /// <summary>
-        /// Cooldown applied to the fallback-to-bearer sentinel after a 403 or 400 FeatureNotEnabled CreateSession failure.
+        /// Cooldown applied to the fallback-to-bearer sentinel after any fallback-eligible
+        /// CreateSession failure (5xx, 403, or 400 FeatureNotEnabled).
         /// </summary>
-        private static readonly TimeSpan FeatureDisabledOrForbiddenFallbackCooldown = TimeSpan.FromHours(24);
-
-        /// <summary>
-        /// Cooldown applied to the fallback-to-bearer sentinel after a transient server
-        /// error (5xx) CreateSession failure.
-        /// </summary>
-        private static readonly TimeSpan ServerErrorFallbackCooldown = TimeSpan.FromSeconds(60);
+        private static readonly TimeSpan FallbackCooldown = TimeSpan.FromMinutes(5);
 
         private const string FeatureNotEnabled = "FeatureNotEnabled";
 
@@ -215,24 +210,18 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Determines whether a CreateSession failure is eligible for fallback-to-bearer,
         /// and if so, the cooldown for which the fallback is cached. Transient server
-        /// errors (5xx) use a short cooldown; permission/feature-level failures (403, or
-        /// 400 FeatureNotEnabled) use a long cooldown.
+        /// errors (5xx) and permission/feature-level failures (403, or 400 FeatureNotEnabled)
+        /// all use the same cooldown.
         /// </summary>
         private static bool TryGetFallbackCooldown(RequestFailedException ex, out TimeSpan cooldown)
         {
-            // 5xx -> short cooldown.
-            if (ex.Status >= (int)HttpStatusCode.InternalServerError)
-            {
-                cooldown = ServerErrorFallbackCooldown;
-                return true;
-            }
-
-            // 403 Forbidden or 400 FeatureNotEnabled -> long cooldown.
-            if (ex.Status == (int)HttpStatusCode.Forbidden
+            // 5xx, 403 Forbidden, or 400 FeatureNotEnabled -> fallback to bearer.
+            if (ex.Status >= (int)HttpStatusCode.InternalServerError
+                || ex.Status == (int)HttpStatusCode.Forbidden
                 || (ex.Status == (int)HttpStatusCode.BadRequest
                     && string.Equals(ex.ErrorCode, FeatureNotEnabled, StringComparison.OrdinalIgnoreCase)))
             {
-                cooldown = FeatureDisabledOrForbiddenFallbackCooldown;
+                cooldown = FallbackCooldown;
                 return true;
             }
 

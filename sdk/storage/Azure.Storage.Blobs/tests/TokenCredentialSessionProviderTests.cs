@@ -76,6 +76,25 @@ namespace Azure.Storage.Blobs.Tests
             return response;
         }
 
+        private static MockResponse CreateSessionErrorResponse(int statusCode, string errorCode = null)
+        {
+            string xml =
+                $"<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
+                $"<Error>" +
+                $"<Code>{errorCode ?? "UnknownError"}</Code>" +
+                $"<Message>Simulated error</Message>" +
+                $"</Error>";
+
+            var response = new MockResponse(statusCode);
+            response.AddHeader("Content-Type", "application/xml");
+            if (errorCode != null)
+            {
+                response.AddHeader("x-ms-error-code", errorCode);
+            }
+            response.SetContent(xml);
+            return response;
+        }
+
         private static (TokenCredentialSessionProvider Provider, MockTransport Transport) CreateProvider(
             Uri serviceUri,
             params MockResponse[] createSessionResponses)
@@ -299,6 +318,58 @@ namespace Azure.Storage.Blobs.Tests
             Assert.AreEqual("current-token", after.SessionToken,
                 "Invalidating with a stale value must leave the current cache entry intact.");
             Assert.AreEqual(1, transport.Requests.Count);
+        }
+        #endregion
+
+        #region Fallback Cooldown
+        /// <summary>
+        /// Every fallback-eligible CreateSession failure (5xx, 403, or 400 FeatureNotEnabled)
+        /// produces a fallback-to-bearer sentinel cached for the same 5 minute cooldown.
+        /// </summary>
+        [TestCase(500, "InternalError")]
+        [TestCase(503, "ServerBusy")]
+        [TestCase(403, "AuthorizationFailure")]
+        [TestCase(400, "FeatureNotEnabled")]
+        public async Task AcquireFails_FallbackEligible_UsesFiveMinuteCooldown(int statusCode, string errorCode)
+        {
+            TimeSpan expectedCooldown = TimeSpan.FromMinutes(5);
+
+            // Only one CreateSession response is queued: a re-acquisition within the
+            // cooldown window would underrun the transport and throw.
+            var (provider, transport) = CreateProvider(
+                ServiceUri,
+                CreateSessionErrorResponse(statusCode, errorCode));
+
+            DateTimeOffset before = DateTimeOffset.UtcNow;
+            SessionProvider.SessionTokenInfo sentinel = await GetSessionAsync(provider, CreateMessage(BlobUri));
+            DateTimeOffset after = DateTimeOffset.UtcNow;
+
+            Assert.IsTrue(sentinel.IsFallbackToBearer, "A fallback-eligible failure must produce the fallback sentinel.");
+            Assert.GreaterOrEqual(sentinel.ExpiresOn, before + expectedCooldown,
+                "The sentinel must be cached for at least the 5 minute cooldown.");
+            Assert.LessOrEqual(sentinel.ExpiresOn, after + expectedCooldown,
+                "The sentinel must not be cached for longer than the 5 minute cooldown.");
+            Assert.AreEqual(sentinel.ExpiresOn, sentinel.RefreshOn,
+                "RefreshOn must equal ExpiresOn so the full cooldown is honored.");
+
+            // A second request within the cooldown is served from cache.
+            SessionProvider.SessionTokenInfo second = await GetSessionAsync(provider, CreateMessage(BlobUri));
+            Assert.IsTrue(second.IsFallbackToBearer);
+            Assert.AreEqual(1, transport.Requests.Count,
+                "The cooldown should prevent re-acquisition; expected exactly one CreateSession call.");
+        }
+
+        [TestCase(400, "InvalidInput")]
+        [TestCase(404, "ContainerNotFound")]
+        [TestCase(409, "ContainerBeingDeleted")]
+        public void AcquireFails_NotFallbackEligible_Propagates(int statusCode, string errorCode)
+        {
+            var (provider, _) = CreateProvider(
+                ServiceUri,
+                CreateSessionErrorResponse(statusCode, errorCode));
+
+            Assert.ThrowsAsync<RequestFailedException>(
+                async () => await GetSessionAsync(provider, CreateMessage(BlobUri)));
         }
         #endregion
 
