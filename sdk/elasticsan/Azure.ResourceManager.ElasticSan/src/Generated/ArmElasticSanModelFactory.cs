@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(default, new PrivateEndpoint(privateEndpointId, default), connectionState, default, default),
+                provisioningState is null && privateEndpointId is null && connectionState is null && groupIds is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), connectionState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), default),
                 default);
         }
 
@@ -98,13 +98,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 name,
                 resourceType,
                 systemData,
-                volumeId is null && managedByResourceId is null ? default : new VolumeProperties(
+                volumeId is null && creationData is null && storageTarget is null && managedByResourceId is null && provisioningState is null ? default : new VolumeProperties(
                     volumeId,
-                    default,
-                    default,
-                    default,
+                    creationData,
+                    sizeGiB,
+                    storageTarget,
                     new ManagedByInfo(managedByResourceId, default),
-                    default,
+                    provisioningState,
                     default),
                 default);
         }
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 name,
                 resourceType,
                 systemData,
-                creationDataSourceId is null ? default : new SnapshotProperties(new SnapshotCreationInfo(creationDataSourceId, default), default, default, default, default),
+                creationDataSourceId is null && provisioningState is null && sourceVolumeSizeGiB is null && volumeName is null ? default : new SnapshotProperties(new SnapshotCreationInfo(creationDataSourceId, default), provisioningState, sourceVolumeSizeGiB, volumeName, default),
                 default);
         }
 
