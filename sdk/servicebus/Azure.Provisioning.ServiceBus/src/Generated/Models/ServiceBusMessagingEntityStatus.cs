@@ -7,29 +7,26 @@
 
 namespace Azure.Provisioning.ServiceBus
 {
-    /// <summary>
-    /// Entity status ordered to preserve the numeric values shipped by the
-    /// reflection-based provisioning generator.
-    /// </summary>
+    /// <summary> Entity status. </summary>
     public enum ServiceBusMessagingEntityStatus
     {
-        /// <summary> Unknown. </summary>
-        Unknown = 0,
         /// <summary> Active. </summary>
         Active = 1,
         /// <summary> Disabled. </summary>
         Disabled = 2,
         /// <summary> Restoring. </summary>
         Restoring = 3,
-        /// <summary> Send disabled. </summary>
+        /// <summary> SendDisabled. </summary>
         SendDisabled = 4,
-        /// <summary> Receive disabled. </summary>
+        /// <summary> ReceiveDisabled. </summary>
         ReceiveDisabled = 5,
         /// <summary> Creating. </summary>
         Creating = 6,
         /// <summary> Deleting. </summary>
         Deleting = 7,
         /// <summary> Renaming. </summary>
-        Renaming = 8
+        Renaming = 8,
+        /// <summary> Unknown. </summary>
+        Unknown = 0
     }
 }
