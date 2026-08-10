@@ -775,8 +775,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="alertRulesCreatedByTemplateCount"> The number of alert rules that were created by this template. </param>
-        /// <param name="lastUpdatedOn"> The last time that this alert rule template has been updated. </param>
         /// <param name="createdOn"> The time that this alert rule template has been added. </param>
+        /// <param name="lastUpdatedOn"> The last time that this alert rule template has been updated. </param>
         /// <param name="description"> The description of the alert rule template. </param>
         /// <param name="displayName"> The display name for alert rule template. </param>
         /// <param name="requiredDataConnectors"> The required data sources for this template. </param>
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="productFilter"> The alerts' productName on which the cases will be generated. </param>
         /// <param name="severitiesFilter"> the alerts' severities on which the cases will be generated. </param>
         /// <returns> A new <see cref="Models.MicrosoftSecurityIncidentCreationAlertRuleTemplate"/> instance for mocking. </returns>
-        public static MicrosoftSecurityIncidentCreationAlertRuleTemplate MicrosoftSecurityIncidentCreationAlertRuleTemplate(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? alertRulesCreatedByTemplateCount = default, DateTimeOffset? lastUpdatedOn = default, DateTimeOffset? createdOn = default, string description = default, string displayName = default, IEnumerable<AlertRuleTemplateDataSource> requiredDataConnectors = default, SecurityInsightsAlertRuleTemplateStatus? status = default, IEnumerable<string> displayNamesFilter = default, IEnumerable<string> displayNamesExcludeFilter = default, MicrosoftSecurityProductName? productFilter = default, IEnumerable<SecurityInsightsAlertSeverity> severitiesFilter = default)
+        public static MicrosoftSecurityIncidentCreationAlertRuleTemplate MicrosoftSecurityIncidentCreationAlertRuleTemplate(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? alertRulesCreatedByTemplateCount = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastUpdatedOn = default, string description = default, string displayName = default, IEnumerable<AlertRuleTemplateDataSource> requiredDataConnectors = default, SecurityInsightsAlertRuleTemplateStatus? status = default, IEnumerable<string> displayNamesFilter = default, IEnumerable<string> displayNamesExcludeFilter = default, MicrosoftSecurityProductName? productFilter = default, IEnumerable<SecurityInsightsAlertSeverity> severitiesFilter = default)
         {
             return new MicrosoftSecurityIncidentCreationAlertRuleTemplate(
                 id,
@@ -946,7 +946,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                displayName is null && triggeringLogic is null && actions is null && lastModifiedOn is null && createdOn is null && lastModifiedBy is null && createdBy is null ? default : new AutomationRuleProperties(
+                    displayName,
+                    order,
+                    triggeringLogic,
+                    (actions ?? new ChangeTrackingList<SecurityInsightsAutomationRuleAction>()).ToList(),
+                    lastModifiedOn,
+                    createdOn,
+                    lastModifiedBy,
+                    createdBy,
+                    default),
                 etag,
                 default);
         }
@@ -3878,7 +3887,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                title is null && description is null && createdOn is null && lastModifiedOn is null && createdBy is null && lastModifiedBy is null ? default : new IncidentTaskProperties(
+                    title,
+                    description,
+                    status,
+                    createdOn,
+                    lastModifiedOn,
+                    createdBy,
+                    lastModifiedBy,
+                    default),
                 eTag,
                 default);
         }
@@ -4006,20 +4023,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                sourceControlId is null ? default : new SourceControlProperties(
+                sourceControlId is null && version is null && displayName is null && description is null && contentTypes is null && repository is null && servicePrincipal is null && workloadIdentityFederation is null && repositoryAccess is null && repositoryResourceInfo is null && lastDeploymentInfo is null && pullRequest is null ? default : new SourceControlProperties(
                     sourceControlId,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    version,
+                    displayName,
+                    description,
+                    repoType,
+                    (contentTypes ?? new ChangeTrackingList<SourceControlContentType>()).ToList(),
+                    repository,
+                    servicePrincipal,
+                    workloadIdentityFederation,
+                    repositoryAccess,
+                    repositoryResourceInfo,
+                    lastDeploymentInfo,
+                    pullRequest,
                     default),
                 eTag,
                 default);
@@ -4151,7 +4168,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.RepositoryAccessProperties"/> instance for mocking. </returns>
         public static RepositoryAccessProperties RepositoryAccessProperties(RepositoryAccessKind kind = default, string code = default, string state = default, string clientId = default, string token = default, string installationId = default)
         {
-            return new RepositoryAccessProperties(default, default);
+            return new RepositoryAccessProperties(code is null && state is null && clientId is null && token is null && installationId is null ? default : new RepositoryAccessObject(new RepositoryAccess(
+                kind,
+                code,
+                state,
+                clientId,
+                token,
+                installationId,
+                default), default), default);
         }
 
         /// <param name="warning"> Warning data. </param>
@@ -5098,11 +5122,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                triggeredAnalyticsRuleRunId is null && ruleRunAdditionalData is null ? default : new TriggeredAnalyticsRuleRunProperties(
-                    default,
-                    default,
+                ruleId is null && triggeredAnalyticsRuleRunId is null && ruleRunAdditionalData is null ? default : new TriggeredAnalyticsRuleRunProperties(
+                    executeOn,
+                    ruleId,
                     triggeredAnalyticsRuleRunId,
-                    default,
+                    provisioningState,
                     ruleRunAdditionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
                     default),
                 eTag,
@@ -5202,7 +5226,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.AnalyticsRuleRunTrigger"/> instance for mocking. </returns>
         public static AnalyticsRuleRunTrigger AnalyticsRuleRunTrigger(DateTimeOffset executeOn = default)
         {
-            return new AnalyticsRuleRunTrigger(default, default);
+            return new AnalyticsRuleRunTrigger(new AnalyticsRuleRunTriggerProperties(executeOn, default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
