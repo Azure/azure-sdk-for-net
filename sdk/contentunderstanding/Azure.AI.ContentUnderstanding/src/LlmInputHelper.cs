@@ -868,6 +868,7 @@ namespace Azure.AI.ContentUnderstanding
         private static string IndentScalarContinuationLines(object value, int indent)
         {
             string scalar = YamlScalar(value);
+            // Keep continuation lines nested so an embedded "---" cannot terminate the front matter.
             return scalar.Replace("\n", $"\n{new string(' ', indent * 2)}");
         }
 

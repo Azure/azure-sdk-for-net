@@ -223,6 +223,12 @@ namespace Azure.AI.ContentUnderstanding.Tests
         [Test]
         public void ToLlmInput_AnalysisMetadataWithDelimiterLine_IndentsContinuationLines()
         {
+            // Expected YAML (continuation lines stay indented inside the quoted scalar):
+            // metadata:
+            //   description: 'Q3 notes
+            //     ---
+            //     reviewer: bob'
+            //   author: Jane
             var content = ContentUnderstandingModelFactory.DocumentContent(
                 mimeType: "application/pdf",
                 markdown: "Document body",
