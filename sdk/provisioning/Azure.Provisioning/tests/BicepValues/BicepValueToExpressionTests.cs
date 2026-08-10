@@ -1039,6 +1039,27 @@ namespace Azure.Provisioning.Tests.BicepValues
         }
 
         [Test]
+        public void ValidateListPropertyReindexesCapturedSelfReference()
+        {
+            var resource = new TestResource("test");
+            resource.List.Add("item1");
+            resource.List.Add("item2");
+
+            BicepValueReference captured = ((IBicepValue)resource.List[0]).Self!;
+            Assert.That(captured.ToString(), Is.EqualTo("test.list[0]"));
+
+            resource.List.Insert(0, "item0");
+
+            Assert.That(((IBicepValue)resource.List[1]).Self, Is.SameAs(captured));
+            Assert.That(captured.ToString(), Is.EqualTo("test.list[1]"));
+
+            resource.List.RemoveAt(0);
+
+            Assert.That(((IBicepValue)resource.List[0]).Self, Is.SameAs(captured));
+            Assert.That(captured.ToString(), Is.EqualTo("test.list[0]"));
+        }
+
+        [Test]
         public void ValidateDictionaryPropertyAssignFromStandaloneDictionary()
         {
             // Construct a standalone dictionary first
