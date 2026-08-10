@@ -123,6 +123,9 @@ tools:
   edit:
 
 safe-outputs:
+  steps:
+    - name: Disable implicit tag fetching
+      run: git config remote.origin.tagOpt --no-tags
   # Commit the repair (custom-code edits + regenerated Generated/) to the PR branch.
   # Forks are refused by this safe output; the label is re-checked at apply time; the
   # protected-files denylist blocks .github/, dot-dirs, manifests and instruction files.
