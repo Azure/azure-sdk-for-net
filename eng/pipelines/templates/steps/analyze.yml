@@ -85,6 +85,7 @@ steps:
         exit 1
       }
     displayName: Verify library inventory
+    condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
 
   - pwsh: |
       $failed = $false
