@@ -140,8 +140,8 @@ namespace Azure.AI.ContentUnderstanding
 
         // Convert .NET-specific collection shapes (arrays, typed dictionaries, and
         // JsonElement values) into the Dictionary<string, object>/List<object>
-        // shapes understood by the minimal YAML emitter. Null mapping values are
-        // omitted, while null sequence items are retained and rendered as YAML null.
+        // shapes understood by the minimal YAML emitter. Null mapping values and
+        // sequence items are retained and rendered as YAML null.
         private static object? NormalizeMetadataValue(object? value)
         {
             if (value == null)
@@ -151,7 +151,7 @@ namespace Azure.AI.ContentUnderstanding
 
             if (value is JsonElement jsonElement)
             {
-                return ResolveJsonElement(jsonElement);
+                return ResolveJsonElement(jsonElement, preserveNullProperties: true);
             }
 
             if (value is string)
@@ -165,9 +165,9 @@ namespace Azure.AI.ContentUnderstanding
                 foreach (DictionaryEntry entry in dictionary)
                 {
                     object? nestedValue = NormalizeMetadataValue(entry.Value);
-                    if (entry.Key is string key && nestedValue != null)
+                    if (entry.Key is string key)
                     {
-                        map[key] = nestedValue;
+                        map[key] = nestedValue!;
                     }
                 }
 
@@ -276,7 +276,7 @@ namespace Azure.AI.ContentUnderstanding
             return ResolveJsonElement(document.RootElement);
         }
 
-        private static object? ResolveJsonElement(JsonElement element)
+        private static object? ResolveJsonElement(JsonElement element, bool preserveNullProperties = false)
         {
             switch (element.ValueKind)
             {
@@ -284,10 +284,10 @@ namespace Azure.AI.ContentUnderstanding
                     var dict = new Dictionary<string, object>();
                     foreach (JsonProperty property in element.EnumerateObject())
                     {
-                        object? value = ResolveJsonElement(property.Value);
-                        if (value != null)
+                        object? value = ResolveJsonElement(property.Value, preserveNullProperties);
+                        if (value != null || preserveNullProperties)
                         {
-                            dict[property.Name] = value;
+                            dict[property.Name] = value!;
                         }
                     }
                     return dict;
@@ -296,7 +296,7 @@ namespace Azure.AI.ContentUnderstanding
                     var list = new List<object>();
                     foreach (JsonElement item in element.EnumerateArray())
                     {
-                        list.Add(ResolveJsonElement(item)!);
+                        list.Add(ResolveJsonElement(item, preserveNullProperties)!);
                     }
                     return list;
 
@@ -463,10 +463,7 @@ namespace Azure.AI.ContentUnderstanding
                 foreach (var kvp in customMetadata)
                 {
                     object? normalized = NormalizeMetadataValue(kvp.Value);
-                    if (normalized != null)
-                    {
-                        normalizedCustom[kvp.Key] = normalized;
-                    }
+                    normalizedCustom[kvp.Key] = normalized!;
                 }
 
                 fm.Add(new KeyValuePair<string, object>(CustomMetadataFrontMatterKey, normalizedCustom));
@@ -876,10 +873,6 @@ namespace Azure.AI.ContentUnderstanding
             string prefix = new string(' ', indent * 2);
             foreach (var kvp in mapping)
             {
-                if (kvp.Value == null)
-                {
-                    continue;
-                }
                 string safeKey = YamlScalar(kvp.Key);
                 if (kvp.Value is Dictionary<string, object> dict)
                 {
@@ -918,10 +911,6 @@ namespace Azure.AI.ContentUnderstanding
                     bool first = true;
                     foreach (var kvp in dict)
                     {
-                        if (kvp.Value == null)
-                        {
-                            continue;
-                        }
                         string tag = first ? $"{prefix}- " : $"{prefix}  ";
                         string safeKey = YamlScalar(kvp.Key);
                         if (kvp.Value is Dictionary<string, object> nested)

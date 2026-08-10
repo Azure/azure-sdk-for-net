@@ -361,6 +361,93 @@ namespace Azure.AI.ContentUnderstanding.Tests
         }
 
         [Test]
+        public void ToLlmInput_CustomMetadataPreservesNullProperties()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "text",
+                startPageNumber: 1,
+                endPageNumber: 1);
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+            var customMetadata = new Dictionary<string, object>
+            {
+                ["missing"] = null!,
+                ["source"] = "invoice.pdf",
+            };
+
+            string output = result.ToLlmInput(customMetadata);
+
+            Assert.That(output, Does.Contain("missing: null"));
+            Assert.That(output, Does.Contain("source: invoice.pdf"));
+        }
+
+        [Test]
+        public void ToLlmInput_CustomMetadataAllNullDictionaryPreservesNullProperty()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "text",
+                startPageNumber: 1,
+                endPageNumber: 1);
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+            var customMetadata = new Dictionary<string, object>
+            {
+                ["missing"] = null!,
+            };
+
+            string output = result.ToLlmInput(customMetadata);
+
+            Assert.That(output, Does.Contain("customMetadata:"));
+            Assert.That(output, Does.Contain("missing: null"));
+        }
+
+        [Test]
+        public void ToLlmInput_CustomMetadataJsonElementPreservesNullProperty()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "text",
+                startPageNumber: 1,
+                endPageNumber: 1);
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+            using JsonDocument metadataDocument = JsonDocument.Parse("{\"missing\":null}");
+            var customMetadata = new Dictionary<string, object>
+            {
+                ["details"] = metadataDocument.RootElement,
+            };
+
+            string output = result.ToLlmInput(customMetadata);
+
+            Assert.That(output, Does.Contain("details:"));
+            Assert.That(output, Does.Contain("missing: null"));
+        }
+
+        [Test]
+        public void ToLlmInput_CustomMetadataPreservesEmptyStringValuesAndKeys()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "text",
+                startPageNumber: 1,
+                endPageNumber: 1);
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+            var customMetadata = new Dictionary<string, object>
+            {
+                ["emptyValue"] = string.Empty,
+                [string.Empty] = "empty-key",
+            };
+
+            string output = result.ToLlmInput(customMetadata);
+
+            Assert.That(output, Does.Contain("emptyValue: ''"));
+            Assert.That(output, Does.Contain("  '': empty-key"));
+        }
+
+        [Test]
         public void ToLlmInput_CustomMetadataSupportsTypedCollections()
         {
             var content = ContentUnderstandingModelFactory.DocumentContent(
