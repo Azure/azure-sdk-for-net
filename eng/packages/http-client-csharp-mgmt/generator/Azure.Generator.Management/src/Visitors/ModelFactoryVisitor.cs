@@ -229,6 +229,7 @@ namespace Azure.Generator.Management.Visitors
             }
 
             var previousParameterNames = previousParameters.Select(parameter => parameter.Name).ToArray();
+            // Validate the complete target mapping before mutating parameters so an invalid mapping is not partially applied.
             if (previousParameterNames.Any(string.IsNullOrEmpty)
                 || previousParameterNames.Distinct(StringComparer.Ordinal).Count() != previousParameterNames.Length)
             {
@@ -236,6 +237,7 @@ namespace Azure.Generator.Management.Visitors
             }
 
             var updated = false;
+            // Intermediate names may collide during swaps or rotations, but the validated final name set is unique.
             for (int i = 0; i < currentParameters.Count; i++)
             {
                 var previousName = previousParameterNames[i];
