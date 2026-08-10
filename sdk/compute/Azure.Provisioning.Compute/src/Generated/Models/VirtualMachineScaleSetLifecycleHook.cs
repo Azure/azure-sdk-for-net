@@ -73,7 +73,7 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _virtualMachineScaleSetLifecycleHookEventType = DefineProperty<VirtualMachineScaleSetLifecycleHookEventType>(nameof(VirtualMachineScaleSetLifecycleHookEventType), new string[] { "type" });
-            _waitDuration = DefineProperty<TimeSpan>(nameof(WaitDuration), new string[] { "waitDuration" });
+            _waitDuration = DefineProperty<TimeSpan>(nameof(WaitDuration), new string[] { "waitDuration" }, format: "P");
             _defaultAction = DefineProperty<VirtualMachineScaleSetLifecycleHookAction>(nameof(DefaultAction), new string[] { "defaultAction" });
             DefineAdditionalProperties();
         }

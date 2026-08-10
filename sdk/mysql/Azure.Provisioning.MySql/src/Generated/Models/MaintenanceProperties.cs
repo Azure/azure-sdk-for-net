@@ -147,12 +147,12 @@ namespace Azure.Provisioning.MySql
             base.DefineProvisionableProperties();
             _maintenanceType = DefineProperty<MySqlFlexibleServerMaintenanceType>(nameof(MaintenanceType), new string[] { "maintenanceType" }, isOutput: true);
             _maintenanceState = DefineProperty<MySqlFlexibleServerMaintenanceState>(nameof(MaintenanceState), new string[] { "maintenanceState" }, isOutput: true);
-            _maintenanceStartOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceStartOn), new string[] { "maintenanceStartTime" });
-            _maintenanceEndOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceEndOn), new string[] { "maintenanceEndTime" }, isOutput: true);
-            _maintenanceExecutionStartOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceExecutionStartOn), new string[] { "maintenanceExecutionStartTime" }, isOutput: true);
-            _maintenanceExecutionEndOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceExecutionEndOn), new string[] { "maintenanceExecutionEndTime" }, isOutput: true);
-            _maintenanceAvailableScheduleMinOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceAvailableScheduleMinOn), new string[] { "maintenanceAvailableScheduleMinTime" }, isOutput: true);
-            _maintenanceAvailableScheduleMaxOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceAvailableScheduleMaxOn), new string[] { "maintenanceAvailableScheduleMaxTime" }, isOutput: true);
+            _maintenanceStartOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceStartOn), new string[] { "maintenanceStartTime" }, format: "O");
+            _maintenanceEndOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceEndOn), new string[] { "maintenanceEndTime" }, isOutput: true, format: "O");
+            _maintenanceExecutionStartOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceExecutionStartOn), new string[] { "maintenanceExecutionStartTime" }, isOutput: true, format: "O");
+            _maintenanceExecutionEndOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceExecutionEndOn), new string[] { "maintenanceExecutionEndTime" }, isOutput: true, format: "O");
+            _maintenanceAvailableScheduleMinOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceAvailableScheduleMinOn), new string[] { "maintenanceAvailableScheduleMinTime" }, isOutput: true, format: "O");
+            _maintenanceAvailableScheduleMaxOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceAvailableScheduleMaxOn), new string[] { "maintenanceAvailableScheduleMaxTime" }, isOutput: true, format: "O");
             _maintenanceTitle = DefineProperty<string>(nameof(MaintenanceTitle), new string[] { "maintenanceTitle" }, isOutput: true);
             _maintenanceDescription = DefineProperty<string>(nameof(MaintenanceDescription), new string[] { "maintenanceDescription" }, isOutput: true);
             _provisioningState = DefineProperty<MySqlFlexibleServerMaintenanceProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);

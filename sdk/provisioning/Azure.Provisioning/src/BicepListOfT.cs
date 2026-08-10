@@ -62,7 +62,10 @@ public class BicepList<T> :
         }
     }
 
-    // Move literal elements when assigning values to a list
+    /// <summary>
+    /// Assigns a source list to this instance, copying its literal or expression state.
+    /// </summary>
+    /// <param name="source">The source list to assign from.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public void Assign(BicepList<T> source) => Assign((BicepValue)source);
     internal override void Assign(IBicepValue source)
@@ -156,6 +159,7 @@ public class BicepList<T> :
         item.SetSelf(null);
     }
 
+    /// <inheritdoc />
     public void Insert(int index, BicepValue<T> item)
     {
         if (_kind == BicepValueKind.Expression || _isOutput)
@@ -180,6 +184,7 @@ public class BicepList<T> :
         }
     }
 
+    /// <inheritdoc />
     public void Add(BicepValue<T> item)
     {
         if (_kind == BicepValueKind.Expression || _isOutput)
@@ -197,6 +202,7 @@ public class BicepList<T> :
         SetSelfForItem(addedItem, _values.Count - 1);
     }
 
+    /// <inheritdoc />
     public void RemoveAt(int index)
     {
         if (_kind == BicepValueKind.Expression || _isOutput)
@@ -222,6 +228,7 @@ public class BicepList<T> :
         }
     }
 
+    /// <inheritdoc />
     public void Clear()
     {
         if (_kind == BicepValueKind.Expression || _isOutput)
@@ -239,6 +246,7 @@ public class BicepList<T> :
         _values.Clear();
     }
 
+    /// <inheritdoc />
     public bool Remove(BicepValue<T> item)
     {
         if (_kind == BicepValueKind.Expression || _isOutput)
@@ -258,11 +266,17 @@ public class BicepList<T> :
         return false;
     }
 
+    /// <inheritdoc />
     public int Count => _values.Count;
+    /// <inheritdoc />
     public bool IsReadOnly => _values.IsReadOnly;
+    /// <inheritdoc />
     public int IndexOf(BicepValue<T> item) => _values.IndexOf(item);
+    /// <inheritdoc />
     public bool Contains(BicepValue<T> item) => _values.Contains(item);
+    /// <inheritdoc />
     public void CopyTo(BicepValue<T>[] array, int arrayIndex) => _values.CopyTo(array, arrayIndex);
+    /// <inheritdoc />
     public IEnumerator<BicepValue<T>> GetEnumerator() => _values.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)_values).GetEnumerator();
 
