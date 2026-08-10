@@ -1,0 +1,32 @@
+name: azsdk-common-sdk-breaking-change-trigger-eval
+description: tests for the azsdk-common-sdk-breaking-change skill
+type: capability
+
+environment: azsdk-mcp-mock
+
+tags:
+  area: azsdk-common-sdk-breaking-change-test
+  type: ci-gate
+
+config:
+  runs: 1
+  timeout: "90s"
+  model: gpt-5.6-sol
+  executor: copilot-sdk
+
+scoring:
+  threshold: 0.8
+
+stimuli:
+  - name: detect-sdk-breaking-changes-for-service-001
+    prompt: "Detect and mitigate Go SDK breaking changes for the service webpubsub"
+    environment:
+      commands:
+        - git clone --filter=blob:none --sparse https://github.com/Azure/azure-sdk-for-go.git && cd azure-sdk-for-go && git sparse-checkout set eng documentation sdk/resourcemanager/webpubsub/armwebpubsub
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-sdk-breaking-change", "azsdk-common-generate-sdk-locally"]
+      - type: tool-calls
+        config:
+          required: ["azure-sdk-mcp-azsdk_package_detect_breaking_change"]
