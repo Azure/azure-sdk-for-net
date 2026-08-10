@@ -244,28 +244,37 @@ if ($changedFiles.Count -eq 0) {
 $genFiles = @($changedFiles | Where-Object { Test-IsGenerated $_ })
 $customFiles = @($changedFiles | Where-Object { -not (Test-IsGenerated $_) })
 
-# Map of engine-applied patches keyed by normalized path, for the "Change" column.
-$patchMap = @{}
-foreach ($a in $attempts) {
-    $ap = Get-Prop $a 'appliedPatches'
+# Per-iteration applied patches: attribute each custom-code edit to the engine call
+# (result-<n>.json) that made it, so the Files Changed section can group by iteration.
+# A file edited in more than one iteration appears under each iteration that touched it.
+$iterationPatches = [System.Collections.Generic.List[object]]::new()
+for ($i = 0; $i -lt $attempts.Count; $i++) {
+    $ap = Get-Prop $attempts[$i] 'appliedPatches'
+    $rows = [System.Collections.Generic.List[object]]::new()
     if ($ap) {
         foreach ($p in $ap) {
             $fp = Get-Prop $p 'filePath'; if (-not $fp) { continue }
-            $patchMap[(Get-RelPath $fp)] = [pscustomobject]@{
+            $rows.Add([pscustomobject]@{
+                File         = (Get-RelPath $fp)
                 Description  = [string](Get-Prop $p 'description')
                 Replacements = Get-Prop $p 'replacementCount'
-            }
+            })
         }
     }
+    $iterationPatches.Add([pscustomobject]@{ Iteration = $i + 1; Rows = $rows })
 }
-# Match a changed file (repo-relative) to an applied patch by path suffix (handles the
-# engine reporting either repo-relative or package-relative paths).
-function Find-Patch([string]$repoRelFile) {
+# Set of custom files the engine reported patching (normalized), used to detect any
+# diff-only custom changes not attributable to a specific attempt.
+$patchedCustom = [System.Collections.Generic.HashSet[string]]::new()
+foreach ($grp in $iterationPatches) { foreach ($r in $grp.Rows) { [void]$patchedCustom.Add($r.File) } }
+# True when a changed file (repo-relative) matches an applied-patch path by suffix (the
+# engine may report either repo-relative or package-relative paths).
+function Test-PathCovered([string]$repoRelFile, $set) {
     $target = (Get-RelPath $repoRelFile)
-    foreach ($k in $patchMap.Keys) {
-        if ($target -eq $k -or $target.EndsWith("/$k") -or $k.EndsWith("/$target")) { return $patchMap[$k] }
+    foreach ($k in $set) {
+        if ($target -eq $k -or $target.EndsWith("/$k") -or $k.EndsWith("/$target")) { return $true }
     }
-    return $null
+    return $false
 }
 
 # ---- telemetry object (validated against telemetry-schema.v1.json) -----------------
@@ -355,31 +364,60 @@ else {
         }
     }
 
-    # ----- Files changed table -----
+    # ----- Files changed (grouped by iteration; every iteration lands in ONE commit) -----
+    # Custom-code edits are attributed to the exact engine iteration that made them (from
+    # each result-<n>.json's appliedPatches). Regenerated Generated/ files are a cumulative
+    # downstream effect and are not attributable to a single iteration, so they are listed
+    # once. All groups are part of the single repair commit pushed for this run.
     if ($changedFiles.Count -gt 0) {
-        [void]$sb.AppendLine("### Files Changed ($($changedFiles.Count): $($customFiles.Count) custom, $($genFiles.Count) generated)")
+        [void]$sb.AppendLine("### Files Changed ($($changedFiles.Count) distinct: $($customFiles.Count) custom, $($genFiles.Count) generated)")
         [void]$sb.AppendLine('')
-        [void]$sb.AppendLine('| File | Type | Change |')
-        [void]$sb.AppendLine('|---|---|---|')
-        foreach ($f in ($changedFiles | Sort-Object)) {
-            $type = if (Test-IsGenerated $f) { 'Generated' } else { 'Custom code' }
-            if (Test-IsGenerated $f) {
-                $change = 'Regenerated from unchanged spec inputs'
-            }
-            else {
-                $patch = Find-Patch $f
-                if ($patch) {
-                    $change = if ($patch.Description) { $patch.Description } else { 'Custom-code fix' }
-                    if ($patch.Replacements) {
-                        $n = [int]$patch.Replacements
+
+        $anyIterRows = @($iterationPatches | Where-Object { $_.Rows.Count -gt 0 }).Count -gt 0
+        if ($anyIterRows) {
+            foreach ($grp in $iterationPatches) {
+                if ($grp.Rows.Count -eq 0) { continue }
+                [void]$sb.AppendLine("#### Iteration $($grp.Iteration)")
+                [void]$sb.AppendLine('')
+                [void]$sb.AppendLine('| File | Type | Change |')
+                [void]$sb.AppendLine('|---|---|---|')
+                foreach ($r in ($grp.Rows | Sort-Object File)) {
+                    $change = if ($r.Description) { $r.Description } else { 'Custom-code edit' }
+                    if ($r.Replacements) {
+                        $n = [int]$r.Replacements
                         $change += " ($n replacement$(if ($n -ne 1) { 's' }))"
                     }
+                    [void]$sb.AppendLine("| ``$(Get-PkgRelPath $r.File)`` | Custom code | $(Format-Cell $change) |")
                 }
-                else { $change = 'Custom-code edit' }
+                [void]$sb.AppendLine('')
             }
-            [void]$sb.AppendLine("| ``$(Get-PkgRelPath (Get-RelPath $f))`` | $type | $(Format-Cell $change) |")
         }
-        [void]$sb.AppendLine('')
+
+        # Custom files present in the diff but not reported by any attempt's appliedPatches.
+        $otherCustom = @($customFiles | Where-Object { -not (Test-PathCovered $_ $patchedCustom) })
+        if ($otherCustom.Count -gt 0) {
+            [void]$sb.AppendLine('#### Other custom changes')
+            [void]$sb.AppendLine('')
+            [void]$sb.AppendLine('| File | Type | Change |')
+            [void]$sb.AppendLine('|---|---|---|')
+            foreach ($f in ($otherCustom | Sort-Object)) {
+                [void]$sb.AppendLine("| ``$(Get-PkgRelPath (Get-RelPath $f))`` | Custom code | Custom-code edit |")
+            }
+            [void]$sb.AppendLine('')
+        }
+
+        # Regenerated Generated/ files (cumulative; not attributable to a single iteration).
+        if ($genFiles.Count -gt 0) {
+            [void]$sb.AppendLine('#### Regenerated (cumulative)')
+            [void]$sb.AppendLine('')
+            [void]$sb.AppendLine('| File | Type | Change |')
+            [void]$sb.AppendLine('|---|---|---|')
+            foreach ($f in ($genFiles | Sort-Object)) {
+                [void]$sb.AppendLine("| ``$(Get-PkgRelPath (Get-RelPath $f))`` | Generated | Regenerated from unchanged spec inputs |")
+            }
+            [void]$sb.AppendLine('')
+        }
+
         if ($fileSource -eq 'appliedPatches') {
             [void]$sb.AppendLine('_File list derived from engine-applied patches (pre-repair sha unavailable); regenerated Generated/ files may not be shown._')
             [void]$sb.AppendLine('')
