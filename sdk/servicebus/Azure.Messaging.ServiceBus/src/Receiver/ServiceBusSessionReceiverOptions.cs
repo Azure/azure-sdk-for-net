@@ -55,7 +55,6 @@ namespace Azure.Messaging.ServiceBus
         /// costs a request/response exchange on the shared management link per settlement rather than a disposition on
         /// the receiver's own link, which lowers settlement throughput compared to an exclusive session.
         /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Advanced)]
         public bool EnableNonExclusiveSession { get; set; }
 
         /// <summary>
@@ -73,7 +72,6 @@ namespace Azure.Messaging.ServiceBus
         /// <para>This token authorizes taking over the session lock for any caller with Listen rights on the entity, so treat
         /// it as sensitive: do not log it, do not persist it unprotected, and transmit it only over a trusted channel.</para>
         /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Advanced)]
         public Guid? SessionLockToken { get; set; }
 
         /// <summary>

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -58,7 +57,6 @@ namespace Azure.Messaging.ServiceBus
         /// the service cannot honor fails when the session is accepted rather than falling back to an exclusive lock, so
         /// this value always matches the mode that was requested.
         /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Advanced)]
         public virtual bool IsSessionExclusive => InnerReceiver.IsSessionExclusive;
 
         /// <summary>
@@ -77,7 +75,6 @@ namespace Azure.Messaging.ServiceBus
         /// <para>This token authorizes taking over the session lock for any caller with Listen rights on the entity, so treat
         /// it as sensitive: do not log it, do not persist it unprotected, and transmit it only over a trusted channel.</para>
         /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Advanced)]
         public virtual string SessionLockToken => InnerReceiver.SessionLockToken?.ToString();
 
         ///  <summary>
