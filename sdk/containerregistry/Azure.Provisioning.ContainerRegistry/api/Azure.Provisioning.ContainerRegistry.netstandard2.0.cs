@@ -730,7 +730,9 @@ namespace Azure.Provisioning.ContainerRegistry
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryNetworkRuleBypassOption> NetworkRuleBypassOptions { get { throw null; } set { } }
         public Azure.Provisioning.ContainerRegistry.ContainerRegistryNetworkRuleSet NetworkRuleSet { get { throw null; } set { } }
         public Azure.Provisioning.ContainerRegistry.ContainerRegistryPolicies Policies { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryPrivateEndpointConnection> PrivateEndpointConnectionResources { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use PrivateEndpointConnectionResources instead.")]
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryRoleAssignmentMode> RoleAssignmentMode { get { throw null; } set { } }

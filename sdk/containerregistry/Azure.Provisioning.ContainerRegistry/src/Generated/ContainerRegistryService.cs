@@ -292,19 +292,6 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
-        /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<ContainerRegistryPrivateEndpointConnection> PrivateEndpointConnections
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new RegistryProperties();
-                }
-                return Properties.PrivateEndpointConnections;
-            }
-        }
-
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
         public BicepValue<ContainerRegistryPublicNetworkAccess> PublicNetworkAccess
         {
