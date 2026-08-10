@@ -30,7 +30,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         /// </summary>
         /// <remarks>
         /// This value is read from the environment variable: CONTENTUNDERSTANDING_ENDPOINT
-        /// In Playback mode, a fake endpoint is used: https://fake_contentunderstanding_endpoint.services.ai.azure.com/
+        /// In Playback mode, a sanitized placeholder endpoint is used: https://sanitized.services.ai.azure.com/
         /// The endpoint is sanitized in recordings via URI sanitizers to prevent exposing real service endpoints.
         /// </remarks>
         public string Endpoint => GetRecordedVariable(
