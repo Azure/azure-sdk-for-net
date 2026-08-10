@@ -210,11 +210,11 @@ The API returns different content types based on the input. Both `DocumentConten
 * **`DocumentContent`** - For document files (PDF, HTML, images, Office documents such as Word, Excel, PowerPoint, and more). Provides basic information such as page count and MIME type. Retrieve detailed information including pages, tables, figures, paragraphs, and many others.
 * **`AudioVisualContent`** - For audio and video files. Provides basic information such as timing information (start/end times) and frame dimensions (for video). Retrieve detailed information including transcript phrases, timing information, and for video, key frame references and more.
 
-### Analysis patterns (Long Running Operation and inline)
+### Analysis patterns (long-running operation and inline)
 
 Content Understanding supports two analysis patterns:
 
-* **Long Running Operation (LRO)** - `Analyze*` and `AnalyzeBinary*` start analysis and return an `Operation<AnalysisResult>`. The SDK handles polling automatically with `WaitUntil.Completed`. The operation ID is available through `Operation<AnalysisResult>.Id` for use with `GetResultFile*` and `DeleteResult*` methods.
+* **Long-running operation (LRO)** - `Analyze*` and `AnalyzeBinary*` start analysis and return an `Operation<AnalysisResult>`. The SDK handles polling automatically with `WaitUntil.Completed`. The operation ID is available through `Operation<AnalysisResult>.Id` for use with `GetResultFile*` and `DeleteResult*` methods.
 * **Inline** - `AnalyzeInline*` and `AnalyzeBinaryInline*` return `AnalysisResult` in a single response without polling. Inline analysis is available only in `2026-06-01-preview`, supports smaller document inputs and a limited analyzer set, and does not persist results. See [Sample 18][sample18-inline] for URL input and [Sample 19][sample19-inline] for binary input.
 
 ### Main classes

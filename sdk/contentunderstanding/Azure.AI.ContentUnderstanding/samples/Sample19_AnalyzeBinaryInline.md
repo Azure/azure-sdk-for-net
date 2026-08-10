@@ -1,14 +1,14 @@
-# Analyze binary input inline without Long Running Operation polling
+# Analyze binary input inline without long-running operation polling
 
 > **Supported service API version:** `2026-06-01-preview`
 
 This sample shows `AnalyzeBinaryInlineAsync` for local binary input.
 
-## Inline vs Long Running Operation analysis
+## Inline vs. long-running operation analysis
 
 Content Understanding provides two analysis patterns:
 
-**Long Running Operation (LRO):** `AnalyzeBinaryAsync` starts an operation and polls until the result is ready. Choose this mode for larger files or more pages (see [document limits](https://aka.ms/cu-doc-limits)), broader analyzer coverage, or results retained for up to **24 hours** (or until you delete them) with operation lifecycle APIs.
+**Long-running operation (LRO):** `AnalyzeBinaryAsync` starts an operation and polls until the result is ready. Choose this mode for larger files or more pages (see [document limits](https://aka.ms/cu-doc-limits)), broader analyzer coverage, or results retained for up to **24 hours** (or until you delete them) with operation lifecycle APIs.
 
 **Inline:** `AnalyzeBinaryInlineAsync` completes analysis in one HTTP call and returns the result without polling. Choose this mode for smaller inputs within the inline size and page limits when using one of the supported inline analyzers below (no field schema / field extraction). With no polling or wait tied to a polling interval, inline analysis is faster than the corresponding LRO API under these limits. Inline results are not persisted, and a non-succeeded status throws `RequestFailedException`.
 

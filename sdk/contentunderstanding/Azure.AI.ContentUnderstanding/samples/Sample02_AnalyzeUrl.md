@@ -10,7 +10,7 @@ Content Understanding supports both local binary inputs (see [Sample01_AnalyzeBi
 
 Documents, HTML, and images with text are returned as `DocumentContent` (derived from `AnalysisContent`), while audio and video are returned as `AudioVisualContent` (also derived from `AnalysisContent`). These prebuilt RAG analyzers return markdown and a one-paragraph `Summary` for each content item; `prebuilt-videoSearch` can return multiple segments, so iterate over all contents rather than just the first.
 
-`AnalyzeAsync` uses a **Long Running Operation (LRO)** and polls until the result is ready. For the URL inline alternative and guidance on choosing between the patterns, see [Sample 18: Analyze URL input inline][sample18-inline].
+`AnalyzeAsync` uses a **long-running operation (LRO)** and polls until the result is ready. For the URL inline alternative and guidance on choosing between the patterns, see [Sample 18: Analyze URL input inline][sample18-inline].
 
 ## Prerequisites
 

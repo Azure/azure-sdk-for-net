@@ -4,11 +4,11 @@
 
 This sample shows `AnalyzeInlineAsync` for URL-based inputs.
 
-## Inline vs Long Running Operation analysis
+## Inline vs. long-running operation analysis
 
 Content Understanding provides two analysis patterns:
 
-**Long Running Operation (LRO):** `AnalyzeAsync` starts an operation and polls until the result is ready. Choose this mode for larger files or more pages (see [document limits](https://aka.ms/cu-doc-limits)), broader analyzer coverage, or results retained for up to **24 hours** (or until you delete them) with operation lifecycle APIs (`Operation-Location` / operation ID).
+**Long-running operation (LRO):** `AnalyzeAsync` starts an operation and polls until the result is ready. Choose this mode for larger files or more pages (see [document limits](https://aka.ms/cu-doc-limits)), broader analyzer coverage, or results retained for up to **24 hours** (or until you delete them) with operation lifecycle APIs (`Operation-Location` / operation ID).
 
 **Inline:** `AnalyzeInlineAsync` completes analysis in one HTTP call and returns the result without polling. Choose this mode for smaller inputs within the inline size and page limits when using one of the supported inline analyzers below (no field schema / field extraction). With no polling or wait tied to a polling interval, inline analysis is faster than the corresponding LRO API under these limits. Inline results are not persisted, and a non-succeeded status throws `RequestFailedException`.
 

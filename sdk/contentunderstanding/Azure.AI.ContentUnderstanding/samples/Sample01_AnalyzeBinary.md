@@ -51,7 +51,7 @@ The `prebuilt-documentSearch` analyzer transforms unstructured documents into st
 
 To analyze a document from binary data, use the `AnalyzeBinaryAsync` method. The returned value is an `AnalysisResult` object containing data about the submitted document. Since we're analyzing a document, we'll pass the analyzer ID `prebuilt-documentSearch` to the method.
 
-By default, `AnalyzeBinaryAsync` uses a **Long Running Operation (LRO)** and `WaitUntil.Completed` polls until the result is ready. For the binary inline alternative and guidance on choosing between the patterns, see [Sample 19][sample19-inline].
+By default, `AnalyzeBinaryAsync` uses a **long-running operation (LRO)** and `WaitUntil.Completed` polls until the result is ready. For the binary inline alternative and guidance on choosing between the patterns, see [Sample 19][sample19-inline].
 
 Content Understanding supports many document types including PDF, Word, Excel, PowerPoint, images (including scanned image files with hand-written text), and more. For a complete list of supported file types and limits, see [Service limits][cu-service-limits].
 
