@@ -13,7 +13,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The session authentication mode to use for blob operations.
         /// </summary>
-        public SessionMode SessionMode { get; set; } = SessionMode.Enabled;
+        public SessionMode SessionMode { get; set; } = SessionMode.Auto;
 
         /// <summary>
         /// The Account name to use for signing the session key.
@@ -48,14 +48,20 @@ namespace Azure.Storage.Blobs.Models
     public enum SessionMode
     {
         /// <summary>
+        /// Default. The session authentication behavior is determined by the client library
+        /// and may be updated in future releases.
+        /// </summary>
+        Auto = 0,
+
+        /// <summary>
         /// Always use bearer token authentication. No session tokens are used.
         /// </summary>
-        Disabled = 0,
+        Disabled = 1,
 
         /// <summary>
         /// Opt in to session token authentication for all containers.
         /// Each container gets its own cached session token.
         /// </summary>
-        Enabled = 1
+        Enabled = 2
     }
 }

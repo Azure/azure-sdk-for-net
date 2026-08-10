@@ -88,7 +88,7 @@ namespace Azure.Storage.Blobs
         private AuthState AnalyzeRequest(HttpMessage message)
         {
             // Check if Sessions is disabled.
-            if (_sessionOptions.SessionMode == SessionMode.Disabled)
+            if (_sessionOptions.SessionMode.ResolveAuto() == SessionMode.Disabled)
             {
                 return AuthState.UseBearerToken;
             }

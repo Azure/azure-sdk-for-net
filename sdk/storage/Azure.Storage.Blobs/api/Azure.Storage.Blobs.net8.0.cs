@@ -1510,8 +1510,9 @@ namespace Azure.Storage.Blobs.Models
     }
     public enum SessionMode
     {
-        Disabled = 0,
-        Enabled = 1,
+        Auto = 0,
+        Disabled = 1,
+        Enabled = 2,
     }
     public partial class SessionOptions
     {
