@@ -40,6 +40,51 @@ public sealed class ResilientTaskRegistrationTests
         Assert.That(hosted, Is.Not.Empty, "resolved IHostedService set must contain TaskDurabilityService");
     }
 
+    [Test]
+    public void RepeatedAddResilientTasksDoesNotDuplicateHostedServiceAndSharesRegistry()
+    {
+        var services = new ServiceCollection();
+        ResilientTaskBuilder first = services.AddResilientTasks();
+        ResilientTaskBuilder second = services.AddResilientTasks();
+
+        // The second call registers nothing further (AddHostedService is not idempotent), so the
+        // durability service is registered exactly once — no duplicate recovery scan.
+        int hostedServiceCount = services.Count(d => d.ServiceType == typeof(IHostedService));
+        Assert.That(hostedServiceCount, Is.EqualTo(1), "durability hosted service must be registered once");
+
+        // Both builders must target the SAME registry instance the engine will use; otherwise a
+        // task registered via the second builder would be invisible to the engine.
+        first.AddTask<string, string>("via-first", (ctx, ct) => Task.FromResult(ctx.Input));
+        second.AddTask<string, string>("via-second", (ctx, ct) => Task.FromResult(ctx.Input));
+
+        using var provider = services.BuildServiceProvider();
+        TaskRegistry registry = provider.GetRequiredService<TaskRegistry>();
+        Assert.That(registry.TryGet("via-first", out _), Is.True, "task from the first builder must be registered");
+        Assert.That(registry.TryGet("via-second", out _), Is.True, "task from the second builder must be registered");
+    }
+
+    [Test]
+    public void RepeatedAddResilientTasksWithCredentialThrows()
+    {
+        var services = new ServiceCollection();
+        services.AddResilientTasks();
+
+        Assert.Throws<System.InvalidOperationException>(() =>
+            services.AddResilientTasks(new Azure.Core.TestFramework.MockCredential()));
+    }
+
+    [Test]
+    public void AddResilientTasksThrowsWhenEngineRegisteredButRegistryMissing()
+    {
+        // Simulate an inconsistent state: a TaskEngine service exists but its TaskRegistry does not
+        // (e.g. someone wired the services piecemeal). The repeat-call path must fail fast rather
+        // than fabricate a fresh registry and silently orphan every subsequent registration.
+        var services = new ServiceCollection();
+        services.AddSingleton<TaskEngine>(_ => throw new System.NotSupportedException("never built"));
+
+        Assert.Throws<System.InvalidOperationException>(() => services.AddResilientTasks());
+    }
+
     [TestCase("")]
     [TestCase(" ")]
     [TestCase("\t")]

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.AI.AgentServer.Core.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Core.Tests.Snippets
@@ -30,6 +31,13 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
                     return $"you said: {ctx.Input}";
                 });
 
+            // The handle is late-bound to the TaskEngine the container builds, so invoke it only
+            // once the host is running (in an app that is from a request handler after the host has
+            // started). Here we build the provider and start the hosted services to construct and
+            // bind the engine before the call.
+            await using ServiceProvider provider = services.BuildServiceProvider();
+            await StartHostedServicesAsync(provider);
+
             string result = await echo.RunAsync("hello");
             return result;
         }
@@ -45,15 +53,22 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
                     return $"reply to: {ctx.Input}";
                 });
 
-            TaskRun<string> turn1 = await chat.StartAsync("hi");
+            await using ServiceProvider provider = services.BuildServiceProvider();
+            await StartHostedServicesAsync(provider);
+
+            // A multi-turn chain REQUIRES an explicit TaskId (the chain id) that you own — reuse it
+            // across turns to continue the same chain.
+            string chatId = "chat-1";
+            TaskRun<string> turn1 = await chat.StartAsync(
+                "hi", new RunOptions { TaskId = chatId });
             string a1 = await turn1.Completion;
 
             TaskRun<string> turn2 = await chat.StartAsync(
                 "and again",
-                new RunOptions { TaskId = turn1.TaskId });
+                new RunOptions { TaskId = chatId });
             string a2 = await turn2.Completion;
 
-            await chat.DeleteAsync(turn1.TaskId);
+            await chat.DeleteAsync(chatId);
             _ = (a1, a2);
         }
 
@@ -105,10 +120,17 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
             TaskDefinition<string, string> assistant = services.AddResilientTasks()
                 .AddMultiTurnTask<string, string>("assistant", handler, steerable: true);
 
-            TaskRun<string> r1 = await assistant.StartAsync("write a long essay");
+            await using ServiceProvider provider = services.BuildServiceProvider();
+            await StartHostedServicesAsync(provider);
+
+            // Both inputs use the SAME explicit chain id, so the second one steers the running turn
+            // instead of starting a new chain.
+            string chatId = "assistant-1";
+            TaskRun<string> r1 = await assistant.StartAsync(
+                "write a long essay", new RunOptions { TaskId = chatId });
             TaskRun<string> r2 = await assistant.StartAsync(
                 "actually, just one sentence",
-                new RunOptions { TaskId = r1.TaskId });
+                new RunOptions { TaskId = chatId });
             _ = r2;
         }
 
@@ -154,6 +176,18 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
                 InputId = "input-1",
                 IfLastInputId = "input-0",
             };
+        }
+
+        // Starts the host's IHostedServices, which constructs the TaskEngine (the durability
+        // service depends on it) and late-binds it into every TaskDefinition handle so invocation
+        // works. In a real app the host does this for you; the snippets call it explicitly because
+        // they register and invoke in one method rather than across startup and request handling.
+        private static async Task StartHostedServicesAsync(IServiceProvider provider)
+        {
+            foreach (IHostedService hosted in provider.GetServices<IHostedService>())
+            {
+                await hosted.StartAsync(CancellationToken.None);
+            }
         }
 
         [Test]

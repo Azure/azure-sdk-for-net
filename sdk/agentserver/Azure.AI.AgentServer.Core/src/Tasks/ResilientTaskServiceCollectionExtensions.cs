@@ -52,8 +52,20 @@ public static class ResilientTaskServiceCollectionExtensions
                     "only on the first call.");
             }
 
-            TaskRegistry existingRegistry = ResolveRegistered(services) ?? new TaskRegistry();
-            TaskEngineAccessor existingAccessor = ResolveRegisteredAccessor(services) ?? new TaskEngineAccessor();
+            // The registry and accessor are registered together with the TaskEngine on the first
+            // call, so if the engine is present they must be too. Fail fast rather than fabricating
+            // new instances: a builder over a fresh registry/accessor would silently orphan every
+            // subsequent registration (the already-registered engine keeps using the originals).
+            TaskRegistry existingRegistry = ResolveRegistered(services)
+                ?? throw new InvalidOperationException(
+                    "Resilient-tasks services are in an inconsistent state: a TaskEngine is registered " +
+                    "but its TaskRegistry is not. Ensure AddResilientTasks and its dependencies are not " +
+                    "registered piecemeal.");
+            TaskEngineAccessor existingAccessor = ResolveRegisteredAccessor(services)
+                ?? throw new InvalidOperationException(
+                    "Resilient-tasks services are in an inconsistent state: a TaskEngine is registered " +
+                    "but its TaskEngineAccessor is not. Ensure AddResilientTasks and its dependencies are " +
+                    "not registered piecemeal.");
             return new DefaultResilientTaskBuilder(existingRegistry, existingAccessor);
         }
 

@@ -514,6 +514,13 @@ Task<TaskRun<TOutput>?> GetActiveRunAsync(string taskId, string inputId, Cancell
 The handle is returned by `AddTask`/`AddMultiTurnTask`; register it in DI
 (`services.AddSingleton(def)`) to resolve it in request handlers.
 
+> If several tasks share the same `<TInput, TOutput>` pair, registering each handle as
+> `AddSingleton(def)` makes `GetRequiredService<TaskDefinition<TInput, TOutput>>()`
+> ambiguous — DI returns the last registration. Either use keyed registrations
+> (`AddKeyedSingleton(def.Name, def)` / `GetRequiredKeyedService<...>(name)`), or resolve
+> `IEnumerable<TaskDefinition<TInput, TOutput>>` and select by `Name`. When each pair is
+> unique (the common case), a plain `AddSingleton(def)` is enough.
+
 Both `RunAsync` and `StartAsync` perform a storage round-trip and so are async.
 `StartAsync` returns once the run has been durably created; awaiting the returned
 handle waits for the result.
