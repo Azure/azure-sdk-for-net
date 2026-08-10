@@ -124,15 +124,15 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <returns> A new <see cref="Models.NotificationHubApnsCredential"/> instance for mocking. </returns>
         public static NotificationHubApnsCredential NotificationHubApnsCredential(string apnsCertificate = default, string certificateKey = default, Uri endpoint = default, string thumbprintString = default, string keyId = default, string appName = default, string appId = default, string token = default)
         {
-            return new NotificationHubApnsCredential(apnsCertificate is null ? default : new ApnsCredentialProperties(
+            return new NotificationHubApnsCredential(apnsCertificate is null && certificateKey is null && endpoint is null && thumbprintString is null && keyId is null && appName is null && appId is null && token is null ? default : new ApnsCredentialProperties(
                 apnsCertificate,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
+                certificateKey,
+                endpoint,
+                thumbprintString,
+                keyId,
+                appName,
+                appId,
+                token,
                 default), default);
         }
 
@@ -144,11 +144,11 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <returns> A new <see cref="Models.NotificationHubWnsCredential"/> instance for mocking. </returns>
         public static NotificationHubWnsCredential NotificationHubWnsCredential(string packageSid = default, string secretKey = default, Uri windowsLiveEndpoint = default, string certificateKey = default, string wnsCertificate = default)
         {
-            return new NotificationHubWnsCredential(wnsCertificate is null ? default : new WnsCredentialProperties(
-                default,
-                default,
-                default,
-                default,
+            return new NotificationHubWnsCredential(packageSid is null && secretKey is null && windowsLiveEndpoint is null && certificateKey is null && wnsCertificate is null ? default : new WnsCredentialProperties(
+                packageSid,
+                secretKey,
+                windowsLiveEndpoint,
+                certificateKey,
                 wnsCertificate,
                 default), default);
         }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <returns> A new <see cref="Models.NotificationHubMpnsCredential"/> instance for mocking. </returns>
         public static NotificationHubMpnsCredential NotificationHubMpnsCredential(string mpnsCertificate = default, string certificateKey = default, string thumbprintString = default)
         {
-            return new NotificationHubMpnsCredential(mpnsCertificate is null ? default : new MpnsCredentialProperties(mpnsCertificate, default, default, default), default);
+            return new NotificationHubMpnsCredential(mpnsCertificate is null && certificateKey is null && thumbprintString is null ? default : new MpnsCredentialProperties(mpnsCertificate, certificateKey, thumbprintString, default), default);
         }
 
         /// <param name="clientId"> Gets or sets the client identifier. </param>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <returns> A new <see cref="Models.NotificationHubAdmCredential"/> instance for mocking. </returns>
         public static NotificationHubAdmCredential NotificationHubAdmCredential(string clientId = default, string clientSecret = default, Uri authTokenUri = default)
         {
-            return new NotificationHubAdmCredential(default, default);
+            return new NotificationHubAdmCredential(clientId is null && clientSecret is null && authTokenUri is null ? default : new AdmCredentialProperties(clientId, clientSecret, authTokenUri, default), default);
         }
 
         /// <param name="baiduApiKey"> Gets or sets baidu Api Key. </param>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <returns> A new <see cref="Models.BrowserCredential"/> instance for mocking. </returns>
         public static BrowserCredential BrowserCredential(string subject = default, string vapidPrivateKey = default, string vapidPublicKey = default)
         {
-            return new BrowserCredential(default, default);
+            return new BrowserCredential(subject is null && vapidPrivateKey is null && vapidPublicKey is null ? default : new BrowserCredentialProperties(subject, vapidPrivateKey, vapidPublicKey, default), default);
         }
 
         /// <param name="appSecret"> Gets or sets app secret. </param>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <returns> A new <see cref="Models.XiaomiCredential"/> instance for mocking. </returns>
         public static XiaomiCredential XiaomiCredential(string appSecret = default, string endpoint = default)
         {
-            return new XiaomiCredential(default, default);
+            return new XiaomiCredential(appSecret is null && endpoint is null ? default : new XiaomiCredentialProperties(appSecret, endpoint, default), default);
         }
 
         /// <param name="clientEmail"> Gets or sets client email. </param>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <returns> A new <see cref="Models.FcmV1Credential"/> instance for mocking. </returns>
         public static FcmV1Credential FcmV1Credential(string clientEmail = default, string privateKey = default, string projectId = default)
         {
-            return new FcmV1Credential(default, default);
+            return new FcmV1Credential(clientEmail is null && privateKey is null && projectId is null ? default : new FcmV1CredentialProperties(clientEmail, privateKey, projectId, default), default);
         }
 
         /// <param name="name"> Namespace SKU name. </param>
