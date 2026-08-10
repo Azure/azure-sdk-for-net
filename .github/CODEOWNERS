@@ -34,14 +34,14 @@
 #########
 
 # Catch all
-/sdk/                                                              @jsquire
+/sdk/                                                              @jsquire @Azure/azure-sdk-write-net-core
 
 ####################
 # End-to-End Samples
 ####################
 
 # Samples catch-all
-/samples/                                                          @jsquire
+/samples/                                                          @jsquire @Azure/azure-sdk-write-net-core
 
 #PRLabel: Voice Live
 /samples/voicelive/                                                @emilyjiji @xitzhang @pankopon @amber-yujueWang
@@ -683,6 +683,9 @@
 # ServiceLabel: %Device Registry %Mgmt
 # ServiceOwners:                                                   @atastrophic @rohankhandelwal
 
+# PRLabel: %Device Update
+/sdk/deviceupdate/                                                 @wuqiten @devlie
+
 # PRLabel: %App Services %Mgmt
 /sdk/domainregistration/Azure.ResourceManager.*/                   @antcp @AzureAppServiceCLI
 
@@ -894,9 +897,9 @@
 /eng/apicompatbaselines/                                           @Azure/azure-sdk-write-net-core @jsquire
 
 # Add owners for package dependency changes
-/eng/centralpackagemanagement                                           @Azure/azure-sdk-write-net-core @jsquire
-/eng/centralpackagemanagement/Directory.Support.Packages.props          @Azure/azure-sdk-write-net-core @jsquire @ArthurMa1978 @jorgerangel-msft
-/eng/centralpackagemanagement/Directory.Generation.Packages.props       @Azure/azure-sdk-write-net-core @jsquire @ArthurMa1978 @jorgerangel-msft
+/eng/centralpackagemanagement                                      @Azure/azure-sdk-write-net-core @jsquire
+/eng/centralpackagemanagement/Directory.Support.Packages.props     @Azure/azure-sdk-write-net-core @jsquire @ArthurMa1978 @jorgerangel-msft
+/eng/centralpackagemanagement/Directory.Generation.Packages.props  @Azure/azure-sdk-write-net-core @jsquire @ArthurMa1978 @jorgerangel-msft
 
 # Add owners for emitter version changes
 /eng/azure-typespec-http-client-csharp-emitter-package.json             @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
@@ -951,7 +954,7 @@
 /.config/1espt/                                                    @benbp
 /.vscode/                                                          @jsquire @m-nash @JoshLove-msft
 /.devcontainer/                                                    @jsquire @m-nash @JoshLove-msft
-/doc/                                                              @jsquire
+/doc/                                                              @jsquire @m-nash @JoshLove-msft
 
 # Repository configuration that should not be overridden
 /sdk/**/NuGet.*                                                    @Azure/azure-sdk-write-net-core @jsquire

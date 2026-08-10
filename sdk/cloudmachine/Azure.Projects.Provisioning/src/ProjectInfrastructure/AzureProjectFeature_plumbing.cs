@@ -7,9 +7,11 @@ namespace Azure.Projects.Core;
 
 public abstract partial class AzureProjectFeature
 {
+    /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override int GetHashCode() => base.GetHashCode();
 
+    /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override bool Equals(object? obj) => base.Equals(obj);
 }

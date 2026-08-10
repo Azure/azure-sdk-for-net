@@ -31,6 +31,7 @@ namespace Azure.Storage.Blobs
             Metadata metadata,
             HttpRange originalRange,
             string receivedContentRange,
+            long receivedStartRegion,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -52,6 +53,7 @@ namespace Azure.Storage.Blobs
                 encryptionData,
                 ivInStream,
                 CanIgnorePadding(contentRange),
+                receivedStartRegion,
                 async,
                 cancellationToken).ConfigureAwait(false);
 
@@ -195,25 +197,25 @@ namespace Azure.Storage.Blobs
             return true;
         }
 
-        internal static HttpRange GetEncryptedBlobRange(HttpRange originalRange, string rawEncryptionData)
+        internal static (HttpRange BlobRange, long InitialRegionIdx) GetEncryptedBlobRange(HttpRange originalRange, string rawEncryptionData)
         {
             Argument.AssertNotNull(rawEncryptionData, nameof(rawEncryptionData));
             EncryptionData encryptionData = EncryptionDataSerializer.Deserialize(rawEncryptionData);
             return GetEncryptedBlobRange(originalRange, encryptionData);
         }
 
-        internal static HttpRange GetEncryptedBlobRange(HttpRange originalRange, EncryptionData encryptionData)
+        internal static (HttpRange BlobRange, long InitialRegionIdx) GetEncryptedBlobRange(HttpRange originalRange, EncryptionData encryptionData)
         {
             if (encryptionData == default)
             {
-                return originalRange;
+                return (originalRange, 0);
             }
 
             switch (encryptionData.EncryptionAgent.EncryptionVersion)
             {
 #pragma warning disable CS0618 // obsolete
                 case ClientSideEncryptionVersionInternal.V1_0:
-                    return GetEncryptedBlobRangeV1_0(originalRange);
+                    return (GetEncryptedBlobRangeV1_0(originalRange), 0);
 #pragma warning restore CS0618 // obsolete
                 case ClientSideEncryptionVersionInternal.V2_0:
                 case ClientSideEncryptionVersionInternal.V2_1:
@@ -223,7 +225,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        private static HttpRange GetEncryptedBlobRangeV2_0(HttpRange originalRange, EncryptionData encryptionData)
+        private static (HttpRange BlobRange, long InitialRegionIdx) GetEncryptedBlobRangeV2_0(HttpRange originalRange, EncryptionData encryptionData)
         {
             int encryptedRegionDataSize = encryptionData.EncryptedRegionInfo.DataLength;
             int totalEncryptedRegionSize = encryptionData.EncryptedRegionInfo.NonceLength
@@ -232,12 +234,13 @@ namespace Azure.Storage.Blobs
 
             long newOffset = 0;
             long? newCount = null;
+            long initialRegion = 0;
 
             if (originalRange.Offset != 0)
             {
                 // determine region number range start resides in, set offset to start of that total region
-                long regionNum = originalRange.Offset / encryptedRegionDataSize;
-                newOffset = regionNum * totalEncryptedRegionSize;
+                initialRegion = originalRange.Offset / encryptedRegionDataSize;
+                newOffset = initialRegion * totalEncryptedRegionSize;
             }
 
             if (originalRange.Length != null)
@@ -247,7 +250,7 @@ namespace Azure.Storage.Blobs
                 newCount = (regionNum + 1) * totalEncryptedRegionSize - newOffset;
             }
 
-            return new HttpRange(newOffset, newCount);
+            return (new HttpRange(newOffset, newCount), initialRegion);
         }
 
         private static HttpRange GetEncryptedBlobRangeV1_0(HttpRange originalRange)

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridCompute
     internal partial class PrivateEndpointConnectionsGetByPrivateLinkScopeCollectionResultOfT : Pageable<HybridComputePrivateEndpointConnectionData>
     {
         private readonly PrivateEndpointConnections _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _scopeName;
         private readonly RequestContext _context;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="scopeName"> The name of the Azure Arc PrivateLinkScope resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public PrivateEndpointConnectionsGetByPrivateLinkScopeCollectionResultOfT(PrivateEndpointConnections client, string subscriptionId, string resourceGroupName, string scopeName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public PrivateEndpointConnectionsGetByPrivateLinkScopeCollectionResultOfT(PrivateEndpointConnections client, Guid subscriptionId, string resourceGroupName, string scopeName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

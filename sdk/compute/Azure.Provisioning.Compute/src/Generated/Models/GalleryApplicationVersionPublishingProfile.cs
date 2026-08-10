@@ -268,8 +268,8 @@ namespace Azure.Provisioning.Compute
             _targetRegions = DefineListProperty<TargetRegion>(nameof(TargetRegions), new string[] { "targetRegions" });
             _replicaCount = DefineProperty<int>(nameof(ReplicaCount), new string[] { "replicaCount" });
             _isExcludedFromLatest = DefineProperty<bool>(nameof(IsExcludedFromLatest), new string[] { "excludeFromLatest" });
-            _publishedOn = DefineProperty<DateTimeOffset>(nameof(PublishedOn), new string[] { "publishedDate" }, isOutput: true);
-            _endOfLifeOn = DefineProperty<DateTimeOffset>(nameof(EndOfLifeOn), new string[] { "endOfLifeDate" });
+            _publishedOn = DefineProperty<DateTimeOffset>(nameof(PublishedOn), new string[] { "publishedDate" }, isOutput: true, format: "O");
+            _endOfLifeOn = DefineProperty<DateTimeOffset>(nameof(EndOfLifeOn), new string[] { "endOfLifeDate" }, format: "O");
             _storageAccountType = DefineProperty<ImageStorageAccountType>(nameof(StorageAccountType), new string[] { "storageAccountType" });
             _replicationMode = DefineProperty<GalleryReplicationMode>(nameof(ReplicationMode), new string[] { "replicationMode" });
             _targetExtendedLocations = DefineListProperty<GalleryTargetExtendedLocation>(nameof(TargetExtendedLocations), new string[] { "targetExtendedLocations" });

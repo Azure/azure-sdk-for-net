@@ -44,48 +44,6 @@ namespace Azure.ResourceManager.ProviderHub
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.ProviderHub/operations", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            _userAgent.Apply(message);
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            _userAgent.Apply(message);
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
         internal HttpMessage CreateGetByProviderRegistrationRequest(Guid subscriptionId, string providerNamespace, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();

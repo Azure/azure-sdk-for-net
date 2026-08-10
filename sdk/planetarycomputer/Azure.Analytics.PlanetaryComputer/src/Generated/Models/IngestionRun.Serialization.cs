@@ -96,11 +96,11 @@ namespace Azure.Analytics.PlanetaryComputer
             writer.WritePropertyName("operation"u8);
             writer.WriteObjectValue(Operation, options);
             writer.WritePropertyName("creationTime"u8);
-            writer.WriteStringValue(CreationTime, "O");
-            if (Optional.IsDefined(SourceCatalogUrl))
+            writer.WriteStringValue(CreatedOn, "O");
+            if (Optional.IsDefined(SourceCatalogUri))
             {
                 writer.WritePropertyName("sourceCatalogUrl"u8);
-                writer.WriteStringValue(SourceCatalogUrl.AbsoluteUri);
+                writer.WriteStringValue(SourceCatalogUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SkipExistingItems))
             {
@@ -157,8 +157,8 @@ namespace Azure.Analytics.PlanetaryComputer
             Guid id = default;
             Guid? parentRunId = default;
             IngestionRunInformation operation = default;
-            DateTimeOffset creationTime = default;
-            Uri sourceCatalogUrl = default;
+            DateTimeOffset createdOn = default;
+            Uri sourceCatalogUri = default;
             bool? skipExistingItems = default;
             bool? keepOriginalAssets = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -185,7 +185,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("creationTime"u8))
                 {
-                    creationTime = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("sourceCatalogUrl"u8))
@@ -194,7 +194,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    sourceCatalogUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    sourceCatalogUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("skipExistingItems"u8))
@@ -224,8 +224,8 @@ namespace Azure.Analytics.PlanetaryComputer
                 id,
                 parentRunId,
                 operation,
-                creationTime,
-                sourceCatalogUrl,
+                createdOn,
+                sourceCatalogUri,
                 skipExistingItems,
                 keepOriginalAssets,
                 additionalBinaryDataProperties);

@@ -7,7 +7,9 @@ using System.Collections.Generic;
 
 namespace Azure.Projects.Core;
 
-// This is a special collection that can be added to while it's being enumerated.
+/// <summary>
+/// A collection of <see cref="AzureProjectFeature"/> instances that supports safe enumeration during modification.
+/// </summary>
 public class FeatureCollection : IEnumerable<AzureProjectFeature>
 {
     private AzureProjectFeature[] _features = new AzureProjectFeature[4];
@@ -16,6 +18,11 @@ public class FeatureCollection : IEnumerable<AzureProjectFeature>
 
     internal FeatureCollection() { }
 
+    /// <summary>
+    /// Returns all features of the specified type.
+    /// </summary>
+    /// <typeparam name="T">The feature type to find.</typeparam>
+    /// <returns>An enumerable of matching features.</returns>
     public IEnumerable<T> FindAll<T>() where T : AzureProjectFeature
     {
         for (int i = 0; i < _count; i++)
@@ -27,12 +34,25 @@ public class FeatureCollection : IEnumerable<AzureProjectFeature>
         }
     }
 
+    /// <summary>
+    /// Attempts to find the first feature of the specified type.
+    /// </summary>
+    /// <typeparam name="T">The feature type to find.</typeparam>
+    /// <param name="feature">When this method returns, contains the first matching feature, or <see langword="null"/> if none was found.</param>
+    /// <returns><see langword="true"/> if a matching feature was found; otherwise, <see langword="false"/>.</returns>
     public bool TryGet<T>(out T? feature) where T : AzureProjectFeature
     {
         string name = typeof(T).FullName!;
         return TryGet(name, out feature);
     }
 
+    /// <summary>
+    /// Attempts to find a feature of the specified type with the given identifier.
+    /// </summary>
+    /// <typeparam name="T">The feature type to find.</typeparam>
+    /// <param name="id">The identifier to match.</param>
+    /// <param name="feature">When this method returns, contains the matching feature, or <see langword="null"/> if none was found.</param>
+    /// <returns><see langword="true"/> if a matching feature was found; otherwise, <see langword="false"/>.</returns>
     public bool TryGet<T>(string id, out T? feature) where T : AzureProjectFeature
     {
         for (int i = 0; i < _count; i++)
@@ -48,6 +68,10 @@ public class FeatureCollection : IEnumerable<AzureProjectFeature>
         return false;
     }
 
+    /// <summary>
+    /// Appends a feature to this collection.
+    /// </summary>
+    /// <param name="feature">The feature to append.</param>
     public void Append(AzureProjectFeature feature)
     {
         if (_count == _features.Length)
@@ -64,6 +88,10 @@ public class FeatureCollection : IEnumerable<AzureProjectFeature>
         }
     }
 
+    /// <summary>
+    /// Returns an enumerator that iterates through the features in this collection.
+    /// </summary>
+    /// <returns>An enumerator of <see cref="AzureProjectFeature"/> instances.</returns>
     public IEnumerator<AzureProjectFeature> GetEnumerator()
     {
         for (int i = 0; i < _count; i++)
@@ -74,6 +102,11 @@ public class FeatureCollection : IEnumerable<AzureProjectFeature>
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+    /// <summary>
+    /// Creates a unique Bicep identifier by appending a numeric suffix when collisions occur.
+    /// </summary>
+    /// <param name="baseIdentifier">The base identifier to make unique.</param>
+    /// <returns>A unique Bicep identifier string.</returns>
     public string CreateUniqueBicepIdentifier(string baseIdentifier)
     {
         lock (_featureIndex)
