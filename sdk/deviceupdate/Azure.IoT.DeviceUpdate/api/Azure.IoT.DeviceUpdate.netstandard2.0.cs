@@ -102,7 +102,7 @@ namespace Azure.IoT.DeviceUpdate
     public partial class DeviceManagementClientSettings : System.ClientModel.Primitives.ClientSettings
     {
         public DeviceManagementClientSettings() { }
-        public string Endpoint { get { throw null; } set { } }
+        public System.Uri Endpoint { get { throw null; } set { } }
         public string InstanceId { get { throw null; } set { } }
         public Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions Options { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
@@ -156,7 +156,7 @@ namespace Azure.IoT.DeviceUpdate
     public partial class DeviceUpdateClientSettings : System.ClientModel.Primitives.ClientSettings
     {
         public DeviceUpdateClientSettings() { }
-        public string Endpoint { get { throw null; } set { } }
+        public System.Uri Endpoint { get { throw null; } set { } }
         public string InstanceId { get { throw null; } set { } }
         public Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions Options { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
