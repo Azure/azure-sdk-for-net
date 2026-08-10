@@ -118,7 +118,7 @@
 /sdk/attestation/Azure.Security.Attestation/    @Azure/azure-sdk-write-attestation @gkostal
 
 # ServiceLabel: %Attestation
-# ServiceOwners: @gkostal
+# ServiceOwners: @alcarasj @eazymac25 @gkostal @ksapathy @olkroshk @viathefalcon
 
 # PRLabel: %Azure Load Testing
 /sdk/loadtestservice/    @azure/testing-services
