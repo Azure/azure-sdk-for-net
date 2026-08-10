@@ -1502,24 +1502,6 @@ namespace Azure.ResourceManager.Redis
             return GetCachedClient(client => new RedisPatchScheduleCollection(client, Id));
         }
 
-        /// <summary> Gets the patching schedule of a redis cache. </summary>
-        /// <param name="default"> The name of the RedisPatchSchedule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RedisPatchScheduleResource>> GetRedisPatchScheduleAsync(RedisPatchScheduleDefaultName @default, CancellationToken cancellationToken = default)
-        {
-            return await GetRedisPatchSchedules().GetAsync(@default, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets the patching schedule of a redis cache. </summary>
-        /// <param name="default"> The name of the RedisPatchSchedule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<RedisPatchScheduleResource> GetRedisPatchSchedule(RedisPatchScheduleDefaultName @default, CancellationToken cancellationToken = default)
-        {
-            return GetRedisPatchSchedules().Get(@default, cancellationToken);
-        }
-
         /// <summary> Gets a collection of RedisLinkedServerWithProperties in the <see cref="RedisResource"/>. </summary>
         /// <returns> An object representing collection of RedisLinkedServerWithProperties and their operations over a RedisLinkedServerWithPropertyResource. </returns>
         public virtual RedisLinkedServerWithPropertyCollection GetRedisLinkedServerWithProperties()
