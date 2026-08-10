@@ -90,36 +90,145 @@ namespace Azure.Generator.Provisioning.Providers
 
         protected override PropertyProvider[] BuildProperties()
         {
+            var baseProperties = GetBaseProperties();
             var properties = new List<PropertyProvider>();
-            foreach (var prop in _inputModel.Properties)
-            {
-                if (prop.IsDiscriminator) continue;
 
-                var property = ProvisioningGenerator.Instance.TypeFactory.CreateProvisioningProperty(prop, this);
-                if (property != null)
+            // The TypeSpec hierarchy and the generated C# hierarchy are allowed to differ. In
+            // particular, an input base can be intentionally omitted, or custom code can replace it
+            // with a C# base that has no corresponding InputModelType. Build every property that the
+            // input hierarchy could contribute, then reconcile that complete set against the actual
+            // C# base surface. This keeps property ownership tied to the emitted hierarchy rather
+            // than to assumptions about which input models happen to be generated.
+            foreach (var property in GetAllPossibleProperties())
+            {
+                if (baseProperties.TryGetValue(property.Name, out var baseProperty))
                 {
-                    if (HidesBaseProperty(property.Name))
+                    if (IsBasePropertyMatch(property, baseProperty))
                     {
-                        property.Update(modifiers: property.Modifiers | MethodSignatureModifiers.New);
+                        continue;
                     }
-                    properties.Add(property);
+
+                    // A same-name base member with a different type or provisioning contract does
+                    // not implement this input property. The derived property must still be emitted,
+                    // but it deliberately hides the incompatible base member.
+                    property.Update(modifiers: property.Modifiers | MethodSignatureModifiers.New);
                 }
+
+                properties.Add(property);
             }
-            return [.. properties];
+
+            // Input hierarchies can repeat a C# property name after renaming or hierarchy
+            // customization. Candidates are produced from the most-derived model toward the root,
+            // so retaining the first surviving property gives the highest input layer ownership.
+            var names = new HashSet<string>(StringComparer.Ordinal);
+            return [.. properties.Where(property => names.Add(property.Name))];
         }
 
-        private bool HidesBaseProperty(string propertyName)
+        private IEnumerable<ProvisioningPropertyProvider> GetAllPossibleProperties()
         {
-            var baseModel = BaseModelProvider;
-            while (baseModel != null)
+            for (var model = _inputModel; model != null; model = model.BaseModel)
             {
-                if (baseModel.CanonicalView.Properties.Any(property => string.Equals(property.Name, propertyName, StringComparison.Ordinal)))
+                foreach (var inputProperty in model.Properties)
                 {
-                    return true;
+                    if (inputProperty.IsDiscriminator)
+                    {
+                        continue;
+                    }
+
+                    if (ProvisioningGenerator.Instance.TypeFactory.CreateProvisioningProperty(inputProperty, this)
+                        is ProvisioningPropertyProvider property)
+                    {
+                        yield return property;
+                    }
                 }
-                baseModel = baseModel.BaseModelProvider;
             }
-            return false;
+        }
+
+        private Dictionary<string, PropertyProvider> GetBaseProperties()
+        {
+            var properties = new Dictionary<string, PropertyProvider>(StringComparer.Ordinal);
+            var visitedTypes = new HashSet<CSharpType>();
+            var baseType = BaseType;
+
+            while (baseType != null && visitedTypes.Add(baseType))
+            {
+                var baseProvider = ResolveTypeProvider(baseType);
+                if (baseProvider == null)
+                {
+                    break;
+                }
+
+                // Walk from the immediate C# base toward the root and keep the first property for
+                // each name. That is the member visible to the derived class when multiple base
+                // layers hide one another.
+                foreach (var property in baseProvider.CanonicalView.Properties)
+                {
+                    properties.TryAdd(property.Name, property);
+                }
+
+                baseType = baseProvider.BaseType;
+            }
+
+            return properties;
+        }
+
+        private static TypeProvider? ResolveTypeProvider(CSharpType type)
+        {
+            var typeFactory = ProvisioningGenerator.Instance.TypeFactory;
+            if (typeFactory.CSharpTypeMap.TryGetValue(type, out var provider))
+            {
+                return provider;
+            }
+
+            if (string.IsNullOrEmpty(type.Namespace))
+            {
+                return null;
+            }
+
+            // A base declared entirely in custom code is not a ModelProvider and has no
+            // InputModelType. Resolve its Roslyn-backed provider directly so its canonical
+            // properties still participate in the same reconciliation as generated bases.
+            provider = ProvisioningGenerator.Instance.SourceInputModel.FindForTypeInCustomization(
+                type.Namespace,
+                type.Name,
+                type.DeclaringType?.Name,
+                includeReferencedAssemblies: true);
+            if (provider != null)
+            {
+                typeFactory.CSharpTypeMap[type] = provider;
+            }
+
+            return provider;
+        }
+
+        private static bool IsBasePropertyMatch(
+            ProvisioningPropertyProvider property,
+            PropertyProvider baseProperty)
+        {
+            if (!property.Type.Equals(baseProperty.Type))
+            {
+                return false;
+            }
+
+            // Custom properties do not expose provisioning metadata. Once their C# name and type
+            // match, treat the base member as authoritative rather than generating a duplicate
+            // property whose semantic equivalence cannot be disproved.
+            if (baseProperty is not ProvisioningPropertyProvider baseProvisioningProperty)
+            {
+                return true;
+            }
+
+            // Provisioning properties carry behavior that is not represented by their C# signature.
+            // A same-name, same-type property can still differ in TypeSpec-defined behavior such as
+            // Bicep path, output status, requiredness, default value, or literal formatting.
+            // IsSettable is deliberately excluded: it is inferred from how a model is used by
+            // resources, so the same TypeSpec property can be settable on one generated model and
+            // read-only on another without representing a different property contract.
+            return property.BicepPath.SequenceEqual(baseProvisioningProperty.BicepPath, StringComparer.Ordinal)
+                && property.IsOutput == baseProvisioningProperty.IsOutput
+                && property.IsRequired == baseProvisioningProperty.IsRequired
+                && string.Equals(property.DefaultValue, baseProvisioningProperty.DefaultValue, StringComparison.Ordinal)
+                && string.Equals(property.Format, baseProvisioningProperty.Format, StringComparison.Ordinal);
         }
 
         protected override ConstructorProvider[] BuildConstructors()
