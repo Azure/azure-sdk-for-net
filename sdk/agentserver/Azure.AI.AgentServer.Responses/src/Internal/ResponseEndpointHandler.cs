@@ -176,6 +176,7 @@ internal sealed class ResponseEndpointHandler
                 : SessionIdDerivation.Derive(
                     conversationId,
                     request.PreviousResponseId,
+                    responseId,
                     request.AgentReference);
         }
 

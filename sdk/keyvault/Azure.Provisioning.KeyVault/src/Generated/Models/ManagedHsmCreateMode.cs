@@ -14,9 +14,9 @@ namespace Azure.Provisioning.KeyVault
     {
         /// <summary> Default. </summary>
         [DataMember(Name = "default")]
-        Default,
+        Default = 0,
         /// <summary> Recover. </summary>
         [DataMember(Name = "recover")]
-        Recover
+        Recover = 1
     }
 }

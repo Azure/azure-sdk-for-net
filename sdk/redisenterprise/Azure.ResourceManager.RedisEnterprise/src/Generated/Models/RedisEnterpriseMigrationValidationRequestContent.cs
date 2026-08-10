@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseMigrationValidationRequestContent"/>. </summary>
         /// <param name="sourceResourceId"> The source resource ID to validate migration from. This is the resource ID of the Azure Cache for Redis. </param>
-        /// <param name="skipDataMigration"> Sets whether the data is migrated from source to target or not. The default value is true. </param>
-        /// <param name="forceMigrate"> Sets whether to ignore warnings when validating if the source cache can be migrated to the target cache. If this property is true, the isValid property in the response will ignore warning-level disparities between the source and target resource. The default value is false. </param>
+        /// <param name="isSkipDataMigration"> Sets whether the data is migrated from source to target or not. The default value is true. </param>
+        /// <param name="isForceMigrate"> Sets whether to ignore warnings when validating if the source cache can be migrated to the target cache. If this property is true, the isValid property in the response will ignore warning-level disparities between the source and target resource. The default value is false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterpriseMigrationValidationRequestContent(ResourceIdentifier sourceResourceId, bool? skipDataMigration, bool? forceMigrate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RedisEnterpriseMigrationValidationRequestContent(ResourceIdentifier sourceResourceId, bool? isSkipDataMigration, bool? isForceMigrate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceResourceId = sourceResourceId;
-            SkipDataMigration = skipDataMigration;
-            ForceMigrate = forceMigrate;
+            IsSkipDataMigration = isSkipDataMigration;
+            IsForceMigrate = isForceMigrate;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Sets whether the data is migrated from source to target or not. The default value is true. </summary>
         [WirePath("skipDataMigration")]
-        public bool? SkipDataMigration { get; set; }
+        public bool? IsSkipDataMigration { get; set; }
 
         /// <summary> Sets whether to ignore warnings when validating if the source cache can be migrated to the target cache. If this property is true, the isValid property in the response will ignore warning-level disparities between the source and target resource. The default value is false. </summary>
         [WirePath("forceMigrate")]
-        public bool? ForceMigrate { get; set; }
+        public bool? IsForceMigrate { get; set; }
     }
 }

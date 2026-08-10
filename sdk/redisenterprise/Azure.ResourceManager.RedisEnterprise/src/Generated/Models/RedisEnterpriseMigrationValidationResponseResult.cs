@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         internal RedisEnterpriseMigrationValidationResponseResult(bool isValid)
         {
             IsValid = isValid;
-            Errors = new ChangeTrackingList<MigrationValidationError>();
-            Warnings = new ChangeTrackingList<MigrationValidationWarning>();
+            Errors = new ChangeTrackingList<RedisEnterpriseMigrationValidationError>();
+            Warnings = new ChangeTrackingList<RedisEnterpriseMigrationValidationWarning>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseMigrationValidationResponseResult"/>. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="errors"> List of validation errors that prevent migration. </param>
         /// <param name="warnings"> List of validation warnings that may impact migration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterpriseMigrationValidationResponseResult(bool isValid, IList<MigrationValidationError> errors, IList<MigrationValidationWarning> warnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RedisEnterpriseMigrationValidationResponseResult(bool isValid, IList<RedisEnterpriseMigrationValidationError> errors, IList<RedisEnterpriseMigrationValidationWarning> warnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsValid = isValid;
             Errors = errors;
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> List of validation errors that prevent migration. </summary>
         [WirePath("errors")]
-        public IList<MigrationValidationError> Errors { get; }
+        public IList<RedisEnterpriseMigrationValidationError> Errors { get; }
 
         /// <summary> List of validation warnings that may impact migration. </summary>
         [WirePath("warnings")]
-        public IList<MigrationValidationWarning> Warnings { get; }
+        public IList<RedisEnterpriseMigrationValidationWarning> Warnings { get; }
     }
 }

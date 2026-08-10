@@ -11,10 +11,10 @@ namespace Azure.Provisioning.MySql
     public enum MySqlFlexibleServerBatchOfMaintenance
     {
         /// <summary> Default. </summary>
-        Default,
+        Default = 0,
         /// <summary> Batch1. </summary>
-        Batch1,
+        Batch1 = 1,
         /// <summary> Batch2. </summary>
-        Batch2
+        Batch2 = 2
     }
 }

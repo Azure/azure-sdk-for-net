@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             writer.WriteBooleanValue(IsSwitchDns);
             writer.WritePropertyName("skipDataMigration"u8);
             writer.WriteBooleanValue(IsSkipDataMigration);
-            if (Optional.IsDefined(ForceMigrate))
+            if (Optional.IsDefined(IsForceMigrate))
             {
                 writer.WritePropertyName("forceMigrate"u8);
-                writer.WriteBooleanValue(ForceMigrate.Value);
+                writer.WriteBooleanValue(IsForceMigrate.Value);
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             ResourceIdentifier sourceResourceId = default;
             bool isSwitchDns = default;
             bool isSkipDataMigration = default;
-            bool? forceMigrate = default;
+            bool? isForceMigrate = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("sourceType"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    forceMigrate = prop.Value.GetBoolean();
+                    isForceMigrate = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 sourceResourceId,
                 isSwitchDns,
                 isSkipDataMigration,
-                forceMigrate);
+                isForceMigrate);
         }
     }
 }

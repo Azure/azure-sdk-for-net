@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(ResourceType, out string dataBoxEdgeStorageAccountCredentialApiVersion);
             _storageAccountCredentialsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
-            _storageAccountCredentialsRestClient = new StorageAccountCredentials(_storageAccountCredentialsClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeStorageAccountCredentialApiVersion ?? "2023-12-01");
+            _storageAccountCredentialsRestClient = new StorageAccountCredentials(_storageAccountCredentialsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeStorageAccountCredentialApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 

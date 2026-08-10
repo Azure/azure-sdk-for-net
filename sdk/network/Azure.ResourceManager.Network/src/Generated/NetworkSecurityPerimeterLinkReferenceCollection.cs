@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(NetworkSecurityPerimeterLinkReferenceResource.ResourceType, out string networkSecurityPerimeterLinkReferenceApiVersion);
             _networkSecurityPerimeterLinkReferencesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkSecurityPerimeterLinkReferenceResource.ResourceType.Namespace, Diagnostics);
-            _networkSecurityPerimeterLinkReferencesRestClient = new NetworkSecurityPerimeterLinkReferences(_networkSecurityPerimeterLinkReferencesClientDiagnostics, Pipeline, Endpoint, networkSecurityPerimeterLinkReferenceApiVersion ?? "2025-07-01");
+            _networkSecurityPerimeterLinkReferencesRestClient = new NetworkSecurityPerimeterLinkReferences(_networkSecurityPerimeterLinkReferencesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkSecurityPerimeterLinkReferenceApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

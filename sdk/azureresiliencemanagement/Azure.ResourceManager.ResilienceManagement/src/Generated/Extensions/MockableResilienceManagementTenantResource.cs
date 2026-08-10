@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
 
         private ClientDiagnostics OperationStatusClientDiagnostics => _operationStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OperationStatus OperationStatusRestClient => _operationStatusRestClient ??= new OperationStatus(OperationStatusClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
+        private OperationStatus OperationStatusRestClient => _operationStatusRestClient ??= new OperationStatus(OperationStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01-preview");
 
         /// <summary>
         /// Returns the current status of an async operation.

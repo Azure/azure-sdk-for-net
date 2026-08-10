@@ -138,7 +138,7 @@ jobs:
               enabled: true
             codeql:
               # Need to specify the language because we clone after the codeql initialize step
-              language: csharp, javascript
+              language: csharp, javascript, python
               compiled:
                 enabled: true
 

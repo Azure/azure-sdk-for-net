@@ -878,8 +878,8 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        /// <summary> The config customization mode for this scheduler instance. </summary>
-        [WirePath("properties.schedulerProfile.schedulerInstanceProfiles.upstream.schedulerConfigMode")]
+        /// <summary> The configuration mode to be used by the AKS-managed scheduler. </summary>
+        [WirePath("properties.schedulerProfile.upstream.schedulerConfigMode")]
         public SchedulerConfigMode? UpstreamSchedulerConfigMode
         {
             get

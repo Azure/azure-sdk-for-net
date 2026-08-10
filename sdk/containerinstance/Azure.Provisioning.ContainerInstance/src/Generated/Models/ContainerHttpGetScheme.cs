@@ -14,9 +14,9 @@ namespace Azure.Provisioning.ContainerInstance
     {
         /// <summary> http. </summary>
         [DataMember(Name = "http")]
-        Http,
+        Http = 0,
         /// <summary> https. </summary>
         [DataMember(Name = "https")]
-        Https
+        Https = 1
     }
 }

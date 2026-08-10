@@ -194,6 +194,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
         }
         PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "User-Agent", $"{prefix} {telemetryDetails.UserAgent}");
         PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "x-ms-client-request-id", () => Guid.NewGuid().ToString().ToLowerInvariant());
+        PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "Foundry-Features", "MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,AgentsOptimization=V2Preview,Routines=V1Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview");
         PipelinePolicyHelpers.OpenAI.AddResponseItemInputTransformPolicy(options);
         PipelinePolicyHelpers.OpenAI.AddErrorTransformPolicy(options);
         PipelinePolicyHelpers.OpenAI.AddAzureFinetuningParityPolicy(options);

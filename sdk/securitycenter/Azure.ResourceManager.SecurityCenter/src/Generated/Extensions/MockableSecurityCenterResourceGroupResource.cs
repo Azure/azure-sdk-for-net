@@ -44,19 +44,19 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
 
         private ClientDiagnostics AlertsClientDiagnostics => _alertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Alerts AlertsRestClient => _alertsRestClient ??= new Alerts(AlertsClientDiagnostics, Pipeline, Endpoint, "2022-01-01");
+        private Alerts AlertsRestClient => _alertsRestClient ??= new Alerts(AlertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-01-01");
 
         private ClientDiagnostics ExternalSecuritySolutionsClientDiagnostics => _externalSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExternalSecuritySolutions ExternalSecuritySolutionsRestClient => _externalSecuritySolutionsRestClient ??= new ExternalSecuritySolutions(ExternalSecuritySolutionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+        private ExternalSecuritySolutions ExternalSecuritySolutionsRestClient => _externalSecuritySolutionsRestClient ??= new ExternalSecuritySolutions(ExternalSecuritySolutionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-01-01");
 
         private ClientDiagnostics JitNetworkAccessPoliciesClientDiagnostics => _jitNetworkAccessPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private JitNetworkAccessPolicies JitNetworkAccessPoliciesRestClient => _jitNetworkAccessPoliciesRestClient ??= new JitNetworkAccessPolicies(JitNetworkAccessPoliciesClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+        private JitNetworkAccessPolicies JitNetworkAccessPoliciesRestClient => _jitNetworkAccessPoliciesRestClient ??= new JitNetworkAccessPolicies(JitNetworkAccessPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-01-01");
 
         private ClientDiagnostics APICollectionsClientDiagnostics => _apiCollectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private APICollections APICollectionsRestClient => _apiCollectionsRestClient ??= new APICollections(APICollectionsClientDiagnostics, Pipeline, Endpoint, "2023-11-15");
+        private APICollections APICollectionsRestClient => _apiCollectionsRestClient ??= new APICollections(APICollectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-11-15");
 
         /// <summary> Gets a collection of ResourceGroupSecurityAlerts in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="ascLocation"> The ascLocation for the resource. </param>

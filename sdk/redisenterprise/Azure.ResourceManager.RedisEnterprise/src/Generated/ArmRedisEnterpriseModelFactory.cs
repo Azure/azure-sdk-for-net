@@ -225,50 +225,50 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <param name="sourceResourceId"> The source resource ID to validate migration from. This is the resource ID of the Azure Cache for Redis. </param>
-        /// <param name="skipDataMigration"> Sets whether the data is migrated from source to target or not. The default value is true. </param>
-        /// <param name="forceMigrate"> Sets whether to ignore warnings when validating if the source cache can be migrated to the target cache. If this property is true, the isValid property in the response will ignore warning-level disparities between the source and target resource. The default value is false. </param>
+        /// <param name="isSkipDataMigration"> Sets whether the data is migrated from source to target or not. The default value is true. </param>
+        /// <param name="isForceMigrate"> Sets whether to ignore warnings when validating if the source cache can be migrated to the target cache. If this property is true, the isValid property in the response will ignore warning-level disparities between the source and target resource. The default value is false. </param>
         /// <returns> A new <see cref="Models.RedisEnterpriseMigrationValidationRequestContent"/> instance for mocking. </returns>
-        public static RedisEnterpriseMigrationValidationRequestContent RedisEnterpriseMigrationValidationRequestContent(ResourceIdentifier sourceResourceId = default, bool? skipDataMigration = default, bool? forceMigrate = default)
+        public static RedisEnterpriseMigrationValidationRequestContent RedisEnterpriseMigrationValidationRequestContent(ResourceIdentifier sourceResourceId = default, bool? isSkipDataMigration = default, bool? isForceMigrate = default)
         {
-            return new RedisEnterpriseMigrationValidationRequestContent(sourceResourceId, skipDataMigration, forceMigrate, default);
+            return new RedisEnterpriseMigrationValidationRequestContent(sourceResourceId, isSkipDataMigration, isForceMigrate, default);
         }
 
         /// <param name="isValid"> Indicates whether the migration validation passed. </param>
         /// <param name="errors"> List of validation errors that prevent migration. </param>
         /// <param name="warnings"> List of validation warnings that may impact migration. </param>
         /// <returns> A new <see cref="Models.RedisEnterpriseMigrationValidationResponseResult"/> instance for mocking. </returns>
-        public static RedisEnterpriseMigrationValidationResponseResult RedisEnterpriseMigrationValidationResponseResult(bool isValid = default, IEnumerable<MigrationValidationError> errors = default, IEnumerable<MigrationValidationWarning> warnings = default)
+        public static RedisEnterpriseMigrationValidationResponseResult RedisEnterpriseMigrationValidationResponseResult(bool isValid = default, IEnumerable<RedisEnterpriseMigrationValidationError> errors = default, IEnumerable<RedisEnterpriseMigrationValidationWarning> warnings = default)
         {
-            errors ??= new ChangeTrackingList<MigrationValidationError>();
-            warnings ??= new ChangeTrackingList<MigrationValidationWarning>();
+            errors ??= new ChangeTrackingList<RedisEnterpriseMigrationValidationError>();
+            warnings ??= new ChangeTrackingList<RedisEnterpriseMigrationValidationWarning>();
 
-            return new RedisEnterpriseMigrationValidationResponseResult(isValid, (errors ?? new ChangeTrackingList<MigrationValidationError>()).ToList(), (warnings ?? new ChangeTrackingList<MigrationValidationWarning>()).ToList(), default);
+            return new RedisEnterpriseMigrationValidationResponseResult(isValid, (errors ?? new ChangeTrackingList<RedisEnterpriseMigrationValidationError>()).ToList(), (warnings ?? new ChangeTrackingList<RedisEnterpriseMigrationValidationWarning>()).ToList(), default);
         }
 
         /// <param name="disparities"> List of specific disparities that cause this error. </param>
-        /// <returns> A new <see cref="Models.MigrationValidationError"/> instance for mocking. </returns>
-        public static MigrationValidationError MigrationValidationError(IEnumerable<MigrationValidationDisparity> disparities = default)
+        /// <returns> A new <see cref="Models.RedisEnterpriseMigrationValidationError"/> instance for mocking. </returns>
+        public static RedisEnterpriseMigrationValidationError RedisEnterpriseMigrationValidationError(IEnumerable<RedisEnterpriseMigrationValidationDisparity> disparities = default)
         {
-            disparities ??= new ChangeTrackingList<MigrationValidationDisparity>();
+            disparities ??= new ChangeTrackingList<RedisEnterpriseMigrationValidationDisparity>();
 
-            return new MigrationValidationError((disparities ?? new ChangeTrackingList<MigrationValidationDisparity>()).ToList(), default);
+            return new RedisEnterpriseMigrationValidationError((disparities ?? new ChangeTrackingList<RedisEnterpriseMigrationValidationDisparity>()).ToList(), default);
         }
 
         /// <param name="category"> A localized string denoting the category of the validation issue. Examples are "Region", "Data", "Identity", "Clustering Mode", and "TLS". </param>
         /// <param name="message"> Detailed message describing the validation issue. </param>
-        /// <returns> A new <see cref="Models.MigrationValidationDisparity"/> instance for mocking. </returns>
-        public static MigrationValidationDisparity MigrationValidationDisparity(string category = default, string message = default)
+        /// <returns> A new <see cref="Models.RedisEnterpriseMigrationValidationDisparity"/> instance for mocking. </returns>
+        public static RedisEnterpriseMigrationValidationDisparity RedisEnterpriseMigrationValidationDisparity(string category = default, string message = default)
         {
-            return new MigrationValidationDisparity(category, message, default);
+            return new RedisEnterpriseMigrationValidationDisparity(category, message, default);
         }
 
         /// <param name="disparities"> List of specific disparities that cause this warning. </param>
-        /// <returns> A new <see cref="Models.MigrationValidationWarning"/> instance for mocking. </returns>
-        public static MigrationValidationWarning MigrationValidationWarning(IEnumerable<MigrationValidationDisparity> disparities = default)
+        /// <returns> A new <see cref="Models.RedisEnterpriseMigrationValidationWarning"/> instance for mocking. </returns>
+        public static RedisEnterpriseMigrationValidationWarning RedisEnterpriseMigrationValidationWarning(IEnumerable<RedisEnterpriseMigrationValidationDisparity> disparities = default)
         {
-            disparities ??= new ChangeTrackingList<MigrationValidationDisparity>();
+            disparities ??= new ChangeTrackingList<RedisEnterpriseMigrationValidationDisparity>();
 
-            return new MigrationValidationWarning((disparities ?? new ChangeTrackingList<MigrationValidationDisparity>()).ToList(), default);
+            return new RedisEnterpriseMigrationValidationWarning((disparities ?? new ChangeTrackingList<RedisEnterpriseMigrationValidationDisparity>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -496,9 +496,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="sourceResourceId"> The source resource ID to migrate from. This is the resource ID of the Azure Cache for Redis. </param>
         /// <param name="isSwitchDns"> Sets whether the DNS is switched automatically after the data is transferred from the source cache to the target cache. This property must be true during the preview. </param>
         /// <param name="isSkipDataMigration"> Sets whether the data is migrated from source to target or not. This property must be true during the preview. </param>
-        /// <param name="forceMigrate"> Sets whether to ignore warnings when performing validation of the migration request. If this property is true, warning-level disparities between the source and target resources will be ignored, and the request will only fail validation if there are error-level disparities. The default value is false. </param>
+        /// <param name="isForceMigrate"> Sets whether to ignore warnings when performing validation of the migration request. If this property is true, warning-level disparities between the source and target resources will be ignored, and the request will only fail validation if there are error-level disparities. The default value is false. </param>
         /// <returns> A new <see cref="Models.AzureCacheForRedisMigrationProperties"/> instance for mocking. </returns>
-        public static AzureCacheForRedisMigrationProperties AzureCacheForRedisMigrationProperties(ResourceIdentifier targetResourceId = default, RedisEnterpriseMigrationProvisioningState? provisioningState = default, string statusDetails = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, ResourceIdentifier sourceResourceId = default, bool isSwitchDns = default, bool isSkipDataMigration = default, bool? forceMigrate = default)
+        public static AzureCacheForRedisMigrationProperties AzureCacheForRedisMigrationProperties(ResourceIdentifier targetResourceId = default, RedisEnterpriseMigrationProvisioningState? provisioningState = default, string statusDetails = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, ResourceIdentifier sourceResourceId = default, bool isSwitchDns = default, bool isSkipDataMigration = default, bool? isForceMigrate = default)
         {
             return new AzureCacheForRedisMigrationProperties(
                 default,
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 sourceResourceId,
                 isSwitchDns,
                 isSkipDataMigration,
-                forceMigrate);
+                isForceMigrate);
         }
 
         /// <param name="id"> The operation's unique id. </param>

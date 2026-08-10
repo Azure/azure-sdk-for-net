@@ -92,15 +92,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
             writer.WritePropertyName("sourceResourceId"u8);
             writer.WriteStringValue(SourceResourceId);
-            if (Optional.IsDefined(SkipDataMigration))
+            if (Optional.IsDefined(IsSkipDataMigration))
             {
                 writer.WritePropertyName("skipDataMigration"u8);
-                writer.WriteBooleanValue(SkipDataMigration.Value);
+                writer.WriteBooleanValue(IsSkipDataMigration.Value);
             }
-            if (Optional.IsDefined(ForceMigrate))
+            if (Optional.IsDefined(IsForceMigrate))
             {
                 writer.WritePropertyName("forceMigrate"u8);
-                writer.WriteBooleanValue(ForceMigrate.Value);
+                writer.WriteBooleanValue(IsForceMigrate.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 return null;
             }
             ResourceIdentifier sourceResourceId = default;
-            bool? skipDataMigration = default;
-            bool? forceMigrate = default;
+            bool? isSkipDataMigration = default;
+            bool? isForceMigrate = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    skipDataMigration = prop.Value.GetBoolean();
+                    isSkipDataMigration = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("forceMigrate"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    forceMigrate = prop.Value.GetBoolean();
+                    isForceMigrate = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RedisEnterpriseMigrationValidationRequestContent(sourceResourceId, skipDataMigration, forceMigrate, additionalBinaryDataProperties);
+            return new RedisEnterpriseMigrationValidationRequestContent(sourceResourceId, isSkipDataMigration, isForceMigrate, additionalBinaryDataProperties);
         }
     }
 }

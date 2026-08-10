@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> List of attribute mappings. </summary>
-        public IList<MapperAttributeMapping> AttributeMappings { get; }
+        public IList<MapperAttributeMapping> AttributeMappings { get; } = new ChangeTrackingList<MapperAttributeMapping>();
     }
 }

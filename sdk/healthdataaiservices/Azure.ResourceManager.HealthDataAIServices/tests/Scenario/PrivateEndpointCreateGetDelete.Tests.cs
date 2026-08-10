@@ -12,7 +12,6 @@ using NUnit.Framework;
 namespace Azure.ResourceManager.HealthDataAIServices.Tests
 {
     [TestFixture]
-    [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
     public class PrivateEndpointCreateGetDelete : HealthDataAIServicesManagementTestBase
     {
         public PrivateEndpointCreateGetDelete() : base(true)
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Tests
                 Subnets = { new SubnetData() {
                     Name = "default",
                     AddressPrefix = "10.0.1.0/24",
-                    PrivateEndpointNetworkPolicy = VirtualNetworkPrivateEndpointNetworkPolicy.Disabled
+                    PrivateEndpointNetworkPolicies = VirtualNetworkPrivateEndpointNetworkPolicy.Disabled
                 }}
             };
             vnet.AddressPrefixes.Add("10.0.0.0/16");

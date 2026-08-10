@@ -11,12 +11,12 @@ namespace Azure.Provisioning.CostManagement
     public enum ExportScheduleRecurrenceType
     {
         /// <summary> Daily. </summary>
-        Daily,
+        Daily = 0,
         /// <summary> Weekly. </summary>
-        Weekly,
+        Weekly = 1,
         /// <summary> Monthly. </summary>
-        Monthly,
+        Monthly = 2,
         /// <summary> Annually. </summary>
-        Annually
+        Annually = 3
     }
 }

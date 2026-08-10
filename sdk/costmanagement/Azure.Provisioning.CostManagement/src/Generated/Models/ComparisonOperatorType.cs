@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CostManagement
     public enum ComparisonOperatorType
     {
         /// <summary> In. </summary>
-        In,
+        In = 0,
         /// <summary> Contains. </summary>
-        Contains
+        Contains = 1
     }
 }

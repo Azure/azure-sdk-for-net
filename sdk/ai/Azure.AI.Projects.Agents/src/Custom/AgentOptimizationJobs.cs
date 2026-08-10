@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -25,11 +25,27 @@ public partial class AgentOptimizationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<OptimizationJob> Create(OptimizationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
+        OperationResult operation = Create(false, job, operationId, cancellationToken);
+        ClientResult result = ClientResult.FromResponse(operation.GetRawResponse());
+        return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
+    }
+
+    /// <summary> Create an optimization job. Returns 201 with the queued job. Honours `Operation-Id` for idempotent retry. </summary>
+    /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+    /// <param name="job"> The job to create. </param>
+    /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("SCME0006")]
+    public virtual OperationResult Create(bool waitUntilCompleted, OptimizationJob job, string operationId = default, CancellationToken cancellationToken = default)
+    {
         return Create(
-            job: job,
-            foundryFeatures: default,
+            waitUntilCompleted: waitUntilCompleted,
+            content: job,
+            foundryFeatures: default(string),
             operationId: operationId,
-            cancellationToken: cancellationToken
+            options: cancellationToken.ToRequestOptions()
         );
     }
 
@@ -41,11 +57,27 @@ public partial class AgentOptimizationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<OptimizationJob>> CreateAsync(OptimizationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
+        OperationResult operation = await CreateAsync(false, job, operationId, cancellationToken).ConfigureAwait(false);
+        ClientResult result = ClientResult.FromResponse(operation.GetRawResponse());
+        return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
+    }
+
+    /// <summary> Create an optimization job. Returns 201 with the queued job. Honours `Operation-Id` for idempotent retry. </summary>
+    /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+    /// <param name="job"> The job to create. </param>
+    /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("SCME0006")]
+    public virtual async Task<OperationResult> CreateAsync(bool waitUntilCompleted, OptimizationJob job, string operationId = default, CancellationToken cancellationToken = default)
+    {
         return await CreateAsync(
-            job: job,
-            foundryFeatures: default,
+            waitUntilCompleted: waitUntilCompleted,
+            content: job,
+            foundryFeatures: default(string),
             operationId: operationId,
-            cancellationToken: cancellationToken
+            options: cancellationToken.ToRequestOptions()
         ).ConfigureAwait(false);
     }
 
@@ -102,10 +134,10 @@ public partial class AgentOptimizationJobs
     /// <param name="agentName"> Filter to jobs targeting this agent name. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<OptimizationJob> GetAll(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, AgentsJobStatus? status = default, string agentName = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<OptimizationJobListItem> GetAll(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, AgentsJobStatus? status = default, string agentName = default, CancellationToken cancellationToken = default)
     {
         status ??= new AgentsJobStatus("undefined");
-        return new InternalOpenAICollectionResultOfT<OptimizationJob>(
+        return new InternalOpenAICollectionResultOfT<OptimizationJobListItem>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetAllRequest(
@@ -117,7 +149,7 @@ public partial class AgentOptimizationJobs
                     status: string.Equals(localCollectionOptions.Filters[0], "undefined") ? null : localCollectionOptions.Filters[0],
                     agentName: localCollectionOptions.Filters.Count > 1 ? localCollectionOptions.Filters[1] : null,
                     options: localRequestOptions),
-            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<OptimizationJob>(e, o),
+            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<OptimizationJobListItem>(e, o),
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [status.ToString(), agentName]),
             cancellationToken.ToRequestOptions());
     }
@@ -145,10 +177,10 @@ public partial class AgentOptimizationJobs
     /// <param name="agentName"> Filter to jobs targeting this agent name. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<OptimizationJob> GetAllAsync(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, AgentsJobStatus? status = default, string agentName = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<OptimizationJobListItem> GetAllAsync(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, AgentsJobStatus? status = default, string agentName = default, CancellationToken cancellationToken = default)
     {
         status ??= new AgentsJobStatus("undefined");
-        return new InternalOpenAIAsyncCollectionResultOfT<OptimizationJob>(
+        return new InternalOpenAIAsyncCollectionResultOfT<OptimizationJobListItem>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetAllRequest(
@@ -160,7 +192,7 @@ public partial class AgentOptimizationJobs
                     status: string.Equals(localCollectionOptions.Filters[0], "undefined") ? null : localCollectionOptions.Filters[0],
                     agentName: localCollectionOptions.Filters.Count > 1 ? localCollectionOptions.Filters[1] : null,
                     options: localRequestOptions),
-            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<OptimizationJob>(e, o),
+            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<OptimizationJobListItem>(e, o),
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [status.ToString(), agentName]),
             cancellationToken.ToRequestOptions());
     }

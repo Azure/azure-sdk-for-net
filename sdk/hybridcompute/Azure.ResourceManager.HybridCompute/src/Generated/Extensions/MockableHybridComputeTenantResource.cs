@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
 
         private ClientDiagnostics OperationsClientDiagnostics => _operationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Operations OperationsRestClient => _operationsRestClient ??= new Operations(OperationsClientDiagnostics, Pipeline, Endpoint, "2025-09-16-preview");
+        private Operations OperationsRestClient => _operationsRestClient ??= new Operations(OperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-15");
 
         private ClientDiagnostics ExtensionTypeClientDiagnostics => _extensionTypeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExtensionType ExtensionTypeRestClient => _extensionTypeRestClient ??= new ExtensionType(ExtensionTypeClientDiagnostics, Pipeline, Endpoint, "2025-09-16-preview");
+        private ExtensionType ExtensionTypeRestClient => _extensionTypeRestClient ??= new ExtensionType(ExtensionTypeClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-15");
 
         private ClientDiagnostics ExtensionPublisherClientDiagnostics => _extensionPublisherClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExtensionPublisher ExtensionPublisherRestClient => _extensionPublisherRestClient ??= new ExtensionPublisher(ExtensionPublisherClientDiagnostics, Pipeline, Endpoint, "2025-09-16-preview");
+        private ExtensionPublisher ExtensionPublisherRestClient => _extensionPublisherRestClient ??= new ExtensionPublisher(ExtensionPublisherClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-15");
 
         /// <summary> Gets a collection of HybridComputeExtensionValueV2s in the <see cref="TenantResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>

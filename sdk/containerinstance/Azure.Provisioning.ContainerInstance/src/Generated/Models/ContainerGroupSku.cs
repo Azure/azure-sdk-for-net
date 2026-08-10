@@ -11,12 +11,12 @@ namespace Azure.Provisioning.ContainerInstance
     public enum ContainerGroupSku
     {
         /// <summary> NotSpecified. </summary>
-        NotSpecified,
+        NotSpecified = 0,
         /// <summary> Standard. </summary>
-        Standard,
+        Standard = 1,
         /// <summary> Dedicated. </summary>
-        Dedicated,
+        Dedicated = 2,
         /// <summary> Confidential. </summary>
-        Confidential
+        Confidential = 3
     }
 }

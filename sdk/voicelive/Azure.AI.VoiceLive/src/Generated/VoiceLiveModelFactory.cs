@@ -325,19 +325,6 @@ namespace Azure.AI.VoiceLive
                 volume);
         }
 
-        /// <summary>
-        /// Azure realtime native voice configuration. These voices are natively
-        /// supported by the `azure-realtime` model and offer higher quality speech
-        /// synthesis than standard Azure voices. Only valid when using the
-        /// `azure-realtime` model.
-        /// </summary>
-        /// <param name="name"> The name of the Azure realtime native voice. </param>
-        /// <returns> A new <see cref="VoiceLive.AzureRealtimeNativeVoice"/> instance for mocking. </returns>
-        public static AzureRealtimeNativeVoice AzureRealtimeNativeVoice(AzureRealtimeNativeVoiceName name = default)
-        {
-            return new AzureRealtimeNativeVoice("azure-realtime-native", name, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Azure semantic end-of-utterance detection (default). </summary>
         /// <param name="thresholdLevel"> Threshold level setting. Recommended instead of `threshold`. One of `low`, `medium`, `high`, or `default`. </param>
         /// <param name="timeoutMs"> Timeout in milliseconds. Recommended instead of `timeout`. </param>
@@ -349,7 +336,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Top-level union for end-of-utterance (EOU) semantic detection configuration.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.AzureSemanticEouDetection"/>, <see cref="VoiceLive.AzureSemanticEouDetectionEn"/>, <see cref="VoiceLive.AzureSemanticEouDetectionMultilingual"/>, and <see cref="VoiceLive.SmartEndOfTurnDetection"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.AzureSemanticEouDetection"/>, <see cref="VoiceLive.AzureSemanticEouDetectionEn"/>, and <see cref="VoiceLive.AzureSemanticEouDetectionMultilingual"/>.
         /// </summary>
         /// <param name="model"></param>
         /// <returns> A new <see cref="VoiceLive.EouDetection"/> instance for mocking. </returns>
@@ -374,19 +361,6 @@ namespace Azure.AI.VoiceLive
         public static AzureSemanticEouDetectionMultilingual AzureSemanticEouDetectionMultilingual(EouThresholdLevel? thresholdLevel = default, float? timeoutMs = default)
         {
             return new AzureSemanticEouDetectionMultilingual(EouDetectionModel.SemanticDetectionV1Multilingual, additionalBinaryDataProperties: null, thresholdLevel, timeoutMs);
-        }
-
-        /// <summary>
-        /// Audio-based end-of-turn detection. Operates directly on the input audio
-        /// stream rather than text. Use `threshold_level` and `timeout_ms` to tune
-        /// detection.
-        /// </summary>
-        /// <param name="thresholdLevel"> Threshold level setting. One of `low`, `medium`, `high`, or `default`. </param>
-        /// <param name="timeoutMs"> Timeout in milliseconds. </param>
-        /// <returns> A new <see cref="VoiceLive.SmartEndOfTurnDetection"/> instance for mocking. </returns>
-        public static SmartEndOfTurnDetection SmartEndOfTurnDetection(EouThresholdLevel? thresholdLevel = default, int? timeoutMs = default)
-        {
-            return new SmartEndOfTurnDetection(EouDetectionModel.SmartEndOfTurnDetection, additionalBinaryDataProperties: null, thresholdLevel, timeoutMs);
         }
 
         /// <summary> Base model for VAD-based turn detection. </summary>
@@ -797,7 +771,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputAudioTimestampTypes"> Types of timestamps to include in audio response content. </param>
         /// <param name="tools"> Configuration for tools to be used during the session, if applicable. </param>
         /// <param name="toolChoice"> Specifies which tools the model is allowed to call during the session. </param>
-        /// <param name="parallelToolCalls"> Whether the model is allowed to call tools in parallel. </param>
+        /// <param name="allowParallelToolCalls"> Whether the model is allowed to call tools in parallel. </param>
         /// <param name="temperature"> Controls the randomness of the model's output. Range: 0.0 to 1.0. Default is 0.7. </param>
         /// <param name="maxResponseOutputTokens"> Maximum number of tokens to generate in the response. Default is unlimited. </param>
         /// <param name="reasoningEffort">
@@ -815,7 +789,7 @@ namespace Azure.AI.VoiceLive
         /// </param>
         /// <param name="turnDetection"> Type of turn detection to use. </param>
         /// <returns> A new <see cref="VoiceLive.VoiceLiveSessionOptions"/> instance for mocking. </returns>
-        public static VoiceLiveSessionOptions VoiceLiveSessionOptions(string model = default, IEnumerable<InteractionModality> modalities = default, AnimationOptions animation = default, VoiceProvider voice = default, string instructions = default, int? inputAudioSamplingRate = default, InputAudioFormat? inputAudioFormat = default, OutputAudioFormat? outputAudioFormat = default, AudioNoiseReduction inputAudioNoiseReduction = default, AudioEchoCancellation inputAudioEchoCancellation = default, AvatarConfiguration avatar = default, AudioInputTranscriptionOptions inputAudioTranscription = default, IEnumerable<AudioTimestampType> outputAudioTimestampTypes = default, IEnumerable<VoiceLiveToolDefinition> tools = default, ToolChoiceOption toolChoice = default, bool? parallelToolCalls = default, float? temperature = default, MaxResponseOutputTokensOption maxResponseOutputTokens = default, ReasoningEffort? reasoningEffort = default, BinaryData interimResponse = default, IEnumerable<SessionIncludeOption> include = default, IDictionary<string, string> metadata = default, BinaryData turnDetection = default)
+        public static VoiceLiveSessionOptions VoiceLiveSessionOptions(string model = default, IEnumerable<InteractionModality> modalities = default, AnimationOptions animation = default, VoiceProvider voice = default, string instructions = default, int? inputAudioSamplingRate = default, InputAudioFormat? inputAudioFormat = default, OutputAudioFormat? outputAudioFormat = default, AudioNoiseReduction inputAudioNoiseReduction = default, AudioEchoCancellation inputAudioEchoCancellation = default, AvatarConfiguration avatar = default, AudioInputTranscriptionOptions inputAudioTranscription = default, IEnumerable<AudioTimestampType> outputAudioTimestampTypes = default, IEnumerable<VoiceLiveToolDefinition> tools = default, ToolChoiceOption toolChoice = default, bool? allowParallelToolCalls = default, float? temperature = default, MaxResponseOutputTokensOption maxResponseOutputTokens = default, ReasoningEffort? reasoningEffort = default, BinaryData interimResponse = default, IEnumerable<SessionIncludeOption> include = default, IDictionary<string, string> metadata = default, BinaryData turnDetection = default)
         {
             modalities ??= new ChangeTrackingList<InteractionModality>();
             outputAudioTimestampTypes ??= new ChangeTrackingList<AudioTimestampType>();
@@ -839,7 +813,7 @@ namespace Azure.AI.VoiceLive
                 outputAudioTimestampTypes.ToList(),
                 tools.ToList(),
                 toolChoice,
-                parallelToolCalls,
+                allowParallelToolCalls,
                 temperature,
                 maxResponseOutputTokens,
                 reasoningEffort,
@@ -1465,7 +1439,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// A voicelive server event.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.SessionUpdateError"/>, <see cref="VoiceLive.ServerEventWarning"/>, <see cref="VoiceLive.SessionUpdateSessionCreated"/>, <see cref="VoiceLive.SessionUpdateSessionUpdated"/>, <see cref="VoiceLive.SessionUpdateAvatarConnecting"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferCommitted"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferCleared"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStarted"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStopped"/>, <see cref="VoiceLive.SessionUpdateConversationItemCreated"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionCompleted"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed"/>, <see cref="VoiceLive.SessionUpdateConversationItemTruncated"/>, <see cref="VoiceLive.SessionUpdateConversationItemDeleted"/>, <see cref="VoiceLive.SessionUpdateResponseCreated"/>, <see cref="VoiceLive.SessionUpdateResponseDone"/>, <see cref="VoiceLive.SessionUpdateResponseOutputItemAdded"/>, <see cref="VoiceLive.SessionUpdateResponseOutputItemDone"/>, <see cref="VoiceLive.SessionUpdateResponseContentPartAdded"/>, <see cref="VoiceLive.SessionUpdateResponseContentPartDone"/>, <see cref="VoiceLive.SessionUpdateResponseTextDelta"/>, <see cref="VoiceLive.SessionUpdateResponseTextDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioDone"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDone"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDone"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta"/>, <see cref="VoiceLive.SessionUpdateConversationItemRetrieved"/>, <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDelta"/>, <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDone"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsInProgress"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsCompleted"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsFailed"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallArgumentsDelta"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallArgumentsDone"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallInProgress"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallCompleted"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallFailed"/>, <see cref="VoiceLive.ServerEventSessionAvatarSwitchToSpeaking"/>, <see cref="VoiceLive.ServerEventSessionAvatarSwitchToIdle"/>, <see cref="VoiceLive.ServerEventResponseVideoDelta"/>, <see cref="VoiceLive.ServerEventResponseWebSearchCallSearching"/>, <see cref="VoiceLive.ServerEventResponseWebSearchCallInProgress"/>, <see cref="VoiceLive.ServerEventResponseWebSearchCallCompleted"/>, <see cref="VoiceLive.ServerEventResponseFileSearchCallSearching"/>, <see cref="VoiceLive.ServerEventResponseFileSearchCallInProgress"/>, <see cref="VoiceLive.ServerEventResponseFileSearchCallCompleted"/>, <see cref="VoiceLive.ServerEventOutputAudioBufferCleared"/>, <see cref="VoiceLive.ServerEventResponseAudioTranscriptAnnotationAdded"/>, <see cref="VoiceLive.ServerEventResponseInvocationDelta"/>, <see cref="VoiceLive.ServerEventRtcCallSdpCreated"/>, <see cref="VoiceLive.ServerEventRtcCallError"/>, <see cref="VoiceLive.ServerEventOutputAudioBufferStarted"/>, and <see cref="VoiceLive.ServerEventOutputAudioBufferStopped"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.SessionUpdateError"/>, <see cref="VoiceLive.ServerEventWarning"/>, <see cref="VoiceLive.SessionUpdateSessionCreated"/>, <see cref="VoiceLive.SessionUpdateSessionUpdated"/>, <see cref="VoiceLive.SessionUpdateAvatarConnecting"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferCommitted"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferCleared"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStarted"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStopped"/>, <see cref="VoiceLive.SessionUpdateConversationItemCreated"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionCompleted"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed"/>, <see cref="VoiceLive.SessionUpdateConversationItemTruncated"/>, <see cref="VoiceLive.SessionUpdateConversationItemDeleted"/>, <see cref="VoiceLive.SessionUpdateResponseCreated"/>, <see cref="VoiceLive.SessionUpdateResponseDone"/>, <see cref="VoiceLive.SessionUpdateResponseOutputItemAdded"/>, <see cref="VoiceLive.SessionUpdateResponseOutputItemDone"/>, <see cref="VoiceLive.SessionUpdateResponseContentPartAdded"/>, <see cref="VoiceLive.SessionUpdateResponseContentPartDone"/>, <see cref="VoiceLive.SessionUpdateResponseTextDelta"/>, <see cref="VoiceLive.SessionUpdateResponseTextDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioDone"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDone"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDone"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta"/>, <see cref="VoiceLive.SessionUpdateConversationItemRetrieved"/>, <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDelta"/>, <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDone"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsInProgress"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsCompleted"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsFailed"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallArgumentsDelta"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallArgumentsDone"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallInProgress"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallCompleted"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallFailed"/>, <see cref="VoiceLive.ServerEventSessionAvatarSwitchToSpeaking"/>, <see cref="VoiceLive.ServerEventSessionAvatarSwitchToIdle"/>, <see cref="VoiceLive.ServerEventResponseVideoDelta"/>, <see cref="VoiceLive.ServerEventResponseWebSearchCallSearching"/>, <see cref="VoiceLive.ServerEventResponseWebSearchCallInProgress"/>, <see cref="VoiceLive.ServerEventResponseWebSearchCallCompleted"/>, <see cref="VoiceLive.ServerEventResponseFileSearchCallSearching"/>, <see cref="VoiceLive.ServerEventResponseFileSearchCallInProgress"/>, <see cref="VoiceLive.ServerEventResponseFileSearchCallCompleted"/>, <see cref="VoiceLive.ServerEventOutputAudioBufferCleared"/>, <see cref="VoiceLive.ServerEventResponseAudioTranscriptAnnotationAdded"/>, and <see cref="VoiceLive.ServerEventResponseInvocationDelta"/>.
         /// </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
@@ -2459,61 +2433,6 @@ namespace Azure.AI.VoiceLive
             return new ServerEventResponseInvocationDelta(ServerEventType.ResponseInvocationDelta, eventId, additionalBinaryDataProperties: null, delta);
         }
 
-        /// <summary> Returned when the WebRTC SDP negotiation completes successfully. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="rtcCallId"> The unique identifier for this RTC call session. </param>
-        /// <param name="sdpAnswer"> The SDP answer from the server for WebRTC negotiation. </param>
-        /// <returns> A new <see cref="VoiceLive.ServerEventRtcCallSdpCreated"/> instance for mocking. </returns>
-        public static ServerEventRtcCallSdpCreated ServerEventRtcCallSdpCreated(string eventId = default, string rtcCallId = default, string sdpAnswer = default)
-        {
-            return new ServerEventRtcCallSdpCreated(ServerEventType.RtcCallSdpCreated, eventId, additionalBinaryDataProperties: null, rtcCallId, sdpAnswer);
-        }
-
-        /// <summary> Returned when a WebRTC call operation fails. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="operation"> The operation that caused the error (e.g., `rtc.call.sdp.create`). </param>
-        /// <param name="rtcCallId"> The RTC call identifier, if available. </param>
-        /// <param name="error"> The error details. </param>
-        /// <returns> A new <see cref="VoiceLive.ServerEventRtcCallError"/> instance for mocking. </returns>
-        public static ServerEventRtcCallError ServerEventRtcCallError(string eventId = default, string operation = default, string rtcCallId = default, RtcCallErrorDetails error = default)
-        {
-            return new ServerEventRtcCallError(
-                ServerEventType.RtcCallError,
-                eventId,
-                additionalBinaryDataProperties: null,
-                operation,
-                rtcCallId,
-                error);
-        }
-
-        /// <summary> Error details for RTC call errors. </summary>
-        /// <param name="type"> The error category: `invalid_request_error` or `server_error`. </param>
-        /// <param name="code"> A machine-readable error code. </param>
-        /// <param name="message"> A human-readable error description. </param>
-        /// <returns> A new <see cref="VoiceLive.RtcCallErrorDetails"/> instance for mocking. </returns>
-        public static RtcCallErrorDetails RtcCallErrorDetails(string @type = default, string code = default, string message = default)
-        {
-            return new RtcCallErrorDetails(@type, code, message, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Returned when model audio output starts playing. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="responseId"> The ID of the response whose audio started playing. </param>
-        /// <returns> A new <see cref="VoiceLive.ServerEventOutputAudioBufferStarted"/> instance for mocking. </returns>
-        public static ServerEventOutputAudioBufferStarted ServerEventOutputAudioBufferStarted(string eventId = default, string responseId = default)
-        {
-            return new ServerEventOutputAudioBufferStarted(ServerEventType.OutputAudioBufferStarted, eventId, additionalBinaryDataProperties: null, responseId);
-        }
-
-        /// <summary> Returned when model audio output finishes playing. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="responseId"> The ID of the response whose audio stopped playing. </param>
-        /// <returns> A new <see cref="VoiceLive.ServerEventOutputAudioBufferStopped"/> instance for mocking. </returns>
-        public static ServerEventOutputAudioBufferStopped ServerEventOutputAudioBufferStopped(string eventId = default, string responseId = default)
-        {
-            return new ServerEventOutputAudioBufferStopped(ServerEventType.OutputAudioBufferStopped, eventId, additionalBinaryDataProperties: null, responseId);
-        }
-
         /// <summary> Echo cancellation configuration for server-side audio processing. </summary>
         /// <returns> A new <see cref="VoiceLive.AudioEchoCancellation"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -2530,7 +2449,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="instructions"> Optional instructions to guide the model's behavior throughout the session. </param>
         /// <param name="inputAudioSamplingRate">
         /// Input audio sampling rate in Hz. Available values:
-        ///             For pcm16: 8000, 16000, 24000For g711_alaw/g711_ulaw: 8000
+        ///                         For pcm16: 8000, 16000, 24000For g711_alaw/g711_ulaw: 8000
         /// </param>
         /// <param name="inputAudioFormat"> Input audio format. Default is 'pcm16'. </param>
         /// <param name="outputAudioFormat"> Output audio format. Default is 'pcm16'. </param>
@@ -2545,23 +2464,23 @@ namespace Azure.AI.VoiceLive
         /// <param name="maxResponseOutputTokens"> Maximum number of tokens to generate in the response. Default is unlimited. </param>
         /// <param name="reasoningEffort">
         /// Constrains effort on reasoning for reasoning models. Check model documentation for supported values for each model.
-        ///             Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response.
+        ///                         Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response.
         /// </param>
         /// <param name="interimResponse"> Configuration for interim response generation during latency or tool calls. </param>
         /// <param name="include"> List of include options for the session (e.g., logprobs, phrases, file search results). </param>
         /// <param name="metadata">
         /// Set of up to 16 key-value pairs that can be attached to the session. This is useful for
-        ///             storing additional information about the session in a structured format, such as tracking IDs,
-        ///             user context, or application-specific labels. These key-value pairs are also included in
-        ///             Foundry resource logs for tracing and diagnostics. Keys can be a maximum of 64 characters
-        ///             long and values can be a maximum of 512 characters long.
+        ///                         storing additional information about the session in a structured format, such as tracking IDs,
+        ///                         user context, or application-specific labels. These key-value pairs are also included in
+        ///                         Foundry resource logs for tracing and diagnostics. Keys can be a maximum of 64 characters
+        ///                         long and values can be a maximum of 512 characters long.
         /// </param>
         /// <param name="turnDetection"> Type of turn detection to use. </param>
         /// <returns> A new <see cref="VoiceLive.VoiceLiveSessionOptions"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VoiceLiveSessionOptions VoiceLiveSessionOptions(string model, IEnumerable<InteractionModality> modalities, AnimationOptions animation, VoiceProvider voice, string instructions, int? inputAudioSamplingRate, InputAudioFormat? inputAudioFormat, OutputAudioFormat? outputAudioFormat, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionOptions inputAudioTranscription, IEnumerable<AudioTimestampType> outputAudioTimestampTypes, IEnumerable<VoiceLiveToolDefinition> tools, ToolChoiceOption toolChoice, float? temperature, MaxResponseOutputTokensOption maxResponseOutputTokens, ReasoningEffort? reasoningEffort, BinaryData interimResponse, IEnumerable<SessionIncludeOption> include, IDictionary<string, string> metadata, BinaryData turnDetection)
         {
-            return VoiceLiveSessionOptions(model: model, modalities: modalities, animation: animation, voice: voice, instructions: instructions, inputAudioSamplingRate: inputAudioSamplingRate, inputAudioFormat: inputAudioFormat, outputAudioFormat: outputAudioFormat, inputAudioNoiseReduction: inputAudioNoiseReduction, inputAudioEchoCancellation: inputAudioEchoCancellation, avatar: avatar, inputAudioTranscription: inputAudioTranscription, outputAudioTimestampTypes: outputAudioTimestampTypes, tools: tools, toolChoice: toolChoice, parallelToolCalls: default, temperature: temperature, maxResponseOutputTokens: maxResponseOutputTokens, reasoningEffort: reasoningEffort, interimResponse: interimResponse, include: include, metadata: metadata, turnDetection: turnDetection);
+            return VoiceLiveSessionOptions(model: model, modalities: modalities, animation: animation, voice: voice, instructions: instructions, inputAudioSamplingRate: inputAudioSamplingRate, inputAudioFormat: inputAudioFormat, outputAudioFormat: outputAudioFormat, inputAudioNoiseReduction: inputAudioNoiseReduction, inputAudioEchoCancellation: inputAudioEchoCancellation, avatar: avatar, inputAudioTranscription: inputAudioTranscription, outputAudioTimestampTypes: outputAudioTimestampTypes, tools: tools, toolChoice: toolChoice, allowParallelToolCalls: default, temperature: temperature, maxResponseOutputTokens: maxResponseOutputTokens, reasoningEffort: reasoningEffort, interimResponse: interimResponse, include: include, metadata: metadata, turnDetection: turnDetection);
         }
 
         /// <summary> Base for session configuration shared between request and response. </summary>
@@ -2572,10 +2491,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="instructions"> Optional instructions to guide the model's behavior throughout the session. </param>
         /// <param name="inputAudioSamplingRate">
         /// Input audio sampling rate in Hz. Available values:
-        ///                         
-        ///                         - For pcm16: 8000, 16000, 24000
-        ///                         
-        ///                         - For g711_alaw/g711_ulaw: 8000
+        ///                                     
+        ///                                     - For pcm16: 8000, 16000, 24000
+        ///                                     
+        ///                                     - For g711_alaw/g711_ulaw: 8000
         /// </param>
         /// <param name="inputAudioFormat"> Input audio format. Default is 'pcm16'. </param>
         /// <param name="outputAudioFormat"> Output audio format. Default is 'pcm16'. </param>
@@ -2593,14 +2512,14 @@ namespace Azure.AI.VoiceLive
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VoiceLiveSessionOptions VoiceLiveSessionOptions(string model, IEnumerable<InteractionModality> modalities, AnimationOptions animation, VoiceProvider voice, string instructions, int? inputAudioSamplingRate, InputAudioFormat? inputAudioFormat, OutputAudioFormat? outputAudioFormat, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionOptions inputAudioTranscription, IEnumerable<AudioTimestampType> outputAudioTimestampTypes, IEnumerable<VoiceLiveToolDefinition> tools, ToolChoiceOption toolChoice, float? temperature, MaxResponseOutputTokensOption maxResponseOutputTokens, BinaryData turnDetection)
         {
-            return VoiceLiveSessionOptions(model: model, modalities: modalities, animation: animation, voice: voice, instructions: instructions, inputAudioSamplingRate: inputAudioSamplingRate, inputAudioFormat: inputAudioFormat, outputAudioFormat: outputAudioFormat, inputAudioNoiseReduction: inputAudioNoiseReduction, inputAudioEchoCancellation: inputAudioEchoCancellation, avatar: avatar, inputAudioTranscription: inputAudioTranscription, outputAudioTimestampTypes: outputAudioTimestampTypes, tools: tools, toolChoice: toolChoice, parallelToolCalls: default, temperature: temperature, maxResponseOutputTokens: maxResponseOutputTokens, reasoningEffort: default, interimResponse: default, include: default, metadata: default, turnDetection: turnDetection);
+            return VoiceLiveSessionOptions(model: model, modalities: modalities, animation: animation, voice: voice, instructions: instructions, inputAudioSamplingRate: inputAudioSamplingRate, inputAudioFormat: inputAudioFormat, outputAudioFormat: outputAudioFormat, inputAudioNoiseReduction: inputAudioNoiseReduction, inputAudioEchoCancellation: inputAudioEchoCancellation, avatar: avatar, inputAudioTranscription: inputAudioTranscription, outputAudioTimestampTypes: outputAudioTimestampTypes, tools: tools, toolChoice: toolChoice, allowParallelToolCalls: default, temperature: temperature, maxResponseOutputTokens: maxResponseOutputTokens, reasoningEffort: default, interimResponse: default, include: default, metadata: default, turnDetection: turnDetection);
         }
 
         /// <summary>
         /// OpenAI voice configuration with explicit type field.
-        ///                         
-        ///                         This provides a unified interface for OpenAI voices, complementing the
-        ///                         existing string-based OAIVoice for backward compatibility.
+        ///                                     
+        ///                                     This provides a unified interface for OpenAI voices, complementing the
+        ///                                     existing string-based OAIVoice for backward compatibility.
         /// </summary>
         /// <param name="type"> The type of the voice. </param>
         /// <param name="name"> The name of the OpenAI voice. </param>
@@ -2684,37 +2603,37 @@ namespace Azure.AI.VoiceLive
         /// <param name="object"></param>
         /// <param name="status">
         /// The final status of the response.
-        ///                         
-        ///                         One of: `completed`, `cancelled`, `failed`, `incomplete`, or `in_progress`.
+        ///                                     
+        ///                                     One of: `completed`, `cancelled`, `failed`, `incomplete`, or `in_progress`.
         /// </param>
         /// <param name="statusDetails"> Additional details about the status. </param>
         /// <param name="output"> The list of output items generated by the response. </param>
         /// <param name="usage">
         /// Usage statistics for the Response, this will correspond to billing. A
-        ///                         VoiceLive API session will maintain a conversation context and append new
-        ///                         Items to the Conversation, thus output from previous turns (text and
-        ///                         audio tokens) will become the input for later turns.
+        ///                                     VoiceLive API session will maintain a conversation context and append new
+        ///                                     Items to the Conversation, thus output from previous turns (text and
+        ///                                     audio tokens) will become the input for later turns.
         /// </param>
         /// <param name="conversationId">
         /// Which conversation the response is added to, determined by the `conversation`
-        ///                         field in the `response.create` event. If `auto`, the response will be added to
-        ///                         the default conversation and the value of `conversation_id` will be an id like
-        ///                         `conv_1234`. If `none`, the response will not be added to any conversation and
-        ///                         the value of `conversation_id` will be `null`. If responses are being triggered
-        ///                         by server VAD, the response will be added to the default conversation, thus
-        ///                         the `conversation_id` will be an id like `conv_1234`.
+        ///                                     field in the `response.create` event. If `auto`, the response will be added to
+        ///                                     the default conversation and the value of `conversation_id` will be an id like
+        ///                                     `conv_1234`. If `none`, the response will not be added to any conversation and
+        ///                                     the value of `conversation_id` will be `null`. If responses are being triggered
+        ///                                     by server VAD, the response will be added to the default conversation, thus
+        ///                                     the `conversation_id` will be an id like `conv_1234`.
         /// </param>
         /// <param name="voice"> supported voice identifiers and configurations. </param>
         /// <param name="modalities">
         /// The set of modalities the model used to respond. If there are multiple modalities,
-        ///                         the model will pick one, for example if `modalities` is `["text", "audio"]`, the model
-        ///                         could be responding in either text or audio.
+        ///                                     the model will pick one, for example if `modalities` is `["text", "audio"]`, the model
+        ///                                     could be responding in either text or audio.
         /// </param>
         /// <param name="outputAudioFormat"> The format of output audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`. </param>
         /// <param name="temperature"> Sampling temperature for the model, limited to [0.6, 1.2]. Defaults to 0.8. </param>
         /// <param name="maxOutputTokens">
         /// Maximum number of output tokens for a single assistant response,
-        ///                             inclusive of tool calls, that was used in this response.
+        ///                                         inclusive of tool calls, that was used in this response.
         /// </param>
         /// <returns> A new <see cref="VoiceLive.SessionResponse"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -2766,14 +2685,14 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// This event is the output of audio transcription for user audio written to the
-        ///                         user audio buffer. Transcription begins when the input audio buffer is
-        ///                         committed by the client or server (in `server_vad` mode). Transcription runs
-        ///                         asynchronously with Response creation, so this event may come before or after
-        ///                         the Response events.
-        ///                         VoiceLive API models accept audio natively, and thus input transcription is a
-        ///                         separate process run on a separate ASR (Automatic Speech Recognition) model.
-        ///                         The transcript may diverge somewhat from the model's interpretation, and
-        ///                         should be treated as a rough guide.
+        ///                                     user audio buffer. Transcription begins when the input audio buffer is
+        ///                                     committed by the client or server (in `server_vad` mode). Transcription runs
+        ///                                     asynchronously with Response creation, so this event may come before or after
+        ///                                     the Response events.
+        ///                                     VoiceLive API models accept audio natively, and thus input transcription is a
+        ///                                     separate process run on a separate ASR (Automatic Speech Recognition) model.
+        ///                                     The transcript may diverge somewhat from the model's interpretation, and
+        ///                                     should be treated as a rough guide.
         /// </summary>
         /// <param name="eventId"></param>
         /// <param name="itemId"> The ID of the user message item containing the audio. </param>
@@ -2788,10 +2707,10 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Returned when an earlier assistant audio message item is truncated by the
-        ///                         client with a `conversation.item.truncate` event. This event is used to
-        ///                         synchronize the server's understanding of the audio with the client's playback.
-        ///                         This action will truncate the audio and remove the server-side text transcript
-        ///                         to ensure there is no text in the context that hasn't been heard by the user.
+        ///                                     client with a `conversation.item.truncate` event. This event is used to
+        ///                                     synchronize the server's understanding of the audio with the client's playback.
+        ///                                     This action will truncate the audio and remove the server-side text transcript
+        ///                                     to ensure there is no text in the context that hasn't been heard by the user.
         /// </summary>
         /// <param name="itemId"> The ID of the assistant message item that was truncated. </param>
         /// <param name="contentIndex"> The index of the content part that was truncated. </param>

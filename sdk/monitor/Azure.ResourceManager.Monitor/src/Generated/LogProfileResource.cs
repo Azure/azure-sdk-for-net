@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor
         {
             TryGetApiVersion(ResourceType, out string logProfileApiVersion);
             _logProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _logProfilesRestClient = new LogProfiles(_logProfilesClientDiagnostics, Pipeline, Endpoint, logProfileApiVersion ?? "2016-03-01");
+            _logProfilesRestClient = new LogProfiles(_logProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, logProfileApiVersion ?? "2016-03-01");
             ValidateResourceId(id);
         }
 
