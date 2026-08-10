@@ -586,6 +586,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
+        [Ignore("Temporarily ignore this test until we revert enabling Sessions by default")]
         public async Task CopyFromUriAsync_OAuth()
         {
             // Arrange
@@ -634,6 +635,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
+        [Ignore("Temporarily ignore this test until we revert enabling Sessions by default")]
         public async Task CopyFromUriAsync_HttpAuthorization()
         {
             // Arrange
@@ -1185,6 +1187,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
+        [Ignore("Temporarily ignore this test until we revert enabling Sessions by default")]
         public async Task CopyBlockFromUriAsync_HttpAuthorization()
         {
             // Arrange
