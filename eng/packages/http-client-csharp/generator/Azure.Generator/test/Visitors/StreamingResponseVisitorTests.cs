@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Generator.Tests.TestHelpers;
@@ -45,6 +46,33 @@ namespace Azure.Generator.Tests.Visitors
             new TestStreamingResponseVisitor().Visit(expression, CreateMethod(typeof(BinaryData)));
 
             Assert.AreSame(response, expression.Arguments[0]);
+        }
+
+        [Test]
+        public void DoesNotWrapAzureResponseForProviderBackedGenericReturnType()
+        {
+            MockHelpers.LoadMockGenerator();
+            var response = new VariableExpression(typeof(Response), "response");
+            var expression = CreateInvocation("CreateResponse", typeof(BinaryData), response);
+
+            new TestStreamingResponseVisitor().Visit(expression, CreateMethod(new GenericTypeProvider("GenericType", "Sample").Type));
+
+            Assert.AreSame(response, expression.Arguments[0]);
+        }
+
+        [Test]
+        public void WrapsAzureResponseForProviderBackedStreamingReturnType()
+        {
+            MockHelpers.LoadMockGenerator();
+            var response = new VariableExpression(typeof(Response), "response");
+            var expression = CreateInvocation("CreateResponse", typeof(BinaryData), response);
+            var returnType = new GenericTypeProvider("AsyncStreamingClientResult", "System.ClientModel").Type;
+
+            new TestStreamingResponseVisitor().Visit(expression, CreateMethod(returnType));
+
+            var wrappedResponse = (expression.Arguments[0] as ScopedApi)?.Original as NewInstanceExpression;
+            Assert.IsNotNull(wrappedResponse);
+            Assert.AreSame(response, wrappedResponse!.Parameters[0]);
         }
 
         [Test]
@@ -103,6 +131,23 @@ namespace Azure.Generator.Tests.Visitors
                 : base(signature, new Mock<TypeProvider>().Object, null)
             {
             }
+        }
+
+        private class GenericTypeProvider : TypeProvider
+        {
+            private readonly string _name;
+            private readonly string _namespace;
+
+            public GenericTypeProvider(string name, string @namespace)
+            {
+                _name = name;
+                _namespace = @namespace;
+            }
+
+            protected override string BuildName() => _name;
+            protected override string BuildNamespace() => _namespace;
+            protected override string BuildRelativeFilePath() => Path.Combine("src", $"{Name}.cs");
+            protected override CSharpType[] GetTypeArguments() => [typeof(BinaryData)];
         }
     }
 }
