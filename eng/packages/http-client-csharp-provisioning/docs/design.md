@@ -229,8 +229,8 @@ The generator uses this hierarchy together with the ARM provider schema's `Paren
 
 For a non-extension resource, the generator resolves `ParentResourceId` against resources generated in the same output library:
 
-- When the parent resolves, the resource gets a strongly typed, required `Parent` property.
-- When the parent is virtual, belongs to another package, or otherwise does not resolve locally, no `Parent` property is generated.
+- When the resolved resource is the immediate structural parent by resource type, the resource gets a strongly typed, required `Parent` property.
+- When the resolved resource is a more distant ancestor, or when the parent is virtual, belongs to another package, or otherwise does not resolve locally, no `Parent` property is generated. The caller supplies the full resource-name hierarchy because no Bicep `parent` relationship is emitted.
 
 A writable extension resource uses Bicep's `scope` relationship instead of `parent`. It gets a `ProvisionableResource Scope` property so any generated provisioning resource can be assigned without introducing a package dependency. A read-only extension resource does not expose writable `Scope` metadata.
 
@@ -272,7 +272,7 @@ _name = DefineProperty<string>(
 
 For a singleton resource that has only one valid name for its resource type, that fixed name is safe only when it represents the complete Bicep name relative to the generated relationship:
 
-1. When `Parent` resolves, the resource type must be the parent's resource type plus exactly one trailing type segment.
+1. When the immediate structural `Parent` resolves, the resource type is the parent's resource type plus exactly one trailing type segment.
 2. When there is no generated `Parent`, the resource type must contain exactly one resource type segment after the provider namespace.
 
 In those cases, `Name` is getter-only and receives the fixed singleton name as its default:
@@ -297,23 +297,22 @@ If either condition is not met, the generator treats the singleton name like a r
 | Top-level singleton | None | Getter-only with the fixed singleton name |
 | Regular child with its direct parent generated locally | Strongly typed `Parent` | Required and settable; contains the child segment |
 | Singleton child with its direct parent generated locally | Strongly typed `Parent` | Getter-only with the fixed singleton name |
-| Child whose generated parent is more than one resource type level above it | Strongly typed `Parent` | Required and settable; contains the missing intermediate segments and the child segment |
+| Child whose nearest generated ancestor is more than one resource type level above it | None | Required and settable; contains every resource name segment |
 | Child of a virtual or cross-package parent | None | Required and settable; contains every resource name segment |
 | Writable regular extension resource | `ProvisionableResource Scope` | Required and settable |
 | Writable singleton extension resource | `ProvisionableResource Scope` | Follows the parentless singleton rule: fixed only for a top-level resource type |
 | Read-only extension resource | None | Follows the regular or singleton name rule, but exposes no writable `Scope` |
 
-For example, if a generated parent has resource type `Contoso/parents` and its singleton descendant has resource type `Contoso/parents/intermediates/settings`, the descendant keeps the typed `Parent` but requires a composite name:
+For example, if the nearest generated ancestor has resource type `Contoso/parents` and its singleton descendant has resource type `Contoso/parents/intermediates/settings`, that ancestor is not the immediate structural parent (`Contoso/parents/intermediates`). The descendant therefore has no generated `Parent` and requires the full name hierarchy:
 
 ```csharp
 var setting = new SingletonSetting("setting")
 {
-    Parent = parent,
-    Name = "intermediateName/singletonName"
+    Name = "parentName/intermediateName/singletonName"
 };
 ```
 
-When the parent is not generated locally, the name contains the full hierarchy. The Recovery Services shape reported in [#61575](https://github.com/Azure/azure-sdk-for-net/issues/61575) is generated effectively as:
+The same rule applies when the parent is virtual, cross-package, or otherwise not generated locally. The Recovery Services shape reported in [#61575](https://github.com/Azure/azure-sdk-for-net/issues/61575) is generated effectively as:
 
 ```csharp
 var storageConfig = new BackupResourceConfig("storageConfig")

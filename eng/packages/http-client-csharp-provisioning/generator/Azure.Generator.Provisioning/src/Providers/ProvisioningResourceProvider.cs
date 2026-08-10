@@ -82,31 +82,46 @@ namespace Azure.Generator.Provisioning.Providers
         internal ProvisioningResourceProjection? ResourceProjection => _resourceProjection;
 
         /// <summary>
-        /// Gets the parent resource provider via the output library, or null for top-level resources.
+        /// Gets the resource provider resolved from the ARM parent ID, regardless of whether it is the immediate structural parent.
         /// </summary>
-        private ProvisioningResourceProvider? ParentResource
+        private ProvisioningResourceProvider? ResolvedParentResource
             => _resourceProjection is { IsExtensionResource: false, ParentResourceId: { } parentId }
                 ? ProvisioningGenerator.Instance.OutputLibrary.GetResourceByIdPattern(parentId)
                 : null;
 
-        private CSharpType? ParentResourceType => ParentResource?.Type;
+        /// <summary>
+        /// Gets the resolved parent only when its resource type is the immediate structural parent type.
+        /// </summary>
+        private ProvisioningResourceProvider? ImmediateParentResource
+        {
+            get
+            {
+                var parent = ResolvedParentResource;
+                return parent?.ResourceProjection is { } parentProjection
+                    && _resourceProjection is { } resourceProjection
+                    && IsImmediateParentResourceType(new ResourceTypePattern(resourceProjection.ResourceType), new ResourceTypePattern(parentProjection.ResourceType))
+                        ? parent
+                        : null;
+            }
+        }
+
+        private CSharpType? ParentResourceType => ImmediateParentResource?.Type;
 
         private bool CanUseSingletonDefaultName()
         {
             if (_resourceProjection is null)
                 return false;
 
-            var resourceType = new ResourceTypePattern(_resourceProjection.ResourceType);
-            if (ParentResource?.ResourceProjection is { } parentProjection)
-            {
-                var parentResourceType = new ResourceTypePattern(parentProjection.ResourceType);
-                return resourceType.Count == parentResourceType.Count + 1
-                    && resourceType.Take(parentResourceType.Count).SequenceEqual(parentResourceType);
-            }
+            if (ImmediateParentResource is not null)
+                return true;
 
             // The first segment is the provider namespace.
-            return resourceType.Count == 2;
+            return new ResourceTypePattern(_resourceProjection.ResourceType).Count == 2;
         }
+
+        private static bool IsImmediateParentResourceType(ResourceTypePattern resourceType, ResourceTypePattern parentResourceType)
+            => resourceType.Count == parentResourceType.Count + 1
+                && resourceType.Take(parentResourceType.Count).SequenceEqual(parentResourceType);
 
         /// <inheritdoc/>
         ProvisioningPropertyInfo? IProvisioningPropertyInfo.GetProvisioningPropertyInfo(InputModelProperty inputProp)
@@ -221,7 +236,7 @@ namespace Azure.Generator.Provisioning.Providers
                     properties.Add(property);
             }
 
-            // Create parent property for child resources
+            // Create a parent property only for resources whose immediate structural parent is generated
             _parentType = ParentResourceType;
             if (_parentType != null)
             {
@@ -610,7 +625,7 @@ namespace Azure.Generator.Provisioning.Providers
                 ).Terminate());
             }
 
-            // Add DefineResource call for parent on child resources
+            // Add DefineResource call only for an immediate structural parent
             if (_parentField != null && _parentType != null)
             {
                 statements.Add(_parentField.Assign(

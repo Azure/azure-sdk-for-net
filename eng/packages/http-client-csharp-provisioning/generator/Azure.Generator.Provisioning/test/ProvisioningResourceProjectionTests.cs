@@ -515,7 +515,7 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
-        public void SingletonResourceWithGeneratedParentNameIsNotSettable()
+        public void SingletonResourceWithImmediateGeneratedParentHasTypedParentAndFixedName()
         {
             var parentModel = CreateModel("Parent");
             var nameProperty = CreateProperty("Name", isRequired: true);
@@ -537,9 +537,11 @@ namespace Azure.Generator.Provisioning.Tests
                 methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
             ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [parentModel, singletonModel]);
             var providers = CreateAndRegisterResourceProviders(parentResource, singletonResource);
+            var parentProperty = providers[1].Properties.Single(property => property.Name == "Parent");
 
             var propertyInfo = ((IProvisioningPropertyInfo)providers[1]).GetProvisioningPropertyInfo(nameProperty);
 
+            Assert.That(parentProperty.Type.FullyQualifiedName, Is.EqualTo(providers[0].Type.FullyQualifiedName));
             Assert.That(propertyInfo, Is.Not.Null);
             Assert.That(propertyInfo!.IsOutput, Is.False);
             Assert.That(propertyInfo.IsSettable, Is.False);
@@ -565,8 +567,10 @@ namespace Azure.Generator.Provisioning.Tests
 
             var propertyInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(nameProperty);
 
+            Assert.That(provider.Properties.Any(property => property.Name == "Parent"), Is.False);
             Assert.That(propertyInfo, Is.Not.Null);
             Assert.That(propertyInfo!.IsOutput, Is.False);
+            Assert.That(propertyInfo.IsRequired, Is.True);
             Assert.That(propertyInfo.IsSettable, Is.True);
             Assert.That(propertyInfo.DefaultValue, Is.Null);
         }
@@ -597,8 +601,10 @@ namespace Azure.Generator.Provisioning.Tests
 
             var propertyInfo = ((IProvisioningPropertyInfo)providers[1]).GetProvisioningPropertyInfo(nameProperty);
 
+            Assert.That(providers[1].Properties.Any(property => property.Name == "Parent"), Is.False);
             Assert.That(propertyInfo, Is.Not.Null);
             Assert.That(propertyInfo!.IsOutput, Is.False);
+            Assert.That(propertyInfo.IsRequired, Is.True);
             Assert.That(propertyInfo.IsSettable, Is.True);
             Assert.That(propertyInfo.DefaultValue, Is.Null);
         }
