@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Quota
         {
             TryGetApiVersion(ResourceType, out string currentUsagesBaseApiVersion);
             _currentUsagesBasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
-            _currentUsagesBasesRestClient = new CurrentUsagesBases(_currentUsagesBasesClientDiagnostics, Pipeline, Endpoint, currentUsagesBaseApiVersion ?? "2025-09-01");
+            _currentUsagesBasesRestClient = new CurrentUsagesBases(_currentUsagesBasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, currentUsagesBaseApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CurrentUsagesBaseData> response = Response.FromValue(CurrentUsagesBaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CurrentUsagesBaseData> response = Response.FromValue(CurrentUsagesBaseData.FromResponse(result), result);
                 if (response.Value == null)

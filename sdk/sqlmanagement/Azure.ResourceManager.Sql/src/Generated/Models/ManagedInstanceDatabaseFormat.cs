@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct ManagedInstanceDatabaseFormat : IEquatable<ManagedInstanceDatabaseFormat>
     {
         private readonly string _value;
+        /// <summary> AlwaysUpToDate. </summary>
+        private const string AlwaysUpToDateValue = "AlwaysUpToDate";
+        /// <summary> SQLServer2022. </summary>
+        private const string SqlServer2022Value = "SQLServer2022";
+        /// <summary> SQLServer2025. </summary>
+        private const string SqlServer2025Value = "SQLServer2025";
 
         /// <summary> Initializes a new instance of <see cref="ManagedInstanceDatabaseFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedInstanceDatabaseFormat(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AlwaysUpToDateValue = "AlwaysUpToDate";
-        private const string SqlServer2022Value = "SQLServer2022";
-        private const string SqlServer2025Value = "SQLServer2025";
+            _value = value;
+        }
 
         /// <summary> AlwaysUpToDate. </summary>
         public static ManagedInstanceDatabaseFormat AlwaysUpToDate { get; } = new ManagedInstanceDatabaseFormat(AlwaysUpToDateValue);
+
         /// <summary> SQLServer2022. </summary>
         public static ManagedInstanceDatabaseFormat SqlServer2022 { get; } = new ManagedInstanceDatabaseFormat(SqlServer2022Value);
+
         /// <summary> SQLServer2025. </summary>
         public static ManagedInstanceDatabaseFormat SqlServer2025 { get; } = new ManagedInstanceDatabaseFormat(SqlServer2025Value);
+
         /// <summary> Determines if two <see cref="ManagedInstanceDatabaseFormat"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedInstanceDatabaseFormat left, ManagedInstanceDatabaseFormat right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedInstanceDatabaseFormat"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedInstanceDatabaseFormat left, ManagedInstanceDatabaseFormat right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedInstanceDatabaseFormat"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedInstanceDatabaseFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedInstanceDatabaseFormat(string value) => new ManagedInstanceDatabaseFormat(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedInstanceDatabaseFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedInstanceDatabaseFormat?(string value) => value == null ? null : new ManagedInstanceDatabaseFormat(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedInstanceDatabaseFormat other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedInstanceDatabaseFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

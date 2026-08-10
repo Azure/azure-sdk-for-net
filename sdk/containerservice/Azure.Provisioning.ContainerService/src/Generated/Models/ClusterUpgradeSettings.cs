@@ -39,6 +39,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _overrideSettings = DefineModelProperty<UpgradeOverrideSettings>(nameof(OverrideSettings), new string[] { "overrideSettings" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ClusterUpgradeSettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

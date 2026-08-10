@@ -11,15 +11,13 @@ namespace Azure.Generator.Management.Models;
 /// <param name="Kind"> The kind of resource operation. </param>
 /// <param name="InputMethod"> The input service method. </param>
 /// <param name="OperationPath"> The operation path. </param>
-/// <param name="OperationScope"> The scope of the operation. </param>
-/// <param name="ResourceScopeIdPattern"> The resource ID pattern specifying the scope, if applicable. </param>
+/// <param name="Scope"> The scope information for this operation, including the scope kind, ID pattern, and resource type. </param>
 /// <param name="InputClient"> The input client. </param>
 public record ResourceMethod(
     ResourceOperationKind Kind,
     InputServiceMethod InputMethod,
     RequestPathPattern OperationPath,
-    ResourceScope OperationScope,
-    RequestPathPattern? ResourceScopeIdPattern,
+    ArmScopeInfo Scope,
     InputClient InputClient)
 {
     internal static ResourceMethod DeserializeResourceMethod(JsonElement element)
@@ -27,8 +25,7 @@ public record ResourceMethod(
         string? methodId = null;
         ResourceOperationKind? operationKind = null;
         string? operationPath = null;
-        ResourceScope? operationScope = null;
-        string? resourceScopeIdPattern = null;
+        ArmScopeInfo? scope = null;
         foreach (var prop in element.EnumerateObject())
         {
             if (prop.NameEquals("methodId"u8))
@@ -44,13 +41,9 @@ public record ResourceMethod(
             {
                 operationPath = prop.Value.GetString();
             }
-            if (prop.NameEquals("operationScope"u8))
+            if (prop.NameEquals("scope"u8))
             {
-                operationScope = Enum.Parse<ResourceScope>(prop.Value.GetString() ?? throw new JsonException("operationScope cannot be null"), true);
-            }
-            if (prop.NameEquals("resourceScopeIdPattern"u8))
-            {
-                resourceScopeIdPattern = prop.Value.GetString();
+                scope = ArmScopeInfo.Deserialize(prop.Value);
             }
         }
         var inputMethod = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(methodId ?? throw new JsonException("id cannot be null"));
@@ -60,8 +53,7 @@ public record ResourceMethod(
             operationKind ?? throw new JsonException("operationKind cannot be null"),
             inputMethod,
             new RequestPathPattern(operationPath ?? throw new JsonException("operationPath cannot be null")),
-            operationScope ?? throw new JsonException("operationScope cannot be null"),
-            resourceScopeIdPattern is not null ? new RequestPathPattern(resourceScopeIdPattern) : null,
+            scope ?? throw new JsonException("scope cannot be null"),
             inputClient ?? throw new JsonException($"cannot find method {inputMethod.CrossLanguageDefinitionId}'s client"));
     }
 }

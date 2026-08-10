@@ -1,65 +1,171 @@
-# Azure.Search.Documents — Customization Guide
+# Azure.Search.Documents — Customization Reference
 
-This document covers how to apply, update, and remove customizations on top of the TypeSpec-generated code in `Azure.Search.Documents`. It is intended as the primary reference when generated code must be modified to meet the SDK's public API contract.
+## Contents
+- [TypeSpec vs. C# decision table](#when-to-customize-in-typespec-vs-c)
+- [TypeSpec client.tsp decorator reference](#typespec-clienttsp-decorator-reference)
+- [C# customization attributes](#c-customization-attributes)
+- [Common C# patterns](#common-c-patterns)
+- [Service version customizations](#service-version-customizations)
+- [SearchModelFactory customizations](#searchmodelfactory-customizations)
+- [Identifying what needs updating after regeneration](#identifying-what-needs-updating-after-regeneration)
+- [Efficient update patterns](#efficient-update-patterns)
 
-**Related docs:**
-- [architecture.md](./architecture.md) — full source layout and code generation workflow  
-- [TypeSpec Customization Reference](https://github.com/microsoft/typespec/blob/main/packages/http-client-csharp/.tspd/docs/customization.md) — upstream attribute documentation
-- [Client Typespec Renaming](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/09renaming/)
-- [Client Typespec Basic Methods](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/04method/)
+**Related:** [architecture.md](./architecture.md) — source layout, generated-vs-custom file mapping, backward compat rules
 
 ---
 
-## When to Customize vs. When to Fix Upstream
+## When to Customize in TypeSpec vs. C#
 
-Before adding a C# customization, consider whether the change belongs upstream:
-
-| Change | Where it belongs |
+| Change | Where |
 |---|---|
-| Rename a type or property for all languages | TypeSpec `client.tsp` using `@@clientName` |
-| Change access (public → internal) for all languages | TypeSpec `client.tsp` using `@@access` |
-| Add a convenience parameter or constructor | C# customization (language-specific) |
-| Wrap a raw string property as a typed value (e.g., `Uri`, `ETag`) | C# customization |
-| Suppress a generated constructor to replace it | C# customization |
-| Add semantic helpers (e.g., `FieldBuilder`, `SearchFilter`) | C# customization (no spec equivalent) |
-| Add multi-version backward compat for a removed type | C# customization (keep deleted file) |
-| Update existing customizations, e.g., ctors, helpers, overloads | C# customization
+| Rename type/property/operation for all languages | TypeSpec `client.tsp` → `@@clientName` ([renaming](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/09renaming/)) |
+| Change access (public → internal) for all languages | TypeSpec `client.tsp` → `@@access` ([methods](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/04method/)) |
+| Control model usage (input/output/both) | TypeSpec `client.tsp` → `@@usage` ([methods](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/04method/)) |
+| Toggle protocol/convenience method generation | TypeSpec `client.tsp` → `@@protocolAPI` / `@@convenientAPI` ([methods](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/04method/)) |
+| Restructure client hierarchy (split/merge clients) | TypeSpec `client.tsp` → `@client` / `@operationGroup` ([clients](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/03client/)) |
+| Move operations between clients | TypeSpec `client.tsp` → `@@clientLocation` ([clients](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/03client/)) |
+| Add/remove/reorder method parameters | TypeSpec `client.tsp` → `@@override` + transform fns ([methods](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/04method/)) |
+| Elevate parameter to client-level init | TypeSpec `client.tsp` → `@@clientInitialization` ([clients](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/03client/)) |
+| HEAD → boolean response | TypeSpec `client.tsp` → `@responseAsBool` ([methods](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/04method/)) |
+| Override client documentation | TypeSpec `client.tsp` → `@clientDoc` ([types](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/08types/)) |
+| Move model to different namespace | TypeSpec `client.tsp` → `@@clientNamespace` ([types](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/08types/)) |
+| Extend API version enum beyond spec | TypeSpec `client.tsp` → `@@clientApiVersions` ([versioning](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/10versioning/)) |
+| Force/disable paging behavior | TypeSpec `client.tsp` → `@markAsPageable` / `@disablePageable` ([paging](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/05pagingoperations/)) |
+| Force LRO behavior | TypeSpec `client.tsp` → `@markAsLro` ([LRO](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/06longrunningoperations/)) |
+| Multi-layer discriminator hierarchy | TypeSpec `client.tsp` → `@hierarchyBuilding` ([hierarchy](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/11hierarchybuilding/)) |
+| Reference external type from another package | TypeSpec `client.tsp` → `@alternateType` ([types](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/08types/)) |
+| Pass language-specific emitter options | TypeSpec `client.tsp` → `@clientOption` ([options](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/12clientoptions/)) |
+| Language-specific convenience constructor | C# customization |
+| Wrap raw string as typed value (`Uri`, `ETag`, `IList<string>`) | C# customization |
+| Suppress a generated constructor to replace it | C# `[CodeGenSuppress]` |
+| Add semantic helpers (`FieldBuilder`, `SearchFilter`) | C# only |
+| Backward compat for removed type | C# (restore deleted file — see [architecture.md](./architecture.md#backwards-compatibility-for-removed-api-version-types)) |
 
-Use C# customizations when TypeSpec cannot express the desired behavior, or when the behavior is C#-specific.
+> **Rule**: Prefer TypeSpec `client.tsp` when the change applies cross-language. Use C# customization only for language-specific behavior or things TypeSpec decorators cannot express.
 
 ---
 
-## Customization Mechanics
+## TypeSpec client.tsp Decorator Reference
 
-The generator emits `partial class` types. Every generated type can be extended or overridden by adding additional partial class files **outside** `Generated/`. Three attributes (all in `Generated/Internal/`) control how the generator treats these custom files:
+All `client.tsp` customizations use augment decorators (`@@`) in a file alongside `main.tsp`. Import `@azure-tools/typespec-client-generator-core` and `using Azure.ClientGenerator.Core;`.
 
+> Full docs with C#-specific examples: [How to generate client libraries](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/00howtogen/)
+
+### Clients — restructuring the client tree
+
+| Decorator | Purpose | Docs |
+|---|---|---|
+| `@client` | Define a custom client (replaces default hierarchy) | [03client](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/03client/) |
+| `@operationGroup` | Group operations into a sub-client | [03client](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/03client/) |
+| `@@clientLocation` | Move an operation to a different client/sub-client | [03client](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/03client/) |
+| `@@clientName` | Rename a client | [03client](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/03client/) |
+| `@@clientNamespace` | Move a client to a different SDK namespace | [03client](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/03client/) |
+| `@@clientInitialization` | Elevate params to client ctor; control sub-client init | [03client](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/03client/) |
+| `@paramAlias` | Rename an elevated client init parameter | [03client](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/03client/) |
+
+### Methods — controlling generated operations
+
+| Decorator | Purpose | Docs |
+|---|---|---|
+| `@@convenientAPI(op, bool)` | Toggle convenience method generation | [04method](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/04method/) |
+| `@@protocolAPI(op, bool)` | Toggle protocol method generation | [04method](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/04method/) |
+| `@@access(op, "internal")` | Make a method internal/private | [04method](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/04method/) |
+| `@@usage(model, Usage.input\|output)` | Force a model's usage direction | [04method](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/04method/) |
+| `@@override(op, customOp)` | Replace method signature (params, return type) | [04method](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/04method/) |
+| `@responseAsBool` | HEAD ops return `bool` (2xx→true, 404→false) | [04method](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/04method/) |
+| `@@clientLocation(param, op)` | Move a parameter from client to operation level | [04method](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/04method/) |
+
+#### `@@override` transformation functions (experimental, chainable)
+
+| Function | Purpose |
+|---|---|
+| `replaceParameter(op, "name", NewModel.prop)` | Make param required, change type, etc. |
+| `removeParameter(op, "name")` | Remove an optional parameter |
+| `addParameter(op, NewModel.prop)` | Add a new parameter |
+| `reorderParameters(op, #["c","a","b"])` | Reorder method parameters |
+
+Chain via aliases: `alias step1 = replaceParameter(...); alias step2 = removeParameter(step1, ...); @@override(op, step2);`
+
+Scope to one language: `@@override(op, customOp, "csharp");`
+
+### Renaming — types, properties, operations, parameters
+
+| Decorator | Purpose | Docs |
+|---|---|---|
+| `@@clientName(Type, "NewName")` | Rename model/enum/union for all languages | [09renaming](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/09renaming/) |
+| `@@clientName(Type, "NewName", "csharp")` | Rename for C# only | [09renaming](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/09renaming/) |
+| `@@clientName(Type.prop, "newProp")` | Rename a property | [09renaming](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/09renaming/) |
+| `@@clientName(op, "NewOp")` | Rename an operation | [09renaming](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/09renaming/) |
+| `@@clientName(op::parameters.p, "newP")` | Rename an operation parameter | [09renaming](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/09renaming/) |
+
+> If the name comes from `@@clientName`, emitters do **not** apply language casing rules (e.g., PascalCase for C#).
+
+### Types — models, enums, documentation
+
+| Decorator | Purpose | Docs |
+|---|---|---|
+| `@@clientNamespace(Model, "New.Namespace")` | Move model/enum to a different SDK namespace | [08types](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/08types/) |
+| `@clientDoc("...", DocumentationMode.replace)` | Override doc comment for SDK consumers | [08types](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/08types/) |
+| `@alternateType({...}, "csharp")` | Use an external package type instead of generated | [08types](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/08types/) |
+| `@clientDefaultValue(value)` | Legacy: set client default for property/param | [08types](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/08types/) |
+| `@flattenProperty` | Legacy: flatten nested model properties | [08types](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/08types/) |
+| `@hierarchyBuilding(ParentModel)` | Legacy: multi-level discriminator inheritance | [11hierarchy](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/11hierarchybuilding/) |
+
+### Versioning
+
+| Decorator | Purpose | Docs |
+|---|---|---|
+| `@@clientApiVersions(Service, ExtendedEnum)` | Extend API version enum beyond spec | [10versioning](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/10versioning/) |
+| `@apiVersion` | Override which param is the API version param | [10versioning](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/10versioning/) |
+
+### Paging & LRO
+
+| Decorator | Purpose | Docs |
+|---|---|---|
+| `@markAsPageable` | Force operation to be treated as pageable | [05paging](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/05pagingoperations/) |
+| `@disablePageable` | Prevent auto-detected paging behavior | [05paging](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/05pagingoperations/) |
+| `@nextLinkVerb("POST")` | Use POST instead of GET for next-page requests | [05paging](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/05pagingoperations/) |
+| `@markAsLro` | Force operation to be treated as long-running | [06LRO](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/06longrunningoperations/) |
+
+### Emitter options
+
+| Decorator | Purpose | Docs |
+|---|---|---|
+| `@clientOption("name", value, "csharp")` | Pass arbitrary key-value to a specific emitter | [12options](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/12clientoptions/) |
+
+---
+
+## C# Customization Attributes
+
+All attributes are in `Generated/Internal/` and imported via:
 ```csharp
 using Microsoft.TypeSpec.Generator.Customizations;
 ```
 
 ### `[CodeGenType("OriginalName")]`
-Maps a custom class name (or namespace) to the generated type. Causes the generator to emit the type under the new name/namespace.
+Maps a custom class name to the generated type.
 
 ```csharp
-// Renames DocumentsClientOptions → SearchClientOptions
 [CodeGenType("DocumentsClientOptions")]
 public partial class SearchClientOptions : ClientOptions { }
 ```
 
-Real usage in the SDK:
-- `SearchClientOptions.cs` — renames `DocumentsClientOptions` → `SearchClientOptions`
-- `Models/SearchModelFactory.cs` — renames `DocumentsModelFactory` → `SearchModelFactory`
+SDK usages: `SearchClientOptions.cs` (`DocumentsClientOptions` → `SearchClientOptions`), `SearchModelFactory.cs` (`DocumentsModelFactory` → `SearchModelFactory`), `SearchOptions` (`SearchRequest`), `SuggestOptions` (`SuggestPostRequest`), `AutocompleteOptions` (`AutocompletePostRequest`).
 
----
+**Danger:** If the generated type is renamed in a new spec version, the `[CodeGenType("OldName")]` mapping breaks **silently** — the custom partial disconnects from generated code with no compile error.
 
 ### `[CodeGenMember("OriginalPropertyName")]`
-Renames a generated property or field in the custom partial. The generated code removes the original member and relies on the custom declaration instead.
+Renames a generated property/field in the custom partial. **61 usages** across the package.
+
+**Heaviest files:**
+- `Options/SearchOptions.cs` (~20 usages) — wraps comma-separated strings as `IList<string>`, delegates semantic/vector options to sub-objects
+- `Indexes/Models/SearchField.cs` (~15 usages) — renames `Searchable` → `IsSearchable`, `Filterable` → `IsFilterable`, etc.
+- `Options/SuggestOptions.cs` (~8 usages) — same comma-join pattern as SearchOptions
+- `Options/AutocompleteOptions.cs` (~5 usages)
 
 ```csharp
-// Exposes raw string "_etag" as typed ETag? property
 [CodeGenMember("ETag")]
 private string _etag;
-
 public ETag? ETag
 {
     get => _etag is null ? (ETag?)null : new ETag(_etag);
@@ -67,502 +173,211 @@ public ETag? ETag
 }
 ```
 
-Real usages in the SDK:
+SDK usages:
 
-| File | Original name | Custom name / type | Why |
-|---|---|---|---|
-| `SearchField.cs` | `Searchable` | `IsSearchable` (bool?) | Idiomatic naming convention |
-| `SearchField.cs` | `Filterable` | `IsFilterable` (bool?) | ditto |
-| `SearchIndex.cs` | `Fields` → `_fields` | `IList<SearchField> Fields` | Force private backing field so getter can throw on null |
-| `SearchIndex.cs` | `ETag` → `_etag` | `ETag?` wrapper | Expose `Azure.ETag` instead of raw string |
-| `SynonymMap.cs` | `Synonyms` → `SynonymsList` | `IList<string>` | Split newline-delimited string into list |
-| `SynonymMap.cs` | `ETag` → `_etag` | `ETag?` wrapper | Same as above |
-| `SearchAlias.cs` | `ETag` → `_etag` | read-only `ETag?` wrapper | ETag is immutable on alias |
-| `SearchResourceEncryptionKey.cs` | `VaultUri` → `_vaultUri` | `Uri VaultUri` | Expose `Uri` instead of raw string |
-| `SearchResourceEncryptionKey.cs` | `KeyVaultKeyName` | `KeyName` | Shorter, idiomatic name |
-| `SearchIndexerDataSourceConnection.cs` | `ETag` → `_etag` | `ETag?` wrapper | ditto |
-| `IndexingParameters.cs` | `Configuration` | `IndexingParametersConfiguration` | Strongly-typed configuration over raw dictionary |
-| `VectorQuery.cs` | `Fields` → `FieldsRaw` | `IList<string> Fields` | Expose list, join on serialization |
-| `SearchClientOptions.cs` | `Version` (generated string) | `RawVersion` | Custom enum wraps the raw string |
+| File | Original → Custom | Why |
+|---|---|---|
+| `SearchField.cs` | `Searchable` → `IsSearchable` | Idiomatic naming |
+| `SearchIndex.cs` | `ETag` → `_etag` → `ETag?` | Typed `Azure.ETag` wrapper |
+| `SynonymMap.cs` | `Synonyms` → `SynonymsList` | Split newline string → list |
+| `SearchResourceEncryptionKey.cs` | `VaultUri` → `_vaultUri` → `Uri` | Typed `Uri` |
+| `VectorQuery.cs` | `Fields` → `FieldsRaw` | Comma-joined string → `IList<string>` |
+| `SearchClientOptions.cs` | `Version` → `RawVersion` | Custom enum wraps raw string |
+| `IndexingParameters.cs` | `Configuration` → strongly typed | Typed configuration |
 
----
+#### SearchOptions redirector pattern
 
-### `[CodeGenSuppress("MemberName", typeof(Arg1), typeof(Arg2))]`
-Removes a generated constructor or method so a custom replacement can be provided. Applied at the class level.
+`SearchOptions` routes semantic/vector properties through private `[CodeGenMember]` redirectors to public sub-objects (`SemanticSearchOptions`, `VectorSearchOptions`). When a new generated property belongs to a sub-object, follow the full procedure in [architecture.md → SearchOptions Architecture](./architecture.md#searchoptions-architecture).
+
+#### Compound / magic-string properties
+
+Some wire properties are typed as an extensible enum (e.g. `QueryAnswerType`, `QueryCaptionType`, `QueryRewritesType`) but the service actually accepts a **pipe-delimited compound string** that packs the enum value plus one or more parameters:
+
+| Property | Compound format example |
+|---|---|
+| `Answers` | `extractive\|count-5,threshold-0.9,maxcharlength-300` |
+| `Captions` | `extractive\|highlight-true,maxcharlength-400` |
+| `QueryRewrites` | `generative\|count-3` |
+
+The generator only sees the enum type and exposes it as `XxxType?`, **silently hiding the parameter portion** from users. Detect this by reading the generated property's doc comment: if it shows a `|` separator or mentions parameters like `count-`, `threshold-`, `highlight-`, `maxcharlength-`, the property needs a wrapper.
+
+**Wiring template** (three files, mirror `QueryAnswer` exactly):
+
+1. **Handwritten wrapper class** at `src/Models/Xxx.cs` — public typed properties (the enum + each parameter) and an `internal string XxxRaw` getter/setter that parses and emits the compound string. See [Models/QueryAnswer.cs](../../../../src/Models/QueryAnswer.cs) as the canonical reference.
+
+2. **Raw redirector on the owner model.** When the property lives on `SearchOptions`, add a redirector in `Options/SearchOptions.cs` that **lazy-initializes both the sub-object and the wrapper** so a value coming back from deserialization (continuation tokens, response models) isn't silently dropped:
+   ```csharp
+   [CodeGenMember("Xxx")]
+   private string XxxRaw
+   {
+       get => SemanticSearch?.Xxx?.XxxRaw;
+       set
+       {
+           if (string.IsNullOrEmpty(value)) { return; }
+           SemanticSearch ??= new SemanticSearchOptions();
+           SemanticSearch.Xxx ??= new Xxx();
+           SemanticSearch.Xxx.XxxRaw = value;
+       }
+   }
+   ```
+   The wrapper class must expose an `internal Xxx()` parameterless constructor so the redirector can lazy-init it.
+
+   When the property lives directly on another generated model (e.g. `VectorizableTextQuery`), put the redirector on a partial of that model — no sub-object indirection, but the same lazy-init shape:
+   ```csharp
+   public Xxx Xxx { get; set; }
+
+   [CodeGenMember("Xxx")]
+   private string XxxRaw
+   {
+       get => Xxx?.XxxRaw;
+       set { if (!string.IsNullOrEmpty(value)) { Xxx ??= new Xxx(); Xxx.XxxRaw = value; } }
+   }
+   ```
+
+3. **Public sub-object property** (when applicable) — change the public property on `SemanticSearchOptions` / `VectorSearchOptions` from the bare enum (`XxxType?`) to the new wrapper class so callers can set parameters.
+
+Reference implementations: [Models/QueryAnswer.cs](../../../../src/Models/QueryAnswer.cs), [Models/QueryCaption.cs](../../../../src/Models/QueryCaption.cs), [Models/QueryRewrites.cs](../../../../src/Models/QueryRewrites.cs), with matching redirectors in [Options/SearchOptions.cs](../../../../src/Options/SearchOptions.cs) and the `VectorizableTextQuery` partial in [Models/VectorizableTextQuery.cs](../../../../src/Models/VectorizableTextQuery.cs).
+
+### `[CodeGenSuppress("MemberName", typeof(Arg1))]`
+Removes a generated constructor or method.
 
 ```csharp
-// Removes the generated (string name, SearchIndexerDataSourceType, DataSourceCredentials, SearchIndexerDataContainer) ctor
 [CodeGenSuppress(nameof(SearchIndexerDataSourceConnection),
     typeof(string), typeof(SearchIndexerDataSourceType),
     typeof(DataSourceCredentials), typeof(SearchIndexerDataContainer))]
 public partial class SearchIndexerDataSourceConnection { ... }
 ```
 
-Real usages in the SDK:
+SDK usages:
 
-| File | Suppressed member | Reason |
+| File | Suppressed | Reason |
 |---|---|---|
-| `SearchIndexerDataSourceConnection.cs` | Generated 4-arg ctor | Replaced with user-friendly ctor taking `connectionString` instead of `DataSourceCredentials` |
-| `SearchResourceEncryptionKey.cs` | Generated `(string, string)` ctor | Replaced with `(Uri vaultUri, string keyName, string keyVersion)` ctor |
-| `Models/SearchModelFactory.cs` | `IndexDocumentsResult(IReadOnlyList<IndexingResult>)` | Replaced with custom overload that accepts additional params |
+| `SearchIndexerDataSourceConnection.cs` | Generated 4-arg ctor | Replaced with user-friendly `connectionString` ctor |
+| `SearchResourceEncryptionKey.cs` | Generated `(string, string)` ctor | Replaced with `(Uri, string, string)` ctor |
+| `SearchModelFactory.cs` | `IndexDocumentsResult(IReadOnlyList<IndexingResult>)` | Custom overload with additional params |
+
+**Danger:** If the generator renames/removes a suppressed member, `[CodeGenSuppress]` silently does nothing — the generated member reappears in the public API without a compile error. Audit with: `Select-String -Path src/**/*.cs -Pattern "CodeGenSuppress" -Recurse`.
 
 ---
 
-## Common Customization Patterns
+## Common C# Patterns
 
 ### 1. Rename a type
+Create a partial class with `[CodeGenType("OriginalName")]`.
 
-Create a new file with the desired class name in the correct namespace, apply `[CodeGenType]`.
+### 2. Rename a property
+Add `[CodeGenMember("OldName")]` to the new property declaration in the custom partial.
 
-```csharp
-// File: SearchClientOptions.cs
-[CodeGenType("DocumentsClientOptions")]
-public partial class SearchClientOptions : ClientOptions { }
-```
-
-The generator renames the emitted class; the original `Generated/SearchClientOptions.cs` will use `SearchClientOptions` as the class name.
-
----
-
-### 2. Rename a property / field
-
-Create a partial class, declare the new property with `[CodeGenMember("OldName")]`. The generator removes the original property declaration and uses the custom one for serialization.
-
-```csharp
-// File: SearchField.cs
-public partial class SearchField
-{
-    [CodeGenMember("Searchable")]
-    public bool? IsSearchable { get; set; }
-}
-```
-
-> **Constraint:** You can only remap types where the underlying JSON representation is the same (string↔TimeSpan, float↔int, string↔enum, string↔Uri). You cannot remap string↔bool.
-
----
-
-### 3. Replace a generated constructor
-
-Use `[CodeGenSuppress]` to drop the generated ctor, then define a custom one in the same partial class.
-
-```csharp
-[CodeGenSuppress(nameof(SearchIndexerDataSourceConnection),
-    typeof(string), typeof(SearchIndexerDataSourceType),
-    typeof(DataSourceCredentials), typeof(SearchIndexerDataContainer))]
-public partial class SearchIndexerDataSourceConnection
-{
-    public SearchIndexerDataSourceConnection(
-        string name,
-        SearchIndexerDataSourceType type,
-        string connectionString,
-        SearchIndexerDataContainer container)
-    {
-        Name = name ?? throw new ArgumentNullException(nameof(name));
-        ...
-    }
-}
-```
-
----
+### 3. Replace a constructor
+Use `[CodeGenSuppress]` to drop the generated ctor, then define a custom one.
 
 ### 4. Add an extra constructor
+Define in the custom partial without suppressing anything.
 
-Simply define the additional constructor in the partial class without suppressing anything.
+### 5. Change a property type
+Declare with `[CodeGenMember]` and provide a private backing field with conversion logic.
 
-```csharp
-// File: SearchIndex.cs
-public partial class SearchIndex
-{
-    public SearchIndex(string name) : this(name, new List<SearchField>()) { }
-}
-```
+### 6. Make a property internal
+Redefine with `internal` in the custom partial.
 
----
-
-### 5. Change a property type (type remapping)
-
-Declare the property with the new type in the custom partial. The serializer code will be regenerated to use the new type.
-
-```csharp
-// Expose VaultUri as Uri instead of string
-[CodeGenMember("VaultUri")]
-private string _vaultUri;
-
-public Uri VaultUri
-{
-    get => new Uri(_vaultUri);
-    private set => _vaultUri = value.AbsoluteUri;
-}
-```
-
-For lists: expose a materialized `IList<T>` and a private `[CodeGenMember]` property that joins/splits for the wire format:
-
-```csharp
-// VectorQuery.cs — expose Fields as IList<string>, send as comma-joined string
-public IList<string> Fields { get; internal set; } = new List<string>();
-
-[CodeGenMember("Fields")]
-internal string FieldsRaw
-{
-    get => Fields.CommaJoin();
-    set => Fields = InternalSearchExtensions.CommaSplit(value);
-}
-```
-
----
-
-### 6. Make a model property internal
-
-Simply redefine the property in the custom partial with `internal` accessor — the generator removes the public declaration.
-
-```csharp
-public partial class Model
-{
-    internal string SomeProperty { get; }
-}
-```
-
----
-
-### 7. Make a whole type internal
-
-Redefine the class with `internal` in the custom partial.
-
-```csharp
-internal partial class DataSourceCredentials { }
-```
-
----
+### 7. Make a type internal
+Redefine with `internal` in the custom partial.
 
 ### 8. Change a doc comment
-
-Redefine the member with the new XML doc in the custom partial. The generated declaration is suppressed automatically.
-
-```csharp
-public partial class SearchField
-{
-    /// <summary>
-    /// Gets or sets a value indicating whether the field is full-text searchable...
-    /// </summary>
-    [CodeGenMember("Searchable")]
-    public bool? IsSearchable { get; set; }
-}
-```
-
----
+Redefine the member with new XML doc in the custom partial.
 
 ### 9. Rename an enum
-
-Because enums cannot be `partial`, redefine the entire enum under a new name with `[CodeGenType]`. All member values must be copied.
-
-```csharp
-[CodeGenType("OriginalEnumName")]
-public enum NewEnumName
-{
-    Value1,
-    Value2,
-}
-```
-
----
+Redefine entire enum with `[CodeGenType("OriginalName")]` (enums can't be `partial`).
 
 ### 10. Rename an enum member
+Redefine entire enum, mark renamed member with `[CodeGenMember("OriginalMember")]`.
 
-Redefine the entire enum (enums can't be partial), marking the renamed member with `[CodeGenMember("OriginalMember")]`. Only the renamed member needs the attribute.
-
-```csharp
-public enum Colors
-{
-    Red,
-    Green,
-    [CodeGenMember("Blue")]
-    SkyBlue,
-}
-```
-
----
-
-### 11. Convert a closed enum to an extensible enum
-
+### 11. Convert closed enum → extensible struct
 Define an empty `partial struct` with the same name.
 
-```csharp
-public partial struct Colors { }
-```
-
-The generator produces a readonly struct with static factory members.
-
----
-
-### 12. Replace an entire generated member
-
-Define the member in the custom partial with the same name and parameters. The generator suppresses the generated version.
-
-```csharp
-// Custom implementation replaces generated method
-public partial class SearchClient
-{
-    public virtual Response<SearchResults<T>> Search<T>(
-        string searchText,
-        SearchOptions options = null,
-        CancellationToken cancellationToken = default)
-    {
-        // fully custom implementation
-    }
-}
-```
-
----
+### 12. Replace a generated method
+Define method with same name/params in the custom partial.
 
 ### 13. Add forwarding convenience overloads
+Use `[ForwardsClientCalls]` annotation.
 
-Add methods that accept a model object directly and forward to the generated method, annotated with `[ForwardsClientCalls]`.
-
-```csharp
-// SearchIndexClient.Aliases.cs
-[ForwardsClientCalls]
-public virtual Response<SearchAlias> CreateOrUpdateAlias(
-    SearchAlias alias,
-    bool onlyIfUnchanged = false,
-    CancellationToken cancellationToken = default) =>
-    CreateOrUpdateAlias(
-        alias.Name,
-        alias,
-        onlyIfUnchanged ? new MatchConditions { IfMatch = alias.ETag } : null,
-        cancellationToken);
-```
-
----
-
-### 14. Backward compat: keep a type deleted by regen
-
-When a new API version removes a type that existed in earlier versions, the generator deletes the `Generated/Models/TypeName.cs` file. The type must be preserved for callers using older `ServiceVersion` values.
-
-**Process:**
-1. After regeneration, use `git status` or `git diff --name-only` to identify deleted files.
-2. Use `git checkout HEAD -- path/to/DeletedType.cs` to restore the file from the previous commit.
-3. The restored file remains in `Generated/Models/` but is **not overwritten** by future regeneration (it won't appear in the spec anymore).
-4. Do not add a new `ServiceVersion`-based `#if` guard unless the type needs to be conditionally excluded — simple restoration is sufficient.
-
-Examples of retained types in the SDK:
-- `HybridSearch.cs`, `HybridCountAndFacetMode.cs`
-- `IndexerRuntime.cs`
-- `QueryLanguage.cs`, `QuerySpellerType.cs`, `QueryRewritesType.cs`
-- `SemanticQueryRewritesResultType.cs`, `KnowledgeRetrievalOutputMode.cs`
-- `QueryRewritesDebugInfo.cs`, `QueryRewritesValuesDebugInfo.cs`
+### 14. Backward compat: keep a deleted type
+See [architecture.md](./architecture.md#backwards-compatibility-for-removed-api-version-types) for the decision tree and git-tag verification process.
 
 ---
 
 ## Service Version Customizations
 
-`SearchClientOptions.cs` is the only custom file that defines the `ServiceVersion` enum. The generator emits the rest of the options class in `Generated/SearchClientOptions.cs`.
+`SearchClientOptions.cs` defines the `ServiceVersion` enum. See [architecture.md](./architecture.md#service-version-management) for the six locations that must stay in sync.
 
 ### Adding a new API version
-
-1. Add a new enum member in `SearchClientOptions.cs`:
-   ```csharp
-   V2026_04_01 = 6,
-   ```
-2. Update `LatestVersion`:
-   ```csharp
-   internal const ServiceVersion LatestVersion = ServiceVersion.V2026_04_01;
-   ```
-3. Update **all three** switch expressions in `InternalSearchExtensions` (same file):
-   - `Validate` — add the new case
-   - `ToVersionString` — map enum → `"2026-04-01"`
-   - `ToServiceVersion` — map `"2026-04-01"` → enum
-
-> **Rule**: All three switches must always be in sync. Missing a case causes a runtime `ArgumentOutOfRangeException`.
+1. Add enum member.
+2. Update `LatestVersion`.
+3. Add switch arms to all four switch expressions: `TryGetServiceVersion`, `Validate`, `ToVersionString`, `ToServiceVersion`.
 
 ### Removing an API version (rare)
-
-Remove the enum member and all three switch arms. Carefully audit callers. This is a **breaking change** and requires `ApiCompatBaseline.txt` suppression or a major version bump.
+Remove enum member and all four switch arms. This is a **breaking change** requiring `ApiCompatBaseline.txt` suppression or major version bump.
 
 ---
 
-## `SearchModelFactory` Customizations
+## SearchModelFactory Customizations
 
-`Models/SearchModelFactory.cs` is the custom partial for the factory. The generated `Generated/SearchModelFactory.cs` contains auto-generated factory methods for every model.
+The custom `SearchModelFactory` (`Models/SearchModelFactory.cs`) uses `[CodeGenType("DocumentsModelFactory")]` to extend the generated factory. Update rules:
 
-### When to edit the custom factory
-
-- A generated factory method's signature changes (parameters added/removed): update the custom overload with `[EditorBrowsable(EditorBrowsableState.Never)]` to keep backward compat.
-- A model is removed from the generated code: the factory method is also removed; restore it manually in the custom factory file.
-- A completely new custom factory method is needed for a type that doesn't have a generated one.
-
-### Pattern for backward-compat factory overloads
-
-```csharp
-// Keep the old factory signature when the generated one gains new required params
-[EditorBrowsable(EditorBrowsableState.Never)]
-public static IndexerExecutionResult IndexerExecutionResult(
-    IndexerExecutionStatus status,
-    string errorMessage,
-    ...)
-{
-    return IndexerExecutionResult(status, errorMessage, ..., default, default);
-}
-```
+- **New model with constructor changes**: If the generated factory method gains new parameters, add a new overload in the custom factory that accepts all parameters. Mark the old overload `[EditorBrowsable(Never)]` and have it forward to the new one.
+- **Only modify when the build fails**: The hand-written factory only needs changes when a factory method signature changes. Do not proactively add methods.
+- **Check after regen**: If `SearchModelFactory` build errors appear, check `Generated/SearchModelFactory.cs` for the new signature and update the custom overload accordingly.
 
 ---
 
 ## Identifying What Needs Updating After Regeneration
 
-After running `azsdk_package_generate_code`, a regeneration may:
-
 | Generator action | What to check |
 |---|---|
-| Added a new parameter to a generated internal ctor | Custom partial classes that call `new ModelType(...)` — update argument list |
-| Removed a property from a generated model | Custom partial classes that reference the property — remove references |
-| Deleted a generated model file | Restore via git if needed for backward compat; update `SearchModelFactory.cs` |
-| Renamed a generated member | Update `[CodeGenMember("...")]` attribute if the original name changed |
-| Changed a method signature on a generated client | Update any custom partial that wraps or overrides the same method |
-| Added new error types or status codes | Usually nothing needed unless custom code handles them |
+| Added parameter to generated ctor | Custom code calling `new ModelType(...)` — update argument list |
+| Removed property from model | Custom partials referencing it — remove references |
+| Deleted model file | Check backward compat rules in [architecture.md](./architecture.md#backwards-compatibility-for-removed-api-version-types) |
+| Renamed member | Update `[CodeGenMember("...")]` attribute |
+| Changed client method signature | Update custom partial that wraps/overrides it |
+| New `XxxType?` property whose doc comment shows a `\|` separator or `count-` / `threshold-` / `highlight-` / `maxcharlength-` parameter | Add a wrapper class + raw redirector — see [Compound / magic-string properties](#compound--magic-string-properties) |
 
-### Efficient workflow for finding all impacted custom files
+### Finding impacted files
 
 ```powershell
-# 1. Build to surface all compile errors
-cd sdk/search/Azure.Search.Documents
+# Build to surface compile errors (errors in src/ outside Generated/ = files to fix)
 dotnet build src/Azure.Search.Documents.csproj
 
-# 2. Group errors by file
-# Errors in src/Generated/ = ignore (auto-generated)
-# Errors in src/ outside Generated/ = the custom files to fix
+# Show deleted files
+git diff --diff-filter=D --name-only HEAD -- src/Generated/
 
-# 3. For deleted types — find what the generator removed
-git diff --name-only HEAD  # shows modified files
-git diff --diff-filter=D --name-only HEAD  # shows deleted files only
+# Find custom files referencing a moved/removed member
+Select-String -Path src/**/*.cs -Pattern "OldMemberName" -Exclude "Generated/**" -Recurse
 
-# 4. Restore deleted backward-compat types
-git checkout HEAD -- src/Generated/Models/DeletedType.cs
-```
-
-### Efficient find patterns for stale customization references
-
-```powershell
-# Find all custom files referencing a moved/removed generated member
-Select-String -Path src\**\*.cs -Pattern "OldMemberName" -Exclude "Generated\**" -Recurse
-
-# Find all custom factory overloads that need signature updates
-Select-String -Path src\Models\SearchModelFactory.cs -Pattern "public static"
-
-# Show all CodeGenMember references (to audit after a regen)
-Select-String -Path src\**\*.cs -Pattern "CodeGenMember" -Recurse
+# Audit all CodeGenMember references
+Select-String -Path src/**/*.cs -Pattern "CodeGenMember" -Recurse
 ```
 
 ---
 
-## Efficient Patterns for Updating Customizations
+## Efficient Update Patterns
 
-### When a generated constructor gains a new parameter
+### Constructor gains a new parameter
 
-Generated internal constructors gain new parameters as properties are added to the spec. Custom code that calls `new ModelType(a, b, c)` must be updated.
+Build will identify call sites. The fix depends on **what kind of call site** it is:
 
-**Strategy:**
-1. Build — the compiler will identify every call site.
-2. Add the new parameter(s) at the end of the argument list (usually `default` or `null` is appropriate for new optional properties in custom code).
-3. In `SearchModelFactory.cs`, keep old factory overloads with `[EditorBrowsable(Never)]` and forward to the updated signature.
+| Call site type | Correct fix | WRONG fix |
+|---|---|---|
+| **Factory method** (`SearchModelFactory`) | Add `default` for new params. Add `[EditorBrowsable(Never)]` backward-compat overload forwarding to the new signature. | — |
+| **Convenience wrapper** (client methods passing through to generated code) | Use named parameter syntax (`cancellationToken: cancellationToken`) to skip new optional params, or pass `default` for optional header/query params that the wrapper doesn't expose. | — |
+| **Custom deserializer** (`FacetResult.cs`, `SearchResults.cs`) | **Parse the new fields from JSON** and pass the deserialized values to the constructor. Mirror the generated serialization pattern. | Passing `null`/`default` — silently drops data at runtime with no compile error. |
 
-### When a generated constructor loses a parameter
+> **CRITICAL**: Custom deserializers are the most dangerous case. `null`/`default` compiles fine but causes silent data loss. Always check [architecture.md](./architecture.md#custom-deserialization-sites) for the inventory of custom deserialization sites.
 
-Parameters removed from generated internal ctors leave dangling arguments in custom call sites.
+### Constructor loses a parameter
+Build will identify call sites. Remove the argument. Set deleted property after construction if needed.
 
-**Strategy:**
-1. Build — the compiler identifies every call site.
-2. Remove the argument. If the deleted parameter represented a concept that still needs to be set, find the corresponding property and set it after construction.
+### Property renamed in spec
+Update `[CodeGenMember("OldName")]` → `[CodeGenMember("NewName")]`.
 
-### When a property is renamed in the spec (via TypeSpec `@@clientName`)
-
-The generator renames the property. Any `[CodeGenMember("OldName")]` attribute referencing it must be updated to `[CodeGenMember("NewName")]`.
-
-**Strategy:**
-```powershell
-# Identify all CodeGenMember usages to audit
-Select-String -Path src\**\*.cs -Pattern '\[CodeGenMember\(' -Recurse
-```
-
-Update the attribute argument to match the new generated name.
-
-### When a type is renamed in the spec (via TypeSpec `@@clientName`)
-
-The generator renames the class. Any `[CodeGenType("OldName")]` attribute pointing to it must be updated.
-
-### When removing a customization entirely
-
-If a property is now correctly named/typed in the generator, you can delete the `[CodeGenMember]` declaration from the custom partial. The generator will re-emit the member in `Generated/` on the next regen.
-
-**Checklist before removing a customization:**
-- [ ] Does the generated name/type match what the public API surface currently exposes?  
-- [ ] Are there any callers in custom code that use the old name?  
-- [ ] Does the `api/*.cs` snapshot need to be regenerated after the change?  
-- [ ] Does the `ApiCompatBaseline.txt` need updating?
-
----
-
-## Serialization Customizations
-
-### Custom serialized JSON key name
-
-Use `[CodeGenSerialization(nameof(Property), "jsonKeyName")]` on the class.
-
-```csharp
-[CodeGenSerialization(nameof(Name), "catName")]
-public partial class Cat { }
-```
-
-### Custom serialization/deserialization logic
-
-Use `SerializationValueHook` and `DeserializationValueHook` on `[CodeGenSerialization]`:
-
-```csharp
-[CodeGenSerialization(nameof(Name),
-    SerializationValueHook = nameof(WriteNameValue),
-    DeserializationValueHook = nameof(ReadNameValue))]
-public partial class Cat
-{
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private void WriteNameValue(Utf8JsonWriter writer) =>
-        writer.WriteStringValue(Name.ToUpper());
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void ReadNameValue(JsonProperty prop, ref string value) =>
-        value = prop.Value.GetString()?.ToLower();
-}
-```
-
-### Replace entire serialization method
-
-Define `void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)` or `internal static T DeserializeT(JsonElement)` in the custom partial. The generator omits these methods from the generated file.
-
----
-
-## File Placement Rules
-
-| Custom file type | Where to place it |
-|---|---|
-| Partial class extending a generated client | Next to or in subdirectory of the generated file (`Indexes/SearchIndexClient.cs`) |
-| Partial class extending a generated model | `Indexes/Models/` or `Models/` depending on its namespace |
-| Backward-compat retained type (formerly generated) | Stay in `Generated/Models/` — do not move it |
-| New type with no generated equivalent | In the appropriate namespace folder: `Indexes/`, `Models/`, `KnowledgeBases/`, etc. |
-| Semantic helpers (FieldBuilder, SearchFilter) | In the appropriate namespace folder (`Indexes/FieldBuilder.cs`, root `SearchFilter.cs`) |
-
----
-
-## Quick-Reference Checklist: After a Regeneration
-
-```
-[ ] dotnet build — resolve all compile errors in src/ (outside Generated/)
-[ ] Check git diff --diff-filter=D for deleted generated files
-[ ]   → Restore backward-compat types from git
-[ ]   → Remove corresponding factory overloads in SearchModelFactory.cs that can't compile
-[ ]   → Add [EditorBrowsable(Never)] shims in SearchModelFactory.cs for removed types
-[ ] Update SearchClientOptions.cs if a new ServiceVersion was introduced:
-[ ]   → Add enum member
-[ ]   → Update LatestVersion
-[ ]   → Update all three switch expressions (Validate, ToVersionString, ToServiceVersion)
-[ ] Update public API snapshots: eng/scripts/Export-API.ps1 search
-[ ] Update ApiCompatBaseline.txt if needed (new suppressions for intentional breaks)
-[ ] Run tests: dotnet test (playback mode)
-[ ] Review CHANGELOG.md entry
-```
+### Removing a customization
+If the generated name/type now matches the public API, delete the `[CodeGenMember]` declaration. Verify `api/*.cs` doesn't change unexpectedly.

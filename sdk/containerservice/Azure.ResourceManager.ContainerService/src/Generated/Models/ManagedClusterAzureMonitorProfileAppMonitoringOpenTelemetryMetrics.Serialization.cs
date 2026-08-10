@@ -13,7 +13,7 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Application Monitoring Open Telemetry Metrics Profile for Kubernetes Application Container Metrics. Collects OpenTelemetry metrics of the application using Azure Monitor OpenTelemetry based SDKs. See aka.ms/AzureMonitorApplicationMonitoring for an overview. </summary>
+    /// <summary> Application Monitoring Open Telemetry Metrics Profile for AKS. Collects OpenTelemetry metrics of the application using Azure Monitor OpenTelemetry based SDKs. See https://aka.ms/AKSAppMonitoringDocs and https://aka.ms/AzureMonitorApplicationMonitoring for an overview. </summary>
     public partial class ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics : IJsonModel<ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics>
     {
         /// <param name="data"> The data to parse. </param>
@@ -79,10 +79,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsAppMonitoringOpenTelemetryMetricsEnabled.Value);
             }
-            if (Optional.IsDefined(Port))
+            if (Optional.IsDefined(HttpPort))
             {
-                writer.WritePropertyName("port"u8);
-                writer.WriteNumberValue(Port.Value);
+                writer.WritePropertyName("httpPort"u8);
+                writer.WriteNumberValue(HttpPort.Value);
+            }
+            if (Optional.IsDefined(GrpcPort))
+            {
+                writer.WritePropertyName("grpcPort"u8);
+                writer.WriteNumberValue(GrpcPort.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +132,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             bool? isAppMonitoringOpenTelemetryMetricsEnabled = default;
-            long? port = default;
+            long? httpPort = default;
+            long? grpcPort = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -140,13 +146,22 @@ namespace Azure.ResourceManager.ContainerService.Models
                     isAppMonitoringOpenTelemetryMetricsEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("port"u8))
+                if (prop.NameEquals("httpPort"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    port = prop.Value.GetInt64();
+                    httpPort = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("grpcPort"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    grpcPort = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +169,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics(isAppMonitoringOpenTelemetryMetricsEnabled, port, additionalBinaryDataProperties);
+            return new ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics(isAppMonitoringOpenTelemetryMetricsEnabled, httpPort, grpcPort, additionalBinaryDataProperties);
         }
     }
 }

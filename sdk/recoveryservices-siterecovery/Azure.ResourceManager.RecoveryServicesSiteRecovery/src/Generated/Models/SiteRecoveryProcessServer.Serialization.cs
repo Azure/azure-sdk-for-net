@@ -10,14 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryProcessServer : IUtf8JsonSerializable, IJsonModel<SiteRecoveryProcessServer>
+    /// <summary> Details of the Process Server. </summary>
+    public partial class SiteRecoveryProcessServer : IJsonModel<SiteRecoveryProcessServer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryProcessServer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SiteRecoveryProcessServer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryProcessServer>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSiteRecoveryProcessServer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryProcessServer)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryProcessServer>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryProcessServer)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SiteRecoveryProcessServer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SiteRecoveryProcessServer IPersistableModel<SiteRecoveryProcessServer>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SiteRecoveryProcessServer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SiteRecoveryProcessServer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +70,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryProcessServer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryProcessServer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SiteRecoveryProcessServer)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
@@ -74,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("mobilityServiceUpdates"u8);
                 writer.WriteStartArray();
-                foreach (var item in MobilityServiceUpdates)
+                foreach (MobilityServiceUpdate item in MobilityServiceUpdates)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -169,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
-                foreach (var item in HealthErrors)
+                foreach (SiteRecoveryHealthError item in HealthErrors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -225,15 +265,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("marsRegistrationStatus"u8);
                 writer.WriteStringValue(MarsRegistrationStatus);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -242,22 +282,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        SiteRecoveryProcessServer IJsonModel<SiteRecoveryProcessServer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SiteRecoveryProcessServer IJsonModel<SiteRecoveryProcessServer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SiteRecoveryProcessServer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryProcessServer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryProcessServer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SiteRecoveryProcessServer)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSiteRecoveryProcessServer(document.RootElement, options);
         }
 
-        internal static SiteRecoveryProcessServer DeserializeSiteRecoveryProcessServer(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SiteRecoveryProcessServer DeserializeSiteRecoveryProcessServer(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -267,7 +312,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IPAddress ipAddress = default;
             string osType = default;
             string agentVersion = default;
-            DateTimeOffset? lastHeartbeat = default;
+            DateTimeOffset? lastHeartbeatReceivedOn = default;
             string versionStatus = default;
             IReadOnlyList<MobilityServiceUpdate> mobilityServiceUpdates = default;
             string hostId = default;
@@ -291,288 +336,286 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DateTimeOffset? agentExpireOn = default;
             SiteRecoveryVersionDetails agentVersionDetails = default;
             SiteRecoveryProtectionHealth? health = default;
-            DateTimeOffset? psStatsRefreshTime = default;
+            DateTimeOffset? psStatsRefreshOn = default;
             long? throughputUploadPendingDataInBytes = default;
             long? throughputInMBps = default;
             long? throughputInBytes = default;
             string throughputStatus = default;
             string marsCommunicationStatus = default;
             string marsRegistrationStatus = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("friendlyName"u8))
+                if (prop.NameEquals("friendlyName"u8))
                 {
-                    friendlyName = property.Value.GetString();
+                    friendlyName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipAddress"u8))
+                if (prop.NameEquals("ipAddress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ipAddress = IPAddress.Parse(property.Value.GetString());
+                    ipAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("osType"u8))
+                if (prop.NameEquals("osType"u8))
                 {
-                    osType = property.Value.GetString();
+                    osType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentVersion"u8))
+                if (prop.NameEquals("agentVersion"u8))
                 {
-                    agentVersion = property.Value.GetString();
+                    agentVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastHeartbeat"u8))
+                if (prop.NameEquals("lastHeartbeat"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastHeartbeat = property.Value.GetDateTimeOffset("O");
+                    lastHeartbeatReceivedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("versionStatus"u8))
+                if (prop.NameEquals("versionStatus"u8))
                 {
-                    versionStatus = property.Value.GetString();
+                    versionStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mobilityServiceUpdates"u8))
+                if (prop.NameEquals("mobilityServiceUpdates"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MobilityServiceUpdate> array = new List<MobilityServiceUpdate>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MobilityServiceUpdate.DeserializeMobilityServiceUpdate(item, options));
                     }
                     mobilityServiceUpdates = array;
                     continue;
                 }
-                if (property.NameEquals("hostId"u8))
+                if (prop.NameEquals("hostId"u8))
                 {
-                    hostId = property.Value.GetString();
+                    hostId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("machineCount"u8))
+                if (prop.NameEquals("machineCount"u8))
                 {
-                    machineCount = property.Value.GetString();
+                    machineCount = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("replicationPairCount"u8))
+                if (prop.NameEquals("replicationPairCount"u8))
                 {
-                    replicationPairCount = property.Value.GetString();
+                    replicationPairCount = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("systemLoad"u8))
+                if (prop.NameEquals("systemLoad"u8))
                 {
-                    systemLoad = property.Value.GetString();
+                    systemLoad = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("systemLoadStatus"u8))
+                if (prop.NameEquals("systemLoadStatus"u8))
                 {
-                    systemLoadStatus = property.Value.GetString();
+                    systemLoadStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cpuLoad"u8))
+                if (prop.NameEquals("cpuLoad"u8))
                 {
-                    cpuLoad = property.Value.GetString();
+                    cpuLoad = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cpuLoadStatus"u8))
+                if (prop.NameEquals("cpuLoadStatus"u8))
                 {
-                    cpuLoadStatus = property.Value.GetString();
+                    cpuLoadStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("totalMemoryInBytes"u8))
+                if (prop.NameEquals("totalMemoryInBytes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalMemoryInBytes = property.Value.GetInt64();
+                    totalMemoryInBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("availableMemoryInBytes"u8))
+                if (prop.NameEquals("availableMemoryInBytes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    availableMemoryInBytes = property.Value.GetInt64();
+                    availableMemoryInBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("memoryUsageStatus"u8))
+                if (prop.NameEquals("memoryUsageStatus"u8))
                 {
-                    memoryUsageStatus = property.Value.GetString();
+                    memoryUsageStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("totalSpaceInBytes"u8))
+                if (prop.NameEquals("totalSpaceInBytes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalSpaceInBytes = property.Value.GetInt64();
+                    totalSpaceInBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("availableSpaceInBytes"u8))
+                if (prop.NameEquals("availableSpaceInBytes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    availableSpaceInBytes = property.Value.GetInt64();
+                    availableSpaceInBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("spaceUsageStatus"u8))
+                if (prop.NameEquals("spaceUsageStatus"u8))
                 {
-                    spaceUsageStatus = property.Value.GetString();
+                    spaceUsageStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("psServiceStatus"u8))
+                if (prop.NameEquals("psServiceStatus"u8))
                 {
-                    psServiceStatus = property.Value.GetString();
+                    psServiceStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sslCertExpiryDate"u8))
+                if (prop.NameEquals("sslCertExpiryDate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sslCertExpireOn = property.Value.GetDateTimeOffset("O");
+                    sslCertExpireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("sslCertExpiryRemainingDays"u8))
+                if (prop.NameEquals("sslCertExpiryRemainingDays"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sslCertExpiryRemainingDays = property.Value.GetInt32();
+                    sslCertExpiryRemainingDays = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("osVersion"u8))
+                if (prop.NameEquals("osVersion"u8))
                 {
-                    osVersion = property.Value.GetString();
+                    osVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("healthErrors"u8))
+                if (prop.NameEquals("healthErrors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     healthErrors = array;
                     continue;
                 }
-                if (property.NameEquals("agentExpiryDate"u8))
+                if (prop.NameEquals("agentExpiryDate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    agentExpireOn = property.Value.GetDateTimeOffset("O");
+                    agentExpireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("agentVersionDetails"u8))
+                if (prop.NameEquals("agentVersionDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    agentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value, options);
+                    agentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("health"u8))
+                if (prop.NameEquals("health"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    health = new SiteRecoveryProtectionHealth(property.Value.GetString());
+                    health = new SiteRecoveryProtectionHealth(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("psStatsRefreshTime"u8))
+                if (prop.NameEquals("psStatsRefreshTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    psStatsRefreshTime = property.Value.GetDateTimeOffset("O");
+                    psStatsRefreshOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("throughputUploadPendingDataInBytes"u8))
+                if (prop.NameEquals("throughputUploadPendingDataInBytes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    throughputUploadPendingDataInBytes = property.Value.GetInt64();
+                    throughputUploadPendingDataInBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("throughputInMBps"u8))
+                if (prop.NameEquals("throughputInMBps"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    throughputInMBps = property.Value.GetInt64();
+                    throughputInMBps = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("throughputInBytes"u8))
+                if (prop.NameEquals("throughputInBytes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    throughputInBytes = property.Value.GetInt64();
+                    throughputInBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("throughputStatus"u8))
+                if (prop.NameEquals("throughputStatus"u8))
                 {
-                    throughputStatus = property.Value.GetString();
+                    throughputStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("marsCommunicationStatus"u8))
+                if (prop.NameEquals("marsCommunicationStatus"u8))
                 {
-                    marsCommunicationStatus = property.Value.GetString();
+                    marsCommunicationStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("marsRegistrationStatus"u8))
+                if (prop.NameEquals("marsRegistrationStatus"u8))
                 {
-                    marsRegistrationStatus = property.Value.GetString();
+                    marsRegistrationStatus = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SiteRecoveryProcessServer(
                 friendlyName,
                 id,
                 ipAddress,
                 osType,
                 agentVersion,
-                lastHeartbeat,
+                lastHeartbeatReceivedOn,
                 versionStatus,
                 mobilityServiceUpdates ?? new ChangeTrackingList<MobilityServiceUpdate>(),
                 hostId,
@@ -596,45 +639,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 agentExpireOn,
                 agentVersionDetails,
                 health,
-                psStatsRefreshTime,
+                psStatsRefreshOn,
                 throughputUploadPendingDataInBytes,
                 throughputInMBps,
                 throughputInBytes,
                 throughputStatus,
                 marsCommunicationStatus,
                 marsRegistrationStatus,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<SiteRecoveryProcessServer>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryProcessServer>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryProcessServer)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SiteRecoveryProcessServer IPersistableModel<SiteRecoveryProcessServer>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryProcessServer>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSiteRecoveryProcessServer(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryProcessServer)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SiteRecoveryProcessServer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

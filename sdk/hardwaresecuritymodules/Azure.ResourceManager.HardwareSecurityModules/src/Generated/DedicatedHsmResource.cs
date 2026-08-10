@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             TryGetApiVersion(ResourceType, out string dedicatedHsmApiVersion);
             _dedicatedHsmsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ResourceType.Namespace, Diagnostics);
-            _dedicatedHsmsRestClient = new DedicatedHsms(_dedicatedHsmsClientDiagnostics, Pipeline, Endpoint, dedicatedHsmApiVersion ?? "2025-03-31");
+            _dedicatedHsmsRestClient = new DedicatedHsms(_dedicatedHsmsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dedicatedHsmApiVersion ?? "2025-03-31");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 HttpMessage message = _dedicatedHsmsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DedicatedHsmPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HardwareSecurityModulesArmOperation<DedicatedHsmResource> operation = new HardwareSecurityModulesArmOperation<DedicatedHsmResource>(
-                    new DedicatedHsmOperationSource(Client),
+                    new DedicatedHsmResourceOperationSource(Client),
                     _dedicatedHsmsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 HttpMessage message = _dedicatedHsmsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DedicatedHsmPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HardwareSecurityModulesArmOperation<DedicatedHsmResource> operation = new HardwareSecurityModulesArmOperation<DedicatedHsmResource>(
-                    new DedicatedHsmOperationSource(Client),
+                    new DedicatedHsmResourceOperationSource(Client),
                     _dedicatedHsmsClientDiagnostics,
                     Pipeline,
                     message.Request,

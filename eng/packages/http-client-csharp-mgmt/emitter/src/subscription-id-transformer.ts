@@ -16,7 +16,7 @@
  * 2. Recursively traverse from the method's client back to root, removing subscriptionId from all client parameters
  */
 
-import { CodeModel, InputClient } from "@typespec/http-client-csharp";
+import type { CodeModel, InputClient } from "./code-model-types.js";
 import { traverseClient } from "./sdk-client-utils.js";
 
 // Local type definitions matching the runtime structure
@@ -177,8 +177,7 @@ function removeSubscriptionIdFromClientChain(client: InputClient): void {
  */
 function removeSubscriptionIdFromClient(client: InputClient): void {
   const clientParams = client.parameters as unknown as
-    | InputParameterLike[]
-    | undefined;
+    InputParameterLike[] | undefined;
   if (!clientParams) {
     return;
   }

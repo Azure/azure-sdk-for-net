@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
 
         private ClientDiagnostics GuestConfigurationAssignmentsClientDiagnostics => _guestConfigurationAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GuestConfigurationAssignments GuestConfigurationAssignmentsRestClient => _guestConfigurationAssignmentsRestClient ??= new GuestConfigurationAssignments(GuestConfigurationAssignmentsClientDiagnostics, Pipeline, Endpoint, "2024-04-05");
+        private GuestConfigurationAssignments GuestConfigurationAssignmentsRestClient => _guestConfigurationAssignmentsRestClient ??= new GuestConfigurationAssignments(GuestConfigurationAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-04-05");
 
         /// <summary>
         /// List all guest configuration assignments for a subscription.
@@ -55,14 +55,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestConfigurationVmAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GuestConfigurationVmAssignmentResource> GetGuestConfigurationVmAssignmentsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="GuestConfigurationAssignmentData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<GuestConfigurationAssignmentData> SubscriptionListAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVmAssignmentResource>(new GuestConfigurationAssignmentsSubscriptionListAsyncCollectionResultOfT(GuestConfigurationAssignmentsRestClient, Id.SubscriptionId, context, "MockableGuestConfigurationSubscriptionResource.GetGuestConfigurationVmAssignments"), data => new GuestConfigurationVmAssignmentResource(Client, data));
+            return new GuestConfigurationAssignmentsSubscriptionListAsyncCollectionResultOfT(GuestConfigurationAssignmentsRestClient, Id.SubscriptionId, context, "MockableGuestConfigurationSubscriptionResource.SubscriptionList");
         }
 
         /// <summary>
@@ -83,14 +83,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestConfigurationVmAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GuestConfigurationVmAssignmentResource> GetGuestConfigurationVmAssignments(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="GuestConfigurationAssignmentData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<GuestConfigurationAssignmentData> SubscriptionList(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVmAssignmentResource>(new GuestConfigurationAssignmentsSubscriptionListCollectionResultOfT(GuestConfigurationAssignmentsRestClient, Id.SubscriptionId, context, "MockableGuestConfigurationSubscriptionResource.GetGuestConfigurationVmAssignments"), data => new GuestConfigurationVmAssignmentResource(Client, data));
+            return new GuestConfigurationAssignmentsSubscriptionListCollectionResultOfT(GuestConfigurationAssignmentsRestClient, Id.SubscriptionId, context, "MockableGuestConfigurationSubscriptionResource.SubscriptionList");
         }
     }
 }

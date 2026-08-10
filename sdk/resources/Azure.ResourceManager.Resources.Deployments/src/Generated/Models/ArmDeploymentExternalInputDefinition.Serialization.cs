@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmDeploymentExternalInputDefinition : IUtf8JsonSerializable, IJsonModel<ArmDeploymentExternalInputDefinition>
+    /// <summary> Deployment external input definition for parameterization. </summary>
+    public partial class ArmDeploymentExternalInputDefinition : IJsonModel<ArmDeploymentExternalInputDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmDeploymentExternalInputDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExternalInputDefinition"/> for deserialization. </summary>
+        internal ArmDeploymentExternalInputDefinition()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ArmDeploymentExternalInputDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentExternalInputDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeArmDeploymentExternalInputDefinition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ArmDeploymentExternalInputDefinition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentExternalInputDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ArmDeploymentExternalInputDefinition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ArmDeploymentExternalInputDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ArmDeploymentExternalInputDefinition IPersistableModel<ArmDeploymentExternalInputDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ArmDeploymentExternalInputDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ArmDeploymentExternalInputDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,35 +74,34 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentExternalInputDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentExternalInputDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ArmDeploymentExternalInputDefinition)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Config))
             {
                 writer.WritePropertyName("config"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(Config);
+                writer.WriteRawValue(Config);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Config, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(Config))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -65,84 +110,56 @@ namespace Azure.ResourceManager.Resources.Models
             }
         }
 
-        ArmDeploymentExternalInputDefinition IJsonModel<ArmDeploymentExternalInputDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ArmDeploymentExternalInputDefinition IJsonModel<ArmDeploymentExternalInputDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ArmDeploymentExternalInputDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentExternalInputDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentExternalInputDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ArmDeploymentExternalInputDefinition)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeArmDeploymentExternalInputDefinition(document.RootElement, options);
         }
 
-        internal static ArmDeploymentExternalInputDefinition DeserializeArmDeploymentExternalInputDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ArmDeploymentExternalInputDefinition DeserializeArmDeploymentExternalInputDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string kind = default;
             BinaryData config = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("config"u8))
+                if (prop.NameEquals("config"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    config = BinaryData.FromString(property.Value.GetRawText());
+                    config = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ArmDeploymentExternalInputDefinition(kind, config, serializedAdditionalRawData);
+            return new ArmDeploymentExternalInputDefinition(kind, config, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ArmDeploymentExternalInputDefinition>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentExternalInputDefinition>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentExternalInputDefinition)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ArmDeploymentExternalInputDefinition IPersistableModel<ArmDeploymentExternalInputDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentExternalInputDefinition>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeArmDeploymentExternalInputDefinition(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentExternalInputDefinition)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ArmDeploymentExternalInputDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

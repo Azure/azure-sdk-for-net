@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     Properties = new ProfileProperties();
                 }
-                Properties.ProfileStatus = value.Value;
+                Properties.ProfileStatus = value;
             }
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     Properties = new ProfileProperties();
                 }
-                Properties.TrafficRoutingMethod = value.Value;
+                Properties.TrafficRoutingMethod = value;
             }
         }
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     Properties = new ProfileProperties();
                 }
-                Properties.TrafficViewEnrollmentStatus = value.Value;
+                Properties.TrafficViewEnrollmentStatus = value;
             }
         }
 
@@ -160,7 +160,24 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     Properties = new ProfileProperties();
                 }
-                Properties.MaxReturn = value.Value;
+                Properties.MaxReturn = value;
+            }
+        }
+
+        /// <summary> When record type is set, a traffic manager profile will allow only endpoints that match this type. </summary>
+        public TrafficManagerRecordType? RecordType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RecordType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProfileProperties();
+                }
+                Properties.RecordType = value;
             }
         }
     }

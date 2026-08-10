@@ -37,7 +37,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(HcrpConfigurationAssignmentResource.ResourceType, out string hcrpConfigurationAssignmentApiVersion);
             _hcrpConfigurationAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", HcrpConfigurationAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _hcrpConfigurationAssignmentsRestClient = new HcrpConfigurationAssignments(_hcrpConfigurationAssignmentsClientDiagnostics, Pipeline, Endpoint, hcrpConfigurationAssignmentApiVersion ?? "2024-05-01");
+            _hcrpConfigurationAssignmentsRestClient = new HcrpConfigurationAssignments(_hcrpConfigurationAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hcrpConfigurationAssignmentApiVersion ?? "2024-05-01");
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcrpConfigurationAssignmentsRestClient.CreateGetRequest(Id, hcrpConfigAssignmentName, context);
+                HttpMessage message = _hcrpConfigurationAssignmentsRestClient.CreateGetRequest(Id.ToString(), hcrpConfigAssignmentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HcrpConfigurationAssignmentData> response = Response.FromValue(HcrpConfigurationAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -122,7 +122,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcrpConfigurationAssignmentsRestClient.CreateGetRequest(Id, hcrpConfigAssignmentName, context);
+                HttpMessage message = _hcrpConfigurationAssignmentsRestClient.CreateGetRequest(Id.ToString(), hcrpConfigAssignmentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HcrpConfigurationAssignmentData> response = Response.FromValue(HcrpConfigurationAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcrpConfigurationAssignmentsRestClient.CreateGetRequest(Id, hcrpConfigAssignmentName, context);
+                HttpMessage message = _hcrpConfigurationAssignmentsRestClient.CreateGetRequest(Id.ToString(), hcrpConfigAssignmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HcrpConfigurationAssignmentData> response = default;
@@ -228,7 +228,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcrpConfigurationAssignmentsRestClient.CreateGetRequest(Id, hcrpConfigAssignmentName, context);
+                HttpMessage message = _hcrpConfigurationAssignmentsRestClient.CreateGetRequest(Id.ToString(), hcrpConfigAssignmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HcrpConfigurationAssignmentData> response = default;
@@ -285,7 +285,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcrpConfigurationAssignmentsRestClient.CreateGetRequest(Id, hcrpConfigAssignmentName, context);
+                HttpMessage message = _hcrpConfigurationAssignmentsRestClient.CreateGetRequest(Id.ToString(), hcrpConfigAssignmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HcrpConfigurationAssignmentData> response = default;
@@ -346,7 +346,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcrpConfigurationAssignmentsRestClient.CreateGetRequest(Id, hcrpConfigAssignmentName, context);
+                HttpMessage message = _hcrpConfigurationAssignmentsRestClient.CreateGetRequest(Id.ToString(), hcrpConfigAssignmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HcrpConfigurationAssignmentData> response = default;

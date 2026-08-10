@@ -9,7 +9,6 @@ using System;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The CreateSessionResponse. </summary>
     internal partial class CreateSessionResponse
     {
         /// <summary> Initializes a new instance of <see cref="CreateSessionResponse"/>. </summary>
@@ -21,7 +20,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="id"> A unique identifier for the created session. </param>
         /// <param name="expiration"> The time when the session will expire. The format follows RFC 1123. </param>
         /// <param name="authenticationType"> The type of authentication required to create the session. The only type currently supported is HMAC. </param>
-        /// <param name="credentials"></param>
+        /// <param name="credentials"> The credentials used to authorize subsequent requests in the session. </param>
         internal CreateSessionResponse(string id, DateTimeOffset? expiration, AuthenticationType? authenticationType, SessionCredentials credentials)
         {
             Id = id;
@@ -32,11 +31,14 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> A unique identifier for the created session. </summary>
         public string Id { get; }
+
         /// <summary> The time when the session will expire. The format follows RFC 1123. </summary>
         public DateTimeOffset? Expiration { get; }
+
         /// <summary> The type of authentication required to create the session. The only type currently supported is HMAC. </summary>
         public AuthenticationType? AuthenticationType { get; }
-        /// <summary> Gets the credentials. </summary>
+
+        /// <summary> The credentials used to authorize subsequent requests in the session. </summary>
         public SessionCredentials Credentials { get; }
     }
 }

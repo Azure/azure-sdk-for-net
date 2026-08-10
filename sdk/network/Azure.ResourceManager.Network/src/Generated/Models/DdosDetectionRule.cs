@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,32 +23,69 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="DdosDetectionRule"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="provisioningState"> The provisioning state of the DDoS detection rule. </param>
-        /// <param name="detectionMode"> The detection mode for the DDoS detection rule. </param>
-        /// <param name="trafficDetectionRule"> The traffic detection rule details. </param>
-        internal DdosDetectionRule(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, NetworkProvisioningState? provisioningState, DdosDetectionMode? detectionMode, TrafficDetectionRule trafficDetectionRule) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="properties"> Properties of the DDoS detection rule. </param>
+        internal DdosDetectionRule(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ETag? eTag, DdosDetectionRulePropertiesFormat properties) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            ProvisioningState = provisioningState;
-            DetectionMode = detectionMode;
-            TrafficDetectionRule = trafficDetectionRule;
+            ETag = eTag;
+            Properties = properties;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
+        /// <summary> Properties of the DDoS detection rule. </summary>
+        [WirePath("properties")]
+        internal DdosDetectionRulePropertiesFormat Properties { get; set; }
+
         /// <summary> The provisioning state of the DDoS detection rule. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The detection mode for the DDoS detection rule. </summary>
         [WirePath("properties.detectionMode")]
-        public DdosDetectionMode? DetectionMode { get; set; }
+        public DdosDetectionMode? DetectionMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetectionMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DdosDetectionRulePropertiesFormat();
+                }
+                Properties.DetectionMode = value;
+            }
+        }
+
         /// <summary> The traffic detection rule details. </summary>
         [WirePath("properties.trafficDetectionRule")]
-        public TrafficDetectionRule TrafficDetectionRule { get; set; }
+        public TrafficDetectionRule TrafficDetectionRule
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TrafficDetectionRule;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DdosDetectionRulePropertiesFormat();
+                }
+                Properties.TrafficDetectionRule = value;
+            }
+        }
     }
 }

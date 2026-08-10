@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Certificate configuration which consist of non-trusted intermediates and root certificates. </summary>
     public partial class CertificateConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CertificateConfiguration"/>. </summary>
         /// <param name="storeName"> The System.Security.Cryptography.x509certificates.StoreName certificate store location. Only Root and CertificateAuthority are valid locations. </param>
@@ -57,30 +29,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="certificatePassword"> Certificate Password. </param>
         /// <param name="storeName"> The System.Security.Cryptography.x509certificates.StoreName certificate store location. Only Root and CertificateAuthority are valid locations. </param>
         /// <param name="certificate"> Certificate information. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateConfiguration(string encodedCertificate, string certificatePassword, CertificateConfigurationStoreName storeName, CertificateInformation certificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CertificateConfiguration(string encodedCertificate, string certificatePassword, CertificateConfigurationStoreName storeName, CertificateInformation certificate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EncodedCertificate = encodedCertificate;
             CertificatePassword = certificatePassword;
             StoreName = storeName;
             Certificate = certificate;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CertificateConfiguration"/> for deserialization. </summary>
-        internal CertificateConfiguration()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Base64 Encoded certificate. </summary>
         [WirePath("encodedCertificate")]
         public string EncodedCertificate { get; set; }
+
         /// <summary> Certificate Password. </summary>
         [WirePath("certificatePassword")]
         public string CertificatePassword { get; set; }
+
         /// <summary> The System.Security.Cryptography.x509certificates.StoreName certificate store location. Only Root and CertificateAuthority are valid locations. </summary>
         [WirePath("storeName")]
         public CertificateConfigurationStoreName StoreName { get; set; }
+
         /// <summary> Certificate information. </summary>
         [WirePath("certificate")]
         public CertificateInformation Certificate { get; set; }

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             TryGetApiVersion(ResourceType, out string notificationHubApiVersion);
             _notificationHubResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", ResourceType.Namespace, Diagnostics);
-            _notificationHubResourcesRestClient = new NotificationHubResources(_notificationHubResourcesClientDiagnostics, Pipeline, Endpoint, notificationHubApiVersion ?? "2023-10-01-preview");
+            _notificationHubResourcesRestClient = new NotificationHubResources(_notificationHubResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, notificationHubApiVersion ?? "2023-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 else
                 {
                     NotificationHubData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    NotificationHubPatch patch = new NotificationHubPatch();
+                    NotificationHubPatch patch = new NotificationHubPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 else
                 {
                     NotificationHubData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    NotificationHubPatch patch = new NotificationHubPatch();
+                    NotificationHubPatch patch = new NotificationHubPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 else
                 {
                     NotificationHubData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    NotificationHubPatch patch = new NotificationHubPatch();
+                    NotificationHubPatch patch = new NotificationHubPatch(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<NotificationHubResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -757,7 +757,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 else
                 {
                     NotificationHubData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    NotificationHubPatch patch = new NotificationHubPatch();
+                    NotificationHubPatch patch = new NotificationHubPatch(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<NotificationHubResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 else
                 {
                     NotificationHubData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    NotificationHubPatch patch = new NotificationHubPatch();
+                    NotificationHubPatch patch = new NotificationHubPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -845,7 +845,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 else
                 {
                     NotificationHubData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    NotificationHubPatch patch = new NotificationHubPatch();
+                    NotificationHubPatch patch = new NotificationHubPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

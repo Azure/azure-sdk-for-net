@@ -7,7 +7,6 @@
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The CreateSessionConfiguration. </summary>
     internal partial class CreateSessionConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="CreateSessionConfiguration"/>. </summary>

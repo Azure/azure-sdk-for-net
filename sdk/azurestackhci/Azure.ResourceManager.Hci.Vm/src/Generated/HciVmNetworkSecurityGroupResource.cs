@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(ResourceType, out string hciVmNetworkSecurityGroupApiVersion);
             _networkSecurityGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", ResourceType.Namespace, Diagnostics);
-            _networkSecurityGroupsRestClient = new NetworkSecurityGroups(_networkSecurityGroupsClientDiagnostics, Pipeline, Endpoint, hciVmNetworkSecurityGroupApiVersion ?? "2025-09-01-preview");
+            _networkSecurityGroupsRestClient = new NetworkSecurityGroups(_networkSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmNetworkSecurityGroupApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _networkSecurityGroupsRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmNetworkSecurityGroupPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmNetworkSecurityGroupResource> operation = new VmArmOperation<HciVmNetworkSecurityGroupResource>(
-                    new HciVmNetworkSecurityGroupOperationSource(Client),
+                    new HciVmNetworkSecurityGroupResourceOperationSource(Client),
                     _networkSecurityGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _networkSecurityGroupsRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmNetworkSecurityGroupPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmNetworkSecurityGroupResource> operation = new VmArmOperation<HciVmNetworkSecurityGroupResource>(
-                    new HciVmNetworkSecurityGroupOperationSource(Client),
+                    new HciVmNetworkSecurityGroupResourceOperationSource(Client),
                     _networkSecurityGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,

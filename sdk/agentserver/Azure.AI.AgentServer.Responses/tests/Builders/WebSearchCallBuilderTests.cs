@@ -70,7 +70,7 @@ public class WebSearchCallBuilderTests
         var evt = builder.EmitAdded();
         var item = XAssert.IsType<OutputItemWebSearchToolCall>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
-        Assert.That(item.Status, Is.EqualTo(OutputItemWebSearchToolCallStatus.InProgress));
+        Assert.That(item.Status, Is.EqualTo(ItemWebSearchToolCallStatus.InProgress));
     }
 
     [Test]
@@ -138,7 +138,7 @@ public class WebSearchCallBuilderTests
         var evt = builder.EmitDone();
         var item = XAssert.IsType<OutputItemWebSearchToolCall>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
-        Assert.That(item.Status, Is.EqualTo(OutputItemWebSearchToolCallStatus.Completed));
+        Assert.That(item.Status, Is.EqualTo(ItemWebSearchToolCallStatus.Completed));
     }
 
     // ── Sequence numbers ──────────────────────────────────────

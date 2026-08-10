@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.ContainerRegistry.Models;
 using Azure.ResourceManager.Models;
 
@@ -46,6 +45,7 @@ namespace Azure.ResourceManager.ContainerRegistry
     [ModelReaderWriterBuildable(typeof(ContainerRegistryArchiveVersionData))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryArchiveVersionResource))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryAuthCredential))]
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryCacheAuthentication))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryCacheRuleData))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryCacheRulePatch))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryCacheRuleResource))]
@@ -110,6 +110,7 @@ namespace Azure.ResourceManager.ContainerRegistry
     [ModelReaderWriterBuildable(typeof(ContainerRegistryTrustPolicy))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryUsage))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryUsageListResult))]
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryVirtualNetworkRule))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryWebhookCallbackConfig))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryWebhookCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryWebhookData))]
@@ -131,6 +132,7 @@ namespace Azure.ResourceManager.ContainerRegistry
     [ModelReaderWriterBuildable(typeof(ExportPipelineProperties))]
     [ModelReaderWriterBuildable(typeof(ExportPolicy))]
     [ModelReaderWriterBuildable(typeof(GarbageCollectionProperties))]
+    [ModelReaderWriterBuildable(typeof(GoogleArtifactRegistryCacheAuthentication))]
     [ModelReaderWriterBuildable(typeof(ImportPipelineListResult))]
     [ModelReaderWriterBuildable(typeof(ImportPipelineProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
@@ -150,7 +152,6 @@ namespace Azure.ResourceManager.ContainerRegistry
     [ModelReaderWriterBuildable(typeof(ReplicationListResult))]
     [ModelReaderWriterBuildable(typeof(ReplicationProperties))]
     [ModelReaderWriterBuildable(typeof(ReplicationUpdateParametersProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScopeMapData))]
     [ModelReaderWriterBuildable(typeof(ScopeMapListResult))]
     [ModelReaderWriterBuildable(typeof(ScopeMapPatch))]
@@ -161,6 +162,7 @@ namespace Azure.ResourceManager.ContainerRegistry
     [ModelReaderWriterBuildable(typeof(TokenListResult))]
     [ModelReaderWriterBuildable(typeof(TokenProperties))]
     [ModelReaderWriterBuildable(typeof(TokenUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(UnknownContainerRegistryCacheAuthentication))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WebhookListResult))]
     [ModelReaderWriterBuildable(typeof(WebhookProperties))]

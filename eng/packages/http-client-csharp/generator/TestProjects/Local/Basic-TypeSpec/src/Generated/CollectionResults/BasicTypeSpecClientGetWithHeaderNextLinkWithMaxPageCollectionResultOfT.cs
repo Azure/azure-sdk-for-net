@@ -48,12 +48,16 @@ namespace BasicTypeSpec
                     yield break;
                 }
                 ListWithHeaderNextLinkWithMaxPageResponse result = (ListWithHeaderNextLinkWithMaxPageResponse)response;
-                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)result.Things, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (response.Headers.TryGetValue("next", out string value) && !string.IsNullOrEmpty(value))
                 {
                     nextPage = new Uri(value, UriKind.RelativeOrAbsolute);
                 }
                 else
+                {
+                    nextPage = null;
+                }
+                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)result.Things, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                if (nextPage == null)
                 {
                     yield break;
                 }

@@ -155,5 +155,147 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Assert.AreEqual(uri, fileResource.ShareFileClient.Uri);
             AssertCredPresent(fileResource.ShareFileClient.ClientConfiguration, credType);
         }
+
+        #region URI Parsing Tests
+        private const string DefaultSnapshot = "2024-01-01T00:00:00.0000000Z";
+        private const string DefaultFileUri = "https://account.file.core.windows.net/share/file";
+
+        [Test]
+        public async Task ParseUri_SnapshotOnly_NullOptions()
+        {
+            // Arrange
+            ShareFilesStorageResourceProvider provider = new ShareFilesStorageResourceProvider();
+            Uri fileUri = new Uri($"{DefaultFileUri}?sharesnapshot={DefaultSnapshot}");
+
+            // Act
+            StorageResource resource = await provider.FromFileAsync(fileUri, options: null);
+
+            // Assert
+            Assert.IsNotNull(resource);
+            ShareFileStorageResource shareFile = resource as ShareFileStorageResource;
+            Assert.IsNotNull(shareFile);
+        }
+
+        [Test]
+        public async Task ParseUri_SnapshotOnly_ExistingOptions()
+        {
+            // Arrange
+            ShareFilesStorageResourceProvider provider = new ShareFilesStorageResourceProvider();
+            Uri fileUri = new Uri($"{DefaultFileUri}?sharesnapshot={DefaultSnapshot}");
+            ShareFileStorageResourceOptions options = new ShareFileStorageResourceOptions();
+
+            // Act
+            StorageResource resource = await provider.FromFileAsync(fileUri, options);
+
+            // Assert
+            Assert.IsNotNull(resource);
+            ShareFileStorageResource shareFile = resource as ShareFileStorageResource;
+            Assert.IsNotNull(shareFile);
+        }
+
+        [Test]
+        public async Task ParseUri_MatchingSnapshot_ShouldNotThrow()
+        {
+            // Arrange
+            ShareFilesStorageResourceProvider provider = new ShareFilesStorageResourceProvider();
+            Uri fileUri = new Uri($"{DefaultFileUri}?sharesnapshot={DefaultSnapshot}");
+            ShareFileStorageResourceOptions options = new ShareFileStorageResourceOptions
+            {
+                Snapshot = DefaultSnapshot
+            };
+
+            // Act & Assert - Should not throw
+            StorageResource resource = await provider.FromFileAsync(fileUri, options);
+            Assert.IsNotNull(resource);
+        }
+
+        [Test]
+        public void ParseUri_MismatchSnapshot_ShouldThrow()
+        {
+            // Arrange
+            ShareFilesStorageResourceProvider provider = new ShareFilesStorageResourceProvider();
+            Uri fileUri = new Uri($"{DefaultFileUri}?sharesnapshot={DefaultSnapshot}");
+            ShareFileStorageResourceOptions options = new ShareFileStorageResourceOptions
+            {
+                Snapshot = "2025-01-01T00:00:00.0000000Z" // Different snapshot
+            };
+
+            // Act & Assert
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(
+                async () => await provider.FromFileAsync(fileUri, options));
+
+            Assert.That(ex.Message, Does.Contain("Snapshot mismatch"));
+            Assert.That(ex.Message, Does.Contain(DefaultSnapshot));
+        }
+
+        [Test]
+        public async Task ParseUri_NoSnapshot_ReturnsOriginalOptions()
+        {
+            // Arrange
+            ShareFilesStorageResourceProvider provider = new ShareFilesStorageResourceProvider();
+            Uri fileUri = new Uri(DefaultFileUri); // No snapshot
+            ShareFileStorageResourceOptions options = new ShareFileStorageResourceOptions();
+
+            // Act
+            StorageResource resource = await provider.FromFileAsync(fileUri, options);
+
+            // Assert
+            Assert.IsNotNull(resource);
+        }
+
+        [Test]
+        public async Task ParseUri_Directory_SnapshotOnly_NullOptions()
+        {
+            // Arrange
+            ShareFilesStorageResourceProvider provider = new ShareFilesStorageResourceProvider();
+            string directoryUri = "https://account.file.core.windows.net/share/directory";
+            Uri dirUri = new Uri($"{directoryUri}?sharesnapshot={DefaultSnapshot}");
+
+            // Act
+            StorageResource resource = await provider.FromDirectoryAsync(dirUri, options: null);
+
+            // Assert
+            Assert.IsNotNull(resource);
+            ShareDirectoryStorageResourceContainer shareDir = resource as ShareDirectoryStorageResourceContainer;
+            Assert.IsNotNull(shareDir);
+        }
+
+        [Test]
+        public async Task ParseUri_Directory_MatchingSnapshot_ShouldNotThrow()
+        {
+            // Arrange
+            ShareFilesStorageResourceProvider provider = new ShareFilesStorageResourceProvider();
+            string directoryUri = "https://account.file.core.windows.net/share/directory";
+            Uri dirUri = new Uri($"{directoryUri}?sharesnapshot={DefaultSnapshot}");
+            ShareFileStorageResourceOptions options = new ShareFileStorageResourceOptions
+            {
+                Snapshot = DefaultSnapshot
+            };
+
+            // Act & Assert - Should not throw
+            StorageResource resource = await provider.FromDirectoryAsync(dirUri, options);
+            Assert.IsNotNull(resource);
+        }
+
+        [Test]
+        public void ParseUri_Directory_MismatchSnapshot_ShouldThrow()
+        {
+            // Arrange
+            ShareFilesStorageResourceProvider provider = new ShareFilesStorageResourceProvider();
+            string directoryUri = "https://account.file.core.windows.net/share/directory";
+            Uri dirUri = new Uri($"{directoryUri}?sharesnapshot={DefaultSnapshot}");
+            ShareFileStorageResourceOptions options = new ShareFileStorageResourceOptions
+            {
+                Snapshot = "2025-01-01T00:00:00.0000000Z" // Different snapshot
+            };
+
+            // Act & Assert
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(
+                async () => await provider.FromDirectoryAsync(dirUri, options));
+
+            Assert.That(ex.Message, Does.Contain("Snapshot mismatch"));
+            Assert.That(ex.Message, Does.Contain(DefaultSnapshot));
+        }
+        #endregion
     }
 }

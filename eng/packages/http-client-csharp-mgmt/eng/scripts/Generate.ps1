@@ -53,7 +53,7 @@ if ($null -eq $filter) {
     foreach ($project in $testProjects) {
         $specPath = "TestProjects/Local/$($project.Folder)"
         $mgmtLaunchSettings["profiles"].Add($project.FilterName, @{
-            "commandLineArgs" = "`$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll `$(SolutionDir)/$specPath -g MgmtClientGenerator"
+            "commandLineArgs" = "`$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll `$(SolutionDir)/$specPath -g ManagementClientGenerator"
             "commandName" = "Executable"
             "executablePath" = "dotnet"
         })
@@ -79,4 +79,13 @@ if ($null -eq $filter) {
     $mgmtLaunchSettingsPath = Join-Path $mgmtSolutionDir "Azure.Generator.Management" "src" "Properties" "launchSettings.json"
     # Write the settings to JSON and normalize line endings to Unix style (LF)
     $mgmtSortedLaunchSettings | ConvertTo-Json | ForEach-Object { ($_ -replace "`r`n", "`n") + "`n" } | Set-Content -NoNewline $mgmtLaunchSettingsPath
+}
+
+if (-not $LaunchOnly) {
+    Write-Host "Regenerating emitter docs" -ForegroundColor Cyan
+    Invoke "npm run regen-docs:only" $mgmtPackageRoot
+
+    if ($LASTEXITCODE -ne 0) {
+        exit $LASTEXITCODE
+    }
 }

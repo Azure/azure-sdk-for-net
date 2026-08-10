@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Definition of the dsc node report type. </summary>
     public partial class DscNodeReport
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DscNodeReport"/>. </summary>
         internal DscNodeReport()
@@ -74,8 +46,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="ipV6Addresses"> Gets or sets the IPv6 address of the node that sent the report. </param>
         /// <param name="numberOfResources"> Gets or sets the number of resource in the node report. </param>
         /// <param name="rawErrors"> Gets or sets the unparsed errors for the node report. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DscNodeReport(DateTimeOffset? endOn, DateTimeOffset? lastModifiedOn, DateTimeOffset? startOn, string dscNodeReportType, string reportId, string status, string refreshMode, string rebootRequested, string reportFormatVersion, string configurationVersion, string id, IReadOnlyList<DscReportError> errors, IReadOnlyList<DscReportResource> resources, DscMetaConfiguration metaConfiguration, string hostName, IReadOnlyList<string> ipV4Addresses, IReadOnlyList<string> ipV6Addresses, int? numberOfResources, string rawErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DscNodeReport(DateTimeOffset? endOn, DateTimeOffset? lastModifiedOn, DateTimeOffset? startOn, string dscNodeReportType, string reportId, string status, string refreshMode, string rebootRequested, string reportFormatVersion, string configurationVersion, string id, IReadOnlyList<DscReportError> errors, IReadOnlyList<DscReportResource> resources, DscMetaConfiguration metaConfiguration, string hostName, IReadOnlyList<string> ipV4Addresses, IReadOnlyList<string> ipV6Addresses, int? numberOfResources, string rawErrors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EndOn = endOn;
             LastModifiedOn = lastModifiedOn;
@@ -96,45 +68,63 @@ namespace Azure.ResourceManager.Automation.Models
             IPV6Addresses = ipV6Addresses;
             NumberOfResources = numberOfResources;
             RawErrors = rawErrors;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the end time of the node report. </summary>
         public DateTimeOffset? EndOn { get; }
+
         /// <summary> Gets or sets the lastModifiedTime of the node report. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
+
         /// <summary> Gets or sets the start time of the node report. </summary>
         public DateTimeOffset? StartOn { get; }
+
         /// <summary> Gets or sets the type of the node report. </summary>
         public string DscNodeReportType { get; }
+
         /// <summary> Gets or sets the id of the node report. </summary>
         public string ReportId { get; }
+
         /// <summary> Gets or sets the status of the node report. </summary>
         public string Status { get; }
+
         /// <summary> Gets or sets the refreshMode of the node report. </summary>
         public string RefreshMode { get; }
+
         /// <summary> Gets or sets the rebootRequested of the node report. </summary>
         public string RebootRequested { get; }
+
         /// <summary> Gets or sets the reportFormatVersion of the node report. </summary>
         public string ReportFormatVersion { get; }
+
         /// <summary> Gets or sets the configurationVersion of the node report. </summary>
         public string ConfigurationVersion { get; }
+
         /// <summary> Gets or sets the id. </summary>
         public string Id { get; }
+
         /// <summary> Gets or sets the errors for the node report. </summary>
         public IReadOnlyList<DscReportError> Errors { get; }
+
         /// <summary> Gets or sets the resource for the node report. </summary>
         public IReadOnlyList<DscReportResource> Resources { get; }
+
         /// <summary> Gets or sets the metaConfiguration of the node at the time of the report. </summary>
         public DscMetaConfiguration MetaConfiguration { get; }
+
         /// <summary> Gets or sets the hostname of the node that sent the report. </summary>
         public string HostName { get; }
+
         /// <summary> Gets or sets the IPv4 address of the node that sent the report. </summary>
         public IReadOnlyList<string> IPV4Addresses { get; }
+
         /// <summary> Gets or sets the IPv6 address of the node that sent the report. </summary>
         public IReadOnlyList<string> IPV6Addresses { get; }
+
         /// <summary> Gets or sets the number of resource in the node report. </summary>
         public int? NumberOfResources { get; }
+
         /// <summary> Gets or sets the unparsed errors for the node report. </summary>
         public string RawErrors { get; }
     }

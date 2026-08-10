@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>ResourceHierarchyTool</RootNamespace>
+    <AssemblyName>ResourceHierarchyTool</AssemblyName>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <!-- Isolate from repo-level Directory.Build.* conventions; this tool is built
+         independently of the SDKs. CPM is wired in via the local
+         Directory.Build.props so package versions stay in sync with the rest
+         of the repo. -->
+    <ImportDirectoryBuildProps>true</ImportDirectoryBuildProps>
+    <ImportDirectoryBuildTargets>false</ImportDirectoryBuildTargets>
+  </PropertyGroup>
+  <ItemGroup>
+    <!--
+      Bring Azure.ResourceManager + Azure.Core (and their transitive closure)
+      into the tool's bin folder so the AssemblyResolve handler can satisfy
+      typical Azure.ResourceManager.<RP>.dll references without the caller
+      having to supply probe directories. The resolver returns whatever it
+      finds by short name, so any minor version drift between the target
+      DLL's referenced version and the version restored here is tolerated.
+      Versions come from the repo central package management file.
+    -->
+    <PackageReference Include="Azure.ResourceManager" />
+    <PackageReference Include="Azure.Core" />
+  </ItemGroup>
+</Project>

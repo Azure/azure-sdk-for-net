@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageMover.Models;
 
@@ -19,6 +18,7 @@ namespace Azure.ResourceManager.StorageMover
     [ModelReaderWriterBuildable(typeof(AgentList))]
     [ModelReaderWriterBuildable(typeof(AgentProperties))]
     [ModelReaderWriterBuildable(typeof(AgentUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(AzureKeyVaultS3WithHmacCredentials))]
     [ModelReaderWriterBuildable(typeof(AzureKeyVaultSmbCredentials))]
     [ModelReaderWriterBuildable(typeof(AzureMultiCloudConnectorEndpointProperties))]
     [ModelReaderWriterBuildable(typeof(AzureMultiCloudConnectorEndpointUpdateProperties))]
@@ -52,7 +52,8 @@ namespace Azure.ResourceManager.StorageMover
     [ModelReaderWriterBuildable(typeof(ProjectList))]
     [ModelReaderWriterBuildable(typeof(ProjectProperties))]
     [ModelReaderWriterBuildable(typeof(ProjectUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(S3WithHmacEndpointProperties))]
+    [ModelReaderWriterBuildable(typeof(S3WithHmacEndpointUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ScheduleRecurrence))]
     [ModelReaderWriterBuildable(typeof(ScheduleTime))]
     [ModelReaderWriterBuildable(typeof(ScheduleWeeklyRecurrence))]
@@ -80,6 +81,8 @@ namespace Azure.ResourceManager.StorageMover
     [ModelReaderWriterBuildable(typeof(StorageMoverProjectResource))]
     [ModelReaderWriterBuildable(typeof(StorageMoverProperties))]
     [ModelReaderWriterBuildable(typeof(StorageMoverResource))]
+    [ModelReaderWriterBuildable(typeof(StorageMoverScheduleInfo))]
+    [ModelReaderWriterBuildable(typeof(StorageMoverSchedulerTime))]
     [ModelReaderWriterBuildable(typeof(StorageMoverUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetEndpoint))]

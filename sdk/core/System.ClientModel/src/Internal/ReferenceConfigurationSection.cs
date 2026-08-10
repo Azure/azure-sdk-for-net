@@ -27,7 +27,7 @@ internal readonly struct ReferenceConfigurationSection : IConfigurationSection
         _section = config.GetSection(sectionName);
     }
 
-    private ReferenceConfigurationSection(IConfiguration config, IConfigurationSection section)
+    internal ReferenceConfigurationSection(IConfiguration config, IConfigurationSection section)
     {
         _config = config;
         _section = section;
@@ -48,6 +48,8 @@ internal readonly struct ReferenceConfigurationSection : IConfigurationSection
         get => DereferenceValue(_section.Value, null);
         set => _section.Value = value;
     }
+
+    internal IConfiguration Configuration => _config;
 
     public IEnumerable<IConfigurationSection> GetChildren()
     {

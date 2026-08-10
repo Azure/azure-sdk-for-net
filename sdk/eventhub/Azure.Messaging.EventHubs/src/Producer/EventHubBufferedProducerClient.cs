@@ -1404,7 +1404,8 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <param name="partitionState">The state of publishing for the partition.</param>
         /// <param name="releaseGuard"><c>true</c> if the <see cref="PartitionPublishingState.PartitionGuard" /> should be released after publishing; otherwise, <c>false</c>.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel publishing.</param>
+        /// <param name="publishCancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel publishing.</param>
+        /// <param name="batchingWaitCancellationToken">A <see cref="CancellationToken"/> instance to signal that waiting for additional events to batch should stop without canceling publishing.</param>
         ///
         /// <remarks>
         ///   This method has responsibility for invoking the event handlers to communicate
@@ -1413,7 +1414,8 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         internal virtual async Task PublishBatchToPartition(PartitionPublishingState partitionState,
                                                             bool releaseGuard,
-                                                            CancellationToken cancellationToken)
+                                                            CancellationToken publishCancellationToken,
+                                                            CancellationToken batchingWaitCancellationToken)
         {
             var operationId = GenerateOperationId();
             var partitionId = partitionState.PartitionId;
@@ -1433,7 +1435,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 // The wait time constraint should not consider creating the batch; start tracking after the batch is available to build.
 
-                batch = await _producer.CreateBatchAsync(new CreateBatchOptions { PartitionId = partitionId }, cancellationToken).ConfigureAwait(false);
+                batch = await _producer.CreateBatchAsync(new CreateBatchOptions { PartitionId = partitionId }, publishCancellationToken).ConfigureAwait(false);
                 publishWatch = ValueStopwatch.StartNew();
 
                 // Build the batch, stopping either when it is full or when the allowable wait time
@@ -1467,7 +1469,7 @@ namespace Azure.Messaging.EventHubs.Producer
                                 // Handler invocation is performed with a guarantee not to throw; exceptions in the handler are logged
                                 // as part of the invocation.
 
-                                await SafeInvokeOnSendFailedAsync(new List<EventData>(1) { currentEvent }, exception, partitionId, cancellationToken).ConfigureAwait(false);
+                                await SafeInvokeOnSendFailedAsync(new List<EventData>(1) { currentEvent }, exception, partitionId, publishCancellationToken).ConfigureAwait(false);
                                 return;
                             }
 
@@ -1491,8 +1493,20 @@ namespace Azure.Messaging.EventHubs.Producer
 
                         if (ShouldWait(remainingWaitTime, MinimumPublishingWaitInterval))
                         {
-                            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                            await Task.Delay(delayInterval, cancellationToken).ConfigureAwait(false);
+                            publishCancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                            try
+                            {
+                                await Task.Delay(delayInterval, batchingWaitCancellationToken).ConfigureAwait(false);
+                            }
+                            catch (OperationCanceledException) when (batchingWaitCancellationToken.IsCancellationRequested)
+                            {
+                                publishCancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                                // The batching wait was interrupted by a graceful stop, such as FlushAsync or CloseAsync(true).
+                                // Stop waiting for a fuller batch and publish what has already been gathered.
+                                break;
+                            }
                         }
                     }
 
@@ -1509,8 +1523,8 @@ namespace Azure.Messaging.EventHubs.Producer
                     // Handler invocation is performed with a guarantee not to throw; exceptions in the handler are logged
                     // as part of the invocation.
 
-                    await SendBatchAsync(batch, partitionId, operationId, cancellationToken).ConfigureAwait(false);
-                    await SafeInvokeOnSendSucceededAsync(batchEvents, partitionId, cancellationToken).ConfigureAwait(false);
+                    await SendBatchAsync(batch, partitionId, operationId, publishCancellationToken).ConfigureAwait(false);
+                    await SafeInvokeOnSendSucceededAsync(batchEvents, partitionId, publishCancellationToken).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -1522,7 +1536,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 if (batch?.Count > 0)
                 {
-                    await SafeInvokeOnSendFailedAsync(batchEvents, ex, partitionId, cancellationToken).ConfigureAwait(false);
+                    await SafeInvokeOnSendFailedAsync(batchEvents, ex, partitionId, publishCancellationToken).ConfigureAwait(false);
                 }
             }
             finally
@@ -2257,7 +2271,7 @@ namespace Azure.Messaging.EventHubs.Producer
                             {
                                 // Responsibility for releasing the guard semaphore is passed to the task.
 
-                                activeTasks.Add(PublishBatchToPartition(partitionState, releaseGuard: true, activeOperationCancellationSource.Token));
+                                activeTasks.Add(PublishBatchToPartition(partitionState, releaseGuard: true, activeOperationCancellationSource.Token, cancellationToken));
                             }
 
                             // If there are no events in the buffer, avoid a tight loop by blocking to wait for events to be enqueued

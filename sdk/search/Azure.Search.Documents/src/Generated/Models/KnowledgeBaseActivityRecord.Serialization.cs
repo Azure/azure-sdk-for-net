@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Base type for activity records. Tracks execution details, timing, and errors for knowledge base operations.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseAgenticReasoningActivityRecord"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseSearchIndexActivityRecord"/>, <see cref="KnowledgeBaseAzureBlobActivityRecord"/>, <see cref="KnowledgeBaseIndexedSharePointActivityRecord"/>, <see cref="KnowledgeBaseIndexedOneLakeActivityRecord"/>, <see cref="KnowledgeBaseWebActivityRecord"/>, <see cref="KnowledgeBaseRemoteSharePointActivityRecord"/>, <see cref="KnowledgeBaseWorkIQActivityRecord"/>, <see cref="KnowledgeBaseFabricDataAgentActivityRecord"/>, <see cref="KnowledgeBaseFabricOntologyActivityRecord"/>, <see cref="KnowledgeBaseMcpServerActivityRecord"/>, <see cref="KnowledgeBaseFileActivityRecord"/>, <see cref="KnowledgeBaseIndexedSqlActivityRecord"/>, <see cref="KnowledgeBaseModelQueryPlanningActivityRecord"/>, <see cref="KnowledgeBaseModelAnswerSynthesisActivityRecord"/>, <see cref="KnowledgeBaseModelWebSummarizationActivityRecord"/>, and <see cref="KnowledgeBaseAgenticReasoningActivityRecord"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownKnowledgeBaseActivityRecord))]
     public abstract partial class KnowledgeBaseActivityRecord : IJsonModel<KnowledgeBaseActivityRecord>
@@ -96,6 +96,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error, options);
             }
+            if (Optional.IsDefined(Warning))
+            {
+                writer.WritePropertyName("warning"u8);
+                writer.WriteStringValue(Warning);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -142,6 +147,36 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "searchIndex":
+                        return KnowledgeBaseSearchIndexActivityRecord.DeserializeKnowledgeBaseSearchIndexActivityRecord(element, options);
+                    case "azureBlob":
+                        return KnowledgeBaseAzureBlobActivityRecord.DeserializeKnowledgeBaseAzureBlobActivityRecord(element, options);
+                    case "indexedSharePoint":
+                        return KnowledgeBaseIndexedSharePointActivityRecord.DeserializeKnowledgeBaseIndexedSharePointActivityRecord(element, options);
+                    case "indexedOneLake":
+                        return KnowledgeBaseIndexedOneLakeActivityRecord.DeserializeKnowledgeBaseIndexedOneLakeActivityRecord(element, options);
+                    case "web":
+                        return KnowledgeBaseWebActivityRecord.DeserializeKnowledgeBaseWebActivityRecord(element, options);
+                    case "remoteSharePoint":
+                        return KnowledgeBaseRemoteSharePointActivityRecord.DeserializeKnowledgeBaseRemoteSharePointActivityRecord(element, options);
+                    case "workIQ":
+                        return KnowledgeBaseWorkIQActivityRecord.DeserializeKnowledgeBaseWorkIQActivityRecord(element, options);
+                    case "fabricDataAgent":
+                        return KnowledgeBaseFabricDataAgentActivityRecord.DeserializeKnowledgeBaseFabricDataAgentActivityRecord(element, options);
+                    case "fabricOntology":
+                        return KnowledgeBaseFabricOntologyActivityRecord.DeserializeKnowledgeBaseFabricOntologyActivityRecord(element, options);
+                    case "mcpServer":
+                        return KnowledgeBaseMcpServerActivityRecord.DeserializeKnowledgeBaseMcpServerActivityRecord(element, options);
+                    case "file":
+                        return KnowledgeBaseFileActivityRecord.DeserializeKnowledgeBaseFileActivityRecord(element, options);
+                    case "indexedSql":
+                        return KnowledgeBaseIndexedSqlActivityRecord.DeserializeKnowledgeBaseIndexedSqlActivityRecord(element, options);
+                    case "modelQueryPlanning":
+                        return KnowledgeBaseModelQueryPlanningActivityRecord.DeserializeKnowledgeBaseModelQueryPlanningActivityRecord(element, options);
+                    case "modelAnswerSynthesis":
+                        return KnowledgeBaseModelAnswerSynthesisActivityRecord.DeserializeKnowledgeBaseModelAnswerSynthesisActivityRecord(element, options);
+                    case "modelWebSummarization":
+                        return KnowledgeBaseModelWebSummarizationActivityRecord.DeserializeKnowledgeBaseModelWebSummarizationActivityRecord(element, options);
                     case "agenticReasoning":
                         return KnowledgeBaseAgenticReasoningActivityRecord.DeserializeKnowledgeBaseAgenticReasoningActivityRecord(element, options);
                 }

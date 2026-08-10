@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         {
             TryGetApiVersion(ConfidentialLedgerResource.ResourceType, out string confidentialLedgerApiVersion);
             _ledgerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConfidentialLedger", ConfidentialLedgerResource.ResourceType.Namespace, Diagnostics);
-            _ledgerRestClient = new Ledger(_ledgerClientDiagnostics, Pipeline, Endpoint, confidentialLedgerApiVersion ?? "2026-02-23");
+            _ledgerRestClient = new Ledger(_ledgerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, confidentialLedgerApiVersion ?? "2026-02-23");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                 HttpMessage message = _ledgerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, ledgerName, ConfidentialLedgerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ConfidentialLedgerArmOperation<ConfidentialLedgerResource> operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerResource>(
-                    new ConfidentialLedgerOperationSource(Client),
+                    new ConfidentialLedgerResourceOperationSource(Client),
                     _ledgerClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                 HttpMessage message = _ledgerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, ledgerName, ConfidentialLedgerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ConfidentialLedgerArmOperation<ConfidentialLedgerResource> operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerResource>(
-                    new ConfidentialLedgerOperationSource(Client),
+                    new ConfidentialLedgerResourceOperationSource(Client),
                     _ledgerClientDiagnostics,
                     Pipeline,
                     message.Request,

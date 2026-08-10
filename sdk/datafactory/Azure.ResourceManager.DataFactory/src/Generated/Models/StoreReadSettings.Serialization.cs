@@ -8,15 +8,60 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
+    /// <summary>
+    /// Connector read setting.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureBlobStorageReadSettings"/>, <see cref="AzureBlobFSReadSettings"/>, <see cref="AzureDataLakeStoreReadSettings"/>, <see cref="AmazonS3ReadSettings"/>, <see cref="FileServerReadSettings"/>, <see cref="AzureFileStorageReadSettings"/>, <see cref="AmazonS3CompatibleReadSettings"/>, <see cref="OracleCloudStorageReadSettings"/>, <see cref="GoogleCloudStorageReadSettings"/>, <see cref="FtpReadSettings"/>, <see cref="SftpReadSettings"/>, <see cref="HttpReadSettings"/>, <see cref="HdfsReadSettings"/>, and <see cref="LakeHouseReadSettings"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownStoreReadSettings))]
-    public partial class StoreReadSettings : IUtf8JsonSerializable, IJsonModel<StoreReadSettings>
+    public abstract partial class StoreReadSettings : IJsonModel<StoreReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StoreReadSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StoreReadSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StoreReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStoreReadSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StoreReadSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StoreReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(StoreReadSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StoreReadSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StoreReadSettings IPersistableModel<StoreReadSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StoreReadSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StoreReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,31 +73,30 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StoreReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StoreReadSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StoreReadSettings)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StoreReadSettingsType);
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                JsonSerializer.Serialize(writer, MaxConcurrentConnections);
+                writer.WriteObjectValue<DataFactoryElement<int>>(MaxConcurrentConnections, options);
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
-                JsonSerializer.Serialize(writer, DisableMetricsCollection);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(DisableMetricsCollection, options);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -60,78 +104,66 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        StoreReadSettings IJsonModel<StoreReadSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StoreReadSettings IJsonModel<StoreReadSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StoreReadSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StoreReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StoreReadSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StoreReadSettings)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeStoreReadSettings(document.RootElement, options);
         }
 
-        internal static StoreReadSettings DeserializeStoreReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static StoreReadSettings DeserializeStoreReadSettings(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("type", out JsonElement discriminator))
+            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "AmazonS3CompatibleReadSettings": return AmazonS3CompatibleReadSettings.DeserializeAmazonS3CompatibleReadSettings(element, options);
-                    case "AmazonS3ReadSettings": return AmazonS3ReadSettings.DeserializeAmazonS3ReadSettings(element, options);
-                    case "AzureBlobFSReadSettings": return AzureBlobFSReadSettings.DeserializeAzureBlobFSReadSettings(element, options);
-                    case "AzureBlobStorageReadSettings": return AzureBlobStorageReadSettings.DeserializeAzureBlobStorageReadSettings(element, options);
-                    case "AzureDataLakeStoreReadSettings": return AzureDataLakeStoreReadSettings.DeserializeAzureDataLakeStoreReadSettings(element, options);
-                    case "AzureFileStorageReadSettings": return AzureFileStorageReadSettings.DeserializeAzureFileStorageReadSettings(element, options);
-                    case "FileServerReadSettings": return FileServerReadSettings.DeserializeFileServerReadSettings(element, options);
-                    case "FtpReadSettings": return FtpReadSettings.DeserializeFtpReadSettings(element, options);
-                    case "GoogleCloudStorageReadSettings": return GoogleCloudStorageReadSettings.DeserializeGoogleCloudStorageReadSettings(element, options);
-                    case "HdfsReadSettings": return HdfsReadSettings.DeserializeHdfsReadSettings(element, options);
-                    case "HttpReadSettings": return HttpReadSettings.DeserializeHttpReadSettings(element, options);
-                    case "LakeHouseReadSettings": return LakeHouseReadSettings.DeserializeLakeHouseReadSettings(element, options);
-                    case "OracleCloudStorageReadSettings": return OracleCloudStorageReadSettings.DeserializeOracleCloudStorageReadSettings(element, options);
-                    case "SftpReadSettings": return SftpReadSettings.DeserializeSftpReadSettings(element, options);
+                    case "AzureBlobStorageReadSettings":
+                        return AzureBlobStorageReadSettings.DeserializeAzureBlobStorageReadSettings(element, options);
+                    case "AzureBlobFSReadSettings":
+                        return AzureBlobFSReadSettings.DeserializeAzureBlobFSReadSettings(element, options);
+                    case "AzureDataLakeStoreReadSettings":
+                        return AzureDataLakeStoreReadSettings.DeserializeAzureDataLakeStoreReadSettings(element, options);
+                    case "AmazonS3ReadSettings":
+                        return AmazonS3ReadSettings.DeserializeAmazonS3ReadSettings(element, options);
+                    case "FileServerReadSettings":
+                        return FileServerReadSettings.DeserializeFileServerReadSettings(element, options);
+                    case "AzureFileStorageReadSettings":
+                        return AzureFileStorageReadSettings.DeserializeAzureFileStorageReadSettings(element, options);
+                    case "AmazonS3CompatibleReadSettings":
+                        return AmazonS3CompatibleReadSettings.DeserializeAmazonS3CompatibleReadSettings(element, options);
+                    case "OracleCloudStorageReadSettings":
+                        return OracleCloudStorageReadSettings.DeserializeOracleCloudStorageReadSettings(element, options);
+                    case "GoogleCloudStorageReadSettings":
+                        return GoogleCloudStorageReadSettings.DeserializeGoogleCloudStorageReadSettings(element, options);
+                    case "FtpReadSettings":
+                        return FtpReadSettings.DeserializeFtpReadSettings(element, options);
+                    case "SftpReadSettings":
+                        return SftpReadSettings.DeserializeSftpReadSettings(element, options);
+                    case "HttpReadSettings":
+                        return HttpReadSettings.DeserializeHttpReadSettings(element, options);
+                    case "HdfsReadSettings":
+                        return HdfsReadSettings.DeserializeHdfsReadSettings(element, options);
+                    case "LakeHouseReadSettings":
+                        return LakeHouseReadSettings.DeserializeLakeHouseReadSettings(element, options);
                 }
             }
             return UnknownStoreReadSettings.DeserializeUnknownStoreReadSettings(element, options);
         }
-
-        BinaryData IPersistableModel<StoreReadSettings>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StoreReadSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(StoreReadSettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        StoreReadSettings IPersistableModel<StoreReadSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StoreReadSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeStoreReadSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StoreReadSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<StoreReadSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

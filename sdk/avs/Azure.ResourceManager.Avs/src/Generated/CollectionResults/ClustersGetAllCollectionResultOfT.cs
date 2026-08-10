@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 ClusterList result = ClusterList.FromResponse(response);
-                yield return Page<AvsPrivateCloudClusterData>.FromValues((IReadOnlyList<AvsPrivateCloudClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AvsPrivateCloudClusterData>.FromValues((IReadOnlyList<AvsPrivateCloudClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

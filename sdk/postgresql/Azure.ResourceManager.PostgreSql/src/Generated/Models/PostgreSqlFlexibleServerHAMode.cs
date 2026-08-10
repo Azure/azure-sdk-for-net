@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Modes of high availability supported for this compute. </summary>
+    /// <summary> Mode of high availability supported for this compute. </summary>
     public readonly partial struct PostgreSqlFlexibleServerHAMode : IEquatable<PostgreSqlFlexibleServerHAMode>
     {
         private readonly string _value;
+        /// <summary> High availability is supported for this compute, with standby server in a different availability zone than that of the primary. </summary>
+        private const string ZoneRedundantValue = "ZoneRedundant";
+        /// <summary> High availability is supported for this compute, with standby server in the same availability zone as the primary. </summary>
+        private const string SameZoneValue = "SameZone";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerHAMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PostgreSqlFlexibleServerHAMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ZoneRedundantValue = "ZoneRedundant";
-        private const string SameZoneValue = "SameZone";
-
-        /// <summary> ZoneRedundant. </summary>
+        /// <summary> High availability is supported for this compute, with standby server in a different availability zone than that of the primary. </summary>
         public static PostgreSqlFlexibleServerHAMode ZoneRedundant { get; } = new PostgreSqlFlexibleServerHAMode(ZoneRedundantValue);
-        /// <summary> SameZone. </summary>
+
+        /// <summary> High availability is supported for this compute, with standby server in the same availability zone as the primary. </summary>
         public static PostgreSqlFlexibleServerHAMode SameZone { get; } = new PostgreSqlFlexibleServerHAMode(SameZoneValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerHAMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlFlexibleServerHAMode left, PostgreSqlFlexibleServerHAMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerHAMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlFlexibleServerHAMode left, PostgreSqlFlexibleServerHAMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerHAMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerHAMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlFlexibleServerHAMode(string value) => new PostgreSqlFlexibleServerHAMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerHAMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlFlexibleServerHAMode?(string value) => value == null ? null : new PostgreSqlFlexibleServerHAMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlFlexibleServerHAMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlFlexibleServerHAMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -74,12 +74,12 @@ private BinaryData evaluationConfig = BinaryData.FromObjectAsJson(
 
 4. The `EvaluationClient` uses protocol methods i.e. they take in JSON in the form of `BinaryData` and return `ClientResult`, containing binary encoded JSON response, which can be retrieved using `GetRawResponse()` method. To simplify parsing JSON we will create helper methods. One of the methods is named `ParseClientResult`. It gets string values of the top-level JSON properties. In the next section we will use it to get evaluation name and ID.
 
-```C# Snippet:Sample_GetStringValues_EvaluationRules
-private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
+```C# Snippet:Sample_ParseClientResult_EvaluationSampleBase
+protected static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
 {
     Dictionary<string, string> results = [];
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-    JsonDocument document = JsonDocument.ParseValue(ref reader);
+    using JsonDocument document = JsonDocument.ParseValue(ref reader);
     foreach (JsonProperty prop in document.RootElement.EnumerateObject())
     {
         foreach (string key in expectedProperties)
@@ -90,7 +90,7 @@ private static Dictionary<string, string> ParseClientResult(ClientResult result,
             }
         }
     }
-    List<string> notFoundItems = expectedProperties.Where((key) => !results.ContainsKey(key)).ToList();
+    List<string> notFoundItems = [.. expectedProperties.Where((key) => !results.ContainsKey(key))];
     if (notFoundItems.Count > 0)
     {
         StringBuilder sbNotFound = new();
@@ -192,7 +192,7 @@ private static Dictionary<string, (string RunUri, string RunStatus)> GetRunIDs(E
     {
         ClientResult resultList = client.GetEvaluationRuns(evaluationId: evaluationId, limit: 10, order: "desc", after: lastId, evaluationRunStatus: evaluationRunStatus, options: new System.ClientModel.Primitives.RequestOptions());
         Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
 
         foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
         {
@@ -257,7 +257,7 @@ private static async Task<Dictionary<string, (string RunUri, string RunStatus)>>
     {
         ClientResult resultList = await client.GetEvaluationRunsAsync(evaluationId: evaluationId, limit: 10, order: "desc", after: lastId, evaluationRunStatus: evaluationRunStatus, options: new System.ClientModel.Primitives.RequestOptions());
         Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
 
         foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
         {
@@ -401,12 +401,12 @@ while (!allDone);
 
 12. Define the method to get the error message and code from the response if any.
 
-```C# Snippet:Sample_GetError_EvaluationRules
-private static string GetErrorMessageOrEmpty(ClientResult result)
+```C# Snippet:Sample_GetErrorMessageOrEmpty_EvaluationSampleBase
+protected static string GetErrorMessageOrEmpty(ClientResult result)
 {
     string error = "";
     Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-    JsonDocument document = JsonDocument.ParseValue(ref reader);
+    using JsonDocument document = JsonDocument.ParseValue(ref reader);
     string code = default;
     string message = default;
     foreach (JsonProperty prop in document.RootElement.EnumerateObject())

@@ -58,9 +58,7 @@ EgressNatRules = {new WritableSubResource
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/vpnGateways/gateway1/natRules/nat03"),
 }},
-Name = "Connection-Link1",
 }},
-Name = "vpnConnection1",
 }},
                 BgpSettings = new BgpSettings
                 {
@@ -91,7 +89,6 @@ ExternalMappings = {new VpnNatRuleMapping
 AddressSpace = "192.168.0.0/26",
 }},
 IPConfigurationId = "",
-Name = "nat03",
 }},
                 Location = new AzureLocation("westcentralus"),
                 Tags =
@@ -99,7 +96,7 @@ Name = "nat03",
 ["key1"] = "value1"
 },
             };
-            ArmOperation<VpnGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, gatewayName, data);
+            ArmOperation<VpnGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, gatewayName, data, cancellationToken: System.Threading.CancellationToken.None);
             VpnGatewayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

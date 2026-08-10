@@ -595,6 +595,39 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_10_06)]
+        public async Task StageBlockAsync_MD5()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            const int blobSize = Constants.KB;
+            byte[] data = GetRandomBuffer(blobSize);
+
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            BlockBlobStageBlockOptions options = new BlockBlobStageBlockOptions
+            {
+                TransferValidation = new UploadTransferValidationOptions
+                {
+                    ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
+                    PrecalculatedChecksum = MD5.Create().ComputeHash(data)
+                }
+            };
+
+            // Act
+            using MemoryStream stream = new MemoryStream(data);
+            Response<BlockInfo> response = await blob.StageBlockAsync(
+                base64BlockId: ToBase64(GetNewBlockName()),
+                content: stream,
+                options: options);
+
+            // Assert
+            Assert.IsNotNull(response.Value.ContentHash);
+            Assert.IsNotNull(response.Value.ContentCrc64);
+        }
+
+        [RecordedTest]
         public async Task StageBlockFromUriAsync_Min()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -855,6 +888,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_10_06)]
         public async Task StageBlockFromUriAsync_MD5()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -877,12 +911,16 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Act
-            await RetryAsync(
+            Response<BlockInfo> response = await RetryAsync(
                 async () => await destBlob.StageBlockFromUriAsync(
                     sourceUri: sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                     base64BlockId: ToBase64(GetNewBlockName()),
                     options: options),
                 _retryStageBlockFromUri);
+
+            // Assert
+            Assert.IsNotNull(response.Value.ContentHash);
+            Assert.IsNotNull(response.Value.ContentCrc64);
         }
 
         [RecordedTest]
@@ -3571,7 +3609,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_10_06)]
         public async Task SyncUploadFromUriAsync_ContentMd5()
         {
             // Arrange
@@ -3597,6 +3635,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(sourceContentMd5, response.Value.ContentHash);
+            Assert.IsNotNull(response.Value.ContentCrc64);
         }
 
         [RecordedTest]

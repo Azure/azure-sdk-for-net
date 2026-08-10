@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Type of operation to apply on the read replica. This property is write only. Standalone means that the read replica will be promoted to a standalone server, and will become a completely independent entity from the replication set. Switchover means that the read replica will roles with the primary server. </summary>
+    /// <summary> Type of operation to apply on the read replica. This property is write only. </summary>
     public readonly partial struct ReadReplicaPromoteMode : IEquatable<ReadReplicaPromoteMode>
     {
         private readonly string _value;
+        /// <summary> Read replica will become an independent server, and a completely independent entity from the replication set. </summary>
+        private const string StandaloneValue = "Standalone";
+        /// <summary> Read replica will swap roles with primary server. </summary>
+        private const string SwitchoverValue = "Switchover";
 
         /// <summary> Initializes a new instance of <see cref="ReadReplicaPromoteMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ReadReplicaPromoteMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string StandaloneValue = "Standalone";
-        private const string SwitchoverValue = "Switchover";
-
-        /// <summary> Read replica will become an independent server. </summary>
+        /// <summary> Read replica will become an independent server, and a completely independent entity from the replication set. </summary>
         public static ReadReplicaPromoteMode Standalone { get; } = new ReadReplicaPromoteMode(StandaloneValue);
+
         /// <summary> Read replica will swap roles with primary server. </summary>
         public static ReadReplicaPromoteMode Switchover { get; } = new ReadReplicaPromoteMode(SwitchoverValue);
+
         /// <summary> Determines if two <see cref="ReadReplicaPromoteMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ReadReplicaPromoteMode left, ReadReplicaPromoteMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ReadReplicaPromoteMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ReadReplicaPromoteMode left, ReadReplicaPromoteMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReadReplicaPromoteMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ReadReplicaPromoteMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ReadReplicaPromoteMode(string value) => new ReadReplicaPromoteMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ReadReplicaPromoteMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReadReplicaPromoteMode?(string value) => value == null ? null : new ReadReplicaPromoteMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReadReplicaPromoteMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ReadReplicaPromoteMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

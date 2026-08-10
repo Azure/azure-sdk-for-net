@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class LearnedIPPrefixesListResultOperationSource : IOperationSource<LearnedIPPrefixesListResult>
+    /// <summary></summary>
+    internal partial class LearnedIPPrefixesListResultOperationSource : IOperationSource<LearnedIPPrefixesListResult>
     {
-        LearnedIPPrefixesListResult IOperationSource<LearnedIPPrefixesListResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal LearnedIPPrefixesListResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return LearnedIPPrefixesListResult.DeserializeLearnedIPPrefixesListResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        LearnedIPPrefixesListResult IOperationSource<LearnedIPPrefixesListResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return LearnedIPPrefixesListResult.DeserializeLearnedIPPrefixesListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<LearnedIPPrefixesListResult> IOperationSource<LearnedIPPrefixesListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return LearnedIPPrefixesListResult.DeserializeLearnedIPPrefixesListResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return LearnedIPPrefixesListResult.DeserializeLearnedIPPrefixesListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

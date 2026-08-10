@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             TryGetApiVersion(ResourceType, out string storageSyncPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, storageSyncPrivateEndpointConnectionApiVersion ?? "2022-09-01");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageSyncPrivateEndpointConnectionApiVersion ?? "2022-09-01");
             ValidateResourceId(id);
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.StorageSync
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageSyncPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageSyncArmOperation<StorageSyncPrivateEndpointConnectionResource> operation = new StorageSyncArmOperation<StorageSyncPrivateEndpointConnectionResource>(
-                    new StorageSyncPrivateEndpointConnectionOperationSource(Client),
+                    new StorageSyncPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.StorageSync
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageSyncPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageSyncArmOperation<StorageSyncPrivateEndpointConnectionResource> operation = new StorageSyncArmOperation<StorageSyncPrivateEndpointConnectionResource>(
-                    new StorageSyncPrivateEndpointConnectionOperationSource(Client),
+                    new StorageSyncPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

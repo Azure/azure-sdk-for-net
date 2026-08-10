@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class WebSitePremierAddonResource : IJsonModel<PremierAddOnData>
     {
-        private static PremierAddOnData s_dataDeserializationInstance;
-        private static PremierAddOnData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PremierAddOnData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PremierAddOnData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PremierAddOnData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PremierAddOnData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PremierAddOnData>)Data).Write(writer, options);
 
-        PremierAddOnData IJsonModel<PremierAddOnData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PremierAddOnData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PremierAddOnData IJsonModel<PremierAddOnData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PremierAddOnData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PremierAddOnData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PremierAddOnData IPersistableModel<PremierAddOnData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PremierAddOnData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<PremierAddOnData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PremierAddOnData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PremierAddOnData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

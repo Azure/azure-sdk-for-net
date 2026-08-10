@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OracleDatabase.Models;
 
@@ -179,7 +178,6 @@ namespace Azure.ResourceManager.OracleDatabase
     [ModelReaderWriterBuildable(typeof(PrivateIPAddressResult))]
     [ModelReaderWriterBuildable(typeof(RemoveVirtualMachineFromExadbVmClusterDetails))]
     [ModelReaderWriterBuildable(typeof(ResourceAnchorListResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestoreAutonomousDatabaseDetails))]
     [ModelReaderWriterBuildable(typeof(SaasSubscriptionDetails))]
     [ModelReaderWriterBuildable(typeof(ScheduledOperationsType))]

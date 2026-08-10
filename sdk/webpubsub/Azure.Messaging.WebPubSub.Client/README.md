@@ -10,6 +10,7 @@ Use this library to:
 
 - Send messages to groups
 - Send events to the [server](https://learn.microsoft.com/azure/azure-web-pubsub/concept-service-internals#terms)
+- Invoke upstream events and await correlated responses (preview)
 - Join and leave groups
 - Listen messages from groups and servers
 
@@ -211,6 +212,47 @@ catch (SendMessageFailedException ex)
     }
 }
 ```
+
+### Invoke upstream event and await response (preview)
+
+Use `client.InvokeEventAsync()` to send an upstream event and await its correlated `invokeResponse` payload.
+
+```C# Snippet:WebPubSubClient_InvokeEvent
+var result = await client.InvokeEventAsync("processOrder", BinaryData.FromObjectAsJson(new { orderId = 1 }), WebPubSubDataType.Json);
+Console.WriteLine($"Invocation result: {result.Data}");
+```
+
+If the service returns an invocation error, `InvocationFailedException` is thrown with the invocation ID and service error code.
+
+If the operation is canceled through `CancellationToken`, `OperationCanceledException` is thrown.
+
+```C# Snippet:WebPubSubClient_InvokeEventFailure
+try
+{
+    await client.InvokeEventAsync("processOrder", BinaryData.FromObjectAsJson(new { orderId = 1 }), WebPubSubDataType.Json);
+}
+catch (InvocationFailedException ex)
+{
+    Console.WriteLine($"Invocation {ex.InvocationId} failed: {ex.Message}, Code: {ex.Code}");
+}
+```
+
+To enforce a timeout on the invocation, use `CancellationTokenSource` with a deadline. When the timeout elapses, the client automatically sends a `cancelInvocation` message to the service.
+
+```C# Snippet:WebPubSubClient_InvokeEventTimeout
+using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+try
+{
+    var result = await client.InvokeEventAsync("processOrder", BinaryData.FromObjectAsJson(new { orderId = 1 }), WebPubSubDataType.Json, cancellationToken: cts.Token);
+    Console.WriteLine($"Invocation result: {result.Data}");
+}
+catch (OperationCanceledException)
+{
+    Console.WriteLine("Invocation timed out and was cancelled.");
+}
+```
+
+_Streaming and service-initiated invocations are not yet supported._
 
 ## Troubleshooting
 

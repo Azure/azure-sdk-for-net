@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteOfferPartnerProperties"/>. </summary>
-        /// <param name="licensesSubscribed"> The number of licenses subscribed. </param>
-        public LambdaTestHyperExecuteOfferPartnerProperties(int licensesSubscribed)
+        /// <param name="subscribedLicensesCount"> The number of licenses subscribed. </param>
+        public LambdaTestHyperExecuteOfferPartnerProperties(int subscribedLicensesCount)
         {
-            LicensesSubscribed = licensesSubscribed;
+            SubscribedLicensesCount = subscribedLicensesCount;
         }
 
         /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteOfferPartnerProperties"/>. </summary>
-        /// <param name="licensesSubscribed"> The number of licenses subscribed. </param>
+        /// <param name="subscribedLicensesCount"> The number of licenses subscribed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LambdaTestHyperExecuteOfferPartnerProperties(int licensesSubscribed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LambdaTestHyperExecuteOfferPartnerProperties(int subscribedLicensesCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            LicensesSubscribed = licensesSubscribed;
+            SubscribedLicensesCount = subscribedLicensesCount;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The number of licenses subscribed. </summary>
-        public int LicensesSubscribed { get; set; }
+        public int SubscribedLicensesCount { get; set; }
     }
 }

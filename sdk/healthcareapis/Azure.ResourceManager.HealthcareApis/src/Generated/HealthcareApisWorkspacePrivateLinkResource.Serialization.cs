@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
+    /// <summary></summary>
     public partial class HealthcareApisWorkspacePrivateLinkResource : IJsonModel<HealthcareApisPrivateLinkResourceData>
     {
-        private static HealthcareApisPrivateLinkResourceData s_dataDeserializationInstance;
-        private static HealthcareApisPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HealthcareApisPrivateLinkResourceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HealthcareApisPrivateLinkResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HealthcareApisPrivateLinkResourceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HealthcareApisPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HealthcareApisPrivateLinkResourceData>)Data).Write(writer, options);
 
-        HealthcareApisPrivateLinkResourceData IJsonModel<HealthcareApisPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthcareApisPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HealthcareApisPrivateLinkResourceData IJsonModel<HealthcareApisPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HealthcareApisPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HealthcareApisPrivateLinkResourceData>(Data, options, AzureResourceManagerHealthcareApisContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HealthcareApisPrivateLinkResourceData IPersistableModel<HealthcareApisPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthcareApisPrivateLinkResourceData>(data, options, AzureResourceManagerHealthcareApisContext.Default);
 
-        string IPersistableModel<HealthcareApisPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthcareApisPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HealthcareApisPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

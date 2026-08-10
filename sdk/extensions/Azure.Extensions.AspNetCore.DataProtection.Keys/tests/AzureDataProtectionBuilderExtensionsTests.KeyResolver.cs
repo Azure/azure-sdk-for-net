@@ -24,8 +24,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex.ParamName, "keyResolver");
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.ParamName, Is.EqualTo("keyResolver"));
         }
 
         [Test]
@@ -40,8 +40,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex.ParamName, "keyResolver");
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.ParamName, Is.EqualTo("keyResolver"));
         }
 
         [Test]
@@ -58,8 +58,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex.ParamName, "keyResolverFactory");
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.ParamName, Is.EqualTo("keyResolverFactory"));
         }
 
         [Test]
@@ -74,8 +74,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex.ParamName, "keyResolverFactory");
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.ParamName, Is.EqualTo("keyResolverFactory"));
         }
     }
 }

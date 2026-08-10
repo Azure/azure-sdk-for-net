@@ -10,7 +10,7 @@ namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary>
     /// The AgentResponseItem.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentStructuredOutputsResponseItem"/>, <see cref="AgentWorkflowPreviewActionResponseItem"/>, <see cref="OAuthConsentRequestResponseItem"/>, <see cref="MemorySearchToolCallResponseItem"/>, <see cref="BingGroundingToolCall"/>, <see cref="BingGroundingToolCallOutput"/>, <see cref="SharepointGroundingToolCall"/>, <see cref="SharepointGroundingToolCallOutput"/>, <see cref="AzureAISearchToolCall"/>, <see cref="AzureAISearchToolCallOutput"/>, <see cref="BingCustomSearchToolCall"/>, <see cref="BingCustomSearchToolCallOutput"/>, <see cref="OpenApiToolCall"/>, <see cref="OpenApiToolCallOutput"/>, <see cref="BrowserAutomationToolCall"/>, <see cref="BrowserAutomationToolCallOutput"/>, <see cref="FabricDataAgentToolCall"/>, <see cref="FabricDataAgentToolCallOutput"/>, <see cref="AzureFunctionToolCall"/>, <see cref="AzureFunctionToolCallOutput"/>, <see cref="A2AToolCall"/>, and <see cref="A2AToolCallOutput"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentStructuredOutputsResponseItem"/>, <see cref="AgentWorkflowPreviewActionResponseItem"/>, <see cref="OAuthConsentRequestResponseItem"/>, <see cref="BingGroundingToolCall"/>, <see cref="BingGroundingToolCallOutput"/>, <see cref="SharepointGroundingToolCall"/>, <see cref="SharepointGroundingToolCallOutput"/>, <see cref="AzureAISearchToolCall"/>, <see cref="AzureAISearchToolCallOutput"/>, <see cref="BingCustomSearchToolCall"/>, <see cref="BingCustomSearchToolCallOutput"/>, <see cref="OpenApiToolCall"/>, <see cref="OpenApiToolCallOutput"/>, <see cref="BrowserAutomationToolCall"/>, <see cref="BrowserAutomationToolCallOutput"/>, <see cref="FabricDataAgentToolCall"/>, <see cref="FabricDataAgentToolCallOutput"/>, <see cref="AzureFunctionToolCall"/>, <see cref="AzureFunctionToolCallOutput"/>, <see cref="A2AToolCall"/>, <see cref="A2AToolCallOutput"/>, <see cref="MemorySearchToolCall"/>, <see cref="MemoryCommandToolCall"/>, <see cref="MemoryCommandToolCallOutput"/>, <see cref="OutputItemFunctionToolCallOutput"/>, <see cref="OutputItemComputerToolCallOutput"/>, <see cref="OutputItemToolSearchCall"/>, <see cref="OutputItemToolSearchOutput"/>, <see cref="OutputItemLocalShellToolCallOutput"/>, <see cref="OutputItemMcpApprovalResponseResource"/>, and <see cref="OutputItemCustomToolCallOutputResource"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAgentResponseItem))]
     public abstract partial class AgentResponseItem : IJsonModel<AgentResponseItem>
@@ -147,8 +147,6 @@ namespace Azure.AI.Extensions.OpenAI
                         return AgentWorkflowPreviewActionResponseItem.DeserializeAgentWorkflowPreviewActionResponseItem(element, options);
                     case "oauth_consent_request":
                         return OAuthConsentRequestResponseItem.DeserializeOAuthConsentRequestResponseItem(element, options);
-                    case "memory_search_call":
-                        return MemorySearchToolCallResponseItem.DeserializeMemorySearchToolCallResponseItem(element, options);
                     case "bing_grounding_call":
                         return BingGroundingToolCall.DeserializeBingGroundingToolCall(element, options);
                     case "bing_grounding_call_output":
@@ -185,18 +183,32 @@ namespace Azure.AI.Extensions.OpenAI
                         return A2AToolCall.DeserializeA2AToolCall(element, options);
                     case "a2a_preview_call_output":
                         return A2AToolCallOutput.DeserializeA2AToolCallOutput(element, options);
+                    case "memory_search_call":
+                        return MemorySearchToolCall.DeserializeMemorySearchToolCall(element, options);
+                    case "memory_command_preview_call":
+                        return MemoryCommandToolCall.DeserializeMemoryCommandToolCall(element, options);
+                    case "memory_command_preview_call_output":
+                        return MemoryCommandToolCallOutput.DeserializeMemoryCommandToolCallOutput(element, options);
                     case "output_message":
                         return InternalOutputItemOutputMessage.DeserializeInternalOutputItemOutputMessage(element, options);
                     case "file_search_call":
                         return InternalOutputItemFileSearchToolCall.DeserializeInternalOutputItemFileSearchToolCall(element, options);
                     case "function_call":
                         return InternalOutputItemFunctionToolCall.DeserializeInternalOutputItemFunctionToolCall(element, options);
+                    case "function_call_output":
+                        return OutputItemFunctionToolCallOutput.DeserializeOutputItemFunctionToolCallOutput(element, options);
                     case "web_search_call":
                         return InternalOutputItemWebSearchToolCall.DeserializeInternalOutputItemWebSearchToolCall(element, options);
                     case "computer_call":
                         return InternalOutputItemComputerToolCall.DeserializeInternalOutputItemComputerToolCall(element, options);
+                    case "computer_call_output":
+                        return OutputItemComputerToolCallOutput.DeserializeOutputItemComputerToolCallOutput(element, options);
                     case "reasoning":
                         return InternalOutputItemReasoningItem.DeserializeInternalOutputItemReasoningItem(element, options);
+                    case "tool_search_call":
+                        return OutputItemToolSearchCall.DeserializeOutputItemToolSearchCall(element, options);
+                    case "tool_search_output":
+                        return OutputItemToolSearchOutput.DeserializeOutputItemToolSearchOutput(element, options);
                     case "compaction":
                         return InternalOutputItemCompactionBody.DeserializeInternalOutputItemCompactionBody(element, options);
                     case "image_generation_call":
@@ -205,6 +217,8 @@ namespace Azure.AI.Extensions.OpenAI
                         return InternalOutputItemCodeInterpreterToolCall.DeserializeInternalOutputItemCodeInterpreterToolCall(element, options);
                     case "local_shell_call":
                         return InternalOutputItemLocalShellToolCall.DeserializeInternalOutputItemLocalShellToolCall(element, options);
+                    case "local_shell_call_output":
+                        return OutputItemLocalShellToolCallOutput.DeserializeOutputItemLocalShellToolCallOutput(element, options);
                     case "shell_call":
                         return InternalOutputItemFunctionShellCall.DeserializeInternalOutputItemFunctionShellCall(element, options);
                     case "shell_call_output":
@@ -219,8 +233,12 @@ namespace Azure.AI.Extensions.OpenAI
                         return InternalOutputItemMcpListTools.DeserializeInternalOutputItemMcpListTools(element, options);
                     case "mcp_approval_request":
                         return InternalOutputItemMcpApprovalRequest.DeserializeInternalOutputItemMcpApprovalRequest(element, options);
+                    case "mcp_approval_response":
+                        return OutputItemMcpApprovalResponseResource.DeserializeOutputItemMcpApprovalResponseResource(element, options);
                     case "custom_tool_call":
-                        return InternalOutputItemCustomToolCall.DeserializeInternalOutputItemCustomToolCall(element, options);
+                        return InternalOutputItemCustomToolCallResource.DeserializeInternalOutputItemCustomToolCallResource(element, options);
+                    case "custom_tool_call_output":
+                        return OutputItemCustomToolCallOutputResource.DeserializeOutputItemCustomToolCallOutputResource(element, options);
                 }
             }
             return UnknownAgentResponseItem.DeserializeUnknownAgentResponseItem(element, options);

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct GatewayLoadBalancerTunnelInterfaceType : IEquatable<GatewayLoadBalancerTunnelInterfaceType>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Internal. </summary>
+        private const string InternalValue = "Internal";
+        /// <summary> External. </summary>
+        private const string ExternalValue = "External";
 
         /// <summary> Initializes a new instance of <see cref="GatewayLoadBalancerTunnelInterfaceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GatewayLoadBalancerTunnelInterfaceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string InternalValue = "Internal";
-        private const string ExternalValue = "External";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static GatewayLoadBalancerTunnelInterfaceType None { get; } = new GatewayLoadBalancerTunnelInterfaceType(NoneValue);
+
         /// <summary> Internal. </summary>
         public static GatewayLoadBalancerTunnelInterfaceType Internal { get; } = new GatewayLoadBalancerTunnelInterfaceType(InternalValue);
+
         /// <summary> External. </summary>
         public static GatewayLoadBalancerTunnelInterfaceType External { get; } = new GatewayLoadBalancerTunnelInterfaceType(ExternalValue);
+
         /// <summary> Determines if two <see cref="GatewayLoadBalancerTunnelInterfaceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GatewayLoadBalancerTunnelInterfaceType left, GatewayLoadBalancerTunnelInterfaceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GatewayLoadBalancerTunnelInterfaceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GatewayLoadBalancerTunnelInterfaceType left, GatewayLoadBalancerTunnelInterfaceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GatewayLoadBalancerTunnelInterfaceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GatewayLoadBalancerTunnelInterfaceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GatewayLoadBalancerTunnelInterfaceType(string value) => new GatewayLoadBalancerTunnelInterfaceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GatewayLoadBalancerTunnelInterfaceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GatewayLoadBalancerTunnelInterfaceType?(string value) => value == null ? null : new GatewayLoadBalancerTunnelInterfaceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GatewayLoadBalancerTunnelInterfaceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GatewayLoadBalancerTunnelInterfaceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

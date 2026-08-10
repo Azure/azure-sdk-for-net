@@ -86,6 +86,7 @@ internal static class ResourceExtensions
                         "Microsoft.ApplicationInsights.WorkerService" => SdkVersionType.ShimWorkerService,
                         "Microsoft.ApplicationInsights.Web" => SdkVersionType.ShimWeb,
                         "Microsoft.ApplicationInsights.NLogTarget" => SdkVersionType.ShimNLog,
+                        "Microsoft.OpenTelemetry" => SdkVersionType.MicrosoftOpenTelemetry,
                         _ => null,
                     };
                     break;

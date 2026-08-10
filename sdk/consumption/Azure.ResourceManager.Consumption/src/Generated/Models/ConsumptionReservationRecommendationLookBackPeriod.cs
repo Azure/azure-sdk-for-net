@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> The ConsumptionReservationRecommendationLookBackPeriod. </summary>
+    /// <summary></summary>
     public readonly partial struct ConsumptionReservationRecommendationLookBackPeriod : IEquatable<ConsumptionReservationRecommendationLookBackPeriod>
     {
         private readonly string _value;
+        /// <summary> Use 7 days of data for recommendations. </summary>
+        private const string Last07DaysValue = "Last7Days";
+        /// <summary> Use 30 days of data for recommendations. </summary>
+        private const string Last30DaysValue = "Last30Days";
+        /// <summary> Use 60 days of data for recommendations. </summary>
+        private const string Last60DaysValue = "Last60Days";
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionReservationRecommendationLookBackPeriod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConsumptionReservationRecommendationLookBackPeriod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string Last07DaysValue = "Last7Days";
-        private const string Last30DaysValue = "Last30Days";
-        private const string Last60DaysValue = "Last60Days";
+            _value = value;
+        }
 
         /// <summary> Use 7 days of data for recommendations. </summary>
         public static ConsumptionReservationRecommendationLookBackPeriod Last07Days { get; } = new ConsumptionReservationRecommendationLookBackPeriod(Last07DaysValue);
+
         /// <summary> Use 30 days of data for recommendations. </summary>
         public static ConsumptionReservationRecommendationLookBackPeriod Last30Days { get; } = new ConsumptionReservationRecommendationLookBackPeriod(Last30DaysValue);
+
         /// <summary> Use 60 days of data for recommendations. </summary>
         public static ConsumptionReservationRecommendationLookBackPeriod Last60Days { get; } = new ConsumptionReservationRecommendationLookBackPeriod(Last60DaysValue);
+
         /// <summary> Determines if two <see cref="ConsumptionReservationRecommendationLookBackPeriod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConsumptionReservationRecommendationLookBackPeriod left, ConsumptionReservationRecommendationLookBackPeriod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConsumptionReservationRecommendationLookBackPeriod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConsumptionReservationRecommendationLookBackPeriod left, ConsumptionReservationRecommendationLookBackPeriod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConsumptionReservationRecommendationLookBackPeriod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConsumptionReservationRecommendationLookBackPeriod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConsumptionReservationRecommendationLookBackPeriod(string value) => new ConsumptionReservationRecommendationLookBackPeriod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConsumptionReservationRecommendationLookBackPeriod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConsumptionReservationRecommendationLookBackPeriod?(string value) => value == null ? null : new ConsumptionReservationRecommendationLookBackPeriod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConsumptionReservationRecommendationLookBackPeriod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConsumptionReservationRecommendationLookBackPeriod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

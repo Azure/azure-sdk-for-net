@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             CapacityPoolResource capactiyPoolResource1 = (await _capacityPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, capactiyPoolData)).Value;
             Assert.AreEqual(poolName, capactiyPoolResource1.Id.Name);
             VerifyCapacityPoolProperties(capactiyPoolResource1, true);
-            (await capactiyPoolResource1.GetAsync()).Value.Should().BeEquivalentTo(capactiyPoolResource1);
+            (await capactiyPoolResource1.GetAsync()).Value.Should().BeEquivalentTo(capactiyPoolResource1, options => options.IncludingAllDeclaredProperties());
 
             //validate if created successfully
             CapacityPoolResource capactiyPoolResource2 = await _capacityPoolCollection.GetAsync(poolName);
             VerifyCapacityPoolProperties(capactiyPoolResource2, true);
-            capactiyPoolResource2.Should().BeEquivalentTo(capactiyPoolResource1);
+            capactiyPoolResource2.Should().BeEquivalentTo(capactiyPoolResource1, options => options.IncludingAllDeclaredProperties());
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _capacityPoolCollection.GetAsync(poolName + "1"); });
             Assert.AreEqual(404, exception.Status);
             Assert.IsTrue(await _capacityPoolCollection.ExistsAsync(poolName));
@@ -122,8 +122,8 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(count, 2);
             VerifyCapacityPoolProperties(pool3, true);
             VerifyCapacityPoolProperties(pool4, true);
-            pool3.Should().BeEquivalentTo(pool1);
-            pool4.Should().BeEquivalentTo(pool2);
+            pool3.Should().BeEquivalentTo(pool1, options => options.IncludingAllDeclaredProperties());
+            pool4.Should().BeEquivalentTo(pool2, options => options.IncludingAllDeclaredProperties());
         }
 
         [RecordedTest]
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.NetApp.Tests
 
             // validate
             CapacityPoolResource pool2 = await _capacityPoolCollection.GetAsync(pool1.Data.Name.Split('/').Last());
-            pool1.Should().BeEquivalentTo(pool2);
+            pool1.Should().BeEquivalentTo(pool2, options => options.IncludingAllDeclaredProperties());
         }
 
         [RecordedTest]

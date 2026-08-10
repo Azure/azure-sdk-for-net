@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             TryGetApiVersion(IspCacheNodeResource.ResourceType, out string ispCacheNodeApiVersion);
             _ispCacheNodesOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", IspCacheNodeResource.ResourceType.Namespace, Diagnostics);
-            _ispCacheNodesOperationsRestClient = new IspCacheNodesOperations(_ispCacheNodesOperationsClientDiagnostics, Pipeline, Endpoint, ispCacheNodeApiVersion ?? "2024-11-30-preview");
+            _ispCacheNodesOperationsRestClient = new IspCacheNodesOperations(_ispCacheNodesOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, ispCacheNodeApiVersion ?? "2024-11-30-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ConnectedCache
                 HttpMessage message = _ispCacheNodesOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, IspCacheNodeData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ConnectedCacheArmOperation<IspCacheNodeResource> operation = new ConnectedCacheArmOperation<IspCacheNodeResource>(
-                    new IspCacheNodeOperationSource(Client),
+                    new IspCacheNodeResourceOperationSource(Client),
                     _ispCacheNodesOperationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ConnectedCache
                 HttpMessage message = _ispCacheNodesOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, IspCacheNodeData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ConnectedCacheArmOperation<IspCacheNodeResource> operation = new ConnectedCacheArmOperation<IspCacheNodeResource>(
-                    new IspCacheNodeOperationSource(Client),
+                    new IspCacheNodeResourceOperationSource(Client),
                     _ispCacheNodesOperationsClientDiagnostics,
                     Pipeline,
                     message.Request,

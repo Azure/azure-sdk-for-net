@@ -7,7 +7,6 @@
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The SessionCredentials. </summary>
     internal partial class SessionCredentials
     {
         /// <summary> Initializes a new instance of <see cref="SessionCredentials"/>. </summary>
@@ -26,6 +25,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> An opaque token used to authorize subsequent requests in the session. Must be treated as a security credential. </summary>
         public string SessionToken { get; }
+
         /// <summary> Only returned when AuthenticationType is HMAC. A symmetric encryption key used to sign requests in the session using the Shared Key protocol. </summary>
         public string SessionKey { get; }
     }

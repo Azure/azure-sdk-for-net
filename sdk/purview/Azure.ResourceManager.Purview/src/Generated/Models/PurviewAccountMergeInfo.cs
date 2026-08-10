@@ -26,20 +26,20 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="accountName"> The account name of the <i>other</i> account in the merge operation. </param>
         /// <param name="accountResourceGroupName"> The resource group name of the <i>other</i> account in the merge operation. </param>
         /// <param name="accountSubscriptionId"> The subscription id of the <i>other</i> account in the merge operation. </param>
-        /// <param name="deprovisioned">
+        /// <param name="isDeprovisioned">
         /// The deprovisioned status of the account.
         /// Only applicable for the secondary account.
         /// </param>
         /// <param name="mergeStatus"> The status of the merge operation. </param>
         /// <param name="typeOfAccount"> The account's type for the merge operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PurviewAccountMergeInfo(string accountLocation, string accountName, string accountResourceGroupName, string accountSubscriptionId, bool? deprovisioned, PurviewMergeStatus? mergeStatus, PurviewMergeAccountType? typeOfAccount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PurviewAccountMergeInfo(string accountLocation, string accountName, string accountResourceGroupName, string accountSubscriptionId, bool? isDeprovisioned, PurviewMergeStatus? mergeStatus, PurviewMergeAccountType? typeOfAccount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccountLocation = accountLocation;
             AccountName = accountName;
             AccountResourceGroupName = accountResourceGroupName;
             AccountSubscriptionId = accountSubscriptionId;
-            Deprovisioned = deprovisioned;
+            IsDeprovisioned = isDeprovisioned;
             MergeStatus = mergeStatus;
             TypeOfAccount = typeOfAccount;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// The deprovisioned status of the account.
         /// Only applicable for the secondary account.
         /// </summary>
-        public bool? Deprovisioned { get; }
+        public bool? IsDeprovisioned { get; }
 
         /// <summary> The status of the merge operation. </summary>
         public PurviewMergeStatus? MergeStatus { get; }

@@ -124,8 +124,8 @@ namespace Azure.ResourceManager.NetApp.Tests
                 else if (backupPolicy.Id.Name.Equals(backupPolicyName2))
                     backupPolicyResource4 = backupPolicy;
             }
-            backupPolicyResource3.Should().BeEquivalentTo(backupPolicyGetResource1);
-            backupPolicyResource4.Should().BeEquivalentTo(backupPolicyGetResource2);
+            backupPolicyResource3.Should().BeEquivalentTo(backupPolicyGetResource1, options => options.IncludingAllDeclaredProperties());
+            backupPolicyResource4.Should().BeEquivalentTo(backupPolicyGetResource2, options => options.IncludingAllDeclaredProperties());
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _backupPolicyCollection.GetAsync(backupPolicyName + "1"); });
             Assert.AreEqual(404, exception.Status);

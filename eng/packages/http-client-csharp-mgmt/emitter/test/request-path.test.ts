@@ -55,6 +55,17 @@ describe("RequestPath", () => {
       ok(parent.isPrefixOf(child));
     });
 
+    it("should match fixed ARM path segments case-insensitively", () => {
+      const parent = new RequestPath(
+        "/subscriptions/{subscriptionId}/resourceGroups/{rg}/providers/Microsoft.Devices/IotHubs/{resourceName}"
+      );
+      const child = new RequestPath(
+        "/subscriptions/{subscriptionId}/resourceGroups/{rg}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateLinkResources/{groupId}"
+      );
+
+      ok(parent.isPrefixOf(child));
+    });
+
     it("should return true when paths are equal", () => {
       const rp1 = new RequestPath("/a/{b}/c");
       const rp2 = new RequestPath("/a/{b}/c");
@@ -141,6 +152,17 @@ describe("RequestPath", () => {
       ok(rp1.equals(rp2));
     });
 
+    it("should return true when fixed ARM path segment casing differs", () => {
+      const rp1 = new RequestPath(
+        "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Devices/IotHubs/{resourceName}"
+      );
+      const rp2 = new RequestPath(
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{hubName}"
+      );
+
+      ok(rp1.equals(rp2));
+    });
+
     it("should return false for different fixed segments", () => {
       const rp1 = new RequestPath("/subscriptions/{sub}/resourceGroups/{rg}");
       const rp2 = new RequestPath(
@@ -159,6 +181,69 @@ describe("RequestPath", () => {
       const rp1 = new RequestPath("/a/{b}");
       const rp2 = new RequestPath("/a/b");
       ok(!rp1.equals(rp2));
+    });
+  });
+
+  describe("isResourceInstancePath", () => {
+    it("should recognize well-known tenant, subscription, and resource group resource paths", () => {
+      ok(new RequestPath("").isResourceInstancePath());
+      ok(new RequestPath("/tenants/{tenantId}").isResourceInstancePath());
+      ok(
+        new RequestPath(
+          "/subscriptions/{subscriptionId}"
+        ).isResourceInstancePath()
+      );
+      ok(
+        new RequestPath(
+          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+        ).isResourceInstancePath()
+      );
+    });
+
+    it("should recognize well-known resource paths case-insensitively", () => {
+      ok(new RequestPath("/Tenants/{tenantId}").isResourceInstancePath());
+      ok(
+        new RequestPath(
+          "/Subscriptions/{subscriptionId}"
+        ).isResourceInstancePath()
+      );
+      ok(
+        new RequestPath(
+          "/Subscriptions/{subscriptionId}/ResourceGroups/{resourceGroupName}"
+        ).isResourceInstancePath()
+      );
+    });
+
+    it("should recognize generic provider resource paths", () => {
+      ok(
+        new RequestPath(
+          "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachines/{vmName}"
+        ).isResourceInstancePath()
+      );
+    });
+
+    it("should validate provider tail shape without validating scope prefix", () => {
+      ok(
+        new RequestPath(
+          "/{resourceUri}/providers/Microsoft.Edge/sites/{siteName}"
+        ).isResourceInstancePath()
+      );
+    });
+
+    it("should allow variable type segments because their type is validated from operation metadata", () => {
+      ok(
+        new RequestPath(
+          "/subscriptions/{subscriptionId}/providers/Microsoft.Edge/{resourceType}/{resourceName}"
+        ).isResourceInstancePath()
+      );
+    });
+
+    it("should reject provider paths that do not end on a name segment", () => {
+      ok(
+        !new RequestPath(
+          "/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider"
+        ).isResourceInstancePath()
+      );
     });
   });
 
@@ -204,6 +289,23 @@ describe("RequestPath", () => {
       strictEqual(rp.resourceType, "Microsoft.Resources/tenants");
     });
 
+    it("should return well-known resource types for mixed-case scope paths", () => {
+      strictEqual(
+        new RequestPath(
+          "/Subscriptions/{subscriptionId}/ResourceGroups/{resourceGroupName}"
+        ).resourceType,
+        "Microsoft.Resources/resourceGroups"
+      );
+      strictEqual(
+        new RequestPath("/Subscriptions/{subscriptionId}").resourceType,
+        "Microsoft.Resources/subscriptions"
+      );
+      strictEqual(
+        new RequestPath("/Tenants/{tenantId}").resourceType,
+        "Microsoft.Resources/tenants"
+      );
+    });
+
     it("should return undefined for path without determinable resource type", () => {
       const rp = new RequestPath("/unknown/path");
       strictEqual(rp.resourceType, undefined);
@@ -216,6 +318,13 @@ describe("RequestPath", () => {
   });
 
   describe("scopePath", () => {
+    it("should cache the last providers segment index", () => {
+      const rp = new RequestPath(
+        "/subscriptions/{sub}/providers/Microsoft.A/parents/{parentName}/providers/Microsoft.B/children/{childName}"
+      );
+      strictEqual(rp.lastProvidersSegmentIndex, 6);
+    });
+
     it("should return scope for resource group resource", () => {
       const rp = new RequestPath(
         "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Compute/virtualMachines/{vmName}"
@@ -285,6 +394,27 @@ describe("RequestPath", () => {
         "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Edge/sites/{siteName}"
       );
       strictEqual(rp.operationScope, ResourceScopeKind.ManagementGroup);
+    });
+
+    it("should detect scope with mixed-case ARM literals", () => {
+      strictEqual(
+        new RequestPath(
+          "/Subscriptions/{subscriptionId}/ResourceGroups/{resourceGroupName}/Providers/Microsoft.Edge/sites/{siteName}"
+        ).operationScope,
+        ResourceScopeKind.ResourceGroup
+      );
+      strictEqual(
+        new RequestPath(
+          "/Subscriptions/{subscriptionId}/Providers/Microsoft.Edge/sites/{siteName}"
+        ).operationScope,
+        ResourceScopeKind.Subscription
+      );
+      strictEqual(
+        new RequestPath(
+          "/Providers/microsoft.management/ManagementGroups/{groupId}/Providers/Microsoft.Edge/sites/{siteName}"
+        ).operationScope,
+        ResourceScopeKind.ManagementGroup
+      );
     });
 
     it("should detect Tenant scope for single provider path", () => {

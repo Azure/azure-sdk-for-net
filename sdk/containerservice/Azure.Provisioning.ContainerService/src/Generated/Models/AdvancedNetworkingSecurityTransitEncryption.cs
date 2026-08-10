@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _type = DefineProperty<TransitEncryptionType>(nameof(Type), new string[] { "type" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AdvancedNetworkingSecurityTransitEncryption that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

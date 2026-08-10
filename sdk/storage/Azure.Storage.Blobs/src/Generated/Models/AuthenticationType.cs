@@ -10,39 +10,52 @@ using System.ComponentModel;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The type of authentication required to create the session. The only type currently supported is HMAC. </summary>
     internal readonly partial struct AuthenticationType : IEquatable<AuthenticationType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AuthenticationType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AuthenticationType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
+        /// <summary> HMAC authentication. </summary>
         private const string HmacValue = "HMAC";
 
-        /// <summary> HMAC. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public AuthenticationType(string value)
+        {
+            _value = value;
+        }
+
+        /// <summary> HMAC authentication. </summary>
         public static AuthenticationType Hmac { get; } = new AuthenticationType(HmacValue);
+
         /// <summary> Determines if two <see cref="AuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AuthenticationType left, AuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AuthenticationType left, AuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AuthenticationType(string value) => new AuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AuthenticationType?(string value) => value == null ? null : new AuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

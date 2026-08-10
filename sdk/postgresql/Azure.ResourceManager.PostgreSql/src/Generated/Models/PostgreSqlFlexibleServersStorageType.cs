@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Type of storage assigned to a server. Allowed values are Premium_LRS, PremiumV2_LRS, or UltraSSD_LRS. If not specified, it defaults to Premium_LRS. </summary>
+    /// <summary> Type of storage assigned to a server. If not specified, it defaults to Premium_LRS. </summary>
     public readonly partial struct PostgreSqlFlexibleServersStorageType : IEquatable<PostgreSqlFlexibleServersStorageType>
     {
         private readonly string _value;
+        /// <summary> Standard Solid State Disk (SSD) backed storage offering consistent performance for general purpose workloads. </summary>
+        private const string PremiumLRSValue = "Premium_LRS";
+        /// <summary> Next generation Solid State Disk (SSD) storage with improved scalability and performance for demanding enterprise workloads. </summary>
+        private const string PremiumV2LRSValue = "PremiumV2_LRS";
+        /// <summary> High-end Solid State Disk (SSD) storage designed for extreme IOPS and latency-sensitive applications. </summary>
+        private const string UltraSSDLRSValue = "UltraSSD_LRS";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersStorageType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PostgreSqlFlexibleServersStorageType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string PremiumLRSValue = "Premium_LRS";
-        private const string PremiumV2LRSValue = "PremiumV2_LRS";
-        private const string UltraSSDLRSValue = "UltraSSD_LRS";
-
-        /// <summary> Premium_LRS. </summary>
+        /// <summary> Standard Solid State Disk (SSD) backed storage offering consistent performance for general purpose workloads. </summary>
         public static PostgreSqlFlexibleServersStorageType PremiumLRS { get; } = new PostgreSqlFlexibleServersStorageType(PremiumLRSValue);
-        /// <summary> PremiumV2_LRS. </summary>
+
+        /// <summary> Next generation Solid State Disk (SSD) storage with improved scalability and performance for demanding enterprise workloads. </summary>
         public static PostgreSqlFlexibleServersStorageType PremiumV2LRS { get; } = new PostgreSqlFlexibleServersStorageType(PremiumV2LRSValue);
-        /// <summary> UltraSSD_LRS. </summary>
+
+        /// <summary> High-end Solid State Disk (SSD) storage designed for extreme IOPS and latency-sensitive applications. </summary>
         public static PostgreSqlFlexibleServersStorageType UltraSSDLRS { get; } = new PostgreSqlFlexibleServersStorageType(UltraSSDLRSValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServersStorageType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlFlexibleServersStorageType left, PostgreSqlFlexibleServersStorageType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServersStorageType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlFlexibleServersStorageType left, PostgreSqlFlexibleServersStorageType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServersStorageType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServersStorageType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlFlexibleServersStorageType(string value) => new PostgreSqlFlexibleServersStorageType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServersStorageType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlFlexibleServersStorageType?(string value) => value == null ? null : new PostgreSqlFlexibleServersStorageType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlFlexibleServersStorageType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlFlexibleServersStorageType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -78,8 +78,21 @@ namespace Azure.AI.Extensions.OpenAI
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("call_id"u8);
             writer.WriteStringValue(CallId);
-            writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action, options);
+            if (Optional.IsDefined(Action))
+            {
+                writer.WritePropertyName("action"u8);
+                writer.WriteObjectValue(Action, options);
+            }
+            if (Optional.IsCollectionDefined(Actions))
+            {
+                writer.WritePropertyName("actions"u8);
+                writer.WriteStartArray();
+                foreach (InternalComputerAction item in Actions)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("pending_safety_checks"u8);
             writer.WriteStartArray();
             foreach (ComputerCallSafetyCheckParam item in PendingSafetyChecks)
@@ -123,8 +136,9 @@ namespace Azure.AI.Extensions.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string callId = default;
             InternalComputerAction action = default;
+            IList<InternalComputerAction> actions = default;
             IList<ComputerCallSafetyCheckParam> pendingSafetyChecks = default;
-            OutputItemComputerToolCallStatus status = default;
+            InputItemComputerToolCallStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -158,7 +172,25 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("action"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     action = InternalComputerAction.DeserializeInternalComputerAction(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("actions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<InternalComputerAction> array = new List<InternalComputerAction>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(InternalComputerAction.DeserializeInternalComputerAction(item, options));
+                    }
+                    actions = array;
                     continue;
                 }
                 if (prop.NameEquals("pending_safety_checks"u8))
@@ -173,7 +205,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToOutputItemComputerToolCallStatus();
+                    status = prop.Value.GetString().ToInputItemComputerToolCallStatus();
                     continue;
                 }
                 if (options.Format != "W")
@@ -189,6 +221,7 @@ namespace Azure.AI.Extensions.OpenAI
                 additionalBinaryDataProperties,
                 callId,
                 action,
+                actions ?? new ChangeTrackingList<InternalComputerAction>(),
                 pendingSafetyChecks,
                 status);
         }

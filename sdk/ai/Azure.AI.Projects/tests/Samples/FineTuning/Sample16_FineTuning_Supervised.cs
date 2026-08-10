@@ -10,7 +10,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.Extensions.OpenAI;
-using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CognitiveServices;

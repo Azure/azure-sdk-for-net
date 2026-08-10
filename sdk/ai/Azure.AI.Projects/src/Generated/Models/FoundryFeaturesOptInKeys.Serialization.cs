@@ -11,23 +11,22 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this FoundryFeaturesOptInKeys value) => value switch
         {
-            FoundryFeaturesOptInKeys.SkillsV1Preview => "Skills=V1Preview",
             FoundryFeaturesOptInKeys.EvaluationsV1Preview => "Evaluations=V1Preview",
             FoundryFeaturesOptInKeys.SchedulesV1Preview => "Schedules=V1Preview",
             FoundryFeaturesOptInKeys.RedTeamsV1Preview => "RedTeams=V1Preview",
             FoundryFeaturesOptInKeys.InsightsV1Preview => "Insights=V1Preview",
             FoundryFeaturesOptInKeys.MemoryStoresV1Preview => "MemoryStores=V1Preview",
-            FoundryFeaturesOptInKeys.ToolboxesV1Preview => "Toolboxes=V1Preview",
+            FoundryFeaturesOptInKeys.RoutinesV1Preview => "Routines=V1Preview",
+            FoundryFeaturesOptInKeys.SkillsV1Preview => "Skills=V1Preview",
+            FoundryFeaturesOptInKeys.DataGenerationJobsV1Preview => "DataGenerationJobs=V1Preview",
+            FoundryFeaturesOptInKeys.ModelsV1Preview => "Models=V1Preview",
+            FoundryFeaturesOptInKeys.AgentsOptimizationV2Preview => "AgentsOptimization=V2Preview",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FoundryFeaturesOptInKeys value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static FoundryFeaturesOptInKeys ToFoundryFeaturesOptInKeys(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Skills=V1Preview"))
-            {
-                return FoundryFeaturesOptInKeys.SkillsV1Preview;
-            }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Evaluations=V1Preview"))
             {
                 return FoundryFeaturesOptInKeys.EvaluationsV1Preview;
@@ -48,9 +47,25 @@ namespace Azure.AI.Projects
             {
                 return FoundryFeaturesOptInKeys.MemoryStoresV1Preview;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Toolboxes=V1Preview"))
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Routines=V1Preview"))
             {
-                return FoundryFeaturesOptInKeys.ToolboxesV1Preview;
+                return FoundryFeaturesOptInKeys.RoutinesV1Preview;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Skills=V1Preview"))
+            {
+                return FoundryFeaturesOptInKeys.SkillsV1Preview;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataGenerationJobs=V1Preview"))
+            {
+                return FoundryFeaturesOptInKeys.DataGenerationJobsV1Preview;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Models=V1Preview"))
+            {
+                return FoundryFeaturesOptInKeys.ModelsV1Preview;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AgentsOptimization=V2Preview"))
+            {
+                return FoundryFeaturesOptInKeys.AgentsOptimizationV2Preview;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FoundryFeaturesOptInKeys value.");
         }

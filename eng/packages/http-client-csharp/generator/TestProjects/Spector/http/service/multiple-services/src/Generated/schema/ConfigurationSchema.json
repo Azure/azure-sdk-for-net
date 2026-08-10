@@ -17,7 +17,7 @@
               "$ref": "#/definitions/credential"
             },
             "Options": {
-              "$ref": "#/definitions/serviceMultipleServicesServiceAClientOptions"
+              "$ref": "#/definitions/serviceAClientOptions"
             }
           }
         },
@@ -34,7 +34,7 @@
               "$ref": "#/definitions/credential"
             },
             "Options": {
-              "$ref": "#/definitions/serviceMultipleServicesServiceAClientOptions"
+              "$ref": "#/definitions/serviceBClientOptions"
             }
           }
         }
@@ -46,7 +46,14 @@
     }
   },
   "definitions": {
-    "serviceMultipleServicesServiceAClientOptions": {
+    "serviceAClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        }
+      ]
+    },
+    "serviceBClientOptions": {
       "allOf": [
         {
           "$ref": "#/definitions/azureOptions"

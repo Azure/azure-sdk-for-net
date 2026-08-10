@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class NetworkFunctionDefinitionGroupPropertiesFormat : IUtf8JsonSerializable, IJsonModel<NetworkFunctionDefinitionGroupPropertiesFormat>
+    /// <summary> Network function definition group properties. </summary>
+    public partial class NetworkFunctionDefinitionGroupPropertiesFormat : IJsonModel<NetworkFunctionDefinitionGroupPropertiesFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFunctionDefinitionGroupPropertiesFormat>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetworkFunctionDefinitionGroupPropertiesFormat PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionDefinitionGroupPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkFunctionDefinitionGroupPropertiesFormat(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkFunctionDefinitionGroupPropertiesFormat)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionDefinitionGroupPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkFunctionDefinitionGroupPropertiesFormat)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetworkFunctionDefinitionGroupPropertiesFormat>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFunctionDefinitionGroupPropertiesFormat IPersistableModel<NetworkFunctionDefinitionGroupPropertiesFormat>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkFunctionDefinitionGroupPropertiesFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkFunctionDefinitionGroupPropertiesFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionDefinitionGroupPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionDefinitionGroupPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkFunctionDefinitionGroupPropertiesFormat)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -44,15 +84,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -61,84 +101,56 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
         }
 
-        NetworkFunctionDefinitionGroupPropertiesFormat IJsonModel<NetworkFunctionDefinitionGroupPropertiesFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFunctionDefinitionGroupPropertiesFormat IJsonModel<NetworkFunctionDefinitionGroupPropertiesFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetworkFunctionDefinitionGroupPropertiesFormat JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionDefinitionGroupPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionDefinitionGroupPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkFunctionDefinitionGroupPropertiesFormat)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetworkFunctionDefinitionGroupPropertiesFormat(document.RootElement, options);
         }
 
-        internal static NetworkFunctionDefinitionGroupPropertiesFormat DeserializeNetworkFunctionDefinitionGroupPropertiesFormat(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetworkFunctionDefinitionGroupPropertiesFormat DeserializeNetworkFunctionDefinitionGroupPropertiesFormat(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ProvisioningState? provisioningState = default;
             string description = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new ProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkFunctionDefinitionGroupPropertiesFormat(provisioningState, description, serializedAdditionalRawData);
+            return new NetworkFunctionDefinitionGroupPropertiesFormat(provisioningState, description, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<NetworkFunctionDefinitionGroupPropertiesFormat>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionDefinitionGroupPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridNetworkContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetworkFunctionDefinitionGroupPropertiesFormat)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NetworkFunctionDefinitionGroupPropertiesFormat IPersistableModel<NetworkFunctionDefinitionGroupPropertiesFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionDefinitionGroupPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetworkFunctionDefinitionGroupPropertiesFormat(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetworkFunctionDefinitionGroupPropertiesFormat)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NetworkFunctionDefinitionGroupPropertiesFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

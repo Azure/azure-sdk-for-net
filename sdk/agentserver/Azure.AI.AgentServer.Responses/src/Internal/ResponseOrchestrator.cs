@@ -121,6 +121,29 @@ internal sealed class ResponseOrchestrator
             await FinalizeExecutionAsync(execution, publisher);
         }
 
+        // Non-bg, non-streaming: if persistence failed, throw the original storage
+        // exception instead of returning a response object with a dangling ID. The
+        // response was never created in storage — post-sandbox GET would 404. Since
+        // this mode is synchronous, the client never committed to the response ID
+        // and can retry cleanly.
+        // If the original exception is one of our mapped types (ResponsesApiException
+        // or BadRequestException — mapped from Foundry status codes with user-safe
+        // messages), re-throw it directly so the exception filter serializes it.
+        // Otherwise (e.g. TCP/HTTP client failure), throw a generic 500.
+        if (execution.PersistenceFailed && !execution.IsBackground)
+        {
+            _tracker.TryEvict(execution.ResponseId);
+            if (execution.PersistenceException is ResponsesApiException or BadRequestException)
+            {
+                throw execution.PersistenceException;
+            }
+
+            // Persistence failed with a non-mapped exception (TCP, I/O, etc.) — platform infra failure
+            var persistenceEx = ApiErrorFactory.ServerException();
+            persistenceEx.Data[StorageErrorMapper.PlatformErrorDataKey] = true;
+            throw persistenceEx;
+        }
+
         return OrchestratorResult.Completed(execution.Response!);
     }
 
@@ -129,21 +152,29 @@ internal sealed class ResponseOrchestrator
     /// Encapsulates all guard logic: store check, background check, completion check.
     /// </summary>
     /// <param name="responseId">The response ID to look up.</param>
-    /// <param name="isolation">The platform isolation context. Use <see cref="IsolationContext.Empty"/> when not applicable.</param>
+    /// <param name="platformContext">The platform identity context. Use <see cref="PlatformContext.Empty"/> when not applicable.</param>
     /// <returns>The Response snapshot.</returns>
     /// <exception cref="ResourceNotFoundException">If the response cannot be retrieved.</exception>
-    public async Task<Models.ResponseObject> GetAsync(string responseId, IsolationContext isolation)
+    public async Task<Models.ResponseObject> GetAsync(string responseId, PlatformContext platformContext)
     {
         // If the response is in-flight, apply in-flight guards and return a snapshot.
         if (_tracker.TryGet(responseId, out var execution) && execution is not null)
         {
-            // Chat isolation enforcement for in-flight responses
-            execution.EnforceChatIsolation(isolation);
+            // User-key enforcement for in-flight responses
+            execution.EnforceUserIsolation(platformContext);
 
             // Guard: store=false responses are not retrievable (B14)
             if (!execution.Store)
             {
                 throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+            }
+
+            // Persistence-failed executions are always retrievable from the tracker
+            // regardless of background mode — the response was never persisted to the
+            // durable store, so we serve it from memory.
+            if (execution.PersistenceFailed && execution.Response is not null)
+            {
+                return execution.Response.Snapshot();
             }
 
             // B16: non-background in-flight responses are not findable via GET.
@@ -165,7 +196,7 @@ internal sealed class ResponseOrchestrator
 
         // Not in-flight — fall through to the durable store.
         // Provider throws ResourceNotFoundException if the ID doesn't exist.
-        return await _provider.GetResponseAsync(responseId, isolation);
+        return await _provider.GetResponseAsync(responseId, platformContext);
     }
 
     /// <summary>
@@ -174,18 +205,18 @@ internal sealed class ResponseOrchestrator
     /// idempotency, winddown wait, output clearing.
     /// </summary>
     /// <param name="responseId">The response ID to cancel.</param>
-    /// <param name="isolation">The platform isolation context. Use <see cref="IsolationContext.Empty"/> when not applicable.</param>
+    /// <param name="platformContext">The platform identity context. Use <see cref="PlatformContext.Empty"/> when not applicable.</param>
     /// <returns>The cancelled Response snapshot.</returns>
     /// <exception cref="ResourceNotFoundException">If the response is not found.</exception>
     /// <exception cref="BadRequestException">If the response cannot be cancelled.</exception>
-    public async Task<Models.ResponseObject> CancelAsync(string responseId, IsolationContext isolation)
+    public async Task<Models.ResponseObject> CancelAsync(string responseId, PlatformContext platformContext)
     {
         if (!_tracker.TryGet(responseId, out var execution) || execution is null)
         {
             // Not in-flight — check durable store for terminal state.
             // If it exists and is already terminal, return as-is (idempotent).
             // If it doesn't exist, provider throws ResourceNotFoundException.
-            var persisted = await _provider.GetResponseAsync(responseId, isolation);
+            var persisted = await _provider.GetResponseAsync(responseId, platformContext);
 
             // B1: background check comes first — non-bg responses always get the
             // "synchronous" message regardless of terminal status (spec line 485).
@@ -205,8 +236,8 @@ internal sealed class ResponseOrchestrator
             };
         }
 
-        // Chat isolation enforcement for in-flight responses
-        execution.EnforceChatIsolation(isolation);
+        // User-key enforcement for in-flight responses
+        execution.EnforceUserIsolation(platformContext);
 
         // B1/B16: non-background in-flight responses are not findable via Cancel.
         // With eager eviction, all tracked executions are in-flight — completed
@@ -340,7 +371,25 @@ internal sealed class ResponseOrchestrator
                     await publisher.OnNextAsync(evt);
 
                     var (inputItems, historyItemIds) = await ResolveItemsForPersistenceAsync(context);
-                    await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response!, inputItems, historyItemIds), context.Isolation);
+
+                    try
+                    {
+                        await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response!, inputItems, historyItemIds), context.PlatformContext);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Phase 1 persistence failed — the client has NOT received
+                        // response.created yet (yield return hasn't executed).
+                        // Null out Response so the error handling path treats this as
+                        // a pre-creation failure → standalone "error" SSE event per spec.
+                        // Cancel the execution CTS so the handler stops processing.
+                        _logger.LogError(ex,
+                            "Phase 1 persistence (CreateResponseAsync) failed for response {ResponseId}",
+                            execution.ResponseId);
+                        execution.Response = null;
+                        execution.CancellationTokenSource.Cancel();
+                        throw;
+                    }
 
                     // Signal that response.created has been processed — unblocks
                     // the bg non-streaming endpoint path waiting for the handler's response.
@@ -505,6 +554,51 @@ internal sealed class ResponseOrchestrator
                 if (evt is ResponseCompletedEvent or ResponseFailedEvent or ResponseIncompleteEvent)
                 {
                     terminalEventYielded = true;
+
+                    // Option A: Persist BEFORE yielding the terminal event.
+                    // This ensures zero consistency gap — if the client sees
+                    // response.completed, the data is durable. The Foundry provider's
+                    // Azure.Core pipeline already handles transport-level retries.
+                    if (execution.Store && execution.Response is not null)
+                    {
+                        Exception? persistException = null;
+                        try
+                        {
+                            if (execution.IsBackground)
+                            {
+                                await _provider.UpdateResponseAsync(execution.Response, execution.Context?.PlatformContext ?? PlatformContext.Empty);
+                            }
+                            else
+                            {
+                                var (inputItems, historyItemIds) = await ResolveItemsForPersistenceAsync(execution.Context);
+                                await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response, inputItems, historyItemIds), execution.Context?.PlatformContext ?? PlatformContext.Empty);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError(ex,
+                                "Persistence failed before terminal event for response {ResponseId}",
+                                execution.ResponseId);
+                            persistException = ex;
+                        }
+
+                        if (persistException is not null)
+                        {
+                            // Always overwrite with storage error — the handler's error
+                            // won't survive sandbox termination anyway (zombie detection
+                            // replaces it), and the client needs to know to retry.
+                            // Clear output: items won't be available from the storage API
+                            // post-sandbox, so returning them now creates a false expectation.
+                            execution.Response.Output.Clear();
+                            execution.Response.SetFailed(
+                                new ResponseErrorCode("storage_error"),
+                                "An internal error occurred while storing the response. Subsequent retrieval is not guaranteed. Please retry the request.");
+                            execution.PersistenceFailed = true;
+                            execution.PersistenceException = persistException;
+                            evt = new ResponseFailedEvent(
+                                evt.SequenceNumber, execution.Response.Snapshot());
+                        }
+                    }
                 }
 
                 yield return evt;
@@ -788,38 +882,65 @@ internal sealed class ResponseOrchestrator
             execution.Response.SetCancelled();
         }
 
-        // 4. Persist — best effort. Provider failures must not prevent cleanup.
-        try
+        // 4. Persist — if it fails after Azure.Core's built-in transport retries,
+        // mark the response as failed and keep it in the tracker.
+        // SKIP for streaming mode: persistence was already attempted in CreateStreamingAsync
+        // before the terminal event was yielded to the client (Option A).
+        if (!execution.IsStreaming || execution.Response?.Status == ResponseStatus.Cancelled)
         {
-            if (execution.Store && execution.Response is not null)
+            try
             {
-                if (execution.IsBackground)
+                if (execution.Store && execution.Response is not null && !execution.PersistenceFailed)
                 {
-                    // Background mode: Create already happened at response.created time — update.
-                    await _provider.UpdateResponseAsync(execution.Response, execution.Context?.Isolation ?? IsolationContext.Empty);
-                }
-                else if (IsNonCancelledTerminal(execution.Response.Status))
-                {
-                    // Default mode: single persist at non-cancelled terminal state.
-                    var (inputItems, historyItemIds) = await ResolveItemsForPersistenceAsync(execution.Context);
-                    await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response, inputItems, historyItemIds), execution.Context?.Isolation ?? IsolationContext.Empty);
+                    if (execution.IsBackground)
+                    {
+                        // Background mode: Create already happened at response.created time — update.
+                        await _provider.UpdateResponseAsync(execution.Response, execution.Context?.PlatformContext ?? PlatformContext.Empty);
+                    }
+                    else if (IsNonCancelledTerminal(execution.Response.Status))
+                    {
+                        // Default mode: single persist at non-cancelled terminal state.
+                        var (inputItems, historyItemIds) = await ResolveItemsForPersistenceAsync(execution.Context);
+                        await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response, inputItems, historyItemIds), execution.Context?.PlatformContext ?? PlatformContext.Empty);
+                    }
                 }
             }
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex,
-                "Provider persistence failed for response {ResponseId}", execution.ResponseId);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex,
+                    "Provider persistence failed for response {ResponseId}", execution.ResponseId);
+
+                // Mark response as failed due to persistence error — but never override
+                // a cancelled status (B11: cancellation always wins).
+                if (execution.Response is not null
+                    && execution.Response.Status != ResponseStatus.Cancelled)
+                {
+                    // Clear output: items won't be available from the storage API
+                    // post-sandbox, so returning them now creates a false expectation.
+                    execution.Response.Output.Clear();
+                    execution.Response.SetFailed(
+                        new ResponseErrorCode("storage_error"),
+                        "An internal error occurred while storing the response. Subsequent retrieval is not guaranteed. Please retry the request.");
+                }
+
+                execution.PersistenceFailed = true;
+                execution.PersistenceException = ex;
+            }
         }
 
         // 5. Evict from tracker — subsequent GET / DELETE / Cancel calls will
         // fall through to the durable ResponsesProvider instead of returning a
         // stale in-memory snapshot. Without eviction, completed executions
         // accumulate in the tracker for the lifetime of the process.
+        // EXCEPTION: If persistence failed, keep the execution in the tracker so
+        // GET can serve the failed response from memory (it was never persisted).
         // TryEvict (not TryRemove) intentionally does NOT dispose the execution:
         // CancelAsync may still hold a reference and read Response.Snapshot()
         // after FinalizedSignal fires in step 6 below.
-        _tracker.TryEvict(execution.ResponseId);
+        if (!execution.PersistenceFailed)
+        {
+            _tracker.TryEvict(execution.ResponseId);
+        }
 
         // 6. Signal FinalizedSignal — CancelAsync and StopAsync await this to know
         // that the response is in its final state and has been persisted.

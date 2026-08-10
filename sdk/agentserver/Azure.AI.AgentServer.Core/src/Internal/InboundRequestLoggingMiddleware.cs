@@ -30,8 +30,8 @@ internal sealed partial class InboundRequestLoggingMiddleware : IMiddleware
         var method = context.Request.Method;
         var path = context.Request.Path.Value ?? "/";
 
-        context.Request.Headers.TryGetValue("x-request-id", out var xRequestId);
-        context.Request.Headers.TryGetValue("x-ms-client-request-id", out var clientRequestId);
+        context.Request.Headers.TryGetValue(PlatformHeaders.RequestId, out var xRequestId);
+        context.Request.Headers.TryGetValue(PlatformHeaders.ClientRequestId, out var clientRequestId);
         var traceId = Activity.Current?.TraceId.ToString();
 
         LogRequestStarted(method, path, xRequestId.ToString(), clientRequestId.ToString(), traceId);

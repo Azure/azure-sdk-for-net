@@ -18,12 +18,17 @@ on:
   roles: all
   reaction: eyes
 
-permissions: read-all
+permissions:
+  copilot-requests: write
+  contents: read
+  issues: read
 
 network:
   allowed:
     - defaults
-    - "api.nuget.org"
+    - dotnet
+    - github
+    - "*.in.applicationinsights.azure.com"
 
 safe-outputs:
   report-failure-as-issue: false
@@ -62,7 +67,7 @@ safe-outputs:
           type: string
       steps:
         - name: Post mention comment
-          uses: actions/github-script@v9
+          uses: actions/github-script@v9.0.0
           env:
             DISPATCH_ISSUE_NUMBER: "${{ github.event.inputs.issue_number || '' }}"
           with:
@@ -218,8 +223,10 @@ Note: The gh-aw runtime provides additional baseline defenses including the XPIA
 - If triggered by `workflow_dispatch`: the issue number is `${{ github.event.inputs.issue_number }}`
 
 Note the issue number — you must include it in every safe-output tool call:
-- For `add-labels`, `remove-labels`, and `add-comment`: pass it as `item_number`
-- For `assign-to-user` and `close-issue`: pass it as `issue_number`
+- For `add_labels`, `remove_labels`, and `add_comment`: pass it as `item_number`
+- For `assign_to_user` and `close_issue`: pass it as `issue_number`
+
+> Note: the `safe-outputs` frontmatter keys use kebab-case (e.g., `add-comment`), while the runtime tool names you call use snake_case (e.g., `add_comment`).
 
 Retrieve the issue using the `get_issue` tool
 
@@ -305,8 +312,8 @@ Labels classification is distinguished by color. Actively inspect label colors w
 ### Excluded Category and Service Labels
 
 The following labels require human judgment and are never assigned by automatic triage:
-- **"Central-EngSys"** (color #ffeb77): For non-service issues such as engineering systems, scripts, workflows, or pipelines in the /eng folder. 
-- **"Service"** (color #ffeb77): For issues with the REST API or Azure service behavior outside SDK control. 
+- **"Central-EngSys"** (color #ffeb77): For non-service issues such as engineering systems, scripts, workflows, or pipelines in the /eng folder.
+- **"Service"** (color #ffeb77): For issues with the REST API or Azure service behavior outside SDK control.
 
 If any of these labels are part of the most confident label prediction, treat the prediction as low confidence and fall back to applying "needs-triage" only.  Any labels applied in earlier steps should be removed, leaving ONLY `needs-triage`
 
@@ -379,7 +386,7 @@ Determine the NuGet package ID conservatively:
 
 If all versions are deprecated AND a date was extracted:
 
-1. Post a comment (via `add-comment`) with this exact text, substituting values:
+1. Post a comment (via `add_comment`) with this exact text, substituting values:
 
 ```
 This package reached end-of-life on <EXTRACTED DATE> and is no longer supported by Microsoft. Unfortunately, we cannot assist with this issue.
@@ -392,7 +399,7 @@ If `deprecation.alternatePackage.id` exists, append:
 The replacement is `<alternatePackage.id>`. Please consider re-filing your issue against the replacement package.
 ```
 
-2. Close the issue (via `close-issue`)
+2. Close the issue (via `close_issue`)
 3. Exit — skip all remaining steps
 
 ## Step 5: Owner Lookup and Routing
@@ -422,47 +429,47 @@ The CODEOWNERS file contains `# ServiceLabel:` entries that associate one or mor
 
 **Why this matters:** The file is structured so that more specific multi-label entries appear AFTER less specific entries. In bottom-to-top scanning, entries closer to the end of the file are encountered first. Multi-label entries placed after a catch-all are encountered before it, correctly overriding the catch-all
 
-The following simplified excerpt illustrates the structure (line numbers reference the actual CODEOWNERS file):
+The following simplified excerpt illustrates the structure:
 
 ```
 # --- Client libraries section (earlier in file) ---
 
-# AzureSdkOwners:                   @jsquire                   ← line 328
-# ServiceLabel: %Event Hubs                                    ← line 329
-# ServiceOwners:                    @axisc @hmlam              ← line 330
+# AzureSdkOwners:                   @jsquire
+# ServiceLabel: %Event Hubs
+# ServiceOwners:                    @axisc @hmlam
 
 # --- Management catch-all ---
 
-# ServiceLabel: %Mgmt                                          ← line 912
-# AzureSdkOwners:                   @ArthurMa1978              ← line 913
+# ServiceLabel: %Mgmt
+# AzureSdkOwners:                   @ArthurMa1978
 
 # --- Management-specific overrides (after catch-all) ---
 
-# ServiceLabel: %ARM %Mgmt                                     ← line 924
-# ServiceOwners:                    @Azure/arm-sdk-owners      ← line 925
+# ServiceLabel: %ARM %Mgmt
+# ServiceOwners:                    @Azure/arm-sdk-owners
 
-# ServiceLabel: %ARM - Templates %Mgmt                         ← line 945
-# ServiceOwners:                    @armleads-azure            ← line 946
+# ServiceLabel: %ARM - Templates %Mgmt
+# ServiceOwners:                    @armleads-azure
 ```
 
 **Example 1 — Predicted labels: "ARM" + "Mgmt"**
 
-Scan starts from end of file (line 1230) upward:
-1. `%ARM - Templates %Mgmt` (line 945) — requires "ARM - Templates" AND "Mgmt"; issue has "ARM" not "ARM - Templates" → no match, continue
-2. `%ARM %Mgmt` (line 924) — requires "ARM" AND "Mgmt"; issue has both → ALL labels match ✅ STOP
+Scan starts from end of file upward:
+1. `%ARM - Templates %Mgmt` — requires "ARM - Templates" AND "Mgmt"; issue has "ARM" not "ARM - Templates" → no match, continue
+2. `%ARM %Mgmt` — requires "ARM" AND "Mgmt"; issue has both → ALL labels match ✅ STOP
 
-The `%Mgmt` catch-all at line 912 is never reached because the more specific `%ARM %Mgmt` entry at line 924 was encountered first (it appears after the catch-all in the file)
+The `%Mgmt` catch-all is never reached because the more specific `%ARM %Mgmt` entry was encountered first (it appears after the catch-all in the file)
 
-**Outcome:** Matches `%ARM %Mgmt` (line 924). ServiceOwners: @Azure/arm-sdk-owners, no AzureSdkOwners. Add "Service Attention" + "needs-team-attention" labels, no assignment, no @mention
+**Outcome:** Matches `%ARM %Mgmt`. ServiceOwners: @Azure/arm-sdk-owners, no AzureSdkOwners. Add "Service Attention" label, no assignment, no @mention. If the issue is also tagged with the "customer-reported" label, add the "needs-team-attention" label
 
 **Example 2 — Predicted labels: "Event Hubs" + "Client"**
 
-Scan starts from end of file (line 1230) upward:
-1. All management-specific entries (lines 924-1230) — each requires "Mgmt" or a management service; issue has "Client" not "Mgmt" → no match for any, continue
-2. `%Mgmt` catch-all (line 912) — requires "Mgmt"; issue has "Client" → no match, continue
-3. `%Event Hubs` (line 329) — requires only "Event Hubs"; issue has "Event Hubs" → ALL labels match ✅ STOP
+Scan starts from end of file upward:
+1. All management-specific entries — each requires "Mgmt" or a management service; issue has "Client" not "Mgmt" → no match for any, continue
+2. `%Mgmt` catch-all — requires "Mgmt"; issue has "Client" → no match, continue
+3. `%Event Hubs` — requires only "Event Hubs"; issue has "Event Hubs" → ALL labels match ✅ STOP
 
-**Outcome:** Matches `%Event Hubs` (line 329). AzureSdkOwners: @jsquire, ServiceOwners: @axisc @hmlam. Assign @jsquire, add "needs-team-attention", @mention @jsquire in Step 6 comment
+**Outcome:** Matches `%Event Hubs`. AzureSdkOwners: @jsquire, ServiceOwners: @axisc @hmlam. Assign @jsquire, @mention @jsquire in Step 6 comment. If the issue is also tagged with the "customer-reported" label, add the "needs-team-attention" label
 
 Note: There is no `%Client` catch-all entry in CODEOWNERS, so "Client" as a category label does not contribute to CODEOWNERS matching. The service label drives the match
 
@@ -529,7 +536,49 @@ Add a single analysis comment to the issue using `add_comment`:
 - Keep @mentions exclusively in Step 6; this comment contains analysis only
 - Leave issue closure decisions to human reviewers; the "issue-addressed" label is not used during initial triage
 
-Use the following format exactly:
+The comment format depends on whether triage was successful or fell back to manual review:
+
+```
+IF "needs-triage" was applied (label prediction fallback) OR "needs-team-triage" was applied (owner lookup fallback):
+    Use the Fallback Comment Format below
+
+ELSE:
+    Use the Standard Comment Format below
+```
+
+### Fallback Comment Format
+
+Used when triage fell back to "needs-triage" (could not predict labels) or "needs-team-triage" (could not identify owners). Focuses on decision-making insight to help the human triager; omits issue summary, details, and debugging tips
+
+```
+## 🎯 Agentic Issue Triage — Needs Manual Review
+
+<details>
+<summary>🏷️ Label Decision</summary>
+
+- **Candidate labels considered:** <list each candidate category+service label pair evaluated and why each was or wasn't viable>
+- **Confidence blockers:** <which specific criteria from the Confidence Criteria section were not met>
+- **Outcome:** <"Applied needs-triage — could not confidently predict labels" or "Applied `<category>` + `<service>` — prediction was confident">
+</details>
+
+<details>
+<summary>👥 Owner Routing</summary>
+
+- **CODEOWNERS scan:** <entries examined during bottom-to-top scan and why each did or didn't match>
+- **Matched entry:** <the entry that matched, or "no match found" with explanation>
+- **Owners found:** <AzureSdkOwners and ServiceOwners from the matched entry, or "none listed">
+- **Outcome:** <routing action taken — e.g., "Applied needs-team-triage — matched entry has no owners listed" or "Applied needs-team-triage — no ServiceLabel entry matched the predicted labels">
+</details>
+```
+
+Rules for the fallback sections:
+- All detail sections are collapsed by default
+- 🏷️ Label Decision: list every candidate label pair that was evaluated, state which confidence criteria blocked a prediction, note reference issues consulted (if any) and why they did or didn't support a prediction
+- 👥 Owner Routing: when "needs-triage" was applied (Steps 4/5/6 were skipped), state "Owner lookup was not performed — label prediction did not reach confidence threshold"; when "needs-team-triage" was applied, show which CODEOWNERS entries were scanned bottom-to-top, which entry matched (if any), what owners were listed, and why routing could not be completed
+
+### Standard Comment Format
+
+Used when labels were confidently predicted and owners were successfully identified:
 
 ```
 ## 🎯 Agentic Issue Triage
@@ -578,7 +627,7 @@ Use the following format exactly:
 </details>
 ```
 
-Rules for the sections:
+Rules for the standard sections:
 - The Summary is always visible; all detail sections are collapsed by default
   - 📋 Issue Details: extract package, affected API, and scenarios from the issue body; include root ask
   - 🔎 Debugging / Reproduction Notes: include diagnostic observations and numbered investigation steps; note similar open issues found via `search_issues` if any

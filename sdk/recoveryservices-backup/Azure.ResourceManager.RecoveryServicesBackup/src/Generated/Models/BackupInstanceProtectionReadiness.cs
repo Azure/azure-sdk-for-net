@@ -15,10 +15,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct BackupInstanceProtectionReadiness : IEquatable<BackupInstanceProtectionReadiness>
     {
         private readonly string _value;
+        /// <summary> Instance protection readiness is unknown. </summary>
         private const string UnknownValue = "Unknown";
+        /// <summary> Instance is ready for protection. </summary>
         private const string ReadyValue = "Ready";
+        /// <summary> Backup schedule is disabled for this instance. </summary>
         private const string ScheduleDisabledValue = "ScheduleDisabled";
+        /// <summary> Instance is partially protected. </summary>
         private const string PartialProtectionValue = "PartialProtection";
+        /// <summary> Instance protection encountered an error. </summary>
         private const string ProtectionErrorValue = "ProtectionError";
 
         /// <summary> Initializes a new instance of <see cref="BackupInstanceProtectionReadiness"/>. </summary>
@@ -31,19 +36,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             _value = value;
         }
 
-        /// <summary> Gets the Unknown. </summary>
+        /// <summary> Instance protection readiness is unknown. </summary>
         public static BackupInstanceProtectionReadiness Unknown { get; } = new BackupInstanceProtectionReadiness(UnknownValue);
 
-        /// <summary> Gets the Ready. </summary>
+        /// <summary> Instance is ready for protection. </summary>
         public static BackupInstanceProtectionReadiness Ready { get; } = new BackupInstanceProtectionReadiness(ReadyValue);
 
-        /// <summary> Gets the ScheduleDisabled. </summary>
+        /// <summary> Backup schedule is disabled for this instance. </summary>
         public static BackupInstanceProtectionReadiness ScheduleDisabled { get; } = new BackupInstanceProtectionReadiness(ScheduleDisabledValue);
 
-        /// <summary> Gets the PartialProtection. </summary>
+        /// <summary> Instance is partially protected. </summary>
         public static BackupInstanceProtectionReadiness PartialProtection { get; } = new BackupInstanceProtectionReadiness(PartialProtectionValue);
 
-        /// <summary> Gets the ProtectionError. </summary>
+        /// <summary> Instance protection encountered an error. </summary>
         public static BackupInstanceProtectionReadiness ProtectionError { get; } = new BackupInstanceProtectionReadiness(ProtectionErrorValue);
 
         /// <summary> Determines if two <see cref="BackupInstanceProtectionReadiness"/> values are the same. </summary>

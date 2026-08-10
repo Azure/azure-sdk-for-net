@@ -354,6 +354,11 @@ namespace Azure.Core
         /// </summary>
         public static AzureLocation MalaysiaWest { get; } = CreateStaticReference("malaysiawest", "Malaysia West");
 
+        /// <summary>
+        /// Public cloud location for Denmark East.
+        /// </summary>
+        public static AzureLocation DenmarkEast { get; } = CreateStaticReference("denmarkeast", "Denmark East");
+
         #endregion
 
         /// <summary> Initializes a new instance of Location. </summary>

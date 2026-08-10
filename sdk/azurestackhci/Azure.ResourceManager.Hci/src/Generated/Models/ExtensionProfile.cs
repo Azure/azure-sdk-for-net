@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Hci.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExtensionProfile"/>. </summary>
-        public ExtensionProfile()
+        internal ExtensionProfile()
         {
             Extensions = new ChangeTrackingList<HciEdgeDeviceArcExtension>();
         }
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> List of Arc extensions installed on edge device. </summary>
         [WirePath("extensions")]
-        public IReadOnlyList<HciEdgeDeviceArcExtension> Extensions { get; }
+        public IReadOnlyList<HciEdgeDeviceArcExtension> Extensions { get; } = new ChangeTrackingList<HciEdgeDeviceArcExtension>();
     }
 }

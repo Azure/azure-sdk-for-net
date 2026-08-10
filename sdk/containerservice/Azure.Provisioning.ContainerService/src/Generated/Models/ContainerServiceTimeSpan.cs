@@ -56,8 +56,12 @@ namespace Azure.Provisioning.ContainerService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "start" });
-            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "end" });
+            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "start" }, format: "O");
+            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "end" }, format: "O");
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerServiceTimeSpan that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

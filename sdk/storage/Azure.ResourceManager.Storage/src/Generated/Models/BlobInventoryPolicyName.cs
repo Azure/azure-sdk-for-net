@@ -11,10 +11,11 @@ using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary></summary>
+    /// <summary> The name of the blob inventory policy. It should always be 'default'. </summary>
     public readonly partial struct BlobInventoryPolicyName : IEquatable<BlobInventoryPolicyName>
     {
         private readonly string _value;
+        /// <summary> Default. </summary>
         private const string DefaultValue = "default";
 
         /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyName"/>. </summary>
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
             _value = value;
         }
 
-        /// <summary> Gets the Default. </summary>
+        /// <summary> Default. </summary>
         public static BlobInventoryPolicyName Default { get; } = new BlobInventoryPolicyName(DefaultValue);
 
         /// <summary> Determines if two <see cref="BlobInventoryPolicyName"/> values are the same. </summary>

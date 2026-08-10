@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Policy;
 namespace Azure.ResourceManager.Resources.Policy.Models
 {
     /// <summary> The response of a PolicyDefinitionVersion list operation. </summary>
-    public partial class PolicyDefinitionVersionListResult
+    internal partial class PolicyDefinitionVersionListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

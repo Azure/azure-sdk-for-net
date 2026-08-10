@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerConfigurationDataType : IEquatable<PostgreSqlFlexibleServerConfigurationDataType>
     {
         private readonly string _value;
+        /// <summary> A boolean value. </summary>
+        private const string BooleanValue = "Boolean";
+        /// <summary> A numeric value. </summary>
+        private const string NumericValue = "Numeric";
+        /// <summary> An integer value. </summary>
+        private const string IntegerValue = "Integer";
+        /// <summary> An enumeration value. </summary>
+        private const string EnumerationValue = "Enumeration";
+        /// <summary> A string value. </summary>
+        private const string StringValue = "String";
+        /// <summary> A set of values. </summary>
+        private const string SetValue = "Set";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerConfigurationDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PostgreSqlFlexibleServerConfigurationDataType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string BooleanValue = "Boolean";
-        private const string NumericValue = "Numeric";
-        private const string IntegerValue = "Integer";
-        private const string EnumerationValue = "Enumeration";
-        private const string StringValue = "String";
-        private const string SetValue = "Set";
-
-        /// <summary> Boolean. </summary>
+        /// <summary> A boolean value. </summary>
         public static PostgreSqlFlexibleServerConfigurationDataType Boolean { get; } = new PostgreSqlFlexibleServerConfigurationDataType(BooleanValue);
-        /// <summary> Numeric. </summary>
+
+        /// <summary> A numeric value. </summary>
         public static PostgreSqlFlexibleServerConfigurationDataType Numeric { get; } = new PostgreSqlFlexibleServerConfigurationDataType(NumericValue);
-        /// <summary> Integer. </summary>
+
+        /// <summary> An integer value. </summary>
         public static PostgreSqlFlexibleServerConfigurationDataType Integer { get; } = new PostgreSqlFlexibleServerConfigurationDataType(IntegerValue);
-        /// <summary> Enumeration. </summary>
+
+        /// <summary> An enumeration value. </summary>
         public static PostgreSqlFlexibleServerConfigurationDataType Enumeration { get; } = new PostgreSqlFlexibleServerConfigurationDataType(EnumerationValue);
-        /// <summary> String. </summary>
+
+        /// <summary> A string value. </summary>
         public static PostgreSqlFlexibleServerConfigurationDataType String { get; } = new PostgreSqlFlexibleServerConfigurationDataType(StringValue);
-        /// <summary> Set. </summary>
+
+        /// <summary> A set of values. </summary>
         public static PostgreSqlFlexibleServerConfigurationDataType Set { get; } = new PostgreSqlFlexibleServerConfigurationDataType(SetValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerConfigurationDataType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlFlexibleServerConfigurationDataType left, PostgreSqlFlexibleServerConfigurationDataType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerConfigurationDataType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlFlexibleServerConfigurationDataType left, PostgreSqlFlexibleServerConfigurationDataType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerConfigurationDataType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerConfigurationDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlFlexibleServerConfigurationDataType(string value) => new PostgreSqlFlexibleServerConfigurationDataType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerConfigurationDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlFlexibleServerConfigurationDataType?(string value) => value == null ? null : new PostgreSqlFlexibleServerConfigurationDataType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlFlexibleServerConfigurationDataType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlFlexibleServerConfigurationDataType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

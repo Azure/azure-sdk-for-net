@@ -67,13 +67,13 @@ namespace Azure.Communication.Messages
         /// </list>
         /// </summary>
         /// <param name="channelId"> The registration ID of the channel. </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetTemplates(Guid channelId, int? maxPageSize, RequestContext context)
+        public virtual Pageable<BinaryData> GetTemplates(Guid channelId, int? maxpagesize, RequestContext context)
         {
-            return new MessageTemplateClientGetTemplatesCollectionResult(this, channelId, maxPageSize, context, "MessageTemplateClient.GetTemplates");
+            return new MessageTemplateClientGetTemplatesCollectionResult(this, channelId, maxpagesize, context, "MessageTemplateClient.GetTemplates");
         }
 
         /// <summary>
@@ -85,33 +85,33 @@ namespace Azure.Communication.Messages
         /// </list>
         /// </summary>
         /// <param name="channelId"> The registration ID of the channel. </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetTemplatesAsync(Guid channelId, int? maxPageSize, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetTemplatesAsync(Guid channelId, int? maxpagesize, RequestContext context)
         {
-            return new MessageTemplateClientGetTemplatesAsyncCollectionResult(this, channelId, maxPageSize, context, "MessageTemplateClient.GetTemplates");
+            return new MessageTemplateClientGetTemplatesAsyncCollectionResult(this, channelId, maxpagesize, context, "MessageTemplateClient.GetTemplates");
         }
 
         /// <summary> List all templates for given Azure Communication Services channel. </summary>
         /// <param name="channelId"> The registration ID of the channel. </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<MessageTemplateItem> GetTemplates(Guid channelId, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<MessageTemplateItem> GetTemplates(Guid channelId, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new MessageTemplateClientGetTemplatesCollectionResultOfT(this, channelId, maxPageSize, cancellationToken.ToRequestContext(), "MessageTemplateClient.GetTemplates");
+            return new MessageTemplateClientGetTemplatesCollectionResultOfT(this, channelId, maxpagesize, cancellationToken.ToRequestContext(), "MessageTemplateClient.GetTemplates");
         }
 
         /// <summary> List all templates for given Azure Communication Services channel. </summary>
         /// <param name="channelId"> The registration ID of the channel. </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<MessageTemplateItem> GetTemplatesAsync(Guid channelId, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MessageTemplateItem> GetTemplatesAsync(Guid channelId, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new MessageTemplateClientGetTemplatesAsyncCollectionResultOfT(this, channelId, maxPageSize, cancellationToken.ToRequestContext(), "MessageTemplateClient.GetTemplates");
+            return new MessageTemplateClientGetTemplatesAsyncCollectionResultOfT(this, channelId, maxpagesize, cancellationToken.ToRequestContext(), "MessageTemplateClient.GetTemplates");
         }
     }
 }

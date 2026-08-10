@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
 ["key1"] = "value1"
 },
             };
-            ArmOperation<VirtualHubResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualHubName, data);
+            ArmOperation<VirtualHubResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualHubName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualHubResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

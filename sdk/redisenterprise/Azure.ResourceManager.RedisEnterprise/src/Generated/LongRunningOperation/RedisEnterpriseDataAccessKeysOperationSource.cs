@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         RedisEnterpriseDataAccessKeys IOperationSource<RedisEnterpriseDataAccessKeys>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            RedisEnterpriseDataAccessKeys result = RedisEnterpriseDataAccessKeys.DeserializeRedisEnterpriseDataAccessKeys(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return RedisEnterpriseDataAccessKeys.DeserializeRedisEnterpriseDataAccessKeys(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         async ValueTask<RedisEnterpriseDataAccessKeys> IOperationSource<RedisEnterpriseDataAccessKeys>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            RedisEnterpriseDataAccessKeys result = RedisEnterpriseDataAccessKeys.DeserializeRedisEnterpriseDataAccessKeys(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return RedisEnterpriseDataAccessKeys.DeserializeRedisEnterpriseDataAccessKeys(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

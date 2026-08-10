@@ -71,8 +71,18 @@ public class RawEventInteropTests
 
         // Use raw event for a custom output item manually
         var rawSeq = stream.NextSequenceNumber(); // 7
-        var manualItem = new OutputItemFunctionToolCall("call_raw", "manual_fn", "{}");
-        manualItem.Id = "raw_item_001";
+        var manualItem = new OutputItemFunctionToolCall(
+            OutputItemType.FunctionCall,
+            createdBy: null,
+            agentReference: null,
+            responseId: null,
+            additionalBinaryDataProperties: null,
+            id: "raw_item_001",
+            callId: "call_raw",
+            @namespace: null,
+            name: "manual_fn",
+            arguments: "{}",
+            status: ItemFunctionToolCallStatus.InProgress);
         var rawAddedEvent = new ResponseOutputItemAddedEvent(rawSeq, 1, manualItem);
         events.Add(rawAddedEvent);
 

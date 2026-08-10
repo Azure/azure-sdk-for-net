@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 writer.WriteStartArray();
                 foreach (ResourceType item in ResourceTypeList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }

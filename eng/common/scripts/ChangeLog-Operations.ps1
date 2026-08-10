@@ -3,6 +3,7 @@
 . "${PSScriptRoot}\SemVer.ps1"
 
 $RELEASE_TITLE_REGEX = "(?<releaseNoteTitle>^\#+\s+(?<version>$([AzureEngSemanticVersion]::SEMVER_REGEX))(\s+(?<releaseStatus>\(.+\))))"
+$PYTHON_RELEASE_TITLE_REGEX = "(?<releaseNoteTitle>^\#+\s+(?<version>$([AzureEngSemanticVersion]::PYTHON_SEMVER_REGEX))(\s+(?<releaseStatus>\(.+\))))"
 $SECTION_HEADER_REGEX_SUFFIX = "##\s(?<sectionName>.*)"
 $CHANGELOG_UNRELEASED_STATUS = "(Unreleased)"
 $CHANGELOG_DATE_FORMAT = "yyyy-MM-dd"
@@ -62,11 +63,13 @@ function Get-ChangeLogEntriesFromContent {
   $changeLogEntries | Add-Member -NotePropertyName "InitialAtxHeader" -NotePropertyValue $initialAtxHeader
   $releaseTitleAtxHeader = $initialAtxHeader + "#"
   $headerLines = @()
+  $parseLanguage = (Get-Variable -Name "Language" -ValueOnly -ErrorAction "Ignore")
+  $titleRegex = if ($parseLanguage -eq "python") { $PYTHON_RELEASE_TITLE_REGEX } else { $RELEASE_TITLE_REGEX }
 
   try {
     # walk the document, finding where the version specifiers are and creating lists
     foreach ($line in $changeLogContent) {
-      if ($line -match $RELEASE_TITLE_REGEX) {
+      if ($line -match $titleRegex) {
         $changeLogEntry = [pscustomobject]@{
           ReleaseVersion = $matches["version"]
           ReleaseStatus  =  $matches["releaseStatus"]

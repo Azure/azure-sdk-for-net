@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Hci.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciStorageProfile"/>. </summary>
-        public HciStorageProfile()
+        internal HciStorageProfile()
         {
             Disks = new ChangeTrackingList<EdgeDeviceDisks>();
         }

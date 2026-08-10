@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             TryGetApiVersion(ResourceType, out string mySqlFlexibleServerFirewallRuleApiVersion);
             _firewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _firewallRulesRestClient = new FirewallRules(_firewallRulesClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerFirewallRuleApiVersion ?? "2024-12-30");
+            _firewallRulesRestClient = new FirewallRules(_firewallRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServerFirewallRuleApiVersion ?? "2024-12-30");
             ValidateResourceId(id);
         }
 
@@ -325,12 +325,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _firewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MySqlFlexibleServerFirewallRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<MySqlFlexibleServerFirewallRuleResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerFirewallRuleResource>(
-                    new MySqlFlexibleServerFirewallRuleOperationSource(Client),
+                    new MySqlFlexibleServerFirewallRuleResourceOperationSource(Client),
                     _firewallRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location);
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -384,12 +384,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _firewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MySqlFlexibleServerFirewallRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<MySqlFlexibleServerFirewallRuleResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerFirewallRuleResource>(
-                    new MySqlFlexibleServerFirewallRuleOperationSource(Client),
+                    new MySqlFlexibleServerFirewallRuleResourceOperationSource(Client),
                     _firewallRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location);
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

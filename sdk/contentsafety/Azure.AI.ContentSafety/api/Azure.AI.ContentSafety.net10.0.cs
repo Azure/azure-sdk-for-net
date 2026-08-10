@@ -178,6 +178,14 @@ namespace Azure.AI.ContentSafety
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveBlocklistItemsAsync(string name, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class BlocklistClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddBlocklistClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddBlocklistClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.ContentSafety.BlocklistClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedBlocklistClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedBlocklistClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.ContentSafety.BlocklistClientSettings> configureSettings) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public partial class BlocklistClientSettings : System.ClientModel.Primitives.ClientSettings
     {
         public BlocklistClientSettings() { }
@@ -217,6 +225,14 @@ namespace Azure.AI.ContentSafety
         public virtual Azure.Response ShieldPrompt(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.ContentSafety.ShieldPromptResult>> ShieldPromptAsync(Azure.AI.ContentSafety.ShieldPromptOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ShieldPromptAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class ContentSafetyClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddContentSafetyClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddContentSafetyClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.ContentSafety.ContentSafetyClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedContentSafetyClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedContentSafetyClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.ContentSafety.ContentSafetyClientSettings> configureSettings) { throw null; }
     }
     public partial class ContentSafetyClientOptions : Azure.Core.ClientOptions
     {
