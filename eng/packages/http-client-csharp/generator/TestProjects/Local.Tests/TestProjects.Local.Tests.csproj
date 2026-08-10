@@ -45,6 +45,7 @@
 		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/SequentialDelayStrategy.cs" LinkBase="Shared/Core" />
 		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/TaskExtensions.cs" LinkBase="Shared/Core" />
 		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/TrimmingAttribute.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/AzurePipelineResponse.cs" LinkBase="Shared/Core" />
 		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/VoidValue.cs" LinkBase="Shared/Core" />
 		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/IXmlSerializable.cs" LinkBase="Shared/Core" />
 		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/XmlWriterContent.cs" LinkBase="Shared/Core" />
