@@ -44,8 +44,10 @@ param(
     # The single failing SDK package path (repo-relative), for the human summary.
     [string]$PackagePath = '',
 
-    # The pre-repair HEAD sha; enables an accurate `git diff` file list. When absent,
-    # the file list falls back to the union of appliedPatches (custom files only).
+    # Fallback pre-repair sha, used only when the repair edits are already committed at emit
+    # time (so the working tree is clean vs HEAD). The primary file list comes from the
+    # uncommitted working-tree diff against HEAD. When absent, the file list falls back to the
+    # union of appliedPatches (custom files only).
     [string]$PreRepairSha = '',
 
     # Max iterations the loop was allowed (from repair-config.yml), for "N / max" display.
@@ -207,13 +209,29 @@ function Test-IsGenerated([string]$path) {
 }
 $changedFiles = @()
 $fileSource = 'git'
-if ($PreRepairSha) {
-    Push-Location $RepoRoot
-    try {
-        $diff = & git diff --name-only $PreRepairSha -- 2>$null
+# Scope every diff to the failing package. The repair only edits custom code and regenerates
+# Generated/ *within* $PackagePath, so scoping enforces the "nothing outside the failing
+# package" invariant and keeps unrelated base-branch files out of the list. For a
+# pull_request event the working tree is the PR *merge ref* (head + base), so an unscoped
+# diff against the pre-repair PR-head sha would also list every file the base branch changed
+# since the branch diverged (e.g. .github/, .mcp.json).
+$pathArgs = if ($PackagePath) { @('--', $PackagePath) } else { @('--') }
+Push-Location $RepoRoot
+try {
+    # Primary: uncommitted working-tree edits. At emit time the repair's custom-code edits and
+    # regenerated Generated/ are still uncommitted -- the push-to-pull-request-branch safe
+    # output commits them in a later job -- so diffing the working tree against the checked-out
+    # HEAD yields exactly the repair's footprint, independent of whatever $PreRepairSha was.
+    $diff = & git diff --name-only HEAD @pathArgs 2>$null
+    if ($LASTEXITCODE -eq 0 -and $diff) { $changedFiles = @($diff | Where-Object { $_ }) }
+
+    # Fallback: if the repair was already committed (working tree clean vs HEAD), diff the
+    # pre-repair sha instead. Still scoped to $PackagePath so merge-ref base changes stay out.
+    if ($changedFiles.Count -eq 0 -and $PreRepairSha) {
+        $diff = & git diff --name-only $PreRepairSha @pathArgs 2>$null
         if ($LASTEXITCODE -eq 0 -and $diff) { $changedFiles = @($diff | Where-Object { $_ }) }
-    } finally { Pop-Location }
-}
+    }
+} finally { Pop-Location }
 if ($changedFiles.Count -eq 0) {
     # Fallback: custom files the engine reported patching (won't include regenerated Generated/).
     $fileSource = 'appliedPatches'
