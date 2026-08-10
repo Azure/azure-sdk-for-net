@@ -148,6 +148,11 @@ namespace Azure.Generator.Provisioning.Providers
         {
             var properties = new Dictionary<string, PropertyProvider>(StringComparer.Ordinal);
             var visitedTypes = new HashSet<CSharpType>();
+
+            // TypeProvider.BaseTypeProvider is the direct provider chain used by the core generator,
+            // but it is internal to Microsoft.TypeSpec.Generator and cannot be accessed from this
+            // generator assembly. Walk the public BaseType chain instead and resolve each provider
+            // here so generated and customization-only bases can both contribute canonical properties.
             var baseType = BaseType;
 
             while (baseType != null && visitedTypes.Add(baseType))
