@@ -238,7 +238,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <returns> A new <see cref="OpenAI.OpenAPIAnonymousAuthenticationDetails"/> instance for mocking. </returns>
         public static OpenAPIAnonymousAuthenticationDetails OpenAPIAnonymousAuthenticationDetails()
         {
-            return new OpenAPIAnonymousAuthenticationDetails(OpenApiAuthenticationKind.Anonymous, additionalBinaryDataProperties: null);
+            return new OpenAPIAnonymousAuthenticationDetails(default, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Security details for OpenApi project connection authentication. </summary>
@@ -246,7 +246,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <returns> A new <see cref="OpenAI.OpenApiProjectConnectionAuthenticationDetails"/> instance for mocking. </returns>
         public static OpenApiProjectConnectionAuthenticationDetails OpenApiProjectConnectionAuthenticationDetails(OpenApiProjectConnectionSecurityScheme securityScheme = default)
         {
-            return new OpenApiProjectConnectionAuthenticationDetails(OpenApiAuthenticationKind.ProjectConnection, additionalBinaryDataProperties: null, securityScheme);
+            return new OpenApiProjectConnectionAuthenticationDetails(default, additionalBinaryDataProperties: null, securityScheme);
         }
 
         /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
@@ -262,7 +262,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <returns> A new <see cref="OpenAI.OpenApiManagedAuthenticationDetails"/> instance for mocking. </returns>
         public static OpenApiManagedAuthenticationDetails OpenApiManagedAuthenticationDetails(OpenApiManagedSecurityScheme securityScheme = default)
         {
-            return new OpenApiManagedAuthenticationDetails(OpenApiAuthenticationKind.ManagedIdentity, additionalBinaryDataProperties: null, securityScheme);
+            return new OpenApiManagedAuthenticationDetails(default, additionalBinaryDataProperties: null, securityScheme);
         }
 
         /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>

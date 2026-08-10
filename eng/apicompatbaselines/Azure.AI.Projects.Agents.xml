@@ -35,19 +35,11 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
-    <Target>T:Azure.AI.Projects.Agents.BingCustomSearchConfiguration</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0001</DiagnosticId>
     <Target>T:Azure.AI.Projects.Agents.BingCustomSearchPreviewTool</Target>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
     <Target>T:Azure.AI.Projects.Agents.BingCustomSearchToolOptions</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0001</DiagnosticId>
-    <Target>T:Azure.AI.Projects.Agents.BingGroundingSearchConfiguration</Target>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
@@ -75,11 +67,27 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.AI.Projects.Agents.FabricDataAgentToolOptions</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
     <Target>T:Azure.AI.Projects.Agents.MemorySearchPreviewTool</Target>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.AI.Projects.Agents.MemorySearchToolOptions</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
     <Target>T:Azure.AI.Projects.Agents.MicrosoftFabricPreviewTool</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.AI.Projects.Agents.OpenAPIAnonymousAuthenticationDetails</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.AI.Projects.Agents.OpenApiAuthenticationDetails</Target>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
@@ -96,14 +104,6 @@
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
     <Target>T:Azure.AI.Projects.Agents.SharepointPreviewTool</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0001</DiagnosticId>
-    <Target>T:Azure.AI.Projects.Agents.ContentFilterConfiguration</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0001</DiagnosticId>
-    <Target>T:Azure.AI.Projects.Agents.FabricDataAgentToolOptions</Target>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
@@ -135,31 +135,171 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.BingCustomSearchConfiguration.#ctor(System.String,System.String)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.BingCustomSearchConfiguration.JsonModelCreateCore(System.Text.Json.Utf8JsonReader@,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.BingCustomSearchConfiguration.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.BingCustomSearchConfiguration.PersistableModelCreateCore(System.BinaryData,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.BingCustomSearchConfiguration.PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.BingCustomSearchConfiguration.set_Count(System.Nullable{System.Int64})</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.BingCustomSearchConfiguration.set_Freshness(System.String)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.BingCustomSearchConfiguration.set_InstanceName(System.String)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.BingCustomSearchConfiguration.set_Market(System.String)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.BingCustomSearchConfiguration.set_ProjectConnectionId(System.String)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.BingCustomSearchConfiguration.set_SetLang(System.String)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.BingGroundingSearchConfiguration.#ctor(System.String)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.BingGroundingSearchConfiguration.JsonModelCreateCore(System.Text.Json.Utf8JsonReader@,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.BingGroundingSearchConfiguration.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.BingGroundingSearchConfiguration.PersistableModelCreateCore(System.BinaryData,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.BingGroundingSearchConfiguration.PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.BingGroundingSearchConfiguration.set_BingUserInterfaceLanguage(System.String)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.BingGroundingSearchConfiguration.set_Count(System.Nullable{System.Int64})</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.BingGroundingSearchConfiguration.set_Freshness(System.String)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.BingGroundingSearchConfiguration.set_Market(System.String)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.BingGroundingSearchConfiguration.set_ProjectConnectionId(System.String)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Azure.AI.Projects.Agents.HostedAgentDefinition.get_Tools</Target>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.MemorySearchToolOptions.#ctor</Target>
+    <Target>M:Azure.AI.Projects.Agents.OpenApiFunctionDefinition.#ctor(System.String,System.BinaryData,Azure.AI.Projects.Agents.OpenApiAuthenticationDetails)</Target>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.MemorySearchToolOptions.JsonModelCreateCore(System.Text.Json.Utf8JsonReader@,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+    <Target>M:Azure.AI.Projects.Agents.OpenApiFunctionDefinition.#ctor(System.String,System.Collections.Generic.IDictionary{System.String,System.BinaryData},Azure.AI.Projects.Agents.OpenApiAuthenticationDetails)</Target>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.MemorySearchToolOptions.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+    <Target>M:Azure.AI.Projects.Agents.OpenApiFunctionDefinition.get_AuthenticationDetails</Target>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.MemorySearchToolOptions.PersistableModelCreateCore(System.BinaryData,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+    <Target>M:Azure.AI.Projects.Agents.OpenApiFunctionDefinition.set_AuthenticationDetails(Azure.AI.Projects.Agents.OpenApiAuthenticationDetails)</Target>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.MemorySearchToolOptions.PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+    <Target>M:Azure.AI.Projects.Agents.OpenAPIManagedAuthenticationDetails.#ctor(Azure.AI.Projects.Agents.OpenAPIManagedSecurityScheme)</Target>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.MemorySearchToolOptions.set_MaxMemories(System.Nullable{System.Int32})</Target>
+    <Target>M:Azure.AI.Projects.Agents.OpenAPIManagedAuthenticationDetails.set_SecurityScheme(Azure.AI.Projects.Agents.OpenAPIManagedSecurityScheme)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.OpenAPIManagedSecurityScheme.#ctor(System.String)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.OpenAPIManagedSecurityScheme.JsonModelCreateCore(System.Text.Json.Utf8JsonReader@,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.OpenAPIManagedSecurityScheme.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.OpenAPIManagedSecurityScheme.PersistableModelCreateCore(System.BinaryData,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.OpenAPIManagedSecurityScheme.PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.OpenAPIManagedSecurityScheme.set_Audience(System.String)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails.#ctor(Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails.set_SecurityScheme(Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme.#ctor(System.String)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme.JsonModelCreateCore(System.Text.Json.Utf8JsonReader@,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme.PersistableModelCreateCore(System.BinaryData,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme.PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme.set_ProjectConnectionId(System.String)</Target>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
@@ -235,6 +375,10 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.ProjectsAgentsModelFactory.FabricDataAgentToolOptions(System.Collections.Generic.IEnumerable{Azure.AI.Projects.Agents.ToolProjectConnection})</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Azure.AI.Projects.Agents.ProjectsAgentsModelFactory.HostedAgentDefinition(Azure.AI.Projects.Agents.ContentFilterConfiguration,System.Collections.Generic.IEnumerable{Azure.AI.Projects.Agents.ProjectsAgentTool},System.Collections.Generic.IEnumerable{Azure.AI.Projects.Agents.ProtocolVersionRecord},System.String,System.String,System.Collections.Generic.IDictionary{System.String,System.String},System.String)</Target>
   </Suppression>
   <Suppression>
@@ -243,7 +387,23 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.ProjectsAgentsModelFactory.MemorySearchToolOptions(System.Nullable{System.Int32})</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Azure.AI.Projects.Agents.ProjectsAgentsModelFactory.MicrosoftFabricPreviewTool(Azure.AI.Projects.Agents.FabricDataAgentToolOptions)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.ProjectsAgentsModelFactory.OpenAPIAnonymousAuthenticationDetails</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.ProjectsAgentsModelFactory.OpenApiAuthenticationDetails(System.String)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.ProjectsAgentsModelFactory.OpenApiFunctionDefinition(System.String,System.String,System.Collections.Generic.IDictionary{System.String,System.BinaryData},Azure.AI.Projects.Agents.OpenApiAuthenticationDetails,System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{Azure.AI.Projects.Agents.OpenAPIFunctionEntry})</Target>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
@@ -334,24 +494,20 @@
     <Target>M:Azure.AI.Projects.Agents.ToolProjectConnection.set_ProjectConnectionId(System.String)</Target>
   </Suppression>
   <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.ProjectsAgentDefinition.get_ContentFilterConfiguration</Target>
+    <DiagnosticId>CP0007</DiagnosticId>
+    <Target>T:Azure.AI.Projects.Agents.OpenAPIManagedAuthenticationDetails</Target>
   </Suppression>
   <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.ProjectsAgentsModelFactory.ContentFilterConfiguration(System.String)</Target>
+    <DiagnosticId>CP0007</DiagnosticId>
+    <Target>T:Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails</Target>
   </Suppression>
   <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.ProjectsAgentsModelFactory.FabricDataAgentToolOptions(System.Collections.Generic.IEnumerable{Azure.AI.Projects.Agents.ToolProjectConnection})</Target>
+    <DiagnosticId>CP0008</DiagnosticId>
+    <Target>T:Azure.AI.Projects.Agents.OpenAPIManagedAuthenticationDetails</Target>
   </Suppression>
   <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.ProjectsAgentsModelFactory.ProjectsAgentDefinition(System.String,Azure.AI.Projects.Agents.ContentFilterConfiguration)</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.ProjectsAgentsModelFactory.WorkflowAgentDefinition(Azure.AI.Projects.Agents.ContentFilterConfiguration,System.String)</Target>
+    <DiagnosticId>CP0008</DiagnosticId>
+    <Target>T:Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails</Target>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0009</DiagnosticId>
@@ -359,7 +515,27 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0009</DiagnosticId>
-    <Target>T:Azure.AI.Projects.Agents.MemorySearchToolOptions</Target>
+    <Target>T:Azure.AI.Projects.Agents.BingCustomSearchConfiguration</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0009</DiagnosticId>
+    <Target>T:Azure.AI.Projects.Agents.BingGroundingSearchConfiguration</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0009</DiagnosticId>
+    <Target>T:Azure.AI.Projects.Agents.OpenAPIManagedAuthenticationDetails</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0009</DiagnosticId>
+    <Target>T:Azure.AI.Projects.Agents.OpenAPIManagedSecurityScheme</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0009</DiagnosticId>
+    <Target>T:Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0009</DiagnosticId>
+    <Target>T:Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme</Target>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0009</DiagnosticId>
