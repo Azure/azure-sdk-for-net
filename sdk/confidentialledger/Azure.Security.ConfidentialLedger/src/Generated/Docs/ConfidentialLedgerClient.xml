@@ -329,52 +329,6 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("collectionId").ToString());
 ]]></code></example>
     </member>
-    <member name="GetLedgerEntryAsync(string,string,CancellationToken)">
-      <example>
-This sample shows how to call GetLedgerEntryAsync.
-<code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
-
-Response<LedgerQueryResult> response = await client.GetLedgerEntryAsync("2.15");
-]]></code></example>
-    </member>
-    <member name="GetLedgerEntry(string,string,CancellationToken)">
-      <example>
-This sample shows how to call GetLedgerEntry.
-<code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
-
-Response<LedgerQueryResult> response = client.GetLedgerEntry("2.15");
-]]></code></example>
-    </member>
-    <member name="GetLedgerEntryAsync(string,string,RequestContext)">
-      <example>
-This sample shows how to call GetLedgerEntryAsync and parse the result.
-<code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
-
-Response response = await client.GetLedgerEntryAsync("2.15", null, null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("state").ToString());
-]]></code></example>
-    </member>
-    <member name="GetLedgerEntry(string,string,RequestContext)">
-      <example>
-This sample shows how to call GetLedgerEntry and parse the result.
-<code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
-
-Response response = client.GetLedgerEntry("2.15", null, null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("state").ToString());
-]]></code></example>
-    </member>
     <member name="GetReceiptAsync(string,CancellationToken)">
       <example>
 This sample shows how to call GetReceiptAsync.
@@ -469,52 +423,6 @@ Response response = client.GetTransactionStatus("4.2", null);
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("state").ToString());
 Console.WriteLine(result.GetProperty("transactionId").ToString());
-]]></code></example>
-    </member>
-    <member name="GetCurrentLedgerEntryAsync(string,CancellationToken)">
-      <example>
-This sample shows how to call GetCurrentLedgerEntryAsync.
-<code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
-
-Response<LedgerEntry> response = await client.GetCurrentLedgerEntryAsync();
-]]></code></example>
-    </member>
-    <member name="GetCurrentLedgerEntry(string,CancellationToken)">
-      <example>
-This sample shows how to call GetCurrentLedgerEntry.
-<code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
-
-Response<LedgerEntry> response = client.GetCurrentLedgerEntry();
-]]></code></example>
-    </member>
-    <member name="GetCurrentLedgerEntryAsync(string,RequestContext)">
-      <example>
-This sample shows how to call GetCurrentLedgerEntryAsync and parse the result.
-<code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
-
-Response response = await client.GetCurrentLedgerEntryAsync(null, null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("contents").ToString());
-]]></code></example>
-    </member>
-    <member name="GetCurrentLedgerEntry(string,RequestContext)">
-      <example>
-This sample shows how to call GetCurrentLedgerEntry and parse the result.
-<code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
-
-Response response = client.GetCurrentLedgerEntry(null, null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("contents").ToString());
 ]]></code></example>
     </member>
     <member name="DeleteUserAsync(string,RequestContext)">

@@ -18,9 +18,9 @@ namespace Azure.Security.ConfidentialLedger
     /// The primary ledger's certificate is registered when the client is constructed. Failover ledger
     /// certificates are fetched from the (independently trusted) identity service and registered lazily
     /// the first time the client fails over to that ledger. Because every certificate in this store was
-    /// obtained from the trusted identity service, widening the set does not weaken certificate pinning:
-    /// the transport still only accepts certificate chains that terminate in one of these explicitly
-    /// trusted ledger identity certificates.
+    /// obtained from the trusted identity service. Each endpoint-specific transport validates only
+    /// against the certificate registered for that endpoint's ledger id, so adding a failover ledger
+    /// does not widen the trust accepted for any other endpoint.
     /// </remarks>
     internal sealed class ConfidentialLedgerCertificateTrustStore
     {
@@ -38,7 +38,8 @@ namespace Azure.Security.ConfidentialLedger
         {
             if (certificate != null && !string.IsNullOrEmpty(ledgerId))
             {
-                _trustedCerts.TryAdd(ledgerId, certificate);
+                _trustedCerts.AddOrUpdate(ledgerId, certificate, (_, existing) =>
+                    existing.RawData.SequenceEqual(certificate.RawData) ? existing : certificate);
             }
         }
 
@@ -47,33 +48,29 @@ namespace Azure.Security.ConfidentialLedger
             !string.IsNullOrEmpty(ledgerId) && _trustedCerts.ContainsKey(ledgerId);
 
         /// <summary>
-        /// Validation callback used by the transport. Returns <c>true</c> when the presented server
-        /// certificate chain terminates in one of the trusted ledger identity certificates. When
+        /// Validation callback used by an endpoint-specific transport. Returns <c>true</c> when the presented
+        /// server certificate chain terminates in the certificate registered for <paramref name="ledgerId"/>. When
         /// connection verification is disabled the callback always succeeds.
         /// </summary>
-        public bool Validate(X509Certificate2 presented)
+        public bool Validate(string ledgerId, X509Certificate2 presented)
         {
             if (!_verifyConnection)
             {
                 return true;
             }
-            if (presented == null)
+            if (presented == null || string.IsNullOrEmpty(ledgerId) || !_trustedCerts.TryGetValue(ledgerId, out X509Certificate2 trusted))
             {
                 return false;
             }
-
-            foreach (X509Certificate2 trusted in _trustedCerts.Values)
-            {
-                if (IsChainRootedIn(presented, trusted))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return IsChainRootedIn(presented, trusted);
         }
 
         private static bool IsChainRootedIn(X509Certificate2 presented, X509Certificate2 trusted)
         {
+            if (presented.RawData.SequenceEqual(trusted.RawData))
+            {
+                return true;
+            }
             using var certificateChain = new X509Chain();
             // Revocation is not required by CCF. Hence revocation checks must be skipped to avoid validation failing unnecessarily.
             certificateChain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;

@@ -364,7 +364,6 @@ namespace Azure.Security.ConfidentialLedger
         /// response will indicate whether the entry is ready and part of the response, or
         /// if the loading is still ongoing.
         /// </remarks>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntryAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<LedgerQueryResult>> GetLedgerEntryAsync(string transactionId, string collectionId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
@@ -390,7 +389,6 @@ namespace Azure.Security.ConfidentialLedger
         /// response will indicate whether the entry is ready and part of the response, or
         /// if the loading is still ongoing.
         /// </remarks>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntry(string,string,CancellationToken)']/*" />
         public virtual Response<LedgerQueryResult> GetLedgerEntry(string transactionId, string collectionId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
@@ -398,92 +396,6 @@ namespace Azure.Security.ConfidentialLedger
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetLedgerEntry(transactionId, collectionId, context);
             return Response.FromValue(LedgerQueryResult.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets the ledger entry at the specified transaction id. A collection id may
-        /// optionally be specified to indicate the collection from which to fetch the
-        /// value.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetLedgerEntryAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="transactionId"> Identifies a write transaction. </param>
-        /// <param name="collectionId"> The collection id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntryAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetLedgerEntryAsync(string transactionId, string collectionId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, collectionId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets the ledger entry at the specified transaction id. A collection id may
-        /// optionally be specified to indicate the collection from which to fetch the
-        /// value.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetLedgerEntry(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="transactionId"> Identifies a write transaction. </param>
-        /// <param name="collectionId"> The collection id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntry(string,string,RequestContext)']/*" />
-        public virtual Response GetLedgerEntry(string transactionId, string collectionId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, collectionId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary> Gets a receipt certifying ledger contents at a particular transaction id. </summary>
@@ -710,7 +622,6 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> A collection id may optionally be specified. </remarks>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetCurrentLedgerEntryAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<LedgerEntry>> GetCurrentLedgerEntryAsync(string collectionId = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -722,84 +633,11 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> A collection id may optionally be specified. </remarks>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetCurrentLedgerEntry(string,CancellationToken)']/*" />
         public virtual Response<LedgerEntry> GetCurrentLedgerEntry(string collectionId = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetCurrentLedgerEntry(collectionId, context);
             return Response.FromValue(LedgerEntry.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets the current value available in the ledger.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetCurrentLedgerEntryAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> The collection id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetCurrentLedgerEntryAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetCurrentLedgerEntryAsync(string collectionId, RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetCurrentLedgerEntryRequest(collectionId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets the current value available in the ledger.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetCurrentLedgerEntry(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> The collection id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetCurrentLedgerEntry(string,RequestContext)']/*" />
-        public virtual Response GetCurrentLedgerEntry(string collectionId, RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetCurrentLedgerEntryRequest(collectionId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method

@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -31,7 +33,9 @@ namespace Azure.Security.ConfidentialLedger
         private readonly ConfidentialLedgerCertificateTrustStore _trustStore;
         private readonly Func<Uri, X509Certificate2> _identityCertResolver;
         private readonly ConfidentialLedgerClientOptions.FailoverSelection _selection;
-        private readonly Random _random = new Random();
+        private readonly Func<Uri, HttpPipeline> _pipelineFactory;
+        private readonly ConcurrentDictionary<string, Lazy<HttpPipeline>> _endpointPipelines =
+            new ConcurrentDictionary<string, Lazy<HttpPipeline>>(StringComparer.OrdinalIgnoreCase);
 
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
@@ -41,12 +45,14 @@ namespace Azure.Security.ConfidentialLedger
             Uri identityServiceEndpoint,
             ConfidentialLedgerCertificateTrustStore trustStore,
             Func<Uri, X509Certificate2> identityCertResolver,
+            Func<Uri, HttpPipeline> pipelineFactory,
             ConfidentialLedgerClientOptions.FailoverSelection selection)
         {
             _discoveryPipeline = discoveryPipeline ?? throw new ArgumentNullException(nameof(discoveryPipeline));
             _identityServiceEndpoint = identityServiceEndpoint ?? new Uri(ConfidentialLedgerClient.Default_Certificate_Endpoint);
             _trustStore = trustStore ?? throw new ArgumentNullException(nameof(trustStore));
             _identityCertResolver = identityCertResolver ?? throw new ArgumentNullException(nameof(identityCertResolver));
+            _pipelineFactory = pipelineFactory ?? throw new ArgumentNullException(nameof(pipelineFactory));
             _selection = selection;
         }
 
@@ -66,30 +72,40 @@ namespace Azure.Security.ConfidentialLedger
             _trustStore.Trust(ledgerId, cert);
         }
 
-        public async Task<List<Uri>> GetFailoverEndpointsAsync(Uri primaryEndpoint)
+        public HttpPipeline GetEndpointPipeline(Uri endpoint)
+        {
+            EnsureEndpointTrusted(endpoint);
+            return _endpointPipelines.GetOrAdd(
+                endpoint.GetLeftPart(UriPartial.Authority),
+                _ => new Lazy<HttpPipeline>(() => _pipelineFactory(endpoint), true)).Value;
+        }
+
+        public async Task<List<Uri>> GetFailoverEndpointsAsync(Uri primaryEndpoint, CancellationToken cancellationToken)
         {
             try
             {
-                using HttpMessage message = CreateFailoverRequest(BuildFailoverUrl(primaryEndpoint));
-                Response response = await _discoveryPipeline.ProcessMessageAsync(message, new RequestContext()).ConfigureAwait(false);
+                var context = new RequestContext { CancellationToken = cancellationToken };
+                using HttpMessage message = CreateFailoverRequest(BuildFailoverUrl(primaryEndpoint), context);
+                Response response = await _discoveryPipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return OrderEndpoints(ParseFailoverEndpoints(primaryEndpoint, response));
             }
-            catch (Exception)
+            catch (Exception) when (!cancellationToken.IsCancellationRequested)
             {
                 // suppress metadata retrieval exception
             }
             return new List<Uri>();
         }
 
-        public List<Uri> GetFailoverEndpoints(Uri primaryEndpoint)
+        public List<Uri> GetFailoverEndpoints(Uri primaryEndpoint, CancellationToken cancellationToken)
         {
             try
             {
-                using HttpMessage message = CreateFailoverRequest(BuildFailoverUrl(primaryEndpoint));
-                Response response = _discoveryPipeline.ProcessMessage(message, new RequestContext());
+                var context = new RequestContext { CancellationToken = cancellationToken };
+                using HttpMessage message = CreateFailoverRequest(BuildFailoverUrl(primaryEndpoint), context);
+                Response response = _discoveryPipeline.ProcessMessage(message, context);
                 return OrderEndpoints(ParseFailoverEndpoints(primaryEndpoint, response));
             }
-            catch (Exception)
+            catch (Exception) when (!cancellationToken.IsCancellationRequested)
             {
                 // suppress metadata retrieval exception
             }
@@ -118,10 +134,12 @@ namespace Azure.Security.ConfidentialLedger
                 return endpoints;
             }
 
-            // Fisher-Yates shuffle.
+            // Fisher-Yates shuffle. Random.Shared is unavailable on older target frameworks, and a new
+            // instance avoids sharing mutable Random state between concurrent client calls.
+            var random = new Random(unchecked(Environment.TickCount * 31 + System.Threading.Thread.CurrentThread.ManagedThreadId));
             for (int i = endpoints.Count - 1; i > 0; i--)
             {
-                int j = _random.Next(i + 1);
+                int j = random.Next(i + 1);
                 Uri tmp = endpoints[i];
                 endpoints[i] = endpoints[j];
                 endpoints[j] = tmp;
@@ -201,9 +219,9 @@ namespace Azure.Security.ConfidentialLedger
             return endpoints;
         }
 
-        private HttpMessage CreateFailoverRequest(Uri failoverUrl)
+        private HttpMessage CreateFailoverRequest(Uri failoverUrl, RequestContext context)
         {
-            HttpMessage message = _discoveryPipeline.CreateMessage(new RequestContext(), ResponseClassifier200);
+            HttpMessage message = _discoveryPipeline.CreateMessage(context, ResponseClassifier200);
             Request request = message.Request;
 
             request.Method = RequestMethod.Get;

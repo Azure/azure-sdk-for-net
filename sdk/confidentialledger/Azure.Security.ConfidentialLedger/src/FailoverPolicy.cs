@@ -3,6 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.ExceptionServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -22,7 +25,8 @@ namespace Azure.Security.ConfidentialLedger
     /// the caller observes the primary error.
     /// </para>
     /// <para>
-    /// Only idempotent read requests (HTTP GET) are failed over; writes always stay on the primary ledger.
+    /// Only the explicitly marked <c>GetLedgerEntry</c> and <c>GetCurrentLedgerEntry</c> requests are
+    /// failed over; every other request stays on the primary ledger.
     /// Each failover ledger is a distinct CCF network with its own identity TLS certificate, so before a
     /// request is sent the failover ledger's certificate is registered with the shared certificate trust
     /// store (see <see cref="ConfidentialLedgerCertificateTrustStore"/>); endpoints whose certificate
@@ -31,8 +35,19 @@ namespace Azure.Security.ConfidentialLedger
     /// </remarks>
     internal sealed class FailoverPolicy : HttpPipelinePolicy
     {
+        private sealed class FailoverEligibleKey
+        {
+        }
+
         private readonly ConfidentialLedgerFailoverService _failoverService;
         private readonly TimeSpan? _failoverNetworkTimeout;
+
+        internal static void MarkEligible(HttpMessage message) =>
+            message.SetProperty(typeof(FailoverEligibleKey), true);
+
+        private static bool IsEligible(HttpMessage message) =>
+            message.TryGetProperty(typeof(FailoverEligibleKey), out object value) &&
+            value is bool eligible && eligible;
 
         public FailoverPolicy(ConfidentialLedgerFailoverService failoverService, TimeSpan? failoverNetworkTimeout)
         {
@@ -51,43 +66,56 @@ namespace Azure.Security.ConfidentialLedger
             // Capture the primary endpoint before the request is mutated.
             Uri primaryEndpoint = message.Request.Uri.ToUri();
 
-            // Primary attempt (the rest of the pipeline, including the retry policy, runs below this point).
-            if (async)
+            ExceptionDispatchInfo primaryException = null;
+            try
             {
-                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                // Primary attempt (the rest of the pipeline, including the retry policy, runs below this point).
+                if (async)
+                {
+                    await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                }
+                else
+                {
+                    ProcessNext(message, pipeline);
+                }
             }
-            else
+            catch (Exception exception) when (IsRetryableTransportException(message, exception))
             {
-                ProcessNext(message, pipeline);
+                primaryException = ExceptionDispatchInfo.Capture(exception);
             }
 
-            // Only fail over idempotent reads; writes must remain on the primary ledger.
-            if (message.Request.Method != RequestMethod.Get || !ShouldFailover(message.Response))
+            // Only the supported ledger-entry reads are explicitly marked for failover. Other GETs,
+            // including governance, receipt, status, and pageable operations, stay on the primary.
+            if (message.Request.Method != RequestMethod.Get || !IsEligible(message) ||
+                (primaryException == null && !ShouldFailover(message.Response)))
             {
                 return;
             }
 
             // Preserve the primary response so the original error can be restored if every failover fails.
-            Response primaryResponse = message.Response;
+            Response primaryResponse = message.HasResponse ? message.Response : null;
 
             List<Uri> failoverEndpoints = async
-                ? await _failoverService.GetFailoverEndpointsAsync(primaryEndpoint).ConfigureAwait(false)
-                : _failoverService.GetFailoverEndpoints(primaryEndpoint);
+                ? await _failoverService.GetFailoverEndpointsAsync(primaryEndpoint, message.CancellationToken).ConfigureAwait(false)
+                : _failoverService.GetFailoverEndpoints(primaryEndpoint, message.CancellationToken);
 
             foreach (Uri endpoint in failoverEndpoints)
             {
-                // A failover ledger has its own identity TLS certificate; make sure the transport trusts it.
+                HttpPipeline endpointPipeline;
                 try
                 {
-                    _failoverService.EnsureEndpointTrusted(endpoint);
+                    endpointPipeline = _failoverService.GetEndpointPipeline(endpoint);
                 }
-                catch
+                catch (Exception) when (!message.CancellationToken.IsCancellationRequested)
                 {
                     // Could not establish trust for this endpoint (e.g. identity lookup failed); skip it.
                     continue;
                 }
 
                 RewriteRequestEndpoint(message.Request, endpoint);
+                message.Response = null;
+                MessageProcessingContext processingContext = message.ProcessingContext;
+                processingContext.RetryNumber = 0;
 
                 // Give each failover attempt its own network timeout when one is configured, so that time
                 // spent on the (already failed) primary does not eat into the failover budget.
@@ -96,13 +124,20 @@ namespace Azure.Security.ConfidentialLedger
                     message.NetworkTimeout = _failoverNetworkTimeout;
                 }
 
-                if (async)
+                try
                 {
-                    await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                    if (async)
+                    {
+                        await endpointPipeline.SendAsync(message, message.CancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        endpointPipeline.Send(message, message.CancellationToken);
+                    }
                 }
-                else
+                catch (Exception exception) when (IsRetryableTransportException(message, exception))
                 {
-                    ProcessNext(message, pipeline);
+                    continue;
                 }
 
                 if (!ShouldFailover(message.Response))
@@ -118,6 +153,21 @@ namespace Azure.Security.ConfidentialLedger
 
             // No failover endpoint produced a usable response: surface the original primary error.
             message.Response = primaryResponse;
+            primaryException?.Throw();
+        }
+
+        private static bool IsRetryableTransportException(HttpMessage message, Exception exception)
+        {
+            if (message.CancellationToken.IsCancellationRequested)
+            {
+                return false;
+            }
+            if (exception is AggregateException aggregate)
+            {
+                return aggregate.InnerExceptions.Count > 0 &&
+                    aggregate.InnerExceptions.All(inner => IsRetryableTransportException(message, inner));
+            }
+            return message.ResponseClassifier.IsRetriable(message, exception);
         }
 
         // Transient conditions that warrant trying the next endpoint. A 404 means the resource does not
