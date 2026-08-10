@@ -83,9 +83,13 @@ public class TestConversationChainMetadataDurabilityTests
 
             // Turn 2 on the same conversation chain: its handler throws unless it can read back the
             // metadata turn 1 flushed. A durable flush → turn 2 completes; a no-op flush → turn 2 fails.
-            var turn2 = await client.PostAsync(
+            // Turn 1 is already "completed", but the Core multi-turn task may still hold the chain lock
+            // for a moment while it suspends — poll-retry until it is released to avoid a transient 409.
+            var turn2 = await PostTurnAwaitingLockReleaseAsync(
+                client,
                 "/responses",
-                Json(new { model = "test", background = true, conversation = "conv-md", previous_response_id = turn1Id }));
+                () => Json(new { model = "test", background = true, conversation = "conv-md", previous_response_id = turn1Id }),
+                TimeSpan.FromSeconds(15));
             Assert.That(turn2.StatusCode, Is.EqualTo(HttpStatusCode.OK));
             string turn2Id;
             using (var doc2 = await ParseAsync(turn2))
@@ -156,5 +160,28 @@ public class TestConversationChainMetadataDurabilityTests
         }
 
         Assert.Fail($"Response '{responseId}' did not reach a terminal state within {timeout} (last status: {last ?? "none"}).");
+    }
+
+    // Serial multi-turn turns are serialized by Core's conversation lock. A turn's response record
+    // flips to "completed" a moment before the Core multi-turn task suspends and releases that lock,
+    // so a follow-up turn POSTed in that window can be (correctly) rejected with 409 conversation_locked.
+    // Poll-retry the follow-up turn until the lock is released, bridging the completed→suspended gap
+    // deterministically (a bounded poll loop, not a fixed delay). A fresh request body is built per
+    // attempt because HttpContent is single-use.
+    private static async Task<HttpResponseMessage> PostTurnAwaitingLockReleaseAsync(
+        HttpClient client, string url, Func<HttpContent> body, TimeSpan timeout)
+    {
+        var deadline = DateTime.UtcNow + timeout;
+        while (true)
+        {
+            var response = await client.PostAsync(url, body());
+            if (response.StatusCode != HttpStatusCode.Conflict || DateTime.UtcNow >= deadline)
+            {
+                return response;
+            }
+
+            response.Dispose();
+            await Task.Delay(50);
+        }
     }
 }

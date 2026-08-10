@@ -288,10 +288,14 @@ public sealed class ResilienceSampleParityEndToEndTests
             await WaitForStatusAsync(client, turn1Id, "completed", TimeSpan.FromSeconds(15));
 
             // Turn 2 references the previous turn; the handler asserts it sees turn_count == 2, which
-            // is only possible if the durable chain metadata from turn 1 survived into turn 2.
-            var turn2 = await client.PostAsync(
+            // is only possible if the durable chain metadata from turn 1 survived into turn 2. Turn 1's
+            // response is already "completed", but the Core multi-turn task may still hold the chain
+            // lock for a moment while it suspends — poll-retry until the lock is released so a slow CI
+            // agent does not observe a transient 409 conversation_locked.
+            var turn2 = await PostTurnAwaitingLockReleaseAsync(
+                client,
                 "/responses",
-                Json(new
+                () => Json(new
                 {
                     model = "chat",
                     input = "What is my name?",
@@ -299,7 +303,8 @@ public sealed class ResilienceSampleParityEndToEndTests
                     background = true,
                     conversation = "conv-mt",
                     previous_response_id = turn1Id,
-                }));
+                }),
+                TimeSpan.FromSeconds(15));
             Assert.That(turn2.StatusCode, Is.EqualTo(HttpStatusCode.OK));
             string turn2Id;
             using (var d = await ParseAsync(turn2))
@@ -485,5 +490,28 @@ public sealed class ResilienceSampleParityEndToEndTests
         }
 
         Assert.Fail($"Response '{responseId}' did not reach a terminal state within {timeout} (last: {last ?? "none"}).");
+    }
+
+    // Serial multi-turn turns are serialized by Core's conversation lock. A turn's response record
+    // flips to "completed" a moment before the Core multi-turn task suspends and releases that lock,
+    // so a follow-up turn POSTed in that window is (correctly) rejected with 409 conversation_locked.
+    // Poll-retry the follow-up turn until the lock is released, bridging the completed→suspended gap
+    // deterministically (a bounded poll loop, not a fixed delay). A fresh request body is built per
+    // attempt because HttpContent is single-use.
+    private static async Task<HttpResponseMessage> PostTurnAwaitingLockReleaseAsync(
+        HttpClient client, string url, Func<HttpContent> body, TimeSpan timeout)
+    {
+        var deadline = DateTime.UtcNow + timeout;
+        while (true)
+        {
+            var response = await client.PostAsync(url, body());
+            if (response.StatusCode != HttpStatusCode.Conflict || DateTime.UtcNow >= deadline)
+            {
+                return response;
+            }
+
+            response.Dispose();
+            await Task.Delay(50);
+        }
     }
 }
