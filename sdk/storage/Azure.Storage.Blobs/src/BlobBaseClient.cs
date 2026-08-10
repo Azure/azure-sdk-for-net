@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Common;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
 using Azure.Storage.Sas;
@@ -3053,13 +3052,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default)
         {
             DownloadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Download;
-
             PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions, validationOptions, progressHandler);
-
-            if (UsingClientSideEncryption)
-            {
-                ClientSideDecryptor.BeginContentEncryptionKeyCaching();
-            }
             return await downloader.DownloadToInternal(destination, conditions, async, cancellationToken).ConfigureAwait(false);
         }
         #endregion Parallel Download
@@ -3412,11 +3405,14 @@ namespace Azure.Storage.Blobs.Specialized
                     }
 
                     long blobContentLength = blobProperties.Value.ContentLength;
-                    ClientSideDecryptor.ContentEncryptionKeyCache contentEncryptionKeyCache = default;
                     EncryptionData encryptionData = null;
+                    BlobClientSideDecryptor decryptor = null;
+                    if (UsingClientSideEncryption)
+                    {
+                        decryptor = new(new(ClientSideEncryption));
+                    }
                     if (UsingClientSideEncryption && !allowModifications)
                     {
-                        contentEncryptionKeyCache = new();
                         encryptionData = BlobClientSideDecryptor.GetAndValidateEncryptionDataOrDefault(blobProperties?.Value?.Metadata);
                     }
 
@@ -3433,7 +3429,6 @@ namespace Azure.Storage.Blobs.Specialized
                             long cseStartRegion = 0;
                             if (UsingClientSideEncryption)
                             {
-                                ClientSideDecryptor.BeginContentEncryptionKeyCaching(contentEncryptionKeyCache);
                                 (range, cseStartRegion) = rangeAdjustmentFunc(requestedRange);
                             }
                             Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
@@ -3445,10 +3440,9 @@ namespace Azure.Storage.Blobs.Specialized
                                 async,
                                 cancellationToken).ConfigureAwait(false);
 
-                            if (UsingClientSideEncryption)
+                            if (decryptor != null)
                             {
-                                response.Value.Content = await new BlobClientSideDecryptor(
-                                    new ClientSideDecryptor(ClientSideEncryption)).DecryptInternal(
+                                response.Value.Content = await decryptor.DecryptInternal(
                                         response.Value.Content,
                                         response.Value.Details.Metadata,
                                         requestedRange,
