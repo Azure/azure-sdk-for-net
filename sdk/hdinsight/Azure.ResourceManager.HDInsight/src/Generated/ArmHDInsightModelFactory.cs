@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <returns> A new <see cref="Models.HDInsightPrivateLinkConfiguration"/> instance for mocking. </returns>
         public static HDInsightPrivateLinkConfiguration HDInsightPrivateLinkConfiguration(string id = default, string name = default, ResourceType? resourceType = default, string groupId = default, HDInsightPrivateLinkConfigurationProvisioningState? provisioningState = default, IEnumerable<HDInsightIPConfiguration> ipConfigurations = default)
         {
-            return new HDInsightPrivateLinkConfiguration(id, name, resourceType, default, default);
+            return new HDInsightPrivateLinkConfiguration(id, name, resourceType, groupId is null && provisioningState is null && ipConfigurations is null ? default : new PrivateLinkConfigurationProperties(groupId, provisioningState, (ipConfigurations ?? new ChangeTrackingList<HDInsightIPConfiguration>()).ToList(), default), default);
         }
 
         /// <param name="id"> The private link IP configuration id. </param>
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, default, default, default),
+                privateEndpointId is null && connectionState is null && linkIdentifier is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, linkIdentifier, provisioningState, default),
                 default);
         }
 
