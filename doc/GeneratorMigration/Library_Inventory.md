@@ -16,7 +16,7 @@
 
 ## Summary
 
-- Total libraries: 443
+- Total libraries: 442
 - Management Plane (MPG): 260
   - Autorest/Swagger: 43
   - New Emitter (TypeSpec): 217
