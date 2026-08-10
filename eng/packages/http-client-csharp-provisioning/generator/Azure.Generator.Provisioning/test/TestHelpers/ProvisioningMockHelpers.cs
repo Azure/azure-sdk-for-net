@@ -98,7 +98,7 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
             return new(
                 metadata.ResourceModel,
                 metadata.ResourceName,
-                metadata.ResourceType.SerializedResourceType,
+                metadata.ResourceType,
                 metadata.SingletonResourceName,
                 metadata.ParentResourceId,
                 metadata.NameConstraints,
