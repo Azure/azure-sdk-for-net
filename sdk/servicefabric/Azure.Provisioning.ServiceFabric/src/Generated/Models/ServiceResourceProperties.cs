@@ -6,7 +6,6 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
@@ -14,18 +13,13 @@ namespace Azure.Provisioning.ServiceFabric
     /// The service resource properties.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StatefulServiceProperties"/> and <see cref="StatelessServiceProperties"/>.
     /// </summary>
-    public partial class ServiceResourceProperties : ProvisionableConstruct
+    public partial class ServiceResourceProperties : ServiceResourcePropertiesBase
     {
         private BicepValue<string> _provisioningState;
         private BicepValue<string> _serviceTypeName;
         private PartitionSchemeDescription _partitionDescription;
         private BicepValue<ArmServicePackageActivationMode> _servicePackageActivationMode;
         private BicepValue<string> _serviceDnsName;
-        private BicepValue<string> _placementConstraints;
-        private BicepList<ServiceCorrelationDescription> _correlationScheme;
-        private BicepList<ServiceLoadMetricDescription> _serviceLoadMetrics;
-        private BicepList<ServicePlacementPolicyDescription> _servicePlacementPolicies;
-        private BicepValue<ApplicationMoveCost> _defaultMoveCost;
 
         /// <summary> Creates a new ServiceResourceProperties. </summary>
         public ServiceResourceProperties()
@@ -102,81 +96,6 @@ namespace Azure.Provisioning.ServiceFabric
             }
         }
 
-        /// <summary> Gets or sets the PlacementConstraints. </summary>
-        public BicepValue<string> PlacementConstraints
-        {
-            get
-            {
-                Initialize();
-                return _placementConstraints;
-            }
-            set
-            {
-                Initialize();
-                _placementConstraints.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the CorrelationScheme. </summary>
-        public BicepList<ServiceCorrelationDescription> CorrelationScheme
-        {
-            get
-            {
-                Initialize();
-                return _correlationScheme;
-            }
-            set
-            {
-                Initialize();
-                _correlationScheme.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the ServiceLoadMetrics. </summary>
-        public BicepList<ServiceLoadMetricDescription> ServiceLoadMetrics
-        {
-            get
-            {
-                Initialize();
-                return _serviceLoadMetrics;
-            }
-            set
-            {
-                Initialize();
-                _serviceLoadMetrics.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the ServicePlacementPolicies. </summary>
-        public BicepList<ServicePlacementPolicyDescription> ServicePlacementPolicies
-        {
-            get
-            {
-                Initialize();
-                return _servicePlacementPolicies;
-            }
-            set
-            {
-                Initialize();
-                _servicePlacementPolicies.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the DefaultMoveCost. </summary>
-        public BicepValue<ApplicationMoveCost> DefaultMoveCost
-        {
-            get
-            {
-                Initialize();
-                return _defaultMoveCost;
-            }
-            set
-            {
-                Initialize();
-                _defaultMoveCost.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ServiceResourceProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -186,11 +105,6 @@ namespace Azure.Provisioning.ServiceFabric
             _partitionDescription = DefineModelProperty<PartitionSchemeDescription>(nameof(PartitionDescription), new string[] { "partitionDescription" });
             _servicePackageActivationMode = DefineProperty<ArmServicePackageActivationMode>(nameof(ServicePackageActivationMode), new string[] { "servicePackageActivationMode" });
             _serviceDnsName = DefineProperty<string>(nameof(ServiceDnsName), new string[] { "serviceDnsName" });
-            _placementConstraints = DefineProperty<string>(nameof(PlacementConstraints), new string[] { "placementConstraints" });
-            _correlationScheme = DefineListProperty<ServiceCorrelationDescription>(nameof(CorrelationScheme), new string[] { "correlationScheme" });
-            _serviceLoadMetrics = DefineListProperty<ServiceLoadMetricDescription>(nameof(ServiceLoadMetrics), new string[] { "serviceLoadMetrics" });
-            _servicePlacementPolicies = DefineListProperty<ServicePlacementPolicyDescription>(nameof(ServicePlacementPolicies), new string[] { "servicePlacementPolicies" });
-            _defaultMoveCost = DefineProperty<ApplicationMoveCost>(nameof(DefaultMoveCost), new string[] { "defaultMoveCost" });
             DefineAdditionalProperties();
         }
 
