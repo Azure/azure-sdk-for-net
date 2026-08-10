@@ -115,13 +115,13 @@ namespace Azure.ResourceManager.Confluent.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                organizationId is null && linkOrganizationToken is null ? default : new OrganizationResourceProperties(
-                    default,
-                    default,
+                createdOn is null && provisioningState is null && organizationId is null && ssoUri is null && offerDetail is null && userDetail is null && linkOrganizationToken is null ? default : new OrganizationResourceProperties(
+                    createdOn,
+                    provisioningState,
                     organizationId,
-                    default,
-                    default,
-                    default,
+                    ssoUri,
+                    offerDetail,
+                    userDetail,
                     new LinkOrganization(linkOrganizationToken, default),
                     default),
                 default);
