@@ -16,10 +16,22 @@
 
 ## Summary
 
+<<<<<<< HEAD
 - Total libraries: 444
+<<<<<<< HEAD
 - Management Plane (MPG): 260
   - Autorest/Swagger: 41
   - New Emitter (TypeSpec): 219
+=======
+- Management Plane (MPG): 261
+  - Autorest/Swagger: 43
+=======
+- Total libraries: 442
+- Management Plane (MPG): 260
+  - Autorest/Swagger: 42
+>>>>>>> 7f06338fe68 (update iventory)
+  - New Emitter (TypeSpec): 218
+>>>>>>> 16f4f884029 (update iventory)
   - Old TypeSpec: 0
 - Data Plane (DPG): 124
   - Autorest/Swagger: 30
@@ -249,6 +261,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | healthcareapis | Azure.ResourceManager.HealthcareApis | ✅ |
 | healthdataaiservices | Azure.ResourceManager.HealthDataAIServices | ✅ |
 | horizondb | Azure.ResourceManager.HorizonDB | ✅ |
+| hybridaks | Azure.ResourceManager.HybridContainerService | ✅ |
 | hybridcompute | Azure.ResourceManager.HybridCompute | ✅ |
 | hybridconnectivity | Azure.ResourceManager.HybridConnectivity | ✅ |
 | hybridkubernetes | Azure.ResourceManager.Kubernetes | ✅ |
@@ -364,7 +377,11 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
+<<<<<<< HEAD
 Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 41
+=======
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 42
+>>>>>>> 16f4f884029 (update iventory)
 
 | Service | Library |
 | ------- | ------- |
@@ -384,7 +401,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 41
 | digitaltwins | Azure.ResourceManager.DigitalTwins |
 | fluidrelay | Azure.ResourceManager.FluidRelay |
 | graphservices | Azure.ResourceManager.GraphServices |
-| hybridaks | Azure.ResourceManager.HybridContainerService |
 | iot | Azure.ResourceManager.IotFirmwareDefense |
 | iotcentral | Azure.ResourceManager.IotCentral |
 | labservices | Azure.ResourceManager.LabServices |
