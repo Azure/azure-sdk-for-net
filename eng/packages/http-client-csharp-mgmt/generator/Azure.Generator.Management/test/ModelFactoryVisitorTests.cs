@@ -160,6 +160,54 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void ModelFactoryParameterCasingAndReorderingPreserveSemanticProviders()
+        {
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [parentModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var method = new MethodProvider(
+                new MethodSignature(
+                    "TestResource",
+                    $"Creates a test resource.",
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                    model.Type,
+                    $"A test resource.",
+                    [
+                        new ParameterProvider("createdOn", $"Created on description", typeof(DateTimeOffset?)),
+                        new ParameterProvider("lastUpdatedOn", $"Last updated on description", typeof(DateTimeOffset?))
+                    ]),
+                MethodBodyStatement.Empty,
+                modelFactory);
+            var lastContractView = new TestModelFactoryView(modelFactory.Name);
+            lastContractView.MethodsToBuild =
+            [
+                new MethodProvider(
+                    new MethodSignature(
+                        "TestResource",
+                        $"Creates a test resource.",
+                        MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                        model.Type,
+                        $"A test resource.",
+                        [
+                            new ParameterProvider("LastUpdatedOn", $"Last updated on description", typeof(DateTimeOffset?)),
+                            new ParameterProvider("CreatedOn", $"Created on description", typeof(DateTimeOffset?))
+                        ]),
+                    MethodBodyStatement.Empty,
+                    lastContractView)
+            ];
+
+            SetLastContractView(modelFactory, lastContractView);
+            modelFactory.Update(methods: [method]);
+            UpdateParameterNames(method);
+
+            Assert.That(method.Signature.Parameters.Select(parameter => parameter.Name), Is.EqualTo(new[] { "LastUpdatedOn", "CreatedOn" }));
+            Assert.That(method.Signature.Parameters.Select(parameter => parameter.Description.ToString()), Is.EqualTo(new[] { "Last updated on description", "Created on description" }));
+        }
+
+        [Test]
         public void ModelFactoryParameterRenamesPreserveFlattenedArguments()
         {
             var propertiesModel = InputFactory.Model(
@@ -541,6 +589,310 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(branchCall, Does.Contain(leafCall));
             Assert.That(branchCall.Split(leafCall).Length - 1, Is.EqualTo(1));
             Assert.That(branchCall.IndexOf("default", StringComparison.Ordinal), Is.LessThan(branchCall.IndexOf(leafCall, StringComparison.Ordinal)));
+        }
+
+        [Test]
+        public void RebuildResolvesCompleteFlattenedPropertyPath()
+        {
+            var applicationModel = InputFactory.Model(
+                "ApplicationModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("applications", InputPrimitiveType.String)]);
+            var galleryModel = InputFactory.Model(
+                "GalleryModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("galleryProfile", applicationModel)]);
+            var vmModel = InputFactory.Model(
+                "VmModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("vm", galleryModel)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [vmModel, galleryModel, applicationModel]);
+            var vm = plugin.Object.TypeFactory.CreateModel(vmModel)!;
+            var gallery = plugin.Object.TypeFactory.CreateModel(galleryModel)!;
+            var application = plugin.Object.TypeFactory.CreateModel(applicationModel)!;
+            var vmProperty = vm.Properties.Single(property => property.Name == "Vm");
+            var galleryProfileProperty = gallery.Properties.Single(property => property.Name == "GalleryProfile");
+            var applicationsProperty = application.Properties.Single(property => property.Name == "Applications");
+            var galleryApplications = new FlattenedPropertyProvider(
+                $"Applications description",
+                MethodSignatureModifiers.Public,
+                applicationsProperty.Type,
+                "galleryApplications",
+                applicationsProperty.Body,
+                gallery,
+                galleryProfileProperty,
+                applicationsProperty);
+            var vmGalleryApplications = new FlattenedPropertyProvider(
+                $"Applications description",
+                MethodSignatureModifiers.Public,
+                applicationsProperty.Type,
+                "vmGalleryApplications",
+                applicationsProperty.Body,
+                vm,
+                vmProperty,
+                galleryApplications);
+            var applicationsParameter = vmGalleryApplications.AsParameter;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var method = new MethodProvider(
+                new MethodSignature(
+                    "VmModel",
+                    $"Creates a VM model.",
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                    vm.Type,
+                    $"A VM model.",
+                    [applicationsParameter]),
+                Return(New.Instance(
+                    vm.Type,
+                    vm.FullConstructor.Signature.Parameters.Select(parameter => parameter.DefaultValue ?? Default).ToArray())),
+                modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+
+            var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("new global::Samples.Models.ApplicationModel(vmGalleryApplications"));
+        }
+
+        [Test]
+        public void RebuildReservationsDistinguishSameNamedParametersByIdentity()
+        {
+            var detailsModel = InputFactory.Model(
+                "DetailsModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+            var parentModel = InputFactory.Model(
+                "ParentModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("value", InputPrimitiveType.String),
+                    InputFactory.Property("details", detailsModel)
+                ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [parentModel, detailsModel]);
+            var parent = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var details = plugin.Object.TypeFactory.CreateModel(detailsModel)!;
+            var valueProperty = parent.Properties.Single(property => property.Name == "Value");
+            var detailsProperty = parent.Properties.Single(property => property.Name == "Details");
+            var detailsValueProperty = details.Properties.Single(property => property.Name == "Value");
+            var detailsValue = new FlattenedPropertyProvider(
+                $"Details value description",
+                MethodSignatureModifiers.Public,
+                detailsValueProperty.Type,
+                "value",
+                detailsValueProperty.Body,
+                parent,
+                detailsProperty,
+                detailsValueProperty);
+            var valueParameter = new ParameterProvider("value", $"Value description", valueProperty.Type, property: valueProperty);
+            var detailsValueParameter = detailsValue.AsParameter;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var method = new MethodProvider(
+                new MethodSignature(
+                    "ParentModel",
+                    $"Creates a parent model.",
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                    parent.Type,
+                    $"A parent model.",
+                    [valueParameter, detailsValueParameter]),
+                Return(New.Instance(
+                    parent.Type,
+                    parent.FullConstructor.Signature.Parameters.Select(parameter => parameter.DefaultValue ?? Default).ToArray())),
+                modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+
+            var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("new global::Samples.Models.ParentModel(value,"));
+            Assert.That(rendered, Does.Contain("new global::Samples.Models.DetailsModel(value0"));
+        }
+
+        [Test]
+        public void RebuildEnforcesReservationsBeforeContextualMatching()
+        {
+            var detailsModel = InputFactory.Model(
+                "DetailsModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+            var parentModel = InputFactory.Model(
+                "ParentModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("details", detailsModel),
+                    InputFactory.Property("detailsValue", InputPrimitiveType.String)
+                ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [parentModel, detailsModel]);
+            var parent = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(detailsModel)!;
+            var detailsValueProperty = parent.Properties.Single(property => property.Name == "DetailsValue");
+            var detailsValueParameter = new ParameterProvider(
+                "detailsValue",
+                $"Details value description",
+                detailsValueProperty.Type,
+                property: detailsValueProperty);
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var method = new MethodProvider(
+                new MethodSignature(
+                    "ParentModel",
+                    $"Creates a parent model.",
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                    parent.Type,
+                    $"A parent model.",
+                    [detailsValueParameter]),
+                Return(New.Instance(parent.Type, [detailsValueParameter, Default])),
+                modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+
+            var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("new global::Samples.Models.ParentModel(((global::Samples.Models.DetailsModel)default), detailsValue"));
+            Assert.That(rendered, Does.Not.Contain("new global::Samples.Models.DetailsModel(detailsValue"));
+        }
+
+        [Test]
+        public void RebuildUsesCollisionPrefixWhenExactContextualNameIsReserved()
+        {
+            var detailsModel = InputFactory.Model(
+                "DetailsModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+            var parentModel = InputFactory.Model(
+                "ParentModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("details", detailsModel),
+                    InputFactory.Property("detailsValue", InputPrimitiveType.String)
+                ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [parentModel, detailsModel]);
+            var parent = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var details = plugin.Object.TypeFactory.CreateModel(detailsModel)!;
+            var detailsProperty = parent.Properties.Single(property => property.Name == "Details");
+            var detailsValueProperty = parent.Properties.Single(property => property.Name == "DetailsValue");
+            var valueProperty = details.Properties.Single(property => property.Name == "Value");
+            var nestedValue = new FlattenedPropertyProvider(
+                $"Nested value description",
+                MethodSignatureModifiers.Public,
+                valueProperty.Type,
+                "valueDetailsValue",
+                valueProperty.Body,
+                parent,
+                detailsProperty,
+                valueProperty);
+            var detailsValueParameter = new ParameterProvider(
+                "detailsValue",
+                $"Details value description",
+                detailsValueProperty.Type,
+                property: detailsValueProperty);
+            var nestedValueParameter = nestedValue.AsParameter;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var method = new MethodProvider(
+                new MethodSignature(
+                    "ParentModel",
+                    $"Creates a parent model.",
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                    parent.Type,
+                    $"A parent model.",
+                    [detailsValueParameter, nestedValueParameter]),
+                Return(New.Instance(parent.Type, [detailsValueParameter, Default])),
+                modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+
+            var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("new global::Samples.Models.DetailsModel(valueDetailsValue"));
+            Assert.That(rendered, Does.Contain(")), detailsValue"));
+        }
+
+        [Test]
+        public void RebuildDoesNotReserveFlattenedParameterForSameNamedTopLevelProperty()
+        {
+            var detailsModel = InputFactory.Model(
+                "DetailsModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+            var parentModel = InputFactory.Model(
+                "ParentModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("details", detailsModel),
+                    InputFactory.Property("detailsValue", InputPrimitiveType.String)
+                ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [parentModel, detailsModel]);
+            var parent = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var details = plugin.Object.TypeFactory.CreateModel(detailsModel)!;
+            var detailsProperty = parent.Properties.Single(property => property.Name == "Details");
+            var valueProperty = details.Properties.Single(property => property.Name == "Value");
+            var flattenedValue = new FlattenedPropertyProvider(
+                $"Details value description",
+                MethodSignatureModifiers.Public,
+                valueProperty.Type,
+                "detailsValue",
+                valueProperty.Body,
+                parent,
+                detailsProperty,
+                valueProperty);
+            var detailsValueParameter = flattenedValue.AsParameter;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var method = new MethodProvider(
+                new MethodSignature(
+                    "ParentModel",
+                    $"Creates a parent model.",
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                    parent.Type,
+                    $"A parent model.",
+                    [detailsValueParameter]),
+                Return(New.Instance(
+                    parent.Type,
+                    parent.FullConstructor.Signature.Parameters.Select(parameter => parameter.DefaultValue ?? Default).ToArray())),
+                modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+
+            var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("new global::Samples.Models.DetailsModel(detailsValue"));
+            Assert.That(rendered, Does.Contain(")), ((string)default)"));
+        }
+
+        [Test]
+        public void RebuildContextualMatchingRequiresCompletePathWords()
+        {
+            var idModel = InputFactory.Model(
+                "IdModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("name", InputPrimitiveType.String)]);
+            var parentModel = InputFactory.Model(
+                "ParentModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("id", idModel)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [parentModel, idModel]);
+            var parent = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(idModel)!;
+            var identityNameParameter = new ParameterProvider("identityName", $"Identity name description", typeof(string));
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var method = new MethodProvider(
+                new MethodSignature(
+                    "ParentModel",
+                    $"Creates a parent model.",
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                    parent.Type,
+                    $"A parent model.",
+                    [identityNameParameter]),
+                Return(New.Instance(
+                    parent.Type,
+                    parent.FullConstructor.Signature.Parameters.Select(parameter => parameter.DefaultValue ?? Default).ToArray())),
+                modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+
+            var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Not.Contain("new global::Samples.Models.IdModel(identityName"));
         }
 
         [Test]

@@ -3,6 +3,7 @@
 
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Utilities;
+using Humanizer;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -197,12 +198,12 @@ namespace Azure.Generator.Management.Visitors
             for (int i = 0; i < constructorParameters.Count; i++)
             {
                 var constructorParameter = constructorParameters[i];
-                var unavailableDirectParameterNames = GetUnavailableDirectParameterNames(
+                var reservedParameters = GetUnavailableDirectParameters(
                     method,
                     constructorParameters,
                     newInstanceExpression.Parameters,
                     constructorParameter);
-                if (TryBuildCompatibilityArgument(method, constructorParameter, unavailableDirectParameterNames, consumedParameters, out var argument))
+                if (TryBuildCompatibilityArgument(method, constructorParameter, reservedParameters, consumedParameters, out var argument))
                 {
                     arguments.Add(argument.Argument);
                     consumedParameters.UnionWith(argument.MatchedParameters);
@@ -246,16 +247,21 @@ namespace Azure.Generator.Management.Visitors
             }
 
             var constructorParameters = modelProvider.FullConstructor.Signature.Parameters;
-            var directParameterNames = constructorParameters
-                .Where(parameter => TryGetMethodParameter(method, parameter.Name, parameter.Type, parameter.Property, out _))
-                .Select(parameter => parameter.Name)
-                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+            var directParameters = new HashSet<ParameterProvider>(ReferenceEqualityComparer.Instance);
+            foreach (var constructorParameter in constructorParameters)
+            {
+                if (TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type, constructorParameter.Property, out var directParameter)
+                    && IsParameterOwnedByPath(directParameter, GetPropertyPath(constructorParameter.Property)))
+                {
+                    directParameters.Add(directParameter);
+                }
+            }
 
             var arguments = new List<ValueExpression>(constructorParameters.Count);
             var consumedParameters = new HashSet<ParameterProvider>(ReferenceEqualityComparer.Instance);
             foreach (var constructorParameter in constructorParameters)
             {
-                if (TryBuildCompatibilityArgument(method, constructorParameter, directParameterNames, consumedParameters, out var argument))
+                if (TryBuildCompatibilityArgument(method, constructorParameter, directParameters, consumedParameters, out var argument))
                 {
                     arguments.Add(argument.Argument);
                     consumedParameters.UnionWith(argument.MatchedParameters);
@@ -411,12 +417,12 @@ namespace Azure.Generator.Management.Visitors
                     continue;
                 }
 
-                var unavailableDirectParameterNames = GetUnavailableDirectParameterNames(
+                var reservedParameters = GetUnavailableDirectParameters(
                     method,
                     constructorParameters,
                     newInstanceExpression.Parameters,
                     constructorParameters[i]);
-                if (TryBuildCompatibilityArgument(method, constructorParameters[i], unavailableDirectParameterNames, consumedParameters, out var replacement))
+                if (TryBuildCompatibilityArgument(method, constructorParameters[i], reservedParameters, consumedParameters, out var replacement))
                 {
                     arguments ??= [.. newInstanceExpression.Parameters];
                     matched ??= [];
@@ -481,7 +487,7 @@ namespace Azure.Generator.Management.Visitors
                 && ReferencesParameter(argument, parameter));
         }
 
-        private static HashSet<string> GetUnavailableDirectParameterNames(
+        private static HashSet<ParameterProvider> GetUnavailableDirectParameters(
             MethodProvider method,
             IReadOnlyList<ParameterProvider> constructorParameters,
             IReadOnlyList<ValueExpression> originalArguments,
@@ -492,12 +498,13 @@ namespace Azure.Generator.Management.Visitors
                 constructorParameters,
                 targetConstructorParameter,
                 originalArguments);
-            var result = GetParameterNamesUsedByOtherOriginalArguments(method.Signature.Parameters, originalArguments, targetArgumentIndex);
+            var result = GetParametersUsedByOtherOriginalArguments(method.Signature.Parameters, originalArguments, targetArgumentIndex);
             foreach (var constructorParameter in constructorParameters)
             {
-                if (TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type, constructorParameter.Property, out _))
+                if (TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type, constructorParameter.Property, out var directParameter)
+                    && IsParameterOwnedByPath(directParameter, GetPropertyPath(constructorParameter.Property)))
                 {
-                    result.Add(constructorParameter.Name);
+                    result.Add(directParameter);
                 }
             }
 
@@ -549,17 +556,17 @@ namespace Azure.Generator.Management.Visitors
                 _ => false
             };
 
-        private static HashSet<string> GetParameterNamesUsedByOtherOriginalArguments(
+        private static HashSet<ParameterProvider> GetParametersUsedByOtherOriginalArguments(
             IReadOnlyList<ParameterProvider> parameters,
             IReadOnlyList<ValueExpression> originalArguments,
             int? targetArgumentIndex)
-            => parameters
+            => new(
+                parameters
                 // A parameter may rebuild the nested model in its original slot, but must not leak into sibling slots.
                 .Where(parameter => originalArguments
                     .Where((_, index) => index != targetArgumentIndex)
-                    .Any(argument => !IsDefaultExpression(argument) && ReferencesParameter(argument, parameter)))
-                .Select(parameter => parameter.Name)
-                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+                    .Any(argument => !IsDefaultExpression(argument) && ReferencesParameter(argument, parameter))),
+                ReferenceEqualityComparer.Instance);
 
         private static bool ReferencesParameter(ValueExpression expression, ParameterProvider parameter)
         {
@@ -680,7 +687,7 @@ namespace Azure.Generator.Management.Visitors
         private static bool TryBuildCompatibilityArgument(
             MethodProvider method,
             ParameterProvider constructorParameter,
-            IReadOnlySet<string> unavailableDirectParameterNames,
+            IReadOnlySet<ParameterProvider> reservedParameters,
             IReadOnlySet<ParameterProvider> consumedParameters,
             [NotNullWhen(true)] out CompatibilityArgument? argument)
         {
@@ -699,7 +706,7 @@ namespace Azure.Generator.Management.Visitors
                 constructorParameter,
                 [],
                 propertyPath,
-                unavailableDirectParameterNames,
+                reservedParameters,
                 consumedParameters,
                 useNullGuard: true,
                 out argument);
@@ -712,7 +719,7 @@ namespace Azure.Generator.Management.Visitors
         /// <param name="constructorParameter">The model-typed constructor parameter to build an argument for.</param>
         /// <param name="visitedTypes">The current recursion stack used to avoid cycles in nested model graphs.</param>
         /// <param name="propertyPath">The constructor-property path of the branch being rebuilt.</param>
-        /// <param name="unavailableDirectParameterNames">Old parameter names that should not be reused by direct nested-name fallback.</param>
+        /// <param name="reservedParameters">Old parameters owned by another original or top-level constructor slot.</param>
         /// <param name="consumedParameters">Old parameters already assigned to another constructor branch.</param>
         /// <param name="useNullGuard">
         /// True when creating a top-level nested model argument, so the old overload keeps returning default when all flattened inputs are null.
@@ -724,7 +731,7 @@ namespace Azure.Generator.Management.Visitors
             ParameterProvider constructorParameter,
             List<CSharpType> visitedTypes,
             IReadOnlyList<PropertyProvider> propertyPath,
-            IReadOnlySet<string> unavailableDirectParameterNames,
+            IReadOnlySet<ParameterProvider> reservedParameters,
             IReadOnlySet<ParameterProvider> consumedParameters,
             bool useNullGuard,
             [NotNullWhen(true)] out CompatibilityArgument? argument)
@@ -758,11 +765,10 @@ namespace Azure.Generator.Management.Visitors
                 if (TryGetNestedCompatibilityArgument(
                     method,
                     constructorParameter.Property,
-                    constructorParameter.Name,
                     nestedParameter,
                     visitedTypes,
                     nestedPropertyPath,
-                    unavailableDirectParameterNames,
+                    reservedParameters,
                     branchConsumedParameters,
                     out var nestedArgument))
                 {
@@ -803,21 +809,27 @@ namespace Azure.Generator.Management.Visitors
         private static bool TryGetNestedCompatibilityArgument(
             MethodProvider method,
             PropertyProvider? parentProperty,
-            string? parentName,
             ParameterProvider nestedParameter,
             List<CSharpType> visitedTypes,
             IReadOnlyList<PropertyProvider> propertyPath,
-            IReadOnlySet<string> unavailableDirectParameterNames,
+            IReadOnlySet<ParameterProvider> reservedParameters,
             IReadOnlySet<ParameterProvider> consumedParameters,
             [NotNullWhen(true)] out CompatibilityArgument? argument)
         {
+            if (TryGetPropertyPathMethodParameter(method, propertyPath, nestedParameter.Type, out var pathParameter)
+                && IsNestedParameterAvailable(pathParameter, propertyPath, reservedParameters, consumedParameters))
+            {
+                argument = new CompatibilityArgument(BuildParameterArgument(pathParameter, nestedParameter.Type), [pathParameter]);
+                return true;
+            }
+
             // Prefer the flattened combined name (for example, parent + child) when available so it wins over unrelated
             // top-level parameters with the same child name.
             if (parentProperty is not null && nestedParameter.Property is not null)
             {
                 var combinedName = PropertyHelpers.GetCombinedPropertyName(nestedParameter.Property, parentProperty).ToVariableName();
                 if (TryGetMethodParameter(method, combinedName, nestedParameter.Type, nestedParameter.Property, out var combinedParameter)
-                    && IsParameterAvailable(combinedParameter, propertyPath, consumedParameters))
+                    && IsNestedParameterAvailable(combinedParameter, propertyPath, reservedParameters, consumedParameters))
                 {
                     argument = new CompatibilityArgument(BuildParameterArgument(combinedParameter, nestedParameter.Type), [combinedParameter]);
                     return true;
@@ -827,10 +839,14 @@ namespace Azure.Generator.Management.Visitors
             // Fall back to contextual old names before the nested parameter's own name. Some old overloads preserved
             // collision-avoiding names that are not identical to the current combined name, such as
             // namePropertiesProgressName for a nested progress.name leaf.
-            if (parentName is not null
-                && nestedParameter.Property is not null
-                && TryGetContextualMethodParameter(method, parentName, nestedParameter, out var contextualParameter)
-                && IsParameterAvailable(contextualParameter, propertyPath, consumedParameters))
+            if (nestedParameter.Property is not null
+                && TryGetContextualMethodParameter(
+                    method,
+                    propertyPath,
+                    nestedParameter,
+                    reservedParameters,
+                    consumedParameters,
+                    out var contextualParameter))
             {
                 argument = new CompatibilityArgument(BuildParameterArgument(contextualParameter, nestedParameter.Type), [contextualParameter]);
                 return true;
@@ -840,8 +856,7 @@ namespace Azure.Generator.Management.Visitors
             // constructor argument or exposed as a current top-level constructor parameter. Reusing such a parameter is
             // ambiguous because it likely belongs to that original slot.
             if (TryGetMethodParameter(method, nestedParameter.Name, nestedParameter.Type, nestedParameter.Property, out var directParameter)
-                && !unavailableDirectParameterNames.Contains(directParameter.Name)
-                && IsParameterAvailable(directParameter, propertyPath, consumedParameters))
+                && IsNestedParameterAvailable(directParameter, propertyPath, reservedParameters, consumedParameters))
             {
                 argument = new CompatibilityArgument(BuildParameterArgument(directParameter, nestedParameter.Type), [directParameter]);
                 return true;
@@ -852,7 +867,7 @@ namespace Azure.Generator.Management.Visitors
                 nestedParameter,
                 visitedTypes,
                 propertyPath,
-                unavailableDirectParameterNames,
+                reservedParameters,
                 consumedParameters,
                 useNullGuard: false,
                 out argument);
@@ -861,7 +876,21 @@ namespace Azure.Generator.Management.Visitors
         private static IReadOnlyList<PropertyProvider> AppendPropertyPath(
             IReadOnlyList<PropertyProvider> propertyPath,
             PropertyProvider? property)
-            => property is null ? propertyPath : [.. propertyPath, property];
+        {
+            var appendedPath = GetPropertyPath(property);
+            if (appendedPath.Count == 0)
+            {
+                return propertyPath;
+            }
+
+            if (propertyPath.Count <= appendedPath.Count
+                && propertyPath.Select((item, index) => ReferenceEquals(item, appendedPath[index])).All(matches => matches))
+            {
+                return appendedPath;
+            }
+
+            return [.. propertyPath, .. appendedPath];
+        }
 
         private static IReadOnlyList<PropertyProvider> GetPropertyPath(PropertyProvider? property)
             => property switch
@@ -877,6 +906,14 @@ namespace Azure.Generator.Management.Visitors
             IReadOnlySet<ParameterProvider> consumedParameters)
             => !consumedParameters.Contains(parameter)
                 && IsParameterOwnedByPath(parameter, propertyPath);
+
+        private static bool IsNestedParameterAvailable(
+            ParameterProvider parameter,
+            IReadOnlyList<PropertyProvider> propertyPath,
+            IReadOnlySet<ParameterProvider> reservedParameters,
+            IReadOnlySet<ParameterProvider> consumedParameters)
+            => !reservedParameters.Contains(parameter)
+                && IsParameterAvailable(parameter, propertyPath, consumedParameters);
 
         private static bool IsParameterOwnedByPath(
             ParameterProvider parameter,
@@ -918,15 +955,85 @@ namespace Azure.Generator.Management.Visitors
             return parameter is not null;
         }
 
-        private static bool TryGetContextualMethodParameter(MethodProvider method, string parentName, ParameterProvider nestedParameter, [NotNullWhen(true)] out ParameterProvider? parameter)
+        private static bool TryGetPropertyPathMethodParameter(
+            MethodProvider method,
+            IReadOnlyList<PropertyProvider> propertyPath,
+            CSharpType expectedType,
+            [NotNullWhen(true)] out ParameterProvider? parameter)
         {
-            var matches = method.Signature.Parameters.Where(p =>
-                !string.Equals(p.Name, nestedParameter.Name, StringComparison.OrdinalIgnoreCase)
-                && p.Name.Contains(parentName, StringComparison.OrdinalIgnoreCase)
-                && p.Name.EndsWith(nestedParameter.Name, StringComparison.OrdinalIgnoreCase)
-                && AreCompatibleParameterTypes(p.Type, nestedParameter.Type)).ToArray();
+            var matches = method.Signature.Parameters.Where(candidate =>
+                AreCompatibleParameterTypes(candidate.Type, expectedType)
+                && ArePropertyPathsEqual(GetPropertyPath(candidate.Property), propertyPath)).ToArray();
             parameter = matches.Length == 1 ? matches[0] : null;
             return parameter is not null;
+        }
+
+        private static bool ArePropertyPathsEqual(
+            IReadOnlyList<PropertyProvider> left,
+            IReadOnlyList<PropertyProvider> right)
+            => left.Count == right.Count
+                && left.Select((property, index) => ReferenceEquals(property, right[index])).All(matches => matches);
+
+        private static bool TryGetContextualMethodParameter(
+            MethodProvider method,
+            IReadOnlyList<PropertyProvider> propertyPath,
+            ParameterProvider nestedParameter,
+            IReadOnlySet<ParameterProvider> reservedParameters,
+            IReadOnlySet<ParameterProvider> consumedParameters,
+            [NotNullWhen(true)] out ParameterProvider? parameter)
+        {
+            var contextualName = GetContextualPropertyName(propertyPath).ToVariableName();
+            var matches = method.Signature.Parameters.Where(p =>
+                !string.Equals(p.Name, nestedParameter.Name, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(p.Name, contextualName, StringComparison.OrdinalIgnoreCase)
+                && AreCompatibleParameterTypes(p.Type, nestedParameter.Type)
+                && IsNestedParameterAvailable(p, propertyPath, reservedParameters, consumedParameters)).ToArray();
+            if (matches.Length == 0)
+            {
+                // Older contracts can prefix a collision-avoiding name while retaining the complete raw property path,
+                // for example namePropertiesProgressName. Accept only a unique ordered-path match.
+                matches = method.Signature.Parameters.Where(p =>
+                    !string.Equals(p.Name, nestedParameter.Name, StringComparison.OrdinalIgnoreCase)
+                    && p.Name.EndsWith(nestedParameter.Name, StringComparison.OrdinalIgnoreCase)
+                    && ContainsPropertyPathInOrder(p.Name, propertyPath)
+                    && AreCompatibleParameterTypes(p.Type, nestedParameter.Type)
+                    && IsNestedParameterAvailable(p, propertyPath, reservedParameters, consumedParameters)).ToArray();
+            }
+
+            parameter = matches.Length == 1 ? matches[0] : null;
+            return parameter is not null;
+        }
+
+        private static bool ContainsPropertyPathInOrder(string parameterName, IReadOnlyList<PropertyProvider> propertyPath)
+        {
+            var parameterWords = parameterName.SplitByCamelCase().ToArray();
+            var pathWords = propertyPath.SelectMany(property => property.Name.SplitByCamelCase()).ToArray();
+            for (int startIndex = 0; startIndex <= parameterWords.Length - pathWords.Length; startIndex++)
+            {
+                if (pathWords.Select((word, offset) =>
+                    string.Equals(word, parameterWords[startIndex + offset], StringComparison.OrdinalIgnoreCase)).All(matches => matches))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static string GetContextualPropertyName(IReadOnlyList<PropertyProvider> propertyPath)
+        {
+            if (propertyPath.Count == 1)
+            {
+                return propertyPath[0].Name;
+            }
+
+            var name = PropertyHelpers.GetCombinedPropertyName(propertyPath[1], propertyPath[0]);
+            for (int i = 2; i < propertyPath.Count; i++)
+            {
+                name = PropertyHelpers.GetCombinedPropertyName(propertyPath[i].Name, propertyPath[i].Type, name);
+            }
+
+            return name;
         }
 
         /// <summary>

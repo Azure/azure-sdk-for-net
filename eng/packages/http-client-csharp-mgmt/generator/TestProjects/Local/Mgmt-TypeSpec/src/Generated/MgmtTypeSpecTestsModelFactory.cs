@@ -156,7 +156,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                serviceUri is null && something is null && boolValue is null && floatValue is null && doubleValue is null && prop1 is null && prop2 is null && nestedPropertyProperties is null && flattenedProperty is null && eTag is null && writableSubResourceProp is null && computeFleetVmCapacityReservationGroupId is null ? default : new FooProperties(
+                serviceUri is null && something is null && boolValue is null && floatValue is null && doubleValue is null && prop1 is null && prop2 is null && nestedPropertyProperties is null && flattenedProperty is null && vmGalleryApplications is null && eTag is null && writableSubResourceProp is null && computeFleetVmCapacityReservationGroupId is null ? default : new FooProperties(
                     serviceUri,
                     something,
                     boolValue,
@@ -166,7 +166,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     (prop2 ?? new ChangeTrackingList<int>()).ToList(),
                     new NestedFooModel(nestedPropertyProperties, default),
                     new SafeFlattenModel((flattenedProperty ?? new ChangeTrackingList<string>()).ToList(), default),
-                    default,
+                    new VmProfile(new ApplicationProfile((vmGalleryApplications ?? new ChangeTrackingList<string>()).ToList(), default), default),
                     eTag,
                     writableSubResourceProp,
                     new ComputeFleetVmProfile(new CapacityReservationProfile(new TestSubResource(computeFleetVmCapacityReservationGroupId, default), default), default),
@@ -207,7 +207,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 (prop2 ?? new ChangeTrackingList<int>()).ToList(),
                 nestedPropertyProperties is null ? default : new NestedFooModel(nestedPropertyProperties, default),
                 flattenedProperty is null ? default : new SafeFlattenModel((flattenedProperty ?? new ChangeTrackingList<string>()).ToList(), default),
-                default,
+                vmGalleryApplications is null ? default : new VmProfile(new ApplicationProfile((vmGalleryApplications ?? new ChangeTrackingList<string>()).ToList(), default), default),
                 eTag,
                 writableSubResourceProp,
                 computeFleetVmCapacityReservationGroupId is null ? default : new ComputeFleetVmProfile(new CapacityReservationProfile(new TestSubResource(computeFleetVmCapacityReservationGroupId, default), default), default),

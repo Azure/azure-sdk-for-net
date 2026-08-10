@@ -238,19 +238,30 @@ namespace Azure.Generator.Management.Visitors
             }
 
             var reorderedParameters = new ParameterProvider[currentParameters.Count];
-            var usedParameters = new HashSet<ParameterProvider>();
+            var usedParameters = new HashSet<ParameterProvider>(ReferenceEqualityComparer.Instance);
             // Move existing providers as a unit so their descriptions, property metadata, and body references stay semantic.
             for (int i = 0; i < previousParameters.Count; i++)
             {
                 var previousParameter = previousParameters[i];
-                var matchingParameter = currentParameters.FirstOrDefault(parameter =>
+                var matchingParameters = currentParameters.Where(parameter =>
                     !usedParameters.Contains(parameter)
-                    && parameter.Name == previousParameter.Name
-                    && parameter.Type.AreNamesEqual(previousParameter.Type));
-                if (matchingParameter is not null)
+                    && parameter.Type.AreNamesEqual(previousParameter.Type)
+                    && ReferenceEquals(parameter.Property, previousParameter.Property)).ToArray();
+                if (matchingParameters.Length == 1)
                 {
-                    reorderedParameters[i] = matchingParameter;
-                    usedParameters.Add(matchingParameter);
+                    reorderedParameters[i] = matchingParameters[0];
+                    usedParameters.Add(matchingParameters[0]);
+                    continue;
+                }
+
+                matchingParameters = currentParameters.Where(parameter =>
+                    !usedParameters.Contains(parameter)
+                    && string.Equals(parameter.Name, previousParameter.Name, StringComparison.OrdinalIgnoreCase)
+                    && parameter.Type.AreNamesEqual(previousParameter.Type)).ToArray();
+                if (matchingParameters.Length == 1)
+                {
+                    reorderedParameters[i] = matchingParameters[0];
+                    usedParameters.Add(matchingParameters[0]);
                 }
             }
 
@@ -263,16 +274,16 @@ namespace Azure.Generator.Management.Visitors
                 }
 
                 var previousParameter = previousParameters[i];
-                var matchingParameter = currentParameters.FirstOrDefault(parameter =>
+                var matchingParameters = currentParameters.Where(parameter =>
                     !usedParameters.Contains(parameter)
-                    && parameter.Type.AreNamesEqual(previousParameter.Type));
-                if (matchingParameter is null)
+                    && parameter.Type.AreNamesEqual(previousParameter.Type)).ToArray();
+                if (matchingParameters.Length != 1)
                 {
                     return false;
                 }
 
-                reorderedParameters[i] = matchingParameter;
-                usedParameters.Add(matchingParameter);
+                reorderedParameters[i] = matchingParameters[0];
+                usedParameters.Add(matchingParameters[0]);
             }
 
             var updated = false;
