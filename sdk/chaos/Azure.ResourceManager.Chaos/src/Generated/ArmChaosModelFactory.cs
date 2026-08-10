@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                default,
+                provisioningState is null && steps is null && selectors is null && customerDataStorage is null ? default : new ExperimentProperties(provisioningState, (steps ?? new ChangeTrackingList<ChaosExperimentStep>()).ToList(), (selectors ?? new ChangeTrackingList<ChaosTargetSelector>()).ToList(), customerDataStorage, default),
                 default);
         }
 
@@ -556,16 +556,16 @@ namespace Azure.ResourceManager.Chaos.Models
                 name,
                 resourceType,
                 systemData,
-                actionName is null && actionType is null ? default : new ActionProperties(
-                    default,
-                    default,
-                    default,
+                canonicalId is null && displayName is null && description is null && actionName is null && version is null && actionType is null && supportedTargetTypes is null && parametersSchema is null && recommendedRoles is null ? default : new ActionProperties(
+                    canonicalId,
+                    displayName,
+                    description,
                     actionName,
-                    default,
+                    version,
                     actionType,
-                    default,
-                    default,
-                    default,
+                    (supportedTargetTypes ?? new ChangeTrackingList<ChaosActionSupportedTargetType>()).ToList(),
+                    parametersSchema,
+                    (recommendedRoles ?? new ChangeTrackingList<Guid>()).ToList(),
                     default),
                 default);
         }
@@ -607,16 +607,16 @@ namespace Azure.ResourceManager.Chaos.Models
                 name,
                 resourceType,
                 systemData,
-                actionName is null && actionType is null ? default : new ActionProperties(
-                    default,
-                    default,
-                    default,
+                canonicalId is null && displayName is null && description is null && actionName is null && version is null && actionType is null && supportedTargetTypes is null && parametersSchema is null && recommendedRoles is null ? default : new ActionProperties(
+                    canonicalId,
+                    displayName,
+                    description,
                     actionName,
-                    default,
+                    version,
                     actionType,
-                    default,
-                    default,
-                    default,
+                    (supportedTargetTypes ?? new ChangeTrackingList<ChaosActionSupportedTargetType>()).ToList(),
+                    parametersSchema,
+                    (recommendedRoles ?? new ChangeTrackingList<Guid>()).ToList(),
                     default),
                 default);
         }
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                displayName is null && description is null && propertiesSchema is null && resourceTypes is null ? default : new TargetTypeProperties(displayName, description, propertiesSchema, (resourceTypes ?? new ChangeTrackingList<string>()).ToList(), default),
                 default);
         }
 
