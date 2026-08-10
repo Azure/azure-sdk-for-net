@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                startIPAddress is null && endIPAddress is null && provisioningState is null ? default : new FirewallRuleProperties(startIPAddress, endIPAddress, provisioningState, default),
                 default);
         }
 
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 name,
                 resourceType,
                 systemData,
-                roleType is null ? default : new RoleProperties(roleType, default, default, default, default),
+                roleType is null && password is null && objectId is null && principalType is null && tenantId is null && provisioningState is null ? default : new RoleProperties(roleType, password, new RolePropertiesExternalIdentity(objectId, principalType.GetValueOrDefault(), tenantId, default), provisioningState, default),
                 default);
         }
 

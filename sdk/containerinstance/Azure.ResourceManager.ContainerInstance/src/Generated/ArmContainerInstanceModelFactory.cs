@@ -69,28 +69,28 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 location,
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
                 identity,
-                containers is null && containerGroupOSType is null && diagnosticsLogAnalytics is null && encryptionProperties is null && initContainers is null && confidentialComputeCcePolicy is null && containerGroupProfile is null && isCreatedFromStandbyPool is null ? default : new ContainerGroupPropertiesProperties(
-                    default,
-                    default,
+                provisioningState is null && secretReferences is null && containers is null && imageRegistryCredentials is null && restartPolicy is null && ipAddress is null && containerGroupOSType is null && volumes is null && instanceView is null && diagnosticsLogAnalytics is null && subnetIds is null && dnsConfig is null && sku is null && encryptionProperties is null && initContainers is null && extensions is null && confidentialComputeCcePolicy is null && priority is null && identityAcls is null && containerGroupProfile is null && standbyPoolProfile is null && isCreatedFromStandbyPool is null ? default : new ContainerGroupPropertiesProperties(
+                    provisioningState,
+                    (secretReferences ?? new ChangeTrackingList<ContainerGroupSecretReference>()).ToList(),
                     (containers ?? new ChangeTrackingList<ContainerInstanceContainer>()).ToList(),
-                    default,
-                    default,
-                    default,
+                    (imageRegistryCredentials ?? new ChangeTrackingList<ContainerGroupImageRegistryCredential>()).ToList(),
+                    restartPolicy,
+                    ipAddress,
                     containerGroupOSType,
-                    default,
-                    default,
+                    (volumes ?? new ChangeTrackingList<ContainerVolume>()).ToList(),
+                    instanceView,
                     new ContainerGroupDiagnostics(diagnosticsLogAnalytics, default),
-                    default,
-                    default,
-                    default,
+                    (subnetIds ?? new ChangeTrackingList<ContainerGroupSubnetId>()).ToList(),
+                    dnsConfig,
+                    sku,
                     encryptionProperties,
                     (initContainers ?? new ChangeTrackingList<InitContainerDefinitionContent>()).ToList(),
-                    default,
+                    (extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>()).ToList(),
                     new ConfidentialComputeProperties(confidentialComputeCcePolicy, default),
-                    default,
-                    default,
+                    priority,
+                    identityAcls,
                     containerGroupProfile,
-                    default,
+                    standbyPoolProfile,
                     isCreatedFromStandbyPool,
                     default),
                 default);
@@ -120,17 +120,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <returns> A new <see cref="Models.ContainerInstanceContainer"/> instance for mocking. </returns>
         public static ContainerInstanceContainer ContainerInstanceContainer(string name = default, string image = default, IEnumerable<string> command = default, IEnumerable<ContainerPort> ports = default, IEnumerable<ContainerEnvironmentVariable> environmentVariables = default, ContainerInstanceView instanceView = default, ContainerResourceRequirements resources = default, IEnumerable<ContainerVolumeMount> volumeMounts = default, ContainerProbe livenessProbe = default, ContainerProbe readinessProbe = default, ContainerSecurityContextDefinition securityContext = default, IDictionary<string, string> configMapKeyValuePairs = default)
         {
-            return new ContainerInstanceContainer(name, configMapKeyValuePairs is null ? default : new ContainerProperties(
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
+            return new ContainerInstanceContainer(name, image is null && command is null && ports is null && environmentVariables is null && instanceView is null && resources is null && volumeMounts is null && livenessProbe is null && readinessProbe is null && securityContext is null && configMapKeyValuePairs is null ? default : new ContainerProperties(
+                image,
+                (command ?? new ChangeTrackingList<string>()).ToList(),
+                (ports ?? new ChangeTrackingList<ContainerPort>()).ToList(),
+                (environmentVariables ?? new ChangeTrackingList<ContainerEnvironmentVariable>()).ToList(),
+                instanceView,
+                resources,
+                (volumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>()).ToList(),
+                livenessProbe,
+                readinessProbe,
+                securityContext,
                 new ConfigMap(configMapKeyValuePairs ?? new ChangeTrackingDictionary<string, string>(), default),
                 default), default);
         }
@@ -479,7 +479,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <returns> A new <see cref="Models.InitContainerDefinitionContent"/> instance for mocking. </returns>
         public static InitContainerDefinitionContent InitContainerDefinitionContent(string name = default, string image = default, IEnumerable<string> command = default, IEnumerable<ContainerEnvironmentVariable> environmentVariables = default, InitContainerPropertiesDefinitionInstanceView instanceView = default, IEnumerable<ContainerVolumeMount> volumeMounts = default, ContainerSecurityContextDefinition securityContext = default)
         {
-            return new InitContainerDefinitionContent(name, default, default);
+            return new InitContainerDefinitionContent(name, image is null && command is null && environmentVariables is null && instanceView is null && volumeMounts is null && securityContext is null ? default : new InitContainerPropertiesDefinition(
+                image,
+                (command ?? new ChangeTrackingList<string>()).ToList(),
+                (environmentVariables ?? new ChangeTrackingList<ContainerEnvironmentVariable>()).ToList(),
+                instanceView,
+                (volumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>()).ToList(),
+                securityContext,
+                default), default);
         }
 
         /// <param name="restartCount"> The number of times that the init container has been restarted. </param>
