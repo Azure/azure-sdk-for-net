@@ -61,6 +61,7 @@ namespace Azure.Generator.Provisioning.Providers
         /// <see cref="IProvisioningPropertyInfo.GetProvisioningPropertyInfo"/>.
         /// </summary>
         private readonly Lazy<Dictionary<InputModelProperty, ResourcePropertyInfo>> _propertyLookup;
+        private readonly Lazy<ProvisioningResourceProvider?> _immediateParentResource;
         /// <summary>
         /// Serialized property names that are writable in the create/update request body model.
         /// When the resource model is output-only (e.g., a ProxyResource with a separate create body),
@@ -82,30 +83,25 @@ namespace Azure.Generator.Provisioning.Providers
         internal ProvisioningResourceProjection? ResourceProjection => _resourceProjection;
 
         /// <summary>
-        /// Gets the resource provider resolved from the ARM parent ID, regardless of whether it is the immediate structural parent.
-        /// </summary>
-        private ProvisioningResourceProvider? ResolvedParentResource
-            => _resourceProjection is { IsExtensionResource: false, ParentResourceId: { } parentId }
-                ? ProvisioningGenerator.Instance.OutputLibrary.GetResourceByIdPattern(parentId)
-                : null;
-
-        /// <summary>
         /// Gets the resolved parent only when its resource type is the immediate structural parent type.
         /// </summary>
-        private ProvisioningResourceProvider? ImmediateParentResource
-        {
-            get
-            {
-                var parent = ResolvedParentResource;
-                return parent?.ResourceProjection is { } parentProjection
-                    && _resourceProjection is { } resourceProjection
-                    && IsImmediateParentResourceType(new ResourceTypePattern(resourceProjection.ResourceType), new ResourceTypePattern(parentProjection.ResourceType))
-                        ? parent
-                        : null;
-            }
-        }
+        private ProvisioningResourceProvider? ImmediateParentResource => _immediateParentResource.Value;
 
-        private CSharpType? ParentResourceType => ImmediateParentResource?.Type;
+        private ProvisioningResourceProvider? ResolveImmediateParentResource()
+        {
+            if (_resourceProjection is not { IsExtensionResource: false, ParentResourceId: { } parentId } resourceProjection)
+                return null;
+
+            var parent = ProvisioningGenerator.Instance.OutputLibrary.GetResourceByIdPattern(parentId);
+            if (parent?.ResourceProjection is not { } parentProjection)
+                return null;
+
+            return IsImmediateParentResourceType(
+                new ResourceTypePattern(resourceProjection.ResourceType),
+                new ResourceTypePattern(parentProjection.ResourceType))
+                    ? parent
+                    : null;
+        }
 
         private bool CanUseSingletonDefaultName()
         {
@@ -152,6 +148,7 @@ namespace Azure.Generator.Provisioning.Providers
                 : null;
             _isSettableResource = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(projection.ResourceModel);
             _createBodyWritableProperties = BuildCreateBodyWritableProperties();
+            _immediateParentResource = new(ResolveImmediateParentResource);
             _allProperties = new(CollectAllProperties);
             _propertyLookup = new(() => _allProperties.Value.ToDictionary(p => p.Property));
             ProvisioningGenerator.Instance.AddTypeToKeep(this);
@@ -168,6 +165,7 @@ namespace Azure.Generator.Provisioning.Providers
             _defaultApiVersion = null;
             _isSettableResource = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(inputModel);
             _createBodyWritableProperties = [];
+            _immediateParentResource = new(ResolveImmediateParentResource);
             _allProperties = new(CollectAllProperties);
             _propertyLookup = new(() => _allProperties.Value.ToDictionary(p => p.Property));
             ProvisioningGenerator.Instance.AddTypeToKeep(this);
@@ -237,7 +235,7 @@ namespace Azure.Generator.Provisioning.Providers
             }
 
             // Create a parent property only for resources whose immediate structural parent is generated
-            _parentType = ParentResourceType;
+            _parentType = ImmediateParentResource?.Type;
             if (_parentType != null)
             {
                 _parentField = new FieldProvider(
