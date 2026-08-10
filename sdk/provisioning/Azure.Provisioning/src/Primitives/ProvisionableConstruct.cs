@@ -315,6 +315,20 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
         bool isRequired = false)
         => DefineListProperty<T>(propertyName, bicepPath, isOutput, isRequired, format: null);
 
+    /// <summary>
+    /// Defines a list property on this construct.
+    /// </summary>
+    /// <typeparam name="T">The type of the list element values.</typeparam>
+    /// <param name="propertyName">The name of the property on this construct.</param>
+    /// <param name="bicepPath">The path to the property in the emitted Bicep resource body.</param>
+    /// <param name="isOutput">Whether the property is output-only.</param>
+    /// <param name="isRequired">Whether the property is required.</param>
+    /// <param name="format">
+    /// The optional serialization format token to pass to literal leaf values while compiling
+    /// this list to Bicep. When set, this format takes precedence over formats stored on
+    /// nested literal values.
+    /// </param>
+    /// <returns>The defined list property.</returns>
     protected BicepList<T> DefineListProperty<T>(
         string propertyName,
         string[]? bicepPath,
@@ -340,6 +354,20 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
         bool isRequired = false)
         => DefineDictionaryProperty<T>(propertyName, bicepPath, isOutput, isRequired, format: null);
 
+    /// <summary>
+    /// Defines a dictionary property on this construct.
+    /// </summary>
+    /// <typeparam name="T">The type of the dictionary values.</typeparam>
+    /// <param name="propertyName">The name of the property on this construct.</param>
+    /// <param name="bicepPath">The path to the property in the emitted Bicep resource body.</param>
+    /// <param name="isOutput">Whether the property is output-only.</param>
+    /// <param name="isRequired">Whether the property is required.</param>
+    /// <param name="format">
+    /// The optional serialization format token to pass to literal leaf values while compiling
+    /// this dictionary to Bicep. When set, this format takes precedence over formats stored on
+    /// nested literal values.
+    /// </param>
+    /// <returns>The defined dictionary property.</returns>
     protected BicepDictionary<T> DefineDictionaryProperty<T>(
         string propertyName,
         string[]? bicepPath,
