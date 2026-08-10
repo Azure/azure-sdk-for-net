@@ -1,5 +1,5 @@
 name: azsdk-common-sdk-breaking-change-trigger-eval
-description: Trigger and anti-trigger tests for theazsdk-common-sdk-breaking-change skill
+description: Trigger tests for the azsdk-common-sdk-breaking-change skill
 type: capability
 
 environment: azsdk-mcp-mock
