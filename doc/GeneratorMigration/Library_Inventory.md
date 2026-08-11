@@ -16,7 +16,7 @@
 
 ## Summary
 
-- Total libraries: 442
+- Total libraries: 443
 - Management Plane (MPG): 260
   - Autorest/Swagger: 43
   - New Emitter (TypeSpec): 217
@@ -25,9 +25,9 @@
   - Autorest/Swagger: 30
   - New Emitter (TypeSpec): 51
   - Old TypeSpec: 1
-- Provisioning: 53
+- Provisioning: 54
   - Reflection-based generator: 25
-  - TypeSpec-based generator: 26
+  - TypeSpec-based generator: 27
   - No generator: 2
 - No generator: 47
 
@@ -414,7 +414,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 43
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 26 / 53 migrated to TypeSpec-based generator
+**Migration Status**: 27 / 54 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
@@ -442,6 +442,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | eventhub | Azure.Provisioning.EventHubs | Azure.ResourceManager.EventHubs ✅ | TypeSpec ✅ |
 | frontdoor | Azure.Provisioning.FrontDoor | Azure.ResourceManager.FrontDoor ✅ | TypeSpec ✅ |
 | hybridkubernetes | Azure.Provisioning.Kubernetes | Azure.ResourceManager.Kubernetes ✅ | TypeSpec ✅ |
+| iothub | Azure.Provisioning.IotHub | Azure.ResourceManager.IotHub ✅ | TypeSpec ✅ |
 | keyvault | Azure.Provisioning.KeyVault | Azure.ResourceManager.KeyVault ✅ | TypeSpec ✅ |
 | kubernetesconfiguration | Azure.Provisioning.KubernetesConfiguration | Azure.ResourceManager.KubernetesConfiguration | Reflection |
 | kusto | Azure.Provisioning.Kusto | Azure.ResourceManager.Kusto ✅ | Reflection |
