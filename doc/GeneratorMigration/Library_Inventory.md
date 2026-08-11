@@ -16,9 +16,9 @@
 
 ## Summary
 
-- Total libraries: 442
-- Management Plane (MPG): 260
-  - Autorest/Swagger: 43
+- Total libraries: 441
+- Management Plane (MPG): 259
+  - Autorest/Swagger: 42
   - New Emitter (TypeSpec): 217
   - Old TypeSpec: 0
 - Data Plane (DPG): 129
@@ -361,7 +361,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 43
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 42
 
 | Service | Library |
 | ------- | ------- |
@@ -384,7 +384,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 43
 | hybridaks | Azure.ResourceManager.HybridContainerService |
 | iot | Azure.ResourceManager.IotFirmwareDefense |
 | iotcentral | Azure.ResourceManager.IotCentral |
-| kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration |
 | labservices | Azure.ResourceManager.LabServices |
 | logic | Azure.ResourceManager.Logic |
 | machinelearningcompute | Azure.ResourceManager.MachineLearningCompute |

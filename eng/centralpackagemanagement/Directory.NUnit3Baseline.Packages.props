@@ -199,9 +199,10 @@
         $(MSBuildProjectName) == 'Azure.ResourceManager.IotOperations.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.KeyVault.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Kubernetes.Tests' or
+        $(MSBuildProjectName) == 'Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.KubernetesConfiguration.Extensions.Tests' or
+        $(MSBuildProjectName) == 'Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Tests' or
-        $(MSBuildProjectName) == 'Azure.ResourceManager.KubernetesConfiguration.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Kusto.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.LabServices.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.LambdaTestHyperExecute.Tests' or
