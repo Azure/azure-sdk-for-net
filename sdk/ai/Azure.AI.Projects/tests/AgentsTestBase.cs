@@ -594,10 +594,10 @@ public class AgentsTestBase : ProjectsClientTestBase
             ToolType.Memory => new global::Azure.AI.Extensions.OpenAI.MemorySearchPreviewTool(memoryStoreName: (await CreateMemoryStore(projectClient)).Name, scope: MEMORY_STORE_SCOPE),
             ToolType.AzureAISearch => new global::Azure.AI.Extensions.OpenAI.AzureAISearchTool(new global::Azure.AI.Extensions.OpenAI.AzureAISearchToolOptions(indexes: [GetAISearchIndex()])),
             ToolType.BingGrounding => new global::Azure.AI.Extensions.OpenAI.BingGroundingTool(new global::Azure.AI.Extensions.OpenAI.BingGroundingSearchToolOptions(
-                searchConfigurations: [new global::Azure.AI.Extensions.OpenAI.BingGroundingSearchConfiguration(projectConnectionId: TestEnvironment.BING_CONNECTION_ID)]
+                searchConfigurations: [new global::Azure.AI.Extensions.OpenAI.BingGroundingSearchOptions(projectConnectionId: TestEnvironment.BING_CONNECTION_ID)]
             )),
             ToolType.BingGroundingCustom => new global::Azure.AI.Extensions.OpenAI.BingCustomSearchPreviewTool(new global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolOptions(
-                searchConfigurations: [new global::Azure.AI.Extensions.OpenAI.BingCustomSearchConfiguration(projectConnectionId: TestEnvironment.CUSTOM_BING_CONNECTION_ID, instanceName: TestEnvironment.BING_CUSTOM_SEARCH_INSTANCE_NAME)]
+                searchConfigurations: [new global::Azure.AI.Extensions.OpenAI.BingCustomSearchOptions(projectConnectionId: TestEnvironment.CUSTOM_BING_CONNECTION_ID, instanceName: TestEnvironment.BING_CUSTOM_SEARCH_INSTANCE_NAME)]
             )),
             ToolType.MCP => ResponseTool.CreateMcpTool(
                 serverLabel: "api-specs",
@@ -610,7 +610,7 @@ public class AgentsTestBase : ProjectsClientTestBase
             ToolType.Sharepoint => GetSharepointTool(projectClient),
             ToolType.BrowserAutomation => new global::Azure.AI.Extensions.OpenAI.BrowserAutomationPreviewTool(
             new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions(
-                new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionParameters(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
+                new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
             )),
             ToolType.MicrosoftFabric => GetMicrosoftFabricAgentTool(),
             ToolType.FabricIQ => GetFabricIQAgentTool(),

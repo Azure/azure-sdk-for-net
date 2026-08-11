@@ -1,0 +1,6 @@
+{
+  "package-name": "Azure.AI.Projects.Agents",
+  "plugins": [
+    "C:/Users/nirovins/eclipse-workspace/azure-sdk-for-net/sdk/ai/codegen"
+  ]
+}

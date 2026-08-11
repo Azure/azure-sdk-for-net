@@ -4,13 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
-    [Experimental("AAIP002")]
     public partial class BingGroundingTool : ResponseTool
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

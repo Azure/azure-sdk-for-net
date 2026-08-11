@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -97,6 +98,11 @@ namespace Azure.AI.Projects.Agents
                 foreach (var item in ToolConfigs)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();

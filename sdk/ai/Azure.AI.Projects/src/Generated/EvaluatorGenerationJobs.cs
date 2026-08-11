@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
@@ -42,59 +43,24 @@ namespace Azure.AI.Projects.Evaluation
         internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
-        /// [Protocol Method] Creates an evaluator generation job. The service generates rubric-based evaluator
+        /// Creates an evaluator generation job. The service generates rubric-based evaluator
         /// definitions from the provided source materials asynchronously.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
         /// </summary>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult Create(BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
+        [Experimental("SCME0006")]
+        internal virtual OperationResult Create(bool waitUntilCompleted, BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EvaluatorGenerationJobs.Create");
             scope.Start();
             try
             {
                 using PipelineMessage message = CreateCreateRequest(content, foundryFeatures, operationId, options);
-                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Creates an evaluator generation job. The service generates rubric-based evaluator
-        /// definitions from the provided source materials asynchronously.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> CreateAsync(BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EvaluatorGenerationJobs.Create");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreateCreateRequest(content, foundryFeatures, operationId, options);
-                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                return OperationResultHelpers.ProcessMessage(Pipeline, message, options, OperationFinalStateVia.OperationLocation, waitUntilCompleted);
             }
             catch (Exception e)
             {
@@ -107,30 +73,59 @@ namespace Azure.AI.Projects.Evaluation
         /// Creates an evaluator generation job. The service generates rubric-based evaluator
         /// definitions from the provided source materials asynchronously.
         /// </summary>
-        /// <param name="job"> The job to create. </param>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<EvaluatorGenerationJob> Create(EvaluatorGenerationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The response returned from the service. </returns>
+        [Experimental("SCME0006")]
+        internal virtual async Task<OperationResult> CreateAsync(bool waitUntilCompleted, BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
         {
-            ClientResult result = Create(job, foundryFeatures?.ToSerialString(), operationId, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((EvaluatorGenerationJob)result, result.GetRawResponse());
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EvaluatorGenerationJobs.Create");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateRequest(content, foundryFeatures, operationId, options);
+                return await OperationResultHelpers.ProcessMessageAsync(Pipeline, message, options, OperationFinalStateVia.OperationLocation, waitUntilCompleted).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// Creates an evaluator generation job. The service generates rubric-based evaluator
         /// definitions from the provided source materials asynchronously.
         /// </summary>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
         /// <param name="job"> The job to create. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<EvaluatorGenerationJob>> CreateAsync(EvaluatorGenerationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
+        [Experimental("SCME0006")]
+        internal virtual OperationResult Create(bool waitUntilCompleted, EvaluatorGenerationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await CreateAsync(job, foundryFeatures?.ToSerialString(), operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((EvaluatorGenerationJob)result, result.GetRawResponse());
+            OperationResult result = Create(waitUntilCompleted, job, foundryFeatures?.ToSerialString(), operationId, cancellationToken.ToRequestOptions());
+            return result;
+        }
+
+        /// <summary>
+        /// Creates an evaluator generation job. The service generates rubric-based evaluator
+        /// definitions from the provided source materials asynchronously.
+        /// </summary>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+        /// <param name="job"> The job to create. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        [Experimental("SCME0006")]
+        internal virtual async Task<OperationResult> CreateAsync(bool waitUntilCompleted, EvaluatorGenerationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
+        {
+            OperationResult result = await CreateAsync(waitUntilCompleted, job, foundryFeatures?.ToSerialString(), operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return result;
         }
 
         /// <summary>

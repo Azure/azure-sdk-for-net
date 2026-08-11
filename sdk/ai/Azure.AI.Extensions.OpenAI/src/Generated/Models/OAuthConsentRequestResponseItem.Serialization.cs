@@ -75,7 +75,7 @@ namespace Azure.AI.Extensions.OpenAI
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("consent_link"u8);
-            writer.WriteStringValue(InternalConsentLink);
+            writer.WriteStringValue(ConsentLink);
             writer.WritePropertyName("server_label"u8);
             writer.WriteStringValue(ServerLabel);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -125,7 +125,7 @@ namespace Azure.AI.Extensions.OpenAI
             AgentReference agentReference = default;
             string responseId = default;
             string id0 = default;
-            string internalConsentLink = default;
+            string consentLink = default;
             string serverLabel = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -161,7 +161,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("consent_link"u8))
                 {
-                    internalConsentLink = prop.Value.GetString();
+                    consentLink = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("server_label"u8))
@@ -180,7 +180,7 @@ namespace Azure.AI.Extensions.OpenAI
                 agentReference,
                 responseId,
                 id0,
-                internalConsentLink,
+                consentLink,
                 serverLabel,
                 additionalBinaryDataProperties);
         }

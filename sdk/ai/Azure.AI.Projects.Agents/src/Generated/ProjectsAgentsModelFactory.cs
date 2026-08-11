@@ -901,7 +901,8 @@ namespace Azure.AI.Projects.Agents
         /// resource attached to the tool.
         /// </param>
         /// <returns> A new <see cref="Agents.WebSearchToolboxTool"/> instance for mocking. </returns>
-        public static WebSearchToolboxTool WebSearchToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, OpenAI.WebSearchToolFilters filters = default, WebSearchApproximateLocation userLocation = default, WebSearchToolSearchContextSize? searchContextSize = default, ProjectWebSearchConfiguration customSearchConfiguration = default)
+        [Experimental("AAIP002")]
+        public static WebSearchToolboxTool WebSearchToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, WebSearchToolFilters filters = default, WebSearchToolApproximateLocation userLocation = default, WebSearchToolSearchContextSize? searchContextSize = default, WebSearchConfiguration customSearchConfiguration = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
 

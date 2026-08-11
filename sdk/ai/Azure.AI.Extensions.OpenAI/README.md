@@ -1221,7 +1221,7 @@ create the `BingGroundingTool` and use it in `DeclarativeAgentDefinition` object
 ```C# Snippet:Sample_CreateAgent_BingGrounding_Sync
 AIProjectConnection bingConnectionName = projectClient.Connections.GetConnection(connectionName: connectionName);
 BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOptions(
-    searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
+    searchConfigurations: [new BingGroundingSearchOptions(projectConnectionId: bingConnectionName.Id)]
     )
 );
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -1290,7 +1290,7 @@ en.wikipedia.org. This configuration is called "wikipedia" its search URL is con
 ```C# Snippet:Sample_CreateAgent_CustomBingSearch_Async
 AIProjectConnection bingConnectionName = await projectClient.Connections.GetConnectionAsync(connectionName: connectionName);
 BingCustomSearchPreviewTool customBingSearchAgentTool = new(new BingCustomSearchToolOptions(
-    searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
+    searchConfigurations: [new BingCustomSearchOptions(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
     )
 );
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -1514,7 +1514,7 @@ To use Azure Playwright workspace we need to create agent with `BrowserAutomatio
 AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
 BrowserAutomationPreviewTool playwrightTool = new(
     new BrowserAutomationToolOptions(
-        new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
+        new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
     ));
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)

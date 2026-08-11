@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Definition of input parameters for the Browser Automation Tool. </summary>
-    [Experimental("AAIP001")]
     public partial class BrowserAutomationToolOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -18,7 +16,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolOptions"/>. </summary>
         /// <param name="connection"> The project connection parameters associated with the Browser Automation Tool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connection"/> is null. </exception>
-        public BrowserAutomationToolOptions(BrowserAutomationToolConnectionParameters connection)
+        public BrowserAutomationToolOptions(BrowserAutomationToolConnectionOptions connection)
         {
             Argument.AssertNotNull(connection, nameof(connection));
 
@@ -28,13 +26,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolOptions"/>. </summary>
         /// <param name="connection"> The project connection parameters associated with the Browser Automation Tool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BrowserAutomationToolOptions(BrowserAutomationToolConnectionParameters connection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BrowserAutomationToolOptions(BrowserAutomationToolConnectionOptions connection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Connection = connection;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The project connection parameters associated with the Browser Automation Tool. </summary>
-        public BrowserAutomationToolConnectionParameters Connection { get; set; }
+        public BrowserAutomationToolConnectionOptions Connection { get; set; }
     }
 }

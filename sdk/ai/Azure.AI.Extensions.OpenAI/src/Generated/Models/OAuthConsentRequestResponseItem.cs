@@ -4,13 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Request from the service for the user to perform OAuth consent. </summary>
-    [Experimental("AAIP002")]
     public partial class OAuthConsentRequestResponseItem : ResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -18,19 +16,39 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/>. </summary>
         /// <param name="id"></param>
-        /// <param name="internalConsentLink"> The link the user can use to perform OAuth consent. </param>
+        /// <param name="consentLink"> The link the user can use to perform OAuth consent. </param>
         /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="internalConsentLink"/> or <paramref name="serverLabel"/> is null. </exception>
-        public OAuthConsentRequestResponseItem(string id, string internalConsentLink, string serverLabel) : base("oauth_consent_request")
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="consentLink"/> or <paramref name="serverLabel"/> is null. </exception>
+        public OAuthConsentRequestResponseItem(string id, string consentLink, string serverLabel) : base("oauth_consent_request")
         {
             Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(internalConsentLink, nameof(internalConsentLink));
+            Argument.AssertNotNull(consentLink, nameof(consentLink));
             Argument.AssertNotNull(serverLabel, nameof(serverLabel));
 
             Id = id;
-            InternalConsentLink = internalConsentLink;
+            ConsentLink = consentLink;
             ServerLabel = serverLabel;
         }
+
+        /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/>. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"> The agent that created the item. </param>
+        /// <param name="responseId"> The response on which the item is created. </param>
+        /// <param name="id0"></param>
+        /// <param name="consentLink"> The link the user can use to perform OAuth consent. </param>
+        /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OAuthConsentRequestResponseItem(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string id0, string consentLink, string serverLabel, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, id, agentReference, responseId)
+        {
+            Id = id0;
+            ConsentLink = consentLink;
+            ServerLabel = serverLabel;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> The link the user can use to perform OAuth consent. </summary>
+        public string ConsentLink { get; set; }
 
         /// <summary> The server label for the OAuth consent request. </summary>
         public string ServerLabel { get; set; }

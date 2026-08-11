@@ -1,5 +1,11 @@
 # Release History
 
+## 1.7.0-beta.1 (2026-07-30)
+
+### Features Added
+
+- Upgraded api-version to 2026-05-02-preview.
+
 ## 1.6.0 (2026-07-26)
 
 ### Features Added

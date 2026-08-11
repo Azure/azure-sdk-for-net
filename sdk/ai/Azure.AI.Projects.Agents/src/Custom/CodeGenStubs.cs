@@ -14,8 +14,6 @@ public partial class ProjectsAgentRecord
     private string Object { get; } = "agent";
 }
 
-[CodeGenType("OpenApiFunctionDefinitionFunction")] public partial class OpenAPIFunctionEntry { }
-[CodeGenType("WebSearchConfiguration")] public partial class ProjectWebSearchConfiguration { }
 [CodeGenType("CreateAgentVersionFromManifestRequest1")] public partial class AgentManifestOptions { }
 
 // Internal types
