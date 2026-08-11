@@ -16,9 +16,7 @@ namespace Azure.AI.ContentSafety
         /// <param name="blobUri">The blob uri of the image.</param>
         public ContentSafetyImageData(Uri blobUri)
         {
-            // Deterministic CS0103 break for the auto-build-repair e2e test: the repair
-            // agent renames BlobUriForRepairTest back to the real property (BlobUri).
-            BlobUriForRepairTest = blobUri;
+            BlobUri = blobUri;
         }
 
         /// <summary>
