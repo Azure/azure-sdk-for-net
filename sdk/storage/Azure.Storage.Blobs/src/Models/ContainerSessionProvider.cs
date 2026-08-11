@@ -15,13 +15,15 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// A <see cref="SessionProvider"/> that mints session tokens using a
     /// <see cref="TokenCredential"/> (OAuth/bearer) and caches them per container.
+    /// This provider is for <see cref="TokenCredential"/> authentication only; clients
+    /// using shared key or SAS credentials do not use it.
     /// <para>
     /// The service URI passed to the constructor is expected to be a
     /// blob service endpoint (for example, https://{account}.blob.core.windows.net);
     /// session creation uses the blob Create Session API.
     /// </para>
     /// </summary>
-    public class TokenCredentialSessionProvider : SessionProvider
+    public class ContainerSessionProvider : SessionProvider
     {
         /// <summary>
         /// Buffer before the session's expiry at which a proactive background refresh is initiated.
@@ -55,7 +57,7 @@ namespace Azure.Storage.Blobs.Models
         private readonly Lazy<BlobServiceClient> _serviceClient;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TokenCredentialSessionProvider"/> class.
+        /// Initializes a new instance of the <see cref="ContainerSessionProvider"/> class.
         /// </summary>
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> belonging to the target storage account.
@@ -67,7 +69,7 @@ namespace Azure.Storage.Blobs.Models
         /// Optional client options applied to the internal <see cref="BlobServiceClient"/>
         /// used to issue Create Session requests. When null, default options are used.
         /// </param>
-        public TokenCredentialSessionProvider(Uri serviceUri, TokenCredential credential, BlobClientOptions options = null)
+        public ContainerSessionProvider(Uri serviceUri, TokenCredential credential, BlobClientOptions options = null)
         {
             if (serviceUri == null)
             {

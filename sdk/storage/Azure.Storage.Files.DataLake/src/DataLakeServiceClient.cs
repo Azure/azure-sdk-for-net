@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -476,7 +476,7 @@ namespace Azure.Storage.Files.DataLake
                 Blobs.Models.SessionOptions sessionOptions)
             {
                 Blobs.Models.SessionProvider sessionProvider = sessionOptions?.SessionProvider
-                    ?? new Blobs.Models.TokenCredentialSessionProvider(blobServiceUri, tokenCredential, blobClientOptions);
+                    ?? new Blobs.Models.ContainerSessionProvider(blobServiceUri, tokenCredential, blobClientOptions);
                 return BlobServiceClient.CreateSessionAuthenticationPolicy(
                     fallbackAuthPolicy,
                     sessionProvider,

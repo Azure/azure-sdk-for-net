@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -374,7 +374,7 @@ namespace Azure.Storage.Blobs
             string audienceScope = string.IsNullOrEmpty(options?.Audience?.ToString()) ? BlobAudience.DefaultAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope();
 
             SessionProvider sessionProvider = options?.SessionOptions?.SessionProvider
-                ?? new TokenCredentialSessionProvider(blobContainerUri, credential, options);
+                ?? new ContainerSessionProvider(blobContainerUri, credential, options);
             _authenticationPolicy = new SessionAuthenticationPolicy(
                 fallbackAuthPolicy: credential.AsPolicy(audienceScope, options),
                 sessionProvider: sessionProvider,

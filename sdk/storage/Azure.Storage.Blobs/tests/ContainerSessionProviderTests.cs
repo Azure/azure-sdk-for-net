@@ -14,16 +14,16 @@ using NUnit.Framework;
 namespace Azure.Storage.Blobs.Tests
 {
     /// <summary>
-    /// Unit tests for <see cref="TokenCredentialSessionProvider"/> exercised directly,
+    /// Unit tests for <see cref="ContainerSessionProvider"/> exercised directly,
     /// independent of <see cref="SessionAuthenticationPolicy"/>.
     /// </summary>
     [TestFixture(true)]
     [TestFixture(false)]
-    public class TokenCredentialSessionProviderTests
+    public class ContainerSessionProviderTests
     {
         private readonly bool _async;
 
-        public TokenCredentialSessionProviderTests(bool isAsync)
+        public ContainerSessionProviderTests(bool isAsync)
         {
             _async = isAsync;
         }
@@ -95,7 +95,7 @@ namespace Azure.Storage.Blobs.Tests
             return response;
         }
 
-        private static (TokenCredentialSessionProvider Provider, MockTransport Transport) CreateProvider(
+        private static (ContainerSessionProvider Provider, MockTransport Transport) CreateProvider(
             Uri serviceUri,
             params MockResponse[] createSessionResponses)
         {
@@ -106,7 +106,7 @@ namespace Azure.Storage.Blobs.Tests
             };
             options.Retry.MaxRetries = 0;
 
-            return (new TokenCredentialSessionProvider(serviceUri, new StaticTokenCredential(), options), transport);
+            return (new ContainerSessionProvider(serviceUri, new StaticTokenCredential(), options), transport);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Azure.Storage.Blobs.Tests
         [Test]
         public void Ctor_NullServiceUri_Throws()
         {
-            Assert.Throws<ArgumentNullException>(() => new TokenCredentialSessionProvider(
+            Assert.Throws<ArgumentNullException>(() => new ContainerSessionProvider(
                 serviceUri: null,
                 credential: new StaticTokenCredential()));
         }
@@ -142,7 +142,7 @@ namespace Azure.Storage.Blobs.Tests
         [Test]
         public void Ctor_NullCredential_Throws()
         {
-            Assert.Throws<ArgumentNullException>(() => new TokenCredentialSessionProvider(
+            Assert.Throws<ArgumentNullException>(() => new ContainerSessionProvider(
                 serviceUri: ServiceUri,
                 credential: null));
         }
@@ -152,7 +152,7 @@ namespace Azure.Storage.Blobs.Tests
         {
             // Both arguments are null; the exception must name serviceUri, locking in
             // that validation follows the declared parameter order.
-            var ex = Assert.Throws<ArgumentNullException>(() => new TokenCredentialSessionProvider(
+            var ex = Assert.Throws<ArgumentNullException>(() => new ContainerSessionProvider(
                 serviceUri: null,
                 credential: null));
             Assert.AreEqual("serviceUri", ex.ParamName);
@@ -161,7 +161,7 @@ namespace Azure.Storage.Blobs.Tests
         [Test]
         public void Ctor_NullOptions_DoesNotThrow()
         {
-            Assert.DoesNotThrow(() => new TokenCredentialSessionProvider(
+            Assert.DoesNotThrow(() => new ContainerSessionProvider(
                 ServiceUri,
                 new StaticTokenCredential()));
         }

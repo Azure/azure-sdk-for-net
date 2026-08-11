@@ -150,12 +150,12 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         /// <summary>
-        /// Creates a <see cref="TokenCredentialSessionProvider"/> whose internal
+        /// Creates a <see cref="ContainerSessionProvider"/> whose internal
         /// session-minting client is backed by a <see cref="MockTransport"/>.
         /// The returned transport observes only CreateSession traffic, so tests can
         /// assert exactly how many sessions were minted.
         /// </summary>
-        private static (TokenCredentialSessionProvider Provider, MockTransport CreateSessionTransport) CreateProvider(
+        private static (ContainerSessionProvider Provider, MockTransport CreateSessionTransport) CreateProvider(
             params MockResponse[] createSessionResponses)
         {
             var transport = new MockTransport(createSessionResponses);
@@ -165,7 +165,7 @@ namespace Azure.Storage.Blobs.Tests
             };
             options.Retry.MaxRetries = 0;
 
-            var provider = new TokenCredentialSessionProvider(
+            var provider = new ContainerSessionProvider(
                 ServiceUri,
                 new StaticTokenCredential(),
                 options);

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -391,7 +391,7 @@ namespace Azure.Storage.Blobs.Specialized
             if (tokenCredential != null)
             {
                 SessionProvider sessionProvider = options.SessionOptions?.SessionProvider
-                    ?? new TokenCredentialSessionProvider(blobUri, tokenCredential, options);
+                    ?? new ContainerSessionProvider(blobUri, tokenCredential, options);
                 authentication = new SessionAuthenticationPolicy(
                     fallbackAuthPolicy: authentication,
                     sessionProvider: sessionProvider,

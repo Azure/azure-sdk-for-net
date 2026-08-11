@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -9906,7 +9906,7 @@ namespace Azure.Storage.Blobs.Test
             // counting policy has to be attached to the provider's options as well.
             BlobClientOptions providerOptions = GetOptions();
             providerOptions.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
-            SessionProvider sharedProvider = new TokenCredentialSessionProvider(
+            SessionProvider sharedProvider = new ContainerSessionProvider(
                 new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
                 TestEnvironment.Credential,
                 providerOptions);
@@ -9992,7 +9992,7 @@ namespace Azure.Storage.Blobs.Test
             // The counting policy is attached purely for testing/asserting purposes.
             BlobClientOptions providerOptions = GetOptions();
             providerOptions.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
-            SessionProvider sharedProvider = new TokenCredentialSessionProvider(
+            SessionProvider sharedProvider = new ContainerSessionProvider(
                 new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
                 TestEnvironment.Credential,
                 providerOptions);
@@ -10059,7 +10059,7 @@ namespace Azure.Storage.Blobs.Test
             // counting policy has to be attached to the provider's options as well.
             BlobClientOptions providerOptions = GetOptions();
             providerOptions.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
-            SessionProvider sharedProvider = new TokenCredentialSessionProvider(
+            SessionProvider sharedProvider = new ContainerSessionProvider(
                 new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
                 TestEnvironment.Credential,
                 providerOptions);

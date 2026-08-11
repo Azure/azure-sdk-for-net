@@ -661,7 +661,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             var countingPolicy = new SessionAuthCountingPolicy();
 
             Blobs.BlobClientOptions providerOptions = GetBlobOptionsForProvider(countingPolicy);
-            var sessionProvider = new Blobs.Models.TokenCredentialSessionProvider(
+            var sessionProvider = new Blobs.Models.ContainerSessionProvider(
                 GetBlobServiceUri(files[0].Uri),
                 TestEnvironment.Credential,
                 providerOptions);
@@ -726,7 +726,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             var countingPolicy = new SessionAuthCountingPolicy();
 
             Blobs.BlobClientOptions providerOptions = GetBlobOptionsForProvider(countingPolicy);
-            var sessionProvider = new Blobs.Models.TokenCredentialSessionProvider(
+            var sessionProvider = new Blobs.Models.ContainerSessionProvider(
                 GetBlobServiceUri(files[0].Uri),
                 TestEnvironment.Credential,
                 providerOptions);
@@ -784,16 +784,16 @@ namespace Azure.Storage.Files.DataLake.Tests
         #region Helper Classes
 
         /// <summary>
-        /// Builds a <see cref="Blobs.Models.TokenCredentialSessionProvider"/> whose internal
+        /// Builds a <see cref="Blobs.Models.ContainerSessionProvider"/> whose internal
         /// session-minting pipeline carries <paramref name="countingPolicy"/>. CreateSession
         /// requests never traverse the DataLake client's pipeline, so a test that asserts on
         /// <see cref="SessionAuthCountingPolicy.CreateSessionCount"/> must supply the provider
         /// explicitly rather than relying on the one the client creates by default.
         /// </summary>
-        private Blobs.Models.TokenCredentialSessionProvider GetCountingSessionProvider(
+        private Blobs.Models.ContainerSessionProvider GetCountingSessionProvider(
             Uri uri,
             HttpPipelinePolicy countingPolicy)
-            => new Blobs.Models.TokenCredentialSessionProvider(
+            => new Blobs.Models.ContainerSessionProvider(
                 GetBlobServiceUri(uri),
                 TestEnvironment.Credential,
                 GetBlobOptionsForProvider(countingPolicy));
@@ -819,7 +819,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         /// <summary>
         /// Builds the <see cref="Blobs.BlobClientOptions"/> used by a standalone
-        /// <see cref="Blobs.Models.TokenCredentialSessionProvider"/>, carrying the same
+        /// <see cref="Blobs.Models.ContainerSessionProvider"/>, carrying the same
         /// recording transport as the DataLake clients so CreateSession calls are both
         /// recorded and counted.
         /// </summary>

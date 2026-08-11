@@ -1656,9 +1656,9 @@ namespace Azure.Storage.Blobs.Models
         public string BlobName { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class TokenCredentialSessionProvider : Azure.Storage.Blobs.Models.SessionProvider
+    public partial class ContainerSessionProvider : Azure.Storage.Blobs.Models.SessionProvider
     {
-        public TokenCredentialSessionProvider(System.Uri serviceUri, Azure.Core.TokenCredential credential, Azure.Storage.Blobs.BlobClientOptions options = null) { }
+        public ContainerSessionProvider(System.Uri serviceUri, Azure.Core.TokenCredential credential, Azure.Storage.Blobs.BlobClientOptions options = null) { }
     }
     public partial class UserDelegationKey : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Blobs.Models.UserDelegationKey>
     {

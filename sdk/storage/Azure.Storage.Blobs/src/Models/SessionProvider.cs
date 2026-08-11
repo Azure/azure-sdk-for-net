@@ -18,7 +18,7 @@ namespace Azure.Storage.Blobs.Models
     /// </para>
     /// <para>
     /// This type has a closed hierarchy: it can be referenced but not derived from outside
-    /// of the SDK. Use <see cref="TokenCredentialSessionProvider"/> for token-credential based sessions.
+    /// of the SDK. Use <see cref="ContainerSessionProvider"/> for token-credential based sessions.
     /// </para>
     /// </summary>
     public abstract class SessionProvider
