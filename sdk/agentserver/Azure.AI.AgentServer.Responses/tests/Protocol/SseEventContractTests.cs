@@ -96,6 +96,24 @@ public class SseEventContractTests : ProtocolTestBase
         Assert.That(doc.RootElement.GetProperty("sequence_number").GetInt64(), Is.EqualTo(0));
     }
 
+    [Test]
+    public async Task SSE_Stream_FunctionCallOutput_IncludesLifecycleStatuses()
+    {
+        Handler.EventFactory = (req, ctx, ct) => FunctionCallOutputLifecycleStream(ctx, ct);
+
+        var response = await PostResponsesAsync(new { model = "test", stream = true });
+
+        var events = await ParseSseAsync(response);
+        var added = events.Single(e => e.EventType == "response.output_item.added");
+        var done = events.Single(e => e.EventType == "response.output_item.done");
+
+        using var addedDocument = JsonDocument.Parse(added.Data);
+        Assert.That(addedDocument.RootElement.GetProperty("item").GetProperty("status").GetString(), Is.EqualTo("in_progress"));
+
+        using var doneDocument = JsonDocument.Parse(done.Data);
+        Assert.That(doneDocument.RootElement.GetProperty("item").GetProperty("status").GetString(), Is.EqualTo("completed"));
+    }
+
     // ── Helper event factories ─────────────────────────────────
 
     private static async IAsyncEnumerable<ResponseStreamEvent> FullLifecycleStream(
@@ -105,6 +123,22 @@ public class SseEventContractTests : ProtocolTestBase
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
         yield return stream.EmitCreated();
         yield return stream.EmitInProgress();
+        yield return stream.EmitCompleted();
+        await Task.CompletedTask;
+    }
+
+    private static async IAsyncEnumerable<ResponseStreamEvent> FunctionCallOutputLifecycleStream(
+        ResponseContext ctx,
+        [EnumeratorCancellation] CancellationToken ct = default)
+    {
+        var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
+        yield return stream.EmitCreated();
+        yield return stream.EmitInProgress();
+        foreach (var evt in stream.OutputItemFunctionCallOutput("call_1", BinaryData.FromString("\"result\"")))
+        {
+            ct.ThrowIfCancellationRequested();
+            yield return evt;
+        }
         yield return stream.EmitCompleted();
         await Task.CompletedTask;
     }

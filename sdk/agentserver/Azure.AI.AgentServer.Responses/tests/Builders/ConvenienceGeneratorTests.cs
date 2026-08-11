@@ -399,6 +399,24 @@ public class ConvenienceGeneratorTests
         Assert.That(fco.Output.ToString(), Is.EqualTo("\"72 degrees\""));
     }
 
+    [Test]
+    public void OutputItemFunctionCallOutput_EmitsLifecycleStatuses()
+    {
+        var stream = CreateStream();
+
+        var events = stream.OutputItemFunctionCallOutput(
+            "call_1",
+            BinaryData.FromString("\"72 degrees\"")).ToList();
+
+        var added = XAssert.IsType<ResponseOutputItemAddedEvent>(events[0]);
+        var addedOutput = XAssert.IsType<OutputItemFunctionToolCallOutput>(added.Item);
+        Assert.That(addedOutput.Status, Is.EqualTo(OutputItemFunctionToolCallOutputStatus.InProgress));
+
+        var done = XAssert.IsType<ResponseOutputItemDoneEvent>(events[1]);
+        var doneOutput = XAssert.IsType<OutputItemFunctionToolCallOutput>(done.Item);
+        Assert.That(doneOutput.Status, Is.EqualTo(OutputItemFunctionToolCallOutputStatus.Completed));
+    }
+
     // ──────────────────────────────────────────────────────────
     //  S-056: Output-Item Convenience – ReasoningItem
     // ──────────────────────────────────────────────────────────

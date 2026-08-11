@@ -599,7 +599,7 @@ public class ResponseEventStream
     {
         var itemId = IdGenerator.NewFunctionCallOutputItemId(_context.ResponseId);
         var builder = AddOutputItem<OutputItemFunctionToolCallOutput>(itemId);
-        var item = new OutputItemFunctionToolCallOutput(
+        var addedItem = new OutputItemFunctionToolCallOutput(
             OutputItemType.FunctionCallOutput,
             createdBy: null,
             agentReference: null,
@@ -608,9 +608,20 @@ public class ResponseEventStream
             id: itemId,
             callId: callId,
             output: output,
-            status: null);
-        yield return builder.EmitAdded(item);
-        yield return builder.EmitDone(item);
+            status: OutputItemFunctionToolCallOutputStatus.InProgress);
+        yield return builder.EmitAdded(addedItem);
+
+        var doneItem = new OutputItemFunctionToolCallOutput(
+            OutputItemType.FunctionCallOutput,
+            createdBy: null,
+            agentReference: null,
+            responseId: null,
+            additionalBinaryDataProperties: null,
+            id: itemId,
+            callId: callId,
+            output: output,
+            status: OutputItemFunctionToolCallOutputStatus.Completed);
+        yield return builder.EmitDone(doneItem);
     }
 
     /// <summary>
