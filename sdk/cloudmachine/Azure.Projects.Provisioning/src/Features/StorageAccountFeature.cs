@@ -9,17 +9,32 @@ using Azure.Provisioning.Storage;
 
 namespace Azure.Projects;
 
+/// <summary>
+/// Represents a provisioning feature that emits an Azure Storage account resource.
+/// </summary>
 public class StorageAccountFeature : AzureProjectFeature
 {
     private readonly StorageSkuName _skuName;
+    /// <summary>
+    /// Gets the name of the storage account.
+    /// </summary>
     public string Name { get; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="StorageAccountFeature"/> class.
+    /// </summary>
+    /// <param name="accountName">The name of the storage account.</param>
+    /// <param name="sku">The SKU to use for the storage account.</param>
     public StorageAccountFeature(string accountName, StorageSkuName sku = StorageSkuName.StandardLrs)
     {
         _skuName = sku;
         Name = accountName;
     }
 
+    /// <summary>
+    /// Emits the provisioning constructs for the storage account into the specified infrastructure.
+    /// </summary>
+    /// <param name="infrastructure">The project infrastructure to emit constructs into.</param>
     protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         var storageAccount = new StorageAccount("storageAccount", StorageAccount.ResourceVersions.V2023_01_01)
@@ -50,16 +65,30 @@ public class StorageAccountFeature : AzureProjectFeature
         );
     }
 
+    /// <inheritdoc/>
     public override string ToString() => $"{this.GetType().Name} {this.Id} {Name}";
 }
 
+/// <summary>
+/// Represents a provisioning feature that emits a Blob service for an Azure Storage account.
+/// </summary>
 public class BlobServiceFeature : AzureProjectFeature
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="BlobServiceFeature"/> class.
+    /// </summary>
     public BlobServiceFeature()
     { }
 
+    /// <summary>
+    /// Gets or sets the storage account feature that this blob service belongs to.
+    /// </summary>
     public StorageAccountFeature? Account { get; set; }
 
+    /// <summary>
+    /// Emits the required features for the Blob service into the specified infrastructure.
+    /// </summary>
+    /// <param name="infrastructure">The project infrastructure to emit features into.</param>
     protected internal override void EmitFeatures(ProjectInfrastructure infrastructure)
     {
         FeatureCollection features = infrastructure.Features;
@@ -72,6 +101,10 @@ public class BlobServiceFeature : AzureProjectFeature
         features.Append(this);
     }
 
+    /// <summary>
+    /// Emits the provisioning constructs for the Blob service into the specified infrastructure.
+    /// </summary>
+    /// <param name="infrastructure">The project infrastructure to emit constructs into.</param>
     protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         if (Account == null)
@@ -87,15 +120,30 @@ public class BlobServiceFeature : AzureProjectFeature
         infrastructure.AddConstruct(Id, blobService);
     }
 
+    /// <inheritdoc/>
     public override string ToString() => $"{this.GetType().Name} {this.Id}";
 }
 
+/// <summary>
+/// Represents a provisioning feature that emits a blob container within an Azure Storage account.
+/// </summary>
 public class BlobContainerFeature : AzureProjectFeature
 {
     private readonly bool _isObservable;
+    /// <summary>
+    /// Gets the name of the blob container.
+    /// </summary>
     public string ContainerName { get; }
+    /// <summary>
+    /// Gets or sets the blob service feature that this container belongs to.
+    /// </summary>
     public BlobServiceFeature? Service { get; set; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="BlobContainerFeature"/> class.
+    /// </summary>
+    /// <param name="containerName">The name of the blob container.</param>
+    /// <param name="isObservable">Whether to emit event-driven infrastructure for observing changes to this container.</param>
     public BlobContainerFeature(string containerName, bool isObservable = true)
         : base($"{typeof(BlobContainerFeature).FullName}_{containerName}")
     {
@@ -103,6 +151,10 @@ public class BlobContainerFeature : AzureProjectFeature
         _isObservable = isObservable;
     }
 
+    /// <summary>
+    /// Emits the required features for the blob container into the specified infrastructure.
+    /// </summary>
+    /// <param name="infrastructure">The project infrastructure to emit features into.</param>
     protected internal override void EmitFeatures(ProjectInfrastructure infrastructure)
     {
         FeatureCollection features = infrastructure.Features;
@@ -138,6 +190,10 @@ public class BlobContainerFeature : AzureProjectFeature
         }
     }
 
+    /// <summary>
+    /// Emits the provisioning constructs for the blob container into the specified infrastructure.
+    /// </summary>
+    /// <param name="infrastructure">The project infrastructure to emit constructs into.</param>
     protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         if (Service == null || Service.Account == null)
@@ -159,5 +215,6 @@ public class BlobContainerFeature : AzureProjectFeature
         );
     }
 
+    /// <inheritdoc/>
     public override string ToString() => $"{this.GetType().Name} {this.Id} {ContainerName}";
 }

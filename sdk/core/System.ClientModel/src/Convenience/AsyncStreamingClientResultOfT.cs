@@ -3,6 +3,7 @@
 
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace System.ClientModel;
 /// Enumerating a disposed result throws <see cref="ObjectDisposedException"/>;
 /// requesting a second enumerator throws <see cref="InvalidOperationException"/>.
 /// </remarks>
+[Experimental("SCME0005")]
 public sealed class AsyncStreamingClientResult<T> : IAsyncEnumerable<T>, IAsyncDisposable
 {
     private readonly PipelineResponse _response;
