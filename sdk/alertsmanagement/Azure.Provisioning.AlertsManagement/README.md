@@ -16,6 +16,10 @@ dotnet add package Azure.Provisioning.AlertsManagement --prerelease
 
 * You must have a [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
 
+### Authenticate the Client
+
+ResourceManager-based provisioning libraries use `DefaultAzureCredential` for authentication. See the [Azure Identity README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md) for more details.
+
 ## Key concepts
 
 This library allows you to specify infrastructure in a declarative style using .NET and then deploy it with azd without maintaining Bicep or ARM templates directly.
