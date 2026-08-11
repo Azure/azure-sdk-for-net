@@ -50,6 +50,13 @@
   durable protocol arbitration and structural termination continue under SDK
   ownership. Best-effort proactive cancellation now has an independent bounded
   send deadline instead of delaying the cancelled caller indefinitely.
+- Fixed WebSocket finalization when an inner close ignores cancellation or
+  abort, while preserving late task observation and aborted close telemetry.
+  A close frame committed before a later handler exception remains the
+  client-visible wire result, while final telemetry separately classifies the
+  handler failure as `1011` / `internal_failure`.
+  Delayed connection tracing now explicitly records the request-parent sibling
+  fallback used when listener startup exceeds its bounded budget.
 
 ### Other Changes
 

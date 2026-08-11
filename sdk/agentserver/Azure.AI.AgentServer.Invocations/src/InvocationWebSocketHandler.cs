@@ -23,7 +23,10 @@ namespace Azure.AI.AgentServer.Invocations;
 /// <c>azure.ai.agentserver.invocations_ws.close_code</c> is the endpoint's final
 /// local transport classification; selected and attempted close codes are
 /// carried in separate fields. Queue acceptance does not guarantee external
-/// logger or exporter completion.</para>
+/// logger or exporter completion. If a handler successfully sends a close
+/// frame and then throws, that frame cannot be replaced: the client keeps the
+/// sent code, while final diagnostics classify the later handler failure as
+/// <c>1011</c>/<c>internal_failure</c>.</para>
 /// <para>The inherited <see cref="HandleAsync"/> (HTTP
 /// <c>POST /invocations</c>) returns <c>404 Not Found</c> by default — a
 /// WS-only handler does not need to override it. Multi-protocol handlers
@@ -34,8 +37,12 @@ namespace Azure.AI.AgentServer.Invocations;
 /// <para>ASP.NET Core auto-propagates the inbound W3C trace context to the
 /// request <see cref="System.Diagnostics.Activity"/>. The library creates an
 /// <c>agentserver.connection</c> child activity for the accepted WebSocket;
-/// spans started by handlers are parented beneath it. Session / invocation /
-/// <c>x-request-id</c> baggage is propagated before the handler runs.</para>
+/// spans started by handlers are normally parented beneath it. If listener
+/// startup exceeds the bounded telemetry budget, handler spans and the late
+/// connection span remain request-parent siblings, and the connection span is
+/// tagged with <c>azure.ai.agentserver.trace.parent_fallback=true</c>. Session /
+/// invocation / <c>x-request-id</c> baggage is propagated before the handler
+/// runs.</para>
 /// </remarks>
 public abstract class InvocationWebSocketHandler : InvocationHandler
 {

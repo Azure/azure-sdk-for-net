@@ -162,6 +162,10 @@ What the SDK does for you when the registered handler derives from `InvocationWe
 - Calls `AcceptWebSocketAsync` before invoking your handler.
 - Sends an RFC 6455 protocol-level Ping frame (opcode `0x9`) every `WS_KEEPALIVE_INTERVAL` seconds when the env var is set — Kestrel does this for us via `WebSocketOptions.KeepAliveInterval`, so the connection stays alive across upstream proxy / load-balancer idle timeouts without any extra application traffic. Disabled by default.
 - Closes the connection cleanly on handler return (close code `1000` — `NormalClosure`) or maps an uncaught handler exception to close code `1011` (`InternalServerError`). Valid handler-initiated close codes are preserved; reserved or out-of-range local statuses are mapped to `1011` for the wire attempt.
+    If a handler sends a close frame and then throws, the sent frame cannot be
+    replaced: the client keeps that wire code, while endpoint telemetry records
+    the later exception as final diagnostic `1011` / `internal_failure` and
+    retains the original code in `attempted_close_code`.
 - Emits an `agentserver.connection` activity and makes one bounded best-effort
     attempt to enqueue a structured close-event log carrying `session_id`, final
     local `close_code`, `selected_close_code`, `attempted_close_code`,
@@ -173,6 +177,10 @@ What the SDK does for you when the registered handler derives from `InvocationWe
     metrics expose bounded degradation. Telemetry backpressure never changes the
     transport result. ASP.NET Core propagates the inbound W3C trace context, so
     the connection activity and handler spans remain in the caller's trace.
+    Handler spans are normally children of `agentserver.connection`; if listener
+    startup exceeds the bounded telemetry budget, both remain request-parent
+    siblings and the late connection activity records
+    `azure.ai.agentserver.trace.parent_fallback=true`.
 - When the registered handler is a plain `InvocationHandler` (not an `InvocationWebSocketHandler`), an upgrade attempt receives HTTP `404 Not Found` — the WS endpoint short-circuits with "endpoint not registered" semantics so a missing handler fails fast instead of accepting and immediately closing.
 
 The session ID honours `FOUNDRY_AGENT_SESSION_ID` (matching the HTTP `POST /invocations` precedence, minus the query-param override which has no ergonomic equivalent on a long-lived WS connection), falling back to a generated UUID. Both transports on the same container therefore report the same session ID.

@@ -76,91 +76,142 @@ internal sealed class TrackingWebSocket : WebSocket
         }
     }
 
-    public override async Task CloseAsync(
+    public override Task CloseAsync(
         WebSocketCloseStatus closeStatus,
         string? statusDescription,
+        CancellationToken cancellationToken) =>
+        ExecuteCloseAsync(
+            _inner.CloseAsync,
+            closeStatus,
+            statusDescription,
+            WebSocketCloseAttemptApi.CloseAsync,
+            cancellationToken);
+
+    public override Task CloseOutputAsync(
+        WebSocketCloseStatus closeStatus,
+        string? statusDescription,
+        CancellationToken cancellationToken) =>
+        ExecuteCloseAsync(
+            _inner.CloseOutputAsync,
+            closeStatus,
+            statusDescription,
+            WebSocketCloseAttemptApi.CloseOutputAsync,
+            cancellationToken);
+
+    private async Task ExecuteCloseAsync(
+        Func<WebSocketCloseStatus, string?, CancellationToken, Task> closeAsync,
+        WebSocketCloseStatus closeStatus,
+        string? statusDescription,
+        WebSocketCloseAttemptApi attemptApi,
         CancellationToken cancellationToken)
     {
         var requestedCloseCode = (int)closeStatus;
         TrySelectCloseCode(requestedCloseCode);
         cancellationToken.ThrowIfCancellationRequested();
         var attemptedCloseCode = WebSocketTerminationResult.MapWireCloseCode(requestedCloseCode);
-        var attempt = TryRecordCloseAttempt(attemptedCloseCode, WebSocketCloseAttemptApi.CloseAsync);
+        var attempt = TryRecordCloseAttempt(attemptedCloseCode, attemptApi);
         CleanupDeadline.Start();
-        using var deadlineCancellation = CleanupDeadline.CreateCancellationTokenSource();
-        using var linkedCancellation = CancellationTokenSource.CreateLinkedTokenSource(
+        var deadlineCancellation = CleanupDeadline.CreateCancellationTokenSource();
+        var linkedCancellation = CancellationTokenSource.CreateLinkedTokenSource(
             cancellationToken,
             deadlineCancellation.Token);
+        Task closeTask;
         try
         {
-            await _inner.CloseAsync(
+            closeTask = closeAsync(
                 (WebSocketCloseStatus)attemptedCloseCode,
                 GetMappedDescription(requestedCloseCode, attemptedCloseCode, statusDescription),
-                linkedCancellation.Token).ConfigureAwait(false);
+                linkedCancellation.Token) ?? throw new InvalidOperationException(
+                    "The inner WebSocket close returned a null task.");
+        }
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+        {
+            linkedCancellation.Dispose();
+            deadlineCancellation.Dispose();
+            MarkCloseAttemptFailed(attempt);
+            throw new OperationCanceledException(cancellationToken);
+        }
+        catch (OperationCanceledException) when (deadlineCancellation.IsCancellationRequested)
+        {
+            linkedCancellation.Dispose();
+            deadlineCancellation.Dispose();
+            MarkCloseAttemptFailed(attempt);
+            Abort();
+            return;
+        }
+        catch
+        {
+            linkedCancellation.Dispose();
+            deadlineCancellation.Dispose();
+            MarkCloseAttemptFailed(attempt);
+            throw;
+        }
+
+        var detached = false;
+        try
+        {
+            await closeTask.WaitAsync(linkedCancellation.Token).ConfigureAwait(false);
             MarkCloseAttemptSucceeded(attempt);
         }
         catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
             MarkCloseAttemptFailed(attempt);
-            // Preserve the caller's cancellation attribution: rethrow with the
-            // original request token so upstream identity checks classify this
-            // as caller cancellation rather than an internal handler failure.
+            detached = !closeTask.IsCompleted;
+            if (detached)
+            {
+                ObserveDetachedClose(closeTask, linkedCancellation, deadlineCancellation);
+            }
             throw new OperationCanceledException(cancellationToken);
         }
         catch (OperationCanceledException) when (deadlineCancellation.IsCancellationRequested)
         {
             MarkCloseAttemptFailed(attempt);
-            // The shared cleanup deadline expired; abort best-effort.
+            detached = !closeTask.IsCompleted;
+            if (detached)
+            {
+                ObserveDetachedClose(closeTask, linkedCancellation, deadlineCancellation);
+            }
             Abort();
         }
         catch
         {
             MarkCloseAttemptFailed(attempt);
             throw;
+        }
+        finally
+        {
+            if (!detached)
+            {
+                linkedCancellation.Dispose();
+                deadlineCancellation.Dispose();
+            }
         }
     }
 
-    public override async Task CloseOutputAsync(
-        WebSocketCloseStatus closeStatus,
-        string? statusDescription,
-        CancellationToken cancellationToken)
+    private static void ObserveDetachedClose(
+        Task closeTask,
+        CancellationTokenSource linkedCancellation,
+        CancellationTokenSource deadlineCancellation) =>
+        _ = ObserveDetachedCloseAsync(closeTask, linkedCancellation, deadlineCancellation);
+
+    private static async Task ObserveDetachedCloseAsync(
+        Task closeTask,
+        CancellationTokenSource linkedCancellation,
+        CancellationTokenSource deadlineCancellation)
     {
-        var requestedCloseCode = (int)closeStatus;
-        TrySelectCloseCode(requestedCloseCode);
-        cancellationToken.ThrowIfCancellationRequested();
-        var attemptedCloseCode = WebSocketTerminationResult.MapWireCloseCode(requestedCloseCode);
-        var attempt = TryRecordCloseAttempt(attemptedCloseCode, WebSocketCloseAttemptApi.CloseOutputAsync);
-        CleanupDeadline.Start();
-        using var deadlineCancellation = CleanupDeadline.CreateCancellationTokenSource();
-        using var linkedCancellation = CancellationTokenSource.CreateLinkedTokenSource(
-            cancellationToken,
-            deadlineCancellation.Token);
         try
         {
-            await _inner.CloseOutputAsync(
-                (WebSocketCloseStatus)attemptedCloseCode,
-                GetMappedDescription(requestedCloseCode, attemptedCloseCode, statusDescription),
-                linkedCancellation.Token).ConfigureAwait(false);
-            MarkCloseAttemptSucceeded(attempt);
+            await closeTask.ConfigureAwait(false);
         }
-        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+#pragma warning disable CA1031 // Detached transport completion is observed after endpoint finalization.
+        catch (Exception)
+#pragma warning restore CA1031
         {
-            MarkCloseAttemptFailed(attempt);
-            // Preserve the caller's cancellation attribution: rethrow with the
-            // original request token so upstream identity checks classify this
-            // as caller cancellation rather than an internal handler failure.
-            throw new OperationCanceledException(cancellationToken);
         }
-        catch (OperationCanceledException) when (deadlineCancellation.IsCancellationRequested)
+        finally
         {
-            MarkCloseAttemptFailed(attempt);
-            // The shared cleanup deadline expired; abort best-effort.
-            Abort();
-        }
-        catch
-        {
-            MarkCloseAttemptFailed(attempt);
-            throw;
+            linkedCancellation.Dispose();
+            deadlineCancellation.Dispose();
         }
     }
 

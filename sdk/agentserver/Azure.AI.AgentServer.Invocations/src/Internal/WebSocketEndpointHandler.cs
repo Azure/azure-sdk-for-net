@@ -19,7 +19,10 @@ namespace Azure.AI.AgentServer.Invocations.Internal;
 /// <remarks>
 /// ASP.NET Core propagates the inbound W3C trace context to the request
 /// <see cref="Activity"/>. The endpoint creates an <c>agentserver.connection</c>
-/// child activity spanning the accepted socket through bounded close, and also
+/// child activity spanning the accepted socket through bounded close. If
+/// listener startup exceeds the bounded telemetry budget, handler spans and the
+/// late connection span remain request-parent siblings and the connection span
+/// is tagged with <c>azure.ai.agentserver.trace.parent_fallback=true</c>. It also
 /// emits a structured close-event log line carrying
 /// <c>azure.ai.agentserver.invocations_ws.session_id</c>,
 /// final <c>azure.ai.agentserver.invocations_ws.close_code</c>, separate selected
@@ -36,17 +39,38 @@ internal sealed class WebSocketEndpointHandler
     private readonly TelemetryCallbackDispatcher _telemetryDispatcher;
     private readonly VoiceResourceGovernor _voiceResourceGovernor;
     private readonly ILogger<WebSocketEndpointHandler> _logger;
+    private readonly TimeSpan _webSocketCleanupBudget;
 
     public WebSocketEndpointHandler(
         InvocationsActivitySource activitySource,
         TelemetryCallbackDispatcher telemetryDispatcher,
         VoiceResourceGovernor voiceResourceGovernor,
         ILogger<WebSocketEndpointHandler> logger)
+        : this(
+            activitySource,
+            telemetryDispatcher,
+            voiceResourceGovernor,
+            logger,
+            TimeSpan.FromSeconds(InvocationsWebSocketConstants.CleanupTimeoutSeconds))
+    {
+    }
+
+    internal WebSocketEndpointHandler(
+        InvocationsActivitySource activitySource,
+        TelemetryCallbackDispatcher telemetryDispatcher,
+        VoiceResourceGovernor voiceResourceGovernor,
+        ILogger<WebSocketEndpointHandler> logger,
+        TimeSpan webSocketCleanupBudget)
     {
         _activitySource = activitySource;
         _telemetryDispatcher = telemetryDispatcher;
         _voiceResourceGovernor = voiceResourceGovernor;
         _logger = logger;
+        if (webSocketCleanupBudget <= TimeSpan.Zero)
+        {
+            throw new ArgumentOutOfRangeException(nameof(webSocketCleanupBudget));
+        }
+        _webSocketCleanupBudget = webSocketCleanupBudget;
     }
 
     /// <summary>
@@ -124,7 +148,7 @@ internal sealed class WebSocketEndpointHandler
                 var acceptedWebSocket = await httpContext.WebSockets.AcceptWebSocketAsync();
                 webSocket = new TrackingWebSocket(
                     acceptedWebSocket,
-                    TimeSpan.FromSeconds(InvocationsWebSocketConstants.CleanupTimeoutSeconds),
+                    _webSocketCleanupBudget,
                     _telemetryDispatcher);
                 var trackingWebSocket = (TrackingWebSocket)webSocket;
                 var activityStart = InvocationsTelemetry.StartActivityAsync(
@@ -218,15 +242,20 @@ internal sealed class WebSocketEndpointHandler
         }
         finally
         {
-            var durationMs = GetElapsedMilliseconds(startTimestamp);
             var termination = await FinalizeWebSocketAsync(
                 webSocket,
                 sessionId,
                 closeCode,
                 abnormalClosure,
-                durationMs,
+                durationMs: 0,
                 errorCode,
-                activityStartTimeUtc.AddMilliseconds(durationMs));
+                activityStartTimeUtc);
+            var durationMs = GetElapsedMilliseconds(startTimestamp);
+            termination = termination with
+            {
+                DurationMs = durationMs,
+                EndTimeUtc = activityStartTimeUtc.AddMilliseconds(durationMs),
+            };
             if (connectionActivity is not null)
             {
                 ApplyConnectionActivityTerminal(connectionActivity, termination);
@@ -260,6 +289,8 @@ internal sealed class WebSocketEndpointHandler
             return;
         }
 
+        activity.SetTag("azure.ai.agentserver.trace.parent_fallback", true);
+        activity.SetTag("azure.ai.agentserver.trace.parent_fallback_reason", "telemetry_start_timeout");
         var terminal = await activityTerminal.ConfigureAwait(false);
         ApplyConnectionActivityTerminal(activity, terminal);
         await InvocationsTelemetry.StopActivityAsync(
