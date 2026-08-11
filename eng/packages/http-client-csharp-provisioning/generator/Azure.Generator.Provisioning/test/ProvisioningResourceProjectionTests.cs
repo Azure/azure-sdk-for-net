@@ -418,11 +418,11 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
-        public void GeneratedBasePropertySettableDifferenceDoesNotRequireNewProperty()
+        public void GeneratedBasePropertyUsageDifferencesDoNotRequireNewProperty()
         {
             var baseModel = CreateModel(
                 "WriteableSubResourceData",
-                [CreateProperty("Id")]);
+                [CreateProperty("Id", isRequired: true)]);
             var derivedModel = CreateModel(
                 "SubResourceDataWithStatus",
                 [CreateProperty("Status")],

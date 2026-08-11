@@ -223,17 +223,10 @@ namespace Azure.Generator.Provisioning.Providers
                 return true;
             }
 
-            // Provisioning properties carry behavior that is not represented by their C# signature.
-            // A same-name, same-type property can still differ in TypeSpec-defined behavior such as
-            // Bicep path, output status, requiredness, default value, or literal formatting.
-            // IsSettable is deliberately excluded: it is inferred from how a model is used by
-            // resources, so the same TypeSpec property can be settable on one generated model and
-            // read-only on another without representing a different property contract.
-            return property.BicepPath.SequenceEqual(baseProvisioningProperty.BicepPath, StringComparer.Ordinal)
-                && property.IsOutput == baseProvisioningProperty.IsOutput
-                && property.IsRequired == baseProvisioningProperty.IsRequired
-                && string.Equals(property.DefaultValue, baseProvisioningProperty.DefaultValue, StringComparison.Ordinal)
-                && string.Equals(property.Format, baseProvisioningProperty.Format, StringComparison.Ordinal);
+            // The same InputModelProperty instance represents the same TypeSpec declaration, including
+            // all metadata that is not visible in the C# signature. Different instances represent a
+            // redeclaration and must remain distinct even when their resolved name and type match.
+            return ReferenceEquals(property.InputProperty, baseProvisioningProperty.InputProperty);
         }
 
         protected override ConstructorProvider[] BuildConstructors()
