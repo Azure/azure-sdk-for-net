@@ -13,7 +13,7 @@
 - Fixed the `StopSession` and `StopSessionAsync` calls.
 
 ### Other Changes
-- Updated the `OpenAI` package dependency to `2.11.0`.
+- Updated the `OpenAI` package dependency to `2.12.0`.
 
 ### Sample Updates
 - Added sample demonstrating disabling and enabling Hosted Agent.

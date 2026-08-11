@@ -46,7 +46,7 @@ public partial class ProjectResponsesClientOptions : ResponsesClientOptions
     internal AuthenticationTokenProvider TokenProvider { get; set; }
 
     /// <summary>
-    /// Implicitly converts a <see cref="ProjectOpenAIClientOptions"/> instance to a new
+    /// Convert a <see cref="ProjectOpenAIClientOptions"/> instance to a new
     /// <see cref="ProjectResponsesClientOptions"/> instance.
     /// </summary>
     /// <remarks>
@@ -57,8 +57,7 @@ public partial class ProjectResponsesClientOptions : ResponsesClientOptions
     /// destination instance is only consulted by <see cref="ResponsesClient"/> for its own
     /// properties such as <see cref="ResponsesClientOptions.Endpoint"/>.
     /// </remarks>
-    /// <param name="source"> The source options instance to convert. </param>
-    public static implicit operator ProjectResponsesClientOptions(ProjectOpenAIClientOptions source)
+    public static ProjectResponsesClientOptions ToProjectResponsesClientOptions(ProjectOpenAIClientOptions source)
     {
         if (source is null)
         {

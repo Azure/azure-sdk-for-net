@@ -49,7 +49,7 @@ This release migrates the library from emitting its own copies of the OpenAI Res
   | `ResponsesMemorySearchOptions` | `MemorySearchOptions` |
   | `ResponsesMemorySearchPreviewTool` | `MemorySearchPreviewTool` |
   | `ResponsesMicrosoftFabricPreviewTool` | `MicrosoftFabricPreviewTool` |
-  | `ResponsesOpenApiAnonymousAuthDetails` | `OpenAPIAnonymousAuthenticationDetails` |
+  | `ResponsesOpenApiAnonymousAuthDetails` | `OpenApiAnonymousAuthenticationDetails` |
   | `ResponsesOpenApiAuthDetails` | `OpenApiAuthenticationDetails` |
   | `ResponsesOpenApiFunctionDefinition` | `OpenApiFunctionDefinition` |
   | `ResponsesOpenApiFunctionDefinitionFunction` | `OpenApiFunctionDefinitionFunction` |
@@ -57,13 +57,20 @@ This release migrates the library from emitting its own copies of the OpenAI Res
   | `ResponsesOpenApiManagedSecurityScheme` | `OpenApiManagedSecurityScheme` |
   | `ResponsesOpenApiProjectConnectionAuthDetails` | `OpenApiProjectConnectionAuthenticationDetails` |
   | `ResponsesOpenApiProjectConnectionSecurityScheme` | `OpenApiProjectConnectionSecurityScheme` |
-  | `ResponsesOpenApiTool` | `OpenAPITool` |
+  | `ResponsesOpenApiTool` | `OpenApiTool` |
   | `ResponsesSharepointGroundingToolParameters` | `SharePointGroundingToolOptions` |
-  | `ResponsesSharepointPreviewTool` | `SharepointPreviewTool` |
+  | `ResponsesSharepointPreviewTool` | `SharePointPreviewTool` |
   | `ResponsesStructuredOutputDefinition` | `StructuredOutputDefinition` |
   | `ResponsesToolProjectConnection` | `ToolProjectConnection` |
   | `ResponsesWebSearchConfiguration` | `WebSearchConfiguration` |
   | `ResponsesWorkIQPreviewTool` | `WorkIQPreviewTool` |
+- **Other renames** were done:
+
+  | Old (2.x) | New (3.0.0-beta.1) |
+  | --- | --- |
+  | `OpenAPIAnonymousAuthenticationDetails` | `OpenApiAnonymousAuthenticationDetails` |
+  | `SharepointGroundingToolCall` | `SharePointGroundingToolCall` |
+  | `SharepointGroundingToolCallOutput` | `SharePointGroundingToolCallOutput` |
 
   The built-in tool and item types that OpenAI already models (for example computer-use, web-search, function, and MCP tools) are no longer emitted by this library; use the corresponding `OpenAI.Responses` types instead.
 - **Members were renamed alongside their declaring types:**

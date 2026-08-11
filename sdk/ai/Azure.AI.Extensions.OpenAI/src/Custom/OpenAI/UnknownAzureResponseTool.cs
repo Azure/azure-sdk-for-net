@@ -41,8 +41,8 @@ namespace Azure.AI.Extensions.OpenAI
             [ResponseToolKind.FabricIQPreview] = (typeof(FabricIQPreviewTool), FabricIQPreviewTool.DeserializeFabricIQPreviewTool),
             [ResponseToolKind.MemorySearchPreview] = (typeof(MemorySearchPreviewTool), MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool),
             [ResponseToolKind.FabricDataAgentPreview] = (typeof(MicrosoftFabricPreviewTool), MicrosoftFabricPreviewTool.DeserializeMicrosoftFabricPreviewTool),
-            [ResponseToolKind.OpenAPI] = (typeof(OpenAPITool), OpenAPITool.DeserializeOpenAPITool),
-            [ResponseToolKind.SharePointGroundingPreview] = (typeof(SharepointPreviewTool), SharepointPreviewTool.DeserializeSharepointPreviewTool),
+            [ResponseToolKind.OpenAPI] = (typeof(OpenApiTool), OpenApiTool.DeserializeOpenApiTool),
+            [ResponseToolKind.SharePointGroundingPreview] = (typeof(SharePointPreviewTool), SharePointPreviewTool.DeserializeSharePointPreviewTool),
             [ResponseToolKind.WorkIQPreview] = (typeof(WorkIQPreviewTool), WorkIQPreviewTool.DeserializeWorkIQPreviewTool),
         };
 #pragma warning restore AAIP001

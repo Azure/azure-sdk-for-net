@@ -1,7 +1,7 @@
 {
   "AssetsFileName": "assets.json",
   "AssetsRepo": "Azure/azure-sdk-assets",
-  "Tag": "net/ai/Azure.AI.Extensions.OpenAI_b0501bc10d",
+  "Tag": "net/ai/Azure.AI.Extensions.OpenAI_718202e161",
   "AssetsRepoPrefixPath": "net",
   "TagPrefix": "net/ai/Azure.AI.Extensions.OpenAI"
 }

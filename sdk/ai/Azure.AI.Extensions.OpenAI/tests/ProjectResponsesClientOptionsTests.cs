@@ -31,15 +31,15 @@ public class ProjectResponsesClientOptionsTests
     }
 
     [Test]
-    public void ImplicitOperator_NullSource_ReturnsNull()
+    public void Conversion_NullSource_ReturnsNull()
     {
         ProjectOpenAIClientOptions source = null;
-        ProjectResponsesClientOptions destination = source;
+        ProjectResponsesClientOptions destination = ProjectResponsesClientOptions.ToProjectResponsesClientOptions(source);
         Assert.That(destination, Is.Null);
     }
 
     [Test]
-    public void ImplicitOperator_CopiesAllExpectedProperties()
+    public void Conversion_CopiesAllExpectedProperties()
     {
         Uri endpoint = new("https://example.foundry.azure.com/api/projects/p/openai/v1");
         ClientLoggingOptions loggingOptions = new();
@@ -59,7 +59,7 @@ public class ProjectResponsesClientOptionsTests
             AgentName = "MyAgent",
         };
 
-        ProjectResponsesClientOptions destination = source;
+        ProjectResponsesClientOptions destination = ProjectResponsesClientOptions.ToProjectResponsesClientOptions(source);
 
         Assert.That(destination, Is.Not.Null);
         Assert.That(destination, Is.Not.SameAs(source));
@@ -78,13 +78,13 @@ public class ProjectResponsesClientOptionsTests
     }
 
     [Test]
-    public void ImplicitOperator_ProducesUnfrozenDestinationEvenIfSourceIsFrozen()
+    public void Conversion_ProducesUnfrozenDestinationEvenIfSourceIsFrozen()
     {
         ProjectOpenAIClientOptions source = new();
         source.Freeze();
         Assert.That(source.IsReadOnly, Is.True);
 
-        ProjectResponsesClientOptions destination = source;
+        ProjectResponsesClientOptions destination = ProjectResponsesClientOptions.ToProjectResponsesClientOptions(source);
 
         Assert.That(destination.IsReadOnly, Is.False);
         Assert.DoesNotThrow(() => destination.ApiVersion = "v2");

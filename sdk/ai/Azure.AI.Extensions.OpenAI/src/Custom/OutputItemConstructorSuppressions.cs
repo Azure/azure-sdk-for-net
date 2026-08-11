@@ -282,10 +282,10 @@ public partial class OpenApiToolCallOutput
     }
 }
 
-[CodeGenSuppress(nameof(SharepointGroundingToolCall), typeof(ResponseItemKind), typeof(AgentReference), typeof(string), typeof(string), typeof(string), typeof(ToolCallStatus), typeof(IDictionary<string, BinaryData>))]
-public partial class SharepointGroundingToolCall
+[CodeGenSuppress(nameof(SharePointGroundingToolCall), typeof(ResponseItemKind), typeof(AgentReference), typeof(string), typeof(string), typeof(string), typeof(ToolCallStatus), typeof(IDictionary<string, BinaryData>))]
+public partial class SharePointGroundingToolCall
 {
-    internal SharepointGroundingToolCall(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
+    internal SharePointGroundingToolCall(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
         CallId = callId;
         Arguments = arguments;
@@ -294,10 +294,10 @@ public partial class SharepointGroundingToolCall
     }
 }
 
-[CodeGenSuppress(nameof(SharepointGroundingToolCallOutput), typeof(ResponseItemKind), typeof(AgentReference), typeof(string), typeof(string), typeof(BinaryData), typeof(ToolCallStatus), typeof(IDictionary<string, BinaryData>))]
-public partial class SharepointGroundingToolCallOutput
+[CodeGenSuppress(nameof(SharePointGroundingToolCallOutput), typeof(ResponseItemKind), typeof(AgentReference), typeof(string), typeof(string), typeof(BinaryData), typeof(ToolCallStatus), typeof(IDictionary<string, BinaryData>))]
+public partial class SharePointGroundingToolCallOutput
 {
-    internal SharepointGroundingToolCallOutput(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
+    internal SharePointGroundingToolCallOutput(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
         CallId = callId;
         Output = output;
