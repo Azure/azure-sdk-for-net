@@ -459,18 +459,7 @@
       "resourceModelId": "Microsoft.DataBoxEdge.Job",
       "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/operationsStatus/{name}",
       "resourceType": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/operationsStatus",
-      "methods": [
-        {
-          "methodId": "Microsoft.DataBoxEdge.OperationsStatus.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/operationsStatus/{name}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/operationsStatus/{name}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
+      "methods": [],
       "scope": {
         "kind": "ResourceGroup",
         "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",

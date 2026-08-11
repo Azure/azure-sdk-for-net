@@ -18,7 +18,7 @@ Resource ID comparisons normalize path variable names, so `{name}` and `{labName
 | Resource type / hierarchy | 0 matching normalized patterns differ |
 | Resource model | 0 matching normalized patterns differ |
 | CRUD operations | 0 matching normalized patterns differ |
-| List/action operations | 1 matching normalized patterns differ |
+| List/action operations | 0 matching normalized patterns differ |
 | Non-resource methods | 0 legacy-only; 0 resolve-only |
 
 
@@ -49,8 +49,7 @@ None.
 
 ### List/action operation differences
 
-- `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.Chaos/workspaces/{}/scenarios/{}/configurations/{}`
-  - resolveArmResources-only: `Microsoft.Chaos.ScenarioConfigurations.cancel (Action) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.Chaos/workspaces/{}/scenarios/{}/configurations/{}/cancel [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.Chaos/workspaces/{}/scenarios/{}/configurations/{}, Microsoft.Resources/resourceGroups]`
+None.
 
 
 ### Legacy-only non-resource methods

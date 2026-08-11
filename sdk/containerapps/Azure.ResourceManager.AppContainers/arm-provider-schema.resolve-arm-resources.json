@@ -924,16 +924,6 @@
             "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistory/{labelName}",
             "scopeResourceType": "Microsoft.Resources/resourceGroups"
           }
-        },
-        {
-          "methodId": "Microsoft.App.ContainerAppsLabelHistory.listLabelHistory",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistory",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
         }
       ],
       "scope": {

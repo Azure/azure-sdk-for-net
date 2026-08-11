@@ -1315,16 +1315,6 @@
           }
         },
         {
-          "methodId": "Microsoft.Cdn.RuleSets.createV1",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
           "methodId": "Microsoft.Cdn.RuleSets.get",
           "kind": "Read",
           "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}",

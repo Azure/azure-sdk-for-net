@@ -191,18 +191,7 @@
       "resourceModelId": "Microsoft.Devices.ProvisioningServiceDescription",
       "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/operationresults/{operationId}",
       "resourceType": "Microsoft.Devices/provisioningServices/operationresults",
-      "methods": [
-        {
-          "methodId": "Microsoft.Devices.ProvisioningServiceDescriptionOperations.getOperationResult",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/operationresults/{operationId}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/operationresults/{operationId}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
+      "methods": [],
       "scope": {
         "kind": "ResourceGroup",
         "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
@@ -314,15 +303,6 @@
     }
   ],
   "nonResourceMethods": [
-    {
-      "methodId": "Azure.ResourceManager.Legacy.Operations.list",
-      "operationPath": "/providers/Microsoft.Devices/operations",
-      "scope": {
-        "kind": "Tenant",
-        "scopeIdPattern": "",
-        "scopeResourceType": "Microsoft.Resources/tenants"
-      }
-    },
     {
       "methodId": "Microsoft.Devices.IotDpsResourceOperationGroup.checkProvisioningServiceNameAvailability",
       "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkProvisioningServiceNameAvailability",

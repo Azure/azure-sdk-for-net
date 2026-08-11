@@ -814,16 +814,6 @@
           }
         },
         {
-          "methodId": "Microsoft.Chaos.ScenarioConfigurations.cancel",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/workspaces/{workspaceName}/scenarios/{scenarioName}/configurations/{scenarioConfigurationName}/cancel",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/workspaces/{workspaceName}/scenarios/{scenarioName}/configurations/{scenarioConfigurationName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
           "methodId": "Microsoft.Chaos.ScenarioConfigurations.execute",
           "kind": "Action",
           "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/workspaces/{workspaceName}/scenarios/{scenarioName}/configurations/{scenarioConfigurationName}/execute",

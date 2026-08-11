@@ -738,15 +738,6 @@
       }
     },
     {
-      "methodId": "Microsoft.HDInsight.LocationsOperationGroup.getAzureAsyncOperationStatus",
-      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/azureasyncoperations/{operationId}",
-      "scope": {
-        "kind": "Subscription",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}",
-        "scopeResourceType": "Microsoft.Resources/subscriptions"
-      }
-    },
-    {
       "methodId": "Microsoft.HDInsight.LocationsOperationGroup.checkNameAvailability",
       "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/checkNameAvailability",
       "scope": {

@@ -111,16 +111,6 @@
             "scopeIdPattern": "/providers/Microsoft.Subscription/policies/default",
             "scopeResourceType": "Microsoft.Resources/tenants"
           }
-        },
-        {
-          "methodId": "Microsoft.Subscription.GetTenantPolicyResponses.listPolicyForTenant",
-          "kind": "List",
-          "operationPath": "/providers/Microsoft.Subscription/policies",
-          "scope": {
-            "kind": "Tenant",
-            "scopeIdPattern": "",
-            "scopeResourceType": "Microsoft.Resources/tenants"
-          }
         }
       ],
       "scope": {
@@ -168,16 +158,6 @@
           "scope": {
             "kind": "Subscription",
             "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/changeTenantRequest/default",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        },
-        {
-          "methodId": "Microsoft.Subscription.TargetDirectoryResults.listTargetDirectory",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/changeTenantRequest",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}",
             "scopeResourceType": "Microsoft.Resources/subscriptions"
           }
         }
@@ -245,15 +225,6 @@
     {
       "methodId": "Microsoft.Subscription.SubscriptionOperationGroup.acceptOwnershipStatus",
       "operationPath": "/providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnershipStatus",
-      "scope": {
-        "kind": "Tenant",
-        "scopeIdPattern": "",
-        "scopeResourceType": "Microsoft.Resources/tenants"
-      }
-    },
-    {
-      "methodId": "Microsoft.Subscription.SubscriptionOperationOperationGroup.get",
-      "operationPath": "/providers/Microsoft.Subscription/subscriptionOperations/{operationId}",
       "scope": {
         "kind": "Tenant",
         "scopeIdPattern": "",

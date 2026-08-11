@@ -452,16 +452,6 @@
           }
         },
         {
-          "methodId": "Microsoft.DBforMySQL.LongRunningBackup.delete",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/backupsV2/{backupName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/backupsV2/{backupName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
           "methodId": "Microsoft.DBforMySQL.LongRunningBackups.list",
           "kind": "List",
           "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/backupsV2",
@@ -606,53 +596,6 @@
         "2024-12-01-preview",
         "2024-12-30"
       ],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.DBforMySQL.FabricMirroringSetting",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/fabricMirroringSettings/{fabricMirroringSettingsName}",
-      "resourceType": "Microsoft.DBforMySQL/flexibleServers/fabricMirroringSettings",
-      "methods": [
-        {
-          "methodId": "Microsoft.DBforMySQL.FabricMirroringSettings.createOrUpdate",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/fabricMirroringSettings/{fabricMirroringSettingsName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/fabricMirroringSettings/{fabricMirroringSettingsName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.DBforMySQL.FabricMirroringSettings.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/fabricMirroringSettings/{fabricMirroringSettingsName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/fabricMirroringSettings/{fabricMirroringSettingsName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.DBforMySQL.FabricMirroringSettings.listByServer",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/fabricMirroringSettings",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      },
-      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}",
-      "resourceName": "FabricMirroringSetting",
-      "nameConstraints": {},
-      "apiVersions": [],
       "rbacRoles": []
     },
     {
@@ -828,57 +771,9 @@
         "2024-12-30"
       ],
       "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.DBforMySQL.PrivateLinkResource",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/privateLinkResources/{groupName}",
-      "resourceType": "Microsoft.DBforMySQL/flexibleServers/privateLinkResources",
-      "methods": [
-        {
-          "methodId": "Microsoft.DBforMySQL.PrivateLinkResources.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/privateLinkResources/{groupName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/privateLinkResources/{groupName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.DBforMySQL.PrivateLinkResources.listByServer",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/privateLinkResources",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      },
-      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}",
-      "resourceName": "PrivateLinkResource",
-      "nameConstraints": {
-        "pattern": "^[a-z0-9][-a-z0-9]*(?<!-)$"
-      },
-      "apiVersions": [],
-      "rbacRoles": []
     }
   ],
   "nonResourceMethods": [
-    {
-      "methodId": "Microsoft.DBforMySQL.Operations.list",
-      "operationPath": "/providers/Microsoft.DBforMySQL/operations",
-      "scope": {
-        "kind": "Tenant",
-        "scopeIdPattern": "",
-        "scopeResourceType": "Microsoft.Resources/tenants"
-      }
-    },
     {
       "methodId": "Microsoft.DBforMySQL.LocationBasedCapabilities.list",
       "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/capabilities",
@@ -909,24 +804,6 @@
     {
       "methodId": "Microsoft.DBforMySQL.CheckNameAvailabilityWithoutLocation.execute",
       "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/checkNameAvailability",
-      "scope": {
-        "kind": "Subscription",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}",
-        "scopeResourceType": "Microsoft.Resources/subscriptions"
-      }
-    },
-    {
-      "methodId": "Microsoft.DBforMySQL.OperationResults.get",
-      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/operationResults/{operationId}",
-      "scope": {
-        "kind": "Subscription",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}",
-        "scopeResourceType": "Microsoft.Resources/subscriptions"
-      }
-    },
-    {
-      "methodId": "Microsoft.DBforMySQL.OperationProgress.get",
-      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/operationProgress/{operationId}",
       "scope": {
         "kind": "Subscription",
         "scopeIdPattern": "/subscriptions/{subscriptionId}",

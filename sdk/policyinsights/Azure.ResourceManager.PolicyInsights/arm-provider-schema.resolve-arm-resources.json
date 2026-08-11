@@ -128,62 +128,7 @@
       "resourceModelId": "PolicyInsightsApi.Remediation",
       "resourceIdPattern": "/providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}",
       "resourceType": "Microsoft.PolicyInsights/remediations",
-      "methods": [
-        {
-          "methodId": "PolicyInsightsApi.Remediations.createOrUpdateAtManagementGroup",
-          "kind": "Create",
-          "operationPath": "/providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}"
-          }
-        },
-        {
-          "methodId": "PolicyInsightsApi.Remediations.getAtManagementGroup",
-          "kind": "Read",
-          "operationPath": "/providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}"
-          }
-        },
-        {
-          "methodId": "PolicyInsightsApi.Remediations.deleteAtManagementGroup",
-          "kind": "Delete",
-          "operationPath": "/providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}"
-          }
-        },
-        {
-          "methodId": "PolicyInsightsApi.Remediations.listForManagementGroup",
-          "kind": "List",
-          "operationPath": "/providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}"
-          }
-        },
-        {
-          "methodId": "PolicyInsightsApi.RemediationsOperationGroup.cancelAtManagementGroup",
-          "kind": "Action",
-          "operationPath": "/providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/cancel",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}"
-          }
-        },
-        {
-          "methodId": "PolicyInsightsApi.RemediationsOperationGroup.listDeploymentsAtManagementGroup",
-          "kind": "Action",
-          "operationPath": "/providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/listDeployments",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}"
-          }
-        }
-      ],
+      "methods": [],
       "scope": {
         "kind": "Extension",
         "scopeIdPattern": "/providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}"
@@ -235,48 +180,7 @@
       "resourceModelId": "PolicyInsightsApi.Attestation",
       "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}",
       "resourceType": "Microsoft.PolicyInsights/attestations",
-      "methods": [
-        {
-          "methodId": "PolicyInsightsApi.Attestations.createOrUpdateAtSubscription",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        },
-        {
-          "methodId": "PolicyInsightsApi.Attestations.getAtSubscription",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        },
-        {
-          "methodId": "PolicyInsightsApi.Attestations.deleteAtSubscription",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        },
-        {
-          "methodId": "PolicyInsightsApi.Attestations.listForSubscription",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/attestations",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        }
-      ],
+      "methods": [],
       "scope": {
         "kind": "Subscription",
         "scopeIdPattern": "/subscriptions/{subscriptionId}",
@@ -291,68 +195,7 @@
       "resourceModelId": "PolicyInsightsApi.Remediation",
       "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}",
       "resourceType": "Microsoft.PolicyInsights/remediations",
-      "methods": [
-        {
-          "methodId": "PolicyInsightsApi.Remediations.createOrUpdateAtSubscription",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        },
-        {
-          "methodId": "PolicyInsightsApi.Remediations.getAtSubscription",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        },
-        {
-          "methodId": "PolicyInsightsApi.Remediations.deleteAtSubscription",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        },
-        {
-          "methodId": "PolicyInsightsApi.Remediations.listForSubscription",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        },
-        {
-          "methodId": "PolicyInsightsApi.Remediations.cancelAtSubscription",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/cancel",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        },
-        {
-          "methodId": "PolicyInsightsApi.Remediations.listDeploymentsAtSubscription",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/listDeployments",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        }
-      ],
+      "methods": [],
       "scope": {
         "kind": "Subscription",
         "scopeIdPattern": "/subscriptions/{subscriptionId}",
@@ -367,48 +210,7 @@
       "resourceModelId": "PolicyInsightsApi.Attestation",
       "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations/{attestationName}",
       "resourceType": "Microsoft.PolicyInsights/attestations",
-      "methods": [
-        {
-          "methodId": "PolicyInsightsApi.Attestations.createOrUpdateAtResourceGroup",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations/{attestationName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations/{attestationName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "PolicyInsightsApi.Attestations.getAtResourceGroup",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations/{attestationName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations/{attestationName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "PolicyInsightsApi.Attestations.deleteAtResourceGroup",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations/{attestationName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations/{attestationName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "PolicyInsightsApi.Attestations.listForResourceGroup",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
+      "methods": [],
       "scope": {
         "kind": "ResourceGroup",
         "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
@@ -423,68 +225,7 @@
       "resourceModelId": "PolicyInsightsApi.Remediation",
       "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations/{remediationName}",
       "resourceType": "Microsoft.PolicyInsights/remediations",
-      "methods": [
-        {
-          "methodId": "PolicyInsightsApi.Remediations.createOrUpdateAtResourceGroup",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations/{remediationName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations/{remediationName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "PolicyInsightsApi.Remediations.getAtResourceGroup",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations/{remediationName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations/{remediationName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "PolicyInsightsApi.Remediations.deleteAtResourceGroup",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations/{remediationName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations/{remediationName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "PolicyInsightsApi.Remediations.listForResourceGroup",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "PolicyInsightsApi.Remediations.cancelAtResourceGroup",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/cancel",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations/{remediationName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "PolicyInsightsApi.Remediations.listDeploymentsAtResourceGroup",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/listDeployments",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations/{remediationName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
+      "methods": [],
       "scope": {
         "kind": "ResourceGroup",
         "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
@@ -497,15 +238,6 @@
     }
   ],
   "nonResourceMethods": [
-    {
-      "methodId": "PolicyInsightsApi.Operations.list",
-      "operationPath": "/providers/Microsoft.PolicyInsights/operations",
-      "scope": {
-        "kind": "Tenant",
-        "scopeIdPattern": "",
-        "scopeResourceType": "Microsoft.Resources/tenants"
-      }
-    },
     {
       "methodId": "PolicyInsightsApi.PolicyEventsOperationGroup.listQueryResultsForManagementGroup",
       "operationPath": "/providers/{managementGroupsNamespace}/managementGroups/{managementGroupName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults",

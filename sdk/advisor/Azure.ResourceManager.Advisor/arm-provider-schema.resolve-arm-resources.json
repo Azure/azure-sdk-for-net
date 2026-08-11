@@ -24,16 +24,6 @@
           }
         },
         {
-          "methodId": "Microsoft.Advisor.ResourceRecommendationBases.list",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/recommendations",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        },
-        {
           "methodId": "Microsoft.Advisor.ResourceRecommendationBases.listByTenant",
           "kind": "List",
           "operationPath": "/{resourceUri}/providers/Microsoft.Advisor/recommendations",
@@ -381,15 +371,6 @@
     }
   ],
   "nonResourceMethods": [
-    {
-      "methodId": "Azure.ResourceManager.Legacy.Operations.list",
-      "operationPath": "/providers/Microsoft.Advisor/operations",
-      "scope": {
-        "kind": "Tenant",
-        "scopeIdPattern": "",
-        "scopeResourceType": "Microsoft.Resources/tenants"
-      }
-    },
     {
       "methodId": "Microsoft.Advisor.ConfigurationsOperationGroup.listBySubscription",
       "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations",

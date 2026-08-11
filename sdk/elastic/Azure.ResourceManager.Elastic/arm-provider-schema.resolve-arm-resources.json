@@ -456,15 +456,6 @@
   ],
   "nonResourceMethods": [
     {
-      "methodId": "Azure.ResourceManager.Legacy.Operations.list",
-      "operationPath": "/providers/Microsoft.Elastic/operations",
-      "scope": {
-        "kind": "Tenant",
-        "scopeIdPattern": "",
-        "scopeResourceType": "Microsoft.Resources/tenants"
-      }
-    },
-    {
       "methodId": "Microsoft.Elastic.ElasticVersionsOperationGroup.list",
       "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Elastic/elasticVersions",
       "scope": {

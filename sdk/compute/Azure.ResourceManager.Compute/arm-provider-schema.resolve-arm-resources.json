@@ -3358,15 +3358,6 @@
   ],
   "nonResourceMethods": [
     {
-      "methodId": "Compute.Operations.list",
-      "operationPath": "/providers/Microsoft.Compute/operations",
-      "scope": {
-        "kind": "Tenant",
-        "scopeIdPattern": "",
-        "scopeResourceType": "Microsoft.Resources/tenants"
-      }
-    },
-    {
       "methodId": "Compute.UsageOperationGroup.list",
       "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/usages",
       "scope": {

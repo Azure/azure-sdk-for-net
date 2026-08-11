@@ -17,9 +17,9 @@ Resource ID comparisons normalize path variable names, so `{name}` and `{labName
 | Raw resource ID patterns | 0 legacy-only raw; 0 resolve-only raw; 0 raw mismatches removed by variable-name normalization |
 | Resource type / hierarchy | 0 matching normalized patterns differ |
 | Resource model | 0 matching normalized patterns differ |
-| CRUD operations | 1 matching normalized patterns differ |
+| CRUD operations | 0 matching normalized patterns differ |
 | List/action operations | 0 matching normalized patterns differ |
-| Non-resource methods | 0 legacy-only; 1 resolve-only |
+| Non-resource methods | 0 legacy-only; 0 resolve-only |
 
 
 ### Legacy-only normalized resource ID patterns
@@ -44,8 +44,7 @@ None.
 
 ### CRUD operation differences
 
-- `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.Kubernetes/connectedClusters/{}`
-  - resolveArmResources-only: `Microsoft.Kubernetes.ConnectedClusters.update (Update) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.Kubernetes/connectedClusters/{} [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.Kubernetes/connectedClusters/{}, Microsoft.Resources/resourceGroups]`
+None.
 
 
 ### List/action operation differences
@@ -60,4 +59,4 @@ None.
 
 ### resolveArmResources-only non-resource methods
 
-- `Azure.ResourceManager.Legacy.Operations.list (/providers/Microsoft.Kubernetes/operations) Tenant`
+None.

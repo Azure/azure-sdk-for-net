@@ -545,30 +545,12 @@
   ],
   "nonResourceMethods": [
     {
-      "methodId": "Microsoft.StorageSync.Operations.list",
-      "operationPath": "/providers/Microsoft.StorageSync/operations",
-      "scope": {
-        "kind": "Tenant",
-        "scopeIdPattern": "",
-        "scopeResourceType": "Microsoft.Resources/tenants"
-      }
-    },
-    {
       "methodId": "Microsoft.StorageSync.StorageSyncServicesOperationGroup.checkNameAvailability",
       "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.StorageSync/locations/{locationName}/checkNameAvailability",
       "scope": {
         "kind": "Subscription",
         "scopeIdPattern": "/subscriptions/{subscriptionId}",
         "scopeResourceType": "Microsoft.Resources/subscriptions"
-      }
-    },
-    {
-      "methodId": "Microsoft.StorageSync.OperationStatusOperationGroup.get",
-      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/locations/{locationName}/workflows/{workflowId}/operations/{operationId}",
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
       }
     }
   ]

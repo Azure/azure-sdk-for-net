@@ -19,7 +19,7 @@ Resource ID comparisons normalize path variable names, so `{name}` and `{labName
 | Resource model | 0 matching normalized patterns differ |
 | CRUD operations | 0 matching normalized patterns differ |
 | List/action operations | 0 matching normalized patterns differ |
-| Non-resource methods | 1 legacy-only; 2 resolve-only |
+| Non-resource methods | 1 legacy-only; 0 resolve-only |
 
 
 ### Legacy-only normalized resource ID patterns
@@ -62,5 +62,4 @@ None.
 
 ### resolveArmResources-only non-resource methods
 
-- `Microsoft.Resources.DeploymentOperationsOperationGroup.get (/subscriptions/{}/resourcegroups/{}/deployments/{}/operations/{}) Tenant`
-- `Microsoft.Resources.DeploymentOperationsOperationGroup.list (/subscriptions/{}/resourcegroups/{}/deployments/{}/operations) Tenant`
+None.

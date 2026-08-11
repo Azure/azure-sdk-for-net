@@ -19,7 +19,7 @@ Resource ID comparisons normalize path variable names, so `{name}` and `{labName
 | Resource model | 0 matching normalized patterns differ |
 | CRUD operations | 1 matching normalized patterns differ |
 | List/action operations | 1 matching normalized patterns differ |
-| Non-resource methods | 0 legacy-only; 1 resolve-only |
+| Non-resource methods | 0 legacy-only; 0 resolve-only |
 
 
 ### Legacy-only normalized resource ID patterns
@@ -61,4 +61,4 @@ None.
 
 ### resolveArmResources-only non-resource methods
 
-- `Azure.ResourceManager.Legacy.Operations.list (/providers/Microsoft.RecoveryServices/operations) Tenant`
+None.

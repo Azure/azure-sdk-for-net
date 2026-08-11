@@ -18,7 +18,7 @@ Resource ID comparisons normalize path variable names, so `{name}` and `{labName
 | Resource type / hierarchy | 0 matching normalized patterns differ |
 | Resource model | 0 matching normalized patterns differ |
 | CRUD operations | 3 matching normalized patterns differ |
-| List/action operations | 3 matching normalized patterns differ |
+| List/action operations | 2 matching normalized patterns differ |
 | Non-resource methods | 0 legacy-only; 0 resolve-only |
 
 
@@ -56,8 +56,6 @@ None.
 
 - `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.App/connectedEnvironments/{}`
   - resolveArmResources-only: `Microsoft.App.ConnectedEnvironmentsDaprComponents.createOrUpdate (Action) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.App/connectedEnvironments/{}/daprComponents/{} [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.App/connectedEnvironments/{}, Microsoft.Resources/resourceGroups]`
-- `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.App/containerApps/{}/labelHistory/{}`
-  - resolveArmResources-only: `Microsoft.App.ContainerAppsLabelHistory.listLabelHistory (List) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.App/containerApps/{}/labelHistory [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.App/containerApps/{}, Microsoft.Resources/resourceGroups]`
 - `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.App/managedEnvironments/{}`
   - resolveArmResources-only: `Microsoft.App.HttpRouteConfigs.delete (Action) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.App/managedEnvironments/{}/httpRouteConfigs/{} [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.App/managedEnvironments/{}, Microsoft.Resources/resourceGroups]`; `Microsoft.App.HttpRouteConfigs.update (Action) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.App/managedEnvironments/{}/httpRouteConfigs/{} [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.App/managedEnvironments/{}, Microsoft.Resources/resourceGroups]`; `Microsoft.App.ManagedCertificates.createOrUpdate (Action) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.App/managedEnvironments/{}/managedCertificates/{} [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.App/managedEnvironments/{}, Microsoft.Resources/resourceGroups]`
 

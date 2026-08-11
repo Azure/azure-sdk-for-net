@@ -1,32 +1,6 @@
 {
   "resources": [
     {
-      "resourceModelId": "Microsoft.CognitiveServices.ComputeOperationStatus",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/computeOperations/{operationId}",
-      "resourceType": "Microsoft.CognitiveServices/locations/computeOperations",
-      "methods": [
-        {
-          "methodId": "Microsoft.CognitiveServices.ComputeOperations.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/computeOperations/{operationId}",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/computeOperations/{operationId}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "Subscription",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}",
-        "scopeResourceType": "Microsoft.Resources/subscriptions"
-      },
-      "resourceName": "ComputeOperationStatus",
-      "nameConstraints": {},
-      "apiVersions": [],
-      "rbacRoles": []
-    },
-    {
       "resourceModelId": "Microsoft.CognitiveServices.RaiContentFilter",
       "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/raiContentFilters/{filterName}",
       "resourceType": "Microsoft.CognitiveServices/locations/raiContentFilters",

@@ -391,15 +391,6 @@
   ],
   "nonResourceMethods": [
     {
-      "methodId": "Azure.ResourceManager.Legacy.Operations.list",
-      "operationPath": "/providers/Microsoft.BotService/operations",
-      "scope": {
-        "kind": "Tenant",
-        "scopeIdPattern": "",
-        "scopeResourceType": "Microsoft.Resources/tenants"
-      }
-    },
-    {
       "methodId": "Microsoft.BotService.BotsOperationGroup.getCheckNameAvailability",
       "operationPath": "/providers/Microsoft.BotService/checkNameAvailability",
       "scope": {
@@ -429,15 +420,6 @@
     {
       "methodId": "Microsoft.BotService.HostSettingsOperationGroup.get",
       "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.BotService/hostSettings",
-      "scope": {
-        "kind": "Subscription",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}",
-        "scopeResourceType": "Microsoft.Resources/subscriptions"
-      }
-    },
-    {
-      "methodId": "Microsoft.BotService.OperationResultsOperationGroup.get",
-      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.BotService/operationresults/{operationResultId}",
       "scope": {
         "kind": "Subscription",
         "scopeIdPattern": "/subscriptions/{subscriptionId}",

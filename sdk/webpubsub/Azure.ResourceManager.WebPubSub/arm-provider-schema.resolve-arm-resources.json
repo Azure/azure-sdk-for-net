@@ -588,15 +588,6 @@
   ],
   "nonResourceMethods": [
     {
-      "methodId": "Microsoft.SignalRService.Operations.list",
-      "operationPath": "/providers/Microsoft.SignalRService/operations",
-      "scope": {
-        "kind": "Tenant",
-        "scopeIdPattern": "",
-        "scopeResourceType": "Microsoft.Resources/tenants"
-      }
-    },
-    {
       "methodId": "Microsoft.SignalRService.WebPubSubOperationGroup.checkNameAvailability",
       "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability",
       "scope": {

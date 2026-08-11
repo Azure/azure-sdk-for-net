@@ -1355,15 +1355,5 @@
       "rbacRoles": []
     }
   ],
-  "nonResourceMethods": [
-    {
-      "methodId": "Microsoft.DesktopVirtualization.Operations.list",
-      "operationPath": "/providers/Microsoft.DesktopVirtualization/operations",
-      "scope": {
-        "kind": "Tenant",
-        "scopeIdPattern": "",
-        "scopeResourceType": "Microsoft.Resources/tenants"
-      }
-    }
-  ]
+  "nonResourceMethods": []
 }

@@ -7,19 +7,19 @@ Compared files:
 
 ## Summary
 
-0 legacy-only and 4 resolve-only normalized resource ID patterns.
+0 legacy-only and 0 resolve-only normalized resource ID patterns.
 
 Resource ID comparisons normalize path variable names, so `{name}` and `{labName}` are treated as the same resource identity.
 
 | Aspect | Result |
 | --- | --- |
-| Resource ID patterns | 7 matching normalized patterns; 0 legacy-only; 4 resolve-only |
-| Raw resource ID patterns | 0 legacy-only raw; 4 resolve-only raw; 0 raw mismatches removed by variable-name normalization |
+| Resource ID patterns | 7 matching normalized patterns; 0 legacy-only; 0 resolve-only |
+| Raw resource ID patterns | 0 legacy-only raw; 0 resolve-only raw; 0 raw mismatches removed by variable-name normalization |
 | Resource type / hierarchy | 0 matching normalized patterns differ |
 | Resource model | 0 matching normalized patterns differ |
 | CRUD operations | 0 matching normalized patterns differ |
 | List/action operations | 0 matching normalized patterns differ |
-| Non-resource methods | 0 legacy-only; 2 resolve-only |
+| Non-resource methods | 0 legacy-only; 0 resolve-only |
 
 
 ### Legacy-only normalized resource ID patterns
@@ -29,10 +29,7 @@ None.
 
 ### resolveArmResources-only normalized resource ID patterns
 
-- `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.KeyVault/managedHSMs/{}/keys/{}`
-- `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.KeyVault/managedHSMs/{}/keys/{}/versions/{}`
-- `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.KeyVault/vaults/{}/keys/{}`
-- `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.KeyVault/vaults/{}/keys/{}/versions/{}`
+None.
 
 
 ### Resource type / hierarchy differences
@@ -62,5 +59,4 @@ None.
 
 ### resolveArmResources-only non-resource methods
 
-- `Azure.ResourceManager.Legacy.Operations.list (/providers/Microsoft.KeyVault/operations) Tenant`
-- `Microsoft.KeyVault.VaultsOperationGroup.list (/subscriptions/{}/resources) Tenant`
+None.

@@ -7,18 +7,18 @@ Compared files:
 
 ## Summary
 
-0 legacy-only and 1 resolve-only normalized resource ID patterns.
+0 legacy-only and 0 resolve-only normalized resource ID patterns.
 
 Resource ID comparisons normalize path variable names, so `{name}` and `{labName}` are treated as the same resource identity.
 
 | Aspect | Result |
 | --- | --- |
-| Resource ID patterns | 5 matching normalized patterns; 0 legacy-only; 1 resolve-only |
-| Raw resource ID patterns | 0 legacy-only raw; 1 resolve-only raw; 0 raw mismatches removed by variable-name normalization |
+| Resource ID patterns | 5 matching normalized patterns; 0 legacy-only; 0 resolve-only |
+| Raw resource ID patterns | 0 legacy-only raw; 0 resolve-only raw; 0 raw mismatches removed by variable-name normalization |
 | Resource type / hierarchy | 0 matching normalized patterns differ |
 | Resource model | 0 matching normalized patterns differ |
 | CRUD operations | 0 matching normalized patterns differ |
-| List/action operations | 1 matching normalized patterns differ |
+| List/action operations | 0 matching normalized patterns differ |
 | Non-resource methods | 0 legacy-only; 0 resolve-only |
 
 
@@ -29,7 +29,7 @@ None.
 
 ### resolveArmResources-only normalized resource ID patterns
 
-- `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.DurableTask/schedulers/{}/transparentDataEncryptions/default`
+None.
 
 
 ### Resource type / hierarchy differences
@@ -49,8 +49,7 @@ None.
 
 ### List/action operation differences
 
-- `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.DurableTask/schedulers/{}`
-  - resolveArmResources-only: `Microsoft.DurableTask.Schedulers.restart (Action) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.DurableTask/schedulers/{}/restart [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.DurableTask/schedulers/{}, Microsoft.Resources/resourceGroups]`
+None.
 
 
 ### Legacy-only non-resource methods

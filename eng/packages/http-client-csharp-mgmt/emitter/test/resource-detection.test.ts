@@ -9,11 +9,17 @@ import {
 } from "./test-util.js";
 import { TestHost } from "@typespec/compiler/testing";
 import { createModel } from "@typespec/http-client-csharp";
-import { buildArmProviderSchema } from "../src/resource-detection.js";
+import {
+  buildArmProviderSchema,
+  filterArmProviderSchemaToTcgcOutput
+} from "../src/resource-detection.js";
 import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
 import { ok, strictEqual, deepStrictEqual } from "assert";
 import {
+  ArmProviderSchema,
   ArmResourceSchema,
+  RequestPath,
+  ResourceOperationKind,
   ResourceScopeKind
 } from "../src/resource-metadata.js";
 
@@ -254,6 +260,103 @@ interface Employees2 {
     deepStrictEqual(
       normalizeSchemaForComparison(resolvedSchema),
       normalizeSchemaForComparison(armProviderSchema)
+    );
+  });
+
+  it("filters resolveArmResources schema to TCGC code model", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Widget resource */
+model Widget is TrackedResource<WidgetProperties> {
+  ...ResourceNameParameter<Widget>;
+}
+
+/** Widget properties */
+model WidgetProperties {
+  value?: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Widgets {
+  get is ArmResourceRead<Widget>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Widget>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    const existingResource = resolvedSchema.resources[0];
+    ok(existingResource);
+    const existingMethod = existingResource.metadata.methods[0];
+    ok(existingMethod);
+
+    const missingMethod = {
+      ...existingMethod,
+      methodId: "Missing.Widget.delete",
+      kind: ResourceOperationKind.Delete
+    };
+    const schemaWithUnprojectedEntries: ArmProviderSchema = {
+      resources: [
+        {
+          ...existingResource,
+          metadata: {
+            ...existingResource.metadata,
+            methods: [...existingResource.metadata.methods, missingMethod]
+          }
+        },
+        {
+          ...existingResource,
+          resourceModelId: "Missing.Widget",
+          metadata: {
+            ...existingResource.metadata,
+            resourceIdPattern: new RequestPath(
+              "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/missingWidgets/{missingWidgetName}"
+            ),
+            resourceType: "Microsoft.ContosoProviderHub/missingWidgets",
+            methods: [existingMethod, missingMethod]
+          }
+        }
+      ],
+      nonResourceMethods: [
+        {
+          methodId: existingMethod.methodId,
+          operationPath: existingMethod.operationPath,
+          scope: existingMethod.scope
+        },
+        {
+          methodId: "Missing.Widget.action",
+          operationPath: new RequestPath(
+            "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/missingWidgets/{missingWidgetName}/doSomething"
+          ),
+          scope: existingMethod.scope
+        }
+      ]
+    };
+
+    const filtered = filterArmProviderSchemaToTcgcOutput(
+      schemaWithUnprojectedEntries,
+      root
+    );
+
+    strictEqual(filtered.resources.length, 1);
+    strictEqual(
+      filtered.resources[0].resourceModelId,
+      existingResource.resourceModelId
+    );
+    ok(
+      filtered.resources[0].metadata.methods.every(
+        (method) => method.methodId !== missingMethod.methodId
+      )
+    );
+    deepStrictEqual(
+      filtered.nonResourceMethods.map((method) => method.methodId),
+      [existingMethod.methodId]
     );
   });
 

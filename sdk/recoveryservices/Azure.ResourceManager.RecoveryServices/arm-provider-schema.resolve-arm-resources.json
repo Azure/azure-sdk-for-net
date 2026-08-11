@@ -58,18 +58,7 @@
       "resourceModelId": "Microsoft.RecoveryServices.DeletedVault",
       "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults/{deletedVaultName}/operations/{operationId}",
       "resourceType": "Microsoft.RecoveryServices/locations/deletedVaults/operations",
-      "methods": [
-        {
-          "methodId": "Microsoft.RecoveryServices.DeletedVaults.getOperationStatus",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults/{deletedVaultName}/operations/{operationId}",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults/{deletedVaultName}/operations/{operationId}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        }
-      ],
+      "methods": [],
       "scope": {
         "kind": "Subscription",
         "scopeIdPattern": "/subscriptions/{subscriptionId}",
@@ -307,15 +296,6 @@
     }
   ],
   "nonResourceMethods": [
-    {
-      "methodId": "Azure.ResourceManager.Legacy.Operations.list",
-      "operationPath": "/providers/Microsoft.RecoveryServices/operations",
-      "scope": {
-        "kind": "Tenant",
-        "scopeIdPattern": "",
-        "scopeResourceType": "Microsoft.Resources/tenants"
-      }
-    },
     {
       "methodId": "Microsoft.RecoveryServices.RecoveryServicesOperationGroup.checkNameAvailability",
       "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/locations/{location}/checkNameAvailability",

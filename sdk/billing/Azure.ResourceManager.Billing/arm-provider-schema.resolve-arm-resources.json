@@ -156,16 +156,6 @@
           }
         },
         {
-          "methodId": "Microsoft.Billing.BillingAccounts.savingsPlansListByBillingAccount",
-          "kind": "Action",
-          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlans",
-          "scope": {
-            "kind": "Tenant",
-            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
-            "scopeResourceType": "Microsoft.Resources/tenants"
-          }
-        },
-        {
           "methodId": "Microsoft.Billing.BillingAccounts.validatePaymentTerms",
           "kind": "Action",
           "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/validatePaymentTerms",

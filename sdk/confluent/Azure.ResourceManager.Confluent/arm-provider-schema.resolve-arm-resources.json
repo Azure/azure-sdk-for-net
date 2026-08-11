@@ -467,15 +467,6 @@
   ],
   "nonResourceMethods": [
     {
-      "methodId": "Microsoft.Confluent.Operations.list",
-      "operationPath": "/providers/Microsoft.Confluent/operations",
-      "scope": {
-        "kind": "Tenant",
-        "scopeIdPattern": "",
-        "scopeResourceType": "Microsoft.Resources/tenants"
-      }
-    },
-    {
       "methodId": "Microsoft.Confluent.MarketplaceAgreementsOperationGroup.list",
       "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements",
       "scope": {

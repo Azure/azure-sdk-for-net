@@ -1698,24 +1698,5 @@
       "rbacRoles": []
     }
   ],
-  "nonResourceMethods": [
-    {
-      "methodId": "Azure.ResourceManager.ProviderOperations.list",
-      "operationPath": "/providers/Microsoft.DevTestLab/operations",
-      "scope": {
-        "kind": "Tenant",
-        "scopeIdPattern": "",
-        "scopeResourceType": "Microsoft.Resources/tenants"
-      }
-    },
-    {
-      "methodId": "Microsoft.DevTestLab.Operations.get",
-      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/locations/{locationName}/operations/{name}",
-      "scope": {
-        "kind": "Subscription",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}",
-        "scopeResourceType": "Microsoft.Resources/subscriptions"
-      }
-    }
-  ]
+  "nonResourceMethods": []
 }

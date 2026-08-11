@@ -18,8 +18,8 @@ Resource ID comparisons normalize path variable names, so `{name}` and `{labName
 | Resource type / hierarchy | 0 matching normalized patterns differ |
 | Resource model | 0 matching normalized patterns differ |
 | CRUD operations | 0 matching normalized patterns differ |
-| List/action operations | 2 matching normalized patterns differ |
-| Non-resource methods | 0 legacy-only; 1 resolve-only |
+| List/action operations | 0 matching normalized patterns differ |
+| Non-resource methods | 0 legacy-only; 0 resolve-only |
 
 
 ### Legacy-only normalized resource ID patterns
@@ -49,10 +49,7 @@ None.
 
 ### List/action operation differences
 
-- `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.ContainerService/managedClusters/{}`
-  - resolveArmResources-only: `Microsoft.ContainerService.ManagedClusters.operationStatusResultGet (Action) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ContainerService/managedClusters/{}/operations/{} [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ContainerService/managedClusters/{}, Microsoft.Resources/resourceGroups]`; `Microsoft.ContainerService.ManagedClusters.operationStatusResultList (Action) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ContainerService/managedClusters/{}/operations [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ContainerService/managedClusters/{}, Microsoft.Resources/resourceGroups]`
-- `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.ContainerService/managedClusters/{}/agentPools/{}`
-  - resolveArmResources-only: `Microsoft.ContainerService.AgentPools.getByAgentPool (Action) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ContainerService/managedClusters/{}/agentPools/{}/operations/{} [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ContainerService/managedClusters/{}/agentPools/{}, Microsoft.Resources/resourceGroups]`
+None.
 
 
 ### Legacy-only non-resource methods
@@ -62,4 +59,4 @@ None.
 
 ### resolveArmResources-only non-resource methods
 
-- `Microsoft.ContainerService.Operations.list (/providers/Microsoft.ContainerService/operations) Tenant`
+None.

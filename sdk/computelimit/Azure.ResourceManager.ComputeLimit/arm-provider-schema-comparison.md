@@ -18,7 +18,7 @@ Resource ID comparisons normalize path variable names, so `{name}` and `{labName
 | Resource type / hierarchy | 0 matching normalized patterns differ |
 | Resource model | 0 matching normalized patterns differ |
 | CRUD operations | 0 matching normalized patterns differ |
-| List/action operations | 1 matching normalized patterns differ |
+| List/action operations | 0 matching normalized patterns differ |
 | Non-resource methods | 0 legacy-only; 0 resolve-only |
 
 
@@ -49,8 +49,7 @@ None.
 
 ### List/action operation differences
 
-- `/subscriptions/{}/providers/Microsoft.ComputeLimit/locations/{}/features/{}`
-  - resolveArmResources-only: `Microsoft.ComputeLimit.Features.enableLegacy (Action) /subscriptions/{}/providers/Microsoft.ComputeLimit/locations/{}/features/{}/enable [Subscription: /subscriptions/{}/providers/Microsoft.ComputeLimit/locations/{}/features/{}, Microsoft.Resources/subscriptions]`
+None.
 
 
 ### Legacy-only non-resource methods

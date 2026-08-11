@@ -364,35 +364,8 @@
       }
     },
     {
-      "methodId": "Dynatrace.Observability.MonitorsOperationGroup.getAllConnectedResourcesCount",
-      "operationPath": "/subscriptions/{subscriptionId}/providers/Dynatrace.Observability/getAllConnectedResourcesCount",
-      "scope": {
-        "kind": "Subscription",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}",
-        "scopeResourceType": "Microsoft.Resources/subscriptions"
-      }
-    },
-    {
       "methodId": "Dynatrace.Observability.MonitorsOperationGroup.getMarketplaceSaaSResourceDetails",
       "operationPath": "/subscriptions/{subscriptionId}/providers/Dynatrace.Observability/getMarketplaceSaaSResourceDetails",
-      "scope": {
-        "kind": "Subscription",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}",
-        "scopeResourceType": "Microsoft.Resources/subscriptions"
-      }
-    },
-    {
-      "methodId": "Dynatrace.Observability.CreationSupportedOperationGroup.list",
-      "operationPath": "/subscriptions/{subscriptionId}/providers/Dynatrace.Observability/subscriptionStatuses/{dynatraceEnvironmentId}",
-      "scope": {
-        "kind": "Subscription",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}",
-        "scopeResourceType": "Microsoft.Resources/subscriptions"
-      }
-    },
-    {
-      "methodId": "Dynatrace.Observability.CreationSupportedOperationGroup.get",
-      "operationPath": "/subscriptions/{subscriptionId}/providers/Dynatrace.Observability/subscriptionStatuses/{dynatraceEnvironmentId}/default",
       "scope": {
         "kind": "Subscription",
         "scopeIdPattern": "/subscriptions/{subscriptionId}",

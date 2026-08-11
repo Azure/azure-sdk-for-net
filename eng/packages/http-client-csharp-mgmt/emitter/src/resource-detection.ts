@@ -73,9 +73,9 @@ export function updateClients(
   options: AzureMgmtEmitterOptions
 ): ArmProviderSchemaUpdateResult {
   const legacy = buildArmProviderSchema(sdkContext, codeModel);
-  const resolveArmResourcesSchema = resolveArmResources(
-    sdkContext.program,
-    sdkContext
+  const resolveArmResourcesSchema = filterArmProviderSchemaToTcgcOutput(
+    resolveArmResources(sdkContext.program, sdkContext),
+    codeModel
   );
   const selected =
     options?.["use-legacy-resource-detection"] === false
@@ -87,6 +87,37 @@ export function updateClients(
     legacy,
     resolveArmResources: resolveArmResourcesSchema,
     selected
+  };
+}
+
+export function filterArmProviderSchemaToTcgcOutput(
+  schema: ArmProviderSchema,
+  codeModel: CodeModel
+): ArmProviderSchema {
+  const tcgcModelIds = new Set(
+    codeModel.models.map((model) => model.crossLanguageDefinitionId)
+  );
+  const tcgcMethodIds = new Set(
+    getAllClients(codeModel).flatMap((client) =>
+      client.methods.map((method) => method.crossLanguageDefinitionId)
+    )
+  );
+
+  return {
+    resources: schema.resources
+      .filter((resource) => tcgcModelIds.has(resource.resourceModelId))
+      .map((resource) => ({
+        ...resource,
+        metadata: {
+          ...resource.metadata,
+          methods: resource.metadata.methods.filter((method) =>
+            tcgcMethodIds.has(method.methodId)
+          )
+        }
+      })),
+    nonResourceMethods: schema.nonResourceMethods.filter((method) =>
+      tcgcMethodIds.has(method.methodId)
+    )
   };
 }
 

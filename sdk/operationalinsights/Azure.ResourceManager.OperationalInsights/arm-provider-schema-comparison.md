@@ -7,14 +7,14 @@ Compared files:
 
 ## Summary
 
-1 legacy-only and 2 resolve-only normalized resource ID patterns.
+1 legacy-only and 1 resolve-only normalized resource ID patterns.
 
 Resource ID comparisons normalize path variable names, so `{name}` and `{labName}` are treated as the same resource identity.
 
 | Aspect | Result |
 | --- | --- |
-| Resource ID patterns | 11 matching normalized patterns; 1 legacy-only; 2 resolve-only |
-| Raw resource ID patterns | 1 legacy-only raw; 2 resolve-only raw; 0 raw mismatches removed by variable-name normalization |
+| Resource ID patterns | 11 matching normalized patterns; 1 legacy-only; 1 resolve-only |
+| Raw resource ID patterns | 1 legacy-only raw; 1 resolve-only raw; 0 raw mismatches removed by variable-name normalization |
 | Resource type / hierarchy | 0 matching normalized patterns differ |
 | Resource model | 0 matching normalized patterns differ |
 | CRUD operations | 0 matching normalized patterns differ |
@@ -29,7 +29,6 @@ Resource ID comparisons normalize path variable names, so `{name}` and `{labName
 
 ### resolveArmResources-only normalized resource ID patterns
 
-- `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.OperationalInsights/workspaces/{}/networkSecurityPerimeterConfigurations/{}`
 - `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.OperationalInsights/workspaces/{}/operations/{}`
 
 

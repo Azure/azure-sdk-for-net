@@ -19,7 +19,7 @@ Resource ID comparisons normalize path variable names, so `{name}` and `{labName
 | Resource model | 0 matching normalized patterns differ |
 | CRUD operations | 5 matching normalized patterns differ |
 | List/action operations | 3 matching normalized patterns differ |
-| Non-resource methods | 0 legacy-only; 3 resolve-only |
+| Non-resource methods | 0 legacy-only; 2 resolve-only |
 
 
 ### Legacy-only normalized resource ID patterns
@@ -73,6 +73,5 @@ None.
 
 ### resolveArmResources-only non-resource methods
 
-- `Microsoft.Confluent.Operations.list (/providers/Microsoft.Confluent/operations) Tenant`
 - `Microsoft.Confluent.OrganizationResources.create (/subscriptions/{}/resourceGroups/{}/providers/Microsoft.Confluent/organizations/{}) ResourceGroup [/subscriptions/{}/resourceGroups/{}: Microsoft.Resources/resourceGroups]`
 - `Microsoft.Confluent.OrganizationResources.update (/subscriptions/{}/resourceGroups/{}/providers/Microsoft.Confluent/organizations/{}) ResourceGroup [/subscriptions/{}/resourceGroups/{}: Microsoft.Resources/resourceGroups]`

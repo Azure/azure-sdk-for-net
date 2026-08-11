@@ -19,7 +19,7 @@ Resource ID comparisons normalize path variable names, so `{name}` and `{labName
 | Resource model | 0 matching normalized patterns differ |
 | CRUD operations | 0 matching normalized patterns differ |
 | List/action operations | 0 matching normalized patterns differ |
-| Non-resource methods | 0 legacy-only; 3 resolve-only |
+| Non-resource methods | 0 legacy-only; 0 resolve-only |
 
 
 ### Legacy-only normalized resource ID patterns
@@ -59,6 +59,4 @@ None.
 
 ### resolveArmResources-only non-resource methods
 
-- `Dynatrace.Observability.CreationSupportedOperationGroup.get (/subscriptions/{}/providers/Dynatrace.Observability/subscriptionStatuses/{}/default) Subscription [/subscriptions/{}: Microsoft.Resources/subscriptions]`
-- `Dynatrace.Observability.CreationSupportedOperationGroup.list (/subscriptions/{}/providers/Dynatrace.Observability/subscriptionStatuses/{}) Subscription [/subscriptions/{}: Microsoft.Resources/subscriptions]`
-- `Dynatrace.Observability.MonitorsOperationGroup.getAllConnectedResourcesCount (/subscriptions/{}/providers/Dynatrace.Observability/getAllConnectedResourcesCount) Subscription [/subscriptions/{}: Microsoft.Resources/subscriptions]`
+None.

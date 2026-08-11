@@ -18,8 +18,8 @@ Resource ID comparisons normalize path variable names, so `{name}` and `{labName
 | Resource type / hierarchy | 0 matching normalized patterns differ |
 | Resource model | 0 matching normalized patterns differ |
 | CRUD operations | 0 matching normalized patterns differ |
-| List/action operations | 1 matching normalized patterns differ |
-| Non-resource methods | 0 legacy-only; 1 resolve-only |
+| List/action operations | 0 matching normalized patterns differ |
+| Non-resource methods | 0 legacy-only; 0 resolve-only |
 
 
 ### Legacy-only normalized resource ID patterns
@@ -49,8 +49,7 @@ None.
 
 ### List/action operation differences
 
-- `/{}/providers/Microsoft.Advisor/recommendations/{}`
-  - resolveArmResources-only: `Microsoft.Advisor.ResourceRecommendationBases.list (List) /subscriptions/{}/providers/Microsoft.Advisor/recommendations [Subscription: /subscriptions/{}, Microsoft.Resources/subscriptions]`
+None.
 
 
 ### Legacy-only non-resource methods
@@ -60,4 +59,4 @@ None.
 
 ### resolveArmResources-only non-resource methods
 
-- `Azure.ResourceManager.Legacy.Operations.list (/providers/Microsoft.Advisor/operations) Tenant`
+None.

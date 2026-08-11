@@ -17,7 +17,7 @@ Resource ID comparisons normalize path variable names, so `{name}` and `{labName
 | Raw resource ID patterns | 0 legacy-only raw; 0 resolve-only raw; 0 raw mismatches removed by variable-name normalization |
 | Resource type / hierarchy | 0 matching normalized patterns differ |
 | Resource model | 0 matching normalized patterns differ |
-| CRUD operations | 2 matching normalized patterns differ |
+| CRUD operations | 0 matching normalized patterns differ |
 | List/action operations | 0 matching normalized patterns differ |
 | Non-resource methods | 0 legacy-only; 0 resolve-only |
 
@@ -44,10 +44,7 @@ None.
 
 ### CRUD operation differences
 
-- `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.ContainerService/fleets/{}`
-  - resolveArmResources-only: `Microsoft.ContainerService.Fleets.update (Update) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ContainerService/fleets/{} [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ContainerService/fleets/{}, Microsoft.Resources/resourceGroups]`
-- `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.ContainerService/fleets/{}/members/{}`
-  - resolveArmResources-only: `Microsoft.ContainerService.FleetMembers.update (Update) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ContainerService/fleets/{}/members/{} [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ContainerService/fleets/{}/members/{}, Microsoft.Resources/resourceGroups]`
+None.
 
 
 ### List/action operation differences

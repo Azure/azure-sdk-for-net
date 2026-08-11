@@ -532,15 +532,6 @@
   ],
   "nonResourceMethods": [
     {
-      "methodId": "Azure.ResourceManager.Legacy.Operations.list",
-      "operationPath": "/providers/Microsoft.Cache/operations",
-      "scope": {
-        "kind": "Tenant",
-        "scopeIdPattern": "",
-        "scopeResourceType": "Microsoft.Resources/tenants"
-      }
-    },
-    {
       "methodId": "Microsoft.Cache.RedisOperationGroup.checkNameAvailability",
       "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Cache/checkNameAvailability",
       "scope": {

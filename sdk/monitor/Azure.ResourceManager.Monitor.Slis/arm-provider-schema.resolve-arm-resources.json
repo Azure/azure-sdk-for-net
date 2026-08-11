@@ -61,15 +61,5 @@
       "rbacRoles": []
     }
   ],
-  "nonResourceMethods": [
-    {
-      "methodId": "Microsoft.Monitor.SloView.sliSignalPreview",
-      "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.Monitor/sliSignalPreview",
-      "scope": {
-        "kind": "Extension",
-        "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
-        "scopeResourceType": "Microsoft.Management/serviceGroups"
-      }
-    }
-  ]
+  "nonResourceMethods": []
 }

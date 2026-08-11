@@ -33,15 +33,6 @@
           }
         },
         {
-          "methodId": "Microsoft.KubernetesRuntime.BgpPeers.oldDelete",
-          "kind": "Delete",
-          "operationPath": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}"
-          }
-        },
-        {
           "methodId": "Microsoft.KubernetesRuntime.BgpPeers.list",
           "kind": "List",
           "operationPath": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers",
@@ -90,15 +81,6 @@
         },
         {
           "methodId": "Microsoft.KubernetesRuntime.LoadBalancers.delete",
-          "kind": "Delete",
-          "operationPath": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}"
-          }
-        },
-        {
-          "methodId": "Microsoft.KubernetesRuntime.LoadBalancers.oldDelete",
           "kind": "Delete",
           "operationPath": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}",
           "scope": {

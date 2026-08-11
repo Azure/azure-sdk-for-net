@@ -147,68 +147,7 @@
       "resourceModelId": "Microsoft.Resources.DeploymentStacks.DeploymentStack",
       "resourceIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
       "resourceType": "Microsoft.Resources/deploymentStacks",
-      "methods": [
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksAtManagementGroup.createOrUpdate",
-          "kind": "Create",
-          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
-          "scope": {
-            "kind": "ManagementGroup",
-            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
-            "scopeResourceType": "Microsoft.Management/managementGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksAtManagementGroup.get",
-          "kind": "Read",
-          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
-          "scope": {
-            "kind": "ManagementGroup",
-            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
-            "scopeResourceType": "Microsoft.Management/managementGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksAtManagementGroup.delete",
-          "kind": "Delete",
-          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
-          "scope": {
-            "kind": "ManagementGroup",
-            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
-            "scopeResourceType": "Microsoft.Management/managementGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksAtManagementGroup.list",
-          "kind": "List",
-          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Resources/deploymentStacks",
-          "scope": {
-            "kind": "ManagementGroup",
-            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}",
-            "scopeResourceType": "Microsoft.Management/managementGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksAtManagementGroup.exportTemplate",
-          "kind": "Action",
-          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}/exportTemplate",
-          "scope": {
-            "kind": "ManagementGroup",
-            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
-            "scopeResourceType": "Microsoft.Management/managementGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksAtManagementGroup.validateStack",
-          "kind": "Action",
-          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}/validate",
-          "scope": {
-            "kind": "ManagementGroup",
-            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
-            "scopeResourceType": "Microsoft.Management/managementGroups"
-          }
-        }
-      ],
+      "methods": [],
       "scope": {
         "kind": "ManagementGroup",
         "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}",
@@ -227,58 +166,7 @@
       "resourceModelId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksWhatIfResult",
       "resourceIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
       "resourceType": "Microsoft.Resources/deploymentStacksWhatIfResults",
-      "methods": [
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksWhatIfResultsAtManagementGroup.createOrUpdate",
-          "kind": "Create",
-          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
-          "scope": {
-            "kind": "ManagementGroup",
-            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
-            "scopeResourceType": "Microsoft.Management/managementGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksWhatIfResultsAtManagementGroup.get",
-          "kind": "Read",
-          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
-          "scope": {
-            "kind": "ManagementGroup",
-            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
-            "scopeResourceType": "Microsoft.Management/managementGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksWhatIfResultsAtManagementGroup.delete",
-          "kind": "Delete",
-          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
-          "scope": {
-            "kind": "ManagementGroup",
-            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
-            "scopeResourceType": "Microsoft.Management/managementGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksWhatIfResultsAtManagementGroup.list",
-          "kind": "List",
-          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Resources/deploymentStacksWhatIfResults",
-          "scope": {
-            "kind": "ManagementGroup",
-            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}",
-            "scopeResourceType": "Microsoft.Management/managementGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksWhatIfResultsAtManagementGroup.whatIf",
-          "kind": "Action",
-          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}/whatIf",
-          "scope": {
-            "kind": "ManagementGroup",
-            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
-            "scopeResourceType": "Microsoft.Management/managementGroups"
-          }
-        }
-      ],
+      "methods": [],
       "scope": {
         "kind": "ManagementGroup",
         "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}",
@@ -297,68 +185,7 @@
       "resourceModelId": "Microsoft.Resources.DeploymentStacks.DeploymentStack",
       "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
       "resourceType": "Microsoft.Resources/deploymentStacks",
-      "methods": [
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksAtSubscription.createOrUpdate",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksAtSubscription.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksAtSubscription.delete",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksAtSubscription.list",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacks",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksAtSubscription.exportTemplate",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}/exportTemplate",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksAtSubscription.validateStack",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}/validate",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        }
-      ],
+      "methods": [],
       "scope": {
         "kind": "Subscription",
         "scopeIdPattern": "/subscriptions/{subscriptionId}",
@@ -377,58 +204,7 @@
       "resourceModelId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksWhatIfResult",
       "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
       "resourceType": "Microsoft.Resources/deploymentStacksWhatIfResults",
-      "methods": [
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksWhatIfResultsAtSubscription.createOrUpdate",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksWhatIfResultsAtSubscription.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksWhatIfResultsAtSubscription.delete",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksWhatIfResultsAtSubscription.list",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacksWhatIfResults",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksWhatIfResultsAtSubscription.whatIf",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}/whatIf",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        }
-      ],
+      "methods": [],
       "scope": {
         "kind": "Subscription",
         "scopeIdPattern": "/subscriptions/{subscriptionId}",
@@ -447,68 +223,7 @@
       "resourceModelId": "Microsoft.Resources.DeploymentStacks.DeploymentStack",
       "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
       "resourceType": "Microsoft.Resources/deploymentStacks",
-      "methods": [
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksAtResourceGroup.createOrUpdate",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksAtResourceGroup.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksAtResourceGroup.delete",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksAtResourceGroup.list",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacks",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksAtResourceGroup.exportTemplate",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}/exportTemplate",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksAtResourceGroup.validateStack",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}/validate",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
+      "methods": [],
       "scope": {
         "kind": "ResourceGroup",
         "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
@@ -527,58 +242,7 @@
       "resourceModelId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksWhatIfResult",
       "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
       "resourceType": "Microsoft.Resources/deploymentStacksWhatIfResults",
-      "methods": [
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksWhatIfResultsAtResourceGroup.createOrUpdate",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksWhatIfResultsAtResourceGroup.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksWhatIfResultsAtResourceGroup.delete",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksWhatIfResultsAtResourceGroup.list",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacksWhatIfResults",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksWhatIfResultsAtResourceGroup.whatIf",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}/whatIf",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
+      "methods": [],
       "scope": {
         "kind": "ResourceGroup",
         "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",

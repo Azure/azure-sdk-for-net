@@ -66,29 +66,9 @@
           }
         },
         {
-          "methodId": "Microsoft.AzureResilienceManagement.Drills.addOrUpdateResourcesOld",
-          "kind": "Action",
-          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/addOrUpdateResourcesOld",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}",
-            "scopeResourceType": "Microsoft.Management/serviceGroups"
-          }
-        },
-        {
           "methodId": "Microsoft.AzureResilienceManagement.Drills.end",
           "kind": "Action",
           "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/end",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}",
-            "scopeResourceType": "Microsoft.Management/serviceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.AzureResilienceManagement.Drills.refreshReadinessState",
-          "kind": "Action",
-          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/refreshReadinessState",
           "scope": {
             "kind": "Extension",
             "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}",
@@ -259,26 +239,6 @@
             "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}",
             "scopeResourceType": "Microsoft.Management/serviceGroups"
           }
-        },
-        {
-          "methodId": "Microsoft.AzureResilienceManagement.DrillRuns.testFailOver",
-          "kind": "Action",
-          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/testFailOver",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}",
-            "scopeResourceType": "Microsoft.Management/serviceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.AzureResilienceManagement.DrillRuns.testFailOverCleanup",
-          "kind": "Action",
-          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/testFailOverCleanup",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}",
-            "scopeResourceType": "Microsoft.Management/serviceGroups"
-          }
         }
       ],
       "scope": {
@@ -296,162 +256,6 @@
         "2026-03-01-preview",
         "2026-04-01-preview"
       ],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.AzureResilienceManagement.ChaosJob",
-      "resourceIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/chaosJobs/{chaosJobName}",
-      "resourceType": "Microsoft.AzureResilienceManagement/drills/drillRuns/chaosJobs",
-      "methods": [
-        {
-          "methodId": "Microsoft.AzureResilienceManagement.ChaosJobs.get",
-          "kind": "Read",
-          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/chaosJobs/{chaosJobName}",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/chaosJobs/{chaosJobName}",
-            "scopeResourceType": "Microsoft.Management/serviceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.AzureResilienceManagement.ChaosJobs.list",
-          "kind": "List",
-          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/chaosJobs",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}",
-            "scopeResourceType": "Microsoft.Management/serviceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
-        "scopeResourceType": "Microsoft.Management/serviceGroups"
-      },
-      "parentResourceId": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}",
-      "resourceName": "ChaosJob",
-      "nameConstraints": {
-        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
-      },
-      "apiVersions": [],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.AzureResilienceManagement.ChaosJobChildJob",
-      "resourceIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/chaosJobs/{chaosJobName}/chaosJobChildJobs/{chaosJobChildJobName}",
-      "resourceType": "Microsoft.AzureResilienceManagement/drills/drillRuns/chaosJobs/chaosJobChildJobs",
-      "methods": [
-        {
-          "methodId": "Microsoft.AzureResilienceManagement.ChaosJobChildJobs.get",
-          "kind": "Read",
-          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/chaosJobs/{chaosJobName}/chaosJobChildJobs/{chaosJobChildJobName}",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/chaosJobs/{chaosJobName}/chaosJobChildJobs/{chaosJobChildJobName}",
-            "scopeResourceType": "Microsoft.Management/serviceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.AzureResilienceManagement.ChaosJobChildJobs.list",
-          "kind": "List",
-          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/chaosJobs/{chaosJobName}/chaosJobChildJobs",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/chaosJobs/{chaosJobName}",
-            "scopeResourceType": "Microsoft.Management/serviceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
-        "scopeResourceType": "Microsoft.Management/serviceGroups"
-      },
-      "parentResourceId": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/chaosJobs/{chaosJobName}",
-      "resourceName": "ChaosJobChildJob",
-      "nameConstraints": {
-        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
-      },
-      "apiVersions": [],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.AzureResilienceManagement.ChaosJobResource",
-      "resourceIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/chaosJobs/{chaosJobName}/chaosJobResources/{chaosJobResourceName}",
-      "resourceType": "Microsoft.AzureResilienceManagement/drills/drillRuns/chaosJobs/chaosJobResources",
-      "methods": [
-        {
-          "methodId": "Microsoft.AzureResilienceManagement.ChaosJobResources.get",
-          "kind": "Read",
-          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/chaosJobs/{chaosJobName}/chaosJobResources/{chaosJobResourceName}",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/chaosJobs/{chaosJobName}/chaosJobResources/{chaosJobResourceName}",
-            "scopeResourceType": "Microsoft.Management/serviceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.AzureResilienceManagement.ChaosJobResources.list",
-          "kind": "List",
-          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/chaosJobs/{chaosJobName}/chaosJobResources",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/chaosJobs/{chaosJobName}",
-            "scopeResourceType": "Microsoft.Management/serviceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
-        "scopeResourceType": "Microsoft.Management/serviceGroups"
-      },
-      "parentResourceId": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/chaosJobs/{chaosJobName}",
-      "resourceName": "ChaosJobResource",
-      "nameConstraints": {
-        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
-      },
-      "apiVersions": [],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.AzureResilienceManagement.DrillRunChildJob",
-      "resourceIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/drillRunChildJobs/{drillRunChildJobName}",
-      "resourceType": "Microsoft.AzureResilienceManagement/drills/drillRuns/drillRunChildJobs",
-      "methods": [
-        {
-          "methodId": "Microsoft.AzureResilienceManagement.DrillRunChildJobs.get",
-          "kind": "Read",
-          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/drillRunChildJobs/{drillRunChildJobName}",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/drillRunChildJobs/{drillRunChildJobName}",
-            "scopeResourceType": "Microsoft.Management/serviceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.AzureResilienceManagement.DrillRunChildJobs.list",
-          "kind": "List",
-          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/drillRunChildJobs",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}",
-            "scopeResourceType": "Microsoft.Management/serviceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
-        "scopeResourceType": "Microsoft.Management/serviceGroups"
-      },
-      "parentResourceId": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}",
-      "resourceName": "DrillRunChildJob",
-      "nameConstraints": {
-        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
-      },
-      "apiVersions": [],
       "rbacRoles": []
     },
     {
@@ -820,16 +624,6 @@
           }
         },
         {
-          "methodId": "Microsoft.AzureResilienceManagement.RecoveryPlanActions.reprotectOld",
-          "kind": "Action",
-          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/reprotectOld",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
-            "scopeResourceType": "Microsoft.Management/serviceGroups"
-          }
-        },
-        {
           "methodId": "Microsoft.AzureResilienceManagement.RecoveryPlanActions.testFailover",
           "kind": "Action",
           "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/testFailover",
@@ -893,16 +687,6 @@
           "methodId": "Microsoft.AzureResilienceManagement.RecoveryPlanActions.validateForReprotect",
           "kind": "Action",
           "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/validateForReprotect",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
-            "scopeResourceType": "Microsoft.Management/serviceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.AzureResilienceManagement.RecoveryPlanActions.validateForReprotectOld",
-          "kind": "Action",
-          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/validateForReprotectOld",
           "scope": {
             "kind": "Extension",
             "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
@@ -982,29 +766,9 @@
           }
         },
         {
-          "methodId": "Microsoft.AzureResilienceManagement.RecoveryJobs.cancelOld",
-          "kind": "Action",
-          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}/cancelOld",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}",
-            "scopeResourceType": "Microsoft.Management/serviceGroups"
-          }
-        },
-        {
           "methodId": "Microsoft.AzureResilienceManagement.RecoveryJobs.resume",
           "kind": "Action",
           "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}/resume",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}",
-            "scopeResourceType": "Microsoft.Management/serviceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.AzureResilienceManagement.RecoveryJobs.resumeOld",
-          "kind": "Action",
-          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}/resumeOld",
           "scope": {
             "kind": "Extension",
             "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}",
@@ -1037,45 +801,6 @@
         "2026-03-01-preview",
         "2026-04-01-preview"
       ],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.AzureResilienceManagement.RecoveryChildJob",
-      "resourceIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}/recoveryChildJobs/{recoveryChildJobName}",
-      "resourceType": "Microsoft.AzureResilienceManagement/recoveryPlans/recoveryJobs/recoveryChildJobs",
-      "methods": [
-        {
-          "methodId": "Microsoft.AzureResilienceManagement.RecoveryChildJobs.get",
-          "kind": "Read",
-          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}/recoveryChildJobs/{recoveryChildJobName}",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}/recoveryChildJobs/{recoveryChildJobName}",
-            "scopeResourceType": "Microsoft.Management/serviceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.AzureResilienceManagement.RecoveryChildJobs.list",
-          "kind": "List",
-          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}/recoveryChildJobs",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}",
-            "scopeResourceType": "Microsoft.Management/serviceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
-        "scopeResourceType": "Microsoft.Management/serviceGroups"
-      },
-      "parentResourceId": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}",
-      "resourceName": "RecoveryChildJob",
-      "nameConstraints": {
-        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
-      },
-      "apiVersions": [],
       "rbacRoles": []
     },
     {

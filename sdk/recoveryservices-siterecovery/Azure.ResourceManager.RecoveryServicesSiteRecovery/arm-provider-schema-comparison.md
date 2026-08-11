@@ -17,9 +17,9 @@ Resource ID comparisons normalize path variable names, so `{name}` and `{labName
 | Raw resource ID patterns | 0 legacy-only raw; 1 resolve-only raw; 0 raw mismatches removed by variable-name normalization |
 | Resource type / hierarchy | 0 matching normalized patterns differ |
 | Resource model | 0 matching normalized patterns differ |
-| CRUD operations | 2 matching normalized patterns differ |
+| CRUD operations | 0 matching normalized patterns differ |
 | List/action operations | 1 matching normalized patterns differ |
-| Non-resource methods | 1 legacy-only; 1 resolve-only |
+| Non-resource methods | 1 legacy-only; 0 resolve-only |
 
 
 ### Legacy-only normalized resource ID patterns
@@ -44,10 +44,7 @@ None.
 
 ### CRUD operation differences
 
-- `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.RecoveryServices/vaults/{}/replicationFabrics/{}`
-  - resolveArmResources-only: `Microsoft.RecoveryServices.Fabrics.purge (Delete) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.RecoveryServices/vaults/{}/replicationFabrics/{} [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.RecoveryServices/vaults/{}/replicationFabrics/{}, Microsoft.Resources/resourceGroups]`
-- `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.RecoveryServices/vaults/{}/replicationFabrics/{}/replicationRecoveryServicesProviders/{}`
-  - resolveArmResources-only: `Microsoft.RecoveryServices.RecoveryServicesProviders.purge (Delete) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.RecoveryServices/vaults/{}/replicationFabrics/{}/replicationRecoveryServicesProviders/{} [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.RecoveryServices/vaults/{}/replicationFabrics/{}/replicationRecoveryServicesProviders/{}, Microsoft.Resources/resourceGroups]`
+None.
 
 
 ### List/action operation differences
@@ -63,4 +60,4 @@ None.
 
 ### resolveArmResources-only non-resource methods
 
-- `Microsoft.RecoveryServices.OperationsOperationGroup.list (/subscriptions/{}/resourceGroups/{}/providers/Microsoft.RecoveryServices/operations) ResourceGroup [/subscriptions/{}/resourceGroups/{}: Microsoft.Resources/resourceGroups]`
+None.

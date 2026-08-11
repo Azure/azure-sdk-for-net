@@ -18,8 +18,8 @@ Resource ID comparisons normalize path variable names, so `{name}` and `{labName
 | Resource type / hierarchy | 0 matching normalized patterns differ |
 | Resource model | 0 matching normalized patterns differ |
 | CRUD operations | 0 matching normalized patterns differ |
-| List/action operations | 2 matching normalized patterns differ |
-| Non-resource methods | 0 legacy-only; 2 resolve-only |
+| List/action operations | 0 matching normalized patterns differ |
+| Non-resource methods | 0 legacy-only; 0 resolve-only |
 
 
 ### Legacy-only normalized resource ID patterns
@@ -49,10 +49,7 @@ None.
 
 ### List/action operation differences
 
-- `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.ServiceFabric/managedClusters/{}`
-  - resolveArmResources-only: `Microsoft.ServiceFabric.ManagedApplyMaintenanceWindow.post (Action) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ServiceFabric/managedClusters/{}/applyMaintenanceWindow [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ServiceFabric/managedClusters/{}, Microsoft.Resources/resourceGroups]`; `Microsoft.ServiceFabric.ManagedClusters.getFaultSimulation (Action) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ServiceFabric/managedClusters/{}/getFaultSimulation [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ServiceFabric/managedClusters/{}, Microsoft.Resources/resourceGroups]`; `Microsoft.ServiceFabric.ManagedClusters.listFaultSimulation (Action) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ServiceFabric/managedClusters/{}/listFaultSimulation [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ServiceFabric/managedClusters/{}, Microsoft.Resources/resourceGroups]`; `Microsoft.ServiceFabric.ManagedClusters.startFaultSimulation (Action) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ServiceFabric/managedClusters/{}/startFaultSimulation [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ServiceFabric/managedClusters/{}, Microsoft.Resources/resourceGroups]`; `Microsoft.ServiceFabric.ManagedClusters.stopFaultSimulation (Action) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ServiceFabric/managedClusters/{}/stopFaultSimulation [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ServiceFabric/managedClusters/{}, Microsoft.Resources/resourceGroups]`
-- `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.ServiceFabric/managedClusters/{}/nodeTypes/{}`
-  - resolveArmResources-only: `Microsoft.ServiceFabric.NodeTypes.getFaultSimulation (Action) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ServiceFabric/managedClusters/{}/nodeTypes/{}/getFaultSimulation [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ServiceFabric/managedClusters/{}/nodeTypes/{}, Microsoft.Resources/resourceGroups]`; `Microsoft.ServiceFabric.NodeTypes.listFaultSimulation (Action) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ServiceFabric/managedClusters/{}/nodeTypes/{}/listFaultSimulation [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ServiceFabric/managedClusters/{}/nodeTypes/{}, Microsoft.Resources/resourceGroups]`; `Microsoft.ServiceFabric.NodeTypes.startFaultSimulation (Action) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ServiceFabric/managedClusters/{}/nodeTypes/{}/startFaultSimulation [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ServiceFabric/managedClusters/{}/nodeTypes/{}, Microsoft.Resources/resourceGroups]`; `Microsoft.ServiceFabric.NodeTypes.stopFaultSimulation (Action) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ServiceFabric/managedClusters/{}/nodeTypes/{}/stopFaultSimulation [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.ServiceFabric/managedClusters/{}/nodeTypes/{}, Microsoft.Resources/resourceGroups]`
+None.
 
 
 ### Legacy-only non-resource methods
@@ -62,5 +59,4 @@ None.
 
 ### resolveArmResources-only non-resource methods
 
-- `Microsoft.ServiceFabric.OperationResults.get (/subscriptions/{}/providers/Microsoft.ServiceFabric/locations/{}/managedClusterOperationResults/{}) Subscription [/subscriptions/{}: Microsoft.Resources/subscriptions]`
-- `Microsoft.ServiceFabric.OperationStatus.get (/subscriptions/{}/providers/Microsoft.ServiceFabric/locations/{}/managedClusterOperations/{}) Subscription [/subscriptions/{}: Microsoft.Resources/subscriptions]`
+None.

@@ -226,16 +226,6 @@
             "scopeIdPattern": "/subscriptions/{subscriptionId}",
             "scopeResourceType": "Microsoft.Resources/subscriptions"
           }
-        },
-        {
-          "methodId": "Oracle.Database.DbSystemShapes.listByLocationDeprecated",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dbSystemShapes",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
         }
       ],
       "scope": {
@@ -435,16 +425,6 @@
         },
         {
           "methodId": "Oracle.Database.GiVersions.listByLocation",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        },
-        {
-          "methodId": "Oracle.Database.GiVersions.listByLocationDeprecated",
           "kind": "List",
           "operationPath": "/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions",
           "scope": {

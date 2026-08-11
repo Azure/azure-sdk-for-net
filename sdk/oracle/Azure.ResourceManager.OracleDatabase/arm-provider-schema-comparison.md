@@ -18,7 +18,7 @@ Resource ID comparisons normalize path variable names, so `{name}` and `{labName
 | Resource type / hierarchy | 0 matching normalized patterns differ |
 | Resource model | 0 matching normalized patterns differ |
 | CRUD operations | 0 matching normalized patterns differ |
-| List/action operations | 2 matching normalized patterns differ |
+| List/action operations | 0 matching normalized patterns differ |
 | Non-resource methods | 0 legacy-only; 0 resolve-only |
 
 
@@ -49,10 +49,7 @@ None.
 
 ### List/action operation differences
 
-- `/subscriptions/{}/providers/Oracle.Database/locations/{}/dbSystemShapes/{}`
-  - resolveArmResources-only: `Oracle.Database.DbSystemShapes.listByLocationDeprecated (List) /subscriptions/{}/providers/Oracle.Database/locations/{}/dbSystemShapes [Subscription: /subscriptions/{}, Microsoft.Resources/subscriptions]`
-- `/subscriptions/{}/providers/Oracle.Database/locations/{}/giVersions/{}`
-  - resolveArmResources-only: `Oracle.Database.GiVersions.listByLocationDeprecated (List) /subscriptions/{}/providers/Oracle.Database/locations/{}/giVersions [Subscription: /subscriptions/{}, Microsoft.Resources/subscriptions]`
+None.
 
 
 ### Legacy-only non-resource methods

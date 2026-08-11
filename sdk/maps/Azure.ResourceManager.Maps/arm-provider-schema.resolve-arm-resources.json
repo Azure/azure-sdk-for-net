@@ -293,24 +293,6 @@
         "scopeIdPattern": "",
         "scopeResourceType": "Microsoft.Resources/tenants"
       }
-    },
-    {
-      "methodId": "Microsoft.Maps.OperationResultOperationGroup.get",
-      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Maps/locations/{location}/operationResults/{operationId}",
-      "scope": {
-        "kind": "Subscription",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}",
-        "scopeResourceType": "Microsoft.Resources/subscriptions"
-      }
-    },
-    {
-      "methodId": "Microsoft.Maps.OperationStatusOperationGroup.get",
-      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Maps/locations/{location}/operationStatuses/{operationId}",
-      "scope": {
-        "kind": "Subscription",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}",
-        "scopeResourceType": "Microsoft.Resources/subscriptions"
-      }
     }
   ]
 }

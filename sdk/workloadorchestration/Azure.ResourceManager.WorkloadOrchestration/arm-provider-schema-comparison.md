@@ -18,7 +18,7 @@ Resource ID comparisons normalize path variable names, so `{name}` and `{labName
 | Resource type / hierarchy | 0 matching normalized patterns differ |
 | Resource model | 0 matching normalized patterns differ |
 | CRUD operations | 0 matching normalized patterns differ |
-| List/action operations | 2 matching normalized patterns differ |
+| List/action operations | 0 matching normalized patterns differ |
 | Non-resource methods | 0 legacy-only; 0 resolve-only |
 
 
@@ -49,10 +49,7 @@ None.
 
 ### List/action operation differences
 
-- `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.Edge/solutionTemplates/{}/versions/{}`
-  - resolveArmResources-only: `Microsoft.Edge.SolutionTemplateVersions.bulkReviewSolution (Action) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.Edge/solutionTemplates/{}/versions/{}/bulkReviewSolution [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.Edge/solutionTemplates/{}/versions/{}, Microsoft.Resources/resourceGroups]`
-- `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.Edge/targets/{}`
-  - resolveArmResources-only: `Microsoft.Edge.Targets.unstageSolutionVersion (Action) /subscriptions/{}/resourceGroups/{}/providers/Microsoft.Edge/targets/{}/unstageSolutionVersion [ResourceGroup: /subscriptions/{}/resourceGroups/{}/providers/Microsoft.Edge/targets/{}, Microsoft.Resources/resourceGroups]`
+None.
 
 
 ### Legacy-only non-resource methods
