@@ -4,11 +4,10 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version to `2026-05-15-preview`. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/main/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
+- Added LDAP bind password refresh support to `NetAppAccountResource`.
+- Expanded `LdapConfiguration` and `LdapConfigurationPatch` with bind authentication, Key Vault-backed bind password, DNS server, distinguished name, and LDAP port settings.
+- Added user-assigned managed identity support to certificate and credential Key Vault configurations for Bucket resources.
 
 ## 1.18.0 (2026-07-15)
 

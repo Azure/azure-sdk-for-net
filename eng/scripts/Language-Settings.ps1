@@ -110,6 +110,12 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
     }
   }
 
+  # ForceDirect matrix passes discard indirect packages, so their dependency calculation is unused.
+  if ($env:AZURESDK_SKIP_DEPENDENT_PACKAGE_CALCULATION -eq 'true') {
+    Write-Host "Skipping cross-package dependency calculation; only direct packages are needed for this pass."
+    return $additionalValidationPackages
+  }
+
   # Use all directly changed packages for dependency calculation. This ensures that
   # when any package changes, all cross-service packages that depend on it are included
   # as indirect packages for validation testing.
