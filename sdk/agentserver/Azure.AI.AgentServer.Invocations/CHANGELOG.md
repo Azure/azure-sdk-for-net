@@ -41,6 +41,12 @@
 
 ### Bugs Fixed
 
+- Fixed proactive admission helpers waiting for the local `response.created`
+  send continuation after Voice Live had already returned an authoritative
+  `response.accepted` or `response.dropped` outcome. Registered admissions now
+  complete from the Voice Live outcome or connection terminal while the
+  underlying send remains supervised and a later fault still closes the carrier.
+
 ### Other Changes
 
 ## 1.0.0-beta.5 (2026-06-28)

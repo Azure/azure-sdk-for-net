@@ -844,6 +844,7 @@ internal sealed class VoiceConnection : IVoiceConnection
             _runtimeCancellation.Token,
             _resourceGovernor);
         var completion = new TaskCompletionSource<ProactiveOutcome>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var waiterRegistered = false;
         var fields = new Dictionary<string, object?>
         {
             ["response_id"] = response.ResponseId,
@@ -854,7 +855,7 @@ internal sealed class VoiceConnection : IVoiceConnection
             fields["supersede_key"] = supersedeKey;
         }
 
-        await _sendTransaction.ExecuteAsync(
+        var sendTask = _sendTransaction.ExecuteAsync(
             new VoiceFramePayload("response.created", fields),
             async transactionCancellation =>
             {
@@ -881,6 +882,7 @@ internal sealed class VoiceConnection : IVoiceConnection
                         _pendingProactive.Add(
                             response.ResponseId,
                             new PendingProactive(response, completion, pendingLease));
+                        waiterRegistered = true;
                     }
                     catch
                     {
@@ -895,7 +897,17 @@ internal sealed class VoiceConnection : IVoiceConnection
                 }
             },
             static _ => ValueTask.FromResult(true),
-            cancellationToken).ConfigureAwait(false);
+            cancellationToken,
+            response.CancellationToken);
+
+        var retainSendTask = await AwaitProactiveSendArbitrationAsync(
+            sendTask,
+            completion.Task,
+            () => waiterRegistered).ConfigureAwait(false);
+        if (retainSendTask)
+        {
+            TrackCleanup(sendTask);
+        }
 
         ProactiveOutcome outcome;
         try
@@ -967,6 +979,36 @@ internal sealed class VoiceConnection : IVoiceConnection
         }
 
         return response;
+    }
+
+    internal static async Task<bool> AwaitProactiveSendArbitrationAsync(
+        Task sendTask,
+        Task outcomeTask,
+        Func<bool> waiterRegistered)
+    {
+        ArgumentNullException.ThrowIfNull(sendTask);
+        ArgumentNullException.ThrowIfNull(outcomeTask);
+        ArgumentNullException.ThrowIfNull(waiterRegistered);
+
+        await Task.WhenAny(sendTask, outcomeTask).ConfigureAwait(false);
+        if (outcomeTask.IsCompleted)
+        {
+            return true;
+        }
+
+        try
+        {
+            await sendTask.ConfigureAwait(false);
+        }
+        catch (VoiceBridgeConnectionClosedException) when (waiterRegistered())
+        {
+            // A causal bridge outcome may already be in the receive path. The
+            // registered waiter remains discoverable until that outcome or the
+            // connection terminal gives it one authoritative completion.
+            await outcomeTask.ConfigureAwait(false);
+        }
+
+        return false;
     }
 
     public async Task ReportSessionErrorAsync(string code, string message, CancellationToken cancellationToken)
