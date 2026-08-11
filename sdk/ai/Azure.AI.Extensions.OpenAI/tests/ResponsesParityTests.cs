@@ -185,7 +185,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
             Tools = { codeInterpreterTool },
             InputItems =
             {
-                ResponseItem.CreateUserMessageItem("Calculate the factorial of 5 using Python code."),
+                ResponseItem.CreateUserMessageItem("Use the Code interpreter tool to calculate the factorial of 5 using Python code."),
             },
         };
 

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Kusto.Models;
 using Azure.ResourceManager.Models;
 
@@ -126,7 +125,6 @@ namespace Azure.ResourceManager.Kusto
     [ModelReaderWriterBuildable(typeof(PrivateEndpointProperty))]
     [ModelReaderWriterBuildable(typeof(ReadOnlyFollowingDatabaseProperties))]
     [ModelReaderWriterBuildable(typeof(ReadWriteDatabaseProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SandboxCustomImageData))]
     [ModelReaderWriterBuildable(typeof(SandboxCustomImageProperties))]
     [ModelReaderWriterBuildable(typeof(SandboxCustomImageResource))]

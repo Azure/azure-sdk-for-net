@@ -480,7 +480,6 @@ public class AgentsTests : AgentsTestBase
         Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
     }
 
-    [Ignore("Blocked by the ADO Item 5384172.")]
     [RecordedTest]
     public async Task TestPatchHostedAgent()
     {
@@ -1079,6 +1078,46 @@ public class AgentsTests : AgentsTestBase
         Assert.That(backwards.Count, Is.EqualTo(2));
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
         Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
+    }
+
+    [RecordedTest]
+    public async Task TestDraftAgentVersion()
+    {
+        AgentAdministrationClient agentsClient = GetTestClient();
+        DeclarativeAgentDefinition agentDefinition = new(TestEnvironment.FOUNDRY_MODEL_NAME);
+        ProjectsAgentVersion newAgentVersion = await agentsClient.CreateAgentVersionAsync(
+            AGENT_NAME,
+            new ProjectsAgentVersionCreationOptions(agentDefinition)
+            {
+                Metadata = { ["delete_me"] = "please " },
+            }
+        );
+        agentDefinition = new(model: TestEnvironment.FOUNDRY_MODEL_NAME)
+        {
+            Instructions = "You are a prompt agent which gives wrong answers with 0.1 probability."
+        };
+        ProjectsAgentVersion agentVersionDraft = await agentsClient.CreateAgentVersionAsync(
+            agentName: AGENT_NAME,
+            options: new(agentDefinition)
+            {
+                Draft = true
+            }
+        );
+        Assert.That(agentVersionDraft.Name, Is.EqualTo(AGENT_NAME));
+        Assert.That(agentVersionDraft.Version.StartsWith("draft"), Is.True);
+        Assert.That(agentVersionDraft.Definition, Is.InstanceOf<DeclarativeAgentDefinition>());
+        Assert.That(((DeclarativeAgentDefinition)agentVersionDraft.Definition).Instructions, Is.EqualTo("You are a prompt agent which gives wrong answers with 0.1 probability."));
+        ProjectsAgentRecord record = await agentsClient.GetAgentAsync(AGENT_NAME);
+        Assert.That(record.GetLatestVersion().Version, Is.EqualTo(newAgentVersion.Version));
+        HashSet<string> versions = [.. await agentsClient.GetAgentVersionsAsync(agentName: AGENT_NAME).Select(x => x.Version).ToListAsync()];
+        Assert.That(versions, Does.Contain(newAgentVersion.Version));
+        Assert.That(versions, Does.Not.Contain(agentVersionDraft.Version));
+        versions = [.. await agentsClient.GetAgentVersionsAsync(agentName: AGENT_NAME, includeDrafts: false).Select(x => x.Version).ToListAsync()];
+        Assert.That(versions, Does.Contain(newAgentVersion.Version));
+        Assert.That(versions, Does.Not.Contain(agentVersionDraft.Version));
+        versions = [.. await agentsClient.GetAgentVersionsAsync(agentName: AGENT_NAME, includeDrafts: true).Select(x => x.Version).ToListAsync()];
+        Assert.That(versions, Does.Contain(newAgentVersion.Version));
+        Assert.That(versions, Does.Contain(agentVersionDraft.Version));
     }
 
     #region Helpers

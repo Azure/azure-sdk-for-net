@@ -15,7 +15,7 @@ using Azure.ResourceManager.ApiManagement;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> API Entity Properties. </summary>
-    public partial class ApiContractProperties : ApiEntityBaseContract, IJsonModel<ApiContractProperties>
+    internal partial class ApiContractProperties : ApiEntityBaseContract, IJsonModel<ApiContractProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ApiContractProperties"/> for deserialization. </summary>
         internal ApiContractProperties()

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="extendedLocations"> The names of extended locations. </param>
         /// <param name="type"> The type of the extended location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceVmSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<ContainerServiceVmSkuZoneDetails> zoneDetails, IReadOnlyList<string> extendedLocations, ContainerServiceExtendedLocationType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceVmSkuLocationInfo(string location, IReadOnlyList<string> zones, IReadOnlyList<ContainerServiceVmSkuZoneDetails> zoneDetails, IReadOnlyList<string> extendedLocations, ContainerServiceExtendedLocationType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             Zones = zones;
@@ -42,6 +41,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Location of the SKU. </summary>
+        [WirePath("location")]
+        public string Location { get; }
 
         /// <summary> List of availability zones where the SKU is supported. </summary>
         [WirePath("zones")]

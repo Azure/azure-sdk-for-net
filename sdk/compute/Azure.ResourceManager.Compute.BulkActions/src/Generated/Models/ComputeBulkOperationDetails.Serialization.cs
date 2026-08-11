@@ -137,6 +137,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("retryPolicy"u8);
                 writer.WriteObjectValue(RetryPolicy, options);
             }
+            if (Optional.IsDefined(ResourceNotificationDetails))
+            {
+                writer.WritePropertyName("resourceNotificationDetails"u8);
+                writer.WriteObjectValue(ResourceNotificationDetails, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -191,6 +196,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             ComputeBulkFallbackOperationInfo fallbackOperationInfo = default;
             DateTimeOffset? completedOn = default;
             BulkOperationRetryPolicy retryPolicy = default;
+            ResourceNotificationDetails resourceNotificationDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -294,6 +300,15 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     retryPolicy = BulkOperationRetryPolicy.DeserializeBulkOperationRetryPolicy(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("resourceNotificationDetails"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceNotificationDetails = ResourceNotificationDetails.DeserializeResourceNotificationDetails(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -312,6 +327,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 fallbackOperationInfo,
                 completedOn,
                 retryPolicy,
+                resourceNotificationDetails,
                 additionalBinaryDataProperties);
         }
     }

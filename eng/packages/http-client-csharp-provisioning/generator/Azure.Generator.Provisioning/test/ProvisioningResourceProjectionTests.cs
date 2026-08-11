@@ -5,6 +5,8 @@ using Azure.Generator.Management.Models;
 using Azure.Generator.Provisioning.Primitives;
 using Azure.Generator.Provisioning.Providers;
 using Azure.Generator.Provisioning.Tests.TestHelpers;
+using Azure.Generator.Provisioning.Utilities;
+using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -76,7 +78,7 @@ namespace Azure.Generator.Provisioning.Tests
 
             Assert.That(projection.ResourceModel, Is.SameAs(model));
             Assert.That(projection.ResourceName, Is.EqualTo("TestResource"));
-            Assert.That(projection.ResourceType, Is.EqualTo("Microsoft.Test/widgets"));
+            Assert.That(projection.ResourceType, Is.EqualTo(new ResourceTypePattern("Microsoft.Test/widgets")));
             Assert.That(projection.SingletonResourceName, Is.EqualTo("default"));
             Assert.That(projection.ParentResourceId!.SerializedPath, Is.EqualTo(
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/parents/{parentName}"));
@@ -94,6 +96,29 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(projection.ReadableScopes, Is.EqualTo(new[] { ResourceScope.ResourceGroup }));
             Assert.That(projection.WritableScopes, Is.EqualTo(new[] { ResourceScope.Extension }));
             Assert.That(projection.IsExtensionResource, Is.True);
+        }
+
+        [Test]
+        public void ResourceVersionsAreRetainedAsNonRootType()
+        {
+            var model = CreateModel("TestResourceData");
+            var resource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = CreateResourceProvider(resource);
+
+            var resourceVersions = provider.NestedTypes.Single(type => type.Name == "ResourceVersions");
+            var nonRootTypes = (HashSet<string>)typeof(CodeModelGenerator)
+                .GetProperty("NonRootTypes", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .GetValue(ProvisioningGenerator.Instance)!;
+
+            Assert.That(resourceVersions.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public), Is.True);
+            Assert.That(nonRootTypes, Does.Contain(resourceVersions.Type.FullyQualifiedName));
         }
 
         [Test]
@@ -490,6 +515,101 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
+        public void SingletonResourceWithImmediateGeneratedParentHasTypedParentAndFixedName()
+        {
+            var parentModel = CreateModel("Parent");
+            var nameProperty = CreateProperty("Name", isRequired: true);
+            var singletonModel = CreateModel("SingletonSetting", [nameProperty]);
+            var parentResource = CreateMetadata(
+                parentModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/parents/{parentName}",
+                "Microsoft.Test/parents",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"]);
+            var singletonResource = CreateMetadata(
+                singletonModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/parents/{parentName}/settings/default",
+                "Microsoft.Test/parents/settings",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                singletonResourceName: "default",
+                parentResourceId: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/parents/{parentName}",
+                methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [parentModel, singletonModel]);
+            var providers = CreateAndRegisterResourceProviders(parentResource, singletonResource);
+            var parentProperty = providers[1].Properties.Single(property => property.Name == "Parent");
+
+            var propertyInfo = ((IProvisioningPropertyInfo)providers[1]).GetProvisioningPropertyInfo(nameProperty);
+
+            Assert.That(parentProperty.Type.FullyQualifiedName, Is.EqualTo(providers[0].Type.FullyQualifiedName));
+            Assert.That(propertyInfo, Is.Not.Null);
+            Assert.That(propertyInfo!.IsOutput, Is.False);
+            Assert.That(propertyInfo.IsSettable, Is.False);
+            Assert.That(propertyInfo.DefaultValue, Is.EqualTo("default"));
+        }
+
+        [Test]
+        public void SingletonResourceWithoutGeneratedParentHasSettableName()
+        {
+            var nameProperty = CreateProperty("Name", isRequired: true);
+            var model = CreateModel("SingletonSetting", [nameProperty]);
+            var singletonResource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/parents/{parentName}/settings/default",
+                "Microsoft.Test/parents/settings",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                singletonResourceName: "default",
+                parentResourceId: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/parents/{parentName}",
+                methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = CreateResourceProvider(singletonResource);
+
+            var propertyInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(nameProperty);
+
+            Assert.That(provider.Properties.Any(property => property.Name == "Parent"), Is.False);
+            Assert.That(propertyInfo, Is.Not.Null);
+            Assert.That(propertyInfo!.IsOutput, Is.False);
+            Assert.That(propertyInfo.IsRequired, Is.True);
+            Assert.That(propertyInfo.IsSettable, Is.True);
+            Assert.That(propertyInfo.DefaultValue, Is.Null);
+        }
+
+        [Test]
+        public void SingletonResourceWithDistantGeneratedParentHasSettableName()
+        {
+            var parentModel = CreateModel("Parent");
+            var nameProperty = CreateProperty("Name", isRequired: true);
+            var singletonModel = CreateModel("SingletonSetting", [nameProperty]);
+            var parentResource = CreateMetadata(
+                parentModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/parents/{parentName}",
+                "Microsoft.Test/parents",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"]);
+            var singletonResource = CreateMetadata(
+                singletonModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/parents/{parentName}/children/{childName}/settings/default",
+                "Microsoft.Test/parents/children/settings",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                singletonResourceName: "default",
+                parentResourceId: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/parents/{parentName}",
+                methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [parentModel, singletonModel]);
+            var providers = CreateAndRegisterResourceProviders(parentResource, singletonResource);
+
+            var propertyInfo = ((IProvisioningPropertyInfo)providers[1]).GetProvisioningPropertyInfo(nameProperty);
+
+            Assert.That(providers[1].Properties.Any(property => property.Name == "Parent"), Is.False);
+            Assert.That(propertyInfo, Is.Not.Null);
+            Assert.That(propertyInfo!.IsOutput, Is.False);
+            Assert.That(propertyInfo.IsRequired, Is.True);
+            Assert.That(propertyInfo.IsSettable, Is.True);
+            Assert.That(propertyInfo.DefaultValue, Is.Null);
+        }
+
+        [Test]
         public void WritableResourcePropertiesRemainSettable()
         {
             var writableProperty = CreateProperty("WritableValue");
@@ -513,6 +633,81 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(propertyInfo, Is.Not.Null);
             Assert.That(propertyInfo!.IsOutput, Is.False);
             Assert.That(propertyInfo.IsSettable, Is.True);
+        }
+
+        [TestCase(SerializationFormat.Default, null)]
+        [TestCase(SerializationFormat.DateTime_RFC1123, "R")]
+        [TestCase(SerializationFormat.DateTime_RFC3339, "O")]
+        [TestCase(SerializationFormat.DateTime_RFC7231, "R")]
+        [TestCase(SerializationFormat.DateTime_ISO8601, "O")]
+        [TestCase(SerializationFormat.DateTime_Unix, "U")]
+        [TestCase(SerializationFormat.Date_ISO8601, "D")]
+        [TestCase(SerializationFormat.Duration_ISO8601, "P")]
+        [TestCase(SerializationFormat.Duration_Constant, "c")]
+        [TestCase(SerializationFormat.Time_ISO8601, "T")]
+        [TestCase(SerializationFormat.Bytes_Base64, "base64")]
+        [TestCase(SerializationFormat.Bytes_Base64Url, "base64url")]
+        [TestCase(SerializationFormat.Duration_Seconds, "seconds")]
+        [TestCase(SerializationFormat.Duration_Seconds_Int64, "seconds-int64")]
+        [TestCase(SerializationFormat.Duration_Seconds_Float, "seconds-float")]
+        [TestCase(SerializationFormat.Duration_Seconds_Double, "seconds-double")]
+        [TestCase(SerializationFormat.Duration_Milliseconds, "milliseconds")]
+        [TestCase(SerializationFormat.Duration_Milliseconds_Int64, "milliseconds-int64")]
+        [TestCase(SerializationFormat.Duration_Milliseconds_Float, "milliseconds-float")]
+        [TestCase(SerializationFormat.Duration_Milliseconds_Double, "milliseconds-double")]
+        [TestCase(SerializationFormat.Int_String, "string")]
+        [TestCase(SerializationFormat.Array_CommaDelimited, null)]
+        [TestCase(SerializationFormat.Array_SpaceDelimited, null)]
+        [TestCase(SerializationFormat.Array_PipeDelimited, null)]
+        [TestCase(SerializationFormat.Array_NewlineDelimited, null)]
+        public void LiteralFormatPreservesSerializationFormat(SerializationFormat serializationFormat, string? expected)
+        {
+            Assert.That(BicepTypeHelpers.GetLiteralFormat(serializationFormat), Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void ResourcePropertiesPreserveLiteralFormats()
+        {
+            var durationProperty = CreateProperty(
+                "RetentionPeriod",
+                type: new InputNullableType(new InputDurationType(
+                    DurationKnownEncoding.Iso8601,
+                    "duration",
+                    "TypeSpec.duration",
+                    InputPrimitiveType.String,
+                    null)));
+            var dateTimeProperty = CreateProperty(
+                "LastModified",
+                type: new InputDateTimeType(
+                    DateTimeKnownEncoding.Rfc3339,
+                    "utcDateTime",
+                    "TypeSpec.utcDateTime",
+                    InputPrimitiveType.String,
+                    null));
+            var blobProperty = CreateProperty("Blob", type: InputPrimitiveType.Base64);
+            var urlSafeBlobProperty = CreateProperty("UrlSafeBlob", type: InputPrimitiveType.Base64Url);
+            var metadataProperty = CreateProperty("Metadata", type: InputPrimitiveType.Any);
+            var model = CreateModel("FormattedWidget", [durationProperty, dateTimeProperty, blobProperty, urlSafeBlobProperty, metadataProperty]);
+            var writableResource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods:
+                [
+                    CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup),
+                    CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)
+                ]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = CreateResourceProvider(writableResource);
+            var properties = provider.Properties.OfType<ProvisioningPropertyProvider>().ToDictionary(property => property.Name);
+
+            Assert.That(properties["RetentionPeriod"].Format, Is.EqualTo("P"));
+            Assert.That(properties["LastModified"].Format, Is.EqualTo("O"));
+            Assert.That(properties["Blob"].Format, Is.EqualTo("base64"));
+            Assert.That(properties["UrlSafeBlob"].Format, Is.EqualTo("base64url"));
+            Assert.That(properties["Metadata"].Format, Is.Null);
         }
 
         [Test]
@@ -750,13 +945,21 @@ namespace Azure.Generator.Provisioning.Tests
                 .ToDictionary(
                     group => group.Key,
                     group => group.ToList());
+            var resourcesByIdPattern = new Dictionary<string, ProvisioningResourceProvider>();
+            foreach (var provider in providers.Where(provider => provider.ResourceProjection is not null))
+            {
+                foreach (var resourceIdPattern in provider.ResourceProjection!.ResourceIdPatterns)
+                {
+                    resourcesByIdPattern[resourceIdPattern.SerializedPath] = provider;
+                }
+            }
 
             typeof(ProvisioningOutputLibrary)
                 .GetField("_resources", BindingFlags.Instance | BindingFlags.NonPublic)!
                 .SetValue(outputLibrary, providers);
             typeof(ProvisioningOutputLibrary)
                 .GetField("_resourcesByIdPattern", BindingFlags.Instance | BindingFlags.NonPublic)!
-                .SetValue(outputLibrary, new Dictionary<string, ProvisioningResourceProvider>());
+                .SetValue(outputLibrary, resourcesByIdPattern);
             typeof(ProvisioningOutputLibrary)
                 .GetField("_resourcesByModel", BindingFlags.Instance | BindingFlags.NonPublic)!
                 .SetValue(outputLibrary, resourcesByModel);
@@ -887,7 +1090,7 @@ namespace Azure.Generator.Provisioning.Tests
             return new(
                 metadata.ResourceModel,
                 metadata.ResourceName,
-                metadata.ResourceType.SerializedResourceType,
+                metadata.ResourceType,
                 metadata.SingletonResourceName,
                 metadata.ParentResourceId,
                 metadata.NameConstraints,
