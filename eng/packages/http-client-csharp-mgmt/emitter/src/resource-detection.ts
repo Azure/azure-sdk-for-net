@@ -61,22 +61,33 @@ import { resolveArmResources } from "./resolve-arm-resources-converter.js";
 import { AzureMgmtEmitterOptions } from "./options.js";
 import { getAllSdkClients, traverseClient } from "./sdk-client-utils.js";
 import { $lib } from "./lib/lib.js";
+import { ArmProviderSchemaSnapshots } from "./arm-provider-schema-snapshot.js";
+
+export interface ArmProviderSchemaUpdateResult extends ArmProviderSchemaSnapshots {
+  selected: ArmProviderSchema;
+}
 
 export function updateClients(
   codeModel: CodeModel,
   sdkContext: CSharpEmitterContext,
   options: AzureMgmtEmitterOptions
-): ArmProviderSchema {
-  let armProviderSchema: ArmProviderSchema;
+): ArmProviderSchemaUpdateResult {
+  const legacy = buildArmProviderSchema(sdkContext, codeModel);
+  const resolveArmResourcesSchema = resolveArmResources(
+    sdkContext.program,
+    sdkContext
+  );
+  const selected =
+    options?.["use-legacy-resource-detection"] === false
+      ? resolveArmResourcesSchema
+      : legacy;
 
-  if (options?.["use-legacy-resource-detection"] === false) {
-    armProviderSchema = resolveArmResources(sdkContext.program, sdkContext);
-  } else {
-    armProviderSchema = buildArmProviderSchema(sdkContext, codeModel);
-  }
-
-  applyArmProviderSchemaDecorator(codeModel, armProviderSchema);
-  return armProviderSchema;
+  applyArmProviderSchemaDecorator(codeModel, selected);
+  return {
+    legacy,
+    resolveArmResources: resolveArmResourcesSchema,
+    selected
+  };
 }
 
 /**
@@ -527,11 +538,11 @@ function assignRemainingOperations(
       const scope = buildScopeInfoFromPath(operationPath);
       const isCollectionAction = isResourceCollectionAction(sdkMethod);
       const target = isCollectionAction
-        ? findCollectionActionTargetResource(
+        ? (findCollectionActionTargetResource(
             resources,
             operationPath,
             actionTarget
-          ) ?? actionTarget
+          ) ?? actionTarget)
         : actionTarget;
       target.metadata.methods.push({
         methodId,

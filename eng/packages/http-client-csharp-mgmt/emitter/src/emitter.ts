@@ -26,6 +26,10 @@ import type {
   CSharpEmitterContext
 } from "./code-model-types.js";
 import { ArmProviderSchema } from "./resource-metadata.js";
+import {
+  ArmProviderSchemaSnapshots,
+  emitArmProviderSchemaSnapshots
+} from "./arm-provider-schema-snapshot.js";
 
 export type ManagementCodeModelTransformer = (
   codeModel: CodeModel,
@@ -41,7 +45,11 @@ export async function emitManagementCodeModel(
   context.options["emitter-extension-path"] ??= import.meta.url;
   context.options["sdk-context-options"] ??= azureSDKContextOptions;
   context.options["model-namespace"] ??= true;
+  let armProviderSchemaSnapshots: ArmProviderSchemaSnapshots | undefined;
   const [, diagnostics] = await emitAzureCodeModel(context, updateCodeModel);
+  if (armProviderSchemaSnapshots) {
+    await emitArmProviderSchemaSnapshots(context, armProviderSchemaSnapshots);
+  }
   context.program.reportDiagnostics(filterSuppressedDiagnostics(diagnostics));
 
   function updateCodeModel(
@@ -62,14 +70,18 @@ export async function emitManagementCodeModel(
     // inherit from parents. In mgmt SDK we flatten the hierarchy, so we infer from methods instead.
     fixClientApiVersions(codeModel, sdkContext);
 
-    const armProviderSchema = updateClients(
+    const armProviderSchemaResult = updateClients(
       codeModel,
       sdkContext,
       context.options
     );
+    armProviderSchemaSnapshots = armProviderSchemaResult;
     setFlattenProperty(codeModel, sdkContext);
     setHasClientNameOverride(codeModel, sdkContext);
-    return transform?.(codeModel, sdkContext, armProviderSchema) ?? codeModel;
+    return (
+      transform?.(codeModel, sdkContext, armProviderSchemaResult.selected) ??
+      codeModel
+    );
   }
 }
 
