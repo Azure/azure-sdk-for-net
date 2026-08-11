@@ -82,19 +82,6 @@ namespace Azure.Provisioning.FrontDoor
             }
         }
 
-        /// <summary> Gets the ResourceState. </summary>
-        public BicepValue<FrontDoorResourceState> ResourceState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new RulesEngineProperties();
-                }
-                return Properties.ResourceState;
-            }
-        }
-
         /// <summary> Gets or sets the Rules. </summary>
         public BicepList<RulesEngineRule> Rules
         {
@@ -109,6 +96,19 @@ namespace Azure.Provisioning.FrontDoor
                     Properties = new RulesEngineProperties();
                 }
                 Properties.Rules = value;
+            }
+        }
+
+        /// <summary> Gets the ResourceState. </summary>
+        public BicepValue<FrontDoorResourceState> ResourceState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RulesEngineProperties();
+                }
+                return Properties.ResourceState;
             }
         }
 
