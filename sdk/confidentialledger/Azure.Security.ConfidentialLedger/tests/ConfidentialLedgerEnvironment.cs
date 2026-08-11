@@ -12,6 +12,24 @@ namespace Azure.Security.ConfidentialLedger.Tests
         public Uri ConfidentialLedgerIdentityUrl => new(GetRecordedVariable("CONFIDENTIALLEDGER_IDENTITY_URL"));
 
         /// <summary>
+        /// Whether a pruning-enabled ledger and a known pruned collection have been configured for
+        /// archived-fallback recording.
+        /// </summary>
+        public bool IsPruningLedgerConfigured =>
+            !string.IsNullOrEmpty(GetRecordedOptionalVariable("CONFIDENTIALLEDGER_PRUNING_URL")) &&
+            !string.IsNullOrEmpty(GetRecordedOptionalVariable("CONFIDENTIALLEDGER_PRUNING_IDENTITY_URL")) &&
+            !string.IsNullOrEmpty(GetRecordedOptionalVariable("CONFIDENTIALLEDGER_PRUNED_COLLECTION_ID"));
+
+        /// <summary> The pruning-enabled ledger endpoint used by archived-fallback recorded tests. </summary>
+        public Uri ConfidentialLedgerPruningUrl => new(GetRecordedVariable("CONFIDENTIALLEDGER_PRUNING_URL"));
+
+        /// <summary> The Identity Service endpoint for the pruning-enabled ledger. </summary>
+        public Uri ConfidentialLedgerPruningIdentityUrl => new(GetRecordedVariable("CONFIDENTIALLEDGER_PRUNING_IDENTITY_URL"));
+
+        /// <summary> A collection known to have been removed from live state but retained in ledger history. </summary>
+        public string ConfidentialLedgerPrunedCollectionId => GetRecordedVariable("CONFIDENTIALLEDGER_PRUNED_COLLECTION_ID");
+
+        /// <summary>
         /// Whether a Ledger Gateway endpoint has been configured via <c>CONFIDENTIALLEDGER_WEBFE_URL</c>.
         /// The Ledger Gateway recorded tests self-skip when this is <c>false</c> so they never run against a
         /// non-gateway ledger (for example in the live-test pipeline).
