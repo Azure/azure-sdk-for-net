@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         /// <param name="functionAppProfileId"> Resource Id of Azure Function App Resource. </param>
         /// <param name="openAIProfile"> Profile of OpenAI Resource. </param>
         /// <param name="managedResourceGroupConfiguration"> Configuration of the managed resource group associated with the resource. </param>
-        /// <param name="managedOnBehalfOfMoboBrokerResources"> Associated MoboBrokerResources. </param>
+        /// <param name="managedOnBehalfOfBrokerResources"> Associated broker resources managed on behalf of the service. </param>
         /// <param name="cmkKeyUri"> URI of Key in AKV. </param>
         /// <param name="fabricProfile"> Profile of Fabric resources. </param>
         /// <param name="userManagedOpenAIProfile"> Profile of User Managed OpenAI Resource. </param>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         /// <param name="resourceState"> State of the resource. </param>
         /// <param name="redundancyState"> Zone redundancy state for resources. </param>
         /// <returns> A new <see cref="Models.ManufacturingDataServiceProperties"/> instance for mocking. </returns>
-        public static ManufacturingDataServiceProperties ManufacturingDataServiceProperties(ManufacturingPlatformProvisioningState? provisioningState = default, string version = default, bool? enableCopilot = default, bool? enableDiagnosticSettings = default, string aadApplicationId = default, string aksAdminGroupId = default, string serviceUri = default, string aksProfileId = default, string storageProfileId = default, string databaseCosmosId = default, AdxProfile adxProfile = default, string redisProfileId = default, string monitoringProfileId = default, EventHubProfile eventHubProfile = default, string functionAppProfileId = default, OpenAIProfile openAIProfile = default, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default, IEnumerable<MoboBrokerResourceInfo> managedOnBehalfOfMoboBrokerResources = default, string cmkKeyUri = default, FabricProfile fabricProfile = default, UserManagedOpenAIProfile userManagedOpenAIProfile = default, IEnumerable<DenyAssignmentExclusion> denyAssignmentExclusions = default, ManufacturingPlatformResourceState? resourceState = default, ManufacturingPlatformRedundancyState? redundancyState = default)
+        public static ManufacturingDataServiceProperties ManufacturingDataServiceProperties(ManufacturingPlatformProvisioningState? provisioningState = default, string version = default, bool? enableCopilot = default, bool? enableDiagnosticSettings = default, string aadApplicationId = default, string aksAdminGroupId = default, string serviceUri = default, string aksProfileId = default, string storageProfileId = default, string databaseCosmosId = default, AdxProfile adxProfile = default, string redisProfileId = default, string monitoringProfileId = default, EventHubProfile eventHubProfile = default, string functionAppProfileId = default, OpenAIProfile openAIProfile = default, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default, IEnumerable<ManagedOnBehalfOfBrokerResourceInfo> managedOnBehalfOfBrokerResources = default, string cmkKeyUri = default, FabricProfile fabricProfile = default, UserManagedOpenAIProfile userManagedOpenAIProfile = default, IEnumerable<DenyAssignmentExclusion> denyAssignmentExclusions = default, ManufacturingPlatformResourceState? resourceState = default, ManufacturingPlatformRedundancyState? redundancyState = default)
         {
             denyAssignmentExclusions ??= new ChangeTrackingList<DenyAssignmentExclusion>();
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
                 functionAppProfileId is null ? default : new FunctionAppProfile(functionAppProfileId, default),
                 openAIProfile,
                 managedResourceGroupConfiguration,
-                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<MoboBrokerResourceInfo>()).ToList(), default),
+                managedOnBehalfOfBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfBrokerResources ?? new ChangeTrackingList<ManagedOnBehalfOfBrokerResourceInfo>()).ToList(), default),
                 cmkKeyUri is null ? default : new CmkProfile(cmkKeyUri, default),
                 fabricProfile,
                 userManagedOpenAIProfile,
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             return new ManagedResourceGroupConfiguration(name, location, default);
         }
 
-        /// <param name="id"> Resource Id of MoboBrokerResource. </param>
-        /// <returns> A new <see cref="Models.MoboBrokerResourceInfo"/> instance for mocking. </returns>
-        public static MoboBrokerResourceInfo MoboBrokerResourceInfo(string id = default)
+        /// <param name="id"> Resource identifier of the broker resource. </param>
+        /// <returns> A new <see cref="Models.ManagedOnBehalfOfBrokerResourceInfo"/> instance for mocking. </returns>
+        public static ManagedOnBehalfOfBrokerResourceInfo ManagedOnBehalfOfBrokerResourceInfo(string id = default)
         {
-            return new MoboBrokerResourceInfo(id, default);
+            return new ManagedOnBehalfOfBrokerResourceInfo(id, default);
         }
 
         /// <param name="keyUri"> Azure Key Vault Uri. </param>

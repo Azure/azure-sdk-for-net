@@ -10,27 +10,27 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManufacturingPlatform.Models
 {
-    /// <summary> MoboBroker resource. </summary>
-    public partial class MoboBrokerResourceInfo
+    /// <summary> Broker resource managed on behalf of the service. </summary>
+    public partial class ManagedOnBehalfOfBrokerResourceInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MoboBrokerResourceInfo"/>. </summary>
-        internal MoboBrokerResourceInfo()
+        /// <summary> Initializes a new instance of <see cref="ManagedOnBehalfOfBrokerResourceInfo"/>. </summary>
+        internal ManagedOnBehalfOfBrokerResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MoboBrokerResourceInfo"/>. </summary>
-        /// <param name="id"> Resource Id of MoboBrokerResource. </param>
+        /// <summary> Initializes a new instance of <see cref="ManagedOnBehalfOfBrokerResourceInfo"/>. </summary>
+        /// <param name="id"> Resource identifier of the broker resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MoboBrokerResourceInfo(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedOnBehalfOfBrokerResourceInfo(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Resource Id of MoboBrokerResource. </summary>
+        /// <summary> Resource identifier of the broker resource. </summary>
         public string Id { get; }
     }
 }

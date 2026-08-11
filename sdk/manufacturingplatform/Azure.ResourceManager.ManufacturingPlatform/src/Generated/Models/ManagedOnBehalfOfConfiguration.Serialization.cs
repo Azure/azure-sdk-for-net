@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             {
                 writer.WritePropertyName("moboBrokerResources"u8);
                 writer.WriteStartArray();
-                foreach (MoboBrokerResourceInfo item in MoboBrokerResources)
+                foreach (ManagedOnBehalfOfBrokerResourceInfo item in BrokerResources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,18 +126,18 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             {
                 return null;
             }
-            IReadOnlyList<MoboBrokerResourceInfo> moboBrokerResources = default;
+            IReadOnlyList<ManagedOnBehalfOfBrokerResourceInfo> brokerResources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("moboBrokerResources"u8))
                 {
-                    List<MoboBrokerResourceInfo> array = new List<MoboBrokerResourceInfo>();
+                    List<ManagedOnBehalfOfBrokerResourceInfo> array = new List<ManagedOnBehalfOfBrokerResourceInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MoboBrokerResourceInfo.DeserializeMoboBrokerResourceInfo(item, options));
+                        array.Add(ManagedOnBehalfOfBrokerResourceInfo.DeserializeManagedOnBehalfOfBrokerResourceInfo(item, options));
                     }
-                    moboBrokerResources = array;
+                    brokerResources = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedOnBehalfOfConfiguration(moboBrokerResources, additionalBinaryDataProperties);
+            return new ManagedOnBehalfOfConfiguration(brokerResources, additionalBinaryDataProperties);
         }
     }
 }

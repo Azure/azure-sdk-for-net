@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         /// <summary> Initializes a new instance of <see cref="ManagedOnBehalfOfConfiguration"/>. </summary>
         internal ManagedOnBehalfOfConfiguration()
         {
-            MoboBrokerResources = new ChangeTrackingList<MoboBrokerResourceInfo>();
+            BrokerResources = new ChangeTrackingList<ManagedOnBehalfOfBrokerResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedOnBehalfOfConfiguration"/>. </summary>
-        /// <param name="moboBrokerResources"> Associated MoboBrokerResources. </param>
+        /// <param name="brokerResources"> Associated broker resources managed on behalf of the service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedOnBehalfOfConfiguration(IReadOnlyList<MoboBrokerResourceInfo> moboBrokerResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedOnBehalfOfConfiguration(IReadOnlyList<ManagedOnBehalfOfBrokerResourceInfo> brokerResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            MoboBrokerResources = moboBrokerResources;
+            BrokerResources = brokerResources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Associated MoboBrokerResources. </summary>
-        public IReadOnlyList<MoboBrokerResourceInfo> MoboBrokerResources { get; } = new ChangeTrackingList<MoboBrokerResourceInfo>();
+        /// <summary> Associated broker resources managed on behalf of the service. </summary>
+        public IReadOnlyList<ManagedOnBehalfOfBrokerResourceInfo> BrokerResources { get; } = new ChangeTrackingList<ManagedOnBehalfOfBrokerResourceInfo>();
     }
 }

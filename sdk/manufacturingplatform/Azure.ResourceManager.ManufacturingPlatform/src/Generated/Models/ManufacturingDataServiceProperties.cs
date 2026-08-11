@@ -209,12 +209,12 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             }
         }
 
-        /// <summary> Associated MoboBrokerResources. </summary>
-        public IReadOnlyList<MoboBrokerResourceInfo> ManagedOnBehalfOfMoboBrokerResources
+        /// <summary> Associated broker resources managed on behalf of the service. </summary>
+        public IReadOnlyList<ManagedOnBehalfOfBrokerResourceInfo> ManagedOnBehalfOfBrokerResources
         {
             get
             {
-                return ManagedOnBehalfOfConfiguration is null ? default : ManagedOnBehalfOfConfiguration.MoboBrokerResources;
+                return ManagedOnBehalfOfConfiguration is null ? default : ManagedOnBehalfOfConfiguration.BrokerResources;
             }
         }
 
