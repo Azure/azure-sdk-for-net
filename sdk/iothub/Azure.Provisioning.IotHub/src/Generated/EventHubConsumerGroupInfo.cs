@@ -23,7 +23,6 @@ namespace Azure.Provisioning.IotHub
         private SystemData _systemData;
         private BicepDictionary<BinaryData> _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<IotHubDescription> _parent;
 
         /// <summary> Creates a new EventHubConsumerGroupInfo. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -92,21 +91,6 @@ namespace Azure.Provisioning.IotHub
             }
         }
 
-        /// <summary> Gets or sets the Parent. </summary>
-        public IotHubDescription Parent
-        {
-            get
-            {
-                Initialize();
-                return _parent.Value;
-            }
-            set
-            {
-                Initialize();
-                _parent.Value = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for EventHubConsumerGroupInfo. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -116,7 +100,6 @@ namespace Azure.Provisioning.IotHub
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineDictionaryProperty<BinaryData>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<IotHubDescription>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
