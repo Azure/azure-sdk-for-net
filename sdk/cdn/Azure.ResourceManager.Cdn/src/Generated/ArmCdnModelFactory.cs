@@ -3448,51 +3448,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CanMigrateResult"/>. </summary>
-        /// <param name="id">
-        /// Resource ID, String.
-        ///             Serialized Name: CanMigrateResult.id
-        /// </param>
-        /// <param name="canMigrateResultType">
-        /// Resource type.
-        ///             Serialized Name: CanMigrateResult.type
-        /// </param>
-        /// <param name="canMigrate">
-        /// Flag that says if the profile can be migrated
-        ///             Serialized Name: CanMigrateResult.properties.canMigrate
-        /// </param>
-        /// <param name="defaultSku">
-        /// Recommended sku for the migration
-        ///             Serialized Name: CanMigrateResult.properties.defaultSku
-        /// </param>
-        /// <param name="errors"> Serialized Name: CanMigrateResult.properties.errors. </param>
-        /// <returns> A new <see cref="Models.CanMigrateResult"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CanMigrateResult CanMigrateResult(string id = default, string canMigrateResultType = default, bool? canMigrate = default, CanMigrateDefaultSku? defaultSku = default, IEnumerable<MigrationErrorType> errors = default)
-        {
-            return new CanMigrateResult(default, canMigrateResultType, canMigrate is null && defaultSku is null && errors is null ? default : new CanMigrateProperties(canMigrate, defaultSku, (errors ?? new ChangeTrackingList<MigrationErrorType>()).ToList(), default), default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MigrateResult"/>. </summary>
-        /// <param name="id">
-        /// Resource ID.
-        ///             Serialized Name: MigrateResult.id
-        /// </param>
-        /// <param name="migrateResultType">
-        /// Resource type.
-        ///             Serialized Name: MigrateResult.type
-        /// </param>
-        /// <param name="migratedProfileResourceIdId">
-        /// Arm resource id of the migrated profile
-        ///             Serialized Name: MigrateResult.properties.migratedProfileResourceId
-        /// </param>
-        /// <returns> A new <see cref="Models.MigrateResult"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MigrateResult MigrateResult(string id = default, string migrateResultType = default, ResourceIdentifier migratedProfileResourceIdId = default)
-        {
-            return new MigrateResult(default, migrateResultType, migratedProfileResourceIdId is null ? default : new MigrateResultProperties(new CdnResourceReference(migratedProfileResourceIdId, default), default), default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Cdn.ProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

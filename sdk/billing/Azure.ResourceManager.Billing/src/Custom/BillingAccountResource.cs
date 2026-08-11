@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Cancels payment terms on a billing account. </summary>
-        public virtual async Task<ArmOperation<BillingAccountResource>> CancelPaymentTermsAsync(WaitUntil waitUntil, DateTimeOffset parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingAccountResource>> CancelPaymentTermsAsync(WaitUntil waitUntil, DateTimeOffset dateTime, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _billingAccountsClientDiagnostics.CreateScope("BillingAccountResource.CancelPaymentTerms");
             scope.Start();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingAccountsRestClient.CreateCancelPaymentTermsRequest(Id.Name, BillingRequestContentHelper.ToRequestContent(parameters), context);
+                HttpMessage message = _billingAccountsRestClient.CreateCancelPaymentTermsRequest(Id.Name, BillingRequestContentHelper.ToRequestContent(dateTime), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingAccountResource> operation = new BillingArmOperation<BillingAccountResource>(
                     new BillingAccountResourceOperationSource(Client),
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Cancels payment terms on a billing account. </summary>
-        public virtual ArmOperation<BillingAccountResource> CancelPaymentTerms(WaitUntil waitUntil, DateTimeOffset parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingAccountResource> CancelPaymentTerms(WaitUntil waitUntil, DateTimeOffset dateTime, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _billingAccountsClientDiagnostics.CreateScope("BillingAccountResource.CancelPaymentTerms");
             scope.Start();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingAccountsRestClient.CreateCancelPaymentTermsRequest(Id.Name, BillingRequestContentHelper.ToRequestContent(parameters), context);
+                HttpMessage message = _billingAccountsRestClient.CreateCancelPaymentTermsRequest(Id.Name, BillingRequestContentHelper.ToRequestContent(dateTime), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingAccountResource> operation = new BillingArmOperation<BillingAccountResource>(
                     new BillingAccountResourceOperationSource(Client),
