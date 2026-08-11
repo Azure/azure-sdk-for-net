@@ -1336,6 +1336,10 @@ namespace Azure.Storage.Blobs.Models
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
     }
+    public partial class ContainerSessionProvider : Azure.Storage.Blobs.Models.SessionProvider
+    {
+        public ContainerSessionProvider(System.Uri serviceUri, Azure.Core.TokenCredential credential, Azure.Storage.Blobs.BlobClientOptions options = null) { }
+    }
     public partial class CopyFromUriOperation : Azure.Operation<long>
     {
         protected CopyFromUriOperation() { }
@@ -1657,10 +1661,6 @@ namespace Azure.Storage.Blobs.Models
         public string BlobContainerName { get { throw null; } }
         public string BlobName { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class ContainerSessionProvider : Azure.Storage.Blobs.Models.SessionProvider
-    {
-        public ContainerSessionProvider(System.Uri serviceUri, Azure.Core.TokenCredential credential, Azure.Storage.Blobs.BlobClientOptions options = null) { }
     }
     public partial class UserDelegationKey : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Blobs.Models.UserDelegationKey>
     {
