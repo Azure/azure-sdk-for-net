@@ -9,7 +9,12 @@
 - The client now treats a `GetLedgerEntry`/`GetLedgerEntryAsync` response that is still in the `Loading` state as transient and automatically polls until the entry is committed, bounded by the client's configured retry settings (`ClientOptions.Retry.MaxRetries` attempts with `ClientOptions.Retry.Delay` between attempts). Callers no longer need to write a manual polling loop.
 - Added `ConfidentialLedgerClientOptions.EnableArchivedCollectionFallback`. It defaults to `true`, so `GetCurrentLedgerEntry` and `GetCurrentLedgerEntryAsync` transparently fall back to a historical query for a collection whose latest entry has been archived (pruned), without additional caller logic or configuration. Set it to `false` to retain the legacy `404 Not Found` behavior.
 
+- Added strongly typed convenience overloads for service operations. The existing protocol methods remain available for advanced scenarios.
+- Added experimental configuration and host-builder integration through `ConfidentialLedgerClientSettings` and `ConfidentialLedgerClientHostExtensions`.
+
 ### Breaking Changes
+
+- Renamed and moved `Azure.Security.ConfidentialLedger.Models.SecurityConfidentialLedgerModelFactory` to `Azure.Security.ConfidentialLedger.ConfidentialLedgerModelFactory`.
 
 ### Bugs Fixed
 - Failover requests are now validated by endpoint-specific transports against that ledger's own identity TLS certificate, fetched from the independently validated Identity Service. A certificate trusted for one ledger cannot authenticate another ledger. Custom transports remain supported.

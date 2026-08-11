@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Security.ConfidentialLedger;
 
 namespace Azure.Security.ConfidentialLedger.Models
 {
     /// <summary> Details about a Confidential Ledger user. </summary>
     public partial class LedgerUserMultipleRoles
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LedgerUserMultipleRoles"/>. </summary>
         /// <param name="assignedRoles"> Represents an assignable role. </param>
@@ -62,21 +34,17 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// Identifier for the user. This must either be an AAD object id or a certificate
         /// fingerprint.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LedgerUserMultipleRoles(IList<ConfidentialLedgerUserRoleName> assignedRoles, string userId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LedgerUserMultipleRoles(IList<ConfidentialLedgerUserRoleName> assignedRoles, string userId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AssignedRoles = assignedRoles;
             UserId = userId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LedgerUserMultipleRoles"/> for deserialization. </summary>
-        internal LedgerUserMultipleRoles()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Represents an assignable role. </summary>
         public IList<ConfidentialLedgerUserRoleName> AssignedRoles { get; }
+
         /// <summary>
         /// Identifier for the user. This must either be an AAD object id or a certificate
         /// fingerprint.

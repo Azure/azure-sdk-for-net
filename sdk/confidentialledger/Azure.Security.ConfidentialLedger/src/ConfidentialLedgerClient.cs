@@ -7,10 +7,12 @@ using System.IO;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Security.ConfidentialLedger.Certificate;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.ConfidentialLedger
 {
@@ -137,8 +139,7 @@ namespace Azure.Security.ConfidentialLedger
                     new FailoverPolicy(_failoverService, actualOptions.FailoverNetworkTimeout)
                 };
             }
-
-            _pipeline = HttpPipelineBuilder.Build(
+            Pipeline = HttpPipelineBuilder.Build(
                 actualOptions,
                 perRetryPolicies,
                 _tokenCredential == null ?
@@ -219,7 +220,7 @@ namespace Azure.Security.ConfidentialLedger
                     // the caller supplied is preserved rather than replaced.
                     message.ResponseClassifier = new LedgerGatewayAccept202Classifier(message.ResponseClassifier);
                 }
-                var response = _pipeline.ProcessMessage(message, context);
+                var response = Pipeline.ProcessMessage(message, context);
 
                 var operation = CreatePostLedgerEntryOperation(response);
                 if (waitUntil == WaitUntil.Completed)
@@ -272,7 +273,7 @@ namespace Azure.Security.ConfidentialLedger
                     // RequestContext.AddClassifier the caller supplied is preserved rather than replaced.
                     message.ResponseClassifier = new LedgerGatewayAccept202Classifier(message.ResponseClassifier);
                 }
-                var response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                var response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
 
                 var operation = CreatePostLedgerEntryOperation(response);
                 if (waitUntil == WaitUntil.Completed)
@@ -355,7 +356,7 @@ namespace Azure.Security.ConfidentialLedger
                 for (int attempt = 0; ; attempt++)
                 {
                     using HttpMessage message = CreateFailoverGetLedgerEntryRequest(transactionId, collectionId, context);
-                    Response response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     if (!IsLoadingResponse(response) || attempt >= _maxLoadingRetries)
                     {
                         return response;
@@ -382,7 +383,7 @@ namespace Azure.Security.ConfidentialLedger
                 for (int attempt = 0; ; attempt++)
                 {
                     using HttpMessage message = CreateFailoverGetLedgerEntryRequest(transactionId, collectionId, context);
-                    Response response = _pipeline.ProcessMessage(message, context);
+                    Response response = Pipeline.ProcessMessage(message, context);
                     if (!IsLoadingResponse(response) || attempt >= _maxLoadingRetries)
                     {
                         return response;
@@ -408,7 +409,7 @@ namespace Azure.Security.ConfidentialLedger
                 try
                 {
                     using HttpMessage message = CreateFailoverGetCurrentLedgerEntryRequest(collectionId, context);
-                    return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 }
                 catch (RequestFailedException exception) when (_enableArchivedCollectionFallback && collectionId != null && IsArchivedCollectionNotFound(exception))
                 {
@@ -437,7 +438,7 @@ namespace Azure.Security.ConfidentialLedger
                 try
                 {
                     using HttpMessage message = CreateFailoverGetCurrentLedgerEntryRequest(collectionId, context);
-                    return _pipeline.ProcessMessage(message, context);
+                    return Pipeline.ProcessMessage(message, context);
                 }
                 catch (RequestFailedException exception) when (_enableArchivedCollectionFallback && collectionId != null && IsArchivedCollectionNotFound(exception))
                 {
@@ -476,7 +477,7 @@ namespace Azure.Security.ConfidentialLedger
 
         private HttpMessage CreateFailoverGetLedgerEntryRequest(string transactionId, string collectionId, RequestContext context)
         {
-            HttpMessage message = _pipeline.CreateMessage(context, new ConfidentialLedgerResponseClassifier());
+            HttpMessage message = Pipeline.CreateMessage(context, new ConfidentialLedgerResponseClassifier());
             FailoverPolicy.MarkEligible(message);
             Request request = message.Request;
             request.Method = RequestMethod.Get;
@@ -496,7 +497,7 @@ namespace Azure.Security.ConfidentialLedger
 
         private HttpMessage CreateFailoverGetCurrentLedgerEntryRequest(string collectionId, RequestContext context)
         {
-            HttpMessage message = _pipeline.CreateMessage(context, new ConfidentialLedgerResponseClassifier());
+            HttpMessage message = Pipeline.CreateMessage(context, new ConfidentialLedgerResponseClassifier());
             FailoverPolicy.MarkEligible(message);
             Request request = message.Request;
             request.Method = RequestMethod.Get;
@@ -709,14 +710,37 @@ namespace Azure.Security.ConfidentialLedger
         private async Task<Response> TryGetArchivedCurrentEntryAsync(string collectionId, RequestContext context)
         {
             BinaryData latest = null;
-            await foreach (BinaryData entry in GetLedgerEntriesAsync(
-                collectionId,
-                fromTransactionId: null,
-                toTransactionId: null,
-                tag: null,
-                context: context).ConfigureAwait(false))
+            Uri nextPage = null;
+            int loadingRetries = 0;
+            CancellationToken cancellationToken = context?.CancellationToken ?? default;
+
+            while (true)
             {
-                latest = entry;
+                using HttpMessage message = nextPage == null
+                    ? CreateGetLedgerEntriesRequest(collectionId, null, null, null, context)
+                    : CreateNextGetLedgerEntriesRequest(nextPage, collectionId, null, null, null, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using JsonDocument document = JsonDocument.Parse(response.Content);
+                JsonElement root = document.RootElement;
+
+                if (IsLoadingPage(root))
+                {
+                    if (loadingRetries++ >= _maxLoadingRetries)
+                    {
+                        return null;
+                    }
+                    nextPage = GetNextPage(root);
+                    await Task.Delay(_loadingPollDelay, cancellationToken).ConfigureAwait(false);
+                    continue;
+                }
+
+                loadingRetries = 0;
+                latest = GetLatestEntry(root, latest);
+                nextPage = GetNextPage(root);
+                if (nextPage == null)
+                {
+                    break;
+                }
             }
 
             return latest == null ? null : FormatArchivedCurrentEntry(latest);
@@ -725,17 +749,70 @@ namespace Azure.Security.ConfidentialLedger
         private Response TryGetArchivedCurrentEntry(string collectionId, RequestContext context)
         {
             BinaryData latest = null;
-            foreach (BinaryData entry in GetLedgerEntries(
-                collectionId,
-                fromTransactionId: null,
-                toTransactionId: null,
-                tag: null,
-                context: context))
+            Uri nextPage = null;
+            int loadingRetries = 0;
+            CancellationToken cancellationToken = context?.CancellationToken ?? default;
+
+            while (true)
             {
-                latest = entry;
+                using HttpMessage message = nextPage == null
+                    ? CreateGetLedgerEntriesRequest(collectionId, null, null, null, context)
+                    : CreateNextGetLedgerEntriesRequest(nextPage, collectionId, null, null, null, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                using JsonDocument document = JsonDocument.Parse(response.Content);
+                JsonElement root = document.RootElement;
+
+                if (IsLoadingPage(root))
+                {
+                    if (loadingRetries++ >= _maxLoadingRetries)
+                    {
+                        return null;
+                    }
+                    nextPage = GetNextPage(root);
+                    cancellationToken.WaitHandle.WaitOne(_loadingPollDelay);
+                    cancellationToken.ThrowIfCancellationRequested();
+                    continue;
+                }
+
+                loadingRetries = 0;
+                latest = GetLatestEntry(root, latest);
+                nextPage = GetNextPage(root);
+                if (nextPage == null)
+                {
+                    break;
+                }
             }
 
             return latest == null ? null : FormatArchivedCurrentEntry(latest);
+        }
+
+        private static bool IsLoadingPage(JsonElement root) =>
+            root.TryGetProperty("state", out JsonElement state) &&
+            state.ValueKind == JsonValueKind.String &&
+            string.Equals(state.GetString(), "Loading", StringComparison.Ordinal);
+
+        private static Uri GetNextPage(JsonElement root)
+        {
+            if (!root.TryGetProperty("nextLink", out JsonElement nextLink) ||
+                nextLink.ValueKind != JsonValueKind.String ||
+                string.IsNullOrEmpty(nextLink.GetString()))
+            {
+                return null;
+            }
+
+            return new Uri(nextLink.GetString(), UriKind.RelativeOrAbsolute);
+        }
+
+        private static BinaryData GetLatestEntry(JsonElement root, BinaryData latest)
+        {
+            if (root.TryGetProperty("entries", out JsonElement entries) && entries.ValueKind == JsonValueKind.Array)
+            {
+                foreach (JsonElement entry in entries.EnumerateArray())
+                {
+                    latest = BinaryData.FromString(entry.GetRawText());
+                }
+            }
+            return latest;
         }
 
         private sealed class ArchivedCurrentEntryResponse : Response
