@@ -4,6 +4,7 @@
 
 ### Features Added
 
+- Upgraded API version from `2026-03-01-preview` to `2026-05-01-preview`.
 - Added `RoutingEventStreamProperties` model and `EventStreamAuthenticationType` enum for routing event stream endpoints.
 - Added `RoutingEndpoints.EventStreams` collection property.
 
