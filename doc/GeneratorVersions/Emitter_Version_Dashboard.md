@@ -1,6 +1,6 @@
 # Emitter Version Dashboard
 
-> **Auto-generated** by `Emitter_Version_Dashboard` on 2026-08-11 02:41:18 UTC.
+> **Auto-generated** by `Emitter_Version_Dashboard` on 2026-08-11 02:50:32 UTC.
 > Run that script to refresh this file after dependency version changes.
 
 ## Latest Published Version Chain
@@ -17,7 +17,7 @@
 | Emitter | Depends On | Dependency Version | Latest on npm | Dependency Commit |
 |---|---|---|---|---|
 | `@azure-typespec/http-client-csharp` | `@typespec/http-client-csharp` | [1.0.0-alpha.20260810.6](https://www.npmjs.com/package/@typespec/http-client-csharp/v/1.0.0-alpha.20260810.6) | [1.0.0-alpha.20260810.6](https://www.npmjs.com/package/@typespec/http-client-csharp/v/1.0.0-alpha.20260810.6) | [8187157](https://github.com/microsoft/typespec/commit/818715759ee6111c39793fadadaad92923472732) |
-| `@azure-typespec/http-client-csharp-mgmt` | `@azure-typespec/http-client-csharp` | [1.0.0-alpha.20260810.6](https://www.npmjs.com/package/@azure-typespec/http-client-csharp/v/1.0.0-alpha.20260810.6) | [1.0.0-alpha.20260810.6](https://www.npmjs.com/package/@azure-typespec/http-client-csharp/v/1.0.0-alpha.20260810.6) | [6244a77](https://github.com/Azure/azure-sdk-for-net/commit/6244a777d4ebffc62c2ff272cf09889753774179) |
+| `@azure-typespec/http-client-csharp-mgmt` | `@azure-typespec/http-client-csharp` | [1.0.0-alpha.20260810.6](https://www.npmjs.com/package/@azure-typespec/http-client-csharp/v/1.0.0-alpha.20260810.6) | [1.0.0-alpha.20260810.6](https://www.npmjs.com/package/@azure-typespec/http-client-csharp/v/1.0.0-alpha.20260810.6) | [5135043](https://github.com/Azure/azure-sdk-for-net/commit/5135043a21ec2d9026d9c95526bb6206e2e09348) |
 | `@azure-typespec/http-client-csharp-provisioning` | `@azure-typespec/http-client-csharp-mgmt` | 1.0.0-alpha.20260729.1 | [1.0.0-alpha.20260810.1](https://www.npmjs.com/package/@azure-typespec/http-client-csharp-mgmt/v/1.0.0-alpha.20260810.1) | [34e4817](https://github.com/Azure/azure-sdk-for-net/commit/34e4817e0a0dd6e2dd562cfe56de45bddc13433b) |
 
 ## Source Files
