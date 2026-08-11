@@ -303,13 +303,18 @@ function Test-PathCovered([string]$repoRelFile, $set) {
 }
 
 # ---- telemetry object (validated against telemetry-schema.v1.json) -----------------
+# eligible must never contradict status: status=ineligible is, by definition, the
+# eligibility gate having failed, so force eligible=false there. This keeps the two
+# consistent no matter which path set the status (the -Eligible:$false gate OR an
+# explicit -ForcedStatus ineligible), protecting the downstream metric denominators.
+$eligibleOut = if ($status -eq 'ineligible') { $false } else { [bool]$Eligible }
 $obj = [ordered]@{
     schema_version = 'v1'
     run_id         = $RunId
     repo           = $Repo
     pr             = $Pr
     head_sha       = $HeadSha
-    eligible       = [bool]$Eligible
+    eligible       = $eligibleOut
     status         = $status
     repaired_at    = $repairedAt
 }

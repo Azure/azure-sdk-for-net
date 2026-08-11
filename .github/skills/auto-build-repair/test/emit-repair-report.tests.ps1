@@ -338,6 +338,25 @@ try {
     & pwsh -NoProfile -File $EmitterPath -ResultsDir $rr -PackagePath $pkg -RepoRoot $g6 -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $raOut2 | Out-Null
     $raJson2 = Get-TelemetryObject (Get-Content -Raw $raOut2)
     Assert ($raJson2 -match ('"repaired_at":"' + [regex]::Escape($expected) + '"')) 'repaired_at: stable (unchanged) on re-emit'
+
+    # =========================================================================
+    # eligible/status consistency: when status resolves to 'ineligible' the
+    # telemetry 'eligible' field must be false, regardless of which path set the
+    # status. Both the -Eligible:$false gate and an explicit -ForcedStatus
+    # ineligible (even with the default -Eligible $true) must yield eligible=false,
+    # so downstream metric denominators never see {"eligible":true,"status":"ineligible"}.
+    # =========================================================================
+    Write-Host 'Section: eligible=false whenever status=ineligible (both paths)'
+    $ineA = Join-Path $tmp 'inelig-gate.md'
+    & pwsh -NoProfile -File $EmitterPath -Eligible:$false -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $ineA | Out-Null
+    $ineAJson = Get-TelemetryObject (Get-Content -Raw $ineA)
+    Assert ($ineAJson -match '"eligible":false' -and $ineAJson -match '"status":"ineligible"') 'ineligible-gate: eligible=false, status=ineligible'
+    $ineB = Join-Path $tmp 'inelig-forced.md'
+    & pwsh -NoProfile -File $EmitterPath -ForcedStatus 'ineligible' -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $ineB | Out-Null
+    $ineBJson = Get-TelemetryObject (Get-Content -Raw $ineB)
+    Assert ($ineBJson -match '"status":"ineligible"') 'ineligible-forced: status=ineligible'
+    Assert ($ineBJson -match '"eligible":false') 'ineligible-forced: eligible forced false despite default -Eligible $true'
+    Assert ($ineBJson -notmatch '"eligible":true') 'ineligible-forced: no contradictory eligible=true'
 }
 finally {
     Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue
