@@ -124,9 +124,18 @@ try {
             # sourced from the pre-repair build log (the success result has no buildResult).
             Assert ($body -match '(?m)^### Build Errors Fixed$') "repaired: 'Build Errors Fixed' section present"
             Assert ($body -match 'CS0117') "repaired: fixed error code shown (not 'none')"
+            Assert ($body -match 'Fix committed as a reviewable commit') "repaired: claims a committed fix"
         }
         if ($c.expect -eq 'failed') {
             Assert ($body -match '(?m)^### Remaining Build Errors$') "failed: 'Remaining Build Errors' section present"
+            # This fixture carries specChangeRequired, so the invariant must NOT claim a commit.
+            Assert ($body -notmatch 'Fix committed as a reviewable commit') "failed(spec-change): does not falsely claim a committed fix"
+            Assert ($body -match 'requires a spec-repo change; nothing committed here') "failed(spec-change): reports out-of-scope, nothing committed"
+        }
+        if ($c.expect -eq 'skipped_already_green') {
+            # Already-green runs commit nothing; the invariant line must not claim a fix.
+            Assert ($body -notmatch 'Fix committed as a reviewable commit') "skipped_already_green: does not falsely claim a committed fix"
+            Assert ($body -match 'No changes needed - nothing committed') "skipped_already_green: reports nothing committed"
         }
     }
 

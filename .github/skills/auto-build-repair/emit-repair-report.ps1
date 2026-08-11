@@ -484,7 +484,25 @@ else {
     [void]$sb.AppendLine('- No spec inputs modified (`client.tsp`, `tspconfig.yaml`, TypeSpec sources)')
     [void]$sb.AppendLine('- Pinned commit in `tsp-location.yaml` unchanged')
     [void]$sb.AppendLine('- No `.github/`, `eng/`, pipeline, or package-metadata files touched')
-    [void]$sb.AppendLine('- Fix committed as a reviewable commit - not auto-merged')
+    # The commit claim must match what the workflow actually pushed for this outcome. Only a
+    # successful repair commits a fix; an already-green run needed no change, and an out-of-scope
+    # (spec-change-required) failure pushes nothing. For any other failure, report a commit only
+    # when there is an actual changed-file footprint.
+    $specChangeRequired = $false
+    if ($final) {
+        $scrInv = Get-Prop $final 'specChangeRequired'
+        if ($scrInv -and @($scrInv).Count -gt 0) { $specChangeRequired = $true }
+    }
+    $commitLine = switch ($status) {
+        'repaired'              { '- Fix committed as a reviewable commit - not auto-merged' }
+        'skipped_already_green' { '- No changes needed - nothing committed' }
+        default {
+            if ($specChangeRequired) { '- No custom-code fix applied - requires a spec-repo change; nothing committed here' }
+            elseif ($changedFiles.Count -gt 0) { '- Partial progress committed as a reviewable commit - not auto-merged' }
+            else { '- No fix applied - nothing committed' }
+        }
+    }
+    [void]$sb.AppendLine($commitLine)
     [void]$sb.AppendLine('')
 }
 
