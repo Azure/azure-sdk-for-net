@@ -16,23 +16,10 @@ namespace Azure.AI.ContentSafety
         /// <param name="blobUri">The blob uri of the image.</param>
         public ContentSafetyImageData(Uri blobUri)
         {
-            BlobUri = blobUri;
-        }
-
-        // --- Multi-iteration repair test probe (cascading custom-code drift) ---
-        // Intentionally broken so the auto-build-repair agent must iterate more than
-        // once. Each reference below has a typo whose compiler error is HIDDEN by C#
-        // error-type suppression until the line above it is fixed:
-        //   Level1Typo_BlobUri -> BlobUri (Uri)
-        //   Level2Typo_Host    -> Host    (string)   [hidden until L1 is fixed]
-        //   Level3Typo_Length  -> Length  (int)      [hidden until L2 is fixed]
-        // `var` is required so each variable inherits the error type from its
-        // initializer, which is what suppresses the downstream diagnostic.
-        internal int RepairCascadeProbe()
-        {
-            var uri = BlobUri;
-            var host = uri.Host;
-            return host.Length;
+            // Intentionally broken (CS0103): references a property name that does not exist
+            // so the auto-build-repair agent has a deterministic, single-iteration break to
+            // repair end-to-end. The agent should rename this back to the real property BlobUri.
+            BlobUriForRepairTest = blobUri;
         }
 
         /// <summary>
