@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -386,6 +386,18 @@ namespace Azure.Storage.Blobs.Specialized
         {
             Argument.AssertNotNull(blobUri, nameof(blobUri));
             options ??= new BlobClientOptions();
+
+            // Token-credential path
+            if (tokenCredential != null)
+            {
+                SessionProvider sessionProvider = options.SessionOptions?.SessionProvider
+                    ?? new ContainerSessionProvider(blobUri, tokenCredential, options);
+                authentication = new SessionAuthenticationPolicy(
+                    fallbackAuthPolicy: authentication,
+                    sessionProvider: sessionProvider,
+                    sessionOptions: options.SessionOptions);
+            }
+
             _uri = blobUri;
             if (!string.IsNullOrEmpty(blobUri.Query))
             {

@@ -424,6 +424,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        [Ignore("Temporarily ignore this test until we revert enabling Sessions by default")]
         public async Task DirectoryToDirectory_SingleFile()
         {
             // Arrange
@@ -448,6 +449,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        [Ignore("Temporarily ignore this test until we revert enabling Sessions by default")]
         public async Task DirectoryToDirectory_ManySubDirectories()
         {
             // Arrange
@@ -485,6 +487,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(3)]
+        [Ignore("Temporarily ignore this test until we revert enabling Sessions by default")]
         public async Task DirectoryToDirectory_SubDirectoriesLevels(int level)
         {
             // Arrange
@@ -516,6 +519,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        [Ignore("Temporarily ignore this test until we revert enabling Sessions by default")]
         public async Task DirectoryToDirectory_OverwriteExists()
         {
             // Arrange
@@ -565,6 +569,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        [Ignore("Temporarily ignore this test until we revert enabling Sessions by default")]
         public async Task DirectoryToDirectory_OverwriteNotExists()
         {
             // Arrange
@@ -612,6 +617,7 @@ namespace Azure.Storage.DataMovement.Tests
         [RecordedTest]
         [TestCase("source=path@#%")]
         [TestCase("source%21path%40%23%25")]
+        [Ignore("Temporarily ignore this test until we revert enabling Sessions by default")]
         public async Task DirectoryToDirectory_SpecialChars(string prefix)
         {
             // Arrange
@@ -648,6 +654,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        [Ignore("Temporarily ignore this test until we revert enabling Sessions by default")]
         public virtual async Task DirectoryToDirectory_OAuth()
         {
             // Arrange
