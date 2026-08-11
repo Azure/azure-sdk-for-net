@@ -40,6 +40,16 @@ internal class NameVisitor : ScmLibraryVisitor
             "PrivateEndpointConnectionListResult",
             "PrivateLinkResourceListResult"
         };
+    private static readonly (string Source, string Replacement)[] _acronymRenamingRules =
+        [
+            ("Ipv4", "IPv4"),
+            ("Ipv6", "IPv6"),
+            ("IpV4", "IPv4"),
+            ("IpV6", "IPv6"),
+            ("Ip", "IP"),
+            ("Db", "DB"),
+            ("Os", "OS")
+        ];
 
     protected override EnumProvider? PreVisitEnum(InputEnumType enumType, EnumProvider? type)
     {
@@ -53,7 +63,13 @@ internal class NameVisitor : ScmLibraryVisitor
             var newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{enumType.Name}";
             type.Update(name: newName);
         }
-        return base.PreVisitEnum(enumType, type);
+
+        type = base.PreVisitEnum(enumType, type);
+        if (type is not null)
+        {
+            type.Update(name: NormalizeAcronymCasing(type.Name));
+        }
+        return type;
     }
 
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
@@ -101,6 +117,8 @@ internal class NameVisitor : ScmLibraryVisitor
                 type.Update(name: newName);
             }
         }
+
+        type.Update(name: NormalizeAcronymCasing(type.Name));
         return type;
     }
 
@@ -110,7 +128,12 @@ internal class NameVisitor : ScmLibraryVisitor
         DoPreVisitPropertyForUrlPropertyName(property, propertyProvider);
         DoPreVisitPropertyForTimePropertyName(property, propertyProvider);
         DoPreVisitPropertyNameRenaming(property, propertyProvider);
-        return base.PreVisitProperty(property, propertyProvider);
+        propertyProvider = base.PreVisitProperty(property, propertyProvider);
+        if (propertyProvider is not null)
+        {
+            propertyProvider.Update(name: NormalizeAcronymCasing(propertyProvider.Name));
+        }
+        return propertyProvider;
     }
 
     private void DoPreVisitPropertyForResourceTypeName(InputProperty property, PropertyProvider? propertyProvider)
@@ -226,6 +249,35 @@ internal class NameVisitor : ScmLibraryVisitor
         }
 
         return false;
+    }
+
+    internal static string NormalizeAcronymCasing(string name)
+    {
+        char[]? normalizedName = null;
+        for (int index = 0; index < name.Length - 1; index++)
+        {
+            foreach (var rule in _acronymRenamingRules)
+            {
+                if (!name.AsSpan(index).StartsWith(rule.Source, StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
+                int boundaryIndex = index + rule.Source.Length;
+                // Ensure the acronym ends at a word boundary.
+                if (boundaryIndex < name.Length && !char.IsUpper(name[boundaryIndex]))
+                {
+                    continue;
+                }
+
+                normalizedName ??= name.ToCharArray();
+                rule.Replacement.CopyTo(0, normalizedName, index, rule.Replacement.Length);
+                index = boundaryIndex - 1;
+                break;
+            }
+        }
+
+        return normalizedName is null ? name : new string(normalizedName);
     }
 
     /// <summary>
