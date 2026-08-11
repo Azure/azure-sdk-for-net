@@ -4,7 +4,12 @@
 
 ### Features Added
 
+- Added `RoutingEventStreamProperties` model and `EventStreamAuthenticationType` enum for routing event stream endpoints.
+- Added `RoutingEndpoints.EventStreams` collection property.
+
 ### Breaking Changes
+
+- Removed `IotHubSku.Gen2` static property and `IotHubSkuTier.Generation2` enum member — the GEN2 IoT Hub SKU is no longer present in the `2026-05-01-preview` API.
 
 ### Bugs Fixed
 
