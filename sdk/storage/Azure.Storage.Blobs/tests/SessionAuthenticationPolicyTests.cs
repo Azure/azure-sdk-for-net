@@ -938,17 +938,33 @@ namespace Azure.Storage.Blobs.Tests
             var policy = CreateSessionPolicy(mockBearer, EnabledOptions, provider);
 
             // First request signs with the stale token and gets a 401, which must
-            // invalidate the cached session.
-            var (_, transport1) = await SendBlobGetAsync(
-                policy,
-                BlobUri,
-                RequestMethod.Get,
-                CreateBlobGetResponse(401));
+            // invalidate the cached session. The Authorization header is captured as
+            // the request goes over the wire, because the policy strips the session
+            // credential off the request before falling back to bearer auth.
+            string auth1 = null;
+            var transport1 = new MockTransport(req =>
+            {
+                req.Headers.TryGetValue("Authorization", out auth1);
+                return CreateBlobGetResponse(401);
+            });
+            var pipeline1 = new HttpPipeline(transport1, new HttpPipelinePolicy[] { policy });
+            var message1 = pipeline1.CreateMessage();
+            message1.Request.Method = RequestMethod.Get;
+            message1.Request.Uri.Reset(BlobUri);
 
-            Assert.IsTrue(transport1.Requests[0].Headers.TryGetValue("Authorization", out string auth1));
+            await SendAsync(pipeline1, message1);
+
+            Assert.IsNotNull(auth1, "First request should have been signed with a session token.");
             Assert.IsTrue(auth1.StartsWith($"Session {staleToken}:"),
                 $"First request expected {staleToken}, got: {auth1}");
             VerifyBearerPolicyInvoked(mockBearer, Times.Once());
+
+            // The session credential and its signing date must not survive the
+            // fallback to bearer authentication.
+            Assert.IsFalse(message1.Request.Headers.TryGetValue("Authorization", out _),
+                "The session Authorization header should be removed before bearer fallback.");
+            Assert.IsFalse(message1.Request.Headers.TryGetValue("x-ms-date", out _),
+                "The session signing date should be removed before bearer fallback.");
 
             // The next request must mint a brand new session, proving the 401
             // cleared the cache rather than leaving the stale token in place.
