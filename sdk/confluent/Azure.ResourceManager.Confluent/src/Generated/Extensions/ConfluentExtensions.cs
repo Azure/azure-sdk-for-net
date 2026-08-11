@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -366,32 +365,6 @@ namespace Azure.ResourceManager.Confluent
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableConfluentSubscriptionResource(subscriptionResource).CreateMarketplaceAgreement(body, cancellationToken);
-        }
-
-        /// <summary>
-        /// Create Confluent Marketplace agreement in the subscription.
-        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements/defaultOperation IdMarketplaceAgreements_CreateDefault Api Version2024-02-13MockingTo mock this method, please mock <see cref="MockableConfluentSubscriptionResource.CreateMarketplaceAgreement(ConfluentAgreement,CancellationToken)"/> instead.
-        /// </summary>
-        /// <param name="subscriptionResource"> The  instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public static Task<Response<ConfluentAgreement>> CreateMarketplaceAgreementAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.CreateMarketplaceAgreementAsync(body: default, cancellationToken: cancellationToken);
-        }
-
-        /// <summary>
-        /// Create Confluent Marketplace agreement in the subscription.
-        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements/defaultOperation IdMarketplaceAgreements_CreateDefault Api Version2024-02-13MockingTo mock this method, please mock <see cref="MockableConfluentSubscriptionResource.CreateMarketplaceAgreement(ConfluentAgreement,CancellationToken)"/> instead.
-        /// </summary>
-        /// <param name="subscriptionResource"> The  instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public static Response<ConfluentAgreement> CreateMarketplaceAgreement(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.CreateMarketplaceAgreement(body: default, cancellationToken: cancellationToken);
         }
     }
 }

@@ -364,25 +364,6 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="value"> String representation of the identity. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.AppServiceIdentifierData"/> instance for mocking. </returns>
-        public static AppServiceIdentifierData AppServiceIdentifierData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string value = default, string kind = default)
-        {
-            return new AppServiceIdentifierData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                value is null ? default : new IdentifierProperties(value, default),
-                kind,
-                default);
-        }
-
         /// <param name="name"> Name of the object. </param>
         /// <returns> A new <see cref="Models.AppServiceDomainNameIdentifier"/> instance for mocking. </returns>
         public static AppServiceDomainNameIdentifier AppServiceDomainNameIdentifier(string name = default)
@@ -3043,41 +3024,6 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="sku"> Premier add on SKU. </param>
-        /// <param name="product"> Premier add on Product. </param>
-        /// <param name="vendor"> Premier add on Vendor. </param>
-        /// <param name="marketplacePublisher"> Premier add on Marketplace publisher. </param>
-        /// <param name="marketplaceOffer"> Premier add on Marketplace offer. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.PremierAddOnData"/> instance for mocking. </returns>
-        public static PremierAddOnData PremierAddOnData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string sku = default, string product = default, string vendor = default, string marketplacePublisher = default, string marketplaceOffer = default, string kind = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new PremierAddOnData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                sku is null && product is null && vendor is null && marketplacePublisher is null && marketplaceOffer is null ? default : new PremierAddOnProperties(
-                    sku,
-                    product,
-                    vendor,
-                    marketplacePublisher,
-                    marketplaceOffer,
-                    default),
-                kind,
-                default);
-        }
-
         /// <param name="format">
         /// Name of the format. Valid values are:
         /// FileZilla3
@@ -3890,44 +3836,6 @@ namespace Azure.ResourceManager.AppService.Models
             links ??= new ChangeTrackingList<string>();
 
             return new SampleUtterance(text, (links ?? new ChangeTrackingList<string>()).ToList(), qid, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="description"> Description of the diagnostic category. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.DiagnosticCategoryData"/> instance for mocking. </returns>
-        public static DiagnosticCategoryData DiagnosticCategoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, string kind = default)
-        {
-            return new DiagnosticCategoryData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                description is null ? default : new DiagnosticCategoryProperties(description, default),
-                kind,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="description"> Description of the Analysis. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.WebSiteAnalysisDefinitionData"/> instance for mocking. </returns>
-        public static WebSiteAnalysisDefinitionData WebSiteAnalysisDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, string kind = default)
-        {
-            return new WebSiteAnalysisDefinitionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                description is null ? default : new AnalysisDefinitionProperties(description, default),
-                kind,
-                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
