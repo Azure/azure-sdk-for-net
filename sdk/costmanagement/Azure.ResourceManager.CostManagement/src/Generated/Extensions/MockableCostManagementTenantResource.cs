@@ -46,23 +46,23 @@ namespace Azure.ResourceManager.CostManagement.Mocking
 
         private ClientDiagnostics AlertsClientDiagnostics => _alertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Alerts AlertsRestClient => _alertsRestClient ??= new Alerts(AlertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
+        private Alerts AlertsRestClient => _alertsRestClient ??= new Alerts(AlertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics ScheduledActionsClientDiagnostics => _scheduledActionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ScheduledActions ScheduledActionsRestClient => _scheduledActionsRestClient ??= new ScheduledActions(ScheduledActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
+        private ScheduledActions ScheduledActionsRestClient => _scheduledActionsRestClient ??= new ScheduledActions(ScheduledActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics ForecastClientDiagnostics => _forecastClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Forecast ForecastRestClient => _forecastRestClient ??= new Forecast(ForecastClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
+        private Forecast ForecastRestClient => _forecastRestClient ??= new Forecast(ForecastClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics DimensionsClientDiagnostics => _dimensionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Dimensions DimensionsRestClient => _dimensionsRestClient ??= new Dimensions(DimensionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
+        private Dimensions DimensionsRestClient => _dimensionsRestClient ??= new Dimensions(DimensionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics QueryClientDiagnostics => _queryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Query QueryRestClient => _queryRestClient ??= new Query(QueryClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
+        private Query QueryRestClient => _queryRestClient ??= new Query(QueryClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         /// <summary> Gets a collection of TenantsCostManagementViews in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of TenantsCostManagementViews and their operations over a TenantsCostManagementViewsResource. </returns>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
