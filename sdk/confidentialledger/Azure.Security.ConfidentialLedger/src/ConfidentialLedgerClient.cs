@@ -125,7 +125,10 @@ namespace Azure.Security.ConfidentialLedger
                     discoveryPipeline,
                     identityServiceEndpoint,
                     trustStore,
-                    endpoint => GetIdentityServerTlsCert(endpoint, actualCertificateClientOptions, ledgerOptions: actualOptions).Cert,
+                    endpoint => GetIdentityServerTlsCert(
+                        endpoint,
+                        actualCertificateClientOptions,
+                        new ConfidentialLedgerCertificateClient(identityServiceEndpoint, actualCertificateClientOptions)).Cert,
                     endpoint => CreateEndpointPipeline(actualOptions, trustStore, clientCertificate, endpoint),
                     actualOptions.Failover);
                 perRetryPolicies = new HttpPipelinePolicy[]
