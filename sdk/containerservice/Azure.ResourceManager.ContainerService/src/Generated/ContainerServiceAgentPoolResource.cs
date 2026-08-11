@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(ResourceType, out string containerServiceAgentPoolApiVersion);
             _agentPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
-            _agentPoolsRestClient = new AgentPools(_agentPoolsClientDiagnostics, Pipeline, Endpoint, containerServiceAgentPoolApiVersion ?? "2026-04-02-preview");
+            _agentPoolsRestClient = new AgentPools(_agentPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceAgentPoolApiVersion ?? "2026-05-02-preview");
             ValidateResourceId(id);
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-05-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-05-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-05-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-05-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-05-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-05-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-05-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-05-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-05-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-05-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -593,6 +593,110 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
+        /// Returns pool-level bootstrap configuration for FlexNode machines.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}/listBootstrapData. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AgentPools_ListBootstrapData. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-02-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerServiceAgentPoolResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<AgentPoolBootstrapInfo>> GetBootstrapDataAsync(AgentPoolBootstrapDataContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _agentPoolsClientDiagnostics.CreateScope("ContainerServiceAgentPoolResource.GetBootstrapData");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _agentPoolsRestClient.CreateGetBootstrapDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AgentPoolBootstrapDataContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AgentPoolBootstrapInfo> response = Response.FromValue(AgentPoolBootstrapInfo.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns pool-level bootstrap configuration for FlexNode machines.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}/listBootstrapData. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AgentPools_ListBootstrapData. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-02-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerServiceAgentPoolResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<AgentPoolBootstrapInfo> GetBootstrapData(AgentPoolBootstrapDataContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _agentPoolsClientDiagnostics.CreateScope("ContainerServiceAgentPoolResource.GetBootstrapData");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _agentPoolsRestClient.CreateGetBootstrapDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AgentPoolBootstrapDataContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AgentPoolBootstrapInfo> response = Response.FromValue(AgentPoolBootstrapInfo.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Upgrading the node image version of an agent pool applies the newest OS and runtime updates to the nodes. AKS provides one new image per week with the latest updates. For more details on node image versions, see: https://docs.microsoft.com/azure/aks/node-image-upgrade
         /// <list type="bullet">
         /// <item>
@@ -605,7 +709,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-05-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -654,7 +758,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-05-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -703,7 +807,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-05-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -763,7 +867,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-05-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

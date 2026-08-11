@@ -54,6 +54,48 @@ model ConfigurationStoreProperties {
 
   /** The linked resources of the configuration store. */
   linkedResources?: LinkedResource[];
+
+  /** The amount of time configuration data should be retained. */
+  retentionPeriod?: duration;
+
+  /** Byte-oriented content serialized as a base64 string. */
+  binaryContent?: bytes;
+
+  /** Byte-oriented content serialized as a base64url string. */
+  @encode("base64url")
+  urlSafeBinaryContent?: bytes;
+
+  /** A date-time serialized using RFC 7231. */
+  @encode("rfc7231")
+  lastModified?: utcDateTime;
+
+  /** Date-times whose element format cannot yet be propagated by the provisioning runtime. */
+  auditTimestamps?: utcDateTime[];
+
+  /** A date-time serialized as a Unix timestamp. */
+  @encode("unixTimestamp", int64)
+  expirationTimestamp?: utcDateTime;
+
+  /** A calendar date without a time or timezone. */
+  activationDate?: plainDate;
+
+  /** A clock time without a date or timezone. */
+  activationTime?: plainTime;
+
+  /** A duration serialized as an integer number of seconds. */
+  @encode("seconds", int64)
+  retryAfter?: duration;
+
+  /** A duration serialized as a floating-point number of milliseconds. */
+  @encode("milliseconds", float64)
+  pollingInterval?: duration;
+
+  /** An integer serialized as a string. */
+  @encode(string)
+  encodedInteger?: int64;
+
+  /** Arbitrary JSON content that should keep JSON literal semantics. */
+  jsonMetadata?: unknown;
 }
 
 /** A linked resource reference. */

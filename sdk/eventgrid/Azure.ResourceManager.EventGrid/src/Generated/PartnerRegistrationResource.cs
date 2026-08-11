@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             TryGetApiVersion(ResourceType, out string partnerRegistrationApiVersion);
             _partnerRegistrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", ResourceType.Namespace, Diagnostics);
-            _partnerRegistrationsRestClient = new PartnerRegistrations(_partnerRegistrationsClientDiagnostics, Pipeline, Endpoint, partnerRegistrationApiVersion ?? "2025-07-15-preview");
+            _partnerRegistrationsRestClient = new PartnerRegistrations(_partnerRegistrationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, partnerRegistrationApiVersion ?? "2025-07-15-preview");
             ValidateResourceId(id);
         }
 

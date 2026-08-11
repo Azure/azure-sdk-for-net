@@ -5,10 +5,8 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.Metrics;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -1059,7 +1057,8 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.MCP)]
     [TestCase(ToolType.MCPConnection)]
     [TestCase(ToolType.MCPToolbox)]
-    public async Task TestInterativeTools(ToolType toolType)
+    [TestCase(ToolType.MCPToolboxWithPreview)]
+    public async Task TestInteractiveTools(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
         ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
@@ -1102,9 +1101,9 @@ public class AgentsTests : AgentsTestBase
                     funcionCalled = true;
                     functionWasCalled = true;
                 }
-                else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection || toolType == ToolType.MCPToolbox) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
+                else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection || toolType == ToolType.MCPToolbox || toolType == ToolType.MCPToolboxWithPreview) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
                 {
-                    Assert.That(mcpToolCall.ServerLabel, Is.EqualTo(toolType == ToolType.MCPToolbox? "search-tool" : "api-specs"));
+                    Assert.That(mcpToolCall.ServerLabel, Is.EqualTo(toolType == ToolType.MCPToolbox || toolType == ToolType.MCPToolboxWithPreview ? "search-tool" : "api-specs"));
                     responseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
                     funcionCalled = true;
                     functionWasCalled = true;
@@ -1123,7 +1122,9 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.FunctionCall)]
     [TestCase(ToolType.MCP)]
     [TestCase(ToolType.MCPConnection)]
-    public async Task TestInterativeToolsStreaming(ToolType toolType)
+    [TestCase(ToolType.MCPToolbox)]
+    [TestCase(ToolType.MCPToolboxWithPreview)]
+    public async Task TestInteractiveToolsStreaming(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
         ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
@@ -1192,9 +1193,9 @@ public class AgentsTests : AgentsTestBase
                             functionCalled = true;
                             functionWasCalled = true;
                         }
-                        else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
+                        else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection || toolType == ToolType.MCPToolbox || toolType == ToolType.MCPToolboxWithPreview) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
                         {
-                            Assert.That(mcpToolCall.ServerLabel, Is.EqualTo("api-specs"));
+                            Assert.That(mcpToolCall.ServerLabel, Is.EqualTo(toolType == ToolType.MCPToolbox || toolType == ToolType.MCPToolboxWithPreview ? "search-tool" : "api-specs"));
                             nextResponseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
                             functionCalled = true;
                             functionWasCalled = true;
@@ -1687,23 +1688,24 @@ public class AgentsTests : AgentsTestBase
             await Delay();
             session = await projectClient.AgentAdministrationClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
         }
-        HeaderTestPolicy sessionPolicy = new(new Dictionary<string, string>()
-        {
-            { "x-agent-session-id", session.AgentSessionId }
-        });
         ProjectOpenAIClientOptions responsesOptions = new()
         {
             Endpoint = new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT),
             ApiVersion = "v1",
             AgentName = agentVersion.Name
         };
-        responsesOptions.AddPolicy(sessionPolicy, PipelinePosition.PerCall);
         responsesOptions = GetConfiguredOptions(
             responsesOptions,
             true);
         ProjectResponsesClient responseClient = CreateProxyFromClient(projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
-        ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
-        Assert.That(response.GetOutputText(), Is.Not.Empty);
+        CreateResponseOptions responseOptions = new()
+        {
+            InputItems = { ResponseItem.CreateUserMessageItem("Hello, tell me a joke.") },
+            SessionId = session.AgentSessionId,
+        };
+        ClientResult<ResponseResult> response = await responseClient.CreateResponseAsync(responseOptions);
+        Assert.That(response.GetRawResponse().Headers, Does.Contain(new KeyValuePair<string, string>("x-agent-session-id", session.AgentSessionId)));
+        Assert.That(response.Value.GetOutputText(), Is.Not.Empty);
         // Disable the Agent
         await projectClient.AgentAdministrationClient.DisableAgentAsync(agentVersion.Name);
         try
@@ -1723,23 +1725,14 @@ public class AgentsTests : AgentsTestBase
             await Delay();
             session = await projectClient.AgentAdministrationClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
         }
-        sessionPolicy = new(new Dictionary<string, string>()
+        responseOptions = new()
         {
-            { "x-agent-session-id", session.AgentSessionId }
-        });
-        responsesOptions = new ProjectOpenAIClientOptions()
-        {
-            Endpoint = new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT),
-            ApiVersion = "v1",
-            AgentName = agentVersion.Name
+            InputItems = { ResponseItem.CreateUserMessageItem("Hello, tell me a joke.") },
+            SessionId = session.AgentSessionId,
         };
-        responsesOptions.AddPolicy(sessionPolicy, PipelinePosition.PerCall);
-        responsesOptions = GetConfiguredOptions(
-            responsesOptions,
-            true);
-        responseClient = CreateProxyFromClient(projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
-        response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
-        Assert.That(response.GetOutputText(), Is.Not.Empty);
+        response = await responseClient.CreateResponseAsync(responseOptions);
+        Assert.That(response.GetRawResponse().Headers, Does.Contain(new KeyValuePair<string, string>("x-agent-session-id", session.AgentSessionId)));
+        Assert.That(response.Value.GetOutputText(), Is.Not.Empty);
     }
 
     [RecordedTest]

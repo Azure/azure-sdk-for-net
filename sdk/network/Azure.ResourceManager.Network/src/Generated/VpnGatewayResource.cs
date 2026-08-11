@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string vpnGatewayApiVersion);
             _vpnGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _vpnGatewaysRestClient = new VpnGateways(_vpnGatewaysClientDiagnostics, Pipeline, Endpoint, vpnGatewayApiVersion ?? "2025-07-01");
+            _vpnGatewaysRestClient = new VpnGateways(_vpnGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, vpnGatewayApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(HostingEnvironmentWorkerPoolResource.ResourceType, out string hostingEnvironmentWorkerPoolApiVersion);
             _appServiceEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", HostingEnvironmentWorkerPoolResource.ResourceType.Namespace, Diagnostics);
-            _appServiceEnvironmentsRestClient = new AppServiceEnvironments(_appServiceEnvironmentsClientDiagnostics, Pipeline, Endpoint, hostingEnvironmentWorkerPoolApiVersion ?? "2026-03-15");
+            _appServiceEnvironmentsRestClient = new AppServiceEnvironments(_appServiceEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hostingEnvironmentWorkerPoolApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

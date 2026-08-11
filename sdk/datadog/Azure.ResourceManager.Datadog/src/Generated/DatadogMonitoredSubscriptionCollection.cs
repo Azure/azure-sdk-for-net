@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Datadog
         {
             TryGetApiVersion(DatadogMonitoredSubscriptionResource.ResourceType, out string datadogMonitoredSubscriptionApiVersion);
             _monitoredSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", DatadogMonitoredSubscriptionResource.ResourceType.Namespace, Diagnostics);
-            _monitoredSubscriptionsRestClient = new MonitoredSubscriptions(_monitoredSubscriptionsClientDiagnostics, Pipeline, Endpoint, datadogMonitoredSubscriptionApiVersion ?? "2025-12-26-preview");
+            _monitoredSubscriptionsRestClient = new MonitoredSubscriptions(_monitoredSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, datadogMonitoredSubscriptionApiVersion ?? "2025-12-26-preview");
             ValidateResourceId(id);
         }
 

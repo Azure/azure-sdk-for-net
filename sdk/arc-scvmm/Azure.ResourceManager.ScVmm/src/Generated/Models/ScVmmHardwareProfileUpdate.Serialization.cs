@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ScVmm;
 
 namespace Azure.ResourceManager.ScVmm.Models
 {
-    public partial class ScVmmHardwareProfileUpdate : IUtf8JsonSerializable, IJsonModel<ScVmmHardwareProfileUpdate>
+    /// <summary> Defines the resource update properties. </summary>
+    public partial class ScVmmHardwareProfileUpdate : IJsonModel<ScVmmHardwareProfileUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmHardwareProfileUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ScVmmHardwareProfileUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScVmmHardwareProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeScVmmHardwareProfileUpdate(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ScVmmHardwareProfileUpdate)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScVmmHardwareProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerScVmmContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ScVmmHardwareProfileUpdate)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ScVmmHardwareProfileUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScVmmHardwareProfileUpdate IPersistableModel<ScVmmHardwareProfileUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ScVmmHardwareProfileUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScVmmHardwareProfileUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScVmmHardwareProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScVmmHardwareProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScVmmHardwareProfileUpdate)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(MemoryMB))
             {
                 writer.WritePropertyName("memoryMB"u8);
@@ -64,15 +104,15 @@ namespace Azure.ResourceManager.ScVmm.Models
                 writer.WritePropertyName("dynamicMemoryMinMB"u8);
                 writer.WriteNumberValue(DynamicMemoryMinMB.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -81,22 +121,27 @@ namespace Azure.ResourceManager.ScVmm.Models
             }
         }
 
-        ScVmmHardwareProfileUpdate IJsonModel<ScVmmHardwareProfileUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScVmmHardwareProfileUpdate IJsonModel<ScVmmHardwareProfileUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ScVmmHardwareProfileUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScVmmHardwareProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScVmmHardwareProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScVmmHardwareProfileUpdate)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeScVmmHardwareProfileUpdate(document.RootElement, options);
         }
 
-        internal static ScVmmHardwareProfileUpdate DeserializeScVmmHardwareProfileUpdate(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ScVmmHardwareProfileUpdate DeserializeScVmmHardwareProfileUpdate(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -107,70 +152,68 @@ namespace Azure.ResourceManager.ScVmm.Models
             DynamicMemoryEnabled? dynamicMemoryEnabled = default;
             int? dynamicMemoryMaxMB = default;
             int? dynamicMemoryMinMB = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("memoryMB"u8))
+                if (prop.NameEquals("memoryMB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    memoryMB = property.Value.GetInt32();
+                    memoryMB = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("cpuCount"u8))
+                if (prop.NameEquals("cpuCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cpuCount = property.Value.GetInt32();
+                    cpuCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("limitCpuForMigration"u8))
+                if (prop.NameEquals("limitCpuForMigration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    limitCpuForMigration = new LimitCpuForMigration(property.Value.GetString());
+                    limitCpuForMigration = new LimitCpuForMigration(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dynamicMemoryEnabled"u8))
+                if (prop.NameEquals("dynamicMemoryEnabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dynamicMemoryEnabled = new DynamicMemoryEnabled(property.Value.GetString());
+                    dynamicMemoryEnabled = new DynamicMemoryEnabled(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dynamicMemoryMaxMB"u8))
+                if (prop.NameEquals("dynamicMemoryMaxMB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dynamicMemoryMaxMB = property.Value.GetInt32();
+                    dynamicMemoryMaxMB = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("dynamicMemoryMinMB"u8))
+                if (prop.NameEquals("dynamicMemoryMinMB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dynamicMemoryMinMB = property.Value.GetInt32();
+                    dynamicMemoryMinMB = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ScVmmHardwareProfileUpdate(
                 memoryMB,
                 cpuCount,
@@ -178,38 +221,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 dynamicMemoryEnabled,
                 dynamicMemoryMaxMB,
                 dynamicMemoryMinMB,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ScVmmHardwareProfileUpdate>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScVmmHardwareProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerScVmmContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ScVmmHardwareProfileUpdate)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ScVmmHardwareProfileUpdate IPersistableModel<ScVmmHardwareProfileUpdate>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScVmmHardwareProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeScVmmHardwareProfileUpdate(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ScVmmHardwareProfileUpdate)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ScVmmHardwareProfileUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

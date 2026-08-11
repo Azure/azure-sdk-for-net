@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementGatewayCertificateAuthorityResource.ResourceType, out string apiManagementGatewayCertificateAuthorityApiVersion);
             _gatewayCertificateAuthorityClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementGatewayCertificateAuthorityResource.ResourceType.Namespace, Diagnostics);
-            _gatewayCertificateAuthorityRestClient = new GatewayCertificateAuthority(_gatewayCertificateAuthorityClientDiagnostics, Pipeline, Endpoint, apiManagementGatewayCertificateAuthorityApiVersion ?? "2025-09-01-preview");
+            _gatewayCertificateAuthorityRestClient = new GatewayCertificateAuthority(_gatewayCertificateAuthorityClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementGatewayCertificateAuthorityApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

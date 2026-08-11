@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string workloadNetworksApiVersion);
             _workloadNetworksOpsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _workloadNetworksOpsRestClient = new WorkloadNetworksOps(_workloadNetworksOpsClientDiagnostics, Pipeline, Endpoint, workloadNetworksApiVersion ?? "2024-05-01");
+            _workloadNetworksOpsRestClient = new WorkloadNetworksOps(_workloadNetworksOpsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workloadNetworksApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

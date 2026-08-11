@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CloudHealth
         {
             TryGetApiVersion(ResourceType, out string healthModelAuthenticationSettingApiVersion);
             _authenticationSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CloudHealth", ResourceType.Namespace, Diagnostics);
-            _authenticationSettingsRestClient = new AuthenticationSettings(_authenticationSettingsClientDiagnostics, Pipeline, Endpoint, healthModelAuthenticationSettingApiVersion ?? "2026-05-01-preview");
+            _authenticationSettingsRestClient = new AuthenticationSettings(_authenticationSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthModelAuthenticationSettingApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

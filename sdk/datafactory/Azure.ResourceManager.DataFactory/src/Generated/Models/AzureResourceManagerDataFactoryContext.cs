@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
 
@@ -792,7 +791,6 @@ namespace Azure.ResourceManager.DataFactory
     [ModelReaderWriterBuildable(typeof(RelationalTableDatasetTypeProperties))]
     [ModelReaderWriterBuildable(typeof(RerunTumblingWindowTrigger))]
     [ModelReaderWriterBuildable(typeof(RerunTumblingWindowTriggerTypeProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ResponsysLinkedService))]
     [ModelReaderWriterBuildable(typeof(ResponsysLinkedServiceTypeProperties))]
     [ModelReaderWriterBuildable(typeof(ResponsysObjectDataset))]

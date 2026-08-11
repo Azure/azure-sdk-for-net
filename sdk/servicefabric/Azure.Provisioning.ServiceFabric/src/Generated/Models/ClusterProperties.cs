@@ -572,8 +572,8 @@ namespace Azure.Provisioning.ServiceFabric
             _vmssZonalUpgradeMode = DefineProperty<VmssZonalUpgradeMode>(nameof(VmssZonalUpgradeMode), new string[] { "vmssZonalUpgradeMode" });
             _isInfrastructureServiceManagerEnabled = DefineProperty<bool>(nameof(IsInfrastructureServiceManagerEnabled), new string[] { "infrastructureServiceManager" });
             _upgradeWave = DefineProperty<ClusterUpgradeCadence>(nameof(UpgradeWave), new string[] { "upgradeWave" });
-            _upgradePauseStartOn = DefineProperty<DateTimeOffset>(nameof(UpgradePauseStartOn), new string[] { "upgradePauseStartTimestampUtc" });
-            _upgradePauseEndOn = DefineProperty<DateTimeOffset>(nameof(UpgradePauseEndOn), new string[] { "upgradePauseEndTimestampUtc" });
+            _upgradePauseStartOn = DefineProperty<DateTimeOffset>(nameof(UpgradePauseStartOn), new string[] { "upgradePauseStartTimestampUtc" }, format: "O");
+            _upgradePauseEndOn = DefineProperty<DateTimeOffset>(nameof(UpgradePauseEndOn), new string[] { "upgradePauseEndTimestampUtc" }, format: "O");
             _isWaveUpgradePaused = DefineProperty<bool>(nameof(IsWaveUpgradePaused), new string[] { "waveUpgradePaused" });
             _notifications = DefineListProperty<ClusterNotification>(nameof(Notifications), new string[] { "notifications" });
             _isHttpGatewayExclusiveAuthModeEnabled = DefineProperty<bool>(nameof(IsHttpGatewayExclusiveAuthModeEnabled), new string[] { "enableHttpGatewayExclusiveAuthMode" });

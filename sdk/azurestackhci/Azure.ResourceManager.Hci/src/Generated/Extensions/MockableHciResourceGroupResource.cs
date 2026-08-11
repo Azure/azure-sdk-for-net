@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Hci.Mocking
 
         private ClientDiagnostics OwnershipVouchersClientDiagnostics => _ownershipVouchersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OwnershipVouchers OwnershipVouchersRestClient => _ownershipVouchersRestClient ??= new OwnershipVouchers(OwnershipVouchersClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
+        private OwnershipVouchers OwnershipVouchersRestClient => _ownershipVouchersRestClient ??= new OwnershipVouchers(OwnershipVouchersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
 
         /// <summary> Gets a collection of HciClusters in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of HciClusters and their operations over a HciClusterResource. </returns>

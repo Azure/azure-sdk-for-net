@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string dotNetComponentApiVersion);
             _dotNetComponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _dotNetComponentsRestClient = new DotNetComponents(_dotNetComponentsClientDiagnostics, Pipeline, Endpoint, dotNetComponentApiVersion ?? "2025-10-02-preview");
+            _dotNetComponentsRestClient = new DotNetComponents(_dotNetComponentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dotNetComponentApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 

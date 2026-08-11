@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(VirtualNetworkTapResource.ResourceType, out string virtualNetworkTapApiVersion);
             _virtualNetworkTapsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetworkTapResource.ResourceType.Namespace, Diagnostics);
-            _virtualNetworkTapsRestClient = new VirtualNetworkTaps(_virtualNetworkTapsClientDiagnostics, Pipeline, Endpoint, virtualNetworkTapApiVersion ?? "2025-07-01");
+            _virtualNetworkTapsRestClient = new VirtualNetworkTaps(_virtualNetworkTapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualNetworkTapApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

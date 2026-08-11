@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 
 namespace Azure.AI.ContentSafety
 {
@@ -28,7 +27,6 @@ namespace Azure.AI.ContentSafety
     [ModelReaderWriterBuildable(typeof(PagedTextBlocklist))]
     [ModelReaderWriterBuildable(typeof(PagedTextBlocklistItem))]
     [ModelReaderWriterBuildable(typeof(RemoveTextBlocklistItemsOptions))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ShieldPromptOptions))]
     [ModelReaderWriterBuildable(typeof(ShieldPromptResult))]
     [ModelReaderWriterBuildable(typeof(TextBlocklist))]

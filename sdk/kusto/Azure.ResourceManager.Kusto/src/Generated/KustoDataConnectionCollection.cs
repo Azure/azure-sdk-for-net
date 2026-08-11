@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Kusto
         {
             TryGetApiVersion(KustoDataConnectionResource.ResourceType, out string kustoDataConnectionApiVersion);
             _dataConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoDataConnectionResource.ResourceType.Namespace, Diagnostics);
-            _dataConnectionsRestClient = new DataConnections(_dataConnectionsClientDiagnostics, Pipeline, Endpoint, kustoDataConnectionApiVersion ?? "2025-02-14");
+            _dataConnectionsRestClient = new DataConnections(_dataConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoDataConnectionApiVersion ?? "2025-02-14");
             ValidateResourceId(id);
         }
 
