@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         }
 
         /// <summary> Associated MoboBrokerResources. </summary>
-        public IReadOnlyList<MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources
+        public IReadOnlyList<MoboBrokerResourceInfo> ManagedOnBehalfOfMoboBrokerResources
         {
             get
             {

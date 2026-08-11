@@ -1,4 +1,4 @@
 directory: specification/manufacturingplatform/Manufacturingplatform.Management
-commit: eadfc061743f77cab8070a5bdd1d007496098577
-repo: melina5656/azure-rest-api-specs
+commit: 52f198daeedad1aad07184c820fbd298da428c20
+repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

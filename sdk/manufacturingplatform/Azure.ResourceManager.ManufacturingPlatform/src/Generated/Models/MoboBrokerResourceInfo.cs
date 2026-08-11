@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManufacturingPlatform.Models
 {
     /// <summary> MoboBroker resource. </summary>
-    public partial class MoboBrokerResource
+    public partial class MoboBrokerResourceInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MoboBrokerResource"/>. </summary>
-        internal MoboBrokerResource()
+        /// <summary> Initializes a new instance of <see cref="MoboBrokerResourceInfo"/>. </summary>
+        internal MoboBrokerResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MoboBrokerResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoboBrokerResourceInfo"/>. </summary>
         /// <param name="id"> Resource Id of MoboBrokerResource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MoboBrokerResource(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MoboBrokerResourceInfo(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

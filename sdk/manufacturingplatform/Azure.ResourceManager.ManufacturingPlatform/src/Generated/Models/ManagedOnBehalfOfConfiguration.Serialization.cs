@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             {
                 writer.WritePropertyName("moboBrokerResources"u8);
                 writer.WriteStartArray();
-                foreach (MoboBrokerResource item in MoboBrokerResources)
+                foreach (MoboBrokerResourceInfo item in MoboBrokerResources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,16 +126,16 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             {
                 return null;
             }
-            IReadOnlyList<MoboBrokerResource> moboBrokerResources = default;
+            IReadOnlyList<MoboBrokerResourceInfo> moboBrokerResources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("moboBrokerResources"u8))
                 {
-                    List<MoboBrokerResource> array = new List<MoboBrokerResource>();
+                    List<MoboBrokerResourceInfo> array = new List<MoboBrokerResourceInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MoboBrokerResource.DeserializeMoboBrokerResource(item, options));
+                        array.Add(MoboBrokerResourceInfo.DeserializeMoboBrokerResourceInfo(item, options));
                     }
                     moboBrokerResources = array;
                     continue;

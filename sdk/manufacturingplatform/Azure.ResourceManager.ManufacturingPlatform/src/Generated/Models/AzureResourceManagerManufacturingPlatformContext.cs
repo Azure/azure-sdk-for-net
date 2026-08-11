@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform
     [ModelReaderWriterBuildable(typeof(ManufacturingPlatformSku))]
     [ModelReaderWriterBuildable(typeof(MdsResourceListResult))]
     [ModelReaderWriterBuildable(typeof(MdsResourceUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(MoboBrokerResource))]
+    [ModelReaderWriterBuildable(typeof(MoboBrokerResourceInfo))]
     [ModelReaderWriterBuildable(typeof(MonitoringProfile))]
     [ModelReaderWriterBuildable(typeof(OpenAIProfile))]
     [ModelReaderWriterBuildable(typeof(RedisProfile))]
