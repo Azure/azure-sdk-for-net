@@ -317,7 +317,6 @@ Apply all relevant phases from the skill files, with these workflow-specific adj
 4. Phase 3 breaking-change detection must use the CI failure details fetched in Step 0, API diffs, and every source-compatibility result from Step 2. Do not run `dotnet build` in this workflow because that would execute untrusted PR code. If CI reports ApiCompat failures or build errors, surface them with links to the failed check run URL or Azure DevOps target URL. A passing ApiCompat result does not override `OPTPARAM001` or `OPTPARAM002`.
 5. For every TypeSpec-backed package, apply the base skill's `TSPRENAME001` rule. A rename-only SDK customization for a directly targetable TypeSpec API is blocking and must be replaced with scoped `@@clientName(TypeSpecTarget, "CSharpName", "csharp")` in the spec repository's `client.tsp`, followed by regeneration.
 6. For migration PRs, apply Phases 4 and 5 from the migration skill. Treat manual edits to `src/Generated/` as blocking unless there is clear evidence they are generated output rather than hand edits.
-7. Treat every finding as requiring resolution, including suggestions on beta packages. Do not defer findings until GA or a future stable release.
 
 ## Step 4 - Submit one PR review
 
@@ -348,8 +347,8 @@ Use the compact body only for unchanged non-blocking no-finding results. If ther
 
 Then submit exactly one review using `submit_pull_request_review`:
 
-- Use `REQUEST_CHANGES` if any finding remains.
-- Use `COMMENT` only if no findings remain.
+- Use `REQUEST_CHANGES` if any blocking issue was found.
+- Use `COMMENT` if no blocking issue was found.
 - Do not use `APPROVE`.
 - When submitting `COMMENT`, also emit the `dismiss_stale_change_requests` safe-output tool with no arguments. The deterministic safe-output job will check that this workflow's latest review is the new non-blocking comment on the current head, then dismiss this workflow's prior stale `REQUEST_CHANGES` review from an older commit. Do not attempt to dismiss reviews directly from the agent.
 - After submitting the review, always emit the `publish_pr_check` safe-output tool with no arguments so workflow-dispatch runs leave a visible check on PR heads.
@@ -369,7 +368,7 @@ The review body should contain:
 <short, actionable summary>
 ```
 
-If there are no findings, submit a neutral `COMMENT` review with a short body indicating that no management SDK review issues were found.
+If there are no findings, submit a neutral `COMMENT` review with a short body indicating that no blocking management SDK review issues were found.
 
 When the review has findings, append this process guidance to the review body:
 
