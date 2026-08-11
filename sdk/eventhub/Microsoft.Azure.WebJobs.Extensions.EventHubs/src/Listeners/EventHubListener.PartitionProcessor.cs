@@ -1,4 +1,4 @@
-// Copyright (c) .NET Foundation. All rights reserved.
+﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
@@ -127,7 +127,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
                 if (_singleDispatch)
                 {
-                    UpdateCheckpointContext(events, context);
+                    if (eventCount > 0)
+                    {
+                        UpdateCheckpointContext(events, context);
+                    }
 
                     var triggerInput = new EventHubTriggerInput
                     {
@@ -153,6 +156,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                         await _executor.TryExecuteAsync(input, linkedCts.Token).ConfigureAwait(false);
                         _firstFunctionInvocation = false;
                         eventToCheckpoint = events[i];
+                    }
+
+                    // Track the last processed event for idle checkpoint in single dispatch.
+                    if (eventToCheckpoint != null)
+                    {
+                        _lastProcessedEvent = eventToCheckpoint;
+                        _lastBatchProcessedTime = DateTimeOffset.UtcNow;
                     }
                 }
                 else
@@ -216,9 +226,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     }
                     else
                     {
-                        UpdateCheckpointContext(events, context);
-                        await TriggerExecute(events, context, linkedCts.Token).ConfigureAwait(false);
-                        eventToCheckpoint = events.LastOrDefault();
+                        if (eventCount > 0)
+                        {
+                            UpdateCheckpointContext(events, context);
+                            await TriggerExecute(events, context, linkedCts.Token).ConfigureAwait(false);
+                            eventToCheckpoint = events.LastOrDefault();
+                        }
                     }
 
                     // If total events is less than the batch size, leave them in the stored events list
@@ -249,6 +262,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 {
                     await context.CheckpointAsync(_lastProcessedEvent).ConfigureAwait(false);
                     _batchCounter = 0;
+                    _lastProcessedEvent = null;
                     _lastBatchProcessedTime = DateTimeOffset.UtcNow;
                     _logger.LogDebug(GetOperationDetails(context, "IdleCheckpoint"));
                 }
