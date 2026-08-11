@@ -48,14 +48,15 @@ namespace Azure.AI.Translation.Document
         /// <param name="charactersCharged"> Character charged by the API. </param>
         /// <param name="totalImageScansSucceeded"> Total image scans charged by the API. </param>
         /// <param name="totalImageScansFailed"> Total image scans failed. </param>
-        /// <param name="imageCharged"> Images charged by the API. </param>
-        /// <param name="imageCharacterDetected"> Characters detected within images. </param>
+        /// <param name="imagesCharged"> Images charged by the API. </param>
+        /// <param name="imageCharactersDetected"> Characters detected within images. </param>
+        /// <param name="deploymentName"> Deployment name of the custom translation model used for the translation. </param>
         /// <param name="error">
         /// This contains an outer error with error code, message, details, target and an
         /// inner error with more descriptive details.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentStatusResult(Uri translatedDocumentUri, Uri sourceDocumentUri, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, string translatedToLanguageCode, float progress, string id, long charactersCharged, int? totalImageScansSucceeded, int? totalImageScansFailed, int? imageCharged, int? imageCharacterDetected, JsonElement error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentStatusResult(Uri translatedDocumentUri, Uri sourceDocumentUri, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, string translatedToLanguageCode, float progress, string id, long charactersCharged, int? totalImageScansSucceeded, int? totalImageScansFailed, int? imagesCharged, int? imageCharactersDetected, string deploymentName, JsonElement error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TranslatedDocumentUri = translatedDocumentUri;
             SourceDocumentUri = sourceDocumentUri;
@@ -68,8 +69,9 @@ namespace Azure.AI.Translation.Document
             CharactersCharged = charactersCharged;
             TotalImageScansSucceeded = totalImageScansSucceeded;
             TotalImageScansFailed = totalImageScansFailed;
-            ImageCharged = imageCharged;
-            ImageCharacterDetected = imageCharacterDetected;
+            ImagesCharged = imagesCharged;
+            ImageCharactersDetected = imageCharactersDetected;
+            DeploymentName = deploymentName;
             _error = error;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -81,9 +83,12 @@ namespace Azure.AI.Translation.Document
         public int? TotalImageScansFailed { get; }
 
         /// <summary> Images charged by the API. </summary>
-        public int? ImageCharged { get; }
+        public int? ImagesCharged { get; }
 
         /// <summary> Characters detected within images. </summary>
-        public int? ImageCharacterDetected { get; }
+        public int? ImageCharactersDetected { get; }
+
+        /// <summary> Deployment name of the custom translation model used for the translation. </summary>
+        public string DeploymentName { get; }
     }
 }

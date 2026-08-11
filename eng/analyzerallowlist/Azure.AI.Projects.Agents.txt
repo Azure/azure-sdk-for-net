@@ -29,3 +29,15 @@ nowarn:AAIP001 M:Azure.AI.Projects.Agents.ProjectsAgentVersion.#ctor(System.Coll
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.ProjectsAgentVersion.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.InternalCreateAgentRequest.#ctor(System.String,System.Nullable{Azure.AI.Projects.Agents.AgentState},System.Collections.Generic.IDictionary{System.String,System.String},System.String,Azure.AI.Projects.Agents.ProjectsAgentDefinition,Azure.AI.Projects.Agents.AgentBlueprintReference,System.Nullable{System.Boolean},Azure.AI.Projects.Agents.AgentEndpointConfiguration,Azure.AI.Projects.Agents.AgentCard,System.Collections.Generic.IDictionary{System.String,System.BinaryData})
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.InternalCreateAgentRequest.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
+
+# AAIP002 marks generated declarations that expose OpenAI-experimental surface
+# (see OpenAIExperimentalVisitor in sdk/ai/codegen). The visitor attributes
+# declarations by signature, so DeclarativeAgentDefinition's full internal
+# constructor is marked because its parameters include the OpenAI-experimental
+# ResponseReasoningOptions / ResponseTool / ResponseTextOptions types. The
+# generated deserializer has a clean signature and therefore is not marked, yet
+# its body must call that constructor. Attributing the deserializer instead
+# would cascade onto JsonModelCreateCore / PersistableModelCreateCore, which
+# override non-experimental base members. Scoping the suppression to this one
+# generated method keeps AAIP002 live everywhere else in the assembly.
+nowarn:AAIP002 M:Azure.AI.Projects.Agents.DeclarativeAgentDefinition.DeserializeDeclarativeAgentDefinition(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
