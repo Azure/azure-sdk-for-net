@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Net.Sockets;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
@@ -34,6 +35,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // WebSocketException should use the inner exception as the decision point.
             yield return new object[] { new WebSocketException("dummy", new EventHubsException(true, null)) };
+
+            // Nested transport wrappers should be unwrapped until an exception that can be classified is found.
+
+            yield return new object[] { new WebSocketException("dummy", new HttpRequestException("dummy", new IOException("dummy", new SocketException((int)SocketError.ConnectionReset)))) };
+            yield return new object[] { new WebSocketException("dummy", new HttpRequestException("dummy", new SocketException((int)SocketError.ConnectionReset))) };
+            yield return new object[] { new HttpRequestException("dummy", new IOException()) };
+            yield return new object[] { new AggregateException(new WebSocketException("dummy", new IOException())) };
 
             // Task/Operation Canceled should use the inner exception as the decision point.
 
@@ -69,6 +77,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // WebSocketException should use the inner exception as the decision point.
             yield return new object[] { new WebSocketException("dummy", new EventHubsException(false, null)) };
+
+            // Nested transport wrappers with a terminal root cause should remain non-retriable.
+
+            yield return new object[] { new WebSocketException("dummy", new HttpRequestException("dummy", new SocketException((int)SocketError.HostNotFound))) };
+            yield return new object[] { new WebSocketException("dummy") };
+            yield return new object[] { new HttpRequestException("dummy") };
 
             // Task/Operation Canceled should use the inner exception as the decision point.
 
@@ -221,6 +235,58 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCaseSource(nameof(NonRetriableExceptionTestCases))]
         public void CalculateRetryDelayDoesNotRetryForNotKnownRetriableExceptions(Exception exception)
         {
+            var policy = new BasicRetryPolicy(new EventHubsRetryOptions
+            {
+                MaximumRetries = 99,
+                Delay = TimeSpan.FromSeconds(1),
+                MaximumDelay = TimeSpan.FromSeconds(100),
+                Mode = EventHubsRetryMode.Fixed
+            });
+
+            Assert.That(policy.CalculateRetryDelay(exception, 88), Is.Null);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BasicRetryPolicy.CalculateRetryDelay" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CalculateRetryDelayUnwrapsNestedWrappersWithinTheMaximumDepth()
+        {
+            Exception exception = new IOException();
+
+            for (var index = 0; index < 3; ++index)
+            {
+                exception = new WebSocketException("dummy", exception);
+            }
+
+            var policy = new BasicRetryPolicy(new EventHubsRetryOptions
+            {
+                MaximumRetries = 99,
+                Delay = TimeSpan.FromSeconds(1),
+                MaximumDelay = TimeSpan.FromSeconds(100),
+                Mode = EventHubsRetryMode.Fixed
+            });
+
+            Assert.That(policy.CalculateRetryDelay(exception, 88), Is.Not.Null);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BasicRetryPolicy.CalculateRetryDelay" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CalculateRetryDelayStopsUnwrappingAtTheMaximumDepth()
+        {
+            Exception exception = new IOException();
+
+            for (var index = 0; index < 10; ++index)
+            {
+                exception = new WebSocketException("dummy", exception);
+            }
+
             var policy = new BasicRetryPolicy(new EventHubsRetryOptions
             {
                 MaximumRetries = 99,
