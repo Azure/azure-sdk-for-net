@@ -1,0 +1,22 @@
+{
+  "resources": [],
+  "nonResourceMethods": [
+    {
+      "methodId": "Microsoft.AlertsManagement.AlertRuleRecommendationsOperationGroup.listByResource",
+      "operationPath": "/{resourceUri}/providers/Microsoft.AlertsManagement/alertRuleRecommendations",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      }
+    },
+    {
+      "methodId": "Microsoft.AlertsManagement.AlertRuleRecommendationsOperationGroup.listByTargetType",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alertRuleRecommendations",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    }
+  ]
+}

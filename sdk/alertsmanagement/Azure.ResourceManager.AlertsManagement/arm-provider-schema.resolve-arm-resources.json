@@ -1,0 +1,152 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.AlertsManagement.Alert",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}",
+      "resourceType": "Microsoft.AlertsManagement/alerts",
+      "methods": [
+        {
+          "methodId": "Microsoft.AlertsManagement.AlertOperationGroup.getById",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.AlertsManagement.AlertOperationGroup.getAll",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.AlertsManagement/alerts",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        },
+        {
+          "methodId": "Microsoft.AlertsManagement.AlertOperationGroup.changeState",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}/changestate",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.AlertsManagement.AlertOperationGroup.getEnrichments",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}/enrichments",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.AlertsManagement.AlertOperationGroup.getHistory",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}/history",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "ServiceAlert",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-05-25-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AlertsManagement.Alert",
+      "resourceIdPattern": "/providers/Microsoft.AlertsManagement/alerts/{alertId}",
+      "resourceType": "Microsoft.AlertsManagement/alerts",
+      "methods": [
+        {
+          "methodId": "Microsoft.AlertsManagement.Alerts.getByIdTenant",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.AlertsManagement/alerts/{alertId}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AlertsManagement/alerts/{alertId}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AlertsManagement.AlertGetAllTenantOperation.getAllTenant",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.AlertsManagement/alerts",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AlertsManagement.Alerts.changeStateTenant",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.AlertsManagement/alerts/{alertId}/changestate",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AlertsManagement/alerts/{alertId}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AlertsManagement.Alerts.getHistoryTenant",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.AlertsManagement/alerts/{alertId}/history",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AlertsManagement/alerts/{alertId}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "resourceName": "ServiceAlertTenant",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-05-25-preview"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Operations.list",
+      "operationPath": "/providers/Microsoft.AlertsManagement/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.AlertsManagement.AlertsOperationGroup.metaData",
+      "operationPath": "/providers/Microsoft.AlertsManagement/alertsMetaData",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.AlertsManagement.AlertsOperationGroup.getSummary",
+      "operationPath": "/{scope}/providers/Microsoft.AlertsManagement/alertsSummary",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      }
+    }
+  ]
+}

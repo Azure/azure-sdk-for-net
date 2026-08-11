@@ -1,0 +1,266 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.KubernetesRuntime.BgpPeer",
+      "resourceIdPattern": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}",
+      "resourceType": "Microsoft.KubernetesRuntime/bgpPeers",
+      "methods": [
+        {
+          "methodId": "Microsoft.KubernetesRuntime.BgpPeers.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.KubernetesRuntime.BgpPeers.get",
+          "kind": "Read",
+          "operationPath": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.KubernetesRuntime.BgpPeers.delete",
+          "kind": "Delete",
+          "operationPath": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.KubernetesRuntime.BgpPeers.oldDelete",
+          "kind": "Delete",
+          "operationPath": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.KubernetesRuntime.BgpPeers.list",
+          "kind": "List",
+          "operationPath": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      },
+      "resourceName": "BgpPeer",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9-]{3,24}$"
+      },
+      "apiVersions": [
+        "2023-10-01-preview",
+        "2024-03-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.KubernetesRuntime.LoadBalancer",
+      "resourceIdPattern": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}",
+      "resourceType": "Microsoft.KubernetesRuntime/loadBalancers",
+      "methods": [
+        {
+          "methodId": "Microsoft.KubernetesRuntime.LoadBalancers.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.KubernetesRuntime.LoadBalancers.get",
+          "kind": "Read",
+          "operationPath": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.KubernetesRuntime.LoadBalancers.delete",
+          "kind": "Delete",
+          "operationPath": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.KubernetesRuntime.LoadBalancers.oldDelete",
+          "kind": "Delete",
+          "operationPath": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.KubernetesRuntime.LoadBalancers.list",
+          "kind": "List",
+          "operationPath": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      },
+      "resourceName": "LoadBalancer",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9-]{3,24}$"
+      },
+      "apiVersions": [
+        "2023-10-01-preview",
+        "2024-03-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.KubernetesRuntime.ServiceResource",
+      "resourceIdPattern": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}",
+      "resourceType": "Microsoft.KubernetesRuntime/services",
+      "methods": [
+        {
+          "methodId": "Microsoft.KubernetesRuntime.Services.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.KubernetesRuntime.Services.get",
+          "kind": "Read",
+          "operationPath": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.KubernetesRuntime.Services.delete",
+          "kind": "Delete",
+          "operationPath": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.KubernetesRuntime.Services.list",
+          "kind": "List",
+          "operationPath": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/services",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      },
+      "resourceName": "ServiceResource",
+      "nameConstraints": {
+        "pattern": "^(storageclass|networking)$"
+      },
+      "apiVersions": [
+        "2023-10-01-preview",
+        "2024-03-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.KubernetesRuntime.StorageClassResource",
+      "resourceIdPattern": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}",
+      "resourceType": "Microsoft.KubernetesRuntime/storageClasses",
+      "methods": [
+        {
+          "methodId": "Microsoft.KubernetesRuntime.StorageClass.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.KubernetesRuntime.StorageClass.get",
+          "kind": "Read",
+          "operationPath": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.KubernetesRuntime.StorageClass.update",
+          "kind": "Update",
+          "operationPath": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.KubernetesRuntime.StorageClass.delete",
+          "kind": "Delete",
+          "operationPath": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.KubernetesRuntime.StorageClass.list",
+          "kind": "List",
+          "operationPath": "/{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      },
+      "resourceName": "StorageClassResource",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9-]{3,24}$"
+      },
+      "apiVersions": [
+        "2023-10-01-preview",
+        "2024-03-01"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Operations.list",
+      "operationPath": "/providers/Microsoft.KubernetesRuntime/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    }
+  ]
+}

@@ -1,0 +1,307 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.Education.LabDetails",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default",
+      "resourceType": "Microsoft.Education/labs",
+      "methods": [
+        {
+          "methodId": "Microsoft.Education.Labs.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default",
+            "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections"
+          }
+        },
+        {
+          "methodId": "Microsoft.Education.Labs.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default",
+            "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections"
+          }
+        },
+        {
+          "methodId": "Microsoft.Education.Labs.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default",
+            "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections"
+          }
+        },
+        {
+          "methodId": "Microsoft.Education.Labs.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+            "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections"
+          }
+        },
+        {
+          "methodId": "Microsoft.Education.Labs.listAll",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/providers/Microsoft.Education/labs",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+            "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles"
+          }
+        },
+        {
+          "methodId": "Microsoft.Education.Labs.generateInviteCode",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default/generateInviteCode",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default",
+            "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+        "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections"
+      },
+      "singletonResourceName": "default",
+      "resourceName": "EducationLab",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2021-12-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Education.JoinRequestDetails",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default/joinRequests/{joinRequestName}",
+      "resourceType": "Microsoft.Education/labs/joinRequests",
+      "methods": [
+        {
+          "methodId": "Microsoft.Education.JoinRequests.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default/joinRequests/{joinRequestName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default/joinRequests/{joinRequestName}",
+            "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections"
+          }
+        },
+        {
+          "methodId": "Microsoft.Education.JoinRequests.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default/joinRequests",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default",
+            "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections"
+          }
+        },
+        {
+          "methodId": "Microsoft.Education.JoinRequests.approve",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default/joinRequests/{joinRequestName}/approve",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default/joinRequests/{joinRequestName}",
+            "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections"
+          }
+        },
+        {
+          "methodId": "Microsoft.Education.JoinRequests.deny",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default/joinRequests/{joinRequestName}/deny",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default/joinRequests/{joinRequestName}",
+            "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+        "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default",
+      "resourceName": "EducationJoinRequest",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2021-12-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Education.StudentDetails",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default/students/{studentAlias}",
+      "resourceType": "Microsoft.Education/labs/students",
+      "methods": [
+        {
+          "methodId": "Microsoft.Education.Students.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default/students/{studentAlias}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default/students/{studentAlias}",
+            "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections"
+          }
+        },
+        {
+          "methodId": "Microsoft.Education.Students.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default/students/{studentAlias}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default/students/{studentAlias}",
+            "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections"
+          }
+        },
+        {
+          "methodId": "Microsoft.Education.Students.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default/students/{studentAlias}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default/students/{studentAlias}",
+            "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections"
+          }
+        },
+        {
+          "methodId": "Microsoft.Education.Students.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default/students",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default",
+            "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+        "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default",
+      "resourceName": "EducationStudent",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2021-12-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Education.GrantDetails",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/providers/Microsoft.Education/grants/default",
+      "resourceType": "Microsoft.Education/grants",
+      "methods": [
+        {
+          "methodId": "Microsoft.Education.Grants.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/providers/Microsoft.Education/grants/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/providers/Microsoft.Education/grants/default",
+            "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles"
+          }
+        },
+        {
+          "methodId": "Microsoft.Education.Grants.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/providers/Microsoft.Education/grants",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+            "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+        "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles"
+      },
+      "singletonResourceName": "default",
+      "resourceName": "GrantDetails",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2021-12-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Education.StudentLabDetails",
+      "resourceIdPattern": "/providers/Microsoft.Education/studentLabs/{studentLabName}",
+      "resourceType": "Microsoft.Education/studentLabs",
+      "methods": [
+        {
+          "methodId": "Microsoft.Education.StudentLabs.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Education/studentLabs/{studentLabName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Education/studentLabs/{studentLabName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Education.StudentLabs.listAll",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Education/studentLabs",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "resourceName": "StudentLabDetails",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2021-12-01-preview"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Microsoft.Education.redeemInvitationCode",
+      "operationPath": "/providers/Microsoft.Education/redeemInvitationCode",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.Education.Operations.list",
+      "operationPath": "/providers/Microsoft.Education/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.Education.Grants.listAll",
+      "operationPath": "/providers/Microsoft.Education/grants",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    }
+  ]
+}
