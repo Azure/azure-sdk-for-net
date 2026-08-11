@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.3 (Unreleased)
+## 1.2.0-beta.3 (2026-08-11)
 
 ### Features Added
 
@@ -16,10 +16,6 @@
 - Added analysis diagnostics via `AnalysisResult.Infos` for `2026-06-01-preview`. The collection exposes service information as `ResponseError` values for troubleshooting. See [Analysis diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample_Advanced_AnalysisDiagnostics.md).
 - Updated `ToLlmInput` (preview) to emit analysis-result metadata (`AnalysisContent.Metadata`) under a `metadata:` front-matter block. See [ToLlmInput](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample_Advanced_ToLlmInput.md).
 - Added `AnalyzeOperationExtensions.GetUsageDetails()` to return generated `UsageDetails` from a completed analyze LRO (`Operation<AnalysisResult>`) or inline analyze response (`Response<AnalysisResult>`). See [Sample 03](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample03_AnalyzeInvoice.md), [Sample 18](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample18_AnalyzeInline.md), and [Sample 19](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample19_AnalyzeBinaryInline.md). `GetUsage()` / `AnalyzeUsageDetails` are obsolete and retained for 1.1.0 compatibility.
-
-### Breaking Changes
-
-### Bugs Fixed
 
 ### Other Changes
 
