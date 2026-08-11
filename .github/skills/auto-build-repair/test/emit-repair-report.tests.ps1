@@ -262,6 +262,82 @@ try {
     $ebody = Get-Content -Raw $eout
     Assert ($ebody.Contains('use A \| B second line')) 'escape: pipe escaped and newline flattened in table cell'
     Assert ($ebody -notmatch '(?m)^ second line') 'escape: no raw newline splits the table row'
+
+    # =========================================================================
+    # Untracked (newly created) files: `git diff` never lists new files, so the
+    # emitter must union in `git ls-files --others` to report the full footprint.
+    # Repair edits one tracked file AND creates one brand-new (un-added) file.
+    # =========================================================================
+    Write-Host 'Section: untracked (new) files included in Files Changed'
+    $g4 = Join-Path $tmp 'git-untracked'
+    New-ScratchRepo $g4
+    Push-Location $g4
+    try {
+        New-Item -ItemType Directory -Force -Path "$pkg/src/Customizations" | Out-Null
+        Set-Content "$pkg/src/Customizations/Existing.cs" 'orig'
+        git add -A | Out-Null; git commit -q -m base | Out-Null
+        Set-Content "$pkg/src/Customizations/Existing.cs" 'fixed'   # modified (tracked)
+        Set-Content "$pkg/src/Customizations/BrandNew.cs" 'new'     # created (untracked, not git add-ed)
+    } finally { Pop-Location }
+    $ur = Join-Path $g4 'results'; New-Item -ItemType Directory -Path $ur | Out-Null
+    [ordered]@{ success = $true; appliedPatches = @(@{ filePath = 'src/Customizations/Existing.cs'; description = 'fix'; replacementCount = 1 }) } |
+        ConvertTo-Json -Depth 6 | Set-Content (Join-Path $ur 'result-1.json')
+    $uout = Join-Path $tmp 'untracked.md'
+    & pwsh -NoProfile -File $EmitterPath -ResultsDir $ur -PackagePath $pkg -RepoRoot $g4 -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $uout | Out-Null
+    $ubody = Get-Content -Raw $uout
+    Assert ($ubody -match 'BrandNew\.cs') 'untracked: newly created file appears in Files Changed'
+    Assert ($ubody -match 'Existing\.cs') 'untracked: modified tracked file still appears'
+    Assert ($ubody -notmatch 'derived from engine-applied patches') 'untracked: used git working-tree source (not appliedPatches)'
+
+    # =========================================================================
+    # Stray non-numeric result file: a file like result-final.json matches the
+    # result-*.json glob but is NOT an attempt. It must be ignored (never [int]-
+    # parsed during the sort), so the emitter still renders and the numeric
+    # attempts alone drive status.
+    # =========================================================================
+    Write-Host 'Section: stray non-numeric result file ignored (no crash)'
+    $g5 = Join-Path $tmp 'git-stray'
+    New-ScratchRepo $g5
+    Push-Location $g5; try { Set-Content 'README.md' 'seed'; git add -A | Out-Null; git commit -q -m seed | Out-Null } finally { Pop-Location }
+    $sr = Join-Path $g5 'results'; New-Item -ItemType Directory -Path $sr | Out-Null
+    [ordered]@{ success = $true; appliedPatches = @(@{ filePath = "$pkg/src/Custom.cs"; description = 'fix'; replacementCount = 1 }) } |
+        ConvertTo-Json -Depth 6 | Set-Content (Join-Path $sr 'result-1.json')
+    Set-Content (Join-Path $sr 'result-final.json') '{"success":false}'   # stray: must be skipped, not crash
+    $sout = Join-Path $tmp 'stray.md'
+    & pwsh -NoProfile -File $EmitterPath -ResultsDir $sr -PackagePath $pkg -RepoRoot $g5 -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $sout | Out-Null
+    Assert (Test-Path $sout) 'stray: emitter still renders a comment (stray result-final.json ignored)'
+    $sbody = Get-Content -Raw $sout
+    $sobj = Get-TelemetryObject $sbody
+    Assert ($null -ne $sobj -and (($sobj | ConvertFrom-Json).status) -eq 'repaired') 'stray: numeric result-1.json alone drives status=repaired'
+    Assert ((([regex]::Matches($sbody, '```json')).Count) -eq 1) 'stray: exactly one telemetry block'
+    Assert ($sbody -match '\| \*\*Iterations used\*\* \| 1 of 3 \|') 'stray: stray file not counted as an iteration'
+
+    # =========================================================================
+    # repaired_at determinism: the timestamp must be the write time of the
+    # successful result file (when the green result was recorded), NOT render-time
+    # Get-Date, so re-emitting the same run yields an identical payload.
+    # =========================================================================
+    Write-Host 'Section: repaired_at is the result file mtime and stable across re-runs'
+    $g6 = Join-Path $tmp 'git-repairedat'
+    New-ScratchRepo $g6
+    Push-Location $g6; try { Set-Content 'README.md' 'seed'; git add -A | Out-Null; git commit -q -m seed | Out-Null } finally { Pop-Location }
+    $rr = Join-Path $g6 'results'; New-Item -ItemType Directory -Path $rr | Out-Null
+    $rfile = Join-Path $rr 'result-1.json'
+    [ordered]@{ success = $true; appliedPatches = @(@{ filePath = "$pkg/src/Custom.cs"; description = 'fix'; replacementCount = 1 }) } |
+        ConvertTo-Json -Depth 6 | Set-Content $rfile
+    $fixed = [datetime]::new(2024, 1, 2, 3, 4, 5, [System.DateTimeKind]::Utc)   # pin the mtime
+    (Get-Item $rfile).LastWriteTimeUtc = $fixed
+    $expected = $fixed.ToString('yyyy-MM-ddTHH:mm:ssZ')
+    $raOut = Join-Path $tmp 'repairedat.md'
+    & pwsh -NoProfile -File $EmitterPath -ResultsDir $rr -PackagePath $pkg -RepoRoot $g6 -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $raOut | Out-Null
+    # Assert against the raw JSON text (ConvertFrom-Json would coerce the ISO string to a
+    # [datetime], defeating an exact string compare).
+    $raJson = Get-TelemetryObject (Get-Content -Raw $raOut)
+    Assert ($raJson -match ('"repaired_at":"' + [regex]::Escape($expected) + '"')) 'repaired_at: equals the successful result file mtime (UTC ISO-8601)'
+    $raOut2 = Join-Path $tmp 'repairedat2.md'
+    & pwsh -NoProfile -File $EmitterPath -ResultsDir $rr -PackagePath $pkg -RepoRoot $g6 -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $raOut2 | Out-Null
+    $raJson2 = Get-TelemetryObject (Get-Content -Raw $raOut2)
+    Assert ($raJson2 -match ('"repaired_at":"' + [regex]::Escape($expected) + '"')) 'repaired_at: stable (unchanged) on re-emit'
 }
 finally {
     Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue

@@ -85,14 +85,24 @@ if (-not $Repo) { $Repo = 'unknown/unknown' }
 if (-not $HeadSha) { $HeadSha = '0000000' }
 
 # ---- load per-attempt engine results -------------------------------------------
+# Only files whose name is exactly result-<n>.json are attempts; a stray file like
+# result-final.json is ignored (and, defensively, the sort key never [int]-parses a
+# non-numeric group, so an unexpected name can never throw and suppress the comment).
 $attempts = @()
+$finalFile = $null
 if ($ResultsDir -and (Test-Path $ResultsDir)) {
-    $attempts = Get-ChildItem -Path $ResultsDir -Filter 'result-*.json' -File |
-        Sort-Object { [int]([regex]::Match($_.Name, 'result-(\d+)\.json').Groups[1].Value) } |
-        ForEach-Object {
-            try { Get-Content -Raw -LiteralPath $_.FullName | ConvertFrom-Json }
-            catch { Write-Warning "Skipping unparseable result file: $($_.Name)"; $null }
-        } | Where-Object { $null -ne $_ }
+    $attemptFiles = Get-ChildItem -Path $ResultsDir -Filter 'result-*.json' -File |
+        Where-Object { $_.Name -match '^result-\d+\.json$' } |
+        Sort-Object {
+            $m = [regex]::Match($_.Name, '^result-(\d+)\.json$')
+            if ($m.Success) { [int]$m.Groups[1].Value } else { [int]::MaxValue }
+        }
+    foreach ($f in $attemptFiles) {
+        try { $parsed = Get-Content -Raw -LiteralPath $f.FullName | ConvertFrom-Json }
+        catch { Write-Warning "Skipping unparseable result file: $($f.Name)"; continue }
+        $attempts += $parsed
+        $finalFile = $f   # last successfully-parsed attempt file (matches $attempts[-1])
+    }
     $attempts = @($attempts)
 }
 $iterations = $attempts.Count
@@ -125,7 +135,15 @@ else {
     $stopReason = if ($ec) { [string]$ec } elseif ($iterations -ge $MaxIterations) { 'maxIterations' } else { 'BuildFailed' }
 }
 
-$repairedAt = if ($status -eq 'repaired') { (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ') } else { $null }
+# repaired_at anchors the time-to-green / subsequent-correction metrics, so it must be
+# stable across re-runs of the emitter. Use the write time of the successful engine result
+# file (when the green result was recorded) rather than render-time Get-Date, which would
+# drift on every re-emit. Fall back to now only if the file is somehow unavailable.
+$repairedAt = $null
+if ($status -eq 'repaired') {
+    $repairedAt = if ($finalFile) { $finalFile.LastWriteTimeUtc.ToString('yyyy-MM-ddTHH:mm:ssZ') }
+                  else { (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ') }
+}
 
 # ---- classified build diagnostics (deterministic parse over build output) ------
 # Compiler diagnostics look like:
@@ -222,8 +240,15 @@ try {
     # regenerated Generated/ are still uncommitted -- the push-to-pull-request-branch safe
     # output commits them in a later job -- so diffing the working tree against the checked-out
     # HEAD yields exactly the repair's footprint, independent of whatever $PreRepairSha was.
+    $wt = @()
     $diff = & git diff --name-only HEAD @pathArgs 2>$null
-    if ($LASTEXITCODE -eq 0 -and $diff) { $changedFiles = @($diff | Where-Object { $_ }) }
+    if ($LASTEXITCODE -eq 0 -and $diff) { $wt = @($diff | Where-Object { $_ }) }
+    # `git diff` never lists untracked (newly created) files, so a brand-new custom or
+    # regenerated file would be missing from the audit list until it is `git add`-ed. Union in
+    # the untracked set (same package scope) so the full repair footprint is always reported.
+    $untracked = & git ls-files --others --exclude-standard @pathArgs 2>$null
+    if ($LASTEXITCODE -eq 0 -and $untracked) { $wt += @($untracked | Where-Object { $_ }) }
+    if ($wt.Count -gt 0) { $changedFiles = @($wt | Select-Object -Unique) }
 
     # Fallback: if the repair was already committed (working tree clean vs HEAD), diff the
     # pre-repair sha instead. Still scoped to $PackagePath so merge-ref base changes stay out.
