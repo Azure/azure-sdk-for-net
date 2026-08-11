@@ -55,6 +55,8 @@ namespace Azure.Storage.Blobs
         private bool UseMasterCrc => _validationAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64;
         private StorageCrc64HashAlgorithm _masterCrcCalculator = null;
 
+        private BlobClientSideDecryptor _decryptor;
+
         /// <summary>
         /// The validation options to send to individual download requests.
         /// Tells the client not to perform the checksum validation, leaving
@@ -225,8 +227,9 @@ namespace Azure.Storage.Blobs
                 {
                     if (initialResponse.Value.Details.Metadata.TryGetValue(Constants.ClientSideEncryption.EncryptionDataKey, out string rawEncryptiondata))
                     {
-                        destination = await new BlobClientSideDecryptor(
-                            new ClientSideDecryptor(_client.ClientSideEncryption)).DecryptWholeBlobWriteInternal(
+                        _decryptor ??= new BlobClientSideDecryptor(
+                            new ClientSideDecryptor(_client.ClientSideEncryption));
+                        destination = await _decryptor.DecryptWholeBlobWriteInternal(
                                 destination,
                                 initialResponse.Value.Details.Metadata,
                                 async,
