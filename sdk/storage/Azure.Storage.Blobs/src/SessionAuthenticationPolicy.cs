@@ -153,6 +153,10 @@ namespace Azure.Storage.Blobs
                 // Dispose the content stream to free up a connection before re-sending.
                 message.Response.ContentStream?.Dispose();
 
+                // Remove the session-scheme Authorization header and the signing date so
+                // they don't leak into the bearer token attempt.
+                ClearSessionAuthHeaders(message);
+
                 // Only clear the cache if it still holds the token we just used.
                 // The next request will re-acquire a fresh session.
                 _sessionProvider.InvalidateSession(message, sentWith);
@@ -197,6 +201,16 @@ namespace Azure.Storage.Blobs
             message.Request.Headers.SetValue(
                 HttpHeader.Names.Authorization,
                 $"Session {sessionInfo.SessionToken}:{signature}");
+        }
+
+        /// <summary>
+        /// Removes the headers set by <see cref="SignRequestAndSetAuthHeader"/> so a
+        /// subsequent authentication attempt starts from a clean request.
+        /// </summary>
+        private static void ClearSessionAuthHeaders(HttpMessage message)
+        {
+            message.Request.Headers.Remove(HttpHeader.Names.Authorization);
+            message.Request.Headers.Remove(Constants.HeaderNames.Date);
         }
 
         /// <summary>
