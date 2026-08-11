@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -381,6 +382,32 @@ namespace Azure.ResourceManager.Datadog
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDatadogSubscriptionResource(subscriptionResource).GetSubscriptionStatus(datadogOrganizationId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create Datadog marketplace agreement in the subscription.
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements/defaultOperation IdMarketplaceAgreements_CreateOrUpdateDefault Api Version2025-06-11MockingTo mock this method, please mock <see cref="MockableDatadogSubscriptionResource.CreateOrUpdateMarketplaceAgreement(DatadogAgreement,CancellationToken)"/> instead.
+        /// </summary>
+        /// <param name="subscriptionResource"> The  instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public static Task<Response<DatadogAgreement>> CreateOrUpdateMarketplaceAgreementAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.CreateOrUpdateMarketplaceAgreementAsync(body: default, cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
+        /// Create Datadog marketplace agreement in the subscription.
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements/defaultOperation IdMarketplaceAgreements_CreateOrUpdateDefault Api Version2025-06-11MockingTo mock this method, please mock <see cref="MockableDatadogSubscriptionResource.CreateOrUpdateMarketplaceAgreement(DatadogAgreement,CancellationToken)"/> instead.
+        /// </summary>
+        /// <param name="subscriptionResource"> The  instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public static Response<DatadogAgreement> CreateOrUpdateMarketplaceAgreement(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.CreateOrUpdateMarketplaceAgreement(body: default, cancellationToken: cancellationToken);
         }
     }
 }
