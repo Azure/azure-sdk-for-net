@@ -9,16 +9,20 @@ If the Test Proxy is not responding, the script will retry up to 10 times with a
 .PARAMETER ProxyUrl
 The URL of the Test Proxy to test. Passed from DevOps as a string.
 #>
+[CmdletBinding()]
 Param(
     [Parameter(Mandatory = $True)]
     [string] $ProxyUrl
 )
 
+Set-StrictMode -Version 4
+$ErrorActionPreference = 'Stop'
+
 for ($i = 0; $i -lt 10; $i++) {
     try {
         Write-Host "Invoke-WebRequest -Uri `"$ProxyUrl/Admin/IsAlive`" | Out-Null"
         Invoke-WebRequest -Uri "$ProxyUrl/Admin/IsAlive" | Out-Null
-        Write-Host "Successfully connected to the test proxy on port 5000."
+        Write-Host "Successfully connected to the test proxy at '$ProxyUrl'."
         exit 0
     }
     catch {

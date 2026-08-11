@@ -14,6 +14,7 @@ The URL of the Test Proxy to start. Passed from DevOps as a string.
 .PARAMETER BinariesDirectory
 The directory where the Test Proxy binaries were installed. Passed from DevOps as a string.
 #>
+[CmdletBinding()]
 Param(
     [Parameter(Mandatory = $True)]
     [string] $RootFolder,
@@ -22,6 +23,9 @@ Param(
     [Parameter(Mandatory = $True)]
     [string] $BinariesDirectory
 )
+
+Set-StrictMode -Version 4
+$ErrorActionPreference = 'Stop'
 
 $invocation = @"
 Start-Process $BinariesDirectory/test-proxy/test-proxy.exe
