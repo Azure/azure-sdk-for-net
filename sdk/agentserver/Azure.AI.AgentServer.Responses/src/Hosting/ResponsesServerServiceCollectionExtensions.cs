@@ -90,7 +90,12 @@ public static class ResponsesServerServiceCollectionExtensions
         // use FoundryStorageProvider for persistence; otherwise use in-memory.
         if (FoundryEnvironment.IsHosted)
         {
-            resilientTaskCredential = new DefaultAzureCredential();
+            // Response storage and resilient task storage must authenticate with the SAME identity.
+            // Core's AddResilientTasks captures the credential instance directly (it does not resolve
+            // TokenCredential from DI), so reuse a consumer-registered credential instance when present
+            // — the same one TryAddSingleton keeps for response storage — and only fall back to
+            // DefaultAzureCredential when the consumer has not registered one.
+            resilientTaskCredential = FindRegisteredCredentialInstance(services) ?? new DefaultAzureCredential();
             services.TryAddSingleton<TokenCredential>(_ => resilientTaskCredential);
 
             // Build the Azure.Core HttpPipeline with BearerTokenAuthenticationPolicy.
@@ -252,5 +257,24 @@ public static class ResponsesServerServiceCollectionExtensions
         }
 
         return new Uri(uri.GetLeftPart(UriPartial.Path).TrimEnd('/') + "/storage/");
+    }
+
+    // Returns a TokenCredential that a consumer has already registered as a concrete instance, so it
+    // can be shared with both response storage (via DI) and resilient task storage (passed directly to
+    // Core's AddResilientTasks). A factory-registered credential cannot be resolved before the provider
+    // is built, so this returns null in that case and the caller falls back to DefaultAzureCredential.
+    private static TokenCredential? FindRegisteredCredentialInstance(IServiceCollection services)
+    {
+        for (int i = 0; i < services.Count; i++)
+        {
+            ServiceDescriptor descriptor = services[i];
+            if (descriptor.ServiceType == typeof(TokenCredential)
+                && descriptor.ImplementationInstance is TokenCredential credential)
+            {
+                return credential;
+            }
+        }
+
+        return null;
     }
 }
