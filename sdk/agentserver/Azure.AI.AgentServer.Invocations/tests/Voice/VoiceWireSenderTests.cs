@@ -691,6 +691,85 @@ public class VoiceWireSenderTests
     }
 
     [Test]
+    public async Task CompletedRawSendWinsBeforeItsContinuationRuns()
+    {
+        using var responseCancellation = new CancellationTokenSource();
+        using var webSocket = new DeferredCompletionWebSocket();
+        var transaction = new VoiceSendTransaction(
+            webSocket,
+            terminalSendDrainTimeout: TimeSpan.FromSeconds(1));
+        var send = transaction.ExecuteAsync(
+            new VoiceFramePayload("response.output_text.delta", new Dictionary<string, object?>()),
+            static _ => ValueTask.FromResult(0),
+            static _ => ValueTask.FromResult(true),
+            CancellationToken.None,
+            responseCancellation.Token);
+        await webSocket.SendStarted.Task.WaitAsync(TimeSpan.FromSeconds(2));
+
+        webSocket.CompleteSend();
+        responseCancellation.Cancel();
+        await send.WaitAsync(TimeSpan.FromSeconds(2));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(webSocket.AbortCount, Is.Zero);
+            Assert.That(webSocket.State, Is.EqualTo(WebSocketState.Open));
+        });
+    }
+
+    [Test]
+    public async Task CompletedRawSendWinsLaterOperationDeadline()
+    {
+        using var operationDeadline = new CancellationTokenSource();
+        using var webSocket = new DeferredCompletionWebSocket();
+        var transaction = new VoiceSendTransaction(webSocket);
+        var send = transaction.ExecuteAsync(
+            new VoiceFramePayload("future.message", new Dictionary<string, object?>()),
+            static _ => ValueTask.FromResult(0),
+            static _ => ValueTask.FromResult(true),
+            CancellationToken.None,
+            operationDeadlineCancellation: operationDeadline.Token);
+        await webSocket.SendStarted.Task.WaitAsync(TimeSpan.FromSeconds(2));
+
+        webSocket.CompleteSend();
+        operationDeadline.Cancel();
+        await send.WaitAsync(TimeSpan.FromSeconds(2));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(webSocket.AbortCount, Is.Zero);
+            Assert.That(webSocket.State, Is.EqualTo(WebSocketState.Open));
+        });
+    }
+
+    [Test]
+    public async Task OperationDeadlineBeforeTaskPublicationWinsIncompleteSend()
+    {
+        using var operationDeadline = new CancellationTokenSource();
+        using var webSocket = new DeadlineBeforePublicationWebSocket(
+            () => operationDeadline.Cancel());
+        var transaction = new VoiceSendTransaction(webSocket);
+        var send = transaction.ExecuteAsync(
+            new VoiceFramePayload("future.message", new Dictionary<string, object?>()),
+            static _ => ValueTask.FromResult(0),
+            static _ => ValueTask.FromResult(true),
+            CancellationToken.None,
+            operationDeadlineCancellation: operationDeadline.Token);
+
+        Assert.That(
+            async () => await send.WaitAsync(TimeSpan.FromSeconds(2)),
+            Throws.TypeOf<VoiceBridgeConnectionClosedException>());
+        Assert.Multiple(() =>
+        {
+            Assert.That(webSocket.AbortCount, Is.EqualTo(1));
+            Assert.That(webSocket.State, Is.EqualTo(WebSocketState.Aborted));
+        });
+
+        webSocket.CompleteSend();
+        await webSocket.SendCompleted.Task.WaitAsync(TimeSpan.FromSeconds(2));
+    }
+
+    [Test]
     public async Task ResponseTerminalBetweenBatchFramesDoesNotAbortCarrier()
     {
         using var responseCancellation = new CancellationTokenSource();
@@ -772,6 +851,146 @@ public class VoiceWireSenderTests
             CancellationToken.None);
 
         Assert.That(webSocket.SendCount, Is.EqualTo(2));
+    }
+
+    [Test]
+    public async Task OperationDeadlineWhileWaitingForTransactionDoesNotLeaveGateWaiter()
+    {
+        var allowFirstSend = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        using var webSocket = new RecordingWebSocket { AllowSend = allowFirstSend.Task };
+        var transaction = new VoiceSendTransaction(webSocket);
+        var first = transaction.SendAsync(
+            "future.message",
+            new Dictionary<string, object?>(),
+            CancellationToken.None);
+        await webSocket.SendStarted.Task.WaitAsync(TimeSpan.FromSeconds(2));
+        using var operationDeadline = new CancellationTokenSource();
+        var expired = transaction.ExecuteAsync(
+            new VoiceFramePayload("future.message", new Dictionary<string, object?>()),
+            static _ => ValueTask.FromResult(0),
+            static _ => ValueTask.FromResult(true),
+            CancellationToken.None,
+            operationDeadlineCancellation: operationDeadline.Token);
+
+        try
+        {
+            operationDeadline.Cancel();
+            Assert.That(async () => await expired, Throws.InstanceOf<OperationCanceledException>());
+        }
+        finally
+        {
+            allowFirstSend.TrySetResult();
+            await first;
+        }
+
+        await transaction.SendAsync(
+            "future.message",
+            new Dictionary<string, object?>(),
+            CancellationToken.None);
+
+        Assert.That(webSocket.SendCount, Is.EqualTo(2));
+    }
+
+    [Test]
+    public async Task OperationDeadlineWinnerIsNotOverriddenByLaterSendSuccess()
+    {
+        var allowSend = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        using var webSocket = new RecordingWebSocket { AllowSend = allowSend.Task };
+        using var operationDeadline = new CancellationTokenSource();
+        var transaction = new VoiceSendTransaction(webSocket);
+        var send = transaction.ExecuteAsync(
+            new VoiceFramePayload("future.message", new Dictionary<string, object?>()),
+            static _ => ValueTask.FromResult(0),
+            static _ => ValueTask.FromResult(true),
+            CancellationToken.None,
+            operationDeadlineCancellation: operationDeadline.Token);
+        await webSocket.SendStarted.Task.WaitAsync(TimeSpan.FromSeconds(2));
+
+        operationDeadline.Cancel();
+        allowSend.TrySetResult();
+        Assert.That(
+            async () => await send.WaitAsync(TimeSpan.FromSeconds(2)),
+            Throws.TypeOf<VoiceBridgeConnectionClosedException>());
+        Assert.Multiple(() =>
+        {
+            Assert.That(webSocket.SendCount, Is.EqualTo(1));
+            Assert.That(webSocket.AbortCount, Is.EqualTo(1));
+            Assert.That(webSocket.State, Is.EqualTo(WebSocketState.Aborted));
+        });
+    }
+
+    [Test]
+    public async Task SynchronousSendCompletionWinsDeadlineRaisedInsideCall()
+    {
+        using var operationDeadline = new CancellationTokenSource();
+        using var webSocket = new RecordingWebSocket
+        {
+            AfterSend = _ => operationDeadline.Cancel(),
+        };
+        var transaction = new VoiceSendTransaction(webSocket);
+
+        await transaction.ExecuteAsync(
+            new VoiceFramePayload("future.message", new Dictionary<string, object?>()),
+            static _ => ValueTask.FromResult(0),
+            static _ => ValueTask.FromResult(true),
+            CancellationToken.None,
+            operationDeadlineCancellation: operationDeadline.Token);
+        Assert.Multiple(() =>
+        {
+            Assert.That(webSocket.SendCount, Is.EqualTo(1));
+            Assert.That(webSocket.AbortCount, Is.Zero);
+            Assert.That(webSocket.State, Is.EqualTo(WebSocketState.Open));
+        });
+    }
+
+    [Test]
+    public async Task OperationDeadlineCancelsReservationBeforeSocketWrite()
+    {
+        using var operationDeadline = new CancellationTokenSource();
+        using var webSocket = new RecordingWebSocket();
+        var reservationStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var transaction = new VoiceSendTransaction(webSocket);
+        var send = transaction.ExecuteAsync(
+            new VoiceFramePayload("future.message", new Dictionary<string, object?>()),
+            async cancellationToken =>
+            {
+                reservationStarted.TrySetResult();
+                await Task.Delay(Timeout.InfiniteTimeSpan, cancellationToken);
+                return 0;
+            },
+            static _ => ValueTask.FromResult(true),
+            CancellationToken.None,
+            operationDeadlineCancellation: operationDeadline.Token);
+        try
+        {
+            await reservationStarted.Task.WaitAsync(TimeSpan.FromSeconds(2));
+            operationDeadline.Cancel();
+            Assert.That(
+                async () => await send.WaitAsync(TimeSpan.FromSeconds(2)),
+                Throws.InstanceOf<OperationCanceledException>());
+        }
+        finally
+        {
+            operationDeadline.Cancel();
+            try
+            {
+                await send.WaitAsync(TimeSpan.FromSeconds(2));
+            }
+            catch (OperationCanceledException)
+            {
+            }
+        }
+
+        await transaction.SendAsync(
+            "future.message",
+            new Dictionary<string, object?>(),
+            CancellationToken.None);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(webSocket.SendCount, Is.EqualTo(1));
+            Assert.That(webSocket.AbortCount, Is.Zero);
+        });
     }
 
     private sealed class CountingJsonValue
@@ -910,6 +1129,134 @@ public class VoiceWireSenderTests
         {
             _state = WebSocketState.Closed;
             _abortSignal.Dispose();
+        }
+    }
+
+    private sealed class DeferredCompletionWebSocket : WebSocket
+    {
+        private readonly TaskCompletionSource _sendCompletion =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+        private WebSocketState _state = WebSocketState.Open;
+        private int _abortCount;
+
+        public int AbortCount => Volatile.Read(ref _abortCount);
+
+        public TaskCompletionSource SendStarted { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public override WebSocketCloseStatus? CloseStatus => null;
+
+        public override string? CloseStatusDescription => null;
+
+        public override WebSocketState State => _state;
+
+        public override string? SubProtocol => null;
+
+        public void CompleteSend() => _sendCompletion.TrySetResult();
+
+        public override void Abort()
+        {
+            Interlocked.Increment(ref _abortCount);
+            _state = WebSocketState.Aborted;
+        }
+
+        public override Task CloseAsync(
+            WebSocketCloseStatus closeStatus,
+            string? statusDescription,
+            CancellationToken cancellationToken) => Task.CompletedTask;
+
+        public override Task CloseOutputAsync(
+            WebSocketCloseStatus closeStatus,
+            string? statusDescription,
+            CancellationToken cancellationToken) => Task.CompletedTask;
+
+        public override Task<WebSocketReceiveResult> ReceiveAsync(
+            ArraySegment<byte> buffer,
+            CancellationToken cancellationToken) => throw new NotSupportedException();
+
+        public override Task SendAsync(
+            ArraySegment<byte> buffer,
+            WebSocketMessageType messageType,
+            bool endOfMessage,
+            CancellationToken cancellationToken)
+        {
+            SendStarted.TrySetResult();
+            return _sendCompletion.Task;
+        }
+
+        public override void Dispose()
+        {
+            _sendCompletion.TrySetResult();
+            _state = WebSocketState.Closed;
+        }
+    }
+
+    private sealed class DeadlineBeforePublicationWebSocket : WebSocket
+    {
+        private readonly Action _beforeReturn;
+        private readonly TaskCompletionSource _sendCompletion =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+        private WebSocketState _state = WebSocketState.Open;
+        private int _abortCount;
+
+        public DeadlineBeforePublicationWebSocket(Action beforeReturn)
+        {
+            _beforeReturn = beforeReturn;
+        }
+
+        public int AbortCount => Volatile.Read(ref _abortCount);
+
+        public TaskCompletionSource SendCompleted { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public override WebSocketCloseStatus? CloseStatus => null;
+
+        public override string? CloseStatusDescription => null;
+
+        public override WebSocketState State => _state;
+
+        public override string? SubProtocol => null;
+
+        public void CompleteSend()
+        {
+            _sendCompletion.TrySetResult();
+            SendCompleted.TrySetResult();
+        }
+
+        public override void Abort()
+        {
+            Interlocked.Increment(ref _abortCount);
+            _state = WebSocketState.Aborted;
+        }
+
+        public override Task CloseAsync(
+            WebSocketCloseStatus closeStatus,
+            string? statusDescription,
+            CancellationToken cancellationToken) => Task.CompletedTask;
+
+        public override Task CloseOutputAsync(
+            WebSocketCloseStatus closeStatus,
+            string? statusDescription,
+            CancellationToken cancellationToken) => Task.CompletedTask;
+
+        public override Task<WebSocketReceiveResult> ReceiveAsync(
+            ArraySegment<byte> buffer,
+            CancellationToken cancellationToken) => throw new NotSupportedException();
+
+        public override Task SendAsync(
+            ArraySegment<byte> buffer,
+            WebSocketMessageType messageType,
+            bool endOfMessage,
+            CancellationToken cancellationToken)
+        {
+            _beforeReturn();
+            return _sendCompletion.Task;
+        }
+
+        public override void Dispose()
+        {
+            CompleteSend();
+            _state = WebSocketState.Closed;
         }
     }
 

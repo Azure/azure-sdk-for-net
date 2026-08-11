@@ -198,7 +198,10 @@ internal sealed class VoiceSendTransaction
         CancellationToken cancellationToken,
         CancellationToken responseCancellation = default,
         Func<ValueTask>? beforeWireAsync = null,
-        Action? wireWriteCompleted = null) =>
+        Action? wireWriteCompleted = null,
+        CancellationToken operationDeadlineCancellation = default,
+        Action? wireAttempted = null,
+        Action<Task>? retainedSend = null) =>
         ExecuteAsync(
             new[] { frame },
             reserveAsync,
@@ -206,7 +209,10 @@ internal sealed class VoiceSendTransaction
             cancellationToken,
             responseCancellation,
             beforeWireAsync,
-            wireWriteCompleted);
+            wireWriteCompleted,
+            operationDeadlineCancellation,
+            wireAttempted,
+            retainedSend);
 
     /// <summary>
     /// Executes an ordered group of frames as one reservation. This is used
@@ -228,7 +234,10 @@ internal sealed class VoiceSendTransaction
         CancellationToken cancellationToken,
         CancellationToken responseCancellation = default,
         Func<ValueTask>? beforeWireAsync = null,
-        Action? wireWriteCompleted = null)
+        Action? wireWriteCompleted = null,
+        CancellationToken operationDeadlineCancellation = default,
+        Action? wireAttempted = null,
+        Action<Task>? retainedSend = null)
     {
         ArgumentNullException.ThrowIfNull(frames);
         ArgumentNullException.ThrowIfNull(reserveAsync);
@@ -237,11 +246,22 @@ internal sealed class VoiceSendTransaction
         {
             throw new ArgumentException("A send transaction requires at least one frame.", nameof(frames));
         }
+        if (operationDeadlineCancellation.CanBeCanceled && beforeWireAsync is not null)
+        {
+            throw new ArgumentException(
+                "An operation deadline requires all pre-wire work to observe its cancellation token.",
+                nameof(beforeWireAsync));
+        }
 
         long attemptGeneration = 0;
         long? terminalDrainStarted = null;
         var retainAttemptUntilUnderlyingSendCompletes = false;
-        await _sendGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        using var gateCancellation = cancellationToken.CanBeCanceled && operationDeadlineCancellation.CanBeCanceled
+            ? CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, operationDeadlineCancellation)
+            : null;
+        var gateCancellationToken = gateCancellation?.Token ??
+            (operationDeadlineCancellation.CanBeCanceled ? operationDeadlineCancellation : cancellationToken);
+        await _sendGate.WaitAsync(gateCancellationToken).ConfigureAwait(false);
         try
         {
             EnsureOpen();
@@ -257,13 +277,17 @@ internal sealed class VoiceSendTransaction
             // reservation succeeds, the transaction must physically drain and
             // then either commit or lose semantic arbitration.
             cancellationToken.ThrowIfCancellationRequested();
+            operationDeadlineCancellation.ThrowIfCancellationRequested();
             if (responseCancellation.IsCancellationRequested)
             {
                 throw new VoiceBridgeConnectionClosedException(
                     "The outbound transaction was terminal before state reservation.");
             }
 
-            var reservation = await reserveAsync(CancellationToken.None).ConfigureAwait(false);
+            var reservation = await reserveAsync(
+                operationDeadlineCancellation.CanBeCanceled
+                    ? operationDeadlineCancellation
+                    : CancellationToken.None).ConfigureAwait(false);
 
             // Cancellation that was already visible before the first wire
             // attempt cannot have produced a partial frame. Fail the logical
@@ -275,6 +299,8 @@ internal sealed class VoiceSendTransaction
                 throw new VoiceBridgeConnectionClosedException(
                     "The outbound transaction was terminal before its wire write.");
             }
+
+            operationDeadlineCancellation.ThrowIfCancellationRequested();
 
             if (beforeWireAsync is not null)
             {
@@ -290,6 +316,8 @@ internal sealed class VoiceSendTransaction
                 throw new VoiceBridgeConnectionClosedException(
                     "The outbound transaction was terminal before its wire write.");
             }
+
+            operationDeadlineCancellation.ThrowIfCancellationRequested();
 
             if (responseCancellation.IsCancellationRequested)
             {
@@ -320,17 +348,34 @@ internal sealed class VoiceSendTransaction
                     }
 
                     MarkFrameAttempted(attemptGeneration, index);
+                    wireAttempted?.Invoke();
 
                     var preparedFrame = preparedFrames.Frames[index];
+                    var sendOrOperationDeadline = new SendOperationDeadlineArbiter();
+                    var operationDeadlineRegistration = operationDeadlineCancellation.CanBeCanceled
+                        ? operationDeadlineCancellation.UnsafeRegister(
+                            static state => ((SendOperationDeadlineArbiter)state!).DeadlineElapsed(),
+                            sendOrOperationDeadline)
+                        : default;
                     // Calling WebSocket.SendAsync is the irreversible attempt
                     // boundary. The socket token is intentionally None: our
                     // explicit state below distinguishes pre-call cancellation
                     // from cancellation racing an already-started operation.
-                    var sendTask = _webSocket.SendAsync(
-                        preparedFrame.WrittenMemory,
-                        WebSocketMessageType.Text,
-                        endOfMessage: true,
-                        CancellationToken.None).AsTask();
+                    Task sendTask;
+                    try
+                    {
+                        sendTask = _webSocket.SendAsync(
+                            preparedFrame.WrittenMemory,
+                            WebSocketMessageType.Text,
+                            endOfMessage: true,
+                            CancellationToken.None).AsTask();
+                    }
+                    catch
+                    {
+                        operationDeadlineRegistration.Unregister();
+                        throw;
+                    }
+                    sendOrOperationDeadline.SetSendTask(sendTask);
                     var transportCancellation = new TaskCompletionSource(
                         TaskCreationOptions.RunContinuationsAsynchronously);
                     var cancellationRegistration = _wireCancellation.CanBeCanceled
@@ -369,12 +414,13 @@ internal sealed class VoiceSendTransaction
                     try
                     {
                         var completed = await Task.WhenAny(
-                            sendTask,
+                            sendOrOperationDeadline.Completion,
                             transportCancellation.Task,
                             semanticDrainStart,
                             timeoutTask,
                             terminalFrameDrainTask).ConfigureAwait(false);
-                        if (sendTask.IsCompletedSuccessfully)
+                        var sendWonOperationDeadline = sendOrOperationDeadline.TryClaimCompletedSend();
+                        if (sendWonOperationDeadline)
                         {
                             await sendTask.ConfigureAwait(false);
                             if (index == preparedFrames.Frames.Count - 1)
@@ -399,13 +445,14 @@ internal sealed class VoiceSendTransaction
                             }
 
                             completed = await Task.WhenAny(
-                                sendTask,
+                                sendOrOperationDeadline.Completion,
                                 transportCancellation.Task,
                                 timeoutTask,
                                 terminalFrameDrainTask).ConfigureAwait(false);
                             terminalDrainExpired = completed == terminalFrameDrainTask;
 
-                            if (sendTask.IsCompletedSuccessfully)
+                            sendWonOperationDeadline = sendOrOperationDeadline.TryClaimCompletedSend();
+                            if (sendWonOperationDeadline)
                             {
                                 await sendTask.ConfigureAwait(false);
                                 if (index == preparedFrames.Frames.Count - 1)
@@ -420,7 +467,7 @@ internal sealed class VoiceSendTransaction
                             terminalDrainExpired = completed == terminalFrameDrainTask;
                         }
 
-                        if (completed == sendTask)
+                        if (sendWonOperationDeadline)
                         {
                             await sendTask.ConfigureAwait(false);
                         }
@@ -430,8 +477,11 @@ internal sealed class VoiceSendTransaction
                         preparedFrames.TransferOwnershipTo(
                             sendTask,
                             () => ClearAttempt(attemptGeneration));
+                        retainedSend?.Invoke(sendTask);
                         throw new VoiceBridgeConnectionClosedException(
-                            completed == timeoutTask || terminalDrainExpired
+                            completed == sendOrOperationDeadline.Completion && !sendWonOperationDeadline
+                                ? "The outbound transaction exceeded its operation deadline."
+                                : completed == timeoutTask || terminalDrainExpired
                                 ? "The physical voice send exceeded its bounded drain deadline."
                                 : "The voice connection closed during an outbound transaction.");
                     }
@@ -439,6 +489,7 @@ internal sealed class VoiceSendTransaction
                     {
                         cancellationRegistration.Unregister();
                         semanticCancellationRegistration.Unregister();
+                        operationDeadlineRegistration.Unregister();
                         timeoutCancellation.Cancel();
                         terminalFrameDrainCancellation.Cancel();
                     }
@@ -491,6 +542,77 @@ internal sealed class VoiceSendTransaction
                 ClearAttempt(attemptGeneration);
             }
             _sendGate.Release();
+        }
+    }
+
+    private sealed class SendOperationDeadlineArbiter
+    {
+        private readonly object _sync = new();
+        private readonly TaskCompletionSource<bool> _completion =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+        private Task? _sendTask;
+        private bool _deadlineElapsed;
+
+        public Task<bool> Completion => _completion.Task;
+
+        public void SetSendTask(Task sendTask)
+        {
+            ArgumentNullException.ThrowIfNull(sendTask);
+            lock (_sync)
+            {
+                _sendTask = sendTask;
+                if (sendTask.IsCompleted || _deadlineElapsed)
+                {
+                    _completion.TrySetResult(sendTask.IsCompleted);
+                    return;
+                }
+            }
+
+            _ = sendTask.ContinueWith(
+                static (_, state) => ((SendOperationDeadlineArbiter)state!).SendCompleted(),
+                this,
+                CancellationToken.None,
+                TaskContinuationOptions.ExecuteSynchronously,
+                TaskScheduler.Default);
+        }
+
+        public void DeadlineElapsed()
+        {
+            lock (_sync)
+            {
+                _deadlineElapsed = true;
+                if (_sendTask is not null)
+                {
+                    _completion.TrySetResult(_sendTask.IsCompleted);
+                }
+            }
+        }
+
+        public bool TryClaimCompletedSend()
+        {
+            lock (_sync)
+            {
+                if (_completion.Task.IsCompletedSuccessfully)
+                {
+                    return _completion.Task.Result;
+                }
+
+                if (_sendTask?.IsCompleted == true)
+                {
+                    _completion.TrySetResult(true);
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        private void SendCompleted()
+        {
+            lock (_sync)
+            {
+                _completion.TrySetResult(true);
+            }
         }
     }
 

@@ -77,7 +77,7 @@ public class VoiceTerminationCoordinatorTests
                 Interlocked.Increment(ref applyCount);
                 return ValueTask.CompletedTask;
             },
-            static _ => ValueTask.CompletedTask);
+            static (_, _) => ValueTask.CompletedTask);
         var request = new VoiceConnectionTerminationRequest("session_end", stopRuntime: true);
 
         await Task.WhenAll(
@@ -89,6 +89,286 @@ public class VoiceTerminationCoordinatorTests
             Assert.That(sealCount, Is.EqualTo(1));
             Assert.That(applyCount, Is.EqualTo(1));
             Assert.That(coordinator.IsTerminating, Is.True);
+        });
+        coordinator.MarkCompleted();
+    }
+
+    [Test]
+    public async Task CallerCancellationCannotPoisonSharedStructuralTermination()
+    {
+        using var webSocket = new StubWebSocket();
+        using var runtimeCancellation = new CancellationTokenSource();
+        using var callerCancellation = new CancellationTokenSource();
+        var sealStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var releaseSeal = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var sealCompleted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var sealCount = 0;
+        var applyCount = 0;
+        var coordinator = new VoiceTerminationCoordinator(
+            new CleanupDeadline(TimeSpan.FromSeconds(5)),
+            runtimeCancellation,
+            webSocket,
+            new VoiceTurnLease(),
+            static _ => { },
+            async (request, cancellationToken) =>
+            {
+                try
+                {
+                    Interlocked.Increment(ref sealCount);
+                    sealStarted.TrySetResult();
+                    await releaseSeal.Task;
+                    cancellationToken.ThrowIfCancellationRequested();
+                    return VoiceConnectionTerminationSnapshot.Empty(request);
+                }
+                finally
+                {
+                    sealCompleted.TrySetResult();
+                }
+            },
+            _ =>
+            {
+                Interlocked.Increment(ref applyCount);
+                return ValueTask.CompletedTask;
+            },
+            static (_, _) => ValueTask.CompletedTask);
+
+        Task<VoiceTerminationOutcome>? first = null;
+        try
+        {
+            first = coordinator.BeginAsync(
+                new VoiceConnectionTerminationRequest("end_call", stopRuntime: false),
+                callerCancellation.Token);
+            await sealStarted.Task.WaitAsync(TimeSpan.FromSeconds(1));
+            await callerCancellation.CancelAsync();
+            OperationCanceledException? cancellation = null;
+            try
+            {
+                await first.WaitAsync(TimeSpan.FromSeconds(1));
+            }
+            catch (OperationCanceledException exception)
+            {
+                cancellation = exception;
+            }
+            Assert.That(cancellation?.CancellationToken, Is.EqualTo(callerCancellation.Token));
+
+            var second = coordinator.BeginAsync(
+                new VoiceConnectionTerminationRequest("session_end", stopRuntime: true),
+                CancellationToken.None);
+            releaseSeal.TrySetResult();
+            var outcome = await second.WaitAsync(TimeSpan.FromSeconds(1));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(sealCount, Is.EqualTo(1));
+                Assert.That(applyCount, Is.EqualTo(1));
+                Assert.That(outcome.IsWinner, Is.False);
+                Assert.That(outcome.Snapshot.Request.TerminalKind, Is.EqualTo("end_call"));
+                Assert.That(runtimeCancellation.IsCancellationRequested, Is.True);
+            });
+        }
+        finally
+        {
+            releaseSeal.TrySetResult();
+            await sealCompleted.Task.WaitAsync(TimeSpan.FromSeconds(1));
+            if (first is not null)
+            {
+                try
+                {
+                    await first;
+                }
+                catch (OperationCanceledException)
+                {
+                }
+            }
+            coordinator.MarkCompleted();
+        }
+    }
+
+    [Test]
+    public async Task LateCallerCancellationDoesNotCancelTerminalEnrichment()
+    {
+        using var webSocket = new StubWebSocket();
+        using var runtimeCancellation = new CancellationTokenSource();
+        using var lateCallerCancellation = new CancellationTokenSource();
+        var sealStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var releaseSeal = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var sealCompleted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var sessionEndNotified = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var coordinator = new VoiceTerminationCoordinator(
+            new CleanupDeadline(TimeSpan.FromSeconds(5)),
+            runtimeCancellation,
+            webSocket,
+            new VoiceTurnLease(),
+            static _ => { },
+            async (request, _) =>
+            {
+                try
+                {
+                    sealStarted.TrySetResult();
+                    await releaseSeal.Task;
+                    return VoiceConnectionTerminationSnapshot.Empty(request);
+                }
+                finally
+                {
+                    sealCompleted.TrySetResult();
+                }
+            },
+            static _ => ValueTask.CompletedTask,
+            (_, _) =>
+            {
+                sessionEndNotified.TrySetResult();
+                return ValueTask.CompletedTask;
+            });
+
+        try
+        {
+            var first = coordinator.BeginAsync(
+                new VoiceConnectionTerminationRequest("end_call", stopRuntime: false),
+                CancellationToken.None);
+            await sealStarted.Task.WaitAsync(TimeSpan.FromSeconds(1));
+            var late = coordinator.BeginAsync(
+                new VoiceConnectionTerminationRequest(
+                    "session_end",
+                    stopRuntime: true,
+                    VoiceModelFactory.SessionEndEvent("caller_hangup")),
+                lateCallerCancellation.Token);
+
+            await lateCallerCancellation.CancelAsync();
+            OperationCanceledException? cancellation = null;
+            try
+            {
+                await late.WaitAsync(TimeSpan.FromSeconds(1));
+            }
+            catch (OperationCanceledException exception)
+            {
+                cancellation = exception;
+            }
+            Assert.That(cancellation?.CancellationToken, Is.EqualTo(lateCallerCancellation.Token));
+
+            var completion = coordinator.CompleteAsync(static _ => Task.CompletedTask);
+            Assert.That(completion.IsCompleted, Is.False);
+            releaseSeal.TrySetResult();
+            await first.WaitAsync(TimeSpan.FromSeconds(1));
+            await sessionEndNotified.Task.WaitAsync(TimeSpan.FromSeconds(1));
+            await completion.WaitAsync(TimeSpan.FromSeconds(1));
+            Assert.That(runtimeCancellation.IsCancellationRequested, Is.True);
+        }
+        finally
+        {
+            releaseSeal.TrySetResult();
+            await sealCompleted.Task.WaitAsync(TimeSpan.FromSeconds(1));
+            coordinator.MarkCompleted();
+        }
+    }
+
+    [Test]
+    public async Task StructuralOwnerDeadlineFailsSharedCompletionAndClosesRegistration()
+    {
+        using var webSocket = new StubWebSocket();
+        using var runtimeCancellation = new CancellationTokenSource();
+        using var callerCancellation = new CancellationTokenSource();
+        var sealStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var releaseSeal = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var originalSealCompleted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var sealCount = 0;
+        var applyCount = 0;
+        var coordinator = new VoiceTerminationCoordinator(
+            new CleanupDeadline(TimeSpan.FromMilliseconds(50)),
+            runtimeCancellation,
+            webSocket,
+            new VoiceTurnLease(),
+            static _ => { },
+            async (request, _) =>
+            {
+                if (Interlocked.Increment(ref sealCount) == 1)
+                {
+                    try
+                    {
+                        sealStarted.TrySetResult();
+                        await releaseSeal.Task;
+                    }
+                    finally
+                    {
+                        originalSealCompleted.TrySetResult();
+                    }
+                }
+                return VoiceConnectionTerminationSnapshot.Empty(request);
+            },
+            _ =>
+            {
+                Interlocked.Increment(ref applyCount);
+                return ValueTask.CompletedTask;
+            },
+            static (_, _) => ValueTask.CompletedTask);
+
+        try
+        {
+            var first = coordinator.BeginAsync(
+                new VoiceConnectionTerminationRequest("end_call", stopRuntime: false),
+                callerCancellation.Token);
+            await sealStarted.Task.WaitAsync(TimeSpan.FromSeconds(1));
+            await callerCancellation.CancelAsync();
+            Assert.That(
+                async () => await first.WaitAsync(TimeSpan.FromSeconds(1)),
+                Throws.InstanceOf<OperationCanceledException>());
+
+            await coordinator.CompleteAsync(static _ => Task.CompletedTask)
+                .WaitAsync(TimeSpan.FromSeconds(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(webSocket.State, Is.EqualTo(WebSocketState.Aborted));
+                Assert.That(runtimeCancellation.IsCancellationRequested, Is.True);
+                Assert.That(sealCount, Is.EqualTo(2));
+                Assert.That(applyCount, Is.EqualTo(1));
+                Assert.That(
+                    async () => await coordinator.BeginAsync(
+                        new VoiceConnectionTerminationRequest("session_end", stopRuntime: true),
+                        CancellationToken.None),
+                    Throws.TypeOf<VoiceBridgeConnectionClosedException>());
+            });
+        }
+        finally
+        {
+            releaseSeal.TrySetResult();
+            await originalSealCompleted.Task.WaitAsync(TimeSpan.FromSeconds(1));
+            coordinator.MarkCompleted();
+        }
+    }
+
+    [Test]
+    public async Task DeadlineBeforeFirstBeginFencesStructuralOwnerCreation()
+    {
+        using var webSocket = new StubWebSocket();
+        using var runtimeCancellation = new CancellationTokenSource();
+        var deadlineSelected = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var sealCount = 0;
+        var coordinator = new VoiceTerminationCoordinator(
+            new CleanupDeadline(TimeSpan.FromMilliseconds(50)),
+            runtimeCancellation,
+            webSocket,
+            new VoiceTurnLease(),
+            _ => deadlineSelected.TrySetResult(),
+            (request, _) =>
+            {
+                Interlocked.Increment(ref sealCount);
+                return ValueTask.FromResult(VoiceConnectionTerminationSnapshot.Empty(request));
+            },
+            static _ => ValueTask.CompletedTask,
+            static (_, _) => ValueTask.CompletedTask);
+
+        coordinator.StartDeadline();
+        await deadlineSelected.Task.WaitAsync(TimeSpan.FromSeconds(1));
+        var outcome = await coordinator.BeginAsync(
+            new VoiceConnectionTerminationRequest("session_rejected", stopRuntime: true),
+            CancellationToken.None);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(outcome.IsWinner, Is.False);
+            Assert.That(outcome.Snapshot.Request.TerminalKind, Is.EqualTo("session_rejected"));
+            Assert.That(sealCount, Is.Zero);
+            Assert.That(runtimeCancellation.IsCancellationRequested, Is.True);
+            Assert.That(webSocket.State, Is.EqualTo(WebSocketState.Aborted));
         });
         coordinator.MarkCompleted();
     }
@@ -153,7 +433,7 @@ public class VoiceTerminationCoordinatorTests
             static _ => { },
             static (request, _) => ValueTask.FromResult(VoiceConnectionTerminationSnapshot.Empty(request)),
             static _ => ValueTask.CompletedTask,
-            _ =>
+            (_, _) =>
             {
                 Interlocked.Increment(ref notifyCount);
                 return ValueTask.CompletedTask;
@@ -201,6 +481,50 @@ public class VoiceTerminationCoordinatorTests
         coordinator.MarkCompleted();
     }
 
+    [Test]
+    public async Task ConnectionShutdownCaptureDoesNotDependOnIdentityAdmission()
+    {
+        var governor = new VoiceResourceGovernor(new VoiceResourceLimits
+        {
+            MaxTrackedIdentityBytes = 1,
+        });
+        using var webSocket = new StubWebSocket();
+        using var runtimeCancellation = new CancellationTokenSource();
+        var turnLease = new VoiceTurnLease();
+        var response = new StubResponse();
+        var release = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        turnLease.Activate(response, "reactive", release, activity: null);
+        var coordinator = new VoiceTerminationCoordinator(
+            new CleanupDeadline(TimeSpan.FromSeconds(5)),
+            runtimeCancellation,
+            webSocket,
+            turnLease,
+            static _ => { },
+            static (request, _) => ValueTask.FromResult(VoiceConnectionTerminationSnapshot.Empty(request)),
+            static _ => ValueTask.CompletedTask,
+            static (_, _) => ValueTask.CompletedTask,
+            governor);
+
+        await response.MarkTerminalAsync();
+        var termination = coordinator.CaptureResponseForConnectionShutdown(response, "connection_closed");
+        await VoiceTerminationCoordinator.ApplyResponseTermination(termination);
+        var duplicate = coordinator.CaptureResponseForConnectionShutdown(response, "connection_closed");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(termination.IsNewTerminal, Is.True);
+            Assert.That(termination.TurnTermination.IsNewTerminal, Is.True);
+            Assert.That(duplicate.IsNewTerminal, Is.False);
+            Assert.That(duplicate.TurnTermination.IsNewTerminal, Is.False);
+            Assert.That(turnLease.Current, Is.Null);
+            Assert.That(release.Task.IsCompleted, Is.True);
+            Assert.That(response.IsTerminal, Is.True);
+            Assert.That(response.CancellationToken.IsCancellationRequested, Is.True);
+            Assert.That(governor.TrackedIdentityBytes, Is.Zero);
+        });
+        coordinator.MarkCompleted();
+    }
+
     private static VoiceTerminationCoordinator CreateCoordinator(
         WebSocket webSocket,
         CancellationTokenSource runtimeCancellation,
@@ -213,7 +537,7 @@ public class VoiceTerminationCoordinatorTests
             static _ => { },
             static (request, _) => ValueTask.FromResult(VoiceConnectionTerminationSnapshot.Empty(request)),
             static _ => ValueTask.CompletedTask,
-            static _ => ValueTask.CompletedTask);
+            static (_, _) => ValueTask.CompletedTask);
 
     private sealed class StubResponse : VoiceResponse
     {

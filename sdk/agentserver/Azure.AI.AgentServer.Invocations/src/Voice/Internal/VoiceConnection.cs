@@ -83,6 +83,7 @@ internal sealed class VoiceConnection : IVoiceConnection
 
     private VoiceSession? _session;
     private SessionEndEvent? _sessionEndEvent;
+    private VoiceConnectionTerminationSnapshot? _connectionTerminationSnapshot;
     private Task? _callbackWorker;
     private long _queuedCallbackBytes;
     private bool _ready;
@@ -323,7 +324,9 @@ internal sealed class VoiceConnection : IVoiceConnection
         string messageType,
         IReadOnlyDictionary<string, object?> fields,
         CancellationToken cancellationToken,
-        CancellationToken responseCancellation = default)
+        CancellationToken responseCancellation = default,
+        CancellationToken operationDeadlineCancellation = default,
+        Action<Task>? retainedSend = null)
     {
         long? firstOutputStarted = null;
         await _sendTransaction.ExecuteAsync(
@@ -373,7 +376,9 @@ internal sealed class VoiceConnection : IVoiceConnection
                 }
             },
             cancellationToken,
-            responseCancellation).ConfigureAwait(false);
+            responseCancellation,
+            operationDeadlineCancellation: operationDeadlineCancellation,
+            retainedSend: retainedSend).ConfigureAwait(false);
 
         if (firstOutputStarted.HasValue)
         {
@@ -711,97 +716,155 @@ internal sealed class VoiceConnection : IVoiceConnection
         string? reason,
         CancellationToken cancellationToken)
     {
-        EnsureReady();
         var responseId = response.ResponseId;
         var completion = new TaskCompletionSource<ResponseCancellationOutcome>(TaskCreationOptions.RunContinuationsAsynchronously);
         var waiterRegistered = false;
+        var wireAttempted = false;
+        CancellationTokenSource? sendDeadline = null;
+        var disposeSendDeadline = true;
         var fields = new Dictionary<string, object?> { ["response_id"] = responseId };
         if (reason is not null)
         {
             fields["reason"] = reason;
         }
 
-        var sendTask = _sendTransaction.ExecuteAsync(
-            new VoiceFramePayload("response.cancel", fields),
-            async transactionCancellation =>
-            {
-                await _stateGate.WaitAsync(transactionCancellation).ConfigureAwait(false);
-                try
-                {
-                    EnsureReadyLocked();
-                    var trackedResponse = FindResponseLocked(responseId);
-                    if (!ReferenceEquals(trackedResponse, response) || !response.IsWireOpened)
-                    {
-                        throw new VoiceBridgeConnectionClosedException("The response is not open.");
-                    }
-
-                    var waiterLease = _resourceGovernor.AcquirePendingOperation();
-                    if (!_cancelWaiters.TryAdd(responseId, new CancelWaiter(completion, waiterLease)))
-                    {
-                        waiterLease.Dispose();
-                        throw new InvalidOperationException("Response cancellation is already pending.");
-                    }
-
-                    waiterRegistered = true;
-
-                    try
-                    {
-                        response.ReserveCancellation();
-                    }
-                    catch
-                    {
-                        if (_cancelWaiters.Remove(responseId, out var removedWaiter))
-                        {
-                            removedWaiter.Lease.Dispose();
-                        }
-                        waiterRegistered = false;
-                        throw;
-                    }
-
-                    return 0;
-                }
-                finally
-                {
-                    _stateGate.Release();
-                }
-            },
-            static _ => ValueTask.FromResult(true),
-            cancellationToken,
-            response.CancellationToken);
-        var firstCompleted = await Task.WhenAny(sendTask, completion.Task).ConfigureAwait(false);
-        if (firstCompleted == completion.Task)
-        {
-            TrackCleanup(sendTask);
-            return completion.Task;
-        }
-
         try
         {
-            await sendTask.ConfigureAwait(false);
-        }
-        catch (VoiceBridgeConnectionClosedException)
-        {
-            // A bridge terminal can complete the authoritative waiter after
-            // reservation but before or during the response.cancel wire write.
-            // Preserve that outcome instead of replacing it with a transport
-            // exception from the losing send transaction.
-            await _stateGate.WaitAsync(CancellationToken.None).ConfigureAwait(false);
+            EnsureReady();
+            VoiceSendTransaction.ValidateJsonValue(fields);
+            await _stateGate.WaitAsync(cancellationToken).ConfigureAwait(false);
             try
             {
-                if (!waiterRegistered ||
-                    (!completion.Task.IsCompleted &&
-                        !_termination.IsResponseTerminal(responseId)))
+                EnsureReadyLocked();
+                var trackedResponse = FindResponseLocked(responseId);
+                if (!ReferenceEquals(trackedResponse, response) || !response.IsWireOpened)
                 {
-                    throw;
+                    throw new VoiceBridgeConnectionClosedException("The response is not open.");
                 }
+
+                var waiterLease = _resourceGovernor.AcquirePendingOperation();
+                if (!_cancelWaiters.TryAdd(responseId, new CancelWaiter(completion, waiterLease)))
+                {
+                    waiterLease.Dispose();
+                    throw new InvalidOperationException("Response cancellation is already pending.");
+                }
+
+                waiterRegistered = true;
             }
             finally
             {
                 _stateGate.Release();
             }
-        }
 
-        return completion.Task;
+            sendDeadline = new CancellationTokenSource();
+            var sendRemaining = _cleanupDeadline.Remaining;
+            if (sendRemaining <= TimeSpan.Zero)
+            {
+                sendDeadline.Cancel();
+            }
+            else
+            {
+                sendDeadline.CancelAfter(sendRemaining);
+            }
+
+            var sendTask = _sendTransaction.ExecuteAsync(
+                new VoiceFramePayload("response.cancel", fields),
+                async transactionCancellation =>
+                {
+                    await _stateGate.WaitAsync(transactionCancellation).ConfigureAwait(false);
+                    try
+                    {
+                        EnsureReadyLocked();
+                        if (!_cancelWaiters.TryGetValue(responseId, out var waiter) ||
+                            !ReferenceEquals(waiter.Completion, completion))
+                        {
+                            throw new VoiceBridgeConnectionClosedException("The response cancellation is no longer pending.");
+                        }
+
+                        return 0;
+                    }
+                    finally
+                    {
+                        _stateGate.Release();
+                    }
+                },
+                static _ => ValueTask.FromResult(true),
+                cancellationToken,
+                response.CancellationToken,
+                operationDeadlineCancellation: sendDeadline.Token,
+                wireAttempted: () => Volatile.Write(ref wireAttempted, true));
+            var firstCompleted = await Task.WhenAny(sendTask, completion.Task).ConfigureAwait(false);
+            if (firstCompleted == completion.Task)
+            {
+                TrackCleanup(sendTask);
+                DisposeCancellationWhenCompleted(sendTask, sendDeadline);
+                disposeSendDeadline = false;
+                return completion.Task;
+            }
+
+            try
+            {
+                await sendTask.ConfigureAwait(false);
+            }
+            catch (VoiceBridgeConnectionClosedException) when (waiterRegistered)
+            {
+                // A bridge terminal can complete the authoritative waiter after
+                // reservation but before or during the response.cancel wire write.
+                // Preserve that outcome instead of replacing it with a transport
+                // exception from the losing send transaction.
+                await completion.Task.ConfigureAwait(false);
+            }
+
+            return completion.Task;
+        }
+        catch (OperationCanceledException) when (
+            waiterRegistered &&
+            sendDeadline?.IsCancellationRequested == true)
+        {
+            _termination.StopRuntime();
+            AbortBestEffort();
+            return completion.Task;
+        }
+        catch
+        {
+            var rolledBack = false;
+            if (waiterRegistered && !Volatile.Read(ref wireAttempted))
+            {
+                await _stateGate.WaitAsync(CancellationToken.None).ConfigureAwait(false);
+                try
+                {
+                    if (_cancelWaiters.TryGetValue(responseId, out var waiter) &&
+                        ReferenceEquals(waiter.Completion, completion))
+                    {
+                        _cancelWaiters.Remove(responseId);
+                        waiter.Lease.Dispose();
+                        waiterRegistered = false;
+                        rolledBack = true;
+                    }
+                }
+                finally
+                {
+                    _stateGate.Release();
+                }
+            }
+
+            if (!waiterRegistered)
+            {
+                response.RollbackCancellationReservation();
+            }
+            else if (!rolledBack)
+            {
+                return completion.Task;
+            }
+            throw;
+        }
+        finally
+        {
+            if (disposeSendDeadline)
+            {
+                sendDeadline?.Dispose();
+            }
+        }
     }
 
     public async Task EndCallAsync(string reason, string mode, CancellationToken cancellationToken)
@@ -855,6 +918,9 @@ internal sealed class VoiceConnection : IVoiceConnection
             fields["supersede_key"] = supersedeKey;
         }
 
+        var initialSendDeadline = new CancellationTokenSource();
+        Task? retainedInitialSend = null;
+        var initialWireAttempted = false;
         var sendTask = _sendTransaction.ExecuteAsync(
             new VoiceFramePayload("response.created", fields),
             async transactionCancellation =>
@@ -882,7 +948,7 @@ internal sealed class VoiceConnection : IVoiceConnection
                         _pendingProactive.Add(
                             response.ResponseId,
                             new PendingProactive(response, completion, pendingLease));
-                        waiterRegistered = true;
+                        Volatile.Write(ref waiterRegistered, true);
                     }
                     catch
                     {
@@ -898,15 +964,82 @@ internal sealed class VoiceConnection : IVoiceConnection
             },
             static _ => ValueTask.FromResult(true),
             cancellationToken,
-            response.CancellationToken);
+            response.CancellationToken,
+            operationDeadlineCancellation: initialSendDeadline.Token,
+            wireAttempted: () => Volatile.Write(ref initialWireAttempted, true),
+            retainedSend: task => retainedInitialSend = task);
 
-        var retainSendTask = await AwaitProactiveSendArbitrationAsync(
+        var arbitrationTask = AwaitProactiveSendArbitrationAsync(
             sendTask,
             completion.Task,
-            () => waiterRegistered).ConfigureAwait(false);
+            () => Volatile.Read(ref waiterRegistered));
+        var callerCancelledBeforeArbitration = false;
+        if (cancellationToken.CanBeCanceled)
+        {
+            var callerCancellation = new TaskCompletionSource(
+                TaskCreationOptions.RunContinuationsAsynchronously);
+            using var callerCancellationRegistration = cancellationToken.UnsafeRegister(
+                static state => ((TaskCompletionSource)state!).TrySetResult(),
+                callerCancellation);
+            await Task.WhenAny(arbitrationTask, callerCancellation.Task).ConfigureAwait(false);
+            callerCancelledBeforeArbitration =
+                !completion.Task.IsCompleted &&
+                cancellationToken.IsCancellationRequested;
+        }
+
+        if (callerCancelledBeforeArbitration && !_runtimeCancellation.IsCancellationRequested)
+        {
+            var shouldCancelAdmission = await MarkProactiveAdmissionAbandonedAsync(response).ConfigureAwait(false);
+            var tracked = TrackOwnedCleanup(() => SuperviseCancelledProactiveAsync(
+                response,
+                sendTask,
+                initialSendDeadline,
+                () => retainedInitialSend,
+                () => Volatile.Read(ref initialWireAttempted),
+                completion,
+                shouldCancelAdmission));
+            if (!tracked)
+            {
+                initialSendDeadline.Cancel();
+                _termination.StopRuntime();
+                AbortBestEffort();
+                ObserveTaskFaults(sendTask);
+                DisposeCancellationWhenCompleted(sendTask, initialSendDeadline);
+                if (!Volatile.Read(ref waiterRegistered))
+                {
+                    await response.MarkTerminalAsync().ConfigureAwait(false);
+                    completion.TrySetException(new VoiceBridgeConnectionClosedException(
+                        "Proactive admission was cancelled before registration."));
+                }
+            }
+
+            ObserveTaskFaults(arbitrationTask);
+            ObserveTaskFaults(completion.Task);
+            throw new OperationCanceledException(cancellationToken);
+        }
+
+        bool retainSendTask;
+        try
+        {
+            retainSendTask = await arbitrationTask.ConfigureAwait(false);
+        }
+        catch
+        {
+            initialSendDeadline.Dispose();
+            if (!Volatile.Read(ref waiterRegistered))
+            {
+                await response.MarkTerminalAsync().ConfigureAwait(false);
+            }
+            throw;
+        }
         if (retainSendTask)
         {
             TrackCleanup(sendTask);
+            DisposeCancellationWhenCompleted(sendTask, initialSendDeadline);
+        }
+        else
+        {
+            initialSendDeadline.Dispose();
         }
 
         ProactiveOutcome outcome;
@@ -928,46 +1061,18 @@ internal sealed class VoiceConnection : IVoiceConnection
             }
             else
             {
-                var shouldCancelAdmission = false;
-                await _stateGate.WaitAsync(CancellationToken.None).ConfigureAwait(false);
-                try
-                {
-                    // Cancellation can race the bridge outcome. Register an
-                    // abandoned cancel only while admission is still pending or
-                    // after acceptance made the response active. A dropped or
-                    // connection-terminal response has no future playback outcome
-                    // that could consume this marker.
-                    shouldCancelAdmission = _pendingProactive.ContainsKey(response.ResponseId) ||
-                        (response.IsAccepted && !response.IsTerminal);
-                    if (shouldCancelAdmission)
-                    {
-                        _abandonedProactiveCancels.Add(response.ResponseId);
-                    }
-                }
-                finally
-                {
-                    _stateGate.Release();
-                }
+                var shouldCancelAdmission = await MarkProactiveAdmissionAbandonedAsync(response).ConfigureAwait(false);
 
                 if (shouldCancelAdmission)
                 {
-                    try
+                    if (!TrackOwnedCleanup(() => SendProactiveCancelCompensationAsync(response)))
                     {
-                        await SendAsync(
-                            "response.cancel",
-                            new Dictionary<string, object?>
-                            {
-                                ["response_id"] = response.ResponseId,
-                                ["reason"] = "cancelled_by_agent",
-                            },
-                            CancellationToken.None,
-                            response.CancellationToken).ConfigureAwait(false);
-                    }
-                    catch (VoiceBridgeConnectionClosedException)
-                    {
+                        _termination.StopRuntime();
+                        AbortBestEffort();
                     }
                 }
 
+                ObserveTaskFaults(completion.Task);
                 throw;
             }
         }
@@ -979,6 +1084,175 @@ internal sealed class VoiceConnection : IVoiceConnection
         }
 
         return response;
+    }
+
+    private async Task<bool> MarkProactiveAdmissionAbandonedAsync(VoiceResponse response)
+    {
+        await _stateGate.WaitAsync(CancellationToken.None).ConfigureAwait(false);
+        try
+        {
+            // Cancellation can race the bridge outcome. Register an abandoned
+            // cancel only while admission is still pending or after acceptance
+            // made the response active.
+            var shouldCancelAdmission = _pendingProactive.ContainsKey(response.ResponseId) ||
+                (response.IsAccepted && !response.IsTerminal);
+            if (shouldCancelAdmission)
+            {
+                _abandonedProactiveCancels.Add(response.ResponseId);
+            }
+
+            return shouldCancelAdmission;
+        }
+        finally
+        {
+            _stateGate.Release();
+        }
+    }
+
+    private async Task SuperviseCancelledProactiveAsync(
+        VoiceResponse response,
+        Task initialSend,
+        CancellationTokenSource initialSendDeadline,
+        Func<Task?> retainedInitialSend,
+        Func<bool> initialWireAttempted,
+        TaskCompletionSource<ProactiveOutcome> completion,
+        bool sendCompensation)
+    {
+        var remaining = _cleanupDeadline.Remaining;
+        if (remaining <= TimeSpan.Zero)
+        {
+            initialSendDeadline.Cancel();
+        }
+        else
+        {
+            initialSendDeadline.CancelAfter(remaining);
+        }
+
+        try
+        {
+            var initialSendSucceeded = false;
+            try
+            {
+                await initialSend.ConfigureAwait(false);
+                initialSendSucceeded = true;
+            }
+#pragma warning disable CA1031 // The owner reconciles every initial-send failure by wire phase.
+            catch (Exception)
+#pragma warning restore CA1031
+            {
+            }
+
+            if (!initialWireAttempted())
+            {
+                await RollbackUnseenProactiveAdmissionAsync(response, completion).ConfigureAwait(false);
+            }
+            else if (initialSendSucceeded && sendCompensation &&
+                (!completion.Task.IsCompleted ||
+                    (completion.Task.IsCompletedSuccessfully &&
+                        completion.Task.Result.Accepted &&
+                        !response.IsTerminal)))
+            {
+                await SendProactiveCancelCompensationAsync(response).ConfigureAwait(false);
+            }
+
+            var retained = retainedInitialSend();
+            if (retained is not null)
+            {
+                await ObserveTaskAsync(retained).ConfigureAwait(false);
+            }
+        }
+        finally
+        {
+            initialSendDeadline.Dispose();
+        }
+    }
+
+    private async Task RollbackUnseenProactiveAdmissionAsync(
+        VoiceResponse response,
+        TaskCompletionSource<ProactiveOutcome> completion)
+    {
+        PendingProactive? pending = null;
+        await _stateGate.WaitAsync(CancellationToken.None).ConfigureAwait(false);
+        try
+        {
+            if (_pendingProactive.TryGetValue(response.ResponseId, out var candidate) &&
+                ReferenceEquals(candidate.Completion, completion))
+            {
+                _pendingProactive.Remove(response.ResponseId);
+                _abandonedProactiveCancels.Remove(response.ResponseId);
+                RemoveSeenResponseIdLocked(response.ResponseId);
+                pending = candidate;
+            }
+        }
+        finally
+        {
+            _stateGate.Release();
+        }
+
+        if (pending is not null)
+        {
+            pending.Lease.Dispose();
+        }
+        await response.MarkTerminalAsync().ConfigureAwait(false);
+        completion.TrySetException(new VoiceBridgeConnectionClosedException(
+            "Proactive admission was cancelled before its wire attempt."));
+    }
+
+    private static void DisposeCancellationWhenCompleted(
+        Task task,
+        CancellationTokenSource cancellation)
+    {
+        _ = task.ContinueWith(
+            static (_, state) => ((CancellationTokenSource)state!).Dispose(),
+            cancellation,
+            CancellationToken.None,
+            TaskContinuationOptions.ExecuteSynchronously,
+            TaskScheduler.Default);
+    }
+
+    private async Task SendProactiveCancelCompensationAsync(VoiceResponse response)
+    {
+        Task? retainedSend = null;
+        using var deadlineCancellation = new CancellationTokenSource();
+        var remaining = _cleanupDeadline.Remaining;
+        if (remaining <= TimeSpan.Zero)
+        {
+            deadlineCancellation.Cancel();
+        }
+        else
+        {
+            deadlineCancellation.CancelAfter(remaining);
+        }
+
+        try
+        {
+            await SendAsync(
+                "response.cancel",
+                new Dictionary<string, object?>
+                {
+                    ["response_id"] = response.ResponseId,
+                    ["reason"] = "cancelled_by_agent",
+                },
+                CancellationToken.None,
+                response.CancellationToken,
+                deadlineCancellation.Token,
+                task => retainedSend = task).ConfigureAwait(false);
+        }
+        catch (Exception) when (deadlineCancellation.IsCancellationRequested || !response.IsTerminal)
+        {
+            if (!response.IsTerminal)
+            {
+                _termination.StopRuntime();
+                AbortBestEffort();
+            }
+        }
+        finally
+        {
+            if (retainedSend is not null)
+            {
+                await ObserveTaskAsync(retainedSend).ConfigureAwait(false);
+            }
+        }
     }
 
     internal static async Task<bool> AwaitProactiveSendArbitrationAsync(
@@ -1817,8 +2091,8 @@ internal sealed class VoiceConnection : IVoiceConnection
             }
 
             AddPlaybackOutcomeLocked(outcome.ResponseId);
-            _cancelWaiters.Remove(outcome.ResponseId, out waiter);
-            abandoned = _abandonedProactiveCancels.Remove(outcome.ResponseId);
+            _cancelWaiters.TryGetValue(outcome.ResponseId, out waiter);
+            abandoned = _abandonedProactiveCancels.Contains(outcome.ResponseId);
             if (outcome.Kind == "cancelled" && waiter is null && !abandoned)
             {
                 RemovePlaybackOutcomeLocked(outcome.ResponseId);
@@ -1828,6 +2102,8 @@ internal sealed class VoiceConnection : IVoiceConnection
             }
 
             termination = _termination.TryTerminateResponse(response, outcome.Kind);
+            _cancelWaiters.Remove(outcome.ResponseId);
+            _abandonedProactiveCancels.Remove(outcome.ResponseId);
             ForgetResponseTimingLocked(outcome.ResponseId);
         }
         finally
@@ -2318,6 +2594,11 @@ internal sealed class VoiceConnection : IVoiceConnection
             catch (Exception exception) when (exception is TimeoutException or OperationCanceledException)
             {
             }
+#pragma warning disable CA1031 // Cleanup-owner faults are observed but cannot skip structural release.
+            catch (Exception)
+#pragma warning restore CA1031
+            {
+            }
         }
 
         await _stateGate.WaitAsync(CancellationToken.None).ConfigureAwait(false);
@@ -2360,6 +2641,12 @@ internal sealed class VoiceConnection : IVoiceConnection
         await _stateGate.WaitAsync(cancellationToken).ConfigureAwait(false);
         try
         {
+            cancellationToken.ThrowIfCancellationRequested();
+            if (_connectionTerminationSnapshot is not null)
+            {
+                return _connectionTerminationSnapshot;
+            }
+
             Volatile.Write(ref _ending, true);
             if (request.SessionEndEvent is not null)
             {
@@ -2381,7 +2668,7 @@ internal sealed class VoiceConnection : IVoiceConnection
             var terminations = new List<VoiceResponseTermination>(responses.Count);
             foreach (var response in responses)
             {
-                terminations.Add(_termination.TryTerminateResponse(response, request.TerminalKind));
+                terminations.Add(_termination.CaptureResponseForConnectionShutdown(response, request.TerminalKind));
                 ForgetResponseTimingLocked(response.ResponseId);
             }
 
@@ -2391,7 +2678,8 @@ internal sealed class VoiceConnection : IVoiceConnection
                 _callbackQueue.Writer.TryComplete();
             }
 
-            return new VoiceConnectionTerminationSnapshot(request, terminations);
+            _connectionTerminationSnapshot = new VoiceConnectionTerminationSnapshot(request, terminations);
+            return _connectionTerminationSnapshot;
         }
         finally
         {
@@ -2401,14 +2689,54 @@ internal sealed class VoiceConnection : IVoiceConnection
 
     private async ValueTask ApplyTerminationAsync(VoiceConnectionTerminationSnapshot snapshot)
     {
+        Exception? failure = null;
         foreach (var termination in snapshot.ResponseTerminations)
         {
-            await termination.Response.MarkTerminalAsync().ConfigureAwait(false);
-            ApplyResponseTermination(termination);
-            termination.Response.ReleaseRetainedIdentities();
-            if (termination.IsNewTerminal)
+            try
             {
-                VoiceMetrics.RecordTerminal(_telemetryDispatcher, termination.TerminalKind);
+                await termination.Response.MarkTerminalAsync().ConfigureAwait(false);
+            }
+#pragma warning disable CA1031 // Every captured response must still receive structural cleanup.
+            catch (Exception exception)
+#pragma warning restore CA1031
+            {
+                failure ??= exception;
+            }
+
+            try
+            {
+                ApplyResponseTermination(termination);
+            }
+#pragma warning disable CA1031 // Every captured response must still receive structural cleanup.
+            catch (Exception exception)
+#pragma warning restore CA1031
+            {
+                failure ??= exception;
+            }
+
+            try
+            {
+                termination.Response.ReleaseRetainedIdentities();
+            }
+#pragma warning disable CA1031 // Every captured response must still receive structural cleanup.
+            catch (Exception exception)
+#pragma warning restore CA1031
+            {
+                failure ??= exception;
+            }
+
+            try
+            {
+                if (termination.IsNewTerminal)
+                {
+                    VoiceMetrics.RecordTerminal(_telemetryDispatcher, termination.TerminalKind);
+                }
+            }
+#pragma warning disable CA1031 // Telemetry cannot prevent structural cleanup of later responses.
+            catch (Exception exception)
+#pragma warning restore CA1031
+            {
+                failure ??= exception;
             }
         }
 
@@ -2416,13 +2744,21 @@ internal sealed class VoiceConnection : IVoiceConnection
         {
             _sessionEndSignal.TrySetResult();
         }
+
+        if (failure is not null)
+        {
+            throw failure;
+        }
     }
 
-    private async ValueTask NotifySessionEndAsync(SessionEndEvent sessionEnd)
+    private async ValueTask NotifySessionEndAsync(
+        SessionEndEvent sessionEnd,
+        CancellationToken cancellationToken)
     {
-        await _stateGate.WaitAsync(CancellationToken.None).ConfigureAwait(false);
+        await _stateGate.WaitAsync(cancellationToken).ConfigureAwait(false);
         try
         {
+            cancellationToken.ThrowIfCancellationRequested();
             _sessionEndEvent ??= sessionEnd;
             _callbackQueue.Writer.TryComplete();
         }
@@ -2808,7 +3144,23 @@ internal sealed class VoiceConnection : IVoiceConnection
             throw new InvalidOperationException("Generated response_id was already used.");
         }
 
-        ReserveTrackedIdentityBytesLocked(EstimatedHashEntryBytes);
+        try
+        {
+            ReserveTrackedIdentityBytesLocked(EstimatedHashEntryBytes);
+        }
+        catch
+        {
+            _seenResponseIds.Remove(responseId);
+            throw;
+        }
+    }
+
+    private void RemoveSeenResponseIdLocked(string responseId)
+    {
+        if (_seenResponseIds.Remove(responseId))
+        {
+            ReleaseTrackedIdentityBytesLocked(EstimatedHashEntryBytes);
+        }
     }
 
     private void AddSeenItemIdLocked(string itemId)
@@ -2985,6 +3337,84 @@ internal sealed class VoiceConnection : IVoiceConnection
             CancellationToken.None,
             TaskContinuationOptions.ExecuteSynchronously,
             TaskScheduler.Default);
+    }
+
+    private bool TrackOwnedCleanup(Func<Task> taskFactory)
+    {
+        ArgumentNullException.ThrowIfNull(taskFactory);
+        VoiceResourceLease cleanupLease;
+        try
+        {
+            cleanupLease = _resourceGovernor.AcquireCleanupTask();
+        }
+        catch (VoiceResourceExhaustedException)
+        {
+            return false;
+        }
+
+        var completion = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var task = completion.Task;
+
+        if (!_cleanupTasks.TryAdd(task, 0))
+        {
+            cleanupLease.Dispose();
+            return false;
+        }
+
+        _ = task.ContinueWith(
+            completed =>
+            {
+                _cleanupTasks.TryRemove(completed, out _);
+                cleanupLease.Dispose();
+                if (completed.IsFaulted)
+                {
+                    _ = completed.Exception;
+                }
+            },
+            CancellationToken.None,
+            TaskContinuationOptions.ExecuteSynchronously,
+            TaskScheduler.Default);
+        _ = RunOwnedCleanupFactoryAsync(taskFactory, completion);
+        return true;
+    }
+
+    private static async Task RunOwnedCleanupFactoryAsync(
+        Func<Task> taskFactory,
+        TaskCompletionSource completion)
+    {
+        try
+        {
+            var task = taskFactory() ?? throw new InvalidOperationException(
+                "A Voice cleanup owner returned a null task.");
+            await task.ConfigureAwait(false);
+            completion.TrySetResult();
+        }
+#pragma warning disable CA1031 // The registered placeholder owns and exposes every factory failure.
+        catch (Exception exception)
+#pragma warning restore CA1031
+        {
+            completion.TrySetException(exception);
+        }
+    }
+
+    private static void ObserveTaskFaults(Task task) =>
+        _ = task.ContinueWith(
+            static completed => { _ = completed.Exception; },
+            CancellationToken.None,
+            TaskContinuationOptions.OnlyOnFaulted | TaskContinuationOptions.ExecuteSynchronously,
+            TaskScheduler.Default);
+
+    private void AbortBestEffort()
+    {
+        try
+        {
+            _webSocket.Abort();
+        }
+#pragma warning disable CA1031 // Failed ownership admission is a terminal fail-closed path.
+        catch (Exception)
+#pragma warning restore CA1031
+        {
+        }
     }
 
     private void ApplyResponseTermination(VoiceResponseTermination termination)

@@ -112,6 +112,10 @@ internal sealed class VoiceResourceGovernor
 
     internal long PreparedFrameCount => Read(static governor => governor._preparedFrameCount);
 
+    internal long ControlFrameBytes => Read(static governor => governor._controlFrameBytes);
+
+    internal long ControlFrameCount => Read(static governor => governor._controlFrameCount);
+
     internal long CallbackQueueBytes => Read(static governor => governor._callbackQueueBytes);
 
     internal long CallbackQueueItems => Read(static governor => governor._callbackQueueItems);

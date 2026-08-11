@@ -30,6 +30,7 @@ public class VoiceResponse
     private bool _terminal;
     private bool _sealed;
     private bool _cancelPending;
+    private bool _connectionShutdownCaptured;
     private long _generation;
 
     /// <summary>
@@ -233,6 +234,31 @@ public class VoiceResponse
         }
     }
 
+    internal void RollbackCancellationReservation()
+    {
+        lock (_stateSync)
+        {
+            if (!_terminal)
+            {
+                _cancelPending = false;
+            }
+        }
+    }
+
+    internal bool TryCaptureConnectionShutdown()
+    {
+        lock (_stateSync)
+        {
+            if (_connectionShutdownCaptured)
+            {
+                return false;
+            }
+
+            _connectionShutdownCaptured = true;
+            return true;
+        }
+    }
+
     /// <summary>
     /// Creates the next ordered output item. Complete the previous item before
     /// creating another, and do not mix this API with the simple send helpers.
@@ -408,21 +434,17 @@ public class VoiceResponse
         await _operationGate.WaitAsync(cancellationToken).ConfigureAwait(false);
         try
         {
-            lock (_stateSync)
+            ReserveCancellation();
+            var beginOwner = _connection.BeginCancelAsync(this, reason, CancellationToken.None);
+            try
             {
-                EnsureWritableLocked();
-                if (!_wireOpened)
-                {
-                    throw new InvalidOperationException("Cannot cancel before response.created.");
-                }
-
-                if (_cancelPending)
-                {
-                    throw new InvalidOperationException("Response cancellation is already pending.");
-                }
+                outcome = await beginOwner.WaitAsync(cancellationToken).ConfigureAwait(false);
             }
-
-            outcome = await _connection.BeginCancelAsync(this, reason, CancellationToken.None).ConfigureAwait(false);
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+            {
+                ObserveCancelOwner(beginOwner);
+                throw;
+            }
         }
         finally
         {
@@ -1158,6 +1180,23 @@ public class VoiceResponse
             CancellationToken.None,
             TaskContinuationOptions.OnlyOnFaulted | TaskContinuationOptions.ExecuteSynchronously,
             TaskScheduler.Default);
+
+    private static void ObserveCancelOwner(Task<Task<ResponseCancellationOutcome>> beginOwner) =>
+        _ = ObserveCancelOwnerAsync(beginOwner);
+
+    private static async Task ObserveCancelOwnerAsync(Task<Task<ResponseCancellationOutcome>> beginOwner)
+    {
+        try
+        {
+            var outcome = await beginOwner.ConfigureAwait(false);
+            ObserveOutcomeFaults(outcome);
+        }
+#pragma warning disable CA1031 // The detached owner is observed after the caller abandons its await.
+        catch (Exception)
+#pragma warning restore CA1031
+        {
+        }
+    }
 
     private void PrepareItemLocked(VoiceTextItem item)
     {

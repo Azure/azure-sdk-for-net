@@ -46,6 +46,10 @@
   `response.accepted` or `response.dropped` outcome. Registered admissions now
   complete from the Voice Live outcome or connection terminal while the
   underlying send remains supervised and a later fault still closes the carrier.
+- Fixed caller cancellation of response-cancel and proactive-admission waits so
+  durable protocol arbitration and structural termination continue under SDK
+  ownership. Best-effort proactive cancellation now has an independent bounded
+  send deadline instead of delaying the cancelled caller indefinitely.
 
 ### Other Changes
 

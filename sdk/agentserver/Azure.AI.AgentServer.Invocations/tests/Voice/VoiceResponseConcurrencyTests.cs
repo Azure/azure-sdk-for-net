@@ -284,6 +284,115 @@ public class VoiceResponseConcurrencyTests
         Assert.That(governor.RetainedOutputItems, Is.Zero);
     }
 
+    [Test]
+    public async Task CallerCancellationWhileCancelOwnerIsBlockedKeepsResponseSealed()
+    {
+        var connection = new BlockedCancelConnection();
+        var response = new VoiceResponse(
+            connection,
+            "r_test",
+            new[] { "in_test" },
+            wireOpened: true,
+            accepted: true,
+            CancellationToken.None);
+        using var callerCancellation = new CancellationTokenSource();
+        var cancelTask = response.CancelAsync(cancellationToken: callerCancellation.Token);
+
+        await connection.BeginStarted.Task.WaitAsync(TimeSpan.FromSeconds(1));
+        try
+        {
+            await callerCancellation.CancelAsync();
+            OperationCanceledException? cancellation = null;
+            try
+            {
+                await cancelTask.WaitAsync(TimeSpan.FromSeconds(1));
+            }
+            catch (OperationCanceledException exception)
+            {
+                cancellation = exception;
+            }
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellation?.CancellationToken, Is.EqualTo(callerCancellation.Token));
+                Assert.That(response.IsTerminal, Is.False);
+                Assert.That(response.IsCancelPending, Is.True);
+            });
+        }
+        finally
+        {
+            connection.AllowBegin.TrySetResult();
+            await response.MarkTerminalAsync();
+            connection.Outcome.TrySetResult(new ResponseCancellationOutcome(
+                response.ResponseId,
+                "cancelled",
+                heardText: null,
+                itemId: null));
+            await connection.BeginReturned.Task.WaitAsync(TimeSpan.FromSeconds(1));
+        }
+
+        Assert.That(response.IsCancelPending, Is.False);
+    }
+
+    private sealed class BlockedCancelConnection : IVoiceConnection
+    {
+        public bool Ending => false;
+
+        public TaskCompletionSource BeginStarted { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public TaskCompletionSource AllowBegin { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public TaskCompletionSource BeginReturned { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public TaskCompletionSource<ResponseCancellationOutcome> Outcome { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public Task SendResponseFrameAsync(
+            VoiceResponse response,
+            string messageType,
+            IReadOnlyDictionary<string, object?> fields,
+            Action commit,
+            bool terminal,
+            string? terminalKind,
+            CancellationToken cancellationToken) => throw new NotSupportedException();
+
+        public Task<bool> OpenResponseAsync(
+            VoiceResponse response,
+            IReadOnlyList<string>? inReplyTo,
+            CancellationToken cancellationToken) => throw new NotSupportedException();
+
+        public Task DeclineResponseAsync(
+            VoiceResponse response,
+            IReadOnlyList<string> inReplyTo,
+            string? reason,
+            CancellationToken cancellationToken) => throw new NotSupportedException();
+
+        public async Task<Task<ResponseCancellationOutcome>> BeginCancelAsync(
+            VoiceResponse response,
+            string? reason,
+            CancellationToken cancellationToken)
+        {
+            BeginStarted.TrySetResult();
+            await AllowBegin.Task.WaitAsync(cancellationToken);
+            BeginReturned.TrySetResult();
+            return Outcome.Task;
+        }
+
+        public Task EndCallAsync(string reason, string mode, CancellationToken cancellationToken) =>
+            throw new NotSupportedException();
+
+        public Task<VoiceResponse> StartProactiveResponseAsync(
+            int admissionTimeoutMs,
+            string? supersedeKey,
+            CancellationToken cancellationToken) => throw new NotSupportedException();
+
+        public Task ReportSessionErrorAsync(string code, string message, CancellationToken cancellationToken) =>
+            throw new NotSupportedException();
+    }
+
     private sealed class CoordinatedConnection : IVoiceConnection
     {
         private int _sendCount;
