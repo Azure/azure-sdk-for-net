@@ -450,7 +450,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         public async Task DownloadAsync()
-         {
+        {
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
@@ -9979,6 +9979,69 @@ namespace Azure.Storage.Blobs.Test
                 "Independent clients in container B should share the provider's cached session token");
             Assert.AreNotEqual(sessionTokens[0], sessionTokens[2],
                 "Sessions must remain scoped per container even when the provider is shared");
+        }
+
+        [RecordedTest]
+        [LiveOnly(Reason = "Cannot record tests caching Session authentication")]
+        public async Task DownloadContentAsync_Sessions_SharedSessionProvider_SingleContainer()
+        {
+            var containerName = GetNewContainerName();
+            var countingPolicy = new SessionAuthCountingPolicy(containerName);
+
+            // The Session provider owns the shared pipeline for CreateSession traffic.
+            // The counting policy is attached purely for testing/asserting purposes.
+            BlobClientOptions providerOptions = GetOptions();
+            providerOptions.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+            SessionProvider sharedProvider = new TokenCredentialSessionProvider(
+                new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
+                TestEnvironment.Credential,
+                providerOptions);
+
+            BlobServiceClient setupServiceClient = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: setupServiceClient);
+
+            var data = GetRandomBuffer(Constants.KB);
+            countingPolicy.Start();
+
+            // Each iteration uploads a blob, builds an independent client for it sharing the
+            // provider, and downloads. Without SessionProvider each client would mint its own session.
+            for (int i = 0; i < 3; i++)
+            {
+                BlockBlobClient uploadClient = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+                using (var stream = new MemoryStream(data))
+                {
+                    await uploadClient.UploadAsync(stream);
+                }
+
+                BlobClientOptions options = GetOptions();
+                options.SessionOptions = new SessionOptions()
+                {
+                    SessionMode = SessionMode.Enabled,
+                    AccountName = Tenants.TestConfigOAuth.AccountName,
+                    SessionProvider = sharedProvider,
+                };
+                options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+                BlockBlobClient blob = InstrumentClient(new BlockBlobClient(
+                    uploadClient.Uri,
+                    TestEnvironment.Credential,
+                    options));
+
+                Response<BlobDownloadResult> response = await blob.DownloadContentAsync();
+                TestHelper.AssertSequenceEqual(data, response.Value.Content.ToArray());
+            }
+
+            // Assert — a single session served all three independently created clients
+            Assert.AreEqual(1, countingPolicy.CreateSessionCount,
+                "A shared provider should mint exactly one session for the container, regardless of client count");
+            Assert.AreEqual(3, countingPolicy.GetSessionAuthCount,
+                "Expected all download requests to use Session authorization");
+            Assert.AreEqual(0, countingPolicy.BearerGetBlobCount,
+                "Expected no GET blob requests to fall back to Bearer authorization");
+
+            IReadOnlyList<string> sessionTokens = countingPolicy.GetBlobSessionTokens;
+            Assert.AreEqual(3, sessionTokens.Count);
+            Assert.AreEqual(1, sessionTokens.Distinct().Count(),
+                "Independently created clients should share the provider's cached session token");
         }
 
         [RecordedTest]
