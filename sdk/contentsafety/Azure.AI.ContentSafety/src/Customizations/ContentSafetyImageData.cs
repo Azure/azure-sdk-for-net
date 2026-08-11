@@ -19,7 +19,7 @@ namespace Azure.AI.ContentSafety
             // Intentionally broken (CS0103): references a property name that does not exist
             // so the auto-build-repair agent has a deterministic, single-iteration break to
             // repair end-to-end. The agent should rename this back to the real property BlobUri.
-            BlobUri = blobUri;
+            BlobUriForRepairTest = blobUri;
         }
 
         /// <summary>
