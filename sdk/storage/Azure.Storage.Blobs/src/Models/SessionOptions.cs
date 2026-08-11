@@ -28,6 +28,7 @@ namespace Azure.Storage.Blobs.Models
         /// An optional session provider that owns the session cache and mints sessions.
         /// Construct one with <see cref="ContainerSessionProvider(Uri, Core.TokenCredential, BlobClientOptions)"/>,
         /// which is for <see cref="Core.TokenCredential"/> authentication only.
+        /// The provider must target the same blob service endpoint as the client that this is attached to.
         /// Sessions are cached per container, so clients configured with the same provider share its
         /// cached sessions and a session is created once per container no matter how many clients use it.
         /// When not set, the client creates a provider of its own, shared only with the clients derived from
