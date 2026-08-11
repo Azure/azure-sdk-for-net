@@ -19,6 +19,7 @@ using OpenAI.Responses;
 
 #pragma warning disable OPENAICUA001
 #pragma warning disable AAIP001
+#pragma warning disable AAIP002
 namespace Azure.AI.Projects.Agents.Tests;
 
 public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
@@ -275,7 +276,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             {
                 Name = "web-search",
                 Description = "Test web search",
-                UserLocation = new OpenAI.WebSearchApproximateLocation()
+                UserLocation = new WebSearchToolApproximateLocation()
                 {
                     Country = "US",
                     Region = "Pennsylvania",

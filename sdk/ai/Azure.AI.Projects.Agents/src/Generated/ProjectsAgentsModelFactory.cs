@@ -513,146 +513,6 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Per-tool configuration that controls tool visibility and search behavior. </summary>
-        /// <param name="isPinned">
-        /// When true, the tool is always included in agent context and visible in `tools/list`.
-        /// When false (default), the tool is hidden from `tools/list` and only discoverable via `tool_search`.
-        /// </param>
-        /// <param name="additionalSearchText">
-        /// Additional text indexed for tool_search. Supplements the native tool description
-        /// to improve discoverability. Does not alter `tools/list` output.
-        /// </param>
-        /// <returns> A new <see cref="Agents.ToolConfig"/> instance for mocking. </returns>
-        public static ToolConfig ToolConfig(bool? isPinned = default, string additionalSearchText = default)
-        {
-            return new ToolConfig(isPinned, additionalSearchText, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A project connection resource. </summary>
-        /// <param name="projectConnectionId"> A project connection in a ToolProjectConnectionList attached to this tool. </param>
-        /// <returns> A new <see cref="Agents.ToolProjectConnection"/> instance for mocking. </returns>
-        public static ToolProjectConnection ToolProjectConnection(string projectConnectionId = default)
-        {
-            return new ToolProjectConnection(projectConnectionId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The sharepoint grounding tool parameters. </summary>
-        /// <param name="projectConnections">
-        /// The project connections attached to this tool. There can be a maximum of 1 connection
-        /// resource attached to the tool.
-        /// </param>
-        /// <returns> A new <see cref="Agents.SharePointGroundingToolOptions"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static SharePointGroundingToolOptions SharePointGroundingToolOptions(IEnumerable<ToolProjectConnection> projectConnections = default)
-        {
-            projectConnections ??= new ChangeTrackingList<ToolProjectConnection>();
-
-            return new SharePointGroundingToolOptions(projectConnections.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The OpenAPIFunctionEntry. </summary>
-        /// <param name="name"> The name of the function to be called. </param>
-        /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
-        /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
-        /// <returns> A new <see cref="Agents.OpenAPIFunctionEntry"/> instance for mocking. </returns>
-        public static OpenAPIFunctionEntry OpenAPIFunctionEntry(string name = default, string description = default, IDictionary<string, BinaryData> parameters = default)
-        {
-            parameters ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new OpenAPIFunctionEntry(name, description, parameters, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Security details for OpenApi project connection authentication. </summary>
-        /// <param name="securityScheme"> Project connection auth security details. </param>
-        /// <returns> A new <see cref="Agents.OpenApiProjectConnectionAuthenticationDetails"/> instance for mocking. </returns>
-        public static OpenApiProjectConnectionAuthenticationDetails OpenApiProjectConnectionAuthenticationDetails(OpenApiProjectConnectionSecurityScheme securityScheme = default)
-        {
-            return new OpenApiProjectConnectionAuthenticationDetails(default, securityScheme, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
-        /// <param name="projectConnectionId"> Project connection id for Project Connection auth type. </param>
-        /// <returns> A new <see cref="Agents.OpenApiProjectConnectionSecurityScheme"/> instance for mocking. </returns>
-        public static OpenApiProjectConnectionSecurityScheme OpenApiProjectConnectionSecurityScheme(string projectConnectionId = default)
-        {
-            return new OpenApiProjectConnectionSecurityScheme(projectConnectionId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Security details for OpenApi managed_identity authentication. </summary>
-        /// <param name="securityScheme"> Connection auth security details. </param>
-        /// <returns> A new <see cref="Agents.OpenAPIManagedAuthenticationDetails"/> instance for mocking. </returns>
-        public static OpenAPIManagedAuthenticationDetails OpenAPIManagedAuthenticationDetails(OpenAPIManagedSecurityScheme securityScheme = default)
-        {
-            return new OpenAPIManagedAuthenticationDetails(default, securityScheme, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
-        /// <param name="audience"> Authentication scope for managed_identity auth type. </param>
-        /// <returns> A new <see cref="Agents.OpenAPIManagedSecurityScheme"/> instance for mocking. </returns>
-        public static OpenAPIManagedSecurityScheme OpenAPIManagedSecurityScheme(string audience = default)
-        {
-            return new OpenAPIManagedSecurityScheme(audience, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The AzureFunctionDefinitionFunction. </summary>
-        /// <param name="name"> The name of the function to be called. </param>
-        /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
-        /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
-        /// <returns> A new <see cref="Agents.AzureFunctionDefinitionFunction"/> instance for mocking. </returns>
-        public static AzureFunctionDefinitionFunction AzureFunctionDefinitionFunction(string name = default, string description = default, BinaryData parameters = default)
-        {
-            return new AzureFunctionDefinitionFunction(name, description, parameters, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A structured output that can be produced by the agent. </summary>
-        /// <param name="name"> The name of the structured output. </param>
-        /// <param name="description"> A description of the output to emit. Used by the model to determine when to emit the output. </param>
-        /// <param name="schema"> The JSON schema for the structured output. </param>
-        /// <param name="strict"> Whether to enforce strict validation. Default `true`. </param>
-        /// <returns> A new <see cref="Agents.StructuredOutputDefinition"/> instance for mocking. </returns>
-        public static StructuredOutputDefinition StructuredOutputDefinition(string name = default, string description = default, IDictionary<string, BinaryData> schema = default, bool? strict = default)
-        {
-            schema ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new StructuredOutputDefinition(name, description, schema, strict, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The WebSearchToolFilters. </summary>
-        /// <param name="allowedDomains"></param>
-        /// <returns> A new <see cref="OpenAI.WebSearchToolFilters"/> instance for mocking. </returns>
-        public static OpenAI.WebSearchToolFilters WebSearchToolFilters(IEnumerable<string> allowedDomains = default)
-        {
-            allowedDomains ??= new ChangeTrackingList<string>();
-
-            return new OpenAI.WebSearchToolFilters(allowedDomains.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Web search approximate location. </summary>
-        /// <param name="country"></param>
-        /// <param name="region"></param>
-        /// <param name="city"></param>
-        /// <param name="timezone"></param>
-        /// <returns> A new <see cref="OpenAI.WebSearchApproximateLocation"/> instance for mocking. </returns>
-        public static WebSearchApproximateLocation WebSearchApproximateLocation(string country = default, string region = default, string city = default, string timezone = default)
-        {
-            return new WebSearchApproximateLocation(
-                "approximate",
-                country,
-                region,
-                city,
-                timezone,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A web search configuration for bing custom search. </summary>
-        /// <param name="projectConnectionId"> Project connection id for grounding with bing custom search. </param>
-        /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
-        /// <returns> A new <see cref="Agents.ProjectWebSearchConfiguration"/> instance for mocking. </returns>
-        public static ProjectWebSearchConfiguration ProjectWebSearchConfiguration(string projectConnectionId = default, string instanceName = default)
-        {
-            return new ProjectWebSearchConfiguration(projectConnectionId, instanceName, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Multipart request body for creating a new code-based agent (POST /agents). Inherits from CreateAgentVersionFromCodeContent for future extensibility. </summary>
         /// <param name="metadata"> JSON metadata including description and hosted definition. </param>
         /// <param name="code"> The code zip file (max 250 MB). </param>
@@ -893,7 +753,8 @@ namespace Azure.AI.Projects.Agents
         /// resource attached to the tool.
         /// </param>
         /// <returns> A new <see cref="Agents.WebSearchToolboxTool"/> instance for mocking. </returns>
-        public static WebSearchToolboxTool WebSearchToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, OpenAI.WebSearchToolFilters filters = default, WebSearchApproximateLocation userLocation = default, WebSearchToolSearchContextSize? searchContextSize = default, ProjectWebSearchConfiguration customSearchConfiguration = default)
+        [Experimental("AAIP002")]
+        public static WebSearchToolboxTool WebSearchToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, WebSearchToolFilters filters = default, WebSearchToolApproximateLocation userLocation = default, WebSearchToolSearchContextSize? searchContextSize = default, WebSearchConfiguration customSearchConfiguration = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
 
