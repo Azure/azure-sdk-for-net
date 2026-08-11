@@ -92,8 +92,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             TestStream content = new TestStream(_async, null, TestStream.Read(0, 10));
             TrackingArrayPool testPool = new TrackingArrayPool();
             AppendSink sink = new AppendSink();
-            DataLakePathScheduleDeletionOptions scheduleDeletionOptions =
-                new DataLakePathScheduleDeletionOptions(new DateTimeOffset(2100, 1, 1, 0, 0, 0, TimeSpan.Zero));
+DataLakePathScheduleDeletionOptions scheduleDeletionOptions =
+    new DataLakePathScheduleDeletionOptions(expiresOn: new DateTimeOffset(2100, 1, 1, 0, 0, 0, TimeSpan.Zero));
 
             Mock<DataLakeFileClient> clientMock = new Mock<DataLakeFileClient>(
                 MockBehavior.Strict,
