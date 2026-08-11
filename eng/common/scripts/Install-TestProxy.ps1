@@ -14,6 +14,7 @@ The directory where the Test Proxy binaries will be installed. Passed from DevOp
 .PARAMETER RunProxy
 Whether to run the Test Proxy after installation. Passed from DevOps as a boolean.
 #>
+[CmdletBinding()]
 Param(
     [Parameter(Mandatory = $True)]
     [string] $TemplateRoot,
@@ -22,6 +23,9 @@ Param(
     [Parameter(Mandatory = $False)]
     [bool] $RunProxy = $true
 )
+
+Set-StrictMode -Version 4
+$ErrorActionPreference = 'Stop'
 
 $standardVersion = "$TemplateRoot/eng/common/testproxy/target_version.txt"
 $overrideVersion = "$TemplateRoot/eng/target_proxy_version.txt"

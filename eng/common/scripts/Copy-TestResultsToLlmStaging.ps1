@@ -33,6 +33,7 @@ The glob pattern to match test result files. Passed from DevOps as a string.
 .PARAMETER SourcesDirectory
 The root folder of the repo. Passed from DevOps as a string.
 #>
+[CmdletBinding()]
 Param(
     [Parameter(Mandatory = $True)]
     [string] $ArtifactStagingDirectory,
@@ -43,6 +44,9 @@ Param(
     [Parameter(Mandatory = $True)]
     [string] $SourcesDirectory
 )
+
+Set-StrictMode -Version 4
+$ErrorActionPreference = 'Stop'
 
 $artifactsDirectory = "$ArtifactStagingDirectory/llm-artifacts"
 New-Item $artifactsDirectory -ItemType Directory -Force | Out-Null
