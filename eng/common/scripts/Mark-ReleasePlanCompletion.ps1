@@ -44,7 +44,7 @@ function Process-Package([string]$packageInfoPath)
     if (!$PackageName)
     {
         Write-Host "Package name is not available in the package information file. Skipping the release plan status update for the package."
-        return
+        return $true
     } 
 
     Write-Host "Marking release completion for package, name: $PackageName"
@@ -53,7 +53,7 @@ function Process-Package([string]$packageInfoPath)
     if (!$version)
     {
         Write-Host "Failed to parse version string '$($PackageVersion)' for package '$PackageName'. Skipping the release plan status update."
-        return
+        return $true
     }
 
     $sdkReleaseType = ""
@@ -72,17 +72,28 @@ function Process-Package([string]$packageInfoPath)
         $releaseArgs += @("--package-version", $PackageVersion)
     }
     $releaseInfo = & $AzsdkExePath @releaseArgs
-    if ($LASTEXITCODE -ne 0)
-    {
-        ## Not all releases have a release plan. So we should not fail the script even if a release plan is missing.
-        Write-Host "Failed to mark release completion for package '$PackageName' using azsdk. Exit code: $LASTEXITCODE"
-    }
+    $releaseExitCode = $LASTEXITCODE
     Write-Host "Details: $releaseInfo"
+    if ($releaseExitCode -ne 0)
+    {
+        Write-Warning "Failed to mark release completion for package '$PackageName' using azsdk. Exit code: $releaseExitCode"
+        return $false
+    }
+    return $true
 }
 
 Write-Host "Finding all package info files in the path: $PackageInfoFilePath"
+$hasFailures = $false
 # Get all package info file under the directory given in input param and process
 Get-ChildItem -Path $PackageInfoFilePath -Filter "*.json" | ForEach-Object {
     Write-Host "Processing package info file: $_"
-    Process-Package $_.FullName
+    if (!(Process-Package $_.FullName))
+    {
+        $hasFailures = $true
+    }
+}
+
+if ($hasFailures)
+{
+    exit 1
 }
