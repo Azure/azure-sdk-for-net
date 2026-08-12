@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The authentication info when authType is EasyAuth Microsoft Entra ID. </summary>
-    public partial class EasyAuthMicrosoftEntraIDAuthInfo : AuthBaseInfo
+    public partial class EasyAuthMicrosoftEntraIdAuthInfo : AuthBaseInfo
     {
-        /// <summary> Initializes a new instance of <see cref="EasyAuthMicrosoftEntraIDAuthInfo"/>. </summary>
-        public EasyAuthMicrosoftEntraIDAuthInfo() : base(LinkerAuthType.EasyAuthMicrosoftEntraID)
+        /// <summary> Initializes a new instance of <see cref="EasyAuthMicrosoftEntraIdAuthInfo"/>. </summary>
+        public EasyAuthMicrosoftEntraIdAuthInfo() : base(LinkerAuthType.EasyAuthMicrosoftEntraID)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EasyAuthMicrosoftEntraIDAuthInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EasyAuthMicrosoftEntraIdAuthInfo"/>. </summary>
         /// <param name="authType"> The authentication type. </param>
         /// <param name="authMode"> Optional. Indicates how to configure authentication. If optInAllAuth, service linker configures authentication such as enabling identity on source resource and granting RBAC roles. If optOutAllAuth, opt out authentication setup. Default is optInAllAuth. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="clientId"> Application clientId for EasyAuth Microsoft Entra ID. </param>
         /// <param name="secret"> Application Secret for EasyAuth Microsoft Entra ID. </param>
         /// <param name="deleteOrUpdateBehavior"> Indicates whether to clean up previous operation when Linker is updating or deleting. </param>
-        internal EasyAuthMicrosoftEntraIDAuthInfo(LinkerAuthType authType, LinkerAuthMode? authMode, IDictionary<string, BinaryData> additionalBinaryDataProperties, string clientId, string secret, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior) : base(authType, authMode, additionalBinaryDataProperties)
+        internal EasyAuthMicrosoftEntraIdAuthInfo(LinkerAuthType authType, LinkerAuthMode? authMode, IDictionary<string, BinaryData> additionalBinaryDataProperties, string clientId, string secret, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior) : base(authType, authMode, additionalBinaryDataProperties)
         {
             ClientId = clientId;
             Secret = secret;

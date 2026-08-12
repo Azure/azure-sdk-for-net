@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary>
     /// The authentication info
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AccessKeyInfoBase"/>, <see cref="SecretAuthInfo"/>, <see cref="UserAssignedIdentityAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="UserAccountAuthInfo"/>, and <see cref="EasyAuthMicrosoftEntraIDAuthInfo"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AccessKeyInfoBase"/>, <see cref="SecretAuthInfo"/>, <see cref="UserAssignedIdentityAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="UserAccountAuthInfo"/>, and <see cref="EasyAuthMicrosoftEntraIdAuthInfo"/>.
     /// </summary>
     public abstract partial class AuthBaseInfo
     {

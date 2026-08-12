@@ -304,10 +304,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="clientId"> Application clientId for EasyAuth Microsoft Entra ID. </param>
         /// <param name="secret"> Application Secret for EasyAuth Microsoft Entra ID. </param>
         /// <param name="deleteOrUpdateBehavior"> Indicates whether to clean up previous operation when Linker is updating or deleting. </param>
-        /// <returns> A new <see cref="Models.EasyAuthMicrosoftEntraIDAuthInfo"/> instance for mocking. </returns>
-        public static EasyAuthMicrosoftEntraIDAuthInfo EasyAuthMicrosoftEntraIDAuthInfo(LinkerAuthMode? authMode = default, string clientId = default, string secret = default, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior = default)
+        /// <returns> A new <see cref="Models.EasyAuthMicrosoftEntraIdAuthInfo"/> instance for mocking. </returns>
+        public static EasyAuthMicrosoftEntraIdAuthInfo EasyAuthMicrosoftEntraIdAuthInfo(LinkerAuthMode? authMode = default, string clientId = default, string secret = default, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior = default)
         {
-            return new EasyAuthMicrosoftEntraIDAuthInfo(
+            return new EasyAuthMicrosoftEntraIdAuthInfo(
                 default,
                 authMode,
                 default,
@@ -554,31 +554,6 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 default), default);
         }
 
-        /// <param name="linkerName"> The linker name. </param>
-        /// <param name="isConnectionAvailable"> A boolean value indicating whether the connection is available or not. </param>
-        /// <param name="reportStartOn"> The start time of the validation report. </param>
-        /// <param name="reportEndOn"> The end time of the validation report. </param>
-        /// <param name="sourceId"> The resource id of the Linker source application. </param>
-        /// <param name="targetId"> The resource Id of target service. </param>
-        /// <param name="authType"> The authentication type. </param>
-        /// <param name="validationDetail"> The detail of validation result. </param>
-        /// <param name="resourceId"> Validated Linker id. </param>
-        /// <param name="status"> Validation operation status. </param>
-        /// <returns> A new <see cref="Models.LinkerValidateOperationResult"/> instance for mocking. </returns>
-        public static LinkerValidateOperationResult LinkerValidateOperationResult(string linkerName = default, bool? isConnectionAvailable = default, DateTimeOffset? reportStartOn = default, DateTimeOffset? reportEndOn = default, ResourceIdentifier sourceId = default, ResourceIdentifier targetId = default, LinkerAuthType? authType = default, IEnumerable<LinkerValidationResultItemInfo> validationDetail = default, ResourceIdentifier resourceId = default, string status = default)
-        {
-            return new LinkerValidateOperationResult(linkerName is null && isConnectionAvailable is null && reportStartOn is null && reportEndOn is null && sourceId is null && targetId is null && authType is null && validationDetail is null ? default : new ValidateResult(
-                linkerName,
-                isConnectionAvailable,
-                reportStartOn,
-                reportEndOn,
-                sourceId,
-                targetId,
-                authType,
-                (validationDetail ?? new ChangeTrackingList<LinkerValidationResultItemInfo>()).ToList(),
-                default), resourceId, status, default);
-        }
-
         /// <param name="name"> The validation item name. </param>
         /// <param name="description"> The display name of validation item. </param>
         /// <param name="result"> The result of validation. </param>
@@ -698,33 +673,6 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 default,
                 default,
                 default), default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.LinkerValidateOperationResult"/>. </summary>
-        /// <param name="resourceId"> Validated linker id. </param>
-        /// <param name="status"> Validation operation status. </param>
-        /// <param name="linkerName"> The linker name. </param>
-        /// <param name="isConnectionAvailable"> A boolean value indicating whether the connection is available or not. </param>
-        /// <param name="reportStartOn"> The start time of the validation report. </param>
-        /// <param name="reportEndOn"> The end time of the validation report. </param>
-        /// <param name="sourceId"> The resource id of the linker source application. </param>
-        /// <param name="targetId"> The resource Id of target service. </param>
-        /// <param name="authType"> The authentication type. </param>
-        /// <param name="validationDetail"> The detail of validation result. </param>
-        /// <returns> A new <see cref="Models.LinkerValidateOperationResult"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LinkerValidateOperationResult LinkerValidateOperationResult(ResourceIdentifier resourceId = default, string status = default, string linkerName = default, bool? isConnectionAvailable = default, DateTimeOffset? reportStartOn = default, DateTimeOffset? reportEndOn = default, ResourceIdentifier sourceId = default, ResourceIdentifier targetId = default, LinkerAuthType? authType = default, IEnumerable<LinkerValidationResultItemInfo> validationDetail = default)
-        {
-            return new LinkerValidateOperationResult(linkerName is null && isConnectionAvailable is null && reportStartOn is null && reportEndOn is null && sourceId is null && targetId is null && authType is null && validationDetail is null ? default : new ValidateResult(
-                linkerName,
-                isConnectionAvailable,
-                reportStartOn,
-                reportEndOn,
-                sourceId,
-                targetId,
-                authType,
-                (validationDetail ?? new ChangeTrackingList<LinkerValidationResultItemInfo>()).ToList(),
-                default), resourceId, status, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SourceConfiguration"/>. </summary>

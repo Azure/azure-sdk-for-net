@@ -14,51 +14,51 @@ using Azure.ResourceManager.ServiceLinker;
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The authentication info when authType is EasyAuth Microsoft Entra ID. </summary>
-    public partial class EasyAuthMicrosoftEntraIDAuthInfo : AuthBaseInfo, IJsonModel<EasyAuthMicrosoftEntraIDAuthInfo>
+    public partial class EasyAuthMicrosoftEntraIdAuthInfo : AuthBaseInfo, IJsonModel<EasyAuthMicrosoftEntraIdAuthInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AuthBaseInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EasyAuthMicrosoftEntraIDAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EasyAuthMicrosoftEntraIdAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEasyAuthMicrosoftEntraIDAuthInfo(document.RootElement, options);
+                        return DeserializeEasyAuthMicrosoftEntraIdAuthInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EasyAuthMicrosoftEntraIDAuthInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EasyAuthMicrosoftEntraIdAuthInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EasyAuthMicrosoftEntraIDAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EasyAuthMicrosoftEntraIdAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EasyAuthMicrosoftEntraIDAuthInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EasyAuthMicrosoftEntraIdAuthInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EasyAuthMicrosoftEntraIDAuthInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EasyAuthMicrosoftEntraIdAuthInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EasyAuthMicrosoftEntraIDAuthInfo IPersistableModel<EasyAuthMicrosoftEntraIDAuthInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => (EasyAuthMicrosoftEntraIDAuthInfo)PersistableModelCreateCore(data, options);
+        EasyAuthMicrosoftEntraIdAuthInfo IPersistableModel<EasyAuthMicrosoftEntraIdAuthInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => (EasyAuthMicrosoftEntraIdAuthInfo)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EasyAuthMicrosoftEntraIDAuthInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EasyAuthMicrosoftEntraIdAuthInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EasyAuthMicrosoftEntraIDAuthInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EasyAuthMicrosoftEntraIdAuthInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EasyAuthMicrosoftEntraIDAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EasyAuthMicrosoftEntraIdAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EasyAuthMicrosoftEntraIDAuthInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EasyAuthMicrosoftEntraIdAuthInfo)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ClientId))
@@ -94,24 +94,24 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EasyAuthMicrosoftEntraIDAuthInfo IJsonModel<EasyAuthMicrosoftEntraIDAuthInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EasyAuthMicrosoftEntraIDAuthInfo)JsonModelCreateCore(ref reader, options);
+        EasyAuthMicrosoftEntraIdAuthInfo IJsonModel<EasyAuthMicrosoftEntraIdAuthInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EasyAuthMicrosoftEntraIdAuthInfo)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AuthBaseInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EasyAuthMicrosoftEntraIDAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EasyAuthMicrosoftEntraIdAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EasyAuthMicrosoftEntraIDAuthInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EasyAuthMicrosoftEntraIdAuthInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEasyAuthMicrosoftEntraIDAuthInfo(document.RootElement, options);
+            return DeserializeEasyAuthMicrosoftEntraIdAuthInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EasyAuthMicrosoftEntraIDAuthInfo DeserializeEasyAuthMicrosoftEntraIDAuthInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static EasyAuthMicrosoftEntraIdAuthInfo DeserializeEasyAuthMicrosoftEntraIdAuthInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EasyAuthMicrosoftEntraIDAuthInfo(
+            return new EasyAuthMicrosoftEntraIdAuthInfo(
                 authType,
                 authMode,
                 additionalBinaryDataProperties,
