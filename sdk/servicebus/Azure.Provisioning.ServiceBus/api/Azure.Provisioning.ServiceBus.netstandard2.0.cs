@@ -230,12 +230,16 @@ namespace Azure.Provisioning.ServiceBus
     }
     public enum ServiceBusMinimumTlsVersion
     {
+        [System.ObsoleteAttribute("Use Tls10 instead.")]
         [System.Runtime.Serialization.DataMemberAttribute(Name="1.0")]
         Tls1_0 = 0,
+        [System.ObsoleteAttribute("Use Tls11 instead.")]
         [System.Runtime.Serialization.DataMemberAttribute(Name="1.1")]
         Tls1_1 = 1,
+        [System.ObsoleteAttribute("Use Tls12 instead.")]
         [System.Runtime.Serialization.DataMemberAttribute(Name="1.2")]
         Tls1_2 = 2,
+        [System.ObsoleteAttribute("Use Tls13 instead.")]
         [System.Runtime.Serialization.DataMemberAttribute(Name="1.3")]
         Tls1_3 = 3,
         [System.Runtime.Serialization.DataMemberAttribute(Name="1.0")]

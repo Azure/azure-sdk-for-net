@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.ServiceBus
@@ -25,15 +27,23 @@ namespace Azure.Provisioning.ServiceBus
         [DataMember(Name = "1.3")]
         Tls13 = 7,
         /// <summary> Tls1_0. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use Tls10 instead.")]
         [DataMember(Name = "1.0")]
         Tls1_0 = 0,
         /// <summary> Tls1_1. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use Tls11 instead.")]
         [DataMember(Name = "1.1")]
         Tls1_1 = 1,
         /// <summary> Tls1_2. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use Tls12 instead.")]
         [DataMember(Name = "1.2")]
         Tls1_2 = 2,
         /// <summary> Tls1_3. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use Tls13 instead.")]
         [DataMember(Name = "1.3")]
         Tls1_3 = 3
     }
