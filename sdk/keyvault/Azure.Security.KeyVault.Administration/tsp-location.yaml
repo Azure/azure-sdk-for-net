@@ -1,4 +1,4 @@
 directory: specification/keyvault/data-plane/Administration
-commit: 0aea5f5666b9d631d37074a2f9c9bd8ba0dd1eff
+commit: e0a65682f6e102bfe246799833cb6bac48969bb2
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json

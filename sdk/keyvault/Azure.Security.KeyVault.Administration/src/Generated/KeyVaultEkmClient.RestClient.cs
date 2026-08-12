@@ -14,8 +14,11 @@ namespace Azure.Security.KeyVault.Administration
     public partial class KeyVaultEkmClient
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
+        private static ResponseClassifier _pipelineMessageClassifier202;
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+
+        private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
 
         internal HttpMessage CreateGetEkmConnectionRequest(RequestContext context)
         {
@@ -119,6 +122,97 @@ namespace Azure.Security.KeyVault.Administration
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetEkmPrivateEndpointRequest(string peName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/ekm/privateendpoint/", false);
+            uri.AppendPath(peName, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateEkmPrivateEndpointRequest(string peName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/ekm/privateendpoint/", false);
+            uri.AppendPath(peName, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteEkmPrivateEndpointRequest(string peName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/ekm/privateendpoint/", false);
+            uri.AppendPath(peName, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Delete;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetEkmPrivateEndpointsRequest(RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/ekm/privateendpoint", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetEkmPrivateEndpointOperationStatusRequest(string operationId, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/ekm/privateendpoint/operations/", false);
+            uri.AppendPath(operationId, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

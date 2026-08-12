@@ -1,0 +1,13 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Microsoft.TypeSpec.Generator.Customizations;
+
+namespace Azure.Security.KeyVault.Administration
+{
+    /// <summary> The state of the connection between the private endpoint and the Private Link Service. </summary>
+    [CodeGenType("EkmPrivateEndpointConnectionState")]
+    public partial class KeyVaultEkmPrivateEndpointConnectionState
+    {
+    }
+}

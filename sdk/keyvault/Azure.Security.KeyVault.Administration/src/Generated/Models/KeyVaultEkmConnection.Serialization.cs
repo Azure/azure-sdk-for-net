@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -121,6 +122,11 @@ namespace Azure.Security.KeyVault.Administration
                 writer.WritePropertyName("server_subject_common_name"u8);
                 writer.WriteStringValue(ServerSubjectCommonName);
             }
+            if (Optional.IsDefined(ConnectivityMode))
+            {
+                writer.WritePropertyName("connectivity_mode"u8);
+                writer.WriteStringValue(ConnectivityMode.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -167,6 +173,7 @@ namespace Azure.Security.KeyVault.Administration
             string pathPrefix = default;
             IList<BinaryData> serverCaCertificates = default;
             string serverSubjectCommonName = default;
+            EkmConnectivityMode? connectivityMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -202,12 +209,27 @@ namespace Azure.Security.KeyVault.Administration
                     serverSubjectCommonName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("connectivity_mode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    connectivityMode = new EkmConnectivityMode(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new KeyVaultEkmConnection(hostName, pathPrefix, serverCaCertificates, serverSubjectCommonName, additionalBinaryDataProperties);
+            return new KeyVaultEkmConnection(
+                hostName,
+                pathPrefix,
+                serverCaCertificates,
+                serverSubjectCommonName,
+                connectivityMode,
+                additionalBinaryDataProperties);
         }
     }
 }
