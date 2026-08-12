@@ -13,10 +13,6 @@
   that OpenAPI cannot express. The path extension is authoritative for the
   returned content type — no `Accept` negotiation and no format conversion.
 
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
 
 - Updated the resilient research and multi-turn samples to use `FoundryStateStore`

@@ -45,8 +45,6 @@
   in-memory replay, upgraded automatically to durable file-backed replay when resilient
   background is enabled outside a hosted environment.
 
-### Bugs Fixed
-
 ### Other Changes
 - Retired the interim .NET ↔ Python resilience parity reports now that the port has
   converged.
