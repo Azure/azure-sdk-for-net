@@ -188,7 +188,11 @@ await store.SetItemAsync(
     new Dictionary<string, BinaryData>
     {
         ["phase"] = BinaryData.FromObjectAsJson("complete"),
-    });
+    },
+    tags: null,
+    ifMatch: null,
+    requireExists: false,
+    callId: persistedCallId);
 ```
 
 An explicit `callId` overrides the ambient value. This parameter is available on

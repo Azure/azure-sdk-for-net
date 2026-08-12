@@ -135,7 +135,11 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
                 new Dictionary<string, BinaryData>
                 {
                     ["phase"] = BinaryData.FromObjectAsJson("complete"),
-                });
+                },
+                tags: null,
+                ifMatch: null,
+                requireExists: false,
+                callId: persistedCallId);
 
             #endregion
         }
