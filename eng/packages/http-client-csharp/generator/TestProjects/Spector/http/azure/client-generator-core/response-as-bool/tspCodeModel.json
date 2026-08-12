@@ -2,90 +2,26 @@
   "name": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool",
   "apiVersions": [],
   "enums": [],
-  "constants": [
-    {
-      "$id": "1",
-      "kind": "constant",
-      "name": "AnonymousBoolean",
-      "namespace": "",
-      "usage": "None",
-      "valueType": {
-        "$id": "2",
-        "kind": "boolean",
-        "name": "boolean",
-        "crossLanguageDefinitionId": "TypeSpec.boolean",
-        "decorators": []
-      },
-      "value": true,
-      "decorators": []
-    },
-    {
-      "$id": "3",
-      "kind": "constant",
-      "name": "AnonymousBoolean1",
-      "namespace": "",
-      "usage": "None",
-      "valueType": {
-        "$id": "4",
-        "kind": "boolean",
-        "name": "boolean",
-        "crossLanguageDefinitionId": "TypeSpec.boolean",
-        "decorators": []
-      },
-      "value": false,
-      "decorators": []
-    },
-    {
-      "$id": "5",
-      "kind": "constant",
-      "name": "AnonymousBoolean1",
-      "namespace": "",
-      "usage": "None",
-      "valueType": {
-        "$id": "6",
-        "kind": "boolean",
-        "name": "boolean",
-        "crossLanguageDefinitionId": "TypeSpec.boolean",
-        "decorators": []
-      },
-      "value": true,
-      "decorators": []
-    },
-    {
-      "$id": "7",
-      "kind": "constant",
-      "name": "AnonymousBoolean11",
-      "namespace": "",
-      "usage": "None",
-      "valueType": {
-        "$id": "8",
-        "kind": "boolean",
-        "name": "boolean",
-        "crossLanguageDefinitionId": "TypeSpec.boolean",
-        "decorators": []
-      },
-      "value": false,
-      "decorators": []
-    }
-  ],
+  "constants": [],
   "models": [],
   "clients": [
     {
-      "$id": "9",
+      "$id": "1",
       "kind": "client",
       "name": "ResponseAsBoolClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool",
       "doc": "Test for @responseAsBool decorator.",
       "methods": [],
       "parameters": [
         {
-          "$id": "10",
+          "$id": "2",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "11",
+            "$id": "3",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -96,7 +32,7 @@
           "isEndpoint": true,
           "defaultValue": {
             "type": {
-              "$id": "12",
+              "$id": "4",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
@@ -106,7 +42,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -115,83 +52,42 @@
       "apiVersions": [],
       "children": [
         {
-          "$id": "13",
+          "$id": "5",
           "kind": "client",
           "name": "HeadAsBoolean",
+          "isExactName": false,
           "namespace": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool.HeadAsBoolean",
           "methods": [
             {
-              "$id": "14",
+              "$id": "6",
               "kind": "basic",
               "name": "exists",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
-                "$id": "15",
+                "$id": "7",
                 "name": "exists",
+                "isExactName": false,
                 "resourceName": "HeadAsBoolean",
                 "accessibility": "public",
-                "parameters": [
-                  {
-                    "$id": "16",
-                    "kind": "header",
-                    "name": "accept",
-                    "serializedName": "Accept",
-                    "type": {
-                      "$id": "17",
-                      "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
-                      "decorators": []
-                    },
-                    "isApiVersion": false,
-                    "optional": false,
-                    "isContentType": false,
-                    "scope": "Method",
-                    "readOnly": false,
-                    "decorators": [],
-                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool.HeadAsBoolean.exists.accept",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "18",
-                        "kind": "method",
-                        "name": "accept",
-                        "serializedName": "Accept",
-                        "type": {
-                          "$ref": "17"
-                        },
-                        "location": "Header",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Method",
-                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool.HeadAsBoolean.exists.accept",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": []
-                      }
-                    ]
-                  }
-                ],
+                "parameters": [],
                 "responses": [
                   {
                     "statusCodes": [
                       204
                     ],
-                    "bodyType": {
-                      "$ref": "1"
-                    },
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   },
                   {
                     "statusCodes": [
                       404
                     ],
-                    "bodyType": {
-                      "$ref": "3"
-                    },
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "HEAD",
@@ -204,14 +100,10 @@
                 "decorators": [],
                 "namespace": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool.HeadAsBoolean"
               },
-              "parameters": [
-                {
-                  "$ref": "18"
-                }
-              ],
+              "parameters": [],
               "response": {
                 "type": {
-                  "$id": "19",
+                  "$id": "8",
                   "kind": "boolean",
                   "name": "boolean",
                   "crossLanguageDefinitionId": "TypeSpec.boolean",
@@ -224,77 +116,35 @@
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool.HeadAsBoolean.exists"
             },
             {
-              "$id": "20",
+              "$id": "9",
               "kind": "basic",
               "name": "notExists",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
-                "$id": "21",
+                "$id": "10",
                 "name": "notExists",
+                "isExactName": false,
                 "resourceName": "HeadAsBoolean",
                 "accessibility": "public",
-                "parameters": [
-                  {
-                    "$id": "22",
-                    "kind": "header",
-                    "name": "accept",
-                    "serializedName": "Accept",
-                    "type": {
-                      "$id": "23",
-                      "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
-                      "decorators": []
-                    },
-                    "isApiVersion": false,
-                    "optional": false,
-                    "isContentType": false,
-                    "scope": "Method",
-                    "readOnly": false,
-                    "decorators": [],
-                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool.HeadAsBoolean.notExists.accept",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "24",
-                        "kind": "method",
-                        "name": "accept",
-                        "serializedName": "Accept",
-                        "type": {
-                          "$ref": "23"
-                        },
-                        "location": "Header",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Method",
-                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool.HeadAsBoolean.notExists.accept",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": []
-                      }
-                    ]
-                  }
-                ],
+                "parameters": [],
                 "responses": [
                   {
                     "statusCodes": [
                       204
                     ],
-                    "bodyType": {
-                      "$ref": "5"
-                    },
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   },
                   {
                     "statusCodes": [
                       404
                     ],
-                    "bodyType": {
-                      "$ref": "7"
-                    },
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "HEAD",
@@ -307,14 +157,10 @@
                 "decorators": [],
                 "namespace": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool.HeadAsBoolean"
               },
-              "parameters": [
-                {
-                  "$ref": "24"
-                }
-              ],
+              "parameters": [],
               "response": {
                 "type": {
-                  "$id": "25",
+                  "$id": "11",
                   "kind": "boolean",
                   "name": "boolean",
                   "crossLanguageDefinitionId": "TypeSpec.boolean",
@@ -329,13 +175,13 @@
           ],
           "parameters": [
             {
-              "$id": "26",
+              "$id": "12",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "27",
+                "$id": "13",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -346,7 +192,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "28",
+                  "$id": "14",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -356,7 +202,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool.HeadAsBoolean.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool.HeadAsBoolean.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -364,7 +211,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool.HeadAsBoolean",
           "apiVersions": [],
           "parent": {
-            "$ref": "9"
+            "$ref": "1"
           },
           "isMultiServiceClient": false
         }

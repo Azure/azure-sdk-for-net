@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management;
+using Azure.Generator.Provisioning.Utilities;
 using Azure.Generator.Provisioning.Visitors;
 using Azure.Provisioning.Primitives;
 using Microsoft.CodeAnalysis;
@@ -21,6 +22,8 @@ namespace Azure.Generator.Provisioning
     {
         private static ProvisioningGenerator? _instance;
         private ProvisioningOutputLibrary? _outputLibrary;
+        private EnumValueCustomizationResolver? _enumValueCustomizationResolver;
+        private ProvisioningInputLibrary? _inputLibrary;
 
         /// <summary>
         /// Gets the singleton instance of the provisioning generator.
@@ -43,11 +46,17 @@ namespace Azure.Generator.Provisioning
         public override ProvisioningOutputLibrary OutputLibrary => _outputLibrary ??= new ProvisioningOutputLibrary();
 
         /// <inheritdoc/>
-        public override ManagementTypeFactory TypeFactory { get; }
+        public override ProvisioningInputLibrary InputLibrary => _inputLibrary ??= new ProvisioningInputLibrary(Configuration.OutputDirectory);
+
+        /// <inheritdoc/>
+        public override ProvisioningTypeFactory TypeFactory { get; }
+
+        internal EnumValueCustomizationResolver EnumValueCustomizationResolver => _enumValueCustomizationResolver ??= new();
 
         /// <inheritdoc/>
         protected override void Configure()
         {
+            AddCustomCodeAttributeProvider(OutputLibrary.CodeGenEnumValueAttributeDefinition);
             base.Configure();
             // Add Azure.Provisioning symbols so Roslyn can resolve types without full namespace
             AddMetadataReference(MetadataReference.CreateFromFile(typeof(ProvisionableConstruct).Assembly.Location));

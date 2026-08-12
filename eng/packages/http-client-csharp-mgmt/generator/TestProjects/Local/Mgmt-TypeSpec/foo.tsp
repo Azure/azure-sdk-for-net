@@ -145,6 +145,13 @@ interface Foos {
     ArmResponse<FooDependency[]>
   >;
 
+  @action("splitDependencies")
+  splitDependencies is ArmResourceActionAsync<
+    Foo,
+    void,
+    FooDependency[]
+  >;
+
   /** Get the provisioning state of a Foo resource. */
   @get
   @action("getProvisioningState")
@@ -152,6 +159,15 @@ interface Foos {
     Foo,
     void,
     ArmResponse<FooProvisioningState>
+  >;
+
+  /** Get raw metadata (Record<unknown>) for a Foo resource. */
+  @get
+  @action("getMetadata")
+  getMetadata is ArmResourceActionSync<
+    Foo,
+    void,
+    ArmResponse<Record<unknown>>
   >;
 }
 
@@ -213,3 +229,13 @@ model FooSettingsPropertiesMetaData {
   FooReader: "00000000-0000-0000-0000-000000000002",
   FooDataOperator: "00000000-0000-0000-0000-000000000003",
 }, "csharp");
+
+// Rename the FooSettings SDK class to FooConfiguration. For an ordinary
+// (non-expandable) resource, the "resource-name" value is a plain string.
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Customize resource name"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Customize resource name"
+@@clientOption(FooSettingsOperations.get,
+  "resource-name",
+  "FooConfiguration",
+  "csharp"
+);

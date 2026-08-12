@@ -28,10 +28,12 @@ namespace Azure.Generator.Provisioning.Providers
     internal class ProvisioningModelProvider : ModelProvider, IProvisioningPropertyInfo
     {
         private readonly InputModelType _inputModel;
+        private readonly bool _hasSettableUsage;
 
         public ProvisioningModelProvider(InputModelType inputModel) : base(inputModel)
         {
             _inputModel = inputModel;
+            _hasSettableUsage = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(inputModel);
         }
 
         protected override string BuildNamespace()
@@ -42,6 +44,28 @@ namespace Azure.Generator.Provisioning.Providers
 
         protected override TypeSignatureModifiers BuildDeclarationModifiers()
             => TypeSignatureModifiers.Public | TypeSignatureModifiers.Partial | TypeSignatureModifiers.Class;
+
+        protected override FormattableString BuildDescription()
+        {
+            var description = base.BuildDescription();
+            if (_inputModel.DiscriminatedSubtypes.Count == 0)
+                return description;
+
+            // TODO https://github.com/microsoft/typespec/issues/11397: Remove this override when
+            // discriminator-derived models are retained without relying on XML documentation references.
+            var derivedModels = DerivedModels
+                .Where(model => model.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public))
+                .ToList();
+            var derivedDescription = "Please note this is the abstract base class. The derived classes available for instantiation are: ";
+            var useOxfordComma = derivedModels.Count > 2;
+            for (var i = 0; i < derivedModels.Count; i++)
+            {
+                derivedDescription = i != derivedModels.Count - 1
+                    ? derivedDescription + $"<see cref=\"{derivedModels[i].Type.FullyQualifiedName}\"/>" + (useOxfordComma ? ", " : " ")
+                    : derivedDescription + (i > 0 ? "and " : string.Empty) + $"<see cref=\"{derivedModels[i].Type.FullyQualifiedName}\"/>.";
+            }
+            return $"{description}\n{derivedDescription}";
+        }
 
         protected override CSharpType? BuildBaseType()
         {
@@ -63,7 +87,8 @@ namespace Azure.Generator.Provisioning.Providers
             return new ProvisioningPropertyInfo(
                 property.Name.ToIdentifierName(),
                 property.IsReadOnly,
-                property.IsRequired,
+                !property.IsReadOnly && _hasSettableUsage,
+                property.IsRequired && _hasSettableUsage,
                 [serializedName]);
         }
 
@@ -88,7 +113,7 @@ namespace Azure.Generator.Provisioning.Providers
                     if (prop.IsDiscriminator) continue;
                     if (!seen.Add(prop.Name)) continue;
 
-                    var property = CodeModelGenerator.Instance.TypeFactory.CreateProperty(prop, this);
+                    var property = ProvisioningGenerator.Instance.TypeFactory.CreateProvisioningProperty(prop, this);
                     if (property != null)
                         properties.Add(property);
                 }
@@ -180,11 +205,13 @@ namespace Azure.Generator.Provisioning.Providers
                 statements.Add(field.Assign(
                     This.Invoke(
                         methodName,
-                        BicepTypeHelpers.BuildDefinePropertyArgs(provProp.Name, provProp.BicepPath, provProp.IsOutput, provProp.IsRequired, provProp.DefaultValue),
+                        BicepTypeHelpers.BuildDefinePropertyArgs(field.Type, provProp.Name, provProp.BicepPath, provProp.IsOutput, provProp.IsRequired, provProp.DefaultValue, provProp.Format),
                         typeArgs,
                         false)
                 ).Terminate());
             }
+
+            statements.Add(This.Invoke("DefineAdditionalProperties").Terminate());
 
             var method = new MethodProvider(
                 new MethodSignature(
@@ -197,7 +224,20 @@ namespace Azure.Generator.Provisioning.Providers
                 statements,
                 this);
 
-            return [method];
+            return [method, BuildDefineAdditionalPropertiesMethod()];
+        }
+
+        private MethodProvider BuildDefineAdditionalPropertiesMethod()
+        {
+            var sig = new MethodSignature(
+                "DefineAdditionalProperties",
+                $"Define additional provisionable properties for {Name} that are not part of the generated code.",
+                MethodSignatureModifiers.Partial,
+                null,
+                null,
+                []);
+
+            return new MethodProvider(sig, this);
         }
 
         protected override TypeProvider[] BuildSerializationProviders()

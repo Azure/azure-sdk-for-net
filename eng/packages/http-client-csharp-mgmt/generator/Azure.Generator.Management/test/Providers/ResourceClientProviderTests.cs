@@ -6,15 +6,185 @@ using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.ResourceManager;
+using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
+using System.Reflection;
 
 namespace Azure.Generator.Management.Tests.Providers
 {
     internal class ResourceClientProviderTests
     {
+        [TestCase]
+        public void Verify_BackCompatOverloadIsDecorated()
+        {
+            // The current spec adds an optional "expand" query parameter to Get; the previous contract (loaded from
+            // TestData) did not, so the upstream generator synthesizes a hidden back-compat overload preserving the old
+            // signature.
+            var (client, models) = InputResourceData.ClientWithResource(includeGetQueryParameter: true);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client], lastContractCompilation: () => Helpers.GetCompilationFromDirectory());
+            var provider = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
+            Assert.That(provider.LastContractView, Is.Not.Null);
+
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(provider);
+
+            var backCompatMethods = new TestTypeProvider(
+                name: provider.Name,
+                ns: provider.Type.Namespace,
+                declarationModifiers: provider.DeclarationModifiers,
+                methods: provider.Methods.Where(m => m.Signature.Name == "Get" || m.Signature.Name == "GetAsync"));
+            var rendered = new TypeProviderWriter(backCompatMethods).Write().Content.Replace("\r\n", "\n");
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
+        [TestCase]
+        public void Verify_BackCompatOverloadSuppressedByCustomCode()
+        {
+            var (client, models) = InputResourceData.ClientWithResource(includeGetQueryParameter: true);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => models,
+                clients: () => [client],
+                customizationCompilation: () => Helpers.GetCompilationFromDirectory(parameters: "Custom"),
+                lastContractCompilation: () => Helpers.GetCompilationFromDirectory(parameters: "Last"));
+            var provider = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
+            Assert.That(provider.LastContractView, Is.Not.Null);
+            Assert.That(provider.CustomCodeView, Is.Not.Null);
+
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(provider);
+
+            // The current method (with the new optional "expand" parameter) is still generated.
+            Assert.That(
+                provider.Methods.Any(m => m.Signature.Name == "Get" && m.Signature.Parameters.Any(p => p.Name == "expand")),
+                Is.True);
+            Assert.That(
+                provider.Methods.Any(m => m.Signature.Name == "GetAsync" && m.Signature.Parameters.Any(p => p.Name == "expand")),
+                Is.True);
+
+            // The back-compat shim (Get/GetAsync taking only a CancellationToken) is NOT generated because custom
+            // code already defines a matching overload.
+            Assert.That(
+                provider.Methods.Any(m => m.Signature.Name == "Get" && IsCancellationTokenOnlyOverload(m.Signature)),
+                Is.False);
+            Assert.That(
+                provider.Methods.Any(m => m.Signature.Name == "GetAsync" && IsCancellationTokenOnlyOverload(m.Signature)),
+                Is.False);
+
+            // Validate the resulting code: only the current Get/GetAsync overloads are emitted (no back-compat shim).
+            var generatedMethods = new TestTypeProvider(
+                name: provider.Name,
+                ns: provider.Type.Namespace,
+                declarationModifiers: provider.DeclarationModifiers,
+                methods: provider.Methods.Where(m => m.Signature.Name == "Get" || m.Signature.Name == "GetAsync"));
+            var rendered = new TypeProviderWriter(generatedMethods).Write().Content.Replace("\r\n", "\n");
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
+        private static bool IsCancellationTokenOnlyOverload(MethodSignature signature)
+            => signature.Parameters.Count == 1 && signature.Parameters[0].Type.Equals(typeof(CancellationToken));
+
+        [TestCase]
+        public void Verify_ResourceNameUsesIdentifierName()
+        {
+            var (client, models) = InputResourceData.ClientWithResource(resourceName: "deploymentStackWhatIfResult");
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceClientProvider>()
+                .FirstOrDefault();
+            Assert.That(resourceProvider, Is.Not.Null);
+
+            Assert.That(resourceProvider!.ResourceName, Is.EqualTo("DeploymentStackWhatIfResult"));
+            Assert.That(resourceProvider.Name, Is.EqualTo("DeploymentStackWhatIfResultResource"));
+        }
+
+        [TestCase]
+        public void Verify_CodeGenResourceDataAttributeIsEmitted()
+        {
+            var (_, models) = InputResourceData.ClientWithResource();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models);
+
+            var attributeProvider = plugin.Object.OutputLibrary.TypeProviders
+                .FirstOrDefault(p => p.Name == "CodeGenResourceDataAttribute");
+
+            Assert.That(attributeProvider, Is.Not.Null);
+            var content = new TypeProviderWriter(attributeProvider!).Write().Content;
+            Assert.That(content, Does.Contain("internal partial class CodeGenResourceDataAttribute : global::System.Attribute"));
+            Assert.That(content, Does.Contain("public CodeGenResourceDataAttribute(global::System.Type dataType)"));
+            Assert.That(content, Does.Contain("public global::System.Type DataType"));
+
+            var customCodeAttributeProviders = typeof(CodeModelGenerator).GetProperty(
+                "CustomCodeAttributeProviders",
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!
+                .GetValue(plugin.Object) as IReadOnlyList<TypeProvider>;
+            Assert.That(customCodeAttributeProviders!.Any(p => p.Name == "CodeGenResourceDataAttribute"), Is.True);
+        }
+
+        [TestCase]
+        public void Verify_CodeGenTagPatchHookAttributeIsEmitted()
+        {
+            var (_, models) = InputResourceData.ClientWithResource();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models);
+
+            var attributeProvider = plugin.Object.OutputLibrary.TypeProviders
+                .FirstOrDefault(p => p.Name == "CodeGenTagPatchHookAttribute");
+
+            Assert.That(attributeProvider, Is.Not.Null);
+            var content = new TypeProviderWriter(attributeProvider!).Write().Content;
+            Assert.That(content, Does.Contain("internal partial class CodeGenTagPatchHookAttribute : global::System.Attribute"));
+            Assert.That(content, Does.Contain("public CodeGenTagPatchHookAttribute(string methodName)"));
+            Assert.That(content, Does.Contain("public string MethodName"));
+
+            var customCodeAttributeProviders = typeof(CodeModelGenerator).GetProperty(
+                "CustomCodeAttributeProviders",
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!
+                .GetValue(plugin.Object) as IReadOnlyList<TypeProvider>;
+            Assert.That(customCodeAttributeProviders!.Any(p => p.Name == "CodeGenTagPatchHookAttribute"), Is.True);
+        }
+
+        [TestCase]
+        public void Verify_CodeGenResourceDataChangesResourceDataType()
+        {
+            var (client, models) = InputResourceData.ClientWithResource();
+            var resourceModel = models.Single();
+            var customDataModel = InputFactory.Model(
+                "CustomResponseTypeData",
+                properties: resourceModel.Properties,
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            var customization = """
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    internal class CodeGenResourceDataAttribute : System.Attribute
+                    {
+                        public CodeGenResourceDataAttribute(System.Type dataType) { }
+                    }
+                }
+
+                namespace Samples
+                {
+                    using Microsoft.TypeSpec.Generator.Customizations;
+
+                    [CodeGenResourceData(typeof(CustomResponseTypeData))]
+                    public partial class ResponseTypeResource { }
+
+                    public partial class CustomResponseTypeData { }
+                }
+                """;
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [resourceModel, customDataModel],
+                clients: () => [client],
+                customizationSources: [customization]);
+
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceClientProvider>()
+                .Single();
+
+            Assert.That(resourceProvider.ResourceData.Name, Is.EqualTo("CustomResponseTypeData"));
+            var dataProperty = resourceProvider.Properties.Single(p => p.Name == "Data");
+            Assert.That(dataProperty.Type.Name, Is.EqualTo("CustomResponseTypeData"));
+        }
+
         [TestCase]
         public void Verify_ValidateIdMethod()
         {
@@ -98,6 +268,65 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
+        public void Verify_LroActionReturningArrayIsArmOperationNotPageable()
+        {
+            // An LRO action that returns an array (without @list) should be surfaced as
+            // ArmOperation<IReadOnlyList<T>> rather than a pageable.
+            var (client, models) = InputResourceData.ClientWithResourceLroArrayAction();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceClientProvider>()
+                .FirstOrDefault();
+            Assert.That(resourceProvider, Is.Not.Null);
+
+            var syncMethod = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "SplitDependencies");
+            Assert.That(syncMethod, Is.Not.Null);
+            var asyncMethod = resourceProvider.Methods.FirstOrDefault(m => m.Signature.Name == "SplitDependenciesAsync");
+            Assert.That(asyncMethod, Is.Not.Null);
+
+            // Sync: ArmOperation<IReadOnlyList<T>> with a WaitUntil parameter (LRO shape), not Pageable<T>.
+            var syncSignature = syncMethod!.Signature;
+            Assert.That(syncSignature.ReturnType?.FrameworkType, Is.EqualTo(typeof(ArmOperation<>)));
+            Assert.That(syncSignature.ReturnType?.Arguments[0].IsList, Is.True);
+            Assert.That(syncSignature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(WaitUntil)));
+
+            // Async: Task<ArmOperation<IReadOnlyList<T>>>.
+            var asyncSignature = asyncMethod!.Signature;
+            Assert.That(asyncSignature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Task<>)));
+            Assert.That(asyncSignature.ReturnType?.Arguments[0].FrameworkType, Is.EqualTo(typeof(ArmOperation<>)));
+            Assert.That(asyncSignature.ReturnType?.Arguments[0].Arguments[0].IsList, Is.True);
+            Assert.That(asyncSignature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(WaitUntil)));
+            Assert.That(resourceProvider.BodyDependencyTypes, Does.Contain(plugin.Object.OutputLibrary.ArmOperationOfT.Type));
+            Assert.That(resourceProvider.BodyDependencyTypes.Any(type => type.Name.EndsWith("OperationSource")), Is.True);
+        }
+
+        [TestCase]
+        public void Verify_LroDeleteWithBody_UsesNonGenericArmOperation()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceLroDeleteWithBody();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceClientProvider>()
+                .FirstOrDefault();
+            Assert.That(resourceProvider, Is.Not.Null);
+
+            var syncMethod = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "Delete");
+            Assert.That(syncMethod, Is.Not.Null);
+            var syncSignature = syncMethod!.Signature;
+            Assert.That(syncSignature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(WaitUntil)));
+            Assert.That(syncSignature.ReturnType?.FrameworkType, Is.EqualTo(typeof(ArmOperation)));
+
+            var asyncMethod = resourceProvider.Methods.FirstOrDefault(m => m.Signature.Name == "DeleteAsync");
+            Assert.That(asyncMethod, Is.Not.Null);
+            var asyncSignature = asyncMethod!.Signature;
+            Assert.That(asyncSignature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(WaitUntil)));
+            Assert.That(asyncSignature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Task<>)));
+            Assert.That(asyncSignature.ReturnType?.Arguments[0].FrameworkType, Is.EqualTo(typeof(ArmOperation)));
+            Assert.That(resourceProvider.BodyDependencyTypes, Does.Contain(plugin.Object.OutputLibrary.ArmOperation.Type));
+            Assert.That(resourceProvider.BodyDependencyTypes.Any(type => type.Name.EndsWith("OperationSource")), Is.False);
+        }
+
+        [TestCase]
         public void Verify_ConstructorWithData()
         {
             var constructor = GetResourceClientProviderConstructorByName("data");
@@ -160,6 +389,31 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.That(bodyStatements, Is.Not.Null);
             var exptected = Helpers.GetExpectedFromFile();
             Assert.That(bodyStatements, Is.EqualTo(exptected));
+        }
+
+        [TestCase]
+        public void Verify_CheckExistenceOperation_IsNotEmitted()
+        {
+            var (client, models) = InputResourceData.ClientWithResource(includeCheckExistence: true);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceClientProvider>()
+                .FirstOrDefault();
+            Assert.That(resourceProvider, Is.Not.Null);
+            var collectionProvider = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceCollectionClientProvider>()
+                .FirstOrDefault();
+            Assert.That(collectionProvider, Is.Not.Null);
+
+            var generatedMethodNames = resourceProvider!.Methods
+                .Concat(collectionProvider!.Methods)
+                .Select(m => m.Signature.Name)
+                .ToList();
+
+            Assert.That(
+                generatedMethodNames.Any(n => n.Contains("CheckExistence", StringComparison.OrdinalIgnoreCase)),
+                Is.False,
+                $"CheckExistence is detected in metadata but should not be emitted yet. Methods: {string.Join(", ", generatedMethodNames)}");
         }
 
         [TestCase]

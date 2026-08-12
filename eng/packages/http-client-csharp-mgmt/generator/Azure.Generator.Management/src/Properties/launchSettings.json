@@ -1,12 +1,12 @@
 {
   "profiles": {
     "Mgmt-TypeSpec": {
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Local/Mgmt-TypeSpec -g MgmtClientGenerator",
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Local/Mgmt-TypeSpec -g ManagementClientGenerator",
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
     "Mgmt-TypeSpec-MultiService": {
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Local/Mgmt-TypeSpec-MultiService -g MgmtClientGenerator",
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Local/Mgmt-TypeSpec-MultiService -g ManagementClientGenerator",
       "commandName": "Executable",
       "executablePath": "dotnet"
     }
