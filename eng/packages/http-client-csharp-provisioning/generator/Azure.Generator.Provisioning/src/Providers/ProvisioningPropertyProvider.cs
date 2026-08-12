@@ -19,6 +19,9 @@ namespace Azure.Generator.Provisioning.Providers
     /// </summary>
     internal class ProvisioningPropertyProvider : PropertyProvider
     {
+        /// <summary>The TypeSpec property declaration represented by this provider.</summary>
+        public InputModelProperty InputProperty { get; }
+
         /// <summary>The Bicep serialization path segments for DefineProperty calls.</summary>
         public string[] BicepPath { get; }
 
@@ -38,6 +41,7 @@ namespace Azure.Generator.Provisioning.Providers
         public string? Format { get; }
 
         private ProvisioningPropertyProvider(
+            InputModelProperty inputProperty,
             FieldProvider backingField,
             CSharpType type,
             string name,
@@ -59,6 +63,7 @@ namespace Azure.Generator.Provisioning.Providers
                 enclosingType,
                 wireInfo: wireInfo)
         {
+            InputProperty = inputProperty;
             BackingField = backingField;
             BicepPath = bicepPath;
             IsOutput = isOutput;
@@ -83,6 +88,7 @@ namespace Azure.Generator.Provisioning.Providers
             PropertyWireInformation? wireInfo)
             : base(inputProperty, enclosingType)
         {
+            InputProperty = inputProperty;
             Update(
                 modifiers: MethodSignatureModifiers.Internal,
                 type: type,
@@ -157,7 +163,7 @@ namespace Azure.Generator.Provisioning.Providers
                     inputProperty, field, bicepType, resolvedName, body, enclosingType,
                     bicepPath, isOutput, isRequired, defaultValue, format, wireInfo)
                 : new ProvisioningPropertyProvider(
-                    field, bicepType, resolvedName, body, enclosingType,
+                    inputProperty, field, bicepType, resolvedName, body, enclosingType,
                     bicepPath, isOutput, isSettable, isRequired, defaultValue, format, wireInfo);
         }
     }

@@ -10,6 +10,22 @@ namespace Azure.AI.AgentServer.Responses;
 /// </summary>
 public static class ResponseContextExtensions
 {
+    /// <summary>
+    /// Returns a named conversation-chain metadata namespace facade.
+    /// </summary>
+    /// <param name="context">The response context.</param>
+    /// <param name="namespaceName">
+    /// Namespace name to access; defaults to <see cref="ConversationChainMetadata.DefaultNamespaceName"/>.
+    /// </param>
+    /// <returns>A namespace facade bound to <paramref name="namespaceName"/>.</returns>
+    public static ConversationChainMetadataNamespace MetadataNamespace(
+        this ResponseContext context,
+        string namespaceName = ConversationChainMetadata.DefaultNamespaceName)
+    {
+        Argument.AssertNotNull(context, nameof(context));
+        return context.ConversationChainMetadata.ForNamespace(namespaceName);
+    }
+
     /// <summary>Generates a new output message item ID sharing the response's partition key.</summary>
     /// <param name="context">The response context.</param>
     /// <returns>A message item ID in the format <c>msg_{partitionKey}{entropy}</c>.</returns>

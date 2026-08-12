@@ -12,7 +12,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Outbound Rule for the managed network of a machine learning workspace.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/>, and <see cref="ServiceTagOutboundRule"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/>, and <see cref="ServiceTagOutboundRule"/>.
     /// </summary>
     public partial class MachineLearningOutboundRule : ProvisionableConstruct
     {

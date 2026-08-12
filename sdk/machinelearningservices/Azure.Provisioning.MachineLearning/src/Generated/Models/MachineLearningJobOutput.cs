@@ -12,7 +12,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Job output definition container information on where to find job output/logs.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/>, and <see cref="MachineLearningUriFolderJobOutput"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/>, and <see cref="MachineLearningUriFolderJobOutput"/>.
     /// </summary>
     public partial class MachineLearningJobOutput : ProvisionableConstruct
     {

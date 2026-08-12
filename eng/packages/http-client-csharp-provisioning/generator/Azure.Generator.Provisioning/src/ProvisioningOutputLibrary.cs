@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Reflection;
 using Azure.Generator.Management;
 using Azure.Generator.Management.Models;
@@ -172,11 +173,21 @@ namespace Azure.Generator.Provisioning
                 }
             }
 
+            var discriminatorOnlyEnumIds = GetDiscriminatorOnlyEnumIds();
             foreach (var inputEnum in ProvisioningGenerator.Instance.InputLibrary.InputNamespace.Enums)
             {
                 var enumProvider = ProvisioningGenerator.Instance.TypeFactory.CreateEnum(inputEnum);
                 if (enumProvider != null)
                 {
+                    if (discriminatorOnlyEnumIds.Contains(inputEnum.CrossLanguageDefinitionId)
+                        && enumProvider.LastContractView == null
+                        && !File.Exists(Path.Combine(
+                            ProvisioningGenerator.Instance.Configuration.OutputDirectory,
+                            enumProvider.RelativeFilePath)))
+                    {
+                        continue;
+                    }
+
                     // Provisioning manually builds the provider list instead of calling the base
                     // OutputLibrary.BuildTypeProviders(), so we must preserve the base pipeline's
                     // custom enum replacement behavior here. When a custom enum is decorated with
@@ -212,6 +223,65 @@ namespace Azure.Generator.Provisioning
             }
 
             return [.. providers];
+        }
+
+        private HashSet<string> GetDiscriminatorOnlyEnumIds()
+        {
+            var discriminatorEnumIds = new HashSet<string>(StringComparer.Ordinal);
+            var regularEnumIds = new HashSet<string>(StringComparer.Ordinal);
+            var inputLibrary = ProvisioningGenerator.Instance.InputLibrary;
+
+            foreach (var model in inputLibrary.InputNamespace.Models)
+            {
+                if (!TryGetResourcesByModel(model, out _) && !inputLibrary.IsModelReachable(model))
+                {
+                    continue;
+                }
+
+                foreach (var property in model.Properties)
+                {
+                    var target = property.IsDiscriminator ? discriminatorEnumIds : regularEnumIds;
+                    foreach (var inputEnum in GetReferencedEnums(property.Type))
+                    {
+                        target.Add(inputEnum.CrossLanguageDefinitionId);
+                    }
+                }
+            }
+
+            discriminatorEnumIds.ExceptWith(regularEnumIds);
+            return discriminatorEnumIds;
+        }
+
+        private static IEnumerable<InputEnumType> GetReferencedEnums(InputType inputType)
+        {
+            switch (inputType)
+            {
+                case InputEnumType inputEnum:
+                    yield return inputEnum;
+                    break;
+                case InputArrayType array:
+                    foreach (var nestedEnum in GetReferencedEnums(array.ValueType))
+                    {
+                        yield return nestedEnum;
+                    }
+                    break;
+                case InputDictionaryType dictionary:
+                    foreach (var nestedEnum in GetReferencedEnums(dictionary.KeyType))
+                    {
+                        yield return nestedEnum;
+                    }
+                    foreach (var nestedEnum in GetReferencedEnums(dictionary.ValueType))
+                    {
+                        yield return nestedEnum;
+                    }
+                    break;
+                case InputNullableType nullable:
+                    foreach (var nestedEnum in GetReferencedEnums(nullable.Type))
+                    {
+                        yield return nestedEnum;
+                    }
+                    break;
+            }
         }
     }
 }

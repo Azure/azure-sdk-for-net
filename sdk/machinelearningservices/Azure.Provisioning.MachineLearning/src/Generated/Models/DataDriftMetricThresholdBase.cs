@@ -12,7 +12,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// The DataDriftMetricThresholdBase.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CategoricalDataDriftMetricThreshold"/> and <see cref="NumericalDataDriftMetricThreshold"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="CategoricalDataDriftMetricThreshold"/> and <see cref="NumericalDataDriftMetricThreshold"/>.
     /// </summary>
     public partial class DataDriftMetricThresholdBase : ProvisionableConstruct
     {
