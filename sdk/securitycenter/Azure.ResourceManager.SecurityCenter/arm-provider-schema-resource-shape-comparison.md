@@ -1,0 +1,53 @@
+# ARM resource shape comparison: Azure.ResourceManager.SecurityCenter
+
+This report compares only resource-shape fields from the current snapshots: resource ID, ARM resource type, parent, scope, Read lifecycle operations, and Create lifecycle operations. Other methods and metadata are intentionally ignored.
+
+Resource rows are matched by normalized resource ID, where path parameter names are ignored. Exact resource-ID differences are still reported as a separate axis for matched rows.
+
+## Summary
+
+| Metric | Count |
+| --- | ---: |
+| Legacy resources | 67 |
+| resolveArmResources resources | 66 |
+| Matching normalized resource IDs | 64 |
+| Legacy-only normalized resource IDs | 3 |
+| resolveArmResources-only normalized resource IDs | 2 |
+| Exact resource ID differences on matched resources | 0 |
+| ARM resource type differences | 0 |
+| Parent differences | 4 |
+| Scope differences | 8 |
+| Read lifecycle differences | 0 |
+| Create lifecycle differences | 0 |
+
+## Legacy-only resources
+
+| Normalized resource ID | Resource shape |
+| --- | --- |
+| `/{}/providers/Microsoft.Security/advancedThreatProtectionSettings/current` | resourceId=`/{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/current`<br>resourceType=`Microsoft.Security/advancedThreatProtectionSettings`<br>parent=_none_<br>scope=`kind=Extension`; `id=/{resourceId}`<br>Read=`ATPSettingsAPI.AdvancedThreatProtectionSettings.get /{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/current [Extension, /{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/current]`<br>Create=`ATPSettingsAPI.AdvancedThreatProtectionSettings.create /{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/current [Extension, /{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/current]` |
+| `/subscriptions/{}/providers/Microsoft.Security/locations/{}` | resourceId=`/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}`<br>resourceType=`Microsoft.Security/locations`<br>parent=_none_<br>scope=`kind=Subscription`; `id=/subscriptions/{subscriptionId}`; `type=Microsoft.Resources/subscriptions`<br>Read=`LocationsAPI.AscLocations.get /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation} [Subscription, /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}, Microsoft.Resources/subscriptions]`<br>Create=_none_ |
+| `/subscriptions/{}/resourceGroups/{}/providers/{}/{}/{}/providers/Microsoft.Security/serverVulnerabilityAssessments/default` | resourceId=`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/serverVulnerabilityAssessments/default`<br>resourceType=`Microsoft.Security/serverVulnerabilityAssessments`<br>parent=_none_<br>scope=`kind=Extension`; `id=/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}`<br>Read=`SecuritySolutionsAPI.ServerVulnerabilityAssessments.get /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/serverVulnerabilityAssessments/default [Extension, /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/serverVulnerabilityAssessments/default]`<br>Create=`SecuritySolutionsAPI.ServerVulnerabilityAssessments.createOrUpdate /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/serverVulnerabilityAssessments/default [Extension, /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/serverVulnerabilityAssessments/default]` |
+
+## resolveArmResources-only resources
+
+| Normalized resource ID | Resource shape |
+| --- | --- |
+| `/{}/providers/Microsoft.Security/advancedThreatProtectionSettings/{}` | resourceId=`/{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/{settingName}`<br>resourceType=`Microsoft.Security/advancedThreatProtectionSettings`<br>parent=_none_<br>scope=`kind=Extension`; `id=/{resourceId}`<br>Read=`ATPSettingsAPI.AdvancedThreatProtectionSettings.get /{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/{settingName} [Extension, /{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/{settingName}]`<br>Create=`ATPSettingsAPI.AdvancedThreatProtectionSettings.create /{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/{settingName} [Extension, /{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/{settingName}]` |
+| `/subscriptions/{}/resourceGroups/{}/providers/{}/{}/{}/providers/Microsoft.Security/serverVulnerabilityAssessments/{}` | resourceId=`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/serverVulnerabilityAssessments/{serverVulnerabilityAssessment}`<br>resourceType=`Microsoft.Security/serverVulnerabilityAssessments`<br>parent=_none_<br>scope=`kind=Extension`; `id=/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}`<br>Read=`SecuritySolutionsAPI.ServerVulnerabilityAssessments.get /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/serverVulnerabilityAssessments/{serverVulnerabilityAssessment} [Extension, /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/serverVulnerabilityAssessments/{serverVulnerabilityAssessment}]`<br>Create=`SecuritySolutionsAPI.ServerVulnerabilityAssessments.createOrUpdate /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/serverVulnerabilityAssessments/{serverVulnerabilityAssessment} [Extension, /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/serverVulnerabilityAssessments/{serverVulnerabilityAssessment}]` |
+
+## Matched resource-shape differences
+
+| Normalized resource ID | Axis | Legacy | resolveArmResources |
+| --- | --- | --- | --- |
+| `/subscriptions/{}/providers/Microsoft.Security/locations/{}/alerts/{}` | parent | `id=/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}` | _none_ |
+| `/subscriptions/{}/providers/Microsoft.Security/locations/{}/tasks/{}` | parent | `id=/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}` | _none_ |
+| `/subscriptions/{}/providers/Microsoft.Security/pricings/{}/securityOperators/{}` | parent | _none_ | `id=/{scopeId}/providers/Microsoft.Security/pricings/{pricingName}` |
+| `/subscriptions/{}/providers/Microsoft.Security/pricings/{}/securityOperators/{}` | scope | `kind=Subscription`<br>`id=/subscriptions/{subscriptionId}`<br>`type=Microsoft.Resources/subscriptions` | `kind=Extension`<br>`id=/subscriptions/{subscriptionId}`<br>`type=Microsoft.Resources/subscriptions` |
+| `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.Security/locations/{}/alerts/{}` | scope | `kind=ResourceGroup`<br>`id=/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`<br>`type=Microsoft.Resources/resourceGroups` | `kind=Subscription`<br>`id=/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`<br>`type=Microsoft.Resources/resourceGroups` |
+| `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.Security/locations/{}/allowedConnections/{}` | scope | `kind=ResourceGroup`<br>`id=/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`<br>`type=Microsoft.Resources/resourceGroups` | `kind=Subscription`<br>`id=/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`<br>`type=Microsoft.Resources/resourceGroups` |
+| `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.Security/locations/{}/discoveredSecuritySolutions/{}` | scope | `kind=ResourceGroup`<br>`id=/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`<br>`type=Microsoft.Resources/resourceGroups` | `kind=Subscription`<br>`id=/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`<br>`type=Microsoft.Resources/resourceGroups` |
+| `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.Security/locations/{}/jitNetworkAccessPolicies/{}` | scope | `kind=ResourceGroup`<br>`id=/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`<br>`type=Microsoft.Resources/resourceGroups` | `kind=Subscription`<br>`id=/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`<br>`type=Microsoft.Resources/resourceGroups` |
+| `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.Security/locations/{}/securitySolutions/{}` | scope | `kind=ResourceGroup`<br>`id=/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`<br>`type=Microsoft.Resources/resourceGroups` | `kind=Subscription`<br>`id=/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`<br>`type=Microsoft.Resources/resourceGroups` |
+| `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.Security/locations/{}/tasks/{}` | scope | `kind=ResourceGroup`<br>`id=/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`<br>`type=Microsoft.Resources/resourceGroups` | `kind=Subscription`<br>`id=/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`<br>`type=Microsoft.Resources/resourceGroups` |
+| `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.Security/locations/{}/topologies/{}` | scope | `kind=ResourceGroup`<br>`id=/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`<br>`type=Microsoft.Resources/resourceGroups` | `kind=Subscription`<br>`id=/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`<br>`type=Microsoft.Resources/resourceGroups` |
+| `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.Security/securityConnectors/{}/providers/Microsoft.Security/applications/{}` | parent | `id=/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}` | _none_ |
