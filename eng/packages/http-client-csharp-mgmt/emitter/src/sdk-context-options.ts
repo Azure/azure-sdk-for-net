@@ -9,10 +9,7 @@ import {
   SdkHttpOperation,
   SdkMethod
 } from "@azure-tools/typespec-client-generator-core";
-import type {
-  CodeModel,
-  CSharpEmitterContext
-} from "./code-model-types.js";
+import type { CodeModel, CSharpEmitterContext } from "./code-model-types.js";
 import { getAllSdkClients } from "./sdk-client-utils.js";
 
 // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armprovidernamespace
@@ -155,6 +152,7 @@ const clientOptionRegex = "Azure\\.ClientGenerator\\.Core\\.@clientOption";
 const patternRegex = "TypeSpec\\.@pattern";
 const minLengthRegex = "TypeSpec\\.@minLength";
 const maxLengthRegex = "TypeSpec\\.@maxLength";
+const dynamicModelRegex = "TypeSpec\\.HttpClient\\.CSharp\\.@dynamicModel";
 
 export const azureSDKContextOptions: CreateSdkContextOptions = {
   versioning: {
@@ -182,7 +180,8 @@ export const azureSDKContextOptions: CreateSdkContextOptions = {
     clientOptionRegex,
     patternRegex,
     minLengthRegex,
-    maxLengthRegex
+    maxLengthRegex,
+    dynamicModelRegex
   ]
 };
 
