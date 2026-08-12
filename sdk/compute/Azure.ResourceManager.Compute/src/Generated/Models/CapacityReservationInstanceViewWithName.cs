@@ -21,9 +21,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="CapacityReservationInstanceViewWithName"/>. </summary>
         /// <param name="utilizationInfo"> Unutilized capacity of the capacity reservation. </param>
         /// <param name="statuses"> The resource status information. </param>
+        /// <param name="reservationStateInfo"> The reservation state information for a capacity reservation, this detail is primarily provided for Future capacity reservations. Minimum API version: 2026-04-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name of the capacity reservation. </param>
-        internal CapacityReservationInstanceViewWithName(CapacityReservationUtilization utilizationInfo, IReadOnlyList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name) : base(utilizationInfo, statuses, additionalBinaryDataProperties)
+        internal CapacityReservationInstanceViewWithName(CapacityReservationUtilization utilizationInfo, IReadOnlyList<InstanceViewStatus> statuses, CapacityReservationStateInfo reservationStateInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name) : base(utilizationInfo, statuses, reservationStateInfo, additionalBinaryDataProperties)
         {
             Name = name;
         }

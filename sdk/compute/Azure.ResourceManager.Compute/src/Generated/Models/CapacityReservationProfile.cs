@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The parameters of a capacity reservation Profile. </summary>
-    internal partial class CapacityReservationProfile
+    public partial class CapacityReservationProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -24,15 +24,20 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="CapacityReservationProfile"/>. </summary>
         /// <param name="capacityReservationGroup"> Specifies the capacity reservation group resource id that should be used for allocating the virtual machine or scaleset vm instances provided enough capacity has been reserved. Please refer to https://aka.ms/CapacityReservation for more details. </param>
+        /// <param name="disableCapacityReservationAssignment"> Specifies whether the virtual machine is explicitly opted out from being associated with any capacity reservation. When set to true, the virtual machine will not be allowed to implicitly or explicitly associate with any type of capacity reservation and will consume capacity from the publicly available capacity. Minimum api-version: 2026-04-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityReservationProfile(ComputeWriteableSubResourceData capacityReservationGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CapacityReservationProfile(ComputeWriteableSubResourceData capacityReservationGroup, bool? disableCapacityReservationAssignment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CapacityReservationGroup = capacityReservationGroup;
+            DisableCapacityReservationAssignment = disableCapacityReservationAssignment;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the capacity reservation group resource id that should be used for allocating the virtual machine or scaleset vm instances provided enough capacity has been reserved. Please refer to https://aka.ms/CapacityReservation for more details. </summary>
         internal ComputeWriteableSubResourceData CapacityReservationGroup { get; set; }
+
+        /// <summary> Specifies whether the virtual machine is explicitly opted out from being associated with any capacity reservation. When set to true, the virtual machine will not be allowed to implicitly or explicitly associate with any type of capacity reservation and will consume capacity from the publicly available capacity. Minimum api-version: 2026-04-01. </summary>
+        public bool? DisableCapacityReservationAssignment { get; set; }
 
         /// <summary> Resource Id. </summary>
         public ResourceIdentifier CapacityReservationGroupId

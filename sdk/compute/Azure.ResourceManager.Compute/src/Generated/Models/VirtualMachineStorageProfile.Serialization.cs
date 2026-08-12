@@ -112,6 +112,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("alignRegionalDisksToVMZone"u8);
                 writer.WriteBooleanValue(AlignRegionalDisksToVmZone.Value);
             }
+            if (Optional.IsDefined(DiskApiVersion))
+            {
+                writer.WritePropertyName("diskApiVersion"u8);
+                writer.WriteStringValue(DiskApiVersion.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -159,6 +164,7 @@ namespace Azure.ResourceManager.Compute.Models
             IList<VirtualMachineDataDisk> dataDisks = default;
             DiskControllerType? diskControllerType = default;
             bool? alignRegionalDisksToVmZone = default;
+            DiskApiVersion? diskApiVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -212,6 +218,15 @@ namespace Azure.ResourceManager.Compute.Models
                     alignRegionalDisksToVmZone = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("diskApiVersion"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskApiVersion = new DiskApiVersion(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -223,6 +238,7 @@ namespace Azure.ResourceManager.Compute.Models
                 dataDisks ?? new ChangeTrackingList<VirtualMachineDataDisk>(),
                 diskControllerType,
                 alignRegionalDisksToVmZone,
+                diskApiVersion,
                 additionalBinaryDataProperties);
         }
     }
