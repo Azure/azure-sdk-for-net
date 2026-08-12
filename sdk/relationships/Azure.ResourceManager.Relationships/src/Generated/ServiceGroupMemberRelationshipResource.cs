@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Relationships
         {
             TryGetApiVersion(ResourceType, out string serviceGroupMemberRelationshipApiVersion);
             _serviceGroupMemberRelationshipsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relationships", ResourceType.Namespace, Diagnostics);
-            _serviceGroupMemberRelationshipsRestClient = new ServiceGroupMemberRelationships(_serviceGroupMemberRelationshipsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceGroupMemberRelationshipApiVersion ?? "2023-09-01-preview");
+            _serviceGroupMemberRelationshipsRestClient = new ServiceGroupMemberRelationships(_serviceGroupMemberRelationshipsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceGroupMemberRelationshipApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Relationships
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-09-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Relationships
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-09-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Relationships
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-09-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Relationships
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-09-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Relationships
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-09-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Relationships
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-09-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
