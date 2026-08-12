@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             SecurityFamily = securityFamily;
             AlertVendorName = alertVendorName;
             PackageInfoUrl = packageInfoUri;
+            PackageInfoUri = packageInfoUri;
             ProductName = productName;
             Publisher = publisher;
             PublisherDisplayName = publisherDisplayName;
