@@ -136,33 +136,42 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void FieldsAreCultureInvariant()
         {
             // This has to happen in a new thread because culture changes affect the current thread, which could affect other tests
+
+            Exception? testException = null;
             var thread = new Thread(() =>
             {
-                var logRecords = new List<LogRecord>();
-                using var loggerFactory = LoggerFactory.Create(builder =>
-                    {
-                        builder.AddOpenTelemetry(options =>
+                try {
+                    var logRecords = new List<LogRecord>();
+                    using var loggerFactory = LoggerFactory.Create(builder =>
                         {
-                            options.IncludeFormattedMessage = true;
-                            options.AddInMemoryExporter(logRecords);
+                            builder.AddOpenTelemetry(options =>
+                            {
+                                options.IncludeFormattedMessage = true;
+                                options.AddInMemoryExporter(logRecords);
+                            });
+                            builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
                         });
-                        builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
-                    });
-                var logger = loggerFactory.CreateLogger<LogsHelperTests>();
-                logger.LogInformation("Price is {culturalprice}.", 2.99); // in the culture, is 2,99 not 2.99
+                    var logger = loggerFactory.CreateLogger<LogsHelperTests>();
+                    logger.LogInformation("Price is {culturalprice}.", 2.99); // in the culture, is 2,99 not 2.99
 
-                var properties = new ChangeTrackingDictionary<string, string>();
-                LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out LogContextInfo logContext, out var availabilityInfo);
+                    var properties = new ChangeTrackingDictionary<string, string>();
+                    LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out LogContextInfo logContext, out var availabilityInfo);
 
-                Assert.Equal("Price is 2.99.", message); // we should emit a culture invariant number
-                Assert.True(properties.TryGetValue("culturalprice", out string price));
-                Assert.Equal("2.99", price);
+                    Assert.Equal("Price is 2.99.", message); // we should emit a culture invariant number
+                    Assert.True(properties.TryGetValue("culturalprice", out string price));
+                    Assert.Equal("2.99", price);
+                } catch (Exception e) {
+                    testException = e;
+                }
             })
             {
                 CurrentCulture = CultureInfo.CreateSpecificCulture("pl-PL")
             };
             thread.Start();
             thread.Join();
+            if (testException != null) {
+                throw testException;
+            }
         }
 
         [Theory]
