@@ -64,6 +64,13 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
 
     internal bool IsActive(string taskId) => _activeRuns.ContainsKey(taskId);
 
+    /// <summary>
+    /// <see langword="true"/> when at least one task handler is registered. Gates the durability
+    /// recovery loop: with no registered handlers there is nothing to recover, so the cold-start
+    /// scan and periodic sweep are skipped (Python parity — the task subsystem is opt-in).
+    /// </summary>
+    internal bool HasRegisteredTasks => !_registry.IsEmpty;
+
     internal string InstanceId => _lease.InstanceId;
 
     internal LeaseManager Lease => _lease;

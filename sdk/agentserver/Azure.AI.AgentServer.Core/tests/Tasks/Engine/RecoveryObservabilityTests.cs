@@ -33,6 +33,10 @@ public sealed class RecoveryObservabilityTests
         var logger = new CapturingLogger();
         using TaskTestHost host = TaskTestHost.Create(logger: logger);
 
+        // The recovery loop is opt-in (gated on a non-empty registry), so register a handler —
+        // a process that logs "TaskManager starting" is by definition one that uses resilient tasks.
+        host.Builder.AddTask<string, string>("startup", (ctx, ct) => Task.FromResult(ctx.Input));
+
         var scanner = new RecoveryScanner(host.Engine);
         await using var durability = new TaskDurabilityService(scanner, host.Engine, TimeSpan.FromMinutes(10), logger: logger);
         await durability.StartAsync();
