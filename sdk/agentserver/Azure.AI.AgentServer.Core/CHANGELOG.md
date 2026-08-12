@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.28 (Unreleased)
+## 1.0.0-beta.28 (2026-08-12)
 
 ### Features Added
 

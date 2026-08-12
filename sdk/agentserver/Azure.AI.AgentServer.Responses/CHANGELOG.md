@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.8 (Unreleased)
+## 1.0.0-beta.8 (2026-08-12)
 
 ### Features Added
 - Resilient responses. Resilient background responses (`ResponsesServerOptions.ResilientBackground`)
