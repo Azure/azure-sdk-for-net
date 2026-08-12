@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <param name="administrationMembers"> An array of administrator user identities. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="administrationMembers"/> is null. </exception>
         /// <returns> A new <see cref="Models.FabricCapacityProperties"/> instance for mocking. </returns>
-        public static FabricCapacityProperties FabricCapacityProperties(FabricProvisioningState? provisioningState, FabricResourceState? state, CapacityOverageProperties overage, IEnumerable<string> administrationMembers = default)
+        public static FabricCapacityProperties FabricCapacityProperties(FabricProvisioningState? provisioningState = default, FabricResourceState? state = default, CapacityOverageProperties overage = default, IEnumerable<string> administrationMembers = default)
         {
             return new FabricCapacityProperties(provisioningState, state, overage, administrationMembers is null ? default : new FabricCapacityAdministration((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), default), default);
         }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <param name="administrationMembers"> The capacity administration. </param>
         /// <returns> A new <see cref="Models.FabricCapacityProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FabricCapacityProperties FabricCapacityProperties(FabricProvisioningState? provisioningState = default, FabricResourceState? state = default, IEnumerable<string> administrationMembers = default)
+        public static FabricCapacityProperties FabricCapacityProperties(FabricProvisioningState? provisioningState, FabricResourceState? state, IEnumerable<string> administrationMembers)
         {
             return new FabricCapacityProperties(provisioningState, state, default, administrationMembers is null ? default : new FabricCapacityAdministration((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), default), default);
         }
