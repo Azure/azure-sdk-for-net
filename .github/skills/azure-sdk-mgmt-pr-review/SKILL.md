@@ -9,7 +9,7 @@ Review Azure SDK for .NET management library PRs in three phases: **1. Versionin
 
 ## Phase 1: Versioning Review
 
-Check the package `.csproj`, `CHANGELOG.md`, and compatibility files. Comment on every violation; any violation makes the final review `REQUEST_CHANGES`.
+Check the package `.csproj`, `CHANGELOG.md`, and compatibility files. Comment on every violation. Phase 1 violations are blocking; use the Finding Severity policy to determine the final review event across all phases.
 
 Rules:
 - **No major version bump** unless .NET architects explicitly require a coordinated management-SDK major bump. Flag `1.x` -> `2.0.0` as Critical.
@@ -163,8 +163,8 @@ Report every finding and recommend resolving it in the current PR. Do not defer 
 
 | Severity | Finding categories | Review event |
 |----------|--------------------|--------------|
-| Blocking | Phase 1 versioning violations; all deterministic scanner findings; all contextual naming findings; naming, suffix, acronym, resource-name, and ARM common-type violations; `TSPRENAME001`; required/optional parameter compatibility findings; unmitigated breaking changes; manual generated-code edits; and migration-specific violations | `REQUEST_CHANGES` |
-| Non-blocking | Advisory type-formatting recommendations explicitly phrased as `Consider`, such as using `ResourceIdentifier`, `AzureLocation`, or a numeric type instead of `string`, when they do not also violate a blocking compatibility or API rule | `COMMENT` |
+| Blocking | Phase 1 versioning violations; deterministic scanner findings other than advisory `TYPE001` and `TYPE003` findings; all contextual naming findings; naming, suffix, acronym, resource-name, and ARM common-type violations; `TSPRENAME001`; required/optional parameter compatibility findings; unmitigated breaking changes; manual generated-code edits; and migration-specific violations | `REQUEST_CHANGES` |
+| Non-blocking | Advisory type-formatting recommendations, including scanner rules `TYPE001` and `TYPE003` and recommendations explicitly phrased as `Consider`, such as using `ResourceIdentifier`, `AzureLocation`, or a numeric type instead of `string`, when they do not also violate a blocking compatibility or API rule | `COMMENT` |
 
 When a review contains both severities, use `REQUEST_CHANGES`. Do not label a naming finding as non-blocking.
 
