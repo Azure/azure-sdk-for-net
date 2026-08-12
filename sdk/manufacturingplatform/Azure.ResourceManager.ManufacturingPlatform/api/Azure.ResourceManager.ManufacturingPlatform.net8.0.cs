@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
     {
         internal AdxProfile() { }
         public string DataIngestionUri { get { throw null; } }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string Uri { get { throw null; } }
         protected virtual Azure.ResourceManager.ManufacturingPlatform.Models.AdxProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -115,45 +115,28 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.AdxProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.AdxProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ApplicationVersion : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManufacturingPlatform.Models.ApplicationVersion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.ApplicationVersion>
-    {
-        internal ApplicationVersion() { }
-        public bool IsDeprecated { get { throw null; } }
-        public bool IsLatest { get { throw null; } }
-        public bool IsPreview { get { throw null; } }
-        public string Version { get { throw null; } }
-        protected virtual Azure.ResourceManager.ManufacturingPlatform.Models.ApplicationVersion JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ManufacturingPlatform.Models.ApplicationVersion PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ManufacturingPlatform.Models.ApplicationVersion System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManufacturingPlatform.Models.ApplicationVersion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManufacturingPlatform.Models.ApplicationVersion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ManufacturingPlatform.Models.ApplicationVersion System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.ApplicationVersion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.ApplicationVersion>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.ApplicationVersion>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public static partial class ArmManufacturingPlatformModelFactory
     {
-        public static Azure.ResourceManager.ManufacturingPlatform.Models.AdxProfile AdxProfile(string id = null, string uri = null, string dataIngestionUri = null) { throw null; }
-        public static Azure.ResourceManager.ManufacturingPlatform.Models.ApplicationVersion ApplicationVersion(string version = null, bool isLatest = false, bool isPreview = false, bool isDeprecated = false) { throw null; }
-        public static Azure.ResourceManager.ManufacturingPlatform.Models.AvailableVersionListResult AvailableVersionListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManufacturingPlatform.Models.ApplicationVersion> versions = null) { throw null; }
+        public static Azure.ResourceManager.ManufacturingPlatform.Models.AdxProfile AdxProfile(Azure.Core.ResourceIdentifier id = null, string uri = null, string dataIngestionUri = null) { throw null; }
+        public static Azure.ResourceManager.ManufacturingPlatform.Models.AvailableVersionListResult AvailableVersionListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceApplicationVersion> versions = null) { throw null; }
         public static Azure.ResourceManager.ManufacturingPlatform.Models.DenyAssignmentExclusion DenyAssignmentExclusion(string id = null, string type = null) { throw null; }
-        public static Azure.ResourceManager.ManufacturingPlatform.Models.EventHubProfile EventHubProfile(string adxInstanceId = null, string hostName = null) { throw null; }
+        public static Azure.ResourceManager.ManufacturingPlatform.Models.EventHubProfile EventHubProfile(Azure.Core.ResourceIdentifier adxInstanceId = null, string hostName = null) { throw null; }
         public static Azure.ResourceManager.ManufacturingPlatform.Models.FabricProfile FabricProfile(string keyUri = null, string oneLakeUri = null, string oneLakePath = null) { throw null; }
-        public static Azure.ResourceManager.ManufacturingPlatform.Models.ManagedOnBehalfOfBrokerResourceInfo ManagedOnBehalfOfBrokerResourceInfo(string id = null) { throw null; }
+        public static Azure.ResourceManager.ManufacturingPlatform.Models.ManagedOnBehalfOfBrokerResourceInfo ManagedOnBehalfOfBrokerResourceInfo(Azure.Core.ResourceIdentifier id = null) { throw null; }
         public static Azure.ResourceManager.ManufacturingPlatform.Models.ManagedResourceGroupConfiguration ManagedResourceGroupConfiguration(string name = null, string location = null) { throw null; }
+        public static Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceApplicationVersion ManufacturingDataServiceApplicationVersion(string version = null, bool isLatest = false, bool isPreview = false, bool isDeprecated = false) { throw null; }
         public static Azure.ResourceManager.ManufacturingPlatform.ManufacturingDataServiceData ManufacturingDataServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformSku sku = null) { throw null; }
-        public static Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServicePatch ManufacturingDataServicePatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformSku sku = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.ManufacturingPlatform.Models.MdsResourceUpdateProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceProperties ManufacturingDataServiceProperties(Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformProvisioningState? provisioningState = default(Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformProvisioningState?), string version = null, bool? enableCopilot = default(bool?), bool? enableDiagnosticSettings = default(bool?), string aadApplicationId = null, string aksAdminGroupId = null, string serviceUri = null, string aksProfileId = null, string storageProfileId = null, string databaseCosmosId = null, Azure.ResourceManager.ManufacturingPlatform.Models.AdxProfile adxProfile = null, string redisProfileId = null, string monitoringProfileId = null, Azure.ResourceManager.ManufacturingPlatform.Models.EventHubProfile eventHubProfile = null, string functionAppProfileId = null, Azure.ResourceManager.ManufacturingPlatform.Models.OpenAIProfile openAIProfile = null, Azure.ResourceManager.ManufacturingPlatform.Models.ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManufacturingPlatform.Models.ManagedOnBehalfOfBrokerResourceInfo> managedOnBehalfOfBrokerResources = null, string cmkKeyUri = null, Azure.ResourceManager.ManufacturingPlatform.Models.FabricProfile fabricProfile = null, Azure.ResourceManager.ManufacturingPlatform.Models.UserManagedOpenAIProfile userManagedOpenAIProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManufacturingPlatform.Models.DenyAssignmentExclusion> denyAssignmentExclusions = null, Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformResourceState? resourceState = default(Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformResourceState?), Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformRedundancyState? redundancyState = default(Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformRedundancyState?)) { throw null; }
+        public static Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServicePatch ManufacturingDataServicePatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformSku sku = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceUpdateProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceProperties ManufacturingDataServiceProperties(Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformProvisioningState? provisioningState = default(Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformProvisioningState?), string version = null, bool? enableCopilot = default(bool?), bool? enableDiagnosticSettings = default(bool?), System.Guid aadApplicationId = default(System.Guid), System.Guid? aksAdminGroupId = default(System.Guid?), string serviceUri = null, Azure.Core.ResourceIdentifier aksProfileId = null, Azure.Core.ResourceIdentifier storageProfileId = null, Azure.Core.ResourceIdentifier databaseCosmosId = null, Azure.ResourceManager.ManufacturingPlatform.Models.AdxProfile adxProfile = null, Azure.Core.ResourceIdentifier redisProfileId = null, Azure.Core.ResourceIdentifier monitoringProfileId = null, Azure.ResourceManager.ManufacturingPlatform.Models.EventHubProfile eventHubProfile = null, Azure.Core.ResourceIdentifier functionAppProfileId = null, Azure.ResourceManager.ManufacturingPlatform.Models.OpenAIProfile openAIProfile = null, Azure.ResourceManager.ManufacturingPlatform.Models.ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManufacturingPlatform.Models.ManagedOnBehalfOfBrokerResourceInfo> managedOnBehalfOfBrokerResources = null, string cmkKeyUri = null, Azure.ResourceManager.ManufacturingPlatform.Models.FabricProfile fabricProfile = null, Azure.ResourceManager.ManufacturingPlatform.Models.UserManagedOpenAIProfile userManagedOpenAIProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManufacturingPlatform.Models.DenyAssignmentExclusion> denyAssignmentExclusions = null, Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformResourceState? resourceState = default(Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformResourceState?), Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformRedundancyState? redundancyState = default(Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformRedundancyState?)) { throw null; }
+        public static Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceUpdateProperties ManufacturingDataServiceUpdateProperties(string version = null, bool? enableCopilot = default(bool?), bool? enableDiagnosticSettings = default(bool?), Azure.ResourceManager.ManufacturingPlatform.Models.OpenAIProfile openAIProfile = null, Azure.ResourceManager.ManufacturingPlatform.Models.FabricProfile fabricProfile = null, Azure.ResourceManager.ManufacturingPlatform.Models.UserManagedOpenAIProfile userManagedOpenAIProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManufacturingPlatform.Models.DenyAssignmentExclusion> denyAssignmentExclusions = null, Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformResourceState? resourceState = default(Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformResourceState?)) { throw null; }
         public static Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformSku ManufacturingPlatformSku(string name = null, Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformSkuTier? tier = default(Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformSkuTier?), string size = null, string family = null, int? capacity = default(int?)) { throw null; }
-        public static Azure.ResourceManager.ManufacturingPlatform.Models.MdsResourceUpdateProperties MdsResourceUpdateProperties(string version = null, bool? enableCopilot = default(bool?), bool? enableDiagnosticSettings = default(bool?), Azure.ResourceManager.ManufacturingPlatform.Models.OpenAIProfile openAIProfile = null, Azure.ResourceManager.ManufacturingPlatform.Models.FabricProfile fabricProfile = null, Azure.ResourceManager.ManufacturingPlatform.Models.UserManagedOpenAIProfile userManagedOpenAIProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManufacturingPlatform.Models.DenyAssignmentExclusion> denyAssignmentExclusions = null, Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformResourceState? resourceState = default(Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformResourceState?)) { throw null; }
-        public static Azure.ResourceManager.ManufacturingPlatform.Models.OpenAIProfile OpenAIProfile(string id = null, string gptModelName = null, string gptModelVersion = null, int? gptModelCapacity = default(int?), string gptModelSkuName = null, string embeddingModelName = null, string embeddingModelVersion = null, string embeddingModelSkuName = null, int? embeddingModelCapacity = default(int?)) { throw null; }
-        public static Azure.ResourceManager.ManufacturingPlatform.Models.UserManagedOpenAIProfile UserManagedOpenAIProfile(string id = null, string gptModelDeploymentName = null, string embeddingModelDeploymentName = null, string embeddingModelType = null) { throw null; }
+        public static Azure.ResourceManager.ManufacturingPlatform.Models.OpenAIProfile OpenAIProfile(Azure.Core.ResourceIdentifier id = null, string gptModelName = null, string gptModelVersion = null, int? gptModelCapacity = default(int?), string gptModelSkuName = null, string embeddingModelName = null, string embeddingModelVersion = null, string embeddingModelSkuName = null, int? embeddingModelCapacity = default(int?)) { throw null; }
+        public static Azure.ResourceManager.ManufacturingPlatform.Models.UserManagedOpenAIProfile UserManagedOpenAIProfile(Azure.Core.ResourceIdentifier id = null, string gptModelDeploymentName = null, string embeddingModelDeploymentName = null, string embeddingModelType = null) { throw null; }
     }
     public partial class AvailableVersionListResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManufacturingPlatform.Models.AvailableVersionListResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.AvailableVersionListResult>
     {
         internal AvailableVersionListResult() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ManufacturingPlatform.Models.ApplicationVersion> Versions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceApplicationVersion> Versions { get { throw null; } }
         protected virtual Azure.ResourceManager.ManufacturingPlatform.Models.AvailableVersionListResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ManufacturingPlatform.Models.AvailableVersionListResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -182,7 +165,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
     public partial class EventHubProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManufacturingPlatform.Models.EventHubProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.EventHubProfile>
     {
         internal EventHubProfile() { }
-        public string AdxInstanceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier AdxInstanceId { get { throw null; } }
         public string HostName { get { throw null; } }
         protected virtual Azure.ResourceManager.ManufacturingPlatform.Models.EventHubProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -213,7 +196,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
     public partial class ManagedOnBehalfOfBrokerResourceInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManagedOnBehalfOfBrokerResourceInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManagedOnBehalfOfBrokerResourceInfo>
     {
         internal ManagedOnBehalfOfBrokerResourceInfo() { }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         protected virtual Azure.ResourceManager.ManufacturingPlatform.Models.ManagedOnBehalfOfBrokerResourceInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ManufacturingPlatform.Models.ManagedOnBehalfOfBrokerResourceInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -239,11 +222,28 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManagedResourceGroupConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManagedResourceGroupConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ManufacturingDataServiceApplicationVersion : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceApplicationVersion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceApplicationVersion>
+    {
+        internal ManufacturingDataServiceApplicationVersion() { }
+        public bool IsDeprecated { get { throw null; } }
+        public bool IsLatest { get { throw null; } }
+        public bool IsPreview { get { throw null; } }
+        public string Version { get { throw null; } }
+        protected virtual Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceApplicationVersion JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceApplicationVersion PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceApplicationVersion System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceApplicationVersion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceApplicationVersion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceApplicationVersion System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceApplicationVersion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceApplicationVersion>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceApplicationVersion>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ManufacturingDataServicePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServicePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServicePatch>
     {
         public ManufacturingDataServicePatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.ManufacturingPlatform.Models.MdsResourceUpdateProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceUpdateProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServicePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -258,29 +258,29 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
     }
     public partial class ManufacturingDataServiceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceProperties>
     {
-        public ManufacturingDataServiceProperties(string aadApplicationId) { }
-        public string AadApplicationId { get { throw null; } set { } }
+        public ManufacturingDataServiceProperties(System.Guid aadApplicationId) { }
+        public System.Guid AadApplicationId { get { throw null; } set { } }
         public Azure.ResourceManager.ManufacturingPlatform.Models.AdxProfile AdxProfile { get { throw null; } }
-        public string AksAdminGroupId { get { throw null; } set { } }
-        public string AksProfileId { get { throw null; } }
+        public System.Guid? AksAdminGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier AksProfileId { get { throw null; } }
         public string CmkKeyUri { get { throw null; } set { } }
-        public string DatabaseCosmosId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier DatabaseCosmosId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManufacturingPlatform.Models.DenyAssignmentExclusion> DenyAssignmentExclusions { get { throw null; } }
         public bool? EnableCopilot { get { throw null; } set { } }
         public bool? EnableDiagnosticSettings { get { throw null; } set { } }
         public Azure.ResourceManager.ManufacturingPlatform.Models.EventHubProfile EventHubProfile { get { throw null; } }
         public Azure.ResourceManager.ManufacturingPlatform.Models.FabricProfile FabricProfile { get { throw null; } set { } }
-        public string FunctionAppProfileId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier FunctionAppProfileId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ManufacturingPlatform.Models.ManagedOnBehalfOfBrokerResourceInfo> ManagedOnBehalfOfBrokerResources { get { throw null; } }
         public Azure.ResourceManager.ManufacturingPlatform.Models.ManagedResourceGroupConfiguration ManagedResourceGroupConfiguration { get { throw null; } }
-        public string MonitoringProfileId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier MonitoringProfileId { get { throw null; } }
         public Azure.ResourceManager.ManufacturingPlatform.Models.OpenAIProfile OpenAIProfile { get { throw null; } set { } }
         public Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformProvisioningState? ProvisioningState { get { throw null; } }
-        public string RedisProfileId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier RedisProfileId { get { throw null; } }
         public Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformRedundancyState? RedundancyState { get { throw null; } set { } }
         public Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformResourceState? ResourceState { get { throw null; } set { } }
         public string ServiceUri { get { throw null; } }
-        public string StorageProfileId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier StorageProfileId { get { throw null; } }
         public Azure.ResourceManager.ManufacturingPlatform.Models.UserManagedOpenAIProfile UserManagedOpenAIProfile { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -292,6 +292,27 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ManufacturingDataServiceUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceUpdateProperties>
+    {
+        public ManufacturingDataServiceUpdateProperties() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ManufacturingPlatform.Models.DenyAssignmentExclusion> DenyAssignmentExclusions { get { throw null; } }
+        public bool? EnableCopilot { get { throw null; } set { } }
+        public bool? EnableDiagnosticSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.ManufacturingPlatform.Models.FabricProfile FabricProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.ManufacturingPlatform.Models.OpenAIProfile OpenAIProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformResourceState? ResourceState { get { throw null; } set { } }
+        public Azure.ResourceManager.ManufacturingPlatform.Models.UserManagedOpenAIProfile UserManagedOpenAIProfile { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceUpdateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceUpdateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingDataServiceUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManufacturingPlatformProvisioningState : System.IEquatable<Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformProvisioningState>
@@ -374,27 +395,6 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         Standard = 2,
         Premium = 3,
     }
-    public partial class MdsResourceUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManufacturingPlatform.Models.MdsResourceUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.MdsResourceUpdateProperties>
-    {
-        public MdsResourceUpdateProperties() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ManufacturingPlatform.Models.DenyAssignmentExclusion> DenyAssignmentExclusions { get { throw null; } }
-        public bool? EnableCopilot { get { throw null; } set { } }
-        public bool? EnableDiagnosticSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.ManufacturingPlatform.Models.FabricProfile FabricProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.ManufacturingPlatform.Models.OpenAIProfile OpenAIProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.ManufacturingPlatform.Models.ManufacturingPlatformResourceState? ResourceState { get { throw null; } set { } }
-        public Azure.ResourceManager.ManufacturingPlatform.Models.UserManagedOpenAIProfile UserManagedOpenAIProfile { get { throw null; } set { } }
-        public string Version { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ManufacturingPlatform.Models.MdsResourceUpdateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ManufacturingPlatform.Models.MdsResourceUpdateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ManufacturingPlatform.Models.MdsResourceUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManufacturingPlatform.Models.MdsResourceUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManufacturingPlatform.Models.MdsResourceUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ManufacturingPlatform.Models.MdsResourceUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.MdsResourceUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.MdsResourceUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.MdsResourceUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class OpenAIProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManufacturingPlatform.Models.OpenAIProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.OpenAIProfile>
     {
         public OpenAIProfile() { }
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         public string GptModelName { get { throw null; } set { } }
         public string GptModelSkuName { get { throw null; } set { } }
         public string GptModelVersion { get { throw null; } set { } }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         protected virtual Azure.ResourceManager.ManufacturingPlatform.Models.OpenAIProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ManufacturingPlatform.Models.OpenAIProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -419,11 +419,11 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
     }
     public partial class UserManagedOpenAIProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManufacturingPlatform.Models.UserManagedOpenAIProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManufacturingPlatform.Models.UserManagedOpenAIProfile>
     {
-        public UserManagedOpenAIProfile(string id, string gptModelDeploymentName, string embeddingModelDeploymentName) { }
+        public UserManagedOpenAIProfile(Azure.Core.ResourceIdentifier id, string gptModelDeploymentName, string embeddingModelDeploymentName) { }
         public string EmbeddingModelDeploymentName { get { throw null; } set { } }
         public string EmbeddingModelType { get { throw null; } }
         public string GptModelDeploymentName { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ManufacturingPlatform.Models.UserManagedOpenAIProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ManufacturingPlatform.Models.UserManagedOpenAIProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

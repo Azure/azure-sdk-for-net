@@ -1,8 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.ManufacturingPlatform;
 
 namespace Azure.ResourceManager.ManufacturingPlatform.Models
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         /// <param name="resourceState"> State of the resource. </param>
         /// <param name="redundancyState"> Zone redundancy state for resources. </param>
         /// <returns> A new <see cref="Models.ManufacturingDataServiceProperties"/> instance for mocking. </returns>
-        public static ManufacturingDataServiceProperties ManufacturingDataServiceProperties(ManufacturingPlatformProvisioningState? provisioningState = default, string version = default, bool? enableCopilot = default, bool? enableDiagnosticSettings = default, string aadApplicationId = default, string aksAdminGroupId = default, string serviceUri = default, string aksProfileId = default, string storageProfileId = default, string databaseCosmosId = default, AdxProfile adxProfile = default, string redisProfileId = default, string monitoringProfileId = default, EventHubProfile eventHubProfile = default, string functionAppProfileId = default, OpenAIProfile openAIProfile = default, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default, IEnumerable<ManagedOnBehalfOfBrokerResourceInfo> managedOnBehalfOfBrokerResources = default, string cmkKeyUri = default, FabricProfile fabricProfile = default, UserManagedOpenAIProfile userManagedOpenAIProfile = default, IEnumerable<DenyAssignmentExclusion> denyAssignmentExclusions = default, ManufacturingPlatformResourceState? resourceState = default, ManufacturingPlatformRedundancyState? redundancyState = default)
+        public static ManufacturingDataServiceProperties ManufacturingDataServiceProperties(ManufacturingPlatformProvisioningState? provisioningState = default, string version = default, bool? enableCopilot = default, bool? enableDiagnosticSettings = default, Guid aadApplicationId = default, Guid? aksAdminGroupId = default, string serviceUri = default, ResourceIdentifier aksProfileId = default, ResourceIdentifier storageProfileId = default, ResourceIdentifier databaseCosmosId = default, AdxProfile adxProfile = default, ResourceIdentifier redisProfileId = default, ResourceIdentifier monitoringProfileId = default, EventHubProfile eventHubProfile = default, ResourceIdentifier functionAppProfileId = default, OpenAIProfile openAIProfile = default, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default, IEnumerable<ManagedOnBehalfOfBrokerResourceInfo> managedOnBehalfOfBrokerResources = default, string cmkKeyUri = default, FabricProfile fabricProfile = default, UserManagedOpenAIProfile userManagedOpenAIProfile = default, IEnumerable<DenyAssignmentExclusion> denyAssignmentExclusions = default, ManufacturingPlatformResourceState? resourceState = default, ManufacturingPlatformRedundancyState? redundancyState = default)
         {
             denyAssignmentExclusions ??= new ChangeTrackingList<DenyAssignmentExclusion>();
 

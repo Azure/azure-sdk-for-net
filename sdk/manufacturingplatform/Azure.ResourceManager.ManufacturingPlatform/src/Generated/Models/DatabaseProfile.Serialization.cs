@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ManufacturingPlatform;
 
 namespace Azure.ResourceManager.ManufacturingPlatform.Models
@@ -121,13 +122,17 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             {
                 return null;
             }
-            string cosmosId = default;
+            ResourceIdentifier cosmosId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("cosmosId"u8))
                 {
-                    cosmosId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cosmosId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

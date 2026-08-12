@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         /// <param name="uri"> Uri of Adx Resource. </param>
         /// <param name="dataIngestionUri"> Data Ingestion Uri of Adx Resource. </param>
         /// <returns> A new <see cref="Models.AdxProfile"/> instance for mocking. </returns>
-        public static AdxProfile AdxProfile(string id = default, string uri = default, string dataIngestionUri = default)
+        public static AdxProfile AdxProfile(ResourceIdentifier id = default, string uri = default, string dataIngestionUri = default)
         {
             return new AdxProfile(id, uri, dataIngestionUri, default);
         }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         /// <param name="adxInstanceId"> Resource Id of Adx Instance. </param>
         /// <param name="hostName"> Host Name. </param>
         /// <returns> A new <see cref="Models.EventHubProfile"/> instance for mocking. </returns>
-        public static EventHubProfile EventHubProfile(string adxInstanceId = default, string hostName = default)
+        public static EventHubProfile EventHubProfile(ResourceIdentifier adxInstanceId = default, string hostName = default)
         {
             return new EventHubProfile(adxInstanceId, hostName, default);
         }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         /// <param name="embeddingModelSkuName"> Embedding Model SKU Name. </param>
         /// <param name="embeddingModelCapacity"> Embedding Model Capacity. </param>
         /// <returns> A new <see cref="Models.OpenAIProfile"/> instance for mocking. </returns>
-        public static OpenAIProfile OpenAIProfile(string id = default, string gptModelName = default, string gptModelVersion = default, int? gptModelCapacity = default, string gptModelSkuName = default, string embeddingModelName = default, string embeddingModelVersion = default, string embeddingModelSkuName = default, int? embeddingModelCapacity = default)
+        public static OpenAIProfile OpenAIProfile(ResourceIdentifier id = default, string gptModelName = default, string gptModelVersion = default, int? gptModelCapacity = default, string gptModelSkuName = default, string embeddingModelName = default, string embeddingModelVersion = default, string embeddingModelSkuName = default, int? embeddingModelCapacity = default)
         {
             return new OpenAIProfile(
                 id,
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
 
         /// <param name="id"> Resource identifier of the broker resource. </param>
         /// <returns> A new <see cref="Models.ManagedOnBehalfOfBrokerResourceInfo"/> instance for mocking. </returns>
-        public static ManagedOnBehalfOfBrokerResourceInfo ManagedOnBehalfOfBrokerResourceInfo(string id = default)
+        public static ManagedOnBehalfOfBrokerResourceInfo ManagedOnBehalfOfBrokerResourceInfo(ResourceIdentifier id = default)
         {
             return new ManagedOnBehalfOfBrokerResourceInfo(id, default);
         }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         /// <param name="embeddingModelDeploymentName"> Embedding Model Deployment Name. </param>
         /// <param name="embeddingModelType"> Embedding Model Type. </param>
         /// <returns> A new <see cref="Models.UserManagedOpenAIProfile"/> instance for mocking. </returns>
-        public static UserManagedOpenAIProfile UserManagedOpenAIProfile(string id = default, string gptModelDeploymentName = default, string embeddingModelDeploymentName = default, string embeddingModelType = default)
+        public static UserManagedOpenAIProfile UserManagedOpenAIProfile(ResourceIdentifier id = default, string gptModelDeploymentName = default, string embeddingModelDeploymentName = default, string embeddingModelType = default)
         {
             return new UserManagedOpenAIProfile(id, gptModelDeploymentName, embeddingModelDeploymentName, embeddingModelType, default);
         }
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.ManufacturingDataServicePatch"/> instance for mocking. </returns>
-        public static ManufacturingDataServicePatch ManufacturingDataServicePatch(ManagedServiceIdentity identity = default, ManufacturingPlatformSku sku = default, IDictionary<string, string> tags = default, MdsResourceUpdateProperties properties = default)
+        public static ManufacturingDataServicePatch ManufacturingDataServicePatch(ManagedServiceIdentity identity = default, ManufacturingPlatformSku sku = default, IDictionary<string, string> tags = default, ManufacturingDataServiceUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -166,12 +166,12 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         /// <param name="userManagedOpenAIProfile"> Profile of User Managed OpenAI Resource. </param>
         /// <param name="denyAssignmentExclusions"> Deny Assignments exclusion list. </param>
         /// <param name="resourceState"> State of the resource. </param>
-        /// <returns> A new <see cref="Models.MdsResourceUpdateProperties"/> instance for mocking. </returns>
-        public static MdsResourceUpdateProperties MdsResourceUpdateProperties(string version = default, bool? enableCopilot = default, bool? enableDiagnosticSettings = default, OpenAIProfile openAIProfile = default, FabricProfile fabricProfile = default, UserManagedOpenAIProfile userManagedOpenAIProfile = default, IEnumerable<DenyAssignmentExclusion> denyAssignmentExclusions = default, ManufacturingPlatformResourceState? resourceState = default)
+        /// <returns> A new <see cref="Models.ManufacturingDataServiceUpdateProperties"/> instance for mocking. </returns>
+        public static ManufacturingDataServiceUpdateProperties ManufacturingDataServiceUpdateProperties(string version = default, bool? enableCopilot = default, bool? enableDiagnosticSettings = default, OpenAIProfile openAIProfile = default, FabricProfile fabricProfile = default, UserManagedOpenAIProfile userManagedOpenAIProfile = default, IEnumerable<DenyAssignmentExclusion> denyAssignmentExclusions = default, ManufacturingPlatformResourceState? resourceState = default)
         {
             denyAssignmentExclusions ??= new ChangeTrackingList<DenyAssignmentExclusion>();
 
-            return new MdsResourceUpdateProperties(
+            return new ManufacturingDataServiceUpdateProperties(
                 version,
                 enableCopilot,
                 enableDiagnosticSettings,
@@ -185,21 +185,21 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
 
         /// <param name="versions"> The list of versions. </param>
         /// <returns> A new <see cref="Models.AvailableVersionListResult"/> instance for mocking. </returns>
-        public static AvailableVersionListResult AvailableVersionListResult(IEnumerable<ApplicationVersion> versions = default)
+        public static AvailableVersionListResult AvailableVersionListResult(IEnumerable<ManufacturingDataServiceApplicationVersion> versions = default)
         {
-            versions ??= new ChangeTrackingList<ApplicationVersion>();
+            versions ??= new ChangeTrackingList<ManufacturingDataServiceApplicationVersion>();
 
-            return new AvailableVersionListResult((versions ?? new ChangeTrackingList<ApplicationVersion>()).ToList(), default);
+            return new AvailableVersionListResult((versions ?? new ChangeTrackingList<ManufacturingDataServiceApplicationVersion>()).ToList(), default);
         }
 
         /// <param name="version"> Application Version. </param>
         /// <param name="isLatest"> Is Latest. </param>
         /// <param name="isPreview"> Is Preview. </param>
         /// <param name="isDeprecated"> Is Deprecated. </param>
-        /// <returns> A new <see cref="Models.ApplicationVersion"/> instance for mocking. </returns>
-        public static ApplicationVersion ApplicationVersion(string version = default, bool isLatest = default, bool isPreview = default, bool isDeprecated = default)
+        /// <returns> A new <see cref="Models.ManufacturingDataServiceApplicationVersion"/> instance for mocking. </returns>
+        public static ManufacturingDataServiceApplicationVersion ManufacturingDataServiceApplicationVersion(string version = default, bool isLatest = default, bool isPreview = default, bool isDeprecated = default)
         {
-            return new ApplicationVersion(version, isLatest, isPreview, isDeprecated, default);
+            return new ManufacturingDataServiceApplicationVersion(version, isLatest, isPreview, isDeprecated, default);
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManufacturingPlatform.Models
 {
@@ -24,13 +25,13 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         /// <summary> Initializes a new instance of <see cref="FunctionAppProfile"/>. </summary>
         /// <param name="id"> Resource Id of Azure Function App Resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FunctionAppProfile(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FunctionAppProfile(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource Id of Azure Function App Resource. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
     }
 }

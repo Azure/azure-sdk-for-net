@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ManufacturingPlatform;
 
 namespace Azure.ResourceManager.ManufacturingPlatform.Models
@@ -126,14 +127,18 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             {
                 return null;
             }
-            string adxInstanceId = default;
+            ResourceIdentifier adxInstanceId = default;
             string hostName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("adxInstanceId"u8))
                 {
-                    adxInstanceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    adxInstanceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("hostName"u8))

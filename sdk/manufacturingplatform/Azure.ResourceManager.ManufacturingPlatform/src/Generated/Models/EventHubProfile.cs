@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManufacturingPlatform.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         /// <param name="adxInstanceId"> Resource Id of Adx Instance. </param>
         /// <param name="hostName"> Host Name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubProfile(string adxInstanceId, string hostName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventHubProfile(ResourceIdentifier adxInstanceId, string hostName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdxInstanceId = adxInstanceId;
             HostName = hostName;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         }
 
         /// <summary> Resource Id of Adx Instance. </summary>
-        public string AdxInstanceId { get; }
+        public ResourceIdentifier AdxInstanceId { get; }
 
         /// <summary> Host Name. </summary>
         public string HostName { get; }

@@ -12,18 +12,18 @@ using Azure.ResourceManager.ManufacturingPlatform;
 namespace Azure.ResourceManager.ManufacturingPlatform.Models
 {
     /// <summary> The updatable properties of the MdsResource. </summary>
-    public partial class MdsResourceUpdateProperties
+    public partial class ManufacturingDataServiceUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MdsResourceUpdateProperties"/>. </summary>
-        public MdsResourceUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="ManufacturingDataServiceUpdateProperties"/>. </summary>
+        public ManufacturingDataServiceUpdateProperties()
         {
             DenyAssignmentExclusions = new ChangeTrackingList<DenyAssignmentExclusion>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MdsResourceUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManufacturingDataServiceUpdateProperties"/>. </summary>
         /// <param name="version"> Mds Resource Version. </param>
         /// <param name="enableCopilot"> Enable Copilot. </param>
         /// <param name="enableDiagnosticSettings"> Enable Diagnostic Settings. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         /// <param name="denyAssignmentExclusions"> Deny Assignments exclusion list. </param>
         /// <param name="resourceState"> State of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MdsResourceUpdateProperties(string version, bool? enableCopilot, bool? enableDiagnosticSettings, OpenAIProfile openAIProfile, FabricProfile fabricProfile, UserManagedOpenAIProfile userManagedOpenAIProfile, IList<DenyAssignmentExclusion> denyAssignmentExclusions, ManufacturingPlatformResourceState? resourceState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManufacturingDataServiceUpdateProperties(string version, bool? enableCopilot, bool? enableDiagnosticSettings, OpenAIProfile openAIProfile, FabricProfile fabricProfile, UserManagedOpenAIProfile userManagedOpenAIProfile, IList<DenyAssignmentExclusion> denyAssignmentExclusions, ManufacturingPlatformResourceState? resourceState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             EnableCopilot = enableCopilot;

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManufacturingPlatform.Models
 {
@@ -24,13 +25,13 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         /// <summary> Initializes a new instance of <see cref="DatabaseProfile"/>. </summary>
         /// <param name="cosmosId"> Resource Id of Cosmos Resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseProfile(string cosmosId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseProfile(ResourceIdentifier cosmosId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CosmosId = cosmosId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource Id of Cosmos Resource. </summary>
-        public string CosmosId { get; }
+        public ResourceIdentifier CosmosId { get; }
     }
 }

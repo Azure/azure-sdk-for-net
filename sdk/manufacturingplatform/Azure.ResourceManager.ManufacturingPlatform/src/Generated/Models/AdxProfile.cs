@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManufacturingPlatform.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         /// <param name="uri"> Uri of Adx Resource. </param>
         /// <param name="dataIngestionUri"> Data Ingestion Uri of Adx Resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AdxProfile(string id, string uri, string dataIngestionUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AdxProfile(ResourceIdentifier id, string uri, string dataIngestionUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Uri = uri;
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         }
 
         /// <summary> Resource Id of Adx Resource. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
 
         /// <summary> Uri of Adx Resource. </summary>
         public string Uri { get; }

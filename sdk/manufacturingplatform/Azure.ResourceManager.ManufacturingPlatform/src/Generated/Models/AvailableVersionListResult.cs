@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
 
         /// <summary> Initializes a new instance of <see cref="AvailableVersionListResult"/>. </summary>
         /// <param name="versions"> The list of versions. </param>
-        internal AvailableVersionListResult(IEnumerable<ApplicationVersion> versions)
+        internal AvailableVersionListResult(IEnumerable<ManufacturingDataServiceApplicationVersion> versions)
         {
             Versions = versions.ToList();
         }
@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         /// <summary> Initializes a new instance of <see cref="AvailableVersionListResult"/>. </summary>
         /// <param name="versions"> The list of versions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvailableVersionListResult(IList<ApplicationVersion> versions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvailableVersionListResult(IList<ManufacturingDataServiceApplicationVersion> versions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Versions = versions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of versions. </summary>
-        public IList<ApplicationVersion> Versions { get; }
+        public IList<ManufacturingDataServiceApplicationVersion> Versions { get; }
     }
 }

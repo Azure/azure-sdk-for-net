@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             if (Optional.IsDefined(AksAdminGroupId))
             {
                 writer.WritePropertyName("aksAdminGroupId"u8);
-                writer.WriteStringValue(AksAdminGroupId);
+                writer.WriteStringValue(AksAdminGroupId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ServiceUri))
             {
@@ -247,8 +247,8 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             string version = default;
             bool? enableCopilot = default;
             bool? enableDiagnosticSettings = default;
-            string aadApplicationId = default;
-            string aksAdminGroupId = default;
+            Guid aadApplicationId = default;
+            Guid? aksAdminGroupId = default;
             string serviceUri = default;
             AksProfile aksProfile = default;
             StorageProfile storageProfile = default;
@@ -304,12 +304,16 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
                 }
                 if (prop.NameEquals("aadApplicationId"u8))
                 {
-                    aadApplicationId = prop.Value.GetString();
+                    aadApplicationId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("aksAdminGroupId"u8))
                 {
-                    aksAdminGroupId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    aksAdminGroupId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("serviceUrl"u8))

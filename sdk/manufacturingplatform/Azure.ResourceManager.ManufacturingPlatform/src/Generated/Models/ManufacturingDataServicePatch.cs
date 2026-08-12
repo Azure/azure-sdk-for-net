@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManufacturingDataServicePatch(ManagedServiceIdentity identity, ManufacturingPlatformSku sku, IDictionary<string, string> tags, MdsResourceUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManufacturingDataServicePatch(ManagedServiceIdentity identity, ManufacturingPlatformSku sku, IDictionary<string, string> tags, ManufacturingDataServiceUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             Sku = sku;
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public MdsResourceUpdateProperties Properties { get; set; }
+        public ManufacturingDataServiceUpdateProperties Properties { get; set; }
     }
 }

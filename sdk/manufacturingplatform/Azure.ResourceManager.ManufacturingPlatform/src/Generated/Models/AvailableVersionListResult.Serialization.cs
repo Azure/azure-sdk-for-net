@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             }
             writer.WritePropertyName("versions"u8);
             writer.WriteStartArray();
-            foreach (ApplicationVersion item in Versions)
+            foreach (ManufacturingDataServiceApplicationVersion item in Versions)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -136,16 +136,16 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             {
                 return null;
             }
-            IList<ApplicationVersion> versions = default;
+            IList<ManufacturingDataServiceApplicationVersion> versions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("versions"u8))
                 {
-                    List<ApplicationVersion> array = new List<ApplicationVersion>();
+                    List<ManufacturingDataServiceApplicationVersion> array = new List<ManufacturingDataServiceApplicationVersion>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationVersion.DeserializeApplicationVersion(item, options));
+                        array.Add(ManufacturingDataServiceApplicationVersion.DeserializeManufacturingDataServiceApplicationVersion(item, options));
                     }
                     versions = array;
                     continue;

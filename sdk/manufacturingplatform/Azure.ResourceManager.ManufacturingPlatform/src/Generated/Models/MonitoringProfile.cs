@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManufacturingPlatform.Models
 {
@@ -24,13 +25,13 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         /// <summary> Initializes a new instance of <see cref="MonitoringProfile"/>. </summary>
         /// <param name="id"> Resource Id of Application Insights Resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoringProfile(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitoringProfile(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource Id of Application Insights Resource. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
     }
 }

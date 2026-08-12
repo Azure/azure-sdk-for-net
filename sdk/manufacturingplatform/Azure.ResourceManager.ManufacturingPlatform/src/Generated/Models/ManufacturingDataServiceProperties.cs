@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ManufacturingPlatform;
 
 namespace Azure.ResourceManager.ManufacturingPlatform.Models
@@ -19,11 +20,8 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
 
         /// <summary> Initializes a new instance of <see cref="ManufacturingDataServiceProperties"/>. </summary>
         /// <param name="aadApplicationId"> AAD Application Id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="aadApplicationId"/> is null. </exception>
-        public ManufacturingDataServiceProperties(string aadApplicationId)
+        public ManufacturingDataServiceProperties(Guid aadApplicationId)
         {
-            Argument.AssertNotNull(aadApplicationId, nameof(aadApplicationId));
-
             AadApplicationId = aadApplicationId;
             DenyAssignmentExclusions = new ChangeTrackingList<DenyAssignmentExclusion>();
         }
@@ -54,7 +52,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         /// <param name="resourceState"> State of the resource. </param>
         /// <param name="redundancyState"> Zone redundancy state for resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManufacturingDataServiceProperties(ManufacturingPlatformProvisioningState? provisioningState, string version, bool? enableCopilot, bool? enableDiagnosticSettings, string aadApplicationId, string aksAdminGroupId, string serviceUri, AksProfile aksProfile, StorageProfile storageProfile, DatabaseProfile databaseProfile, AdxProfile adxProfile, RedisProfile redisProfile, MonitoringProfile monitoringProfile, EventHubProfile eventHubProfile, FunctionAppProfile functionAppProfile, OpenAIProfile openAIProfile, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, CmkProfile cmkProfile, FabricProfile fabricProfile, UserManagedOpenAIProfile userManagedOpenAIProfile, IList<DenyAssignmentExclusion> denyAssignmentExclusions, ManufacturingPlatformResourceState? resourceState, ManufacturingPlatformRedundancyState? redundancyState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManufacturingDataServiceProperties(ManufacturingPlatformProvisioningState? provisioningState, string version, bool? enableCopilot, bool? enableDiagnosticSettings, Guid aadApplicationId, Guid? aksAdminGroupId, string serviceUri, AksProfile aksProfile, StorageProfile storageProfile, DatabaseProfile databaseProfile, AdxProfile adxProfile, RedisProfile redisProfile, MonitoringProfile monitoringProfile, EventHubProfile eventHubProfile, FunctionAppProfile functionAppProfile, OpenAIProfile openAIProfile, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, CmkProfile cmkProfile, FabricProfile fabricProfile, UserManagedOpenAIProfile userManagedOpenAIProfile, IList<DenyAssignmentExclusion> denyAssignmentExclusions, ManufacturingPlatformResourceState? resourceState, ManufacturingPlatformRedundancyState? redundancyState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Version = version;
@@ -96,10 +94,10 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         public bool? EnableDiagnosticSettings { get; set; }
 
         /// <summary> AAD Application Id. </summary>
-        public string AadApplicationId { get; set; }
+        public Guid AadApplicationId { get; set; }
 
         /// <summary> AKS Admin Group Id. </summary>
-        public string AksAdminGroupId { get; set; }
+        public Guid? AksAdminGroupId { get; set; }
 
         /// <summary> Service Url. </summary>
         public string ServiceUri { get; }
@@ -156,7 +154,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         public ManufacturingPlatformRedundancyState? RedundancyState { get; set; }
 
         /// <summary> Resource Id of AKS Resource. </summary>
-        public string AksProfileId
+        public ResourceIdentifier AksProfileId
         {
             get
             {
@@ -165,7 +163,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         }
 
         /// <summary> Resource Id of Storage Resource. </summary>
-        public string StorageProfileId
+        public ResourceIdentifier StorageProfileId
         {
             get
             {
@@ -174,7 +172,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         }
 
         /// <summary> Resource Id of Cosmos Resource. </summary>
-        public string DatabaseCosmosId
+        public ResourceIdentifier DatabaseCosmosId
         {
             get
             {
@@ -183,7 +181,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         }
 
         /// <summary> Resource Id of Azure Redis Cache Resource. </summary>
-        public string RedisProfileId
+        public ResourceIdentifier RedisProfileId
         {
             get
             {
@@ -192,7 +190,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         }
 
         /// <summary> Resource Id of Application Insights Resource. </summary>
-        public string MonitoringProfileId
+        public ResourceIdentifier MonitoringProfileId
         {
             get
             {
@@ -201,7 +199,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         }
 
         /// <summary> Resource Id of Azure Function App Resource. </summary>
-        public string FunctionAppProfileId
+        public ResourceIdentifier FunctionAppProfileId
         {
             get
             {

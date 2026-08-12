@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ManufacturingPlatform;
 
 namespace Azure.ResourceManager.ManufacturingPlatform.Models
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         /// <param name="gptModelDeploymentName"> GPT Model Deployment Name. </param>
         /// <param name="embeddingModelDeploymentName"> Embedding Model Deployment Name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="gptModelDeploymentName"/> or <paramref name="embeddingModelDeploymentName"/> is null. </exception>
-        public UserManagedOpenAIProfile(string id, string gptModelDeploymentName, string embeddingModelDeploymentName)
+        public UserManagedOpenAIProfile(ResourceIdentifier id, string gptModelDeploymentName, string embeddingModelDeploymentName)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(gptModelDeploymentName, nameof(gptModelDeploymentName));
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         /// <param name="embeddingModelDeploymentName"> Embedding Model Deployment Name. </param>
         /// <param name="embeddingModelType"> Embedding Model Type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserManagedOpenAIProfile(string id, string gptModelDeploymentName, string embeddingModelDeploymentName, string embeddingModelType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UserManagedOpenAIProfile(ResourceIdentifier id, string gptModelDeploymentName, string embeddingModelDeploymentName, string embeddingModelType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             GptModelDeploymentName = gptModelDeploymentName;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         }
 
         /// <summary> Resource Id of OpenAI Resource. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
 
         /// <summary> GPT Model Deployment Name. </summary>
         public string GptModelDeploymentName { get; set; }

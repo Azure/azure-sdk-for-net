@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             ManagedServiceIdentity identity = default;
             ManufacturingPlatformSku sku = default;
             IDictionary<string, string> tags = default;
-            MdsResourceUpdateProperties properties = default;
+            ManufacturingDataServiceUpdateProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
                     {
                         continue;
                     }
-                    properties = MdsResourceUpdateProperties.DeserializeMdsResourceUpdateProperties(prop.Value, options);
+                    properties = ManufacturingDataServiceUpdateProperties.DeserializeManufacturingDataServiceUpdateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManufacturingPlatform.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         /// <param name="embeddingModelSkuName"> Embedding Model SKU Name. </param>
         /// <param name="embeddingModelCapacity"> Embedding Model Capacity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenAIProfile(string id, string gptModelName, string gptModelVersion, int? gptModelCapacity, string gptModelSkuName, string embeddingModelName, string embeddingModelVersion, string embeddingModelSkuName, int? embeddingModelCapacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OpenAIProfile(ResourceIdentifier id, string gptModelName, string gptModelVersion, int? gptModelCapacity, string gptModelSkuName, string embeddingModelName, string embeddingModelVersion, string embeddingModelSkuName, int? embeddingModelCapacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             GptModelName = gptModelName;
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         }
 
         /// <summary> Resource Id of OpenAI Resource. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
 
         /// <summary> GPT Model Name. </summary>
         public string GptModelName { get; set; }

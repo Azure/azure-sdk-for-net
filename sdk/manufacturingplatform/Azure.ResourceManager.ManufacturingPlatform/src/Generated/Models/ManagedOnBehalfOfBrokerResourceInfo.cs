@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManufacturingPlatform.Models
 {
@@ -24,13 +25,13 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         /// <summary> Initializes a new instance of <see cref="ManagedOnBehalfOfBrokerResourceInfo"/>. </summary>
         /// <param name="id"> Resource identifier of the broker resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedOnBehalfOfBrokerResourceInfo(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedOnBehalfOfBrokerResourceInfo(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource identifier of the broker resource. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
     }
 }
