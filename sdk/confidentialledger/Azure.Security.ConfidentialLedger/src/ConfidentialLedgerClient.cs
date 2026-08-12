@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Security.ConfidentialLedger.Certificate;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.ConfidentialLedger
 {
@@ -106,7 +107,7 @@ namespace Azure.Security.ConfidentialLedger
             ClientDiagnostics = new ClientDiagnostics(actualOptions);
             _tokenCredential = credential;
             _useLedgerGateway = actualOptions.UseLedgerGateway;
-            _pipeline = HttpPipelineBuilder.Build(
+            Pipeline = HttpPipelineBuilder.Build(
                 actualOptions,
                 new HttpPipelinePolicy[] { new ConfidentialLedgerRedirectPolicy(ledgerEndpoint, cachePrimaryNode: !actualOptions.UseLedgerGateway) },
                 _tokenCredential == null ?
@@ -168,7 +169,7 @@ namespace Azure.Security.ConfidentialLedger
                     // the caller supplied is preserved rather than replaced.
                     message.ResponseClassifier = new LedgerGatewayAccept202Classifier(message.ResponseClassifier);
                 }
-                var response = _pipeline.ProcessMessage(message, context);
+                var response = Pipeline.ProcessMessage(message, context);
 
                 var operation = CreatePostLedgerEntryOperation(response);
                 if (waitUntil == WaitUntil.Completed)
@@ -221,7 +222,7 @@ namespace Azure.Security.ConfidentialLedger
                     // RequestContext.AddClassifier the caller supplied is preserved rather than replaced.
                     message.ResponseClassifier = new LedgerGatewayAccept202Classifier(message.ResponseClassifier);
                 }
-                var response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                var response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
 
                 var operation = CreatePostLedgerEntryOperation(response);
                 if (waitUntil == WaitUntil.Completed)
