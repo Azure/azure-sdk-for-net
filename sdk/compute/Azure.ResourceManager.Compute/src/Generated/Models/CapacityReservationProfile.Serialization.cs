@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The parameters of a capacity reservation Profile. </summary>
-    internal partial class CapacityReservationProfile : IJsonModel<CapacityReservationProfile>
+    public partial class CapacityReservationProfile : IJsonModel<CapacityReservationProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("capacityReservationGroup"u8);
                 writer.WriteObjectValue(CapacityReservationGroup, options);
             }
+            if (Optional.IsDefined(DisableCapacityReservationAssignment))
+            {
+                writer.WritePropertyName("disableCapacityReservationAssignment"u8);
+                writer.WriteBooleanValue(DisableCapacityReservationAssignment.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             ComputeWriteableSubResourceData capacityReservationGroup = default;
+            bool? disableCapacityReservationAssignment = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,12 +140,21 @@ namespace Azure.ResourceManager.Compute.Models
                     capacityReservationGroup = ComputeWriteableSubResourceData.DeserializeComputeWriteableSubResourceData(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("disableCapacityReservationAssignment"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    disableCapacityReservationAssignment = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CapacityReservationProfile(capacityReservationGroup, additionalBinaryDataProperties);
+            return new CapacityReservationProfile(capacityReservationGroup, disableCapacityReservationAssignment, additionalBinaryDataProperties);
         }
     }
 }

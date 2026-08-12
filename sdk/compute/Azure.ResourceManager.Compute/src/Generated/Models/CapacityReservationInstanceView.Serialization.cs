@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(ReservationStateInfo))
+            {
+                writer.WritePropertyName("reservationStateInfo"u8);
+                writer.WriteObjectValue(ReservationStateInfo, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -133,6 +138,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             CapacityReservationUtilization utilizationInfo = default;
             IReadOnlyList<InstanceViewStatus> statuses = default;
+            CapacityReservationStateInfo reservationStateInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -159,12 +165,21 @@ namespace Azure.ResourceManager.Compute.Models
                     statuses = array;
                     continue;
                 }
+                if (prop.NameEquals("reservationStateInfo"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    reservationStateInfo = CapacityReservationStateInfo.DeserializeCapacityReservationStateInfo(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CapacityReservationInstanceView(utilizationInfo, statuses ?? new ChangeTrackingList<InstanceViewStatus>(), additionalBinaryDataProperties);
+            return new CapacityReservationInstanceView(utilizationInfo, statuses ?? new ChangeTrackingList<InstanceViewStatus>(), reservationStateInfo, additionalBinaryDataProperties);
         }
     }
 }

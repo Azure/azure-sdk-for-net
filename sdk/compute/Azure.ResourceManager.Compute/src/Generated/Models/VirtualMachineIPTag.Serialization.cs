@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -84,6 +85,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag);
             }
+            if (Optional.IsDefined(FirstPartyServiceTagId))
+            {
+                writer.WritePropertyName("firstPartyServiceTagId"u8);
+                writer.WriteStringValue(FirstPartyServiceTagId);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -128,6 +134,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string ipTagType = default;
             string tag = default;
+            ResourceIdentifier firstPartyServiceTagId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,12 +148,21 @@ namespace Azure.ResourceManager.Compute.Models
                     tag = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("firstPartyServiceTagId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    firstPartyServiceTagId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualMachineIPTag(ipTagType, tag, additionalBinaryDataProperties);
+            return new VirtualMachineIPTag(ipTagType, tag, firstPartyServiceTagId, additionalBinaryDataProperties);
         }
     }
 }

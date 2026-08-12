@@ -91,6 +91,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile, options);
             }
+            if (Optional.IsDefined(AdditionalDiskProperties))
+            {
+                writer.WritePropertyName("additionalDiskProperties"u8);
+                writer.WriteObjectValue(AdditionalDiskProperties, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -123,6 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
             StorageAccountType? storageAccountType = default;
             DiskEncryptionSetParameters diskEncryptionSet = default;
             VirtualMachineDiskSecurityProfile securityProfile = default;
+            AdditionalDiskProperties additionalDiskProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -161,12 +167,27 @@ namespace Azure.ResourceManager.Compute.Models
                     securityProfile = VirtualMachineDiskSecurityProfile.DeserializeVirtualMachineDiskSecurityProfile(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("additionalDiskProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    additionalDiskProperties = AdditionalDiskProperties.DeserializeAdditionalDiskProperties(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualMachineManagedDisk(id, additionalBinaryDataProperties, storageAccountType, diskEncryptionSet, securityProfile);
+            return new VirtualMachineManagedDisk(
+                id,
+                additionalBinaryDataProperties,
+                storageAccountType,
+                diskEncryptionSet,
+                securityProfile,
+                additionalDiskProperties);
         }
     }
 }

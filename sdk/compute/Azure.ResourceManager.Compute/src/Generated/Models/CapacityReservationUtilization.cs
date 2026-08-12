@@ -22,16 +22,19 @@ namespace Azure.ResourceManager.Compute.Models
         internal CapacityReservationUtilization()
         {
             VirtualMachinesAllocated = new ChangeTrackingList<SubResource>();
+            UsedReservedCountBySubscription = new ChangeTrackingDictionary<string, int>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CapacityReservationUtilization"/>. </summary>
         /// <param name="currentCapacity"> The value provides the current capacity of the VM size which was reserved successfully and for which the customer is getting billed. Minimum api-version: 2022-08-01. </param>
         /// <param name="virtualMachinesAllocated"> A list of all virtual machines resource ids allocated against the capacity reservation. </param>
+        /// <param name="usedReservedCountBySubscription"> For open capacity reservations, this provides a map of the used reserved capacity count keyed by the subscription id (a GUID) that is consuming the capacity, i.e. each entry maps a consuming subscription id to the count of reserved capacity it is currently using. This is populated only for open capacity reservations and is not reported for targeted and block capacity reservations, which instead report allocation through virtualMachinesAllocated. Minimum api-version: 2026-04-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityReservationUtilization(int? currentCapacity, IReadOnlyList<SubResource> virtualMachinesAllocated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CapacityReservationUtilization(int? currentCapacity, IReadOnlyList<SubResource> virtualMachinesAllocated, IReadOnlyDictionary<string, int> usedReservedCountBySubscription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CurrentCapacity = currentCapacity;
             VirtualMachinesAllocated = virtualMachinesAllocated;
+            UsedReservedCountBySubscription = usedReservedCountBySubscription;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,5 +43,8 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> A list of all virtual machines resource ids allocated against the capacity reservation. </summary>
         public IReadOnlyList<SubResource> VirtualMachinesAllocated { get; }
+
+        /// <summary> For open capacity reservations, this provides a map of the used reserved capacity count keyed by the subscription id (a GUID) that is consuming the capacity, i.e. each entry maps a consuming subscription id to the count of reserved capacity it is currently using. This is populated only for open capacity reservations and is not reported for targeted and block capacity reservations, which instead report allocation through virtualMachinesAllocated. Minimum api-version: 2026-04-01. </summary>
+        public IReadOnlyDictionary<string, int> UsedReservedCountBySubscription { get; }
     }
 }
