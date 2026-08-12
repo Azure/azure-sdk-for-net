@@ -23,8 +23,7 @@ public sealed class SteeringNudgeRaceTests
         // the superseded source and a blocking handler on the new turn never wakes to drain the
         // queued input. The private ActiveRun<T> is reached via reflection, and the old source's
         // cancellation is paused inside a registered callback so the swap is deterministic.
-        var metadata = new TaskMetadata(string.Empty, (_, _) => Task.CompletedTask);
-        var runState = new TaskRunState<string>("t", "i", metadata, isQueued: false);
+        var runState = new TaskRunState<string>("t", "i", isQueued: false);
 
         Type activeRunType = typeof(TaskEngine)
             .GetNestedType("ActiveRun`1", BindingFlags.NonPublic)!
