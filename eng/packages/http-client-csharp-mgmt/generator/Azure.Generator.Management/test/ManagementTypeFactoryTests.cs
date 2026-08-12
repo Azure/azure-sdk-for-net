@@ -5,9 +5,11 @@ using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Management.Tests.Common;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Generator.Mgmt.Tests
 {
@@ -67,6 +69,39 @@ namespace Azure.Generator.Mgmt.Tests
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => [enumType]);
             var result = plugin.Object.TypeFactory.CreateEnum(enumType, null);
             Assert.That(result, Is.Null);
+        }
+
+        [Test]
+        public void DynamicModelUsesSharedProvider()
+        {
+            var model = InputFactory.Model("DynamicWidget", isDynamicModel: true);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [model],
+                primaryNamespace: "Azure.ResourceManager.Test");
+
+            var provider = plugin.Object.TypeFactory.CreateModel(model);
+
+            Assert.That(provider, Is.TypeOf<ScmModelProvider>());
+            Assert.That(provider!.Type.Namespace, Is.EqualTo("Azure.ResourceManager.Test.Models"));
+            Assert.That(provider.Properties.Count(p => p.Name == "Patch"), Is.EqualTo(1));
+        }
+
+        [Test]
+        public void DynamicResourceModelUsesSharedProviderWithResourceIdentity()
+        {
+            var (client, models) = InputResourceData.ClientWithResource(isDynamicModel: true);
+            var resourceModel = models.Single();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => models,
+                clients: () => [client],
+                primaryNamespace: "Azure.ResourceManager.Test");
+
+            var provider = plugin.Object.TypeFactory.CreateModel(resourceModel);
+
+            Assert.That(provider, Is.TypeOf<ScmModelProvider>());
+            Assert.That(provider!.Name, Is.EqualTo("ResponseTypeData"));
+            Assert.That(provider.Type.Namespace, Is.EqualTo("Azure.ResourceManager.Test"));
+            Assert.That(provider.Properties.Count(p => p.Name == "Patch"), Is.EqualTo(1));
         }
 
         [TestCase]

@@ -1,4 +1,5 @@
 import "@azure-tools/typespec-azure-core";
+import "@typespec/http-client-csharp";
 import "./foo.tsp";
 
 using TypeSpec.Http;
@@ -28,6 +29,7 @@ union FlattenChannel {
 }
 
 /** Properties model with a safe-flattened sub-model and a customized property. */
+@TypeSpec.HttpClient.CSharp.dynamicModel
 model MultiFlattenProperties {
   /** Required property that will be customized via [CodeGenMember] to change its position. */
   channel: FlattenChannel;

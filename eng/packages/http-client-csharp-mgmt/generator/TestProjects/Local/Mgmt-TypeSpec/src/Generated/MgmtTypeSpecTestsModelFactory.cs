@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using Azure;
@@ -1484,6 +1485,25 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         public static HcrpConfigurationAssignmentProperties HcrpConfigurationAssignmentProperties(string configurationName = default, HcrpConfigurationAssignmentPropertiesMachineComplianceStatus? machineComplianceStatus = default)
         {
             return new HcrpConfigurationAssignmentProperties(configurationName, machineComplianceStatus, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="disabled"> Additional property after inner to verify it is not skipped. </param>
+        /// <param name="innerSelectionType"> Gets or sets the SelectionType. </param>
+        /// <param name="channel"> Required property that will be customized via [CodeGenMember] to change its position. </param>
+        /// <returns> A new <see cref="Tests.MultiFlattenTestData"/> instance for mocking. </returns>
+        public static MultiFlattenTestData MultiFlattenTestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? disabled = default, string innerSelectionType = default, FlattenChannel? channel = default)
+        {
+            return new MultiFlattenTestData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                channel is null && innerSelectionType is null && disabled is null ? default : new MultiFlattenProperties(channel, new SafeFlattenInner(innerSelectionType, default), disabled, default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

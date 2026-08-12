@@ -954,37 +954,25 @@ namespace Azure.Generator.Mgmt.Tests
             decoratorsProperty!.SetValue(property, new[] { decorator });
         }
 
-        private static PropertyProvider CreateNonWirePatchProperty(ModelProvider model)
-        {
-            return new PropertyProvider(
-                description: null,
-                modifiers: MethodSignatureModifiers.Public,
-                type: typeof(object),
-                name: "Patch",
-                body: new AutoPropertyBody(false),
-                enclosingType: model);
-        }
-
         [Test]
-        public void TestPropertyFlattenSkipsNonWirePatchProperty()
+        public void TestPropertyFlattenSkipsDynamicPatchProperty()
         {
             var valueProperty = InputFactory.Property("value", InputPrimitiveType.String, isRequired: true, serializedName: "value");
             var propertiesModel = InputFactory.Model(
                 "TestProperties",
-                properties: [valueProperty]);
+                properties: [valueProperty],
+                isDynamicModel: true);
 
             var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: true, serializedName: "properties");
             ApplyFlattenDecorator(propertiesProperty);
             var parentModel = InputFactory.Model(
                 "TestResource",
-                properties: [propertiesProperty]);
+                properties: [propertiesProperty],
+                isDynamicModel: true);
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(
                 inputModels: () => [parentModel, propertiesModel]);
             var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
-            var propertiesProvider = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
-            parentProvider.Update(properties: [.. parentProvider.Properties, CreateNonWirePatchProperty(parentProvider)]);
-            propertiesProvider.Update(properties: [.. propertiesProvider.Properties, CreateNonWirePatchProperty(propertiesProvider)]);
 
             RunVisitors(parentProvider);
 
@@ -993,12 +981,13 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
-        public void TestSafeFlattenIgnoresNonWirePatchProperty()
+        public void TestSafeFlattenIgnoresDynamicPatchProperty()
         {
             var valueProperty = InputFactory.Property("value", InputPrimitiveType.String, isRequired: true, serializedName: "value");
             var wrapperModel = InputFactory.Model(
                 "WrapperModel",
-                properties: [valueProperty]);
+                properties: [valueProperty],
+                isDynamicModel: true);
             var wrapperProperty = InputFactory.Property("wrapper", wrapperModel, isRequired: true, serializedName: "wrapper");
             var parentModel = InputFactory.Model(
                 "ParentModel",
@@ -1007,12 +996,10 @@ namespace Azure.Generator.Mgmt.Tests
             var plugin = ManagementMockHelpers.LoadMockPlugin(
                 inputModels: () => [parentModel, wrapperModel]);
             var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
-            var wrapperProvider = plugin.Object.TypeFactory.CreateModel(wrapperModel)!;
-            wrapperProvider.Update(properties: [.. wrapperProvider.Properties, CreateNonWirePatchProperty(wrapperProvider)]);
 
             RunVisitors(parentProvider);
 
-            AssertSafeFlattenApplied(parentProvider, "non-wire Patch property");
+            AssertSafeFlattenApplied(parentProvider, "dynamic Patch property");
         }
 
         private static void RunVisitors(ModelProvider model)

@@ -19,6 +19,7 @@ using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -139,6 +140,11 @@ namespace Azure.Generator.Management
                 return null;
             }
 
+            if (model.IsDynamicModel)
+            {
+                return CreateDynamicModelProvider(model);
+            }
+
             // For custom Azure resource models (root, intermediate, and resource data models),
             // let the base implementation create regular ModelProviders.
             // This preserves the full custom resource hierarchy without replacing intermediate
@@ -153,6 +159,30 @@ namespace Azure.Generator.Management
                 return new ResourceDataModelProvider(model);
             }
             return new ManagementModelProvider(model);
+        }
+
+        private ModelProvider CreateDynamicModelProvider(InputModelType model)
+        {
+            var provider = base.CreateModelCore(model)
+                ?? throw new InvalidOperationException($"Unable to create a provider for dynamic model '{model.Name}'.");
+            var name = model.IsExactName ? model.Name : model.Name.ToIdentifierName();
+            string @namespace;
+            string relativeFilePath;
+
+            if (ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(model))
+            {
+                name = name.EndsWith("Data", StringComparison.Ordinal) ? name : $"{name}Data";
+                @namespace = PrimaryNamespace;
+                relativeFilePath = Path.Combine("src", "Generated", $"{name}.cs");
+            }
+            else
+            {
+                @namespace = $"{PrimaryNamespace}.Models";
+                relativeFilePath = Path.Combine("src", "Generated", "Models", $"{name}.cs");
+            }
+
+            provider.Update(name: name, @namespace: @namespace, relativeFilePath: relativeFilePath);
+            return provider;
         }
 
         /// <inheritdoc/>
