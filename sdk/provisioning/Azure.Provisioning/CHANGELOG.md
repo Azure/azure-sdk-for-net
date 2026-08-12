@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-- Fixed Bicep serialization formats for `BicepList<T>` and `BicepDictionary<T>` elements.
+- Fixed Bicep serialization formats for `BicepList<T>` and `BicepDictionary<T>` elements, including nested collection elements.
 - Fixed Bicep literal serialization for formatted `DateTimeOffset`, `TimeSpan`, and string-encoded integer values. `DateTimeOffset` values using the `"O"` or `"o"` format now emit UTC `Z` literals (for example, `2026-01-01T00:00:00.0000000Z`) instead of `+00:00` offsets.
 
 ### Other Changes
