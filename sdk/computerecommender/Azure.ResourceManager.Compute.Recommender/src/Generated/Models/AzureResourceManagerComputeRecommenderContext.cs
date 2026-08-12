@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Compute.Recommender.Models;
 using Azure.ResourceManager.Models;
 
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.Compute.Recommender
     [ModelReaderWriterBuildable(typeof(ComputeSkuMixPlacementGenerateResult))]
     [ModelReaderWriterBuildable(typeof(ComputeSkuMixPlacementItem))]
     [ModelReaderWriterBuildable(typeof(ComputeSkuMixPlacementResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SkuMixPlacementCapacityProfile))]
     [ModelReaderWriterBuildable(typeof(SkuMixPlacementInstanceDescription))]
     [ModelReaderWriterBuildable(typeof(SkuMixPlacementProperties))]
