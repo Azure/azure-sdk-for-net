@@ -4,7 +4,6 @@
 using System;
 using Azure.Core;
 
-[assembly: CodeGenSuppressType("ConfidentialLedgerClientOptions")]
 namespace Azure.Security.ConfidentialLedger
 {
     /// <summary> Client options for ConfidentialLedger library clients. </summary>

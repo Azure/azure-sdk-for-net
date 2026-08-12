@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Security.ConfidentialLedger;
 
 namespace Azure.Security.ConfidentialLedger.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.Security.ConfidentialLedger.Models
     public readonly partial struct LedgerEndpointMode : IEquatable<LedgerEndpointMode>
     {
         private readonly string _value;
+        /// <summary> Read-write mode. </summary>
+        private const string ReadwriteValue = "readwrite";
+        /// <summary> Read-only mode. </summary>
+        private const string ReadonlyValue = "readonly";
+        /// <summary> Historical mode. </summary>
+        private const string HistoricalValue = "historical";
 
         /// <summary> Initializes a new instance of <see cref="LedgerEndpointMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LedgerEndpointMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ReadwriteValue = "readwrite";
-        private const string ReadonlyValue = "readonly";
-        private const string HistoricalValue = "historical";
+            _value = value;
+        }
 
         /// <summary> Read-write mode. </summary>
         public static LedgerEndpointMode Readwrite { get; } = new LedgerEndpointMode(ReadwriteValue);
+
         /// <summary> Read-only mode. </summary>
         public static LedgerEndpointMode Readonly { get; } = new LedgerEndpointMode(ReadonlyValue);
+
         /// <summary> Historical mode. </summary>
         public static LedgerEndpointMode Historical { get; } = new LedgerEndpointMode(HistoricalValue);
+
         /// <summary> Determines if two <see cref="LedgerEndpointMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LedgerEndpointMode left, LedgerEndpointMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LedgerEndpointMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LedgerEndpointMode left, LedgerEndpointMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LedgerEndpointMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LedgerEndpointMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LedgerEndpointMode(string value) => new LedgerEndpointMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LedgerEndpointMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LedgerEndpointMode?(string value) => value == null ? null : new LedgerEndpointMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LedgerEndpointMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LedgerEndpointMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
