@@ -4,7 +4,7 @@
 
 ### Features Added
 - Added distributed tracing support.
-- Added new object `ProjectCreateResponseOptions` with the `SessionId` property to allow getting response in specific session.
+- Added `SessionId` property to `CreateResponseOptions` allowing to get response in specific session.
 
 ### Breaking Changes
 
