@@ -459,6 +459,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | provisioning | Azure.Provisioning | Azure.ResourceManager<br>Azure.ResourceManager.Resources<br>Azure.ResourceManager.Authorization ✅<br>Azure.ResourceManager.ManagedServiceIdentities ✅ | Reflection |
 | provisioning | Azure.Provisioning.Deployment | Azure.ResourceManager<br>Azure.ResourceManager.Resources | None |
 | recoveryservices | Azure.Provisioning.RecoveryServices | Azure.ResourceManager.RecoveryServices ✅ | TypeSpec ✅ |
+| recoveryservices-backup | Azure.Provisioning.RecoveryServicesBackup | Azure.ResourceManager.RecoveryServicesBackup ✅ | TypeSpec ✅ |
 | redis | Azure.Provisioning.Redis | Azure.ResourceManager.Redis ✅ | TypeSpec ✅ |
 | redisenterprise | Azure.Provisioning.RedisEnterprise | Azure.ResourceManager.RedisEnterprise ✅ | Reflection |
 | resourcegraph | Azure.Provisioning.ResourceGraph | Azure.ResourceManager.ResourceGraph ✅ | TypeSpec ✅ |
