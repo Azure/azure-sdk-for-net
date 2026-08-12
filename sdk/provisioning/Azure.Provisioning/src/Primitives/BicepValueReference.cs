@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Primitives;
 public class BicepValueReference(ProvisionableConstruct construct, string propertyName, params string[]? path)
 {
     public ProvisionableConstruct Construct { get; } = construct;
-    public string PropertyName { get; } = propertyName;
+    public string PropertyName { get; internal set; } = propertyName;
     public IReadOnlyList<string>? BicepPath { get; } = path;
 
     internal virtual BicepExpression GetReference(bool throwIfNoRoot = true)

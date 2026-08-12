@@ -142,8 +142,10 @@ public class BicepList<T> :
 
     private BicepValueReference? GetItemSelf(int index) =>
         _self is not null
-            ? new BicepListValueReference(_self.Construct, $"{_self.PropertyName}[{index}]", _self.BicepPath?.ToArray(), index)
+            ? new BicepListValueReference(_self.Construct, GetItemPropertyName(index), _self.BicepPath?.ToArray(), index)
             : null;
+
+    private string GetItemPropertyName(int index) => $"{_self!.PropertyName}[{index}]";
 
     private void SetSelfForItem(BicepValue<T> item, int index)
     {
@@ -156,6 +158,10 @@ public class BicepList<T> :
         if (((IBicepValue)item).Self is BicepListValueReference self)
         {
             self.Index = index;
+            if (_self is not null)
+            {
+                self.PropertyName = GetItemPropertyName(index);
+            }
         }
         else
         {

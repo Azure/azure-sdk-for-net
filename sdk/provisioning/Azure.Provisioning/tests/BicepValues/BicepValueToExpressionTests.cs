@@ -1046,16 +1046,19 @@ namespace Azure.Provisioning.Tests.BicepValues
             resource.List.Add("item2");
 
             BicepValueReference captured = ((IBicepValue)resource.List[0]).Self!;
+            Assert.That(captured.PropertyName, Is.EqualTo("List[0]"));
             Assert.That(captured.ToString(), Is.EqualTo("test.list[0]"));
 
             resource.List.Insert(0, "item0");
 
             Assert.That(((IBicepValue)resource.List[1]).Self, Is.SameAs(captured));
+            Assert.That(captured.PropertyName, Is.EqualTo("List[1]"));
             Assert.That(captured.ToString(), Is.EqualTo("test.list[1]"));
 
             resource.List.RemoveAt(0);
 
             Assert.That(((IBicepValue)resource.List[0]).Self, Is.SameAs(captured));
+            Assert.That(captured.PropertyName, Is.EqualTo("List[0]"));
             Assert.That(captured.ToString(), Is.EqualTo("test.list[0]"));
         }
 
