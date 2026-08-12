@@ -88,10 +88,10 @@ From the issue and repository context, determine:
 - Service label and category label.
 - Package ID and package version, preferring package metadata already present in the triage analysis comment when available.
 - Affected API or component, if identifiable.
-- Whether the issue is likely a duplicate of a specific open or closed issue. Use existing triage metadata and `search_issues`; do not perform broad exhaustive search.
-- Whether the issue has enough context to proceed.
-- Whether the issue is about Azure service behavior outside SDK maintainers' control.
-- Whether the issue describes a safe implementation task for Copilot.
+- Whether the issue matches a specific open or closed duplicate issue, per the Duplicate rule below. Use existing triage metadata and `search_issues`; do not perform broad exhaustive search.
+- Whether the issue has enough context to proceed, per the Insufficient Context rule below.
+- Whether the issue is about Azure service behavior outside SDK maintainers' control, per the Working as Designed/Service-Side rule below.
+- Whether the issue describes a bounded, in-scope implementation task for Copilot, per the Actionable SDK Issue rule and its exclusion list below.
 
 Use service/package context when available:
 - `sdk/<service>/TROUBLESHOOTING.md`
@@ -112,9 +112,7 @@ By policy, Azure SDK support is only available for the latest package version. V
 When a package ID and customer-reported package version are available:
 1. Determine the latest stable version from NuGet package metadata or package release context.
 2. Compare the reported version to the latest stable version.
-3. If the reported version is older than the latest stable version, you MUST handle the issue using the Version Currency decision rule below before considering Copilot assignment.
-
-You may still include likely mitigations or investigation notes, but do not assign Copilot solely to fix behavior reported only on an old version unless the issue is obviously present in current code.
+3. If the reported version is older than the latest stable version, you MUST handle the issue using the Version Currency decision rule below before considering Copilot assignment. That rule — including its bypass condition and its fallback when the latest version cannot be verified — is the single source of truth for this decision; do not apply a different bar here.
 
 ## Decision Rules
 
@@ -141,25 +139,25 @@ If any dimension is missing, conflicting, or only weakly inferred, do not take t
 
 If the customer reports an older package version than the latest stable version:
 
-1. Inspect the issue and repository context enough to determine whether the problem is obviously present in current code or current documentation.
-2. If it is NOT obviously present in current code/current documentation, add one comment that:
+1. Inspect current repository content (source, README, CHANGELOG, or documentation) to determine whether the reported problem is confirmed present in current code or current documentation. Confirmed means you can point to a specific current file, snippet, or CHANGELOG entry showing the behavior still exists — not that it seems plausible.
+2. If it is NOT confirmed present in current code/current documentation, add one comment that:
    - States Azure SDK support applies to the latest package version.
    - Names the reported package/version.
    - Names the latest stable version, if known.
    - Asks the customer to reproduce on the latest stable version and report back.
-   - Optionally includes likely mitigation or investigation notes.
+   - Optionally includes mitigations or investigation notes supported by current repository content.
 3. Do not assign Copilot.
 4. Do not continue to actionable-SDK handling.
 
 If the reported package and version are known but the latest stable version cannot be verified from NuGet metadata or repository context, do not invent or guess an exact version number. Instead, assume the customer is not confirmed to be on the latest version for support-policy purposes, and add one comment that states the exact latest version could not be verified during this investigation, explains that Azure SDK support applies to the latest package version, and asks the customer to reproduce on the latest available version. Do not assign Copilot and do not continue to actionable-SDK handling.
 
-Only bypass this rule when the issue is clearly present in current code/current documentation despite the old reported version. If you bypass it, explain that in the actionable-SDK comment before assigning Copilot.
+Only bypass this rule when the issue is confirmed present in current code/current documentation despite the old reported version, per the same evidence bar in step 1. If you bypass it, explain that in the actionable-SDK comment before assigning Copilot.
 
 ### Duplicate
 
-If there is a likely duplicate, add one comment explaining the likely duplicate and linking it. Do not close and do not assign Copilot.
+A duplicate decision requires a specific matching issue, whether open or closed, based on materially matching service/package context and reported symptoms or affected API — not just shared keywords, exception names, or a broad topic. If no specific matching issue meets this bar, do not comment about duplicates and continue to the next decision rule.
 
-A duplicate decision requires a specific matching issue, whether open or closed. The match must be based on materially matching service/package context and reported symptoms or affected API, not just shared keywords, exception names, or a broad topic. If no specific matching issue can be identified, do not comment about duplicates and continue to the next decision rule.
+If a specific matching issue is identified, add one comment explaining the match and linking the issue. Do not close and do not assign Copilot.
 
 ### Insufficient Context
 
@@ -224,7 +222,7 @@ Then call `assign_to_agent` for the issue number with agent `copilot`.
 
 ### No Action
 
-If the issue is already adequately routed or a human should decide without additional automation, call `noop` with a short reason.
+Call `noop` with a short reason when none of the rules above produced a user-visible action or assignment — for example, the issue already carries labels or routing that make further automated action unnecessary, or the situation requires a policy or product judgment call that these rules do not cover. Do not use this rule to skip a rule above that does match: check Version Currency, Duplicate, Insufficient Context, Working as Designed/Service-Side, and Actionable SDK Issue, in order, before falling back here.
 
 ## Output Requirements
 
