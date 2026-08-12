@@ -1,5 +1,11 @@
 # Release History
 
+## 2.2.0 (2026-08-12)
+
+### Other Changes
+
+- Updated `MessagePack` dependency to 2.5.302
+
 ## 2.1.0 (2025-07-25)
 
 ### Features Added
