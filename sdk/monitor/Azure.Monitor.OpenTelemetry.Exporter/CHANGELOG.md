@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-- Log fields are now culture-invariant. ([#TODO](https://github.com/Azure/azure-sdk-for-net/pull/TODO))
+- Log fields are now culture-invariant. ([#61996](https://github.com/Azure/azure-sdk-for-net/pull/61996))
 
 ### Other Changes
 
