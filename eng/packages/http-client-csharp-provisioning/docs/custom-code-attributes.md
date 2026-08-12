@@ -107,13 +107,40 @@ public enum SampleKind
 }
 ```
 
-### Parameters
+    ### Hide and obsolete a compatibility member
 
-| Parameter | Description |
-| --- | --- |
-| `enumName` | Generated C# enum type name. |
-| `memberName` | Generated or compatibility C# enum member name. |
-| `value` | Explicit integer value to emit for the enum member. |
-| `WireName` | Optional settable property. When provided and different from `memberName`, emits `[DataMember(Name = "...")]`. |
+    Use `EditorBrowsableNever` and `ObsoleteMessage` when a compatibility member must remain callable but should not be suggested for new code.
+
+    ```csharp
+    using Microsoft.TypeSpec.Generator.Customizations;
+
+    [assembly: CodeGenEnumValue(
+        "SampleKind",
+        "LegacyKind",
+        4,
+        WireName = "legacy-kind",
+        EditorBrowsableNever = true,
+        ObsoleteMessage = "Use CurrentKind instead.")]
+    ```
+
+    The generator emits:
+
+    ```csharp
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("Use CurrentKind instead.")]
+    [DataMember(Name = "legacy-kind")]
+    LegacyKind = 4
+    ```
+
+    ### Parameters
+
+    | Parameter | Description |
+    | --- | --- |
+    | `enumName` | Generated C# enum type name. |
+    | `memberName` | Generated or compatibility C# enum member name. |
+    | `value` | Explicit integer value to emit for the enum member. |
+    | `WireName` | Optional settable property. When provided and different from `memberName`, emits `[DataMember(Name = "...")]`. |
+    | `EditorBrowsableNever` | Optional settable property. When `true`, emits `[EditorBrowsable(EditorBrowsableState.Never)]`. |
+    | `ObsoleteMessage` | Optional settable property. When provided, emits `[Obsolete("...")]` with the supplied message. |
 
 The generator fails fast if two `CodeGenEnumValue` attributes target the same enum member or assign the same explicit ordinal within the same enum.
