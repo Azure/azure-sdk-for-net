@@ -24,6 +24,12 @@ breaks are not delayed.
 # builds that treat warnings as errors, and it has the same cause.
 $TransientRestoreErrorPattern = '\bNU(1101|1102|1103|1301|1603)\b'
 
+function Clear-NuGetHttpCache {
+    # NuGet caches the "not found" response, so without clearing it a retry would replay the cached
+    # miss instead of asking the feed again.
+    dotnet nuget locals http-cache --clear | Out-Null
+}
+
 function Invoke-WithRestoreRetry {
     <#
     .PARAMETER Command
@@ -100,9 +106,7 @@ function Invoke-WithRestoreRetry {
 
         Write-Host "Restore failed because a package is not on the feed yet. This is usually our feed still mirroring a version that a newly released .NET SDK asked for."
 
-        # NuGet caches the "not found" response, so without clearing it a retry would replay the
-        # cached miss instead of asking the feed again.
-        dotnet nuget locals http-cache --clear | Out-Null
+        Clear-NuGetHttpCache
 
         $delay = $RetryDelaySeconds * $attempt
         Write-Host "Retrying in $delay seconds (attempt $($attempt + 1) of $MaxAttempts)."

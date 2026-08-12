@@ -19,13 +19,6 @@ Install-ModuleIfNotInstalled "Pester" "5.3.3" | Import-Module
 BeforeAll {
     . "$PSScriptRoot/../RestoreRetry.Helpers.ps1"
 
-    # Shadow dotnet so clearing the http cache does not touch the real one, and so the tests can
-    # assert that it happens.
-    $script:dotnetArgs = [System.Collections.Generic.List[string]]::new()
-    function global:dotnet {
-        $script:dotnetArgs.Add($args -join ' ')
-    }
-
     # Stands in for the restore command: prints the given output and fails the first $FailTimes
     # invocations, tracking how many times it ran.
     $script:fakeRestore = Join-Path $TestDrive "fake-restore.ps1"
@@ -67,11 +60,12 @@ exit 0
     $script:compilerError = "C:\r\P.cs(10,5): error CS0103: The name 'x' does not exist in the current context"
 }
 
-AfterAll {
-    Remove-Item function:global:dotnet -ErrorAction SilentlyContinue
-}
-
 Describe "Invoke-WithRestoreRetry" -Tag "UnitTest" {
+
+    BeforeAll {
+        # Keeps the retry path from wiping the real http cache, and lets the tests observe it.
+        Mock Clear-NuGetHttpCache { }
+    }
 
     Context "recognizing a transient restore failure" {
 
@@ -161,21 +155,19 @@ Describe "Invoke-WithRestoreRetry" -Tag "UnitTest" {
     Context "NuGet http cache" {
 
         It "clears the http cache before retrying so the retry does not replay the cached miss" {
-            $script:dotnetArgs.Clear()
             $counter = New-CounterFile
 
             Invoke-FakeRestore -CounterFile $counter -FailTimes 1 -Message $script:transientError | Out-Null
 
-            $script:dotnetArgs | Should -Contain "nuget locals http-cache --clear"
+            Should -Invoke Clear-NuGetHttpCache -Times 1 -Exactly
         }
 
         It "does not clear the http cache when nothing is retried" {
-            $script:dotnetArgs.Clear()
             $counter = New-CounterFile
 
             Invoke-FakeRestore -CounterFile $counter -FailTimes 0 -Message "" | Out-Null
 
-            $script:dotnetArgs.Count | Should -Be 0
+            Should -Invoke Clear-NuGetHttpCache -Times 0 -Exactly
         }
     }
 
