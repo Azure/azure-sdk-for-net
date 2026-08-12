@@ -1,5 +1,5 @@
 directory: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement
-commit: 162c2fda74d6187784e71735f293b65973b9cbc4
+commit: de5af7be7ad092c3cf52862dedd75293ccb70187
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 
