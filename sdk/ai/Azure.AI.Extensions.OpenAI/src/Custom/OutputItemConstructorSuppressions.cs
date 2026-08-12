@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.TypeSpec.Generator.Customizations;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI;
@@ -240,11 +239,18 @@ public partial class MemorySearchToolCall
     }
 }
 
-[CodeGenSuppress(nameof(OAuthConsentRequestResponseItem), typeof(ResponseItemKind), typeof(AgentReference), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>))]
 [CodeGenSuppress(nameof(Id))]
 public partial class OAuthConsentRequestResponseItem
 {
-    internal OAuthConsentRequestResponseItem(ResponseItemKind type, AgentReference agentReference, string responseId, string id, Uri consentLink, string serverLabel, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
+    /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/>. </summary>
+    /// <param name="type"></param>
+    /// <param name="id"></param>
+    /// <param name="agentReference"> The agent that created the item. </param>
+    /// <param name="responseId"> The response on which the item is created. </param>
+    /// <param name="consentLink"> The link the user can use to perform OAuth consent. </param>
+    /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
+    /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+    internal OAuthConsentRequestResponseItem(ResponseItemKind type, string id, AgentReference agentReference, string responseId, Uri consentLink, string serverLabel, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
         Id = id;
         ConsentLink = consentLink;
