@@ -226,7 +226,8 @@ public class ResilientMultiturnHandler : InvocationHandler
         var input = new ConversationInput(
             body.Message,
             context.SessionId,
-            context.InvocationId);
+            context.InvocationId,
+            context.PlatformContext.CallId);
 
         var invoker = request.HttpContext.RequestServices
             .GetRequiredService<ITaskInvoker>();
@@ -260,7 +261,11 @@ public class ResilientMultiturnHandler : InvocationHandler
 public record ConversationRequest(string Message);
 
 /// <summary>Persisted input required to run or recover one conversation turn.</summary>
-public record ConversationInput(string Message, string SessionId, string InvocationId);
+public record ConversationInput(
+    string Message,
+    string SessionId,
+    string InvocationId,
+    [property: JsonPropertyName("call_id")] string? CallId);
 
 /// <summary>Output for a single conversation turn.</summary>
 public record ConversationOutput(int Turn, string Reply, bool Finished = false);

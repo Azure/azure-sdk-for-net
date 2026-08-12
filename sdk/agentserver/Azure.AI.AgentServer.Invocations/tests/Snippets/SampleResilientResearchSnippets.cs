@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Net.ServerSentEvents;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Storage;
@@ -483,7 +484,11 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 // transparently enqueues this input as steering while a turn is in flight.
                 _ = await invoker.StartAsync<ResearchRequest, ResearchResult>(
                     "research",
-                    new ResearchRequest(body.Topic, invId, context.SessionId),
+                    new ResearchRequest(
+                        body.Topic,
+                        invId,
+                        context.SessionId,
+                        context.PlatformContext.CallId),
                     new RunOptions { TaskId = taskId },
                     cancellationToken);
 
@@ -624,7 +629,11 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 
         /// <summary>Input for the research task. Carries the per-turn invocation id so the
         /// producer can key its event stream to this turn.</summary>
-        public record ResearchRequest(string Topic, string InvocationId, string SessionId);
+        public record ResearchRequest(
+            string Topic,
+            string InvocationId,
+            string SessionId,
+            [property: JsonPropertyName("call_id")] string? CallId);
 
         /// <summary>Final result of the research task.</summary>
         public record ResearchResult(string Status, string[] Findings);

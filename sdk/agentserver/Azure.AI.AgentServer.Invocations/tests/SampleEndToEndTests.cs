@@ -525,6 +525,25 @@ public class SampleEndToEndTests
     // ═══════════════════════════════════════════════════════════════════
 
     [Test]
+    public void ResilientSampleTaskInputs_SerializeCanonicalCallId()
+    {
+        var research = new Snippets.SampleResilientResearchSnippets.ResearchRequest(
+            "topic", "invocation", "session", "research-call");
+        var conversation = new Snippets.SampleResilientMultiturnSnippets.ConversationInput(
+            "message", "session", "invocation", "conversation-call");
+
+        using JsonDocument researchJson = JsonDocument.Parse(JsonSerializer.Serialize(research));
+        using JsonDocument conversationJson = JsonDocument.Parse(JsonSerializer.Serialize(conversation));
+
+        Assert.That(
+            researchJson.RootElement.GetProperty("call_id").GetString(),
+            Is.EqualTo("research-call"));
+        Assert.That(
+            conversationJson.RootElement.GetProperty("call_id").GetString(),
+            Is.EqualTo("conversation-call"));
+    }
+
+    [Test]
     public async Task ResilientResearch_StreamsEventsAsSse()
     {
         await using var env = await CreateResilientResearchServerAsync();
