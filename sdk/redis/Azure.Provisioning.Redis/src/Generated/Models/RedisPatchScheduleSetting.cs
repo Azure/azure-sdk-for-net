@@ -74,7 +74,7 @@ namespace Azure.Provisioning.Redis
             base.DefineProvisionableProperties();
             _dayOfWeek = DefineProperty<RedisDayOfWeek>(nameof(DayOfWeek), new string[] { "dayOfWeek" }, isRequired: true);
             _startHourUtc = DefineProperty<int>(nameof(StartHourUtc), new string[] { "startHourUtc" }, isRequired: true);
-            _maintenanceWindow = DefineProperty<TimeSpan>(nameof(MaintenanceWindow), new string[] { "maintenanceWindow" });
+            _maintenanceWindow = DefineProperty<TimeSpan>(nameof(MaintenanceWindow), new string[] { "maintenanceWindow" }, format: "P");
             DefineAdditionalProperties();
         }
 

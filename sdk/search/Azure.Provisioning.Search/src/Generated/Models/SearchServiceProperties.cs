@@ -29,8 +29,8 @@ namespace Azure.Provisioning.Search
         private BicepValue<bool> _isLocalAuthDisabled;
         private SearchAadAuthDataPlaneAuthOptions _authOptions;
         private BicepValue<SearchSemanticSearch> _semanticSearch;
-        private BicepList<SearchPrivateEndpointConnection> _privateEndpointConnections;
-        private BicepList<SharedSearchServicePrivateLink> _sharedPrivateLinkResources;
+        private BicepList<PrivateEndpointConnection> _privateEndpointConnections;
+        private BicepList<SharedPrivateLinkResource> _sharedPrivateLinkResources;
         private BicepValue<ETag> _eTag;
         private BicepValue<SearchServiceUpgradeAvailable> _isUpgradeAvailable;
         private BicepValue<DateTimeOffset> _serviceUpgradedOn;
@@ -251,7 +251,7 @@ namespace Azure.Provisioning.Search
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<SearchPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<PrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {
@@ -261,7 +261,7 @@ namespace Azure.Provisioning.Search
         }
 
         /// <summary> Gets the SharedPrivateLinkResources. </summary>
-        public BicepList<SharedSearchServicePrivateLink> SharedPrivateLinkResources
+        public BicepList<SharedPrivateLinkResource> SharedPrivateLinkResources
         {
             get
             {
@@ -324,8 +324,8 @@ namespace Azure.Provisioning.Search
             _isLocalAuthDisabled = DefineProperty<bool>(nameof(IsLocalAuthDisabled), new string[] { "disableLocalAuth" });
             _authOptions = DefineModelProperty<SearchAadAuthDataPlaneAuthOptions>(nameof(AuthOptions), new string[] { "authOptions" });
             _semanticSearch = DefineProperty<SearchSemanticSearch>(nameof(SemanticSearch), new string[] { "semanticSearch" });
-            _privateEndpointConnections = DefineListProperty<SearchPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
-            _sharedPrivateLinkResources = DefineListProperty<SharedSearchServicePrivateLink>(nameof(SharedPrivateLinkResources), new string[] { "sharedPrivateLinkResources" }, isOutput: true);
+            _privateEndpointConnections = DefineListProperty<PrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            _sharedPrivateLinkResources = DefineListProperty<SharedPrivateLinkResource>(nameof(SharedPrivateLinkResources), new string[] { "sharedPrivateLinkResources" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" }, isOutput: true);
             _isUpgradeAvailable = DefineProperty<SearchServiceUpgradeAvailable>(nameof(IsUpgradeAvailable), new string[] { "upgradeAvailable" });
             _serviceUpgradedOn = DefineProperty<DateTimeOffset>(nameof(ServiceUpgradedOn), new string[] { "serviceUpgradedAt" }, isOutput: true, format: "O");

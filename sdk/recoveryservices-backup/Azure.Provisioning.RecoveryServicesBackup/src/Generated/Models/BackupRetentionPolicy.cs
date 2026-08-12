@@ -11,6 +11,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
 {
     /// <summary>
     /// Base class for retention policy.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="LongTermRetentionPolicy"/> and <see cref="SimpleRetentionPolicy"/>.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LongTermRetentionPolicy"/> and <see cref="SimpleRetentionPolicy"/>.
     /// </summary>
     public partial class BackupRetentionPolicy : ProvisionableConstruct

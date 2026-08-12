@@ -19,7 +19,7 @@ namespace Azure.Provisioning.ContainerService
         private BicepValue<string> _name;
         private SystemData _systemData;
         private AgentPoolUpgradeProfileProperties _properties;
-        private ResourceReference<ContainerServiceAgentPool> _parent;
+        private ResourceReference<AgentPool> _parent;
 
         /// <summary> Creates a new AgentPoolUpgradeProfile. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -69,7 +69,7 @@ namespace Azure.Provisioning.ContainerService
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public ContainerServiceAgentPool Parent
+        public AgentPool Parent
         {
             get
             {
@@ -127,7 +127,7 @@ namespace Azure.Provisioning.ContainerService
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true, defaultValue: "default");
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<AgentPoolUpgradeProfileProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ContainerServiceAgentPool>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<AgentPool>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

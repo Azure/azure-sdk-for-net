@@ -193,7 +193,7 @@ namespace Azure.Generator.Provisioning.Providers
             // A base declared entirely in custom code is not a ModelProvider and has no
             // InputModelType. Resolve its Roslyn-backed provider directly so its canonical
             // properties still participate in the same reconciliation as generated bases.
-            provider = ProvisioningGenerator.Instance.SourceInputModel.FindForTypeInCustomization(
+            provider = ProvisioningGenerator.Instance.SourceInputModel.FindForTypeInCurrentCompilation(
                 type.Namespace,
                 type.Name,
                 type.DeclaringType?.Name,

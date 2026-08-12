@@ -6,14 +6,17 @@
   "devDependencies": {
     "@azure-tools/typespec-autorest": "0.70.1",
     "@azure-tools/typespec-azure-core": "0.70.0",
-    "@azure-tools/typespec-azure-resource-manager": "0.70.0",
+    "@azure-tools/typespec-azure-resource-manager": "https://pkg.pr.new/@azure-tools/typespec-azure-resource-manager@4851",
     "@azure-tools/typespec-azure-rulesets": "0.70.0",
     "@azure-tools/typespec-client-generator-core": "0.70.0",
     "@azure-tools/typespec-liftr-base": "0.14.0",
-    "@typespec/compiler": "1.14.0",
+    "@typespec/compiler": "1.15.0-dev.19",
     "@typespec/http": "1.14.0",
     "@typespec/openapi": "1.14.0",
     "@typespec/rest": "0.84.0",
     "@typespec/versioning": "0.84.0"
+  },
+  "overrides": {
+    "@azure-tools/typespec-azure-resource-manager": "$@azure-tools/typespec-azure-resource-manager"
   }
 }

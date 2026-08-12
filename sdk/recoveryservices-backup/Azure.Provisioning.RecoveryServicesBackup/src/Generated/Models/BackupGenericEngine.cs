@@ -12,6 +12,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
 {
     /// <summary>
     /// The base backup engine class. All workload specific backup engines derive from this class.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="BackupServerEngine"/> and <see cref="DpmBackupEngine"/>.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BackupServerEngine"/> and <see cref="DpmBackupEngine"/>.
     /// </summary>
     public partial class BackupGenericEngine : ProvisionableConstruct

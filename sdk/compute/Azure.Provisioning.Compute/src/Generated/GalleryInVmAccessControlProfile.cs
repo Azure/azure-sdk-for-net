@@ -13,7 +13,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Compute
 {
     /// <summary> Specifies information about the gallery inVMAccessControlProfile that you want to create or update. </summary>
-    public partial class GalleryInVmAccessControlProfile : ProvisionableResource
+    public partial class GalleryInVMAccessControlProfile : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -23,10 +23,10 @@ namespace Azure.Provisioning.Compute
         private GalleryInVmAccessControlProfileProperties _properties;
         private ResourceReference<GalleryResource> _parent;
 
-        /// <summary> Creates a new GalleryInVmAccessControlProfile. </summary>
+        /// <summary> Creates a new GalleryInVMAccessControlProfile. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public GalleryInVmAccessControlProfile(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/galleries/inVMAccessControlProfiles", resourceVersion ?? "2025-12-03")
+        public GalleryInVMAccessControlProfile(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/galleries/inVMAccessControlProfiles", resourceVersion ?? "2025-12-03")
         {
         }
 
@@ -125,7 +125,7 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Define all the provisionable properties for GalleryInVmAccessControlProfile. </summary>
+        /// <summary> Define all the provisionable properties for GalleryInVMAccessControlProfile. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -139,17 +139,17 @@ namespace Azure.Provisioning.Compute
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing GalleryInVmAccessControlProfile. </summary>
+        /// <summary> Creates a reference to an existing GalleryInVMAccessControlProfile. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static GalleryInVmAccessControlProfile FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static GalleryInVMAccessControlProfile FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            GalleryInVmAccessControlProfile result = new GalleryInVmAccessControlProfile(bicepIdentifier, resourceVersion);
+            GalleryInVMAccessControlProfile result = new GalleryInVMAccessControlProfile(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for GalleryInVmAccessControlProfile that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for GalleryInVMAccessControlProfile that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

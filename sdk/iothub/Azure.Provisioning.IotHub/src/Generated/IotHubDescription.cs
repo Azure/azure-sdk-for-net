@@ -26,11 +26,12 @@ namespace Azure.Provisioning.IotHub
         private BicepValue<ETag> _eTag;
         private IotHubSkuInfo _sku;
         private ManagedServiceIdentity _identity;
+        private ResourceReference<IotHubDescription> _parent;
 
         /// <summary> Creates a new IotHubDescription. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public IotHubDescription(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Devices/IotHubs", resourceVersion ?? "2026-03-01-preview")
+        public IotHubDescription(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Devices/IotHubs/jobs", resourceVersion ?? "2026-03-01-preview")
         {
         }
 
@@ -110,7 +111,7 @@ namespace Azure.Provisioning.IotHub
             set
             {
                 Initialize();
-                AssignOrReplace(ref _properties, value);
+                this.AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -140,7 +141,7 @@ namespace Azure.Provisioning.IotHub
             set
             {
                 Initialize();
-                AssignOrReplace(ref _sku, value);
+                this.AssignOrReplace(ref _sku, value);
             }
         }
 
@@ -155,7 +156,22 @@ namespace Azure.Provisioning.IotHub
             set
             {
                 Initialize();
-                AssignOrReplace(ref _identity, value);
+                this.AssignOrReplace(ref _identity, value);
+            }
+        }
+
+        /// <summary> Gets or sets the Parent. </summary>
+        public IotHubDescription Parent
+        {
+            get
+            {
+                Initialize();
+                return _parent.Value;
+            }
+            set
+            {
+                Initialize();
+                _parent.Value = value;
             }
         }
 
@@ -172,7 +188,8 @@ namespace Azure.Provisioning.IotHub
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
             _sku = DefineModelProperty<IotHubSkuInfo>(nameof(Sku), new string[] { "sku" }, isRequired: true);
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            DefineAdditionalProperties();
+            _parent = DefineResource<IotHubDescription>("Parent", new string[] { "parent" }, isRequired: true);
+            this.DefineAdditionalProperties();
         }
 
         /// <summary> Creates a reference to an existing IotHubDescription. </summary>

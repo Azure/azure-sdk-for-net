@@ -33,7 +33,7 @@ namespace Azure.Provisioning.MySql
         private MySqlFlexibleServerBackupProperties _backup;
         private MySqlFlexibleServerHighAvailability _highAvailability;
         private MySqlFlexibleServerNetwork _network;
-        private BicepList<MySqlFlexibleServersPrivateEndpointConnection> _serverPrivateEndpointConnections;
+        private BicepList<ServerPrivateEndpointConnection> _serverPrivateEndpointConnections;
         private MaintenancePolicy _maintenancePolicy;
         private MySqlFlexibleServerMaintenanceWindow _maintenanceWindow;
         private ImportSourceProperties _importSourceProperties;
@@ -294,7 +294,7 @@ namespace Azure.Provisioning.MySql
         }
 
         /// <summary> Gets the ServerPrivateEndpointConnections. </summary>
-        public BicepList<MySqlFlexibleServersPrivateEndpointConnection> ServerPrivateEndpointConnections
+        public BicepList<ServerPrivateEndpointConnection> ServerPrivateEndpointConnections
         {
             get
             {
@@ -387,7 +387,7 @@ namespace Azure.Provisioning.MySql
             _backup = DefineModelProperty<MySqlFlexibleServerBackupProperties>(nameof(Backup), new string[] { "backup" });
             _highAvailability = DefineModelProperty<MySqlFlexibleServerHighAvailability>(nameof(HighAvailability), new string[] { "highAvailability" });
             _network = DefineModelProperty<MySqlFlexibleServerNetwork>(nameof(Network), new string[] { "network" });
-            _serverPrivateEndpointConnections = DefineListProperty<MySqlFlexibleServersPrivateEndpointConnection>(nameof(ServerPrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            _serverPrivateEndpointConnections = DefineListProperty<ServerPrivateEndpointConnection>(nameof(ServerPrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _maintenancePolicy = DefineModelProperty<MaintenancePolicy>(nameof(MaintenancePolicy), new string[] { "maintenancePolicy" });
             _maintenanceWindow = DefineModelProperty<MySqlFlexibleServerMaintenanceWindow>(nameof(MaintenanceWindow), new string[] { "maintenanceWindow" });
             _importSourceProperties = DefineModelProperty<ImportSourceProperties>(nameof(ImportSourceProperties), new string[] { "importSourceProperties" });

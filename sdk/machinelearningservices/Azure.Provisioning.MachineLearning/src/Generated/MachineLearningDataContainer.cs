@@ -18,7 +18,7 @@ namespace Azure.Provisioning.MachineLearning
         private BicepValue<string> _name;
         private SystemData _systemData;
         private MachineLearningDataContainerProperties _properties;
-        private ResourceReference<MachineLearningWorkspace> _parent;
+        private ResourceReference<Workspace> _parent;
 
         /// <summary> Creates a new MachineLearningDataContainer. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -78,7 +78,7 @@ namespace Azure.Provisioning.MachineLearning
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public MachineLearningWorkspace Parent
+        public Workspace Parent
         {
             get
             {
@@ -100,7 +100,7 @@ namespace Azure.Provisioning.MachineLearning
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<MachineLearningDataContainerProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _parent = DefineResource<MachineLearningWorkspace>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<Workspace>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

@@ -19,7 +19,7 @@ namespace Azure.Provisioning.MachineLearning
         private BicepValue<string> _name;
         private SystemData _systemData;
         private MachineLearningModelContainerProperties _properties;
-        private ResourceReference<MachineLearningRegistry> _parent;
+        private ResourceReference<Registry> _parent;
 
         /// <summary> Creates a new MachineLearningRegistryModelContainer. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -79,7 +79,7 @@ namespace Azure.Provisioning.MachineLearning
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public MachineLearningRegistry Parent
+        public Registry Parent
         {
             get
             {
@@ -101,7 +101,7 @@ namespace Azure.Provisioning.MachineLearning
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<MachineLearningModelContainerProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _parent = DefineResource<MachineLearningRegistry>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<Registry>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

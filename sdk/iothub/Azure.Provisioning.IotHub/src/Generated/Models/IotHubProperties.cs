@@ -23,7 +23,7 @@ namespace Azure.Provisioning.IotHub
         private BicepList<IotHubIPFilterRule> _ipFilterRules;
         private IotHubNetworkRuleSetProperties _networkRuleSets;
         private BicepValue<string> _minTlsVersion;
-        private BicepList<IotHubPrivateEndpointConnection> _privateEndpointConnections;
+        private BicepList<IotHubsPrivateEndpointConnections> _privateEndpointConnections;
         private BicepValue<string> _provisioningState;
         private BicepValue<string> _state;
         private BicepValue<string> _hostName;
@@ -202,7 +202,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the PrivateEndpointConnections. </summary>
-        public BicepList<IotHubPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<IotHubsPrivateEndpointConnections> PrivateEndpointConnections
         {
             get
             {
@@ -536,7 +536,7 @@ namespace Azure.Provisioning.IotHub
             _ipFilterRules = DefineListProperty<IotHubIPFilterRule>(nameof(IPFilterRules), new string[] { "ipFilterRules" });
             _networkRuleSets = DefineModelProperty<IotHubNetworkRuleSetProperties>(nameof(NetworkRuleSets), new string[] { "networkRuleSets" });
             _minTlsVersion = DefineProperty<string>(nameof(MinTlsVersion), new string[] { "minTlsVersion" });
-            _privateEndpointConnections = DefineListProperty<IotHubPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" });
+            _privateEndpointConnections = DefineListProperty<IotHubsPrivateEndpointConnections>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" });
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _state = DefineProperty<string>(nameof(State), new string[] { "state" }, isOutput: true);
             _hostName = DefineProperty<string>(nameof(HostName), new string[] { "hostName" }, isOutput: true);

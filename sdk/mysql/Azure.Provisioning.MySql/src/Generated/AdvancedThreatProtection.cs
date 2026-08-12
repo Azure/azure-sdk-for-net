@@ -20,7 +20,7 @@ namespace Azure.Provisioning.MySql
         private BicepValue<string> _name;
         private SystemData _systemData;
         private AdvancedThreatProtectionProperties _properties;
-        private ResourceReference<MySqlFlexibleServer> _parent;
+        private ResourceReference<Server> _parent;
 
         /// <summary> Creates a new AdvancedThreatProtection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -80,7 +80,7 @@ namespace Azure.Provisioning.MySql
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public MySqlFlexibleServer Parent
+        public Server Parent
         {
             get
             {
@@ -145,7 +145,7 @@ namespace Azure.Provisioning.MySql
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<AdvancedThreatProtectionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<MySqlFlexibleServer>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<Server>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

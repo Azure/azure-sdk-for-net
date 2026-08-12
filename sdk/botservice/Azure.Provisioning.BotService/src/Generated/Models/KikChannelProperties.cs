@@ -23,7 +23,7 @@ namespace Azure.Provisioning.BotService
         {
         }
 
-        /// <summary> Gets or sets the UserName. </summary>
+        /// <summary> Gets the UserName. </summary>
         public BicepValue<string> UserName
         {
             get
@@ -31,14 +31,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _userName;
             }
-            set
-            {
-                Initialize();
-                _userName.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ApiKey. </summary>
+        /// <summary> Gets the ApiKey. </summary>
         public BicepValue<string> ApiKey
         {
             get
@@ -46,14 +41,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _apiKey;
             }
-            set
-            {
-                Initialize();
-                _apiKey.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the IsValidated. </summary>
+        /// <summary> Gets the IsValidated. </summary>
         public BicepValue<bool> IsValidated
         {
             get
@@ -61,14 +51,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _isValidated;
             }
-            set
-            {
-                Initialize();
-                _isValidated.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the IsEnabled. </summary>
+        /// <summary> Gets the IsEnabled. </summary>
         public BicepValue<bool> IsEnabled
         {
             get
@@ -76,21 +61,16 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _isEnabled;
             }
-            set
-            {
-                Initialize();
-                _isEnabled.Assign(value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for KikChannelProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _userName = DefineProperty<string>(nameof(UserName), new string[] { "userName" }, isRequired: true);
+            _userName = DefineProperty<string>(nameof(UserName), new string[] { "userName" });
             _apiKey = DefineProperty<string>(nameof(ApiKey), new string[] { "apiKey" });
             _isValidated = DefineProperty<bool>(nameof(IsValidated), new string[] { "isValidated" });
-            _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" }, isRequired: true);
+            _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" });
             DefineAdditionalProperties();
         }
 

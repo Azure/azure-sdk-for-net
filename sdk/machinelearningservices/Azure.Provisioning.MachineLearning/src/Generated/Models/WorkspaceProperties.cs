@@ -34,7 +34,7 @@ namespace Azure.Provisioning.MachineLearning
         private BicepValue<Uri> _mlFlowTrackingUri;
         private MachineLearningNotebookResourceInfo _notebookInfo;
         private BicepValue<string> _primaryUserAssignedIdentity;
-        private BicepList<MachineLearningPrivateEndpointConnection> _privateEndpointConnections;
+        private BicepList<PrivateEndpointConnection> _privateEndpointConnections;
         private BicepValue<int> _privateLinkCount;
         private BicepValue<bool> _isProvisionNetworkNow;
         private BicepValue<MachineLearningProvisioningState> _provisioningState;
@@ -332,7 +332,7 @@ namespace Azure.Provisioning.MachineLearning
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<MachineLearningPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<PrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {
@@ -576,7 +576,7 @@ namespace Azure.Provisioning.MachineLearning
             _mlFlowTrackingUri = DefineProperty<Uri>(nameof(MlFlowTrackingUri), new string[] { "mlFlowTrackingUri" }, isOutput: true);
             _notebookInfo = DefineModelProperty<MachineLearningNotebookResourceInfo>(nameof(NotebookInfo), new string[] { "notebookInfo" }, isOutput: true);
             _primaryUserAssignedIdentity = DefineProperty<string>(nameof(PrimaryUserAssignedIdentity), new string[] { "primaryUserAssignedIdentity" });
-            _privateEndpointConnections = DefineListProperty<MachineLearningPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            _privateEndpointConnections = DefineListProperty<PrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _privateLinkCount = DefineProperty<int>(nameof(PrivateLinkCount), new string[] { "privateLinkCount" }, isOutput: true);
             _isProvisionNetworkNow = DefineProperty<bool>(nameof(IsProvisionNetworkNow), new string[] { "provisionNetworkNow" });
             _provisioningState = DefineProperty<MachineLearningProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);

@@ -14,7 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Compute
 {
     /// <summary> Specifies information about the gallery inVMAccessControlProfile version that you want to create or update. </summary>
-    public partial class GalleryInVmAccessControlProfileVersion : ProvisionableResource
+    public partial class GalleryInVMAccessControlProfileVersion : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -22,12 +22,12 @@ namespace Azure.Provisioning.Compute
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private GalleryInVmAccessControlProfileVersionProperties _properties;
-        private ResourceReference<GalleryInVmAccessControlProfile> _parent;
+        private ResourceReference<GalleryInVMAccessControlProfile> _parent;
 
-        /// <summary> Creates a new GalleryInVmAccessControlProfileVersion. </summary>
+        /// <summary> Creates a new GalleryInVMAccessControlProfileVersion. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public GalleryInVmAccessControlProfileVersion(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/galleries/inVMAccessControlProfiles/versions", resourceVersion ?? "2025-12-03")
+        public GalleryInVMAccessControlProfileVersion(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/galleries/inVMAccessControlProfiles/versions", resourceVersion ?? "2025-12-03")
         {
         }
 
@@ -112,7 +112,7 @@ namespace Azure.Provisioning.Compute
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public GalleryInVmAccessControlProfile Parent
+        public GalleryInVMAccessControlProfile Parent
         {
             get
             {
@@ -123,57 +123,6 @@ namespace Azure.Provisioning.Compute
             {
                 Initialize();
                 _parent.Value = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Mode. </summary>
-        public BicepValue<GalleryInVmAccessControlRulesMode> Mode
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Mode;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
-                }
-                Properties.Mode = value;
-            }
-        }
-
-        /// <summary> Gets or sets the DefaultAccess. </summary>
-        public BicepValue<ComputeGalleryEndpointAccess> DefaultAccess
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DefaultAccess;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
-                }
-                Properties.DefaultAccess = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Rules. </summary>
-        public GalleryInVmAccessControlRules Rules
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Rules;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
-                }
-                Properties.Rules = value;
             }
         }
 
@@ -246,7 +195,58 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Define all the provisionable properties for GalleryInVmAccessControlProfileVersion. </summary>
+        /// <summary> Gets or sets the Mode. </summary>
+        public BicepValue<GalleryInVmAccessControlRulesMode> Mode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Mode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
+                }
+                Properties.Mode = value;
+            }
+        }
+
+        /// <summary> Gets or sets the DefaultAccess. </summary>
+        public BicepValue<ComputeGalleryEndpointAccess> DefaultAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
+                }
+                Properties.DefaultAccess = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Rules. </summary>
+        public GalleryInVmAccessControlRules Rules
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Rules;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
+                }
+                Properties.Rules = value;
+            }
+        }
+
+        /// <summary> Define all the provisionable properties for GalleryInVMAccessControlProfileVersion. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -256,21 +256,21 @@ namespace Azure.Provisioning.Compute
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<GalleryInVmAccessControlProfileVersionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<GalleryInVmAccessControlProfile>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<GalleryInVMAccessControlProfile>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing GalleryInVmAccessControlProfileVersion. </summary>
+        /// <summary> Creates a reference to an existing GalleryInVMAccessControlProfileVersion. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static GalleryInVmAccessControlProfileVersion FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static GalleryInVMAccessControlProfileVersion FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            GalleryInVmAccessControlProfileVersion result = new GalleryInVmAccessControlProfileVersion(bicepIdentifier, resourceVersion);
+            GalleryInVMAccessControlProfileVersion result = new GalleryInVMAccessControlProfileVersion(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for GalleryInVmAccessControlProfileVersion that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for GalleryInVMAccessControlProfileVersion that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

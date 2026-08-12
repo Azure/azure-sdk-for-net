@@ -32,7 +32,7 @@ namespace Azure.Provisioning.BotService
             }
         }
 
-        /// <summary> Gets or sets the ChannelSecret. </summary>
+        /// <summary> Gets the ChannelSecret. </summary>
         public BicepValue<string> ChannelSecret
         {
             get
@@ -40,25 +40,15 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _channelSecret;
             }
-            set
-            {
-                Initialize();
-                _channelSecret.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ChannelAccessToken. </summary>
+        /// <summary> Gets the ChannelAccessToken. </summary>
         public BicepValue<string> ChannelAccessToken
         {
             get
             {
                 Initialize();
                 return _channelAccessToken;
-            }
-            set
-            {
-                Initialize();
-                _channelAccessToken.Assign(value);
             }
         }
 

@@ -9,18 +9,152 @@ import {
 } from "./test-util.js";
 import { TestHost } from "@typespec/compiler/testing";
 import { createModel } from "@typespec/http-client-csharp";
-import { buildArmProviderSchema } from "../src/resource-detection.js";
+import {
+  buildArmProviderSchema,
+  filterArmProviderSchemaToTcgcOutput
+} from "../src/resource-detection.js";
 import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
 import { ok, strictEqual, deepStrictEqual } from "assert";
 import {
   ArmResourceSchema,
+  ArmScopeInfo,
+  RequestPath,
+  ResourceOperationKind,
   ResourceScopeKind
 } from "../src/resource-metadata.js";
+
+function createFilterTestScope(): ArmScopeInfo {
+  return {
+    kind: ResourceScopeKind.ResourceGroup,
+    scopeIdPattern: new RequestPath(
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+    )
+  };
+}
+
+function createFilterTestResource(
+  resourceModelId: string,
+  resourceId: string,
+  methodIds: string[],
+  parentResourceId?: RequestPath,
+  methodKind = ResourceOperationKind.Read
+): ArmResourceSchema {
+  const operationPath = new RequestPath(resourceId);
+  const scope = createFilterTestScope();
+  return {
+    resourceModelId,
+    metadata: {
+      resourceIdPattern: operationPath,
+      resourceType: operationPath.resourceType,
+      methods: methodIds.map((methodId) => ({
+        methodId,
+        kind: methodKind,
+        operationPath,
+        scope
+      })),
+      scope,
+      parentResourceId,
+      resourceName: resourceModelId.split(".").at(-1) ?? resourceModelId,
+      nameConstraints: {},
+      apiVersions: [],
+      rbacRoles: []
+    }
+  };
+}
 
 describe("Resource Detection", () => {
   let runner: TestHost;
   beforeEach(async () => {
     runner = await createEmitterTestHost();
+  });
+
+  it("filters resolveArmResources schema to TCGC output", () => {
+    const parent = createFilterTestResource(
+      "Microsoft.Test.Parent",
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/parents/{parentName}",
+      ["Microsoft.Test.Parent.Get"]
+    );
+    const child = createFilterTestResource(
+      "Microsoft.Test.Child",
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/parents/{parentName}/children/{childName}",
+      ["Microsoft.Test.Child.Get", "Microsoft.Test.Child.Missing"],
+      parent.metadata.resourceIdPattern
+    );
+    const orphan = createFilterTestResource(
+      "Microsoft.Test.Orphan",
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/orphans/{orphanName}",
+      ["Microsoft.Test.Orphan.Get"],
+      new RequestPath(
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/missingParents/{missingParentName}"
+      )
+    );
+
+    const filtered = filterArmProviderSchemaToTcgcOutput(
+      {
+        resources: [
+          parent,
+          child,
+          orphan,
+          createFilterTestResource(
+            "Microsoft.Test.NoRead",
+            "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/noRead/{noReadName}",
+            ["Microsoft.Test.NoRead.Delete"],
+            undefined,
+            ResourceOperationKind.Delete
+          ),
+          createFilterTestResource(
+            "Microsoft.Test.MissingModel",
+            "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/missing/{missingName}",
+            ["Microsoft.Test.Missing.Get"]
+          )
+        ],
+        nonResourceMethods: [
+          {
+            methodId: "Microsoft.Test.Service.Get",
+            operationPath: new RequestPath("/subscriptions/{subscriptionId}"),
+            scope: createFilterTestScope()
+          },
+          {
+            methodId: "Microsoft.Test.Service.Missing",
+            operationPath: new RequestPath("/subscriptions/{subscriptionId}"),
+            scope: createFilterTestScope()
+          }
+        ]
+      },
+      {
+        models: [
+          { crossLanguageDefinitionId: parent.resourceModelId },
+          { crossLanguageDefinitionId: child.resourceModelId },
+          { crossLanguageDefinitionId: orphan.resourceModelId },
+          { crossLanguageDefinitionId: "Microsoft.Test.NoRead" }
+        ],
+        clients: [
+          {
+            methods: [
+              { crossLanguageDefinitionId: "Microsoft.Test.Parent.Get" },
+              { crossLanguageDefinitionId: "Microsoft.Test.Child.Get" },
+              { crossLanguageDefinitionId: "Microsoft.Test.NoRead.Delete" },
+              { crossLanguageDefinitionId: "Microsoft.Test.Service.Get" }
+            ]
+          }
+        ]
+      } as Parameters<typeof filterArmProviderSchemaToTcgcOutput>[1]
+    );
+
+    deepStrictEqual(
+      filtered.resources.map((resource) => resource.resourceModelId),
+      ["Microsoft.Test.Parent", "Microsoft.Test.Child"]
+    );
+    deepStrictEqual(
+      filtered.resources.flatMap((resource) =>
+        resource.metadata.methods.map((method) => method.methodId)
+      ),
+      ["Microsoft.Test.Parent.Get", "Microsoft.Test.Child.Get"]
+    );
+    deepStrictEqual(
+      filtered.nonResourceMethods.map((method) => method.methodId),
+      ["Microsoft.Test.Service.Get"]
+    );
   });
 
   it("resource group resource", async () => {
@@ -2207,7 +2341,8 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
       "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.ContosoProviderHub/sites/{siteName}";
     const normalizeServiceGroupScopes = (resource: ArmResourceSchema) => {
       if (
-        resource.metadata.resourceIdPattern.path === serviceGroupResourcePattern
+        (resource.metadata.resourceIdPattern as unknown as string) ===
+        serviceGroupResourcePattern
       ) {
         (resource.metadata as { scope: { kind: unknown } }).scope.kind =
           "<normalized>";
