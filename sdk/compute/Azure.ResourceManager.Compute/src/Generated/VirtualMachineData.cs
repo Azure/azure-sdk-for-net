@@ -351,6 +351,23 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        /// <summary> Specifies information about the capacity reservation that is used to allocate virtual machine. Minimum api-version: 2021-04-01. </summary>
+        public CapacityReservationProfile CapacityReservation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CapacityReservation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                Properties.CapacityReservation = value;
+            }
+        }
+
         /// <summary> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </summary>
         public DateTimeOffset? TimeCreated
         {
@@ -476,23 +493,6 @@ namespace Azure.ResourceManager.Compute
                     Properties = new VirtualMachineProperties();
                 }
                 Properties.HostGroupId = value;
-            }
-        }
-
-        /// <summary> Resource Id. </summary>
-        public ResourceIdentifier CapacityReservationGroupId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.CapacityReservationGroupId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachineProperties();
-                }
-                Properties.CapacityReservationGroupId = value;
             }
         }
 

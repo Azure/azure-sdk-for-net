@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Indicates the type of capacity reservation. Allowed values are 'Block' for block capacity reservations and 'Targeted' for reservations that enable a VM to consume a specific capacity reservation when a capacity reservation group is provided. The reservation type is immutable and cannot be changed after it is assigned. </summary>
-        public CapacityReservationType? ReservationType
+        /// <summary> Indicates the type of capacity reservation. Allowed values are 'Block' for block capacity reservations that enable a VM to consume capacity only from this capacity block when it is associated using a capacity reservation group, 'Targeted' for reservations that enable a VM to consume capacity from an explicitly associated capacity reservation group and fall back to the publicly available capacity if the reservation is full, and 'Open' for reservations that a VM consumes when it is eligible from an implicitly associated capacity reservation group with the matching VM size and zone without associating that capacity reservation group and fall back to the publicly available capacity if the reservation is full. The reservation type is immutable and cannot be changed after the capacity reservation group is created. </summary>
+        public ReservationType? ReservationType
         {
             get
             {

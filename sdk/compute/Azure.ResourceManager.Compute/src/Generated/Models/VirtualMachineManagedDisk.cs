@@ -25,11 +25,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="storageAccountType"> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </param>
         /// <param name="diskEncryptionSet"> Specifies the customer managed disk encryption set resource id for the managed disk. </param>
         /// <param name="securityProfile"> Specifies the security profile for the managed disk. </param>
-        internal VirtualMachineManagedDisk(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, StorageAccountType? storageAccountType, DiskEncryptionSetParameters diskEncryptionSet, VirtualMachineDiskSecurityProfile securityProfile) : base(id, additionalBinaryDataProperties)
+        /// <param name="additionalDiskProperties"> Specifies additional properties for the managed disk that can be set at the time of implicit creation of the disk. This property is not captured for Restore Points. </param>
+        internal VirtualMachineManagedDisk(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, StorageAccountType? storageAccountType, DiskEncryptionSetParameters diskEncryptionSet, VirtualMachineDiskSecurityProfile securityProfile, AdditionalDiskProperties additionalDiskProperties) : base(id, additionalBinaryDataProperties)
         {
             StorageAccountType = storageAccountType;
             DiskEncryptionSet = diskEncryptionSet;
             SecurityProfile = securityProfile;
+            AdditionalDiskProperties = additionalDiskProperties;
         }
 
         /// <summary> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </summary>
@@ -41,6 +43,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the security profile for the managed disk. </summary>
         public VirtualMachineDiskSecurityProfile SecurityProfile { get; set; }
 
+        /// <summary> Specifies additional properties for the managed disk that can be set at the time of implicit creation of the disk. This property is not captured for Restore Points. </summary>
+        internal AdditionalDiskProperties AdditionalDiskProperties { get; set; }
+
         /// <summary> Resource Id. </summary>
         public ResourceIdentifier DiskEncryptionSetId
         {
@@ -51,6 +56,23 @@ namespace Azure.ResourceManager.Compute.Models
             set
             {
                 DiskEncryptionSet = new DiskEncryptionSetParameters(value);
+            }
+        }
+
+        /// <summary> Specifies the managed disk properties that can be set at the time of implicit creation of the disk. </summary>
+        public VirtualMachineDiskProperties ManagedDiskProperties
+        {
+            get
+            {
+                return AdditionalDiskProperties is null ? default : AdditionalDiskProperties.ManagedDiskProperties;
+            }
+            set
+            {
+                if (AdditionalDiskProperties is null)
+                {
+                    AdditionalDiskProperties = new AdditionalDiskProperties();
+                }
+                AdditionalDiskProperties.ManagedDiskProperties = value;
             }
         }
     }

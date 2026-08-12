@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
@@ -49,7 +51,7 @@ namespace Azure.ResourceManager.Compute
             _location = location;
             _publisherName = publisherName;
             _virtualMachineExtensionImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineExtensionImageResource.ResourceType.Namespace, Diagnostics);
-            _virtualMachineExtensionImagesRestClient = new VirtualMachineExtensionImages(_virtualMachineExtensionImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineExtensionImageApiVersion ?? "2026-03-01");
+            _virtualMachineExtensionImagesRestClient = new VirtualMachineExtensionImages(_virtualMachineExtensionImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineExtensionImageApiVersion ?? "2026-04-01");
             ValidateResourceId(id);
         }
 
@@ -76,7 +78,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,7 +129,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,7 +180,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,7 +214,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -246,7 +248,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -254,11 +256,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="top"></param>
         /// <param name="orderby"></param>
+        /// <param name="expand"> Expand the response to include additional read-only metadata. Allowed values: `properties` — returns extended metadata (`releaseCategory`, `urgencyLevel`, `runProfile`). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="type"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="VirtualMachineExtensionImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineExtensionImageResource> GetAllAsync(string @type, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineExtensionImageResource> GetAllAsync(string @type, string filter = default, int? top = default, string @orderby = default, ListVersionsExpandOptions? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(@type, nameof(@type));
 
@@ -275,6 +278,7 @@ namespace Azure.ResourceManager.Compute
                 filter,
                 top,
                 @orderby,
+                expand?.ToString(),
                 context,
                 "VirtualMachineExtensionImageCollection.GetAll"), data => new VirtualMachineExtensionImageResource(Client, data));
         }
@@ -292,7 +296,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,11 +304,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="top"></param>
         /// <param name="orderby"></param>
+        /// <param name="expand"> Expand the response to include additional read-only metadata. Allowed values: `properties` — returns extended metadata (`releaseCategory`, `urgencyLevel`, `runProfile`). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="type"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="VirtualMachineExtensionImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineExtensionImageResource> GetAll(string @type, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineExtensionImageResource> GetAll(string @type, string filter = default, int? top = default, string @orderby = default, ListVersionsExpandOptions? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(@type, nameof(@type));
 
@@ -321,6 +326,7 @@ namespace Azure.ResourceManager.Compute
                 filter,
                 top,
                 @orderby,
+                expand?.ToString(),
                 context,
                 "VirtualMachineExtensionImageCollection.GetAll"), data => new VirtualMachineExtensionImageResource(Client, data));
         }
@@ -338,7 +344,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -397,7 +403,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -456,7 +462,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -519,7 +525,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -583,6 +589,38 @@ namespace Azure.ResourceManager.Compute
         IAsyncEnumerator<VirtualMachineExtensionImageResource> IAsyncEnumerable<VirtualMachineExtensionImageResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of virtual machine extension image versions.
+        ///             Request Path./subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions.Operation Id.VirtualMachineExtensionImages_ListVersions.Default Api Version.2026-03-01.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="top"></param>
+        /// <param name="orderby"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VirtualMachineExtensionImageResource"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<VirtualMachineExtensionImageResource> GetAllAsync(string @type, string filter, int? top, string @orderby, CancellationToken cancellationToken)
+        {
+            return GetAllAsync(@type: @type, filter: filter, top: top, @orderby: @orderby, expand: default, cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of virtual machine extension image versions.
+        ///             Request Path./subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions.Operation Id.VirtualMachineExtensionImages_ListVersions.Default Api Version.2026-03-01.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="top"></param>
+        /// <param name="orderby"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VirtualMachineExtensionImageResource"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<VirtualMachineExtensionImageResource> GetAll(string @type, string filter, int? top, string @orderby, CancellationToken cancellationToken)
+        {
+            return GetAll(@type: @type, filter: filter, top: top, @orderby: @orderby, expand: default, cancellationToken: cancellationToken);
         }
     }
 }

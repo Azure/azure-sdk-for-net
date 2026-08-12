@@ -24,11 +24,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineHardwareProfile"/>. </summary>
         /// <param name="vmSize"> Specifies the size of the virtual machine. The enum data type is currently deprecated and will be removed by December 23rd 2023. The recommended way to get the list of available sizes is using these APIs: [List all available virtual machine sizes in an availability set](https://docs.microsoft.com/rest/api/compute/availabilitysets/listavailablesizes), [List all available virtual machine sizes in a region]( https://docs.microsoft.com/rest/api/compute/resourceskus/list), [List all available virtual machine sizes for resizing](https://docs.microsoft.com/rest/api/compute/virtualmachines/listavailablesizes). For more information about virtual machine sizes, see [Sizes for virtual machines](https://docs.microsoft.com/azure/virtual-machines/sizes). The available VM sizes depend on region and availability set. </param>
         /// <param name="vmSizeProperties"> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2021-07-01. This feature is still in preview mode and is not supported for VirtualMachineScaleSet. Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </param>
+        /// <param name="processorMode"> Specifies the processor mode for the virtual machine or virtual machine scale set. Optional; if omitted, the platform default applies (currently Deterministic). This property can be updated on a running VM or VMSS without deallocation or reboot. Minimum api-version: 2026-04-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineHardwareProfile(VirtualMachineSizeType? vmSize, VirtualMachineSizeProperties vmSizeProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineHardwareProfile(VirtualMachineSizeType? vmSize, VirtualMachineSizeProperties vmSizeProperties, ProcessorMode? processorMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSize = vmSize;
             VmSizeProperties = vmSizeProperties;
+            ProcessorMode = processorMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,5 +39,8 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2021-07-01. This feature is still in preview mode and is not supported for VirtualMachineScaleSet. Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </summary>
         public VirtualMachineSizeProperties VmSizeProperties { get; set; }
+
+        /// <summary> Specifies the processor mode for the virtual machine or virtual machine scale set. Optional; if omitted, the platform default applies (currently Deterministic). This property can be updated on a running VM or VMSS without deallocation or reboot. Minimum api-version: 2026-04-01. </summary>
+        public ProcessorMode? ProcessorMode { get; set; }
     }
 }
