@@ -4,7 +4,12 @@
 
 ### Features Added
 
+- Added strongly typed convenience overloads for service operations. The existing protocol methods remain available for advanced scenarios.
+- Added experimental configuration and host-builder integration through `ConfidentialLedgerClientSettings` and `ConfidentialLedgerClientHostExtensions`.
+
 ### Breaking Changes
+
+- Renamed and moved `Azure.Security.ConfidentialLedger.Models.SecurityConfidentialLedgerModelFactory` to `Azure.Security.ConfidentialLedger.ConfidentialLedgerModelFactory`.
 
 ### Bugs Fixed
 
