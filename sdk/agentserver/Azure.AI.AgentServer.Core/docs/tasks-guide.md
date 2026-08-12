@@ -263,7 +263,7 @@ stops promptly when cancelled, times out, or the host shuts down.
 Task records contain framework orchestration state only. Persist checkpoints,
 conversation history, and idempotency markers explicitly with `FoundryStateStore`.
 Scope the store name to your task, session, or conversation identity. See the
-[State Store guide](StateStoreGuide.md) for local fallback, optimistic concurrency,
+[State Store guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/StateStoreGuide.md) for local fallback, optimistic concurrency,
 tagging, and recovered-execution patterns.
 
 ### 4.6 The result handle (`TaskRun<TOutput>`)
