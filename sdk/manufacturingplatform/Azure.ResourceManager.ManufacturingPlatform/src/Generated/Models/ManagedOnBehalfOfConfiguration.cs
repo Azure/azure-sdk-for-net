@@ -11,7 +11,6 @@ using Azure.ResourceManager.ManufacturingPlatform;
 
 namespace Azure.ResourceManager.ManufacturingPlatform.Models
 {
-    /// <summary> Configuration of the managed on behalf of resource. </summary>
     internal partial class ManagedOnBehalfOfConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

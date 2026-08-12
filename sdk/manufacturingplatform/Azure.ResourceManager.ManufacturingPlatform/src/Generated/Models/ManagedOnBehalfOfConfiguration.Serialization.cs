@@ -13,7 +13,6 @@ using Azure.ResourceManager.ManufacturingPlatform;
 
 namespace Azure.ResourceManager.ManufacturingPlatform.Models
 {
-    /// <summary> Configuration of the managed on behalf of resource. </summary>
     internal partial class ManagedOnBehalfOfConfiguration : IJsonModel<ManagedOnBehalfOfConfiguration>
     {
         /// <param name="data"> The data to parse. </param>
@@ -77,12 +76,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("moboBrokerResources"u8);
-                writer.WriteStartArray();
-                foreach (ManagedOnBehalfOfBrokerResourceInfo item in BrokerResources)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                SerializeBrokerResources(writer, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
