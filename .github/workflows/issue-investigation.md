@@ -13,6 +13,11 @@ on:
         required: true
         type: string
 
+concurrency:
+  group: "gh-aw-${{ github.workflow }}-${{ github.event.inputs.issue_number }}"
+  queue: max
+  job-discriminator: ${{ github.event.inputs.issue_number || github.run_id }}
+
 permissions:
   copilot-requests: write
   contents: read
