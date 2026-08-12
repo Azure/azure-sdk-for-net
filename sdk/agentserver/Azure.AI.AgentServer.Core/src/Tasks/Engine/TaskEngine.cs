@@ -681,7 +681,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             while (true)
             {
                 TurnOutcome<TOutput> outcome = await RunTurnAsync(
-                    handler, retry, activeRun, currentRun, currentInput, taskId, currentInputId,
+                    registration, handler, retry, activeRun, currentRun, currentInput, taskId, currentInputId,
                     currentMode, steered, TaskEngineConstants.ResolveTaskTimeout(registration.Options?.Timeout), currentCts).ConfigureAwait(false);
 
                 if (outcome.Kind == TurnOutcomeKind.Deferred)
@@ -865,6 +865,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
     // Runs a single turn's retry loop and returns its raw outcome WITHOUT any store write,
     // handle resolution, or active-run cleanup (the orchestrator owns those).
     private async Task<TurnOutcome<TOutput>> RunTurnAsync<TInput, TOutput>(
+        TaskRegistration registration,
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
         TaskRetryPolicy retry,
         ActiveRun<TOutput> activeRun,
@@ -957,8 +958,23 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                 ctxState.RetryAttempt = attempt;
                 try
                 {
-                    TOutput result = await handler(
-                        new TaskContext<TInput>(ctxState), handlerCts.Token).ConfigureAwait(false);
+                    FoundryAgentRequestContext ambientRequestContext = FoundryAgentRequestContext.Current;
+                    FoundryAgentRequestContext? previousRequestContext =
+                        FoundryAgentRequestContext.Exchange(new FoundryAgentRequestContext
+                        {
+                            CallId = ExtractCallId(ctxState.Input, registration) ?? ambientRequestContext.CallId,
+                        });
+                    TOutput result;
+                    try
+                    {
+                        result = await handler(
+                            new TaskContext<TInput>(ctxState), handlerCts.Token).ConfigureAwait(false);
+                    }
+                    finally
+                    {
+                        FoundryAgentRequestContext.Exchange(previousRequestContext);
+                    }
+
                     if (ctxState.DeferredForRecovery)
                     {
                         // The handler voluntarily yielded for recovery (ExitForRecovery set a
@@ -1354,6 +1370,21 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             ? JsonSerializer.SerializeToUtf8Bytes(input, typeInfo)
             : JsonSerializer.SerializeToUtf8Bytes(input);
         return JsonNode.Parse(bytes);
+    }
+
+    private static string? ExtractCallId<TInput>(TInput input, TaskRegistration registration)
+    {
+        if (SerializeInput(input, registration) is not JsonObject inputObject)
+        {
+            return null;
+        }
+
+        JsonNode? value = inputObject["call_id"] ?? inputObject["CallId"];
+        return value is JsonValue jsonValue
+            && jsonValue.TryGetValue(out string? callId)
+            && !string.IsNullOrEmpty(callId)
+                ? callId
+                : null;
     }
 
     // Deserializes a task input node through the registration's source-generated metadata when

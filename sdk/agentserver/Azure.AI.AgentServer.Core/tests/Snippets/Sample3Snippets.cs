@@ -115,6 +115,32 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
         }
 
         [Test]
+        public async Task RecoveredExecution()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync("checkpoints/thread-abc", credential);
+            string persistedCallId = "call-123";
+
+            #region Snippet:Core_Sample3_RecoveredExecution
+
+            // Resilient task inputs should persist the inbound call ID as "call_id".
+            // The task engine restores it for each handler attempt. An explicit callId
+            // can also be used to override the ambient value for a specific operation.
+            StateStoreItem? checkpoint = await store.GetItemAsync(
+                "state",
+                callId: persistedCallId);
+
+            await store.SetItemAsync(
+                "state",
+                new Dictionary<string, BinaryData>
+                {
+                    ["phase"] = BinaryData.FromObjectAsJson("complete"),
+                });
+
+            #endregion
+        }
+
+        [Test]
         public async Task Concurrency()
         {
             TokenCredential credential = new DefaultAzureCredential();

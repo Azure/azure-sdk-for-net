@@ -170,13 +170,15 @@ Console.WriteLine(deleted.Deleted);
 ## Recovered task execution and call IDs
 
 Item methods accept an optional `callId`. When omitted, the client reads
-`FoundryAgentRequestContext.Current.CallId`, which is correct during the original
-HTTP request. A recovered durable task runs without that request context, so include
-the inbound call ID in the task input and pass it explicitly:
+`FoundryAgentRequestContext.Current.CallId`. Include the inbound call ID in durable
+task input using the canonical JSON property `call_id`; the task engine restores it
+for every fresh, retried, steered, or recovered handler attempt. Pass it explicitly
+only when a specific storage operation must override the ambient value:
 
 ```C# Snippet:Core_Sample3_RecoveredExecution
-// Persist the inbound call ID in the durable task input. Recovered handlers do not
-// have the original ambient HTTP context, so pass it explicitly on item operations.
+// Resilient task inputs should persist the inbound call ID as "call_id".
+// The task engine restores it for each handler attempt. An explicit callId
+// can also be used to override the ambient value for a specific operation.
 StateStoreItem? checkpoint = await store.GetItemAsync(
     "state",
     callId: persistedCallId);
@@ -186,13 +188,14 @@ await store.SetItemAsync(
     new Dictionary<string, BinaryData>
     {
         ["phase"] = BinaryData.FromObjectAsJson("complete"),
-    },
-    callId: persistedCallId);
+    });
 ```
 
 An explicit `callId` overrides the ambient value. This parameter is available on
 `CreateItemAsync`, `SetItemAsync`, `GetItemAsync`, `DeleteItemAsync`, and
-`ListKeysAsync`; store lifecycle operations remain store-scoped.
+`ListKeysAsync`; store lifecycle operations remain store-scoped. The overloads retain
+the original parameter order for source and binary compatibility, so explicit
+create/set/list calls also provide their preceding optional arguments.
 
 ## Values, tags, and TTL
 

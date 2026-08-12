@@ -462,7 +462,7 @@ public class FoundryStateStoreTests
     }
 
     [Test]
-    public async Task ItemOperation_DoesNotForwardAmbientCallId()
+    public async Task ItemOperation_ForwardsAmbientCallId()
     {
         var transport = new MockTransport(Json(404, """{"error":{"message":"not found"}}"""));
         FoundryStateStore store = MakeStore(transport, name: "checkpoints");
@@ -479,8 +479,100 @@ public class FoundryStateStoreTests
         }
 
         Assert.That(
-            transport.SingleRequest.Headers.TryGetValue(PlatformHeaders.FoundryCallId, out _),
-            Is.False);
+            transport.SingleRequest.Headers.TryGetValue(PlatformHeaders.FoundryCallId, out string? callId),
+            Is.True);
+        Assert.That(callId, Is.EqualTo("ambient-call"));
+    }
+
+    [Test]
+    public async Task ItemOperation_ExplicitCallIdOverridesAmbientContext()
+    {
+        var transport = new MockTransport(Json(404, """{"error":{"message":"not found"}}"""));
+        FoundryStateStore store = MakeStore(transport, name: "checkpoints");
+        FoundryAgentRequestContext? previous = FoundryAgentRequestContext.Exchange(
+            new FoundryAgentRequestContext { CallId = "ambient-call" });
+
+        try
+        {
+            await store.GetItemAsync("missing", callId: "explicit-call");
+        }
+        finally
+        {
+            FoundryAgentRequestContext.Exchange(previous);
+        }
+
+        Assert.That(
+            transport.SingleRequest.Headers.TryGetValue(PlatformHeaders.FoundryCallId, out string? callId),
+            Is.True);
+        Assert.That(callId, Is.EqualTo("explicit-call"));
+    }
+
+    [Test]
+    public async Task AllItemOperations_ForwardExplicitCallId()
+    {
+        const string itemRef =
+            """{"id":"it_1","object":"state_store.item","key":"step/1","etag":"\"0x8DC\"","created_at":10,"updated_at":10}""";
+        var transport = new MockTransport(
+            Json(201, itemRef),
+            Json(200, itemRef),
+            Json(200,
+                """{"id":"it_1","object":"state_store.item","key":"step/1","value":{"done":true},"etag":"\"0x8DC\"","created_at":10,"updated_at":10}"""),
+            Json(200, """{"id":"it_1","object":"state_store.item","key":"step/1","deleted":true}"""),
+            Json(200, """{"object":"list","data":[],"has_more":false}"""));
+        FoundryStateStore store = MakeStore(transport, name: "checkpoints");
+        var value = new Dictionary<string, BinaryData>
+        {
+            ["done"] = BinaryData.FromObjectAsJson(true),
+        };
+
+        await store.CreateItemAsync("step/1", value, tags: null, callId: "explicit-call");
+        await store.SetItemAsync(
+            "step/1",
+            value,
+            tags: null,
+            ifMatch: null,
+            requireExists: false,
+            callId: "explicit-call");
+        await store.GetItemAsync("step/1", callId: "explicit-call");
+        await store.DeleteItemAsync("step/1", ifMatch: null, callId: "explicit-call");
+        await store.ListKeysAsync(
+            tags: null,
+            limit: null,
+            after: null,
+            before: null,
+            order: ListRequestOrder.Desc,
+            callId: "explicit-call");
+
+        Assert.That(transport.Requests, Has.Count.EqualTo(5));
+        foreach (MockRequest request in transport.Requests)
+        {
+            Assert.That(
+                request.Headers.TryGetValue(PlatformHeaders.FoundryCallId, out string? callId),
+                Is.True);
+            Assert.That(callId, Is.EqualTo("explicit-call"));
+        }
+    }
+
+    [Test]
+    public async Task ExistingNullArgumentCallsRemainUnambiguous()
+    {
+        const string itemRef =
+            """{"id":"it_1","object":"state_store.item","key":"step/1","etag":"\"0x8DC\"","created_at":10,"updated_at":10}""";
+        var transport = new MockTransport(
+            Json(201, itemRef),
+            Json(200, itemRef),
+            Json(200, """{"object":"list","data":[],"has_more":false}"""));
+        FoundryStateStore store = MakeStore(transport, name: "checkpoints");
+        var value = new Dictionary<string, BinaryData>
+        {
+            ["done"] = BinaryData.FromObjectAsJson(true),
+        };
+
+        await store.CreateItemAsync("step/1", value, null);
+        await store.SetItemAsync("step/1", value, null);
+        await store.ListKeysAsync(null);
+
+        Assert.That(transport.Requests, Has.Count.EqualTo(3));
     }
 
     [TestCase(0)]
@@ -536,14 +628,22 @@ public class FoundryStateStoreTests
             await first.SetItemAsync(
                 "step/1",
                 new Dictionary<string, BinaryData> { ["done"] = BinaryData.FromObjectAsJson(true) },
-                tags: new Dictionary<string, string> { ["kind"] = "checkpoint" });
+                tags: new Dictionary<string, string> { ["kind"] = "checkpoint" },
+                ifMatch: null,
+                requireExists: false,
+                callId: "local-call");
 
             FoundryStateStore second = await FoundryStateStore.GetOrCreateAsync(
                 "local-checkpoints",
                 credential: null);
-            StateStoreItem? item = await second.GetItemAsync("step/1");
+            StateStoreItem? item = await second.GetItemAsync("step/1", callId: "local-call");
             StateStoreItemKeyPage page = await second.ListKeysAsync(
-                tags: new Dictionary<string, string> { ["kind"] = "checkpoint" });
+                tags: new Dictionary<string, string> { ["kind"] = "checkpoint" },
+                limit: null,
+                after: null,
+                before: null,
+                order: ListRequestOrder.Desc,
+                callId: "local-call");
 
             Assert.That(item, Is.Not.Null);
             Assert.That(item!.Value["done"].ToObjectFromJson<bool>(), Is.True);
@@ -551,6 +651,7 @@ public class FoundryStateStoreTests
             Assert.That(
                 Directory.GetFiles(Path.Combine(stateRoot, "state_stores"), "*.json"),
                 Has.Length.EqualTo(1));
+            await second.DeleteItemAsync("step/1", ifMatch: null, callId: "local-call");
         }
         finally
         {

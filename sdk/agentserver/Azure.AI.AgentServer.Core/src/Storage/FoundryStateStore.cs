@@ -257,10 +257,25 @@ namespace Azure.AI.AgentServer.Core.Storage
         /// <param name="tags">Optional item metadata tags.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
         /// <returns>A reference to the created item.</returns>
-        public virtual async Task<StateStoreItemRef> CreateItemAsync(
+        public virtual Task<StateStoreItemRef> CreateItemAsync(
             string key,
             IDictionary<string, BinaryData> value,
             IReadOnlyDictionary<string, string>? tags = null,
+            CancellationToken cancellationToken = default)
+            => CreateItemAsync(key, value, tags, callId: null, cancellationToken);
+
+        /// <summary>Creates a new item, failing on a duplicate key.</summary>
+        /// <param name="key">The item key.</param>
+        /// <param name="value">The item value as a JSON object.</param>
+        /// <param name="tags">Optional item metadata tags.</param>
+        /// <param name="callId">The Foundry call ID to forward, or <see langword="null"/> to use the current request context.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        /// <returns>A reference to the created item.</returns>
+        public virtual async Task<StateStoreItemRef> CreateItemAsync(
+            string key,
+            IDictionary<string, BinaryData> value,
+            IReadOnlyDictionary<string, string>? tags,
+            string? callId,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -277,7 +292,8 @@ namespace Azure.AI.AgentServer.Core.Storage
                 RequestMethod.Post,
                 $"{StorePath()}/items",
                 content: body,
-                includeUserId: true);
+                includeUserId: true,
+                callId: callId);
             Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
             return Deserialize<StateStoreItemRef>(response);
         }
@@ -290,12 +306,31 @@ namespace Azure.AI.AgentServer.Core.Storage
         /// <param name="requireExists">When <see langword="true"/>, requires the item to already exist (sends <c>If-Match: *</c>). Mutually exclusive with <paramref name="ifMatch"/>.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
         /// <returns>A reference to the written item.</returns>
-        public virtual async Task<StateStoreItemRef> SetItemAsync(
+        public virtual Task<StateStoreItemRef> SetItemAsync(
             string key,
             IDictionary<string, BinaryData> value,
             IReadOnlyDictionary<string, string>? tags = null,
             string? ifMatch = null,
             bool requireExists = false,
+            CancellationToken cancellationToken = default)
+            => SetItemAsync(key, value, tags, ifMatch, requireExists, callId: null, cancellationToken);
+
+        /// <summary>Creates or replaces one item by key.</summary>
+        /// <param name="key">The item key.</param>
+        /// <param name="value">The item value as a JSON object.</param>
+        /// <param name="tags">Optional item metadata tags.</param>
+        /// <param name="ifMatch">Optional optimistic-concurrency token. Mutually exclusive with <paramref name="requireExists"/>.</param>
+        /// <param name="requireExists">When <see langword="true"/>, requires the item to already exist (sends <c>If-Match: *</c>). Mutually exclusive with <paramref name="ifMatch"/>.</param>
+        /// <param name="callId">The Foundry call ID to forward, or <see langword="null"/> to use the current request context.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        /// <returns>A reference to the written item.</returns>
+        public virtual async Task<StateStoreItemRef> SetItemAsync(
+            string key,
+            IDictionary<string, BinaryData> value,
+            IReadOnlyDictionary<string, string>? tags,
+            string? ifMatch,
+            bool requireExists,
+            string? callId,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -319,7 +354,8 @@ namespace Azure.AI.AgentServer.Core.Storage
                 ItemPath(key),
                 content: body,
                 includeUserId: true,
-                ifMatch: header);
+                ifMatch: header,
+                callId: callId);
             Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
             return Deserialize<StateStoreItemRef>(response);
         }
@@ -328,8 +364,19 @@ namespace Azure.AI.AgentServer.Core.Storage
         /// <param name="key">The item key.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
         /// <returns>The item, or <see langword="null"/> if it does not exist.</returns>
+        public virtual Task<StateStoreItem?> GetItemAsync(
+            string key,
+            CancellationToken cancellationToken = default)
+            => GetItemAsync(key, callId: null, cancellationToken);
+
+        /// <summary>Fetches one item by key.</summary>
+        /// <param name="key">The item key.</param>
+        /// <param name="callId">The Foundry call ID to forward, or <see langword="null"/> to use the current request context.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        /// <returns>The item, or <see langword="null"/> if it does not exist.</returns>
         public virtual async Task<StateStoreItem?> GetItemAsync(
             string key,
+            string? callId,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -343,7 +390,8 @@ namespace Azure.AI.AgentServer.Core.Storage
                 Request request = BuildRequest(
                     RequestMethod.Get,
                     ItemPath(key),
-                    includeUserId: true);
+                    includeUserId: true,
+                    callId: callId);
                 Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
                 return Deserialize<StateStoreItem>(response);
             }
@@ -358,9 +406,22 @@ namespace Azure.AI.AgentServer.Core.Storage
         /// <param name="ifMatch">Optional optimistic-concurrency token.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
         /// <returns>The deleted-item marker.</returns>
-        public virtual async Task<DeletedStateStoreItem> DeleteItemAsync(
+        public virtual Task<DeletedStateStoreItem> DeleteItemAsync(
             string key,
             string? ifMatch = null,
+            CancellationToken cancellationToken = default)
+            => DeleteItemAsync(key, ifMatch, callId: null, cancellationToken);
+
+        /// <summary>Deletes one item by key.</summary>
+        /// <param name="key">The item key.</param>
+        /// <param name="ifMatch">Optional optimistic-concurrency token.</param>
+        /// <param name="callId">The Foundry call ID to forward, or <see langword="null"/> to use the current request context.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        /// <returns>The deleted-item marker.</returns>
+        public virtual async Task<DeletedStateStoreItem> DeleteItemAsync(
+            string key,
+            string? ifMatch,
+            string? callId,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -373,7 +434,8 @@ namespace Azure.AI.AgentServer.Core.Storage
                 RequestMethod.Delete,
                 ItemPath(key),
                 includeUserId: true,
-                ifMatch: ifMatch);
+                ifMatch: ifMatch,
+                callId: callId);
             Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
             return Deserialize<DeletedStateStoreItem>(response);
         }
@@ -386,12 +448,31 @@ namespace Azure.AI.AgentServer.Core.Storage
         /// <param name="order">Sort order over creation time.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
         /// <returns>A <see cref="StateStoreItemKeyPage"/> of keys.</returns>
-        public virtual async Task<StateStoreItemKeyPage> ListKeysAsync(
+        public virtual Task<StateStoreItemKeyPage> ListKeysAsync(
             IReadOnlyDictionary<string, string>? tags = null,
             int? limit = null,
             string? after = null,
             string? before = null,
             ListRequestOrder order = ListRequestOrder.Desc,
+            CancellationToken cancellationToken = default)
+            => ListKeysAsync(tags, limit, after, before, order, callId: null, cancellationToken);
+
+        /// <summary>Lists keys within the bound store.</summary>
+        /// <param name="tags">Optional AND-combined tag-equality filters.</param>
+        /// <param name="limit">Optional maximum number of results.</param>
+        /// <param name="after">Optional cursor: return results after this id. Mutually exclusive with <paramref name="before"/>.</param>
+        /// <param name="before">Optional cursor: return results before this id. Mutually exclusive with <paramref name="after"/>.</param>
+        /// <param name="order">Sort order over creation time.</param>
+        /// <param name="callId">The Foundry call ID to forward, or <see langword="null"/> to use the current request context.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        /// <returns>A <see cref="StateStoreItemKeyPage"/> of keys.</returns>
+        public virtual async Task<StateStoreItemKeyPage> ListKeysAsync(
+            IReadOnlyDictionary<string, string>? tags,
+            int? limit,
+            string? after,
+            string? before,
+            ListRequestOrder order,
+            string? callId,
             CancellationToken cancellationToken = default)
         {
             if (after is not null && before is not null)
@@ -440,6 +521,7 @@ namespace Azure.AI.AgentServer.Core.Storage
                 RequestMethod.Get,
                 $"{StorePath()}/items:keys",
                 includeUserId: true,
+                callId: callId,
                 query: query);
             Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
             return new StateStoreItemKeyPage(Deserialize<ListResponseStateStoreItemKey>(response));
@@ -473,6 +555,7 @@ namespace Azure.AI.AgentServer.Core.Storage
             BinaryData? content = null,
             bool includeUserId = false,
             string? ifMatch = null,
+            string? callId = null,
             IEnumerable<KeyValuePair<string, string>>? query = null)
         {
             FoundryStorageClient client = Client;
@@ -488,6 +571,12 @@ namespace Azure.AI.AgentServer.Core.Storage
             if (includeUserId && _userId is not null)
             {
                 request.Headers.Add(DelegatedUserIdHeader, _userId);
+            }
+
+            string? effectiveCallId = callId ?? FoundryAgentRequestContext.Current.CallId;
+            if (effectiveCallId is not null)
+            {
+                request.Headers.SetValue(PlatformHeaders.FoundryCallId, effectiveCallId);
             }
 
             if (ifMatch is not null)
