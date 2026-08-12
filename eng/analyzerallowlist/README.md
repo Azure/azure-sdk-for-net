@@ -183,6 +183,9 @@ When picking a project from the backlog:
 
 Prefer one project or a small, logically connected package family per migration change. Keep the
 skip list alphabetical and never add a new project merely to bypass a new `AZC0041` failure.
+After the final project is migrated, delete the empty skip-list file. Shipping-library scope is
+configured independently, so an absent skip-list file is treated as an empty backlog and leaves
+`AZC0041` fully enforced.
 
 ## Related
 

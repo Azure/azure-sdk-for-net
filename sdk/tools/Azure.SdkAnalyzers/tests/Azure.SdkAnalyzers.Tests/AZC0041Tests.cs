@@ -268,21 +268,37 @@ namespace Azure.Test { public class TestClient { } }
         }
 
         [Test]
-        public void SkipsProjectWhenCentralConfigurationIsAbsent()
+        public void DoesNotSkipShippingProjectWhenMigrationBacklogIsAbsent()
         {
             bool result = ShouldSkipProject("Azure.Test");
+
+            Assert.That(result, Is.False);
+        }
+
+        [Test]
+        public void SkipsNonShippingProject()
+        {
+            bool result = ShouldSkipProject("Azure.Test", false);
 
             Assert.That(result, Is.True);
         }
 
         [Test]
-        public void SkipsForUnmarkedFileWithBacklogName()
+        public void SkipsProjectWhenShippingScopeIsAbsent()
+        {
+            bool result = ShouldSkipProject("Azure.Test", isShippingClientLibrary: null);
+
+            Assert.That(result, Is.True);
+        }
+
+        [Test]
+        public void DoesNotSkipShippingProjectForUnmarkedFileWithBacklogName()
         {
             bool result = ShouldSkipProject(
                 "Azure.Test",
                 ("CodeAnalysisSuppressionSkipValidation.txt", "Azure.Test", false));
 
-            Assert.That(result, Is.True);
+            Assert.That(result, Is.False);
         }
 
         [Test]
@@ -300,6 +316,14 @@ namespace Azure.Test { public class TestClient { } }
             string projectName,
             params (string Path, string Text, bool Marked)[] files)
         {
+            return ShouldSkipProject(projectName, true, files);
+        }
+
+        private static bool ShouldSkipProject(
+            string projectName,
+            bool? isShippingClientLibrary,
+            params (string Path, string Text, bool Marked)[] files)
+        {
             var additionalFiles = ImmutableArray.CreateBuilder<AdditionalText>();
             var markedPaths = new HashSet<string>();
             foreach ((string path, string text, bool marked) in files)
@@ -313,7 +337,7 @@ namespace Azure.Test { public class TestClient { } }
 
             var options = new AnalyzerOptions(
                 additionalFiles.ToImmutable(),
-                new TestOptionsProvider(projectName, markedPaths));
+                new TestOptionsProvider(projectName, isShippingClientLibrary, markedPaths));
             return CodeAnalysisSuppressionAnalyzer.ShouldSkipProject(options, CancellationToken.None);
         }
 
@@ -346,13 +370,14 @@ namespace Azure.Test { public class TestClient { } }
         private static void EnableSuppressionValidation(
             Microsoft.CodeAnalysis.CSharp.Testing.CSharpAnalyzerTest<CodeAnalysisSuppressionAnalyzer, DefaultVerifier> test)
         {
-            // A centrally marked AdditionalFile is the shipping-library activation signal.
+            // Shipping scope activates AZC0041; the marked file supplies only backlog entries.
             test.TestState.AdditionalFiles.Add((
                 "CodeAnalysisSuppressionSkipValidation.txt",
                 ""));
             test.TestState.AnalyzerConfigFiles.Add((
                 "/.globalconfig",
                 "is_global = true\n" +
+                "build_property.IsShippingClientLibrary = true\n" +
                 "build_property.MSBuildProjectName = Azure.Test\n" +
                 "build_metadata.AdditionalFiles.AzureSdkCodeAnalysisSuppressionSkipValidation = true"));
         }
@@ -402,11 +427,19 @@ namespace Azure.Test { public class TestClient { } }
         {
             private readonly HashSet<string> _markedPaths;
 
-            // Simulate the project property and AdditionalFile metadata emitted by MSBuild.
-            public TestOptionsProvider(string projectName, HashSet<string> markedPaths)
+            // Simulate the project properties and AdditionalFile metadata emitted by MSBuild.
+            public TestOptionsProvider(
+                string projectName,
+                bool? isShippingClientLibrary,
+                HashSet<string> markedPaths)
             {
                 _markedPaths = markedPaths;
-                GlobalOptions = new TestOptions(("build_property.MSBuildProjectName", projectName));
+                GlobalOptions = new TestOptions(
+                    ("build_property.MSBuildProjectName", projectName),
+                    isShippingClientLibrary.HasValue
+                        ? ("build_property.IsShippingClientLibrary",
+                            isShippingClientLibrary.Value ? "true" : "false")
+                        : (null, null));
             }
 
             public override AnalyzerConfigOptions GlobalOptions { get; }

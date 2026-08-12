@@ -16,15 +16,11 @@ namespace Azure.SdkAnalyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public sealed class CodeAnalysisSuppressionAnalyzer : DiagnosticAnalyzer
     {
-        // eng/AnalyzerAllowList.targets adds the central skip list as an AdditionalFile with
-        // AzureSdkCodeAnalysisSuppressionSkipValidation="true". Its CompilerVisibleItemMetadata
-        // entry exposes that value under this `build_metadata` analyzer-config key. Because
-        // ShouldSkipProject ignores files without marker=true, a project-local file with the same
-        // name cannot impersonate the central skip list.
+        // Only files marked by AnalyzerAllowList.targets can act as the migration backlog.
         private const string SkipListMarker =
             "build_metadata.AdditionalFiles.AzureSdkCodeAnalysisSuppressionSkipValidation";
 
-        // CompilerVisibleProperty exposes MSBuildProjectName under the `build_property` prefix.
+        private const string ShippingLibraryProperty = "build_property.IsShippingClientLibrary";
         private const string ProjectNameProperty = "build_property.MSBuildProjectName";
         internal const string BarePragmaMessage =
             "A bare #pragma warning disable is not allowed. Remove it, rebuild to identify the hidden warnings, and fix or centrally approve each specific diagnostic.";
@@ -43,13 +39,11 @@ namespace Azure.SdkAnalyzers
             context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
 
-            // Check the project-level migration backlog before registering syntax analysis.
             context.RegisterCompilationStartAction(compilationContext =>
             {
                 if (ShouldSkipProject(compilationContext.Options, compilationContext.CancellationToken))
                 {
                     // Roslyn requires every compilation-start branch to register an action.
-                    // Keep skipped projects free of syntax analysis while satisfying that contract.
                     compilationContext.RegisterCompilationEndAction(_ => { });
                     return;
                 }
@@ -59,11 +53,18 @@ namespace Azure.SdkAnalyzers
             });
         }
 
-        // ShouldSkipProject checks if the current project should be skipped based on current skip-list
-        // configuration.
         internal static bool ShouldSkipProject(AnalyzerOptions options, CancellationToken cancellationToken)
         {
-            // Find the one AdditionalFile whose analyzer configuration contains marker=true.
+            // Projects outside shipping-library scope skip AZC0041.
+            if (!options.AnalyzerConfigOptionsProvider.GlobalOptions.TryGetValue(
+                ShippingLibraryProperty,
+                out string isShippingClientLibrary) ||
+                !string.Equals(isShippingClientLibrary, "true", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            // Find the marked migration backlog.
             AdditionalText skipList = null;
             foreach (AdditionalText file in options.AdditionalFiles)
             {
@@ -75,7 +76,7 @@ namespace Azure.SdkAnalyzers
                     continue;
                 }
 
-                // Multiple marked files make the authoritative backlog ambiguous. Fail closed.
+                // Multiple marked files are ambiguous, so fail closed.
                 if (skipList != null)
                 {
                     return false;
@@ -84,15 +85,13 @@ namespace Azure.SdkAnalyzers
                 skipList = file;
             }
 
-            // Only shipping libraries receive the centrally marked backlog file. Projects that
-            // merely load the broader analyzer assembly remain outside AZC0041 policy scope.
+            // A missing backlog means migration is complete, so enforce AZC0041.
             if (skipList == null)
             {
-                return true;
+                return false;
             }
 
-            // Once central configuration is present, fail closed if required project identity or
-            // file contents are unavailable so a wiring failure cannot silently disable policy.
+            // Missing project identity or unreadable content fails closed.
             if (!options.AnalyzerConfigOptionsProvider.GlobalOptions.TryGetValue(
                 ProjectNameProperty,
                 out string projectName))
@@ -111,13 +110,12 @@ namespace Azure.SdkAnalyzers
                 string entry = line.ToString().Trim();
                 if (entry.Length == 0 || entry.StartsWith("#", StringComparison.Ordinal))
                 {
-                    // Skip comments and empty lines after trimming.
                     continue;
                 }
 
                 if (string.Equals(entry, projectName, StringComparison.Ordinal))
                 {
-                    // The current project is still awaiting migration, so skip AZC0041 analysis.
+                    // Backlogged projects skip AZC0041.
                     return true;
                 }
             }
@@ -125,25 +123,21 @@ namespace Azure.SdkAnalyzers
             return false;
         }
 
-        // Analyze #pragma warning directives for locally declared suppressions.
         private static void AnalyzePragma(SyntaxNodeAnalysisContext context)
         {
             var pragma = (PragmaWarningDirectiveTriviaSyntax)context.Node;
             if (!pragma.DisableOrRestoreKeyword.IsKind(SyntaxKind.DisableKeyword))
             {
-                // Restore directives do not declare a suppression.
                 return;
             }
 
             if (pragma.ErrorCodes.Count == 0)
             {
-                // A bare warning-disable pragma suppresses all warnings and is always disallowed.
                 context.ReportDiagnostic(Diagnostic.Create(Descriptors.AZC0041, pragma.GetLocation(), BarePragmaMessage));
                 return;
             }
 
-            // Every local warning suppression is centrally governed. Report each ID independently
-            // without coupling policy to the suppressor's narrower scoped-suppression capability.
+            // Governance is independent of scoped-suppression support.
             foreach (ExpressionSyntax errorCode in pragma.ErrorCodes)
             {
                 string diagnosticId = NormalizePragmaDiagnosticId(errorCode);
@@ -151,23 +145,19 @@ namespace Azure.SdkAnalyzers
             }
         }
 
-        // Analyze SuppressMessage and UnconditionalSuppressMessage attributes.
         private static void AnalyzeAttribute(SyntaxNodeAnalysisContext context)
         {
             var attribute = (AttributeSyntax)context.Node;
 
-            // Resolve the constructor semantically so aliases, qualified names, and assembly-level
-            // attributes are handled consistently.
+            // Semantic resolution handles aliases, qualified names, and assembly attributes.
             IMethodSymbol constructor =
                 context.SemanticModel.GetSymbolInfo(attribute, context.CancellationToken).Symbol as IMethodSymbol;
             if (constructor == null ||
                 !s_suppressionAttributeNames.Contains(constructor.ContainingType.ToDisplayString()))
             {
-                // Ignore attributes that are not recognized suppression attributes.
                 return;
             }
 
-            // Find the constructor argument containing the diagnostic ID.
             AttributeArgumentSyntax checkIdArgument = GetCheckIdArgument(attribute, constructor);
             if (checkIdArgument == null)
             {
@@ -197,7 +187,6 @@ namespace Azure.SdkAnalyzers
                 $"Suppression for diagnostic '{diagnosticId}' must be declared in eng/analyzerallowlist"));
         }
 
-        // Locate checkId when supplied positionally or with the constructor's `name:` syntax.
         private static AttributeArgumentSyntax GetCheckIdArgument(AttributeSyntax attribute, IMethodSymbol constructor)
         {
             if (attribute.ArgumentList == null)
@@ -230,9 +219,7 @@ namespace Azure.SdkAnalyzers
             return null;
         }
 
-        // Convert pragma error-code syntax into the canonical diagnostic ID used by the governed
-        // ID set. Preserve identifier IDs, normalize numeric compiler warnings to `CS####`, and
-        // return trimmed source text for any syntax Roslyn does not classify as either form.
+        // Normalize numeric compiler warnings to CS#### and preserve other source forms.
         private static string NormalizePragmaDiagnosticId(ExpressionSyntax errorCode)
         {
             if (errorCode is IdentifierNameSyntax identifier)
@@ -247,7 +234,6 @@ namespace Azure.SdkAnalyzers
                 return "CS" + compilerWarningNumber.ToString("0000", CultureInfo.InvariantCulture);
             }
 
-            // Preserve forward compatibility with other pragma expression shapes.
             return errorCode.ToString().Trim();
         }
     }

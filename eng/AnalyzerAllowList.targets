@@ -30,6 +30,7 @@
   <ItemGroup Condition="'$(IsShippingClientLibrary)' == 'true'">
     <CompilerVisibleItemMetadata Include="AdditionalFiles" MetadataName="AzureSdkAllowList" />
     <CompilerVisibleItemMetadata Include="AdditionalFiles" MetadataName="AzureSdkCodeAnalysisSuppressionSkipValidation" />
+    <CompilerVisibleProperty Include="IsShippingClientLibrary" />
     <CompilerVisibleProperty Include="MSBuildProjectName" />
     <AdditionalFiles Include="$(RepoEngPath)\CodeAnalysisSuppressionSkipValidation.txt"
                      AzureSdkCodeAnalysisSuppressionSkipValidation="true"
