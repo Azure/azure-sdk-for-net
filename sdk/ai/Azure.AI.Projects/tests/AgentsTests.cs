@@ -1698,7 +1698,7 @@ public class AgentsTests : AgentsTestBase
             responsesOptions,
             true);
         ProjectResponsesClient responseClient = CreateProxyFromClient(projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
-        ProjectCreateResponseOptions responseOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
             InputItems = { ResponseItem.CreateUserMessageItem("Hello, tell me a joke.") },
             SessionId = session.AgentSessionId,

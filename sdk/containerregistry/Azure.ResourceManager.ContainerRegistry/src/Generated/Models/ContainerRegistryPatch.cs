@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Enable per-region endpoints for accessing registry. </summary>
         [WirePath("properties.regionalEndpoints")]
-        public RegionalEndpoint? RegionalEndpoints
+        public ContainerRegistryRegionalEndpointStatus? RegionalEndpoints
         {
             get
             {
@@ -268,6 +268,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     Properties = new RegistryPropertiesUpdateParameters();
                 }
                 Properties.MetadataSearch = value;
+            }
+        }
+
+        /// <summary> Whether to allow cache operations that write to repositories in this registry. </summary>
+        [WirePath("properties.writableCacheRepos")]
+        public ContainerRegistryWritableCacheRepositories? WritableCacheRepos
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WritableCacheRepos;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RegistryPropertiesUpdateParameters();
+                }
+                Properties.WritableCacheRepos = value;
             }
         }
 
