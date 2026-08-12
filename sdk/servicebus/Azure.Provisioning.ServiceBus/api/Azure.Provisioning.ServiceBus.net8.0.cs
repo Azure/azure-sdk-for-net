@@ -238,6 +238,14 @@ namespace Azure.Provisioning.ServiceBus
         Tls1_2 = 2,
         [System.Runtime.Serialization.DataMemberAttribute(Name="1.3")]
         Tls1_3 = 3,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="1.0")]
+        Tls10 = 4,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="1.1")]
+        Tls11 = 5,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="1.2")]
+        Tls12 = 6,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="1.3")]
+        Tls13 = 7,
     }
     public partial class ServiceBusNamespace : Azure.Provisioning.Primitives.ProvisionableResource
     {
