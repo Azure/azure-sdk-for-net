@@ -17,10 +17,16 @@ namespace Azure.AI.AgentServer.Invocations;
 /// maps a clean handler return to RFC 6455 close code <c>1000</c>
 /// (<c>NormalClosure</c>) and an uncaught handler exception to
 /// <c>1011</c> (<c>InternalServerError</c>), preserves handler-initiated
-/// close codes unchanged, and emits a structured close-event log line
-/// carrying <c>azure.ai.agentserver.invocations_ws.session_id</c>,
-/// <c>azure.ai.agentserver.invocations_ws.close_code</c>, and
-/// <c>azure.ai.agentserver.invocations_ws.duration_ms</c>.</para>
+/// valid close codes unchanged, maps reserved or invalid local statuses to
+/// <c>1011</c> for a wire attempt, and makes one bounded best-effort attempt to
+/// enqueue a structured close-event log. The log's
+/// <c>azure.ai.agentserver.invocations_ws.close_code</c> is the endpoint's final
+/// local transport classification; selected and attempted close codes are
+/// carried in separate fields. Queue acceptance does not guarantee external
+/// logger or exporter completion. If a handler successfully sends a close
+/// frame and then throws, that frame cannot be replaced: the client keeps the
+/// sent code, while final diagnostics classify the later handler failure as
+/// <c>1011</c>/<c>internal_failure</c>.</para>
 /// <para>The inherited <see cref="HandleAsync"/> (HTTP
 /// <c>POST /invocations</c>) returns <c>404 Not Found</c> by default — a
 /// WS-only handler does not need to override it. Multi-protocol handlers
@@ -28,12 +34,15 @@ namespace Azure.AI.AgentServer.Invocations;
 /// <see cref="HandleWebSocketAsync"/>; both methods see the same session
 /// when <c>FOUNDRY_AGENT_SESSION_ID</c> is set so HTTP and WebSocket turns
 /// correlate.</para>
-/// <para>No framework-level OpenTelemetry span is created for the
-/// connection; ASP.NET Core auto-propagates the inbound W3C trace context
-/// to the request <see cref="System.Diagnostics.Activity"/>, so any spans
-/// the handler starts are parented correctly. Session / invocation /
-/// <c>x-request-id</c> baggage is propagated onto the current Activity
-/// before the handler runs.</para>
+/// <para>ASP.NET Core auto-propagates the inbound W3C trace context to the
+/// request <see cref="System.Diagnostics.Activity"/>. The library creates an
+/// <c>agentserver.connection</c> child activity for the accepted WebSocket;
+/// spans started by handlers are normally parented beneath it. If listener
+/// startup exceeds the bounded telemetry budget, handler spans and the late
+/// connection span remain request-parent siblings, and the connection span is
+/// tagged with <c>azure.ai.agentserver.trace.parent_fallback=true</c>. Session /
+/// invocation / <c>x-request-id</c> baggage is propagated before the handler
+/// runs.</para>
 /// </remarks>
 public abstract class InvocationWebSocketHandler : InvocationHandler
 {

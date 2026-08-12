@@ -1,6 +1,6 @@
 # Azure AI Agent Server Invocations library for .NET
 
-Azure.AI.AgentServer.Invocations is a .NET library for building ASP.NET Core servers that implement the Azure AI Invocations protocol. Subclass `InvocationHandler`, register it with the hosting builder, and the library handles routing, session resolution, client header forwarding, and invocation lifecycle management.
+Azure.AI.AgentServer.Invocations is a .NET library for building ASP.NET Core servers that implement the Azure AI Invocations protocol. Subclass `InvocationHandler`, register it with the hosting builder, and the library handles routing, session resolution, client header forwarding, and invocation lifecycle management. The library also includes a preview `Azure.AI.AgentServer.Invocations.Voice` submodule that implements Voice Live Bridge Protocol 1.0 over `invocations_ws`.
 
 [Source code][source] | [Package (NuGet)][nuget] | [Product documentation][product_doc]
 
@@ -62,6 +62,26 @@ The abstract base class you subclass for HTTP-only handlers. Only `HandleAsync` 
 ### InvocationWebSocketHandler
 
 Derives from `InvocationHandler` and adds the abstract `HandleWebSocketAsync` method for the `/invocations_ws` endpoint. The inherited `HandleAsync` returns 404 by default, so a WebSocket-only handler does not need to implement `HandleAsync` — multi-protocol handlers override both. See the [WebSocket protocol section](#websocket-protocol-invocations_ws) below.
+
+### Voice Live Bridge preview
+
+The `Azure.AI.AgentServer.Invocations.Voice` namespace provides a typed
+implementation of Voice Live Bridge Protocol 1.0 on the existing
+`/invocations_ws` endpoint. Derive from `VoiceHandler` and override
+`OnUserMessageAsync` plus any optional control callbacks your agent needs. The
+submodule owns activation, framing, response and item IDs, exact duplicate
+handling, ordered callbacks, multi-item output, proactive admission,
+self-cancellation, timeout and barge-in arbitration, handoff, and bounded
+per-connection cleanup while host-wide admission limits retained Voice output,
+exact JSON-encoded response frames, variable output writes, prepared frames,
+callback work, and protocol bookkeeping across connections. Each response has
+matching encoded-byte and write ceilings; reservations occur after exact frame
+preparation, commit at the first socket attempt, and release on response
+terminal. Mandatory response control transactions use a separate bounded
+encoded-byte reserve so ordinary output cannot consume their wire headroom. Voice Live
+continues to own audio, speech recognition,
+synthesis, voice activity detection, turn-taking, and barge-in. No additional
+NuGet package is required.
 
 ### InvocationContext
 
@@ -141,10 +161,31 @@ public class WebSocketEchoHandler : InvocationWebSocketHandler
 What the SDK does for you when the registered handler derives from `InvocationWebSocketHandler`:
 
 - Registers the `/invocations_ws` route on the same host as `/invocations` and `/readiness`.
+- Owns the WebSocket route as a literal GET endpoint. Host startup fails before
+    serving requests if another GET-capable endpoint owns the same final path;
+    repeated Invocations mapping at that path is also rejected.
 - Calls `AcceptWebSocketAsync` before invoking your handler.
 - Sends an RFC 6455 protocol-level Ping frame (opcode `0x9`) every `WS_KEEPALIVE_INTERVAL` seconds when the env var is set — Kestrel does this for us via `WebSocketOptions.KeepAliveInterval`, so the connection stays alive across upstream proxy / load-balancer idle timeouts without any extra application traffic. Disabled by default.
-- Closes the connection cleanly on handler return (close code `1000` — `NormalClosure`) or maps an uncaught handler exception to close code `1011` (`InternalServerError`). Handler-initiated close codes are preserved unchanged.
-- Emits a structured close-event log line carrying `session_id`, `close_code`, and `duration_ms`. No framework-level OpenTelemetry span is created for the connection — ASP.NET Core auto-propagates the inbound W3C trace context, so any spans your handler starts are parented correctly without a per-connection wrapper.
+- Closes the connection cleanly on handler return (close code `1000` — `NormalClosure`) or maps an uncaught handler exception to close code `1011` (`InternalServerError`). Valid handler-initiated close codes are preserved; reserved or out-of-range local statuses are mapped to `1011` for the wire attempt.
+    If a handler sends a close frame and then throws, the sent frame cannot be
+    replaced: the client keeps that wire code, while endpoint telemetry records
+    the later exception as final diagnostic `1011` / `internal_failure` and
+    retains the original code in `attempted_close_code`.
+- Emits an `agentserver.connection` activity and makes one bounded best-effort
+    attempt to enqueue a structured close-event log carrying `session_id`, final
+    local `close_code`, `selected_close_code`, `attempted_close_code`,
+    `close_outcome`, and `duration_ms`. Queue acceptance does not guarantee that
+    an external logger or exporter completes. Hosted telemetry callbacks use two
+    fixed background workers over shared bounded queues, so one blocked callback
+    does not consume the host's only telemetry execution slot. Callback completion
+    order is not guaranteed; if both workers block, existing deadline and drop
+    metrics expose bounded degradation. Telemetry backpressure never changes the
+    transport result. ASP.NET Core propagates the inbound W3C trace context, so
+    the connection activity and handler spans remain in the caller's trace.
+    Handler spans are normally children of `agentserver.connection`; if listener
+    startup exceeds the bounded telemetry budget, both remain request-parent
+    siblings and the late connection activity records
+    `azure.ai.agentserver.trace.parent_fallback=true`.
 - When the registered handler is a plain `InvocationHandler` (not an `InvocationWebSocketHandler`), an upgrade attempt receives HTTP `404 Not Found` — the WS endpoint short-circuits with "endpoint not registered" semantics so a missing handler fails fast instead of accepting and immediately closing.
 
 The session ID honours `FOUNDRY_AGENT_SESSION_ID` (matching the HTTP `POST /invocations` precedence, minus the query-param override which has no ergonomic equivalent on a long-lived WS connection), falling back to a generated UUID. Both transports on the same container therefore report the same session ID.

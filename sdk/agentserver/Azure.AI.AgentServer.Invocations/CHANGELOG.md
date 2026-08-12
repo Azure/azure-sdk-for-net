@@ -4,6 +4,34 @@
 
 ### Features Added
 
+- Added the preview `Azure.AI.AgentServer.Invocations.Voice` submodule, a typed
+  implementation of Voice Live Bridge Protocol 1.0 over the existing
+  `invocations_ws` transport. It includes `VoiceHandler`, `VoiceSession`,
+  `VoiceResponse`, `VoiceTextItem`, immutable callback models, proactive
+  admission, self-cancel and barge-in reconciliation, response timeouts,
+  handoff, strict framing and duplicate suppression, and
+  `AddVoice<THandler>()` / `VoiceServer.Run<THandler>()` hosting entry points.
+  Outbound frames are bounded by their final JSON-encoded size, a per-frame
+  attempted-prefix ledger reconciles peer-visible state before local send
+  continuations, response terminal writes have bounded physical drain, and
+  teardown shares one absolute cleanup deadline. Host-wide admission bounds
+  retained output, prepared frames, callback queues and tasks, pending helpers,
+  identities, exact JSON-encoded response bytes, variable output writes, and
+  cleanup work across all Voice connections. Matching per-response encoded-byte
+  and write budgets prevent many small frames or repeated envelope overhead from
+  bypassing raw-text limits, while a separate bounded encoded-byte reserve keeps
+  mandatory response control transactions available. Content-free
+  connection/turn activities preserve the inbound W3C trace hierarchy.
+  WebSocket close observability now separates selected intent, mapped transport
+  attempt, and final local outcome. Close-event logging uses a bounded
+  best-effort enqueue whose deadline, dispatcher-shutdown, and sink-failure
+  degradation is exposed through aggregate metrics without blocking teardown.
+  Hosted telemetry uses two fixed workers over the same bounded priority queues,
+  so one blocked external callback no longer stalls telemetry for every connection.
+  The `/invocations_ws` transport is now a literal GET endpoint with stable owner
+  metadata; final endpoint-table validation rejects duplicate or foreign
+  GET-capable ownership conflicts before the host begins serving requests.
+  Voice ships as part of the Invocations package rather than as a separate package.
 - AsyncAPI discovery endpoints — `InvocationHandler` now exposes two new
   virtual methods, `GetAsyncApiJsonAsync` and `GetAsyncApiYamlAsync`, served
   at `GET /invocations/docs/asyncapi.json` and `GET /invocations/docs/asyncapi.yaml`
@@ -16,6 +44,23 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Fixed proactive admission helpers waiting for the local `response.created`
+  send continuation after Voice Live had already returned an authoritative
+  `response.accepted` or `response.dropped` outcome. Registered admissions now
+  complete from the Voice Live outcome or connection terminal while the
+  underlying send remains supervised and a later fault still closes the carrier.
+- Fixed caller cancellation of response-cancel and proactive-admission waits so
+  durable protocol arbitration and structural termination continue under SDK
+  ownership. Best-effort proactive cancellation now has an independent bounded
+  send deadline instead of delaying the cancelled caller indefinitely.
+- Fixed WebSocket finalization when an inner close ignores cancellation or
+  abort, while preserving late task observation and aborted close telemetry.
+  A close frame committed before a later handler exception remains the
+  client-visible wire result, while final telemetry separately classifies the
+  handler failure as `1011` / `internal_failure`.
+  Delayed connection tracing now explicitly records the request-parent sibling
+  fallback used when listener startup exceeds its bounded budget.
 
 ### Other Changes
 
