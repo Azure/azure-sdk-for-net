@@ -42,7 +42,7 @@
     "@typespec/http-client-csharp": "1.0.0-alpha.20260811.7"
   },
   "devDependencies": {
-    "@azure-tools/azure-http-specs": "0.1.0-alpha.43",
+    "@azure-tools/azure-http-specs": "0.1.0-alpha.44",
     "@azure-tools/typespec-autorest": "0.70.0",
     "@azure-tools/typespec-azure-core": "0.70.0",
     "@azure-tools/typespec-azure-resource-manager": "0.70.0",
