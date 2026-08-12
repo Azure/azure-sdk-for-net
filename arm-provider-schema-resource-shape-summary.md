@@ -10,6 +10,7 @@ Resource rows are matched by normalized resource ID, where path parameter names 
 | --- | ---: |
 | Libraries processed | 217 |
 | Libraries with no resource-shape differences | 155 |
+| Libraries matching all resource-shape fields | 155/217 |
 | Libraries with resource-shape differences | 62 |
 | Legacy resources | 2247 |
 | resolveArmResources resources | 2113 |
