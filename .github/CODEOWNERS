@@ -51,6 +51,7 @@
 # PRLabel: %Azure.Core
 /sdk/core/                                                         @m-nash @Azure/azure-sdk-write-net-core
 /sdk/core/Azure.Core/**/Identity/                                  @JonathanCrd @Azure/azure-sdk-write-identity
+/sdk/core/Azure.Core.Amqp/                                         @m-nash @Azure/azure-sdk-write-net-core @j7nw4r @sagar0207 @SwayGom @sjkwak @hmlam
 
 # ServiceLabel: %Azure.Core
 # ServiceOwners:                                                   @m-nash @Azure/azure-sdk-write-net-core
