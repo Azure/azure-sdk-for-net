@@ -8,9 +8,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> An agent implementing the A2A protocol. </summary>
     public partial class A2APreviewTool : Tool, IJsonModel<A2APreviewTool>
@@ -39,7 +39,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(A2APreviewTool)} does not support writing '{options.Format}' format.");
             }
@@ -74,16 +74,6 @@ namespace Azure.AI.AgentServer.Responses.Models
                 throw new FormatException($"The model {nameof(A2APreviewTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
             if (Optional.IsDefined(BaseUrl))
             {
                 writer.WritePropertyName("base_url"u8);
@@ -98,6 +88,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 writer.WritePropertyName("project_connection_id"u8);
                 writer.WriteStringValue(ProjectConnectionId);
+            }
+            if (Optional.IsDefined(SendCredentialsForAgentCard))
+            {
+                writer.WritePropertyName("send_credentials_for_agent_card"u8);
+                writer.WriteBooleanValue(SendCredentialsForAgentCard.Value);
             }
         }
 
@@ -128,26 +123,15 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string name = default;
-            string description = default;
             Uri baseUrl = default;
             string agentCardPath = default;
             string projectConnectionId = default;
+            bool? sendCredentialsForAgentCard = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ToolType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("base_url"u8))
@@ -169,6 +153,15 @@ namespace Azure.AI.AgentServer.Responses.Models
                     projectConnectionId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("send_credentials_for_agent_card"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sendCredentialsForAgentCard = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -177,11 +170,10 @@ namespace Azure.AI.AgentServer.Responses.Models
             return new A2APreviewTool(
                 @type,
                 additionalBinaryDataProperties,
-                name,
-                description,
                 baseUrl,
                 agentCardPath,
-                projectConnectionId);
+                projectConnectionId,
+                sendCredentialsForAgentCard);
         }
     }
 }

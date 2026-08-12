@@ -9,9 +9,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Emitted when a content part is done. </summary>
     public partial class ResponseContentPartDoneEvent : ResponseStreamEvent, IJsonModel<ResponseContentPartDoneEvent>
@@ -45,7 +45,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResponseContentPartDoneEvent)} does not support writing '{options.Format}' format.");
             }
@@ -94,6 +94,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteNumberValue(OutputIndex);
             writer.WritePropertyName("content_index"u8);
             writer.WriteNumberValue(ContentIndex);
+            writer.WritePropertyName("sequence_number"u8);
+            writer.WriteNumberValue(SequenceNumber);
             writer.WritePropertyName("part"u8);
             writer.WriteObjectValue(Part, options);
         }
@@ -124,22 +126,17 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             ResponseStreamEventType @type = default;
-            long sequenceNumber = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string itemId = default;
             long outputIndex = default;
             long contentIndex = default;
+            long sequenceNumber = default;
             OutputContent part = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ResponseStreamEventType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("sequence_number"u8))
-                {
-                    sequenceNumber = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("item_id"u8))
@@ -157,6 +154,11 @@ namespace Azure.AI.AgentServer.Responses.Models
                     contentIndex = prop.Value.GetInt64();
                     continue;
                 }
+                if (prop.NameEquals("sequence_number"u8))
+                {
+                    sequenceNumber = prop.Value.GetInt64();
+                    continue;
+                }
                 if (prop.NameEquals("part"u8))
                 {
                     part = OutputContent.DeserializeOutputContent(prop.Value, options);
@@ -169,11 +171,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             return new ResponseContentPartDoneEvent(
                 @type,
-                sequenceNumber,
                 additionalBinaryDataProperties,
                 itemId,
                 outputIndex,
                 contentIndex,
+                sequenceNumber,
                 part);
         }
     }

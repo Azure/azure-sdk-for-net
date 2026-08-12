@@ -4,7 +4,7 @@
 
 #nullable disable
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary>
     /// Labels an `assistant` message as intermediate commentary (`commentary`) or the final answer (`final_answer`).

@@ -9,9 +9,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Emitted when an error occurs. </summary>
     public partial class ResponseErrorEvent : ResponseStreamEvent, IJsonModel<ResponseErrorEvent>
@@ -45,7 +45,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResponseErrorEvent)} does not support writing '{options.Format}' format.");
             }
@@ -108,6 +108,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 writer.WriteNull("param"u8);
             }
+            writer.WritePropertyName("sequence_number"u8);
+            writer.WriteNumberValue(SequenceNumber);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -136,21 +138,16 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             ResponseStreamEventType @type = default;
-            long sequenceNumber = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string code = default;
             string message = default;
             string @param = default;
+            long sequenceNumber = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ResponseStreamEventType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("sequence_number"u8))
-                {
-                    sequenceNumber = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("code"u8))
@@ -178,6 +175,11 @@ namespace Azure.AI.AgentServer.Responses.Models
                     @param = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("sequence_number"u8))
+                {
+                    sequenceNumber = prop.Value.GetInt64();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -185,11 +187,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             return new ResponseErrorEvent(
                 @type,
-                sequenceNumber,
                 additionalBinaryDataProperties,
                 code,
                 message,
-                @param);
+                @param,
+                sequenceNumber);
         }
     }
 }

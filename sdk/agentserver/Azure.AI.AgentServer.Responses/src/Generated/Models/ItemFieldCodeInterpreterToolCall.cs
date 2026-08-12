@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Code interpreter tool call. </summary>
     public partial class ItemFieldCodeInterpreterToolCall : ItemField

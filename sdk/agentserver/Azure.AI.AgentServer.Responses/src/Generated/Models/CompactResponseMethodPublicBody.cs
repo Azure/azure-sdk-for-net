@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> The CompactResponseMethodPublicBody. </summary>
     public partial class CompactResponseMethodPublicBody
@@ -17,20 +17,20 @@ namespace Azure.AI.AgentServer.Responses.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CompactResponseMethodPublicBody"/>. </summary>
-        /// <param name="model"></param>
-        internal CompactResponseMethodPublicBody(ModelIdsCompaction? model)
+        /// <param name="model"> The model deployment to use for the compaction of this response. </param>
+        internal CompactResponseMethodPublicBody(string model)
         {
             Model = model;
         }
 
         /// <summary> Initializes a new instance of <see cref="CompactResponseMethodPublicBody"/>. </summary>
-        /// <param name="model"></param>
+        /// <param name="model"> The model deployment to use for the compaction of this response. </param>
         /// <param name="input"></param>
         /// <param name="previousResponseId"></param>
         /// <param name="instructions"></param>
         /// <param name="promptCacheKey"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CompactResponseMethodPublicBody(ModelIdsCompaction? model, BinaryData input, string previousResponseId, string instructions, string promptCacheKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CompactResponseMethodPublicBody(string model, BinaryData input, string previousResponseId, string instructions, string promptCacheKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             Input = input;
@@ -40,8 +40,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Model. </summary>
-        public ModelIdsCompaction? Model { get; }
+        /// <summary> The model deployment to use for the compaction of this response. </summary>
+        public string Model { get; }
 
         /// <summary>
         /// Gets the Input.

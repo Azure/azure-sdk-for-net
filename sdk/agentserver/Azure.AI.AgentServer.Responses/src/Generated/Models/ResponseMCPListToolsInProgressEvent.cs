@@ -6,42 +6,41 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> ResponseMCPListToolsInProgressEvent. </summary>
     public partial class ResponseMCPListToolsInProgressEvent : ResponseStreamEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseMCPListToolsInProgressEvent"/>. </summary>
-        /// <param name="sequenceNumber"></param>
         /// <param name="itemId"> The ID of the MCP tool call item that is being processed. </param>
         /// <param name="outputIndex"> The index of the output item that is being processed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> is null. </exception>
-        public ResponseMCPListToolsInProgressEvent(long sequenceNumber, string itemId, long outputIndex) : base(ResponseStreamEventType.ResponseMcpListToolsInProgress, sequenceNumber)
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
+        internal ResponseMCPListToolsInProgressEvent(string itemId, long outputIndex, long sequenceNumber) : base(ResponseStreamEventType.ResponseMcpListToolsInProgress, sequenceNumber)
         {
-            Argument.AssertNotNull(itemId, nameof(itemId));
-
             ItemId = itemId;
             OutputIndex = outputIndex;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseMCPListToolsInProgressEvent"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="sequenceNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The ID of the MCP tool call item that is being processed. </param>
         /// <param name="outputIndex"> The index of the output item that is being processed. </param>
-        internal ResponseMCPListToolsInProgressEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, long outputIndex) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
+        internal ResponseMCPListToolsInProgressEvent(ResponseStreamEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, long outputIndex, long sequenceNumber) : base(@type, sequenceNumber, additionalBinaryDataProperties)
         {
             ItemId = itemId;
             OutputIndex = outputIndex;
         }
 
         /// <summary> The ID of the MCP tool call item that is being processed. </summary>
-        public string ItemId { get; set; }
+        public string ItemId { get; }
 
         /// <summary> The index of the output item that is being processed. </summary>
-        public long OutputIndex { get; set; }
+        public long OutputIndex { get; }
+
+        /// <summary> The sequence number of this event. </summary>
+        public override long SequenceNumber { get; }
     }
 }

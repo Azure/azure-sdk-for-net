@@ -7,9 +7,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> MCP tool call. </summary>
     public partial class OutputItemMcpToolCall : OutputItem
@@ -19,15 +19,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="serverLabel"> The label of the MCP server running the tool. </param>
         /// <param name="name"> The name of the tool that was run. </param>
         /// <param name="arguments"> A JSON string of the arguments passed to the tool. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="serverLabel"/>, <paramref name="name"/> or <paramref name="arguments"/> is null. </exception>
-        public OutputItemMcpToolCall(string id, string serverLabel, string name, string arguments) : base(OutputItemType.McpCall)
+        internal OutputItemMcpToolCall(string id, string serverLabel, string name, string arguments) : base(OutputItemType.McpCall)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(serverLabel, nameof(serverLabel));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(arguments, nameof(arguments));
-
-            Id = id;
+            _id = id;
             ServerLabel = serverLabel;
             Name = name;
             Arguments = arguments;
@@ -48,9 +42,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="error"></param>
         /// <param name="status"> The status of the tool call. One of `in_progress`, `completed`, `incomplete`, `calling`, or `failed`. </param>
         /// <param name="approvalRequestId"></param>
-        internal OutputItemMcpToolCall(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, string name, string arguments, string output, IDictionary<string, BinaryData> error, MCPToolCallStatus? status, string approvalRequestId) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemMcpToolCall(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, string name, string arguments, string output, IDictionary<string, BinaryData> error, MCPToolCallStatus? status, string approvalRequestId) : base(@type, id, createdBy, agentReference, responseId, additionalBinaryDataProperties)
         {
-            Id = id;
             ServerLabel = serverLabel;
             Name = name;
             Arguments = arguments;
@@ -61,19 +54,19 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The unique ID of the tool call. </summary>
-        public string Id { get; set; }
+        public new string Id => _id ?? default;
 
         /// <summary> The label of the MCP server running the tool. </summary>
-        public string ServerLabel { get; set; }
+        public string ServerLabel { get; }
 
         /// <summary> The name of the tool that was run. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> A JSON string of the arguments passed to the tool. </summary>
-        public string Arguments { get; set; }
+        public string Arguments { get; }
 
-        /// <summary> Gets or sets the Output. </summary>
-        public string Output { get; set; }
+        /// <summary> Gets the Output. </summary>
+        public string Output { get; }
 
         /// <summary>
         /// Gets the Error.
@@ -104,9 +97,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         public IDictionary<string, BinaryData> Error { get; }
 
         /// <summary> The status of the tool call. One of `in_progress`, `completed`, `incomplete`, `calling`, or `failed`. </summary>
-        public MCPToolCallStatus? Status { get; set; }
+        public MCPToolCallStatus? Status { get; }
 
-        /// <summary> Gets or sets the ApprovalRequestId. </summary>
-        public string ApprovalRequestId { get; set; }
+        /// <summary> Gets the ApprovalRequestId. </summary>
+        public string ApprovalRequestId { get; }
     }
 }

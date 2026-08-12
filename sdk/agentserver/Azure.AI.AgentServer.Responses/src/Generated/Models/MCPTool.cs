@@ -7,9 +7,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> MCP tool. </summary>
     public partial class MCPTool : Tool
@@ -23,6 +23,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
             ServerLabel = serverLabel;
             Headers = new ChangeTrackingDictionary<string, string>();
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MCPTool"/>. </summary>
@@ -51,7 +52,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="requireApproval"></param>
         /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
-        internal MCPTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, MCPToolConnectorId? connectorId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApproval, bool? deferLoading, string projectConnectionId) : base(@type, additionalBinaryDataProperties)
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        internal MCPTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, MCPToolConnectorId? connectorId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApproval, bool? deferLoading, string projectConnectionId, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             ServerUrl = serverUrl;
@@ -63,6 +65,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             RequireApproval = requireApproval;
             DeferLoading = deferLoading;
             ProjectConnectionId = projectConnectionId;
+            ToolConfigs = toolConfigs;
         }
 
         /// <summary> A label for this MCP server, used to identify it in tool calls. </summary>
@@ -186,5 +189,8 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </summary>
         public string ProjectConnectionId { get; set; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
     }
 }

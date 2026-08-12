@@ -12,7 +12,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 
-namespace Azure.AI.AgentServer.Responses
+namespace Azure.AI.Agents.Contracts.V2
 {
     internal static partial class ModelSerializationExtensions
     {

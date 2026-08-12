@@ -6,9 +6,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> A tool for capturing structured outputs. </summary>
     public partial class CaptureStructuredOutputsTool : Tool
@@ -20,17 +20,33 @@ namespace Azure.AI.AgentServer.Responses.Models
         {
             Argument.AssertNotNull(outputs, nameof(outputs));
 
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             Outputs = outputs;
         }
 
         /// <summary> Initializes a new instance of <see cref="CaptureStructuredOutputsTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="outputs"> The structured outputs to capture from the model. </param>
-        internal CaptureStructuredOutputsTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, StructuredOutputDefinition outputs) : base(@type, additionalBinaryDataProperties)
+        internal CaptureStructuredOutputsTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, StructuredOutputDefinition outputs) : base(@type, additionalBinaryDataProperties)
         {
+            Name = name;
+            Description = description;
+            ToolConfigs = toolConfigs;
             Outputs = outputs;
         }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public string Description { get; set; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The structured outputs to capture from the model. </summary>
         public StructuredOutputDefinition Outputs { get; set; }

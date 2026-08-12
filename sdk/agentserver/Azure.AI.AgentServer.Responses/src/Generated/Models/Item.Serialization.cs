@@ -7,13 +7,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary>
     /// Content item used to generate a response.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MemorySearchToolCallItemParam"/>, <see cref="ComputerCallOutputItemParam"/>, <see cref="FunctionCallOutputItemParam"/>, <see cref="CompactionSummaryItemParam"/>, <see cref="FunctionShellCallItemParam"/>, <see cref="FunctionShellCallOutputItemParam"/>, <see cref="ApplyPatchToolCallItemParam"/>, <see cref="ApplyPatchToolCallOutputItemParam"/>, <see cref="MCPApprovalResponse"/>, <see cref="ItemReferenceParam"/>, <see cref="ItemMessage"/>, <see cref="ItemFileSearchToolCall"/>, <see cref="ItemComputerToolCall"/>, <see cref="ItemWebSearchToolCall"/>, <see cref="ItemFunctionToolCall"/>, <see cref="ItemReasoningItem"/>, <see cref="ItemImageGenToolCall"/>, <see cref="ItemCodeInterpreterToolCall"/>, <see cref="ItemLocalShellToolCall"/>, <see cref="ItemLocalShellToolCallOutput"/>, <see cref="ItemMcpListTools"/>, <see cref="ItemMcpApprovalRequest"/>, <see cref="ItemMcpToolCall"/>, <see cref="ItemCustomToolCallOutput"/>, <see cref="ItemCustomToolCall"/>, <see cref="ToolSearchCallItemParam"/>, and <see cref="ToolSearchOutputItemParam"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ComputerCallOutputItemParam"/>, <see cref="FunctionCallOutputItemParam"/>, <see cref="CompactionSummaryItemParam"/>, <see cref="FunctionShellCallItemParam"/>, <see cref="FunctionShellCallOutputItemParam"/>, <see cref="ApplyPatchToolCallItemParam"/>, <see cref="ApplyPatchToolCallOutputItemParam"/>, <see cref="MCPApprovalResponse"/>, <see cref="ItemReferenceParam"/>, <see cref="ItemMessage"/>, <see cref="ItemOutputMessage"/>, <see cref="ItemFileSearchToolCall"/>, <see cref="ItemComputerToolCall"/>, <see cref="ItemWebSearchToolCall"/>, <see cref="ItemFunctionToolCall"/>, <see cref="ItemReasoningItem"/>, <see cref="ItemImageGenToolCall"/>, <see cref="ItemCodeInterpreterToolCall"/>, <see cref="ItemLocalShellToolCall"/>, <see cref="ItemLocalShellToolCallOutput"/>, <see cref="ItemMcpListTools"/>, <see cref="ItemMcpApprovalRequest"/>, <see cref="ItemMcpToolCall"/>, <see cref="OutputItemCustomToolCallOutput"/>, <see cref="ItemCustomToolCall"/>, <see cref="ToolSearchCallItemParam"/>, and <see cref="ToolSearchOutputItemParam"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownItem))]
     public abstract partial class Item : IJsonModel<Item>
@@ -47,7 +47,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(Item)} does not support writing '{options.Format}' format.");
             }
@@ -129,8 +129,6 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "memory_search_call":
-                        return MemorySearchToolCallItemParam.DeserializeMemorySearchToolCallItemParam(element, options);
                     case "computer_call_output":
                         return ComputerCallOutputItemParam.DeserializeComputerCallOutputItemParam(element, options);
                     case "function_call_output":
@@ -178,7 +176,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     case "mcp_call":
                         return ItemMcpToolCall.DeserializeItemMcpToolCall(element, options);
                     case "custom_tool_call_output":
-                        return ItemCustomToolCallOutput.DeserializeItemCustomToolCallOutput(element, options);
+                        return OutputItemCustomToolCallOutput.DeserializeOutputItemCustomToolCallOutput(element, options);
                     case "custom_tool_call":
                         return ItemCustomToolCall.DeserializeItemCustomToolCall(element, options);
                     case "tool_search_call":

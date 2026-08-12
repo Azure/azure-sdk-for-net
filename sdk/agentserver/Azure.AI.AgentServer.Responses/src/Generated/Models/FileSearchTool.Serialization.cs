@@ -8,9 +8,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> File search. </summary>
     public partial class FileSearchTool : Tool, IJsonModel<FileSearchTool>
@@ -44,7 +44,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(FileSearchTool)} does not support writing '{options.Format}' format.");
             }
@@ -123,6 +123,17 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsCollectionDefined(ToolConfigs))
+            {
+                writer.WritePropertyName("tool_configs"u8);
+                writer.WriteStartObject();
+                foreach (var item in ToolConfigs)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -158,6 +169,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             BinaryData filters = default;
             string name = default;
             string description = default;
+            IDictionary<string, ToolConfig> toolConfigs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -220,6 +232,20 @@ namespace Azure.AI.AgentServer.Responses.Models
                     description = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("tool_configs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                    }
+                    toolConfigs = dictionary;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -233,7 +259,8 @@ namespace Azure.AI.AgentServer.Responses.Models
                 rankingOptions,
                 filters,
                 name,
-                description);
+                description,
+                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>());
         }
     }
 }

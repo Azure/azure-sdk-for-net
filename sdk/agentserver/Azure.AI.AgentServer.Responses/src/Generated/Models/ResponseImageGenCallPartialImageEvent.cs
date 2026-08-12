@@ -6,25 +6,20 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> ResponseImageGenCallPartialImageEvent. </summary>
     public partial class ResponseImageGenCallPartialImageEvent : ResponseStreamEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseImageGenCallPartialImageEvent"/>. </summary>
-        /// <param name="sequenceNumber"></param>
         /// <param name="outputIndex"> The index of the output item in the response's output array. </param>
         /// <param name="itemId"> The unique identifier of the image generation item being processed. </param>
+        /// <param name="sequenceNumber"> The sequence number of the image generation item being processed. </param>
         /// <param name="partialImageIndex"> 0-based index for the partial image (backend is 1-based, but this is 0-based for the user). </param>
         /// <param name="partialImageB64"> Base64-encoded partial image data, suitable for rendering as an image. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> or <paramref name="partialImageB64"/> is null. </exception>
-        public ResponseImageGenCallPartialImageEvent(long sequenceNumber, long outputIndex, string itemId, long partialImageIndex, string partialImageB64) : base(ResponseStreamEventType.ResponseImageGenerationCallPartialImage, sequenceNumber)
+        internal ResponseImageGenCallPartialImageEvent(long outputIndex, string itemId, long sequenceNumber, long partialImageIndex, string partialImageB64) : base(ResponseStreamEventType.ResponseImageGenerationCallPartialImage, sequenceNumber)
         {
-            Argument.AssertNotNull(itemId, nameof(itemId));
-            Argument.AssertNotNull(partialImageB64, nameof(partialImageB64));
-
             OutputIndex = outputIndex;
             ItemId = itemId;
             PartialImageIndex = partialImageIndex;
@@ -33,13 +28,13 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ResponseImageGenCallPartialImageEvent"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="sequenceNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="outputIndex"> The index of the output item in the response's output array. </param>
         /// <param name="itemId"> The unique identifier of the image generation item being processed. </param>
+        /// <param name="sequenceNumber"> The sequence number of the image generation item being processed. </param>
         /// <param name="partialImageIndex"> 0-based index for the partial image (backend is 1-based, but this is 0-based for the user). </param>
         /// <param name="partialImageB64"> Base64-encoded partial image data, suitable for rendering as an image. </param>
-        internal ResponseImageGenCallPartialImageEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, long outputIndex, string itemId, long partialImageIndex, string partialImageB64) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        internal ResponseImageGenCallPartialImageEvent(ResponseStreamEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long outputIndex, string itemId, long sequenceNumber, long partialImageIndex, string partialImageB64) : base(@type, sequenceNumber, additionalBinaryDataProperties)
         {
             OutputIndex = outputIndex;
             ItemId = itemId;
@@ -48,15 +43,18 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The index of the output item in the response's output array. </summary>
-        public long OutputIndex { get; set; }
+        public long OutputIndex { get; }
 
         /// <summary> The unique identifier of the image generation item being processed. </summary>
-        public string ItemId { get; set; }
+        public string ItemId { get; }
+
+        /// <summary> The sequence number of the image generation item being processed. </summary>
+        public override long SequenceNumber { get; }
 
         /// <summary> 0-based index for the partial image (backend is 1-based, but this is 0-based for the user). </summary>
-        public long PartialImageIndex { get; set; }
+        public long PartialImageIndex { get; }
 
         /// <summary> Base64-encoded partial image data, suitable for rendering as an image. </summary>
-        public string PartialImageB64 { get; set; }
+        public string PartialImageB64 { get; }
     }
 }

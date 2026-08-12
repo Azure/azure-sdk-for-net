@@ -7,13 +7,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary>
     /// A tool that can be used to generate a response.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BingGroundingTool"/>, <see cref="MicrosoftFabricPreviewTool"/>, <see cref="SharepointPreviewTool"/>, <see cref="AzureAISearchTool"/>, <see cref="OpenApiTool"/>, <see cref="BingCustomSearchPreviewTool"/>, <see cref="BrowserAutomationPreviewTool"/>, <see cref="AzureFunctionTool"/>, <see cref="CaptureStructuredOutputsTool"/>, <see cref="A2APreviewTool"/>, <see cref="WorkIQPreviewTool"/>, <see cref="MemorySearchPreviewTool"/>, <see cref="MemorySearchTool"/>, <see cref="CodeInterpreterTool"/>, <see cref="FunctionTool"/>, <see cref="FileSearchTool"/>, <see cref="ComputerUsePreviewTool"/>, <see cref="WebSearchTool"/>, <see cref="MCPTool"/>, <see cref="ImageGenTool"/>, <see cref="LocalShellToolParam"/>, <see cref="FunctionShellToolParam"/>, <see cref="CustomToolParam"/>, <see cref="WebSearchPreviewTool"/>, <see cref="ApplyPatchToolParam"/>, <see cref="ComputerTool"/>, <see cref="NamespaceToolParam"/>, and <see cref="ToolSearchToolParam"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RemoteTool"/>, <see cref="MemorySearchTool"/>, <see cref="BingGroundingTool"/>, <see cref="MicrosoftFabricPreviewTool"/>, <see cref="SharepointPreviewTool"/>, <see cref="AzureAISearchTool"/>, <see cref="OpenApiTool"/>, <see cref="BingCustomSearchPreviewTool"/>, <see cref="BrowserAutomationPreviewTool"/>, <see cref="AzureFunctionTool"/>, <see cref="CaptureStructuredOutputsTool"/>, <see cref="A2APreviewTool"/>, <see cref="WorkIQPreviewTool"/>, <see cref="FabricIQPreviewTool"/>, <see cref="WebIQPreviewTool"/>, <see cref="MemorySearchPreviewTool"/>, <see cref="CodeInterpreterTool"/>, <see cref="FileSearchTool"/>, <see cref="WebSearchTool"/>, <see cref="MCPTool"/>, <see cref="FunctionTool"/>, <see cref="ComputerUsePreviewTool"/>, <see cref="ImageGenTool"/>, <see cref="LocalShellToolParam"/>, <see cref="FunctionShellToolParam"/>, <see cref="CustomToolParam"/>, <see cref="WebSearchPreviewTool"/>, <see cref="ApplyPatchToolParam"/>, <see cref="ComputerTool"/>, <see cref="NamespaceToolParam"/>, and <see cref="ToolSearchToolParam"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTool))]
     public abstract partial class Tool : IJsonModel<Tool>
@@ -47,7 +47,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(Tool)} does not support writing '{options.Format}' format.");
             }
@@ -129,6 +129,10 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "remote_tool":
+                        return RemoteTool.DeserializeRemoteTool(element, options);
+                    case "memory_search":
+                        return MemorySearchTool.DeserializeMemorySearchTool(element, options);
                     case "bing_grounding":
                         return BingGroundingTool.DeserializeBingGroundingTool(element, options);
                     case "fabric_dataagent_preview":
@@ -151,22 +155,24 @@ namespace Azure.AI.AgentServer.Responses.Models
                         return A2APreviewTool.DeserializeA2APreviewTool(element, options);
                     case "work_iq_preview":
                         return WorkIQPreviewTool.DeserializeWorkIQPreviewTool(element, options);
+                    case "fabric_iq_preview":
+                        return FabricIQPreviewTool.DeserializeFabricIQPreviewTool(element, options);
+                    case "web_iq_preview":
+                        return WebIQPreviewTool.DeserializeWebIQPreviewTool(element, options);
                     case "memory_search_preview":
                         return MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool(element, options);
-                    case "memory_search":
-                        return MemorySearchTool.DeserializeMemorySearchTool(element, options);
                     case "code_interpreter":
                         return CodeInterpreterTool.DeserializeCodeInterpreterTool(element, options);
-                    case "function":
-                        return FunctionTool.DeserializeFunctionTool(element, options);
                     case "file_search":
                         return FileSearchTool.DeserializeFileSearchTool(element, options);
-                    case "computer_use_preview":
-                        return ComputerUsePreviewTool.DeserializeComputerUsePreviewTool(element, options);
                     case "web_search":
                         return WebSearchTool.DeserializeWebSearchTool(element, options);
                     case "mcp":
                         return MCPTool.DeserializeMCPTool(element, options);
+                    case "function":
+                        return FunctionTool.DeserializeFunctionTool(element, options);
+                    case "computer_use_preview":
+                        return ComputerUsePreviewTool.DeserializeComputerUsePreviewTool(element, options);
                     case "image_generation":
                         return ImageGenTool.DeserializeImageGenTool(element, options);
                     case "local_shell":

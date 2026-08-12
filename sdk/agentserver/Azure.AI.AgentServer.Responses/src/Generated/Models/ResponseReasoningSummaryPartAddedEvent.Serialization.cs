@@ -9,9 +9,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Emitted when a new reasoning summary part is added. </summary>
     public partial class ResponseReasoningSummaryPartAddedEvent : ResponseStreamEvent, IJsonModel<ResponseReasoningSummaryPartAddedEvent>
@@ -45,7 +45,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResponseReasoningSummaryPartAddedEvent)} does not support writing '{options.Format}' format.");
             }
@@ -94,6 +94,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteNumberValue(OutputIndex);
             writer.WritePropertyName("summary_index"u8);
             writer.WriteNumberValue(SummaryIndex);
+            writer.WritePropertyName("sequence_number"u8);
+            writer.WriteNumberValue(SequenceNumber);
             writer.WritePropertyName("part"u8);
             writer.WriteObjectValue(Part, options);
         }
@@ -124,22 +126,17 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             ResponseStreamEventType @type = default;
-            long sequenceNumber = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string itemId = default;
             long outputIndex = default;
             long summaryIndex = default;
+            long sequenceNumber = default;
             ResponseReasoningSummaryPartAddedEventPart part = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ResponseStreamEventType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("sequence_number"u8))
-                {
-                    sequenceNumber = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("item_id"u8))
@@ -157,6 +154,11 @@ namespace Azure.AI.AgentServer.Responses.Models
                     summaryIndex = prop.Value.GetInt64();
                     continue;
                 }
+                if (prop.NameEquals("sequence_number"u8))
+                {
+                    sequenceNumber = prop.Value.GetInt64();
+                    continue;
+                }
                 if (prop.NameEquals("part"u8))
                 {
                     part = ResponseReasoningSummaryPartAddedEventPart.DeserializeResponseReasoningSummaryPartAddedEventPart(prop.Value, options);
@@ -169,11 +171,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             return new ResponseReasoningSummaryPartAddedEvent(
                 @type,
-                sequenceNumber,
                 additionalBinaryDataProperties,
                 itemId,
                 outputIndex,
                 summaryIndex,
+                sequenceNumber,
                 part);
         }
     }

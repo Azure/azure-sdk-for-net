@@ -6,33 +6,33 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> A WorkIQ server-side tool. </summary>
     public partial class WorkIQPreviewTool : Tool
     {
         /// <summary> Initializes a new instance of <see cref="WorkIQPreviewTool"/>. </summary>
-        /// <param name="workIqPreview"> The WorkIQ tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workIqPreview"/> is null. </exception>
-        public WorkIQPreviewTool(WorkIQPreviewToolParameters workIqPreview) : base(ToolType.WorkIqPreview)
+        /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectConnectionId"/> is null. </exception>
+        public WorkIQPreviewTool(string projectConnectionId) : base(ToolType.WorkIqPreview)
         {
-            Argument.AssertNotNull(workIqPreview, nameof(workIqPreview));
+            Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
 
-            WorkIqPreview = workIqPreview;
+            ProjectConnectionId = projectConnectionId;
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkIQPreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="workIqPreview"> The WorkIQ tool parameters. </param>
-        internal WorkIQPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, WorkIQPreviewToolParameters workIqPreview) : base(@type, additionalBinaryDataProperties)
+        /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
+        internal WorkIQPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string projectConnectionId) : base(@type, additionalBinaryDataProperties)
         {
-            WorkIqPreview = workIqPreview;
+            ProjectConnectionId = projectConnectionId;
         }
 
-        /// <summary> The WorkIQ tool parameters. </summary>
-        public WorkIQPreviewToolParameters WorkIqPreview { get; set; }
+        /// <summary> The ID of the WorkIQ project connection. </summary>
+        public string ProjectConnectionId { get; set; }
     }
 }

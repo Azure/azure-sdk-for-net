@@ -9,9 +9,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Emitted when there is a partial function-call arguments delta. </summary>
     public partial class ResponseFunctionCallArgumentsDeltaEvent : ResponseStreamEvent, IJsonModel<ResponseFunctionCallArgumentsDeltaEvent>
@@ -45,7 +45,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResponseFunctionCallArgumentsDeltaEvent)} does not support writing '{options.Format}' format.");
             }
@@ -92,6 +92,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteStringValue(ItemId);
             writer.WritePropertyName("output_index"u8);
             writer.WriteNumberValue(OutputIndex);
+            writer.WritePropertyName("sequence_number"u8);
+            writer.WriteNumberValue(SequenceNumber);
             writer.WritePropertyName("delta"u8);
             writer.WriteStringValue(Delta);
         }
@@ -122,21 +124,16 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             ResponseStreamEventType @type = default;
-            long sequenceNumber = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string itemId = default;
             long outputIndex = default;
+            long sequenceNumber = default;
             string delta = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ResponseStreamEventType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("sequence_number"u8))
-                {
-                    sequenceNumber = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("item_id"u8))
@@ -147,6 +144,11 @@ namespace Azure.AI.AgentServer.Responses.Models
                 if (prop.NameEquals("output_index"u8))
                 {
                     outputIndex = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("sequence_number"u8))
+                {
+                    sequenceNumber = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("delta"u8))
@@ -161,10 +163,10 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             return new ResponseFunctionCallArgumentsDeltaEvent(
                 @type,
-                sequenceNumber,
                 additionalBinaryDataProperties,
                 itemId,
                 outputIndex,
+                sequenceNumber,
                 delta);
         }
     }

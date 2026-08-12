@@ -8,9 +8,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> The fabric data agent tool parameters. </summary>
     public partial class FabricDataAgentToolParameters : IJsonModel<FabricDataAgentToolParameters>
@@ -39,7 +39,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(FabricDataAgentToolParameters)} does not support writing '{options.Format}' format.");
             }
@@ -72,16 +72,6 @@ namespace Azure.AI.AgentServer.Responses.Models
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FabricDataAgentToolParameters)} does not support writing '{format}' format.");
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(ProjectConnections))
             {
@@ -135,22 +125,10 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            string name = default;
-            string description = default;
             IList<ToolProjectConnection> projectConnections = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("project_connections"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -170,7 +148,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FabricDataAgentToolParameters(name, description, projectConnections ?? new ChangeTrackingList<ToolProjectConnection>(), additionalBinaryDataProperties);
+            return new FabricDataAgentToolParameters(projectConnections ?? new ChangeTrackingList<ToolProjectConnection>(), additionalBinaryDataProperties);
         }
     }
 }

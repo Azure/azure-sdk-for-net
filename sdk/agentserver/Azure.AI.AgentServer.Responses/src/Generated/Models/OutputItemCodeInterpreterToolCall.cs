@@ -8,9 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Code interpreter tool call. </summary>
     public partial class OutputItemCodeInterpreterToolCall : OutputItem
@@ -21,13 +20,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="containerId"> The ID of the container used to run the code. </param>
         /// <param name="code"></param>
         /// <param name="outputs"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="containerId"/> is null. </exception>
-        public OutputItemCodeInterpreterToolCall(string id, ItemCodeInterpreterToolCallStatus status, string containerId, string code, IEnumerable<BinaryData> outputs) : base(OutputItemType.CodeInterpreterCall)
+        internal OutputItemCodeInterpreterToolCall(string id, ItemCodeInterpreterToolCallStatus status, string containerId, string code, IEnumerable<BinaryData> outputs) : base(OutputItemType.CodeInterpreterCall)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(containerId, nameof(containerId));
-
-            Id = id;
+            _id = id;
             Status = status;
             ContainerId = containerId;
             Code = code;
@@ -45,9 +40,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="containerId"> The ID of the container used to run the code. </param>
         /// <param name="code"></param>
         /// <param name="outputs"></param>
-        internal OutputItemCodeInterpreterToolCall(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, ItemCodeInterpreterToolCallStatus status, string containerId, string code, IList<BinaryData> outputs) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemCodeInterpreterToolCall(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, ItemCodeInterpreterToolCallStatus status, string containerId, string code, IList<BinaryData> outputs) : base(@type, id, createdBy, agentReference, responseId, additionalBinaryDataProperties)
         {
-            Id = id;
             Status = status;
             ContainerId = containerId;
             Code = code;
@@ -55,19 +49,19 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The unique ID of the code interpreter tool call. </summary>
-        public string Id { get; set; }
+        public new string Id => _id ?? default;
 
         /// <summary> The status of the code interpreter tool call. Valid values are `in_progress`, `completed`, `incomplete`, `interpreting`, and `failed`. </summary>
-        public ItemCodeInterpreterToolCallStatus Status { get; set; }
+        public ItemCodeInterpreterToolCallStatus Status { get; }
 
         /// <summary> The ID of the container used to run the code. </summary>
-        public string ContainerId { get; set; }
+        public string ContainerId { get; }
 
-        /// <summary> Gets or sets the Code. </summary>
-        public string Code { get; set; }
+        /// <summary> Gets the Code. </summary>
+        public string Code { get; }
 
         /// <summary>
-        /// Gets or sets the Outputs.
+        /// Gets the Outputs.
         /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -105,6 +99,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </list>
         /// </para>
         /// </summary>
-        public IList<BinaryData> Outputs { get; set; }
+        public IList<BinaryData> Outputs { get; }
     }
 }

@@ -6,26 +6,21 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> ResponseOutputTextAnnotationAddedEvent. </summary>
     public partial class ResponseOutputTextAnnotationAddedEvent : ResponseStreamEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseOutputTextAnnotationAddedEvent"/>. </summary>
-        /// <param name="sequenceNumber"></param>
         /// <param name="itemId"> The unique identifier of the item to which the annotation is being added. </param>
         /// <param name="outputIndex"> The index of the output item in the response's output array. </param>
         /// <param name="contentIndex"> The index of the content part within the output item. </param>
         /// <param name="annotationIndex"> The index of the annotation within the content part. </param>
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
         /// <param name="annotation"> The annotation object being added. (See annotation schema for details.). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> or <paramref name="annotation"/> is null. </exception>
-        public ResponseOutputTextAnnotationAddedEvent(long sequenceNumber, string itemId, long outputIndex, long contentIndex, long annotationIndex, Annotation annotation) : base(ResponseStreamEventType.ResponseOutputTextAnnotationAdded, sequenceNumber)
+        internal ResponseOutputTextAnnotationAddedEvent(string itemId, long outputIndex, long contentIndex, long annotationIndex, long sequenceNumber, Annotation annotation) : base(ResponseStreamEventType.ResponseOutputTextAnnotationAdded, sequenceNumber)
         {
-            Argument.AssertNotNull(itemId, nameof(itemId));
-            Argument.AssertNotNull(annotation, nameof(annotation));
-
             ItemId = itemId;
             OutputIndex = outputIndex;
             ContentIndex = contentIndex;
@@ -35,14 +30,14 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ResponseOutputTextAnnotationAddedEvent"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="sequenceNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The unique identifier of the item to which the annotation is being added. </param>
         /// <param name="outputIndex"> The index of the output item in the response's output array. </param>
         /// <param name="contentIndex"> The index of the content part within the output item. </param>
         /// <param name="annotationIndex"> The index of the annotation within the content part. </param>
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
         /// <param name="annotation"> The annotation object being added. (See annotation schema for details.). </param>
-        internal ResponseOutputTextAnnotationAddedEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, long outputIndex, long contentIndex, long annotationIndex, Annotation annotation) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        internal ResponseOutputTextAnnotationAddedEvent(ResponseStreamEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, long outputIndex, long contentIndex, long annotationIndex, long sequenceNumber, Annotation annotation) : base(@type, sequenceNumber, additionalBinaryDataProperties)
         {
             ItemId = itemId;
             OutputIndex = outputIndex;
@@ -52,18 +47,21 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The unique identifier of the item to which the annotation is being added. </summary>
-        public string ItemId { get; set; }
+        public string ItemId { get; }
 
         /// <summary> The index of the output item in the response's output array. </summary>
-        public long OutputIndex { get; set; }
+        public long OutputIndex { get; }
 
         /// <summary> The index of the content part within the output item. </summary>
-        public long ContentIndex { get; set; }
+        public long ContentIndex { get; }
 
         /// <summary> The index of the annotation within the content part. </summary>
-        public long AnnotationIndex { get; set; }
+        public long AnnotationIndex { get; }
+
+        /// <summary> The sequence number of this event. </summary>
+        public override long SequenceNumber { get; }
 
         /// <summary> The annotation object being added. (See annotation schema for details.). </summary>
-        public Annotation Annotation { get; set; }
+        public Annotation Annotation { get; }
     }
 }

@@ -6,9 +6,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> The ContextManagementParam. </summary>
     public partial class ContextManagementParam
@@ -38,7 +38,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The context management entry type. Currently only 'compaction' is supported. </summary>
-        public string Type { get; set; }
+        public string Type { get; }
 
         /// <summary> Gets or sets the CompactThreshold. </summary>
         public long? CompactThreshold { get; set; }

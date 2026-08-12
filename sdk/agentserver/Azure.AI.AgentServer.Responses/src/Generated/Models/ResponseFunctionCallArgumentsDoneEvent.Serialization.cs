@@ -9,9 +9,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Emitted when function-call arguments are finalized. </summary>
     public partial class ResponseFunctionCallArgumentsDoneEvent : ResponseStreamEvent, IJsonModel<ResponseFunctionCallArgumentsDoneEvent>
@@ -45,7 +45,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResponseFunctionCallArgumentsDoneEvent)} does not support writing '{options.Format}' format.");
             }
@@ -94,6 +94,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("output_index"u8);
             writer.WriteNumberValue(OutputIndex);
+            writer.WritePropertyName("sequence_number"u8);
+            writer.WriteNumberValue(SequenceNumber);
             writer.WritePropertyName("arguments"u8);
             writer.WriteStringValue(Arguments);
         }
@@ -124,22 +126,17 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             ResponseStreamEventType @type = default;
-            long sequenceNumber = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string itemId = default;
             string name = default;
             long outputIndex = default;
+            long sequenceNumber = default;
             string arguments = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ResponseStreamEventType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("sequence_number"u8))
-                {
-                    sequenceNumber = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("item_id"u8))
@@ -157,6 +154,11 @@ namespace Azure.AI.AgentServer.Responses.Models
                     outputIndex = prop.Value.GetInt64();
                     continue;
                 }
+                if (prop.NameEquals("sequence_number"u8))
+                {
+                    sequenceNumber = prop.Value.GetInt64();
+                    continue;
+                }
                 if (prop.NameEquals("arguments"u8))
                 {
                     arguments = prop.Value.GetString();
@@ -169,11 +171,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             return new ResponseFunctionCallArgumentsDoneEvent(
                 @type,
-                sequenceNumber,
                 additionalBinaryDataProperties,
                 itemId,
                 name,
                 outputIndex,
+                sequenceNumber,
                 arguments);
         }
     }

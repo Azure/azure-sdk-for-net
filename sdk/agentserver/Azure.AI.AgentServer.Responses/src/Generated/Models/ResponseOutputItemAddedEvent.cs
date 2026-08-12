@@ -6,42 +6,41 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Emitted when a new output item is added. </summary>
     public partial class ResponseOutputItemAddedEvent : ResponseStreamEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseOutputItemAddedEvent"/>. </summary>
-        /// <param name="sequenceNumber"></param>
         /// <param name="outputIndex"> The index of the output item that was added. </param>
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
         /// <param name="item"> The output item that was added. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="item"/> is null. </exception>
-        public ResponseOutputItemAddedEvent(long sequenceNumber, long outputIndex, OutputItem item) : base(ResponseStreamEventType.ResponseOutputItemAdded, sequenceNumber)
+        internal ResponseOutputItemAddedEvent(long outputIndex, long sequenceNumber, OutputItem item) : base(ResponseStreamEventType.ResponseOutputItemAdded, sequenceNumber)
         {
-            Argument.AssertNotNull(item, nameof(item));
-
             OutputIndex = outputIndex;
             Item = item;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseOutputItemAddedEvent"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="sequenceNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="outputIndex"> The index of the output item that was added. </param>
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
         /// <param name="item"> The output item that was added. </param>
-        internal ResponseOutputItemAddedEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, long outputIndex, OutputItem item) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        internal ResponseOutputItemAddedEvent(ResponseStreamEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long outputIndex, long sequenceNumber, OutputItem item) : base(@type, sequenceNumber, additionalBinaryDataProperties)
         {
             OutputIndex = outputIndex;
             Item = item;
         }
 
         /// <summary> The index of the output item that was added. </summary>
-        public long OutputIndex { get; set; }
+        public long OutputIndex { get; }
+
+        /// <summary> The sequence number of this event. </summary>
+        public override long SequenceNumber { get; }
 
         /// <summary> The output item that was added. </summary>
-        public OutputItem Item { get; set; }
+        public OutputItem Item { get; }
     }
 }

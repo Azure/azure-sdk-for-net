@@ -4,7 +4,7 @@
 
 #nullable disable
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Outcome values reported for apply_patch tool call outputs. </summary>
     public enum ApplyPatchCallOutputStatusParam

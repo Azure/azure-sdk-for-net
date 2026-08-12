@@ -7,9 +7,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Reasoning. </summary>
     public partial class OutputItemReasoningItem : OutputItem
@@ -17,13 +17,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="OutputItemReasoningItem"/>. </summary>
         /// <param name="id"> The unique identifier of the reasoning content. </param>
         /// <param name="summary"> Reasoning summary content. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="summary"/> is null. </exception>
-        public OutputItemReasoningItem(string id, IEnumerable<SummaryTextContent> summary) : base(OutputItemType.Reasoning)
+        internal OutputItemReasoningItem(string id, IEnumerable<SummaryTextContent> summary) : base(OutputItemType.Reasoning)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(summary, nameof(summary));
-
-            Id = id;
+            _id = id;
             Summary = summary.ToList();
             Content = new ChangeTrackingList<ReasoningTextContent>();
         }
@@ -42,9 +38,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal OutputItemReasoningItem(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string encryptedContent, IList<SummaryTextContent> summary, IList<ReasoningTextContent> content, ItemReasoningItemStatus? status) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemReasoningItem(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string encryptedContent, IList<SummaryTextContent> summary, IList<ReasoningTextContent> content, ItemReasoningItemStatus? status) : base(@type, id, createdBy, agentReference, responseId, additionalBinaryDataProperties)
         {
-            Id = id;
             EncryptedContent = encryptedContent;
             Summary = summary;
             Content = content;
@@ -52,10 +47,10 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The unique identifier of the reasoning content. </summary>
-        public string Id { get; set; }
+        public new string Id => _id ?? default;
 
-        /// <summary> Gets or sets the EncryptedContent. </summary>
-        public string EncryptedContent { get; set; }
+        /// <summary> Gets the EncryptedContent. </summary>
+        public string EncryptedContent { get; }
 
         /// <summary> Reasoning summary content. </summary>
         public IList<SummaryTextContent> Summary { get; }
@@ -67,6 +62,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </summary>
-        public ItemReasoningItemStatus? Status { get; set; }
+        public ItemReasoningItemStatus? Status { get; }
     }
 }

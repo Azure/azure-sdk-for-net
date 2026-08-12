@@ -6,24 +6,19 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Emitted when there is a partial function-call arguments delta. </summary>
     public partial class ResponseFunctionCallArgumentsDeltaEvent : ResponseStreamEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseFunctionCallArgumentsDeltaEvent"/>. </summary>
-        /// <param name="sequenceNumber"></param>
         /// <param name="itemId"> The ID of the output item that the function-call arguments delta is added to. </param>
         /// <param name="outputIndex"> The index of the output item that the function-call arguments delta is added to. </param>
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
         /// <param name="delta"> The function-call arguments delta that is added. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> or <paramref name="delta"/> is null. </exception>
-        public ResponseFunctionCallArgumentsDeltaEvent(long sequenceNumber, string itemId, long outputIndex, string delta) : base(ResponseStreamEventType.ResponseFunctionCallArgumentsDelta, sequenceNumber)
+        internal ResponseFunctionCallArgumentsDeltaEvent(string itemId, long outputIndex, long sequenceNumber, string delta) : base(ResponseStreamEventType.ResponseFunctionCallArgumentsDelta, sequenceNumber)
         {
-            Argument.AssertNotNull(itemId, nameof(itemId));
-            Argument.AssertNotNull(delta, nameof(delta));
-
             ItemId = itemId;
             OutputIndex = outputIndex;
             Delta = delta;
@@ -31,12 +26,12 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ResponseFunctionCallArgumentsDeltaEvent"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="sequenceNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The ID of the output item that the function-call arguments delta is added to. </param>
         /// <param name="outputIndex"> The index of the output item that the function-call arguments delta is added to. </param>
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
         /// <param name="delta"> The function-call arguments delta that is added. </param>
-        internal ResponseFunctionCallArgumentsDeltaEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, long outputIndex, string delta) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        internal ResponseFunctionCallArgumentsDeltaEvent(ResponseStreamEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, long outputIndex, long sequenceNumber, string delta) : base(@type, sequenceNumber, additionalBinaryDataProperties)
         {
             ItemId = itemId;
             OutputIndex = outputIndex;
@@ -44,12 +39,15 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The ID of the output item that the function-call arguments delta is added to. </summary>
-        public string ItemId { get; set; }
+        public string ItemId { get; }
 
         /// <summary> The index of the output item that the function-call arguments delta is added to. </summary>
-        public long OutputIndex { get; set; }
+        public long OutputIndex { get; }
+
+        /// <summary> The sequence number of this event. </summary>
+        public override long SequenceNumber { get; }
 
         /// <summary> The function-call arguments delta that is added. </summary>
-        public string Delta { get; set; }
+        public string Delta { get; }
     }
 }

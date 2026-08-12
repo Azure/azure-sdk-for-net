@@ -8,9 +8,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Message. </summary>
     public partial class ItemMessage : Item, IJsonModel<ItemMessage>
@@ -44,7 +44,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(ItemMessage)} does not support writing '{options.Format}' format.");
             }
@@ -81,20 +81,28 @@ namespace Azure.AI.AgentServer.Responses.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role.ToSerialString());
+            writer.WritePropertyName("content"u8);
+            writer.WriteStartArray();
+            foreach (MessageContent item in Content)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
             if (Optional.IsDefined(Phase))
             {
                 writer.WritePropertyName("phase"u8);
                 writer.WriteStringValue(Phase.Value.ToSerialString());
             }
-            writer.WritePropertyName("content"u8);
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(Content);
-#else
-            using (JsonDocument document = JsonDocument.Parse(Content))
+            if (Optional.IsDefined(Id))
             {
-                JsonSerializer.Serialize(writer, document.RootElement);
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
             }
-#endif
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToSerialString());
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -125,8 +133,10 @@ namespace Azure.AI.AgentServer.Responses.Models
             ItemType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             MessageRole role = default;
+            IList<MessageContent> content = default;
             MessagePhase? phase = default;
-            BinaryData content = default;
+            string id = default;
+            MessageStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -139,6 +149,16 @@ namespace Azure.AI.AgentServer.Responses.Models
                     role = prop.Value.GetString().ToMessageRole();
                     continue;
                 }
+                if (prop.NameEquals("content"u8))
+                {
+                    List<MessageContent> array = new List<MessageContent>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(MessageContent.DeserializeMessageContent(item, options));
+                    }
+                    content = array;
+                    continue;
+                }
                 if (prop.NameEquals("phase"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -149,9 +169,18 @@ namespace Azure.AI.AgentServer.Responses.Models
                     phase = prop.Value.GetString().ToMessagePhase();
                     continue;
                 }
-                if (prop.NameEquals("content"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    content = BinaryData.FromString(prop.Value.GetRawText());
+                    id = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("status"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = prop.Value.GetString().ToMessageStatus();
                     continue;
                 }
                 if (options.Format != "W")
@@ -159,7 +188,14 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ItemMessage(@type, additionalBinaryDataProperties, role, phase, content);
+            return new ItemMessage(
+                @type,
+                additionalBinaryDataProperties,
+                role,
+                content,
+                phase,
+                id,
+                status);
         }
     }
 }

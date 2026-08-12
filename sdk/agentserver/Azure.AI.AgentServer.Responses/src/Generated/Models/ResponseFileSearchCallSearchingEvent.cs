@@ -6,42 +6,41 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Emitted when a file search is currently searching. </summary>
     public partial class ResponseFileSearchCallSearchingEvent : ResponseStreamEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseFileSearchCallSearchingEvent"/>. </summary>
-        /// <param name="sequenceNumber"></param>
         /// <param name="outputIndex"> The index of the output item that the file search call is searching. </param>
         /// <param name="itemId"> The ID of the output item that the file search call is initiated. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> is null. </exception>
-        public ResponseFileSearchCallSearchingEvent(long sequenceNumber, long outputIndex, string itemId) : base(ResponseStreamEventType.ResponseFileSearchCallSearching, sequenceNumber)
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
+        internal ResponseFileSearchCallSearchingEvent(long outputIndex, string itemId, long sequenceNumber) : base(ResponseStreamEventType.ResponseFileSearchCallSearching, sequenceNumber)
         {
-            Argument.AssertNotNull(itemId, nameof(itemId));
-
             OutputIndex = outputIndex;
             ItemId = itemId;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseFileSearchCallSearchingEvent"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="sequenceNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="outputIndex"> The index of the output item that the file search call is searching. </param>
         /// <param name="itemId"> The ID of the output item that the file search call is initiated. </param>
-        internal ResponseFileSearchCallSearchingEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, long outputIndex, string itemId) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
+        internal ResponseFileSearchCallSearchingEvent(ResponseStreamEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long outputIndex, string itemId, long sequenceNumber) : base(@type, sequenceNumber, additionalBinaryDataProperties)
         {
             OutputIndex = outputIndex;
             ItemId = itemId;
         }
 
         /// <summary> The index of the output item that the file search call is searching. </summary>
-        public long OutputIndex { get; set; }
+        public long OutputIndex { get; }
 
         /// <summary> The ID of the output item that the file search call is initiated. </summary>
-        public string ItemId { get; set; }
+        public string ItemId { get; }
+
+        /// <summary> The sequence number of this event. </summary>
+        public override long SequenceNumber { get; }
     }
 }

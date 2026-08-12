@@ -6,33 +6,32 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Emitted when there is a partial audio response. </summary>
     public partial class ResponseAudioDeltaEvent : ResponseStreamEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseAudioDeltaEvent"/>. </summary>
-        /// <param name="sequenceNumber"></param>
+        /// <param name="sequenceNumber"> A sequence number for this chunk of the stream response. </param>
         /// <param name="delta"> A chunk of Base64 encoded response audio bytes. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="delta"/> is null. </exception>
-        public ResponseAudioDeltaEvent(long sequenceNumber, BinaryData delta) : base(ResponseStreamEventType.ResponseAudioDelta, sequenceNumber)
+        internal ResponseAudioDeltaEvent(long sequenceNumber, BinaryData delta) : base(ResponseStreamEventType.ResponseAudioDelta, sequenceNumber)
         {
-            Argument.AssertNotNull(delta, nameof(delta));
-
             Delta = delta;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseAudioDeltaEvent"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="sequenceNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="sequenceNumber"> A sequence number for this chunk of the stream response. </param>
         /// <param name="delta"> A chunk of Base64 encoded response audio bytes. </param>
-        internal ResponseAudioDeltaEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData delta) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        internal ResponseAudioDeltaEvent(ResponseStreamEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long sequenceNumber, BinaryData delta) : base(@type, sequenceNumber, additionalBinaryDataProperties)
         {
             Delta = delta;
         }
+
+        /// <summary> A sequence number for this chunk of the stream response. </summary>
+        public override long SequenceNumber { get; }
 
         /// <summary>
         /// A chunk of Base64 encoded response audio bytes.
@@ -50,6 +49,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Delta { get; set; }
+        public BinaryData Delta { get; }
     }
 }

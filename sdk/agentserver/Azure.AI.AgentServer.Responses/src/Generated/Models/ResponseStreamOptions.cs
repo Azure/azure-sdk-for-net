@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Options for streaming responses. Only set this when you set `stream: true`. </summary>
     public partial class ResponseStreamOptions

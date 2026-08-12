@@ -6,9 +6,9 @@
 
 using System;
 using System.ComponentModel;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary></summary>
     public readonly partial struct ToolType : IEquatable<ToolType>
@@ -29,6 +29,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         private const string ToolSearchValue = "tool_search";
         private const string WebSearchPreviewValue = "web_search_preview";
         private const string ApplyPatchValue = "apply_patch";
+        private const string RemoteToolValue = "remote_tool";
         private const string A2aPreviewValue = "a2a_preview";
         private const string BingCustomSearchPreviewValue = "bing_custom_search_preview";
         private const string BrowserAutomationPreviewValue = "browser_automation_preview";
@@ -36,6 +37,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         private const string SharepointGroundingPreviewValue = "sharepoint_grounding_preview";
         private const string MemorySearchPreviewValue = "memory_search_preview";
         private const string WorkIqPreviewValue = "work_iq_preview";
+        private const string FabricIqPreviewValue = "fabric_iq_preview";
+        private const string ToolboxSearchPreviewValue = "toolbox_search_preview";
+        private const string WebIqPreviewValue = "web_iq_preview";
         private const string AzureAiSearchValue = "azure_ai_search";
         private const string AzureFunctionValue = "azure_function";
         private const string BingGroundingValue = "bing_grounding";
@@ -98,6 +102,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Gets the ApplyPatch. </summary>
         public static ToolType ApplyPatch { get; } = new ToolType(ApplyPatchValue);
 
+        /// <summary> Gets the RemoteTool. </summary>
+        public static ToolType RemoteTool { get; } = new ToolType(RemoteToolValue);
+
         /// <summary> Gets the A2aPreview. </summary>
         public static ToolType A2aPreview { get; } = new ToolType(A2aPreviewValue);
 
@@ -118,6 +125,15 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Gets the WorkIqPreview. </summary>
         public static ToolType WorkIqPreview { get; } = new ToolType(WorkIqPreviewValue);
+
+        /// <summary> Gets the FabricIqPreview. </summary>
+        public static ToolType FabricIqPreview { get; } = new ToolType(FabricIqPreviewValue);
+
+        /// <summary> Gets the ToolboxSearchPreview. </summary>
+        public static ToolType ToolboxSearchPreview { get; } = new ToolType(ToolboxSearchPreviewValue);
+
+        /// <summary> Gets the WebIqPreview. </summary>
+        public static ToolType WebIqPreview { get; } = new ToolType(WebIqPreviewValue);
 
         /// <summary> Gets the AzureAiSearch. </summary>
         public static ToolType AzureAiSearch { get; } = new ToolType(AzureAiSearchValue);

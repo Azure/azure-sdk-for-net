@@ -8,9 +8,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
     public partial class OpenApiTool : Tool, IJsonModel<OpenApiTool>
@@ -44,7 +44,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(OpenApiTool)} does not support writing '{options.Format}' format.");
             }
@@ -79,6 +79,17 @@ namespace Azure.AI.AgentServer.Responses.Models
                 throw new FormatException($"The model {nameof(OpenApiTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsCollectionDefined(ToolConfigs))
+            {
+                writer.WritePropertyName("tool_configs"u8);
+                writer.WriteStartObject();
+                foreach (var item in ToolConfigs)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
             writer.WritePropertyName("openapi"u8);
             writer.WriteObjectValue(Openapi, options);
         }
@@ -110,12 +121,27 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, ToolConfig> toolConfigs = default;
             OpenApiFunctionDefinition openapi = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ToolType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("tool_configs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                    }
+                    toolConfigs = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("openapi"u8))
@@ -128,7 +154,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OpenApiTool(@type, additionalBinaryDataProperties, openapi);
+            return new OpenApiTool(@type, additionalBinaryDataProperties, toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(), openapi);
         }
     }
 }

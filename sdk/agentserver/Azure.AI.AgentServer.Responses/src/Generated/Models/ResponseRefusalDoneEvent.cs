@@ -6,25 +6,20 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Emitted when refusal text is finalized. </summary>
     public partial class ResponseRefusalDoneEvent : ResponseStreamEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseRefusalDoneEvent"/>. </summary>
-        /// <param name="sequenceNumber"></param>
         /// <param name="itemId"> The ID of the output item that the refusal text is finalized. </param>
         /// <param name="outputIndex"> The index of the output item that the refusal text is finalized. </param>
         /// <param name="contentIndex"> The index of the content part that the refusal text is finalized. </param>
         /// <param name="refusal"> The refusal text that is finalized. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> or <paramref name="refusal"/> is null. </exception>
-        public ResponseRefusalDoneEvent(long sequenceNumber, string itemId, long outputIndex, long contentIndex, string refusal) : base(ResponseStreamEventType.ResponseRefusalDone, sequenceNumber)
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
+        internal ResponseRefusalDoneEvent(string itemId, long outputIndex, long contentIndex, string refusal, long sequenceNumber) : base(ResponseStreamEventType.ResponseRefusalDone, sequenceNumber)
         {
-            Argument.AssertNotNull(itemId, nameof(itemId));
-            Argument.AssertNotNull(refusal, nameof(refusal));
-
             ItemId = itemId;
             OutputIndex = outputIndex;
             ContentIndex = contentIndex;
@@ -33,13 +28,13 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ResponseRefusalDoneEvent"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="sequenceNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The ID of the output item that the refusal text is finalized. </param>
         /// <param name="outputIndex"> The index of the output item that the refusal text is finalized. </param>
         /// <param name="contentIndex"> The index of the content part that the refusal text is finalized. </param>
         /// <param name="refusal"> The refusal text that is finalized. </param>
-        internal ResponseRefusalDoneEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, long outputIndex, long contentIndex, string refusal) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
+        internal ResponseRefusalDoneEvent(ResponseStreamEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, long outputIndex, long contentIndex, string refusal, long sequenceNumber) : base(@type, sequenceNumber, additionalBinaryDataProperties)
         {
             ItemId = itemId;
             OutputIndex = outputIndex;
@@ -48,15 +43,18 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The ID of the output item that the refusal text is finalized. </summary>
-        public string ItemId { get; set; }
+        public string ItemId { get; }
 
         /// <summary> The index of the output item that the refusal text is finalized. </summary>
-        public long OutputIndex { get; set; }
+        public long OutputIndex { get; }
 
         /// <summary> The index of the content part that the refusal text is finalized. </summary>
-        public long ContentIndex { get; set; }
+        public long ContentIndex { get; }
 
         /// <summary> The refusal text that is finalized. </summary>
-        public string Refusal { get; set; }
+        public string Refusal { get; }
+
+        /// <summary> The sequence number of this event. </summary>
+        public override long SequenceNumber { get; }
     }
 }

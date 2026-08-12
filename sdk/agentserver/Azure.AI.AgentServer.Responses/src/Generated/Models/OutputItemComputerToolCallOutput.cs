@@ -6,9 +6,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Computer tool call output. </summary>
     public partial class OutputItemComputerToolCallOutput : OutputItem
@@ -16,12 +16,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="OutputItemComputerToolCallOutput"/>. </summary>
         /// <param name="callId"> The ID of the computer tool call that produced the output. </param>
         /// <param name="output"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callId"/> or <paramref name="output"/> is null. </exception>
-        public OutputItemComputerToolCallOutput(string callId, ComputerScreenshotImage output) : base(OutputItemType.ComputerCallOutput)
+        internal OutputItemComputerToolCallOutput(string callId, ComputerScreenshotImage output) : base(OutputItemType.ComputerCallOutput)
         {
-            Argument.AssertNotNull(callId, nameof(callId));
-            Argument.AssertNotNull(output, nameof(output));
-
             CallId = callId;
             AcknowledgedSafetyChecks = new ChangeTrackingList<ComputerCallSafetyCheckParam>();
             Output = output;
@@ -44,9 +40,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
-        internal OutputItemComputerToolCallOutput(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, IList<ComputerCallSafetyCheckParam> acknowledgedSafetyChecks, ComputerScreenshotImage output, OutputItemComputerToolCallOutputStatus? status) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemComputerToolCallOutput(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, IList<ComputerCallSafetyCheckParam> acknowledgedSafetyChecks, ComputerScreenshotImage output, OutputItemComputerToolCallOutputStatus? status) : base(@type, id, createdBy, agentReference, responseId, additionalBinaryDataProperties)
         {
-            Id = id;
             CallId = callId;
             AcknowledgedSafetyChecks = acknowledgedSafetyChecks;
             Output = output;
@@ -54,10 +49,10 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The ID of the computer tool call output. </summary>
-        public string Id { get; }
+        public new string Id => _id ?? default;
 
         /// <summary> The ID of the computer tool call that produced the output. </summary>
-        public string CallId { get; set; }
+        public string CallId { get; }
 
         /// <summary>
         /// The safety checks reported by the API that have been acknowledged by the
@@ -65,13 +60,13 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </summary>
         public IList<ComputerCallSafetyCheckParam> AcknowledgedSafetyChecks { get; }
 
-        /// <summary> Gets or sets the Output. </summary>
-        public ComputerScreenshotImage Output { get; set; }
+        /// <summary> Gets the Output. </summary>
+        public ComputerScreenshotImage Output { get; }
 
         /// <summary>
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </summary>
-        public OutputItemComputerToolCallOutputStatus? Status { get; set; }
+        public OutputItemComputerToolCallOutputStatus? Status { get; }
     }
 }

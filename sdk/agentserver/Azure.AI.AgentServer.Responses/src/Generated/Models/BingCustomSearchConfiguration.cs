@@ -6,9 +6,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> A bing custom search configuration. </summary>
     public partial class BingCustomSearchConfiguration
@@ -30,8 +30,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BingCustomSearchConfiguration"/>. </summary>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="projectConnectionId"> Project connection id for grounding with bing search. </param>
         /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
         /// <param name="market"> The market where the results come from. </param>
@@ -39,10 +37,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="count"> The number of search results to return in the bing api response. </param>
         /// <param name="freshness"> Filter search results by a specific time range. See [accepted values here](https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/query-parameters). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BingCustomSearchConfiguration(string name, string description, string projectConnectionId, string instanceName, string market, string setLang, long? count, string freshness, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BingCustomSearchConfiguration(string projectConnectionId, string instanceName, string market, string setLang, long? count, string freshness, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Name = name;
-            Description = description;
             ProjectConnectionId = projectConnectionId;
             InstanceName = instanceName;
             Market = market;
@@ -51,12 +47,6 @@ namespace Azure.AI.AgentServer.Responses.Models
             Freshness = freshness;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
-
-        /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
 
         /// <summary> Project connection id for grounding with bing search. </summary>
         public string ProjectConnectionId { get; set; }

@@ -9,9 +9,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> The response object. </summary>
     public partial class ResponseObject : IJsonModel<ResponseObject>
@@ -45,7 +45,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResponseObject)} does not support writing '{options.Format}' format.");
             }
@@ -292,6 +292,16 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 writer.WriteNull("agent_reference"u8);
             }
+            if (Optional.IsCollectionDefined(ContentFilters))
+            {
+                writer.WritePropertyName("content_filters"u8);
+                writer.WriteStartArray();
+                foreach (ContentFilterResult item in ContentFilters)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -341,8 +351,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             string user = default;
             string safetyIdentifier = default;
             string promptCacheKey = default;
-            CreateResponseServiceTier? serviceTier = default;
-            CreateResponsePromptCacheRetention? promptCacheRetention = default;
+            CreateResponseRequestServiceTier? serviceTier = default;
+            CreateResponseRequestPromptCacheRetention? promptCacheRetention = default;
             string previousResponseId = default;
             string model = default;
             Reasoning reasoning = default;
@@ -353,13 +363,13 @@ namespace Azure.AI.AgentServer.Responses.Models
             IList<Tool> tools = default;
             BinaryData toolChoice = default;
             Prompt prompt = default;
-            CreateResponseTruncation? truncation = default;
+            CreateResponseRequestTruncation? truncation = default;
             string id = default;
             string @object = default;
-            ResponseStatus? status = default;
+            CreateResponseResponseStatus? status = default;
             DateTimeOffset createdAt = default;
             DateTimeOffset? completedAt = default;
-            ResponseErrorInfo error = default;
+            ResponseError error = default;
             ResponseIncompleteDetails incompleteDetails = default;
             IList<OutputItem> output = default;
             BinaryData instructions = default;
@@ -370,6 +380,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             AgentId agent = default;
             string agentSessionId = default;
             AgentReference agentReference = default;
+            IList<ContentFilterResult> contentFilters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -435,7 +446,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                         serviceTier = null;
                         continue;
                     }
-                    serviceTier = prop.Value.GetString().ToCreateResponseServiceTier();
+                    serviceTier = prop.Value.GetString().ToCreateResponseRequestServiceTier();
                     continue;
                 }
                 if (prop.NameEquals("prompt_cache_retention"u8))
@@ -445,7 +456,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                         promptCacheRetention = null;
                         continue;
                     }
-                    promptCacheRetention = prop.Value.GetString().ToCreateResponsePromptCacheRetention();
+                    promptCacheRetention = prop.Value.GetString().ToCreateResponseRequestPromptCacheRetention();
                     continue;
                 }
                 if (prop.NameEquals("previous_response_id"u8))
@@ -551,7 +562,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                         truncation = null;
                         continue;
                     }
-                    truncation = prop.Value.GetString().ToCreateResponseTruncation();
+                    truncation = prop.Value.GetString().ToCreateResponseRequestTruncation();
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
@@ -570,7 +581,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToResponseStatus();
+                    status = prop.Value.GetString().ToCreateResponseResponseStatus();
                     continue;
                 }
                 if (prop.NameEquals("created_at"u8))
@@ -595,7 +606,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                         error = null;
                         continue;
                     }
-                    error = ResponseErrorInfo.DeserializeResponseErrorInfo(prop.Value, options);
+                    error = ResponseError.DeserializeResponseError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("incomplete_details"u8))
@@ -686,6 +697,20 @@ namespace Azure.AI.AgentServer.Responses.Models
                     agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("content_filters"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ContentFilterResult> array = new List<ContentFilterResult>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ContentFilterResult.DeserializeContentFilterResult(item, options));
+                    }
+                    contentFilters = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -728,6 +753,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 agent,
                 agentSessionId,
                 agentReference,
+                contentFilters ?? new ChangeTrackingList<ContentFilterResult>(),
                 additionalBinaryDataProperties);
         }
     }

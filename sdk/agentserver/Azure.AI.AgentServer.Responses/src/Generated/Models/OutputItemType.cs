@@ -6,9 +6,9 @@
 
 using System;
 using System.ComponentModel;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary></summary>
     public readonly partial struct OutputItemType : IEquatable<OutputItemType>
@@ -40,9 +40,14 @@ namespace Azure.AI.AgentServer.Responses.Models
         private const string CustomToolCallValue = "custom_tool_call";
         private const string CustomToolCallOutputValue = "custom_tool_call_output";
         private const string MessageValue = "message";
+        private const string RemoteToolCallValue = "remote_function_call";
+        private const string RemoteToolCallOutputValue = "remote_function_call_output";
+        private const string ItemReferenceValue = "item_reference";
         private const string StructuredOutputsValue = "structured_outputs";
         private const string OauthConsentRequestValue = "oauth_consent_request";
         private const string MemorySearchCallValue = "memory_search_call";
+        private const string MemoryCommandPreviewCallValue = "memory_command_preview_call";
+        private const string MemoryCommandPreviewCallOutputValue = "memory_command_preview_call_output";
         private const string WorkflowActionValue = "workflow_action";
         private const string A2aPreviewCallValue = "a2a_preview_call";
         private const string A2aPreviewCallOutputValue = "a2a_preview_call_output";
@@ -151,6 +156,15 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Gets the Message. </summary>
         public static OutputItemType Message { get; } = new OutputItemType(MessageValue);
 
+        /// <summary> Gets the RemoteToolCall. </summary>
+        public static OutputItemType RemoteToolCall { get; } = new OutputItemType(RemoteToolCallValue);
+
+        /// <summary> Gets the RemoteToolCallOutput. </summary>
+        public static OutputItemType RemoteToolCallOutput { get; } = new OutputItemType(RemoteToolCallOutputValue);
+
+        /// <summary> Gets the ItemReference. </summary>
+        public static OutputItemType ItemReference { get; } = new OutputItemType(ItemReferenceValue);
+
         /// <summary> Gets the StructuredOutputs. </summary>
         public static OutputItemType StructuredOutputs { get; } = new OutputItemType(StructuredOutputsValue);
 
@@ -159,6 +173,12 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Gets the MemorySearchCall. </summary>
         public static OutputItemType MemorySearchCall { get; } = new OutputItemType(MemorySearchCallValue);
+
+        /// <summary> Gets the MemoryCommandPreviewCall. </summary>
+        public static OutputItemType MemoryCommandPreviewCall { get; } = new OutputItemType(MemoryCommandPreviewCallValue);
+
+        /// <summary> Gets the MemoryCommandPreviewCallOutput. </summary>
+        public static OutputItemType MemoryCommandPreviewCallOutput { get; } = new OutputItemType(MemoryCommandPreviewCallOutputValue);
 
         /// <summary> Gets the WorkflowAction. </summary>
         public static OutputItemType WorkflowAction { get; } = new OutputItemType(WorkflowActionValue);

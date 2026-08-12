@@ -7,9 +7,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> A set of index resources used by the `azure_ai_search` tool. </summary>
     public partial class AzureAISearchToolResource
@@ -31,26 +31,16 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureAISearchToolResource"/>. </summary>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="indexes">
         /// The indices attached to this agent. There can be a maximum of 1 index
         /// resource attached to the agent.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureAISearchToolResource(string name, string description, IList<AISearchIndexResource> indexes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureAISearchToolResource(IList<AISearchIndexResource> indexes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Name = name;
-            Description = description;
             Indexes = indexes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
-
-        /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
 
         /// <summary>
         /// The indices attached to this agent. There can be a maximum of 1 index

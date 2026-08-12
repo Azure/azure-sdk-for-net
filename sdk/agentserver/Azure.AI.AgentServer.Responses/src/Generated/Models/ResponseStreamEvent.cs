@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary>
     /// The ResponseStreamEvent.
@@ -40,5 +40,8 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Gets or sets the Type. </summary>
         internal ResponseStreamEventType Type { get; set; }
+
+        /// <summary> Gets the SequenceNumber. </summary>
+        public virtual long SequenceNumber { get; }
     }
 }

@@ -6,9 +6,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> MCP approval response. </summary>
     public partial class OutputItemMcpApprovalResponseResource : OutputItem
@@ -17,13 +16,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="id"> The unique ID of the approval response. </param>
         /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>
         /// <param name="approve"> Whether the request was approved. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="approvalRequestId"/> is null. </exception>
-        public OutputItemMcpApprovalResponseResource(string id, string approvalRequestId, bool approve) : base(OutputItemType.McpApprovalResponse)
+        internal OutputItemMcpApprovalResponseResource(string id, string approvalRequestId, bool approve) : base(OutputItemType.McpApprovalResponse)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(approvalRequestId, nameof(approvalRequestId));
-
-            Id = id;
+            _id = id;
             ApprovalRequestId = approvalRequestId;
             Approve = approve;
         }
@@ -38,24 +33,23 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>
         /// <param name="approve"> Whether the request was approved. </param>
         /// <param name="reason"></param>
-        internal OutputItemMcpApprovalResponseResource(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string approvalRequestId, bool approve, string reason) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemMcpApprovalResponseResource(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string approvalRequestId, bool approve, string reason) : base(@type, id, createdBy, agentReference, responseId, additionalBinaryDataProperties)
         {
-            Id = id;
             ApprovalRequestId = approvalRequestId;
             Approve = approve;
             Reason = reason;
         }
 
         /// <summary> The unique ID of the approval response. </summary>
-        public string Id { get; set; }
+        public new string Id => _id ?? default;
 
         /// <summary> The ID of the approval request being answered. </summary>
-        public string ApprovalRequestId { get; set; }
+        public string ApprovalRequestId { get; }
 
         /// <summary> Whether the request was approved. </summary>
-        public bool Approve { get; set; }
+        public bool Approve { get; }
 
-        /// <summary> Gets or sets the Reason. </summary>
-        public string Reason { get; set; }
+        /// <summary> Gets the Reason. </summary>
+        public string Reason { get; }
     }
 }

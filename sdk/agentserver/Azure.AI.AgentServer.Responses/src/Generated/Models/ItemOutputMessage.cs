@@ -7,10 +7,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
-    internal partial class ItemOutputMessage : Item
+    /// <summary> Output message. </summary>
+    public partial class ItemOutputMessage : Item
     {
         /// <summary> Initializes a new instance of <see cref="ItemOutputMessage"/>. </summary>
         /// <param name="id"> The unique ID of the output message. </param>
@@ -19,8 +21,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
         public ItemOutputMessage(string id, IEnumerable<OutputMessageContent> content, ItemOutputMessageStatus status) : base(ItemType.OutputMessage)
         {
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(content, nameof(content));
+
             Id = id;
             Content = content.ToList();
             Status = status;

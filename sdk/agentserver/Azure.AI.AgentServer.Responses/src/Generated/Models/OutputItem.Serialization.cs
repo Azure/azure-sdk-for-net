@@ -5,15 +5,16 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary>
     /// The OutputItem.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StructuredOutputsOutputItem"/>, <see cref="WorkflowActionOutputItem"/>, <see cref="OAuthConsentRequestOutputItem"/>, <see cref="MemorySearchToolCallItemResource"/>, <see cref="BingGroundingToolCall"/>, <see cref="BingGroundingToolCallOutput"/>, <see cref="SharepointGroundingToolCall"/>, <see cref="SharepointGroundingToolCallOutput"/>, <see cref="AzureAISearchToolCall"/>, <see cref="AzureAISearchToolCallOutput"/>, <see cref="BingCustomSearchToolCall"/>, <see cref="BingCustomSearchToolCallOutput"/>, <see cref="OpenApiToolCall"/>, <see cref="OpenApiToolCallOutput"/>, <see cref="BrowserAutomationToolCall"/>, <see cref="BrowserAutomationToolCallOutput"/>, <see cref="FabricDataAgentToolCall"/>, <see cref="FabricDataAgentToolCallOutput"/>, <see cref="AzureFunctionToolCall"/>, <see cref="AzureFunctionToolCallOutput"/>, <see cref="A2AToolCall"/>, <see cref="A2AToolCallOutput"/>, <see cref="OutputItemCustomToolCall"/>, <see cref="OutputItemCustomToolCallOutput"/>, <see cref="OutputItemFileSearchToolCall"/>, <see cref="OutputItemFunctionToolCall"/>, <see cref="OutputItemFunctionToolCallOutput"/>, <see cref="OutputItemWebSearchToolCall"/>, <see cref="OutputItemComputerToolCall"/>, <see cref="OutputItemComputerToolCallOutput"/>, <see cref="OutputItemReasoningItem"/>, <see cref="OutputItemToolSearchCall"/>, <see cref="OutputItemToolSearchOutput"/>, <see cref="OutputItemCompactionBody"/>, <see cref="OutputItemImageGenToolCall"/>, <see cref="OutputItemCodeInterpreterToolCall"/>, <see cref="OutputItemLocalShellToolCall"/>, <see cref="OutputItemLocalShellToolCallOutput"/>, <see cref="OutputItemFunctionShellCall"/>, <see cref="OutputItemFunctionShellCallOutput"/>, <see cref="OutputItemApplyPatchToolCall"/>, <see cref="OutputItemApplyPatchToolCallOutput"/>, <see cref="OutputItemMcpToolCall"/>, <see cref="OutputItemMcpListTools"/>, <see cref="OutputItemMcpApprovalRequest"/>, <see cref="OutputItemMcpApprovalResponseResource"/>, and <see cref="OutputItemMessage"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OutputItemRemoteToolCall"/>, <see cref="OutputItemRemoteToolCallOutput"/>, <see cref="OutputItemReference"/>, <see cref="StructuredOutputsOutputItem"/>, <see cref="WorkflowActionOutputItem"/>, <see cref="OAuthConsentRequestOutputItem"/>, <see cref="BingGroundingToolCall"/>, <see cref="BingGroundingToolCallOutput"/>, <see cref="SharepointGroundingToolCall"/>, <see cref="SharepointGroundingToolCallOutput"/>, <see cref="AzureAISearchToolCall"/>, <see cref="AzureAISearchToolCallOutput"/>, <see cref="BingCustomSearchToolCall"/>, <see cref="BingCustomSearchToolCallOutput"/>, <see cref="OpenApiToolCall"/>, <see cref="OpenApiToolCallOutput"/>, <see cref="BrowserAutomationToolCall"/>, <see cref="BrowserAutomationToolCallOutput"/>, <see cref="FabricDataAgentToolCall"/>, <see cref="FabricDataAgentToolCallOutput"/>, <see cref="AzureFunctionToolCall"/>, <see cref="AzureFunctionToolCallOutput"/>, <see cref="A2AToolCall"/>, <see cref="A2AToolCallOutput"/>, <see cref="MemorySearchToolCall"/>, <see cref="MemoryCommandToolCall"/>, <see cref="MemoryCommandToolCallOutput"/>, <see cref="CustomToolCallResource"/>, <see cref="CustomToolCallOutputResource"/>, <see cref="OutputItemOutputMessage"/>, <see cref="OutputItemFileSearchToolCall"/>, <see cref="OutputItemFunctionToolCall"/>, <see cref="OutputItemFunctionToolCallOutput"/>, <see cref="OutputItemWebSearchToolCall"/>, <see cref="OutputItemComputerToolCall"/>, <see cref="OutputItemComputerToolCallOutput"/>, <see cref="OutputItemReasoningItem"/>, <see cref="OutputItemToolSearchCall"/>, <see cref="OutputItemToolSearchOutput"/>, <see cref="OutputItemCompactionBody"/>, <see cref="OutputItemImageGenToolCall"/>, <see cref="OutputItemCodeInterpreterToolCall"/>, <see cref="OutputItemLocalShellToolCall"/>, <see cref="OutputItemLocalShellToolCallOutput"/>, <see cref="OutputItemFunctionShellCall"/>, <see cref="OutputItemFunctionShellCallOutput"/>, <see cref="OutputItemApplyPatchToolCall"/>, <see cref="OutputItemApplyPatchToolCallOutput"/>, <see cref="OutputItemMcpToolCall"/>, <see cref="OutputItemMcpListTools"/>, <see cref="OutputItemMcpApprovalRequest"/>, <see cref="OutputItemMcpApprovalResponseResource"/>, and <see cref="OutputItemMessage"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownOutputItem))]
     public abstract partial class OutputItem : IJsonModel<OutputItem>
@@ -47,7 +48,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(OutputItem)} does not support writing '{options.Format}' format.");
             }
@@ -62,6 +63,14 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<OutputItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="OutputItem"/> from. </param>
+        public static explicit operator OutputItem(ClientResult result)
+        {
+            PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeOutputItem(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -83,6 +92,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
             if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("created_by"u8);
@@ -151,14 +165,18 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "remote_function_call":
+                        return OutputItemRemoteToolCall.DeserializeOutputItemRemoteToolCall(element, options);
+                    case "remote_function_call_output":
+                        return OutputItemRemoteToolCallOutput.DeserializeOutputItemRemoteToolCallOutput(element, options);
+                    case "item_reference":
+                        return OutputItemReference.DeserializeOutputItemReference(element, options);
                     case "structured_outputs":
                         return StructuredOutputsOutputItem.DeserializeStructuredOutputsOutputItem(element, options);
                     case "workflow_action":
                         return WorkflowActionOutputItem.DeserializeWorkflowActionOutputItem(element, options);
                     case "oauth_consent_request":
                         return OAuthConsentRequestOutputItem.DeserializeOAuthConsentRequestOutputItem(element, options);
-                    case "memory_search_call":
-                        return MemorySearchToolCallItemResource.DeserializeMemorySearchToolCallItemResource(element, options);
                     case "bing_grounding_call":
                         return BingGroundingToolCall.DeserializeBingGroundingToolCall(element, options);
                     case "bing_grounding_call_output":
@@ -195,10 +213,16 @@ namespace Azure.AI.AgentServer.Responses.Models
                         return A2AToolCall.DeserializeA2AToolCall(element, options);
                     case "a2a_preview_call_output":
                         return A2AToolCallOutput.DeserializeA2AToolCallOutput(element, options);
+                    case "memory_search_call":
+                        return MemorySearchToolCall.DeserializeMemorySearchToolCall(element, options);
+                    case "memory_command_preview_call":
+                        return MemoryCommandToolCall.DeserializeMemoryCommandToolCall(element, options);
+                    case "memory_command_preview_call_output":
+                        return MemoryCommandToolCallOutput.DeserializeMemoryCommandToolCallOutput(element, options);
                     case "custom_tool_call":
-                        return OutputItemCustomToolCall.DeserializeOutputItemCustomToolCall(element, options);
+                        return CustomToolCallResource.DeserializeCustomToolCallResource(element, options);
                     case "custom_tool_call_output":
-                        return OutputItemCustomToolCallOutput.DeserializeOutputItemCustomToolCallOutput(element, options);
+                        return CustomToolCallOutputResource.DeserializeCustomToolCallOutputResource(element, options);
                     case "output_message":
                         return OutputItemOutputMessage.DeserializeOutputItemOutputMessage(element, options);
                     case "file_search_call":

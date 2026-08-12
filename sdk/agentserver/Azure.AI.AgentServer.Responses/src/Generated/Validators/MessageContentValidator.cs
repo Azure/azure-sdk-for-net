@@ -86,6 +86,7 @@ internal static partial class MessageContentValidator
         "output_text" => MessageContentOutputTextContentValidator.Validate(element),
         "reasoning_text" => MessageContentReasoningTextContentValidator.Validate(element),
         "refusal" => MessageContentRefusalContentValidator.Validate(element),
+        "summary_text" => SummaryTextContentValidator.Validate(element),
         "text" => TextContentValidator.Validate(element),
         _ => ValidationResult.Success,  // Unknown type — forward compatible
     };

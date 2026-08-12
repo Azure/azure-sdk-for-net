@@ -7,9 +7,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Web search tool call. </summary>
     public partial class OutputItemWebSearchToolCall : OutputItem
@@ -21,13 +20,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// An object describing the specific action taken in this web search call.
         ///   Includes details on how the model used the web (search, open_page, find_in_page).
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="action"/> is null. </exception>
-        public OutputItemWebSearchToolCall(string id, ItemWebSearchToolCallStatus status, BinaryData action) : base(OutputItemType.WebSearchCall)
+        internal OutputItemWebSearchToolCall(string id, ItemWebSearchToolCallStatus status, BinaryData action) : base(OutputItemType.WebSearchCall)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(action, nameof(action));
-
-            Id = id;
+            _id = id;
             Status = status;
             Action = action;
         }
@@ -44,18 +39,17 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// An object describing the specific action taken in this web search call.
         ///   Includes details on how the model used the web (search, open_page, find_in_page).
         /// </param>
-        internal OutputItemWebSearchToolCall(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, ItemWebSearchToolCallStatus status, BinaryData action) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemWebSearchToolCall(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, ItemWebSearchToolCallStatus status, BinaryData action) : base(@type, id, createdBy, agentReference, responseId, additionalBinaryDataProperties)
         {
-            Id = id;
             Status = status;
             Action = action;
         }
 
         /// <summary> The unique ID of the web search tool call. </summary>
-        public string Id { get; set; }
+        public new string Id => _id ?? default;
 
         /// <summary> The status of the web search tool call. </summary>
-        public ItemWebSearchToolCallStatus Status { get; set; }
+        public ItemWebSearchToolCallStatus Status { get; }
 
         /// <summary>
         /// An object describing the specific action taken in this web search call.
@@ -100,6 +94,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Action { get; set; }
+        public BinaryData Action { get; }
     }
 }

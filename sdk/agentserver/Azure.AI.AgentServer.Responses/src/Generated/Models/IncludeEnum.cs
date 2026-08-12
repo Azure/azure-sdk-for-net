@@ -6,9 +6,9 @@
 
 using System;
 using System.ComponentModel;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary>
     /// Specify additional output data to include in the model response. Currently supported values are:

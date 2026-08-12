@@ -6,35 +6,34 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Emitted when the model response is complete. </summary>
     public partial class ResponseCompletedEvent : ResponseStreamEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseCompletedEvent"/>. </summary>
-        /// <param name="sequenceNumber"></param>
         /// <param name="response"> Properties of the completed response. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="response"/> is null. </exception>
-        public ResponseCompletedEvent(long sequenceNumber, ResponseObject response) : base(ResponseStreamEventType.ResponseCompleted, sequenceNumber)
+        /// <param name="sequenceNumber"> The sequence number for this event. </param>
+        internal ResponseCompletedEvent(ResponseObject response, long sequenceNumber) : base(ResponseStreamEventType.ResponseCompleted, sequenceNumber)
         {
-            Argument.AssertNotNull(response, nameof(response));
-
             Response = response;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseCompletedEvent"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="sequenceNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="response"> Properties of the completed response. </param>
-        internal ResponseCompletedEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseObject response) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="sequenceNumber"> The sequence number for this event. </param>
+        internal ResponseCompletedEvent(ResponseStreamEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseObject response, long sequenceNumber) : base(@type, sequenceNumber, additionalBinaryDataProperties)
         {
             Response = response;
         }
 
         /// <summary> Properties of the completed response. </summary>
-        public ResponseObject Response { get; set; }
+        public ResponseObject Response { get; }
+
+        /// <summary> The sequence number for this event. </summary>
+        public override long SequenceNumber { get; }
     }
 }

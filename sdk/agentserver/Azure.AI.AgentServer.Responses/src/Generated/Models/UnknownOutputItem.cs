@@ -7,17 +7,18 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     internal partial class UnknownOutputItem : OutputItem
     {
         /// <summary> Initializes a new instance of <see cref="UnknownOutputItem"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="id"></param>
         /// <param name="createdBy"> The information about the creator of the item. </param>
         /// <param name="agentReference"> The agent that created the item. </param>
         /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownOutputItem(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", createdBy, agentReference, responseId, additionalBinaryDataProperties)
+        internal UnknownOutputItem(OutputItemType @type, string id, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", id, createdBy, agentReference, responseId, additionalBinaryDataProperties)
         {
         }
     }

@@ -9,9 +9,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Emitted when a new output item is added. </summary>
     public partial class ResponseOutputItemAddedEvent : ResponseStreamEvent, IJsonModel<ResponseOutputItemAddedEvent>
@@ -45,7 +45,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResponseOutputItemAddedEvent)} does not support writing '{options.Format}' format.");
             }
@@ -90,6 +90,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("output_index"u8);
             writer.WriteNumberValue(OutputIndex);
+            writer.WritePropertyName("sequence_number"u8);
+            writer.WriteNumberValue(SequenceNumber);
             writer.WritePropertyName("item"u8);
             writer.WriteObjectValue(Item, options);
         }
@@ -120,9 +122,9 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             ResponseStreamEventType @type = default;
-            long sequenceNumber = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             long outputIndex = default;
+            long sequenceNumber = default;
             OutputItem item = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,14 +133,14 @@ namespace Azure.AI.AgentServer.Responses.Models
                     @type = new ResponseStreamEventType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("sequence_number"u8))
-                {
-                    sequenceNumber = prop.Value.GetInt64();
-                    continue;
-                }
                 if (prop.NameEquals("output_index"u8))
                 {
                     outputIndex = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("sequence_number"u8))
+                {
+                    sequenceNumber = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("item"u8))
@@ -151,7 +153,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponseOutputItemAddedEvent(@type, sequenceNumber, additionalBinaryDataProperties, outputIndex, item);
+            return new ResponseOutputItemAddedEvent(@type, additionalBinaryDataProperties, outputIndex, sequenceNumber, item);
         }
     }
 }

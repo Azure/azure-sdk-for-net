@@ -8,9 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> The response object. </summary>
     public partial class ResponseObject
@@ -35,12 +35,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="instructions"></param>
         /// <param name="parallelToolCalls"> Whether to allow the model to run tool calls in parallel. </param>
         /// <param name="agentReference"> The agent used for this response. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="output"/> is null. </exception>
-        public ResponseObject(string id, DateTimeOffset createdAt, ResponseErrorInfo error, ResponseIncompleteDetails incompleteDetails, IEnumerable<OutputItem> output, BinaryData instructions, bool parallelToolCalls, AgentReference agentReference)
+        internal ResponseObject(string id, DateTimeOffset createdAt, ResponseError error, ResponseIncompleteDetails incompleteDetails, IEnumerable<OutputItem> output, BinaryData instructions, bool parallelToolCalls, AgentReference agentReference)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(output, nameof(output));
-
             Tools = new ChangeTrackingList<Tool>();
             Id = id;
             CreatedAt = createdAt;
@@ -50,6 +46,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             Instructions = instructions;
             ParallelToolCalls = parallelToolCalls;
             AgentReference = agentReference;
+            ContentFilters = new ChangeTrackingList<ContentFilterResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseObject"/>. </summary>
@@ -115,8 +112,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// affinity in follow-up calls.
         /// </param>
         /// <param name="agentReference"> The agent used for this response. </param>
+        /// <param name="contentFilters"> The content filter evaluation results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseObject(Metadata metadata, long? topLogprobs, double? temperature, double? topP, string user, string safetyIdentifier, string promptCacheKey, CreateResponseServiceTier? serviceTier, CreateResponsePromptCacheRetention? promptCacheRetention, string previousResponseId, string model, Reasoning reasoning, bool? background, long? maxOutputTokens, long? maxToolCalls, ResponseTextParam text, IList<Tool> tools, BinaryData toolChoice, Prompt prompt, CreateResponseTruncation? truncation, string id, string @object, ResponseStatus? status, DateTimeOffset createdAt, DateTimeOffset? completedAt, ResponseErrorInfo error, ResponseIncompleteDetails incompleteDetails, IList<OutputItem> output, BinaryData instructions, string outputText, ResponseUsage usage, bool parallelToolCalls, ConversationReference conversation, AgentId agent, string agentSessionId, AgentReference agentReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseObject(Metadata metadata, long? topLogprobs, double? temperature, double? topP, string user, string safetyIdentifier, string promptCacheKey, CreateResponseRequestServiceTier? serviceTier, CreateResponseRequestPromptCacheRetention? promptCacheRetention, string previousResponseId, string model, Reasoning reasoning, bool? background, long? maxOutputTokens, long? maxToolCalls, ResponseTextParam text, IList<Tool> tools, BinaryData toolChoice, Prompt prompt, CreateResponseRequestTruncation? truncation, string id, string @object, CreateResponseResponseStatus? status, DateTimeOffset createdAt, DateTimeOffset? completedAt, ResponseError error, ResponseIncompleteDetails incompleteDetails, IList<OutputItem> output, BinaryData instructions, string outputText, ResponseUsage usage, bool parallelToolCalls, ConversationReference conversation, AgentId agent, string agentSessionId, AgentReference agentReference, IList<ContentFilterResult> contentFilters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             TopLogprobs = topLogprobs;
@@ -154,69 +152,70 @@ namespace Azure.AI.AgentServer.Responses.Models
             Agent = agent;
             AgentSessionId = agentSessionId;
             AgentReference = agentReference;
+            ContentFilters = contentFilters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the Metadata. </summary>
-        public Metadata Metadata { get; set; }
+        /// <summary> Gets the Metadata. </summary>
+        public Metadata Metadata { get; }
 
-        /// <summary> Gets or sets the TopLogprobs. </summary>
-        public long? TopLogprobs { get; set; }
+        /// <summary> Gets the TopLogprobs. </summary>
+        public long? TopLogprobs { get; }
 
-        /// <summary> Gets or sets the Temperature. </summary>
-        public double? Temperature { get; set; }
+        /// <summary> Gets the Temperature. </summary>
+        public double? Temperature { get; }
 
-        /// <summary> Gets or sets the TopP. </summary>
-        public double? TopP { get; set; }
+        /// <summary> Gets the TopP. </summary>
+        public double? TopP { get; }
 
         /// <summary>
         /// This field is being replaced by `safety_identifier` and `prompt_cache_key`. Use `prompt_cache_key` instead to maintain caching optimizations.
         ///   A stable identifier for your end-users.
         ///   Used to boost cache hit rates by better bucketing similar requests and  to help OpenAI detect and prevent abuse. [Learn more](/docs/guides/safety-best-practices#safety-identifiers).
         /// </summary>
-        public string User { get; set; }
+        public string User { get; }
 
         /// <summary>
         /// A stable identifier used to help detect users of your application that may be violating OpenAI's usage policies.
         ///   The IDs should be a string that uniquely identifies each user, with a maximum length of 64 characters. We recommend hashing their username or email address, in order to avoid sending us any identifying information. [Learn more](/docs/guides/safety-best-practices#safety-identifiers).
         /// </summary>
-        public string SafetyIdentifier { get; set; }
+        public string SafetyIdentifier { get; }
 
         /// <summary> Used by OpenAI to cache responses for similar requests to optimize your cache hit rates. Replaces the `user` field. [Learn more](/docs/guides/prompt-caching). </summary>
-        public string PromptCacheKey { get; set; }
+        public string PromptCacheKey { get; }
 
-        /// <summary> Gets or sets the ServiceTier. </summary>
-        public CreateResponseServiceTier? ServiceTier { get; set; }
+        /// <summary> Gets the ServiceTier. </summary>
+        public CreateResponseRequestServiceTier? ServiceTier { get; }
 
-        /// <summary> Gets or sets the PromptCacheRetention. </summary>
-        public CreateResponsePromptCacheRetention? PromptCacheRetention { get; set; }
+        /// <summary> Gets the PromptCacheRetention. </summary>
+        public CreateResponseRequestPromptCacheRetention? PromptCacheRetention { get; }
 
-        /// <summary> Gets or sets the PreviousResponseId. </summary>
-        public string PreviousResponseId { get; set; }
+        /// <summary> Gets the PreviousResponseId. </summary>
+        public string PreviousResponseId { get; }
 
         /// <summary> The model deployment to use for the creation of this response. </summary>
-        public string Model { get; set; }
+        public string Model { get; }
 
-        /// <summary> Gets or sets the Reasoning. </summary>
-        public Reasoning Reasoning { get; set; }
+        /// <summary> Gets the Reasoning. </summary>
+        public Reasoning Reasoning { get; }
 
-        /// <summary> Gets or sets the Background. </summary>
-        public bool? Background { get; set; }
+        /// <summary> Gets the Background. </summary>
+        public bool? Background { get; }
 
-        /// <summary> Gets or sets the MaxOutputTokens. </summary>
-        public long? MaxOutputTokens { get; set; }
+        /// <summary> Gets the MaxOutputTokens. </summary>
+        public long? MaxOutputTokens { get; }
 
-        /// <summary> Gets or sets the MaxToolCalls. </summary>
-        public long? MaxToolCalls { get; set; }
+        /// <summary> Gets the MaxToolCalls. </summary>
+        public long? MaxToolCalls { get; }
 
-        /// <summary> Gets or sets the Text. </summary>
-        public ResponseTextParam Text { get; set; }
+        /// <summary> Gets the Text. </summary>
+        public ResponseTextParam Text { get; }
 
         /// <summary> Gets the Tools. </summary>
         public IList<Tool> Tools { get; }
 
         /// <summary>
-        /// Gets or sets the ToolChoice.
+        /// Gets the ToolChoice.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -254,16 +253,16 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData ToolChoice { get; set; }
+        public BinaryData ToolChoice { get; }
 
-        /// <summary> Gets or sets the Prompt. </summary>
-        public Prompt Prompt { get; set; }
+        /// <summary> Gets the Prompt. </summary>
+        public Prompt Prompt { get; }
 
-        /// <summary> Gets or sets the Truncation. </summary>
-        public CreateResponseTruncation? Truncation { get; set; }
+        /// <summary> Gets the Truncation. </summary>
+        public CreateResponseRequestTruncation? Truncation { get; }
 
         /// <summary> Unique identifier for this Response. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
 
         /// <summary> The object type of this resource - always set to `response`. </summary>
         public string Object { get; } = "response";
@@ -272,19 +271,19 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the response generation. One of `completed`, `failed`,
         ///   `in_progress`, `cancelled`, `queued`, or `incomplete`.
         /// </summary>
-        public ResponseStatus? Status { get; set; }
+        public CreateResponseResponseStatus? Status { get; }
 
         /// <summary> Unix timestamp (in seconds) of when this Response was created. </summary>
-        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; }
 
-        /// <summary> Gets or sets the CompletedAt. </summary>
-        public DateTimeOffset? CompletedAt { get; set; }
+        /// <summary> Gets the CompletedAt. </summary>
+        public DateTimeOffset? CompletedAt { get; }
 
-        /// <summary> Gets or sets the Error. </summary>
-        public ResponseErrorInfo Error { get; set; }
+        /// <summary> Gets the Error. </summary>
+        public ResponseError Error { get; }
 
-        /// <summary> Gets or sets the IncompleteDetails. </summary>
-        public ResponseIncompleteDetails IncompleteDetails { get; set; }
+        /// <summary> Gets the IncompleteDetails. </summary>
+        public ResponseIncompleteDetails IncompleteDetails { get; }
 
         /// <summary>
         /// An array of content items generated by the model.
@@ -298,7 +297,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         public IList<OutputItem> Output { get; }
 
         /// <summary>
-        /// Gets or sets the Instructions.
+        /// Gets the Instructions.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -336,25 +335,25 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Instructions { get; set; }
+        public BinaryData Instructions { get; }
 
-        /// <summary> Gets or sets the OutputText. </summary>
-        public string OutputText { get; set; }
+        /// <summary> Gets the OutputText. </summary>
+        public string OutputText { get; }
 
-        /// <summary> Gets or sets the Usage. </summary>
-        public ResponseUsage Usage { get; set; }
+        /// <summary> Gets the Usage. </summary>
+        public ResponseUsage Usage { get; }
 
         /// <summary> Whether to allow the model to run tool calls in parallel. </summary>
-        public bool ParallelToolCalls { get; set; }
+        public bool ParallelToolCalls { get; }
 
-        /// <summary> Gets or sets the Conversation. </summary>
-        public ConversationReference Conversation { get; set; }
+        /// <summary> Gets the Conversation. </summary>
+        public ConversationReference Conversation { get; }
 
         /// <summary>
         /// (Deprecated) Use agent_reference instead.
         /// The agent used for this response
         /// </summary>
-        public AgentId Agent { get; set; }
+        public AgentId Agent { get; }
 
         /// <summary>
         /// The session identifier for this response. Currently only relevant for hosted agents.
@@ -362,9 +361,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// or an auto-generated UUID. Use for session-scoped operations and to maintain sandbox
         /// affinity in follow-up calls.
         /// </summary>
-        public string AgentSessionId { get; set; }
+        public string AgentSessionId { get; }
 
         /// <summary> The agent used for this response. </summary>
-        public AgentReference AgentReference { get; set; }
+        public AgentReference AgentReference { get; }
+
+        /// <summary> The content filter evaluation results. </summary>
+        public IList<ContentFilterResult> ContentFilters { get; }
     }
 }

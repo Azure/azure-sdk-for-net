@@ -6,9 +6,9 @@
 
 using System;
 using System.ComponentModel;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary>
     /// Authentication type for OpenApi endpoint. Allowed types are:
