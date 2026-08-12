@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Management.Tests.Common;
 using Azure.ResourceManager.Models;
@@ -72,7 +73,22 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
-        public void DynamicModelUsesSharedProvider()
+        public void ManagementModelUsesSharedProvider()
+        {
+            var model = InputFactory.Model("Widget");
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [model],
+                primaryNamespace: "Azure.ResourceManager.Test");
+
+            var provider = plugin.Object.TypeFactory.CreateModel(model);
+
+            Assert.That(provider, Is.TypeOf<ManagementModelProvider>());
+            Assert.That(provider, Is.InstanceOf<ScmModelProvider>());
+            Assert.That(provider!.Type.Namespace, Is.EqualTo("Azure.ResourceManager.Test.Models"));
+        }
+
+        [Test]
+        public void DynamicManagementModelHasPatchProperty()
         {
             var model = InputFactory.Model("DynamicWidget", isDynamicModel: true);
             var plugin = ManagementMockHelpers.LoadMockPlugin(
@@ -81,7 +97,8 @@ namespace Azure.Generator.Mgmt.Tests
 
             var provider = plugin.Object.TypeFactory.CreateModel(model);
 
-            Assert.That(provider, Is.TypeOf<ScmModelProvider>());
+            Assert.That(provider, Is.TypeOf<ManagementModelProvider>());
+            Assert.That(provider, Is.InstanceOf<ScmModelProvider>());
             Assert.That(provider!.Type.Namespace, Is.EqualTo("Azure.ResourceManager.Test.Models"));
             Assert.That(provider.Properties.Count(p => p.Name == "Patch"), Is.EqualTo(1));
         }
@@ -98,7 +115,8 @@ namespace Azure.Generator.Mgmt.Tests
 
             var provider = plugin.Object.TypeFactory.CreateModel(resourceModel);
 
-            Assert.That(provider, Is.TypeOf<ScmModelProvider>());
+            Assert.That(provider, Is.TypeOf<ResourceDataModelProvider>());
+            Assert.That(provider, Is.InstanceOf<ScmModelProvider>());
             Assert.That(provider!.Name, Is.EqualTo("ResponseTypeData"));
             Assert.That(provider.Type.Namespace, Is.EqualTo("Azure.ResourceManager.Test"));
             Assert.That(provider.Properties.Count(p => p.Name == "Patch"), Is.EqualTo(1));
