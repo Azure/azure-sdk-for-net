@@ -32,7 +32,6 @@ namespace Azure.Provisioning.IotHub
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.IotHub.IotHubDescription Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<System.BinaryData> Properties { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }

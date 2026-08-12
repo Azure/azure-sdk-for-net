@@ -51,7 +51,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateGetOperationStatusRequest(operationId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -84,7 +84,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateGetOperationStatusRequest(operationId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -129,7 +129,7 @@ namespace Azure.Security.ConfidentialLedger
 
         internal HttpMessage CreateGetOperationStatusRequest(string operationId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
