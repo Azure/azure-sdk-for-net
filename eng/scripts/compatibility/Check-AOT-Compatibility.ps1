@@ -13,6 +13,8 @@ param(
   [string]$DirectoryName
 )
 
+. "$PSScriptRoot/../RestoreRetry.Helpers.ps1"
+
 # Convert ServiceDirectory + PackageName to PackagePath if needed
 if ($PSCmdlet.ParameterSetName -eq 'ByNameAndDirectory') {
     # Use DirectoryName if provided, otherwise default to PackageName
@@ -105,7 +107,7 @@ $programFileContent | Set-Content -Path $programFile
 Write-Host "Collecting the set of trimming warnings."
 
 dotnet clean aotcompatibility.csproj | Out-Null
-dotnet restore aotcompatibility.csproj | Out-Null
+Invoke-WithRestoreRetry { dotnet restore aotcompatibility.csproj } | Out-Null
 $publishOutput = dotnet publish aotcompatibility.csproj -nodeReuse:false /p:UseSharedCompilation=false /p:ExposeExperimentalFeatures=true
 
 if ($LASTEXITCODE -ne 0)

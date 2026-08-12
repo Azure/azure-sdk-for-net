@@ -31,6 +31,7 @@ Set-StrictMode -Version 1
 
 . (Join-Path $PSScriptRoot\..\common\scripts common.ps1)
 . (Join-Path $PSScriptRoot CodeChecks.Helpers.ps1)
+. (Join-Path $PSScriptRoot RestoreRetry.Helpers.ps1)
 
 [string[]] $errors = @()
 
@@ -149,7 +150,9 @@ try {
 
             Write-Host "Re-generating clients"
             Invoke-Block {
-                & dotnet msbuild $PSScriptRoot\..\service.proj /restore /t:GenerateCode /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory $diagnosticArguments /p:ProjectListOverrideFile="$scopedOverrideFile"
+                Invoke-WithRestoreRetry {
+                    & dotnet msbuild $PSScriptRoot\..\service.proj /restore /t:GenerateCode /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory $diagnosticArguments /p:ProjectListOverrideFile="$scopedOverrideFile"
+                }
             }
         }
     }

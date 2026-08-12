@@ -20,6 +20,7 @@ if ($SpellCheckPublicApiSurface -and -not (Get-Command 'npx')) {
 }
 
 . $PSScriptRoot/../common/scripts/Helpers/CommandInvocation-Helpers.ps1
+. $PSScriptRoot/RestoreRetry.Helpers.ps1
 
 $relativePackagePath = $ServiceDirectory
 $apiListingFilesFilter = "$PSScriptRoot/../../sdk/$ServiceDirectory/*/api/*.cs"
@@ -42,7 +43,7 @@ if ($ProjectListOverrideFile) {
     $projectListOverrideArgument = "/p:ProjectListOverrideFile=`"$ProjectListOverrideFile`""
 }
 
-Invoke-LoggedMsbuildCommand "dotnet build /t:ExportApi /p:RunApiCompat=false /p:InheritDocEnabled=false /p:GeneratePackageOnBuild=false /p:Configuration=Release /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:IncludeTests=false /p:Scope=`"$relativePackagePath`" /p:SDKType=$SDKType $projectListOverrideArgument /restore $servicesProj $diagnosticArguments"
+Invoke-WithRestoreRetry -MsBuildLogging -ExitOnFailure -Command "dotnet build /t:ExportApi /p:RunApiCompat=false /p:InheritDocEnabled=false /p:GeneratePackageOnBuild=false /p:Configuration=Release /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:IncludeTests=false /p:Scope=`"$relativePackagePath`" /p:SDKType=$SDKType $projectListOverrideArgument /restore $servicesProj $diagnosticArguments"
 
 # Normalize line endings to LF in generated API listing files
 Write-Host "Normalizing line endings in API listing files"

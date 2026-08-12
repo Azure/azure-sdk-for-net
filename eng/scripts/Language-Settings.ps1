@@ -9,6 +9,7 @@ $PackageRepositoryUri = "https://www.nuget.org/packages"
 
 . "$PSScriptRoot/docs/Docs-ToC.ps1"
 . "$PSScriptRoot/ProjectScopedEngFiles.ps1"
+. "$PSScriptRoot/RestoreRetry.Helpers.ps1"
 function Get-AllPackageInfoFromRepo($serviceDirectory)
 {
   $allPackageProps = @()
@@ -565,7 +566,7 @@ function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
     $showSummary = ($env:SYSTEM_DEBUG -eq 'true') -or ($VerbosePreference -ne 'SilentlyContinue')
     $summaryArgs = $showSummary ? "/v:n /ds" : ""
 
-    Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:ProjectListOverrideFile=$(Resolve-Path $projectListOverrideFile -Relative) $summaryArgs eng\service.proj"
+    Invoke-WithRestoreRetry -ExitOnFailure -Command "dotnet msbuild /restore /t:GenerateCode /p:ProjectListOverrideFile=$(Resolve-Path $projectListOverrideFile -Relative) $summaryArgs eng\service.proj"
   }
   finally {
     Pop-Location
