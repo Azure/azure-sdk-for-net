@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.CommvaultContentStore;
 
 namespace Azure.ResourceManager.CommvaultContentStore.Models
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             string resourceName = default;
             long lastBackUpTime = default;
             string resourceGroup = default;
-            string location = default;
+            AzureLocation location = default;
             string vmGuid = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("vmGuid"u8))

@@ -14,56 +14,56 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The rules to match resources. </summary>
-    public partial class Rule : IJsonModel<Rule>
+    public partial class ProtectionGroupRule : IJsonModel<ProtectionGroupRule>
     {
-        /// <summary> Initializes a new instance of <see cref="Rule"/> for deserialization. </summary>
-        internal Rule()
+        /// <summary> Initializes a new instance of <see cref="ProtectionGroupRule"/> for deserialization. </summary>
+        internal ProtectionGroupRule()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Rule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ProtectionGroupRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Rule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectionGroupRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRule(document.RootElement, options);
+                        return DeserializeProtectionGroupRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Rule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectionGroupRule)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Rule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectionGroupRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCommvaultContentStoreContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Rule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectionGroupRule)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Rule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ProtectionGroupRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Rule IPersistableModel<Rule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ProtectionGroupRule IPersistableModel<ProtectionGroupRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Rule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProtectionGroupRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Rule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProtectionGroupRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Rule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectionGroupRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Rule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectionGroupRule)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("property"u8);
             writer.WriteStringValue(Property.ToString());
@@ -104,24 +104,24 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Rule IJsonModel<Rule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ProtectionGroupRule IJsonModel<ProtectionGroupRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Rule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ProtectionGroupRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Rule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectionGroupRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Rule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectionGroupRule)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRule(document.RootElement, options);
+            return DeserializeProtectionGroupRule(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Rule DeserializeRule(JsonElement element, ModelReaderWriterOptions options)
+        internal static ProtectionGroupRule DeserializeProtectionGroupRule(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new Rule(@property, @operator, value, additionalBinaryDataProperties);
+            return new ProtectionGroupRule(@property, @operator, value, additionalBinaryDataProperties);
         }
     }
 }

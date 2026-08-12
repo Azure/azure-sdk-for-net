@@ -12,16 +12,16 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> Offer details for the marketplace that is selected by the user. </summary>
-    public partial class OfferDetails
+    public partial class CommvaultOfferDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OfferDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultOfferDetails"/>. </summary>
         /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
         /// <param name="offerId"> Offer Id for the marketplace offer. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/> or <paramref name="offerId"/> is null. </exception>
-        public OfferDetails(string publisherId, string offerId)
+        public CommvaultOfferDetails(string publisherId, string offerId)
         {
             Argument.AssertNotNull(publisherId, nameof(publisherId));
             Argument.AssertNotNull(offerId, nameof(offerId));
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             OfferId = offerId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OfferDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultOfferDetails"/>. </summary>
         /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
         /// <param name="offerId"> Offer Id for the marketplace offer. </param>
         /// <param name="planId"> Plan Id for the marketplace offer. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="termUnit"> Plan Display Name for the marketplace offer. </param>
         /// <param name="termId"> Plan Display Name for the marketplace offer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OfferDetails(string publisherId, string offerId, string planId, string planName, string termUnit, string termId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommvaultOfferDetails(string publisherId, string offerId, string planId, string planName, string termUnit, string termId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublisherId = publisherId;
             OfferId = offerId;

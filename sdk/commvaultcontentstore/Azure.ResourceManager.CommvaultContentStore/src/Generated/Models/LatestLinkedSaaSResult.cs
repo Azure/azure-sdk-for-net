@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="saaSResourceId"> SaaS resource id. </param>
         /// <param name="isHiddenSaaS"> Flag indicating if the SaaS resource is hidden. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LatestLinkedSaaSResult(string saaSResourceId, bool? isHiddenSaaS, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LatestLinkedSaaSResult(ResourceIdentifier saaSResourceId, bool? isHiddenSaaS, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SaaSResourceId = saaSResourceId;
             IsHiddenSaaS = isHiddenSaaS;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> SaaS resource id. </summary>
-        public string SaaSResourceId { get; }
+        public ResourceIdentifier SaaSResourceId { get; }
 
         /// <summary> Flag indicating if the SaaS resource is hidden. </summary>
         public bool? IsHiddenSaaS { get; }

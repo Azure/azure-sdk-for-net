@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="marketplace"/> or <paramref name="user"/> is null. </exception>
-        public CloudAccountProperties(MarketplaceDetails marketplace, UserDetails user)
+        public CloudAccountProperties(MarketplaceDetails marketplace, CommvaultUserDetails user)
         {
             Argument.AssertNotNull(marketplace, nameof(marketplace));
             Argument.AssertNotNull(user, nameof(user));
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="backupAdminOnCcaCreate"> The backup administrator principal provided during CCA create. Required on create (enforced by backend), ignored on update. </param>
         /// <param name="multiPersonAuthorizationOnCcaCreate"> The multi-person authorization (MPA) administrator principal provided during CCA create. Required on create (enforced by backend), ignored on update. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CloudAccountProperties(MarketplaceDetails marketplace, UserDetails user, ResourceProvisioningState? provisioningState, string ssoUri, EntityInfo backupAdminOnCcaCreate, EntityInfo multiPersonAuthorizationOnCcaCreate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CloudAccountProperties(MarketplaceDetails marketplace, CommvaultUserDetails user, ResourceProvisioningState? provisioningState, string ssoUri, CommvaultEntityInfo backupAdminOnCcaCreate, CommvaultEntityInfo multiPersonAuthorizationOnCcaCreate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Marketplace = marketplace;
             User = user;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public MarketplaceDetails Marketplace { get; set; }
 
         /// <summary> Details of the user. </summary>
-        public UserDetails User { get; set; }
+        public CommvaultUserDetails User { get; set; }
 
         /// <summary> Provisioning state of the resource. </summary>
         public ResourceProvisioningState? ProvisioningState { get; }
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public string SsoUri { get; }
 
         /// <summary> The backup administrator principal provided during CCA create. Required on create (enforced by backend), ignored on update. </summary>
-        public EntityInfo BackupAdminOnCcaCreate { get; set; }
+        public CommvaultEntityInfo BackupAdminOnCcaCreate { get; set; }
 
         /// <summary> The multi-person authorization (MPA) administrator principal provided during CCA create. Required on create (enforced by backend), ignored on update. </summary>
-        public EntityInfo MultiPersonAuthorizationOnCcaCreate { get; set; }
+        public CommvaultEntityInfo MultiPersonAuthorizationOnCcaCreate { get; set; }
     }
 }

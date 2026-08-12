@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
             return new CloudAccountResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="StorageResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CommvaultStorageResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageResource"/> object. </returns>
-        public virtual StorageResource GetStorageResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CommvaultStorageResource"/> object. </returns>
+        public virtual CommvaultStorageResource GetCommvaultStorageResource(ResourceIdentifier id)
         {
-            StorageResource.ValidateResourceId(id);
-            return new StorageResource(Client, id);
+            CommvaultStorageResource.ValidateResourceId(id);
+            return new CommvaultStorageResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="CommvaultPlanResource"/> along with the instance operations that can be performed on it but with no data. </summary>

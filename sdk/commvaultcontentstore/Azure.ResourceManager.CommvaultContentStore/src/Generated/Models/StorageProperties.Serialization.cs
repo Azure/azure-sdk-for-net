@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.CommvaultContentStore;
 
 namespace Azure.ResourceManager.CommvaultContentStore.Models
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 return null;
             }
-            string location = default;
+            AzureLocation location = default;
             StorageType storageType = default;
             Vendor vendor = default;
             StorageClassType @class = default;
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("storageType"u8))

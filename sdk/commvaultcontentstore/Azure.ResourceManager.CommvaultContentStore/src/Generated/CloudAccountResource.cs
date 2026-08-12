@@ -893,11 +893,11 @@ namespace Azure.ResourceManager.CommvaultContentStore
             }
         }
 
-        /// <summary> Gets a collection of Storages in the <see cref="CloudAccountResource"/>. </summary>
-        /// <returns> An object representing collection of Storages and their operations over a StorageResource. </returns>
-        public virtual StorageCollection GetStorages()
+        /// <summary> Gets a collection of CommvaultStorages in the <see cref="CloudAccountResource"/>. </summary>
+        /// <returns> An object representing collection of CommvaultStorages and their operations over a CommvaultStorageResource. </returns>
+        public virtual CommvaultStorageCollection GetCommvaultStorages()
         {
-            return GetCachedClient(client => new StorageCollection(client, Id));
+            return GetCachedClient(client => new CommvaultStorageCollection(client, Id));
         }
 
         /// <summary> Get a Storage. </summary>
@@ -906,11 +906,11 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<StorageResource>> GetStorageAsync(string storageName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommvaultStorageResource>> GetCommvaultStorageAsync(string storageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
 
-            return await GetStorages().GetAsync(storageName, cancellationToken).ConfigureAwait(false);
+            return await GetCommvaultStorages().GetAsync(storageName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a Storage. </summary>
@@ -919,11 +919,11 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<StorageResource> GetStorage(string storageName, CancellationToken cancellationToken = default)
+        public virtual Response<CommvaultStorageResource> GetCommvaultStorage(string storageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
 
-            return GetStorages().Get(storageName, cancellationToken);
+            return GetCommvaultStorages().Get(storageName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CommvaultPlans in the <see cref="CloudAccountResource"/>. </summary>

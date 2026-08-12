@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            PlanProperties properties = default;
+            CommvaultPlanProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                     {
                         continue;
                     }
-                    properties = PlanProperties.DeserializePlanProperties(prop.Value, options);
+                    properties = CommvaultPlanProperties.DeserializeCommvaultPlanProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

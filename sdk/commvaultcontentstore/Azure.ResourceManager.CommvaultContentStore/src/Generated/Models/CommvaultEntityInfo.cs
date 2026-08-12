@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> Information about an Entra entity (user or group) assigned to a role. </summary>
-    public partial class EntityInfo
+    public partial class CommvaultEntityInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EntityInfo"/>. </summary>
-        public EntityInfo()
+        /// <summary> Initializes a new instance of <see cref="CommvaultEntityInfo"/>. </summary>
+        public CommvaultEntityInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EntityInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultEntityInfo"/>. </summary>
         /// <param name="id"> The unique identifier (UUID) of the Entra entity. </param>
         /// <param name="displayName"> The display name of the Entra entity. </param>
         /// <param name="entityType"> The type of entity - user or group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntityInfo(string id, string displayName, EntityType? entityType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommvaultEntityInfo(string id, string displayName, EntityType? entityType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             DisplayName = displayName;

@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 return null;
             }
             MarketplaceDetails marketplace = default;
-            UserDetails user = default;
+            CommvaultUserDetails user = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    user = UserDetails.DeserializeUserDetails(prop.Value, options);
+                    user = CommvaultUserDetails.DeserializeCommvaultUserDetails(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

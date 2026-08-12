@@ -63,21 +63,21 @@ namespace Azure.ResourceManager.CommvaultContentStore
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StorageResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="CommvaultStorageResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCommvaultContentStoreArmClient.GetStorageResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCommvaultContentStoreArmClient.GetCommvaultStorageResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StorageResource"/> object. </returns>
-        public static StorageResource GetStorageResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CommvaultStorageResource"/> object. </returns>
+        public static CommvaultStorageResource GetCommvaultStorageResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCommvaultContentStoreArmClient(client).GetStorageResource(id);
+            return GetMockableCommvaultContentStoreArmClient(client).GetCommvaultStorageResource(id);
         }
 
         /// <summary>

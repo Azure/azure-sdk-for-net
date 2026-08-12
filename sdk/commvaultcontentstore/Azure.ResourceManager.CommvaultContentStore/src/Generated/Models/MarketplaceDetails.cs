@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.CommvaultContentStore;
 
 namespace Azure.ResourceManager.CommvaultContentStore.Models
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <summary> Initializes a new instance of <see cref="MarketplaceDetails"/>. </summary>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offerDetails"/> is null. </exception>
-        public MarketplaceDetails(OfferDetails offerDetails)
+        public MarketplaceDetails(CommvaultOfferDetails offerDetails)
         {
             Argument.AssertNotNull(offerDetails, nameof(offerDetails));
 
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="saasResourceId"> Marketplace SaaS Resource Id. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceDetails(string subscriptionId, MarketplaceSubscriptionStatus? subscriptionStatus, string saasResourceId, OfferDetails offerDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MarketplaceDetails(string subscriptionId, MarketplaceSubscriptionStatus? subscriptionStatus, ResourceIdentifier saasResourceId, CommvaultOfferDetails offerDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubscriptionId = subscriptionId;
             SubscriptionStatus = subscriptionStatus;
@@ -49,9 +50,9 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public MarketplaceSubscriptionStatus? SubscriptionStatus { get; }
 
         /// <summary> Marketplace SaaS Resource Id. </summary>
-        public string SaasResourceId { get; set; }
+        public ResourceIdentifier SaasResourceId { get; set; }
 
         /// <summary> Offer details for the marketplace that is selected by the user. </summary>
-        public OfferDetails OfferDetails { get; set; }
+        public CommvaultOfferDetails OfferDetails { get; set; }
     }
 }

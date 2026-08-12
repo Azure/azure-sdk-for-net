@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CommvaultContentStore
 {
     /// <summary></summary>
-    internal partial class StorageResourceOperationSource : IOperationSource<StorageResource>
+    internal partial class CommvaultStorageResourceOperationSource : IOperationSource<CommvaultStorageResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal StorageResourceOperationSource(ArmClient client)
+        internal CommvaultStorageResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        StorageResource IOperationSource<StorageResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CommvaultStorageResource IOperationSource<CommvaultStorageResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            StorageData data = StorageData.DeserializeStorageData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new StorageResource(_client, data);
+            CommvaultStorageData data = CommvaultStorageData.DeserializeCommvaultStorageData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new CommvaultStorageResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<StorageResource> IOperationSource<StorageResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CommvaultStorageResource> IOperationSource<CommvaultStorageResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            StorageData data = StorageData.DeserializeStorageData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new StorageResource(_client, data);
+            CommvaultStorageData data = CommvaultStorageData.DeserializeCommvaultStorageData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new CommvaultStorageResource(_client, data);
         }
     }
 }

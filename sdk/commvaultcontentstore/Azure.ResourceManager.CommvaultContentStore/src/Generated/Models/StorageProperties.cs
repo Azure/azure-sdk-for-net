@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CommvaultContentStore;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
@@ -22,11 +22,8 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="storageType"> The type of Commvault Storage. </param>
         /// <param name="vendor"> The vendor of Commvault Storage. </param>
         /// <param name="class"> The class of Commvault Storage. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public StorageProperties(string location, StorageType storageType, Vendor vendor, StorageClassType @class)
+        public StorageProperties(AzureLocation location, StorageType storageType, Vendor vendor, StorageClassType @class)
         {
-            Argument.AssertNotNull(location, nameof(location));
-
             Location = location;
             StorageType = storageType;
             Vendor = vendor;
@@ -40,7 +37,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="class"> The class of Commvault Storage. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageProperties(string location, StorageType storageType, Vendor vendor, StorageClassType @class, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageProperties(AzureLocation location, StorageType storageType, Vendor vendor, StorageClassType @class, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             StorageType = storageType;
@@ -51,7 +48,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> Location of the Commvault Storage. </summary>
-        public string Location { get; set; }
+        public AzureLocation Location { get; set; }
 
         /// <summary> The type of Commvault Storage. </summary>
         public StorageType StorageType { get; set; }

@@ -14,51 +14,51 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> A role assignment mapping a Commvault role to one or more Entra entities (users or groups). </summary>
-    public partial class RoleAssignment : IJsonModel<RoleAssignment>
+    public partial class CommvaultRoleAssignment : IJsonModel<CommvaultRoleAssignment>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RoleAssignment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CommvaultRoleAssignment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultRoleAssignment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRoleAssignment(document.RootElement, options);
+                        return DeserializeCommvaultRoleAssignment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoleAssignment)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommvaultRoleAssignment)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultRoleAssignment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCommvaultContentStoreContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RoleAssignment)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommvaultRoleAssignment)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RoleAssignment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CommvaultRoleAssignment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RoleAssignment IPersistableModel<RoleAssignment>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CommvaultRoleAssignment IPersistableModel<CommvaultRoleAssignment>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RoleAssignment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CommvaultRoleAssignment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RoleAssignment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CommvaultRoleAssignment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultRoleAssignment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleAssignment)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CommvaultRoleAssignment)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(RoleName))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 writer.WritePropertyName("entities"u8);
                 writer.WriteStartArray();
-                foreach (EntityInfo item in Entities)
+                foreach (CommvaultEntityInfo item in Entities)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -108,31 +108,31 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RoleAssignment IJsonModel<RoleAssignment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CommvaultRoleAssignment IJsonModel<CommvaultRoleAssignment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RoleAssignment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CommvaultRoleAssignment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultRoleAssignment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleAssignment)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CommvaultRoleAssignment)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRoleAssignment(document.RootElement, options);
+            return DeserializeCommvaultRoleAssignment(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RoleAssignment DeserializeRoleAssignment(JsonElement element, ModelReaderWriterOptions options)
+        internal static CommvaultRoleAssignment DeserializeCommvaultRoleAssignment(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             RoleName? roleName = default;
-            IList<EntityInfo> entities = default;
+            IList<CommvaultEntityInfo> entities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    List<EntityInfo> array = new List<EntityInfo>();
+                    List<CommvaultEntityInfo> array = new List<CommvaultEntityInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(EntityInfo.DeserializeEntityInfo(item, options));
+                        array.Add(CommvaultEntityInfo.DeserializeCommvaultEntityInfo(item, options));
                     }
                     entities = array;
                     continue;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RoleAssignment(roleName, entities ?? new ChangeTrackingList<EntityInfo>(), additionalBinaryDataProperties);
+            return new CommvaultRoleAssignment(roleName, entities ?? new ChangeTrackingList<CommvaultEntityInfo>(), additionalBinaryDataProperties);
         }
     }
 }

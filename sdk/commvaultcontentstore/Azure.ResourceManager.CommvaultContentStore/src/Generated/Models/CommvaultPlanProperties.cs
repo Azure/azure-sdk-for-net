@@ -8,38 +8,38 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.CommvaultContentStore;
 
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The properties of Commvault Plan. </summary>
-    public partial class PlanProperties
+    public partial class CommvaultPlanProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PlanProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultPlanProperties"/>. </summary>
         /// <param name="location"> Location of the Commvault Plan. </param>
         /// <param name="storagePlans"> The storage plans associated with the Commvault Plan. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="storagePlans"/> is null. </exception>
-        public PlanProperties(string location, IEnumerable<StoragePlan> storagePlans)
+        /// <exception cref="ArgumentNullException"> <paramref name="storagePlans"/> is null. </exception>
+        public CommvaultPlanProperties(AzureLocation location, IEnumerable<StoragePlan> storagePlans)
         {
-            Argument.AssertNotNull(location, nameof(location));
             Argument.AssertNotNull(storagePlans, nameof(storagePlans));
 
             Location = location;
             StoragePlans = storagePlans.ToList();
-            Schedules = new ChangeTrackingList<Schedule>();
+            Schedules = new ChangeTrackingList<CommvaultBackupSchedule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlanProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultPlanProperties"/>. </summary>
         /// <param name="location"> Location of the Commvault Plan. </param>
         /// <param name="storagePlans"> The storage plans associated with the Commvault Plan. </param>
         /// <param name="schedules"> The Commvault Plan Schedule. </param>
         /// <param name="retention"> The Commvault Plan Retention. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PlanProperties(string location, IList<StoragePlan> storagePlans, IList<Schedule> schedules, Retention retention, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommvaultPlanProperties(AzureLocation location, IList<StoragePlan> storagePlans, IList<CommvaultBackupSchedule> schedules, Retention retention, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             StoragePlans = storagePlans;
@@ -50,13 +50,13 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> Location of the Commvault Plan. </summary>
-        public string Location { get; set; }
+        public AzureLocation Location { get; set; }
 
         /// <summary> The storage plans associated with the Commvault Plan. </summary>
         public IList<StoragePlan> StoragePlans { get; }
 
         /// <summary> The Commvault Plan Schedule. </summary>
-        public IList<Schedule> Schedules { get; }
+        public IList<CommvaultBackupSchedule> Schedules { get; }
 
         /// <summary> The Commvault Plan Retention. </summary>
         internal Retention Retention { get; set; }

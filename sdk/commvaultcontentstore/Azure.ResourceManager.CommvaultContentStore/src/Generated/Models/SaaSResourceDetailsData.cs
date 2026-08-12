@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="saaSResourceId"> Id of the Marketplace SaaS Resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SaaSResourceDetailsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string saaSResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal SaaSResourceDetailsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier saaSResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             SaaSResourceId = saaSResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Id of the Marketplace SaaS Resource. </summary>
-        public string SaaSResourceId { get; }
+        public ResourceIdentifier SaaSResourceId { get; }
     }
 }

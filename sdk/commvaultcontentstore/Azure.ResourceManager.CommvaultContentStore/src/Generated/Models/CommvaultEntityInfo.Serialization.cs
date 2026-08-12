@@ -13,52 +13,52 @@ using Azure.ResourceManager.CommvaultContentStore;
 
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
-    /// <summary> User details for an organization. </summary>
-    public partial class UserDetails : IJsonModel<UserDetails>
+    /// <summary> Information about an Entra entity (user or group) assigned to a role. </summary>
+    public partial class CommvaultEntityInfo : IJsonModel<CommvaultEntityInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UserDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CommvaultEntityInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultEntityInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeUserDetails(document.RootElement, options);
+                        return DeserializeCommvaultEntityInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommvaultEntityInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultEntityInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCommvaultContentStoreContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UserDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommvaultEntityInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UserDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CommvaultEntityInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UserDetails IPersistableModel<UserDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CommvaultEntityInfo IPersistableModel<CommvaultEntityInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UserDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CommvaultEntityInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<UserDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CommvaultEntityInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,35 +69,25 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultEntityInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CommvaultEntityInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(FirstName))
+            if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("firstName"u8);
-                writer.WriteStringValue(FirstName);
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(LastName))
+            if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("lastName"u8);
-                writer.WriteStringValue(LastName);
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(EmailAddress))
+            if (Optional.IsDefined(EntityType))
             {
-                writer.WritePropertyName("emailAddress"u8);
-                writer.WriteStringValue(EmailAddress);
-            }
-            if (Optional.IsDefined(Upn))
-            {
-                writer.WritePropertyName("upn"u8);
-                writer.WriteStringValue(Upn);
-            }
-            if (Optional.IsDefined(PhoneNumber))
-            {
-                writer.WritePropertyName("phoneNumber"u8);
-                writer.WriteStringValue(PhoneNumber);
+                writer.WritePropertyName("entityType"u8);
+                writer.WriteStringValue(EntityType.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -118,60 +108,52 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UserDetails IJsonModel<UserDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CommvaultEntityInfo IJsonModel<CommvaultEntityInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UserDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CommvaultEntityInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultEntityInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CommvaultEntityInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUserDetails(document.RootElement, options);
+            return DeserializeCommvaultEntityInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UserDetails DeserializeUserDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static CommvaultEntityInfo DeserializeCommvaultEntityInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string firstName = default;
-            string lastName = default;
-            string emailAddress = default;
-            string upn = default;
-            string phoneNumber = default;
+            string id = default;
+            string displayName = default;
+            EntityType? entityType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("firstName"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    firstName = prop.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("lastName"u8))
+                if (prop.NameEquals("displayName"u8))
                 {
-                    lastName = prop.Value.GetString();
+                    displayName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("emailAddress"u8))
+                if (prop.NameEquals("entityType"u8))
                 {
-                    emailAddress = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("upn"u8))
-                {
-                    upn = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("phoneNumber"u8))
-                {
-                    phoneNumber = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    entityType = new EntityType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -179,13 +161,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UserDetails(
-                firstName,
-                lastName,
-                emailAddress,
-                upn,
-                phoneNumber,
-                additionalBinaryDataProperties);
+            return new CommvaultEntityInfo(id, displayName, entityType, additionalBinaryDataProperties);
         }
     }
 }

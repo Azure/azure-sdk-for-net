@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (StorageData item in Value)
+            foreach (CommvaultStorageData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 return null;
             }
-            IList<StorageData> value = default;
+            IList<CommvaultStorageData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<StorageData> array = new List<StorageData>();
+                    List<CommvaultStorageData> array = new List<CommvaultStorageData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(StorageData.DeserializeStorageData(item, options));
+                        array.Add(CommvaultStorageData.DeserializeCommvaultStorageData(item, options));
                     }
                     value = array;
                     continue;

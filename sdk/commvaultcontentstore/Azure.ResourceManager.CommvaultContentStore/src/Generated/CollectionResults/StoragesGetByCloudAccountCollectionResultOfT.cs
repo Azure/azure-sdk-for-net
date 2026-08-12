@@ -14,7 +14,7 @@ using Azure.ResourceManager.CommvaultContentStore.Models;
 
 namespace Azure.ResourceManager.CommvaultContentStore
 {
-    internal partial class StoragesGetByCloudAccountCollectionResultOfT : Pageable<StorageData>
+    internal partial class StoragesGetByCloudAccountCollectionResultOfT : Pageable<CommvaultStorageData>
     {
         private readonly Storages _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of StoragesGetByCloudAccountCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<StorageData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<CommvaultStorageData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 }
                 StorageListResult result = StorageListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<StorageData>.FromValues((IReadOnlyList<StorageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<CommvaultStorageData>.FromValues((IReadOnlyList<CommvaultStorageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

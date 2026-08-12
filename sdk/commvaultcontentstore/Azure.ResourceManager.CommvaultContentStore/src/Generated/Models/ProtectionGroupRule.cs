@@ -12,17 +12,17 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The rules to match resources. </summary>
-    public partial class Rule
+    public partial class ProtectionGroupRule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Rule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectionGroupRule"/>. </summary>
         /// <param name="property"> property of the rule. </param>
         /// <param name="operator"> property of the rule. </param>
         /// <param name="value"> property of the rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Rule(RuleProperty @property, CommvaultMatchOperator @operator, string value)
+        public ProtectionGroupRule(RuleProperty @property, CommvaultMatchOperator @operator, string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Rule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectionGroupRule"/>. </summary>
         /// <param name="property"> property of the rule. </param>
         /// <param name="operator"> property of the rule. </param>
         /// <param name="value"> property of the rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Rule(RuleProperty @property, CommvaultMatchOperator @operator, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProtectionGroupRule(RuleProperty @property, CommvaultMatchOperator @operator, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Property = @property;
             Operator = @operator;

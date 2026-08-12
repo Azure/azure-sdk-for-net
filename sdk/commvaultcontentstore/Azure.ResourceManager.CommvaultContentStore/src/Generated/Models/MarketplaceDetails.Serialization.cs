@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.CommvaultContentStore;
 
 namespace Azure.ResourceManager.CommvaultContentStore.Models
@@ -140,8 +141,8 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             }
             string subscriptionId = default;
             MarketplaceSubscriptionStatus? subscriptionStatus = default;
-            string saasResourceId = default;
-            OfferDetails offerDetails = default;
+            ResourceIdentifier saasResourceId = default;
+            CommvaultOfferDetails offerDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,12 +162,16 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("saasResourceId"u8))
                 {
-                    saasResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    saasResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("offerDetails"u8))
                 {
-                    offerDetails = OfferDetails.DeserializeOfferDetails(prop.Value, options);
+                    offerDetails = CommvaultOfferDetails.DeserializeCommvaultOfferDetails(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

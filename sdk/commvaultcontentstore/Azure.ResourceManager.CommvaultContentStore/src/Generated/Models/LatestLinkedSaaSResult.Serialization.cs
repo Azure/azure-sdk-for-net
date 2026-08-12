@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.CommvaultContentStore;
 
 namespace Azure.ResourceManager.CommvaultContentStore.Models
@@ -134,14 +135,18 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 return null;
             }
-            string saaSResourceId = default;
+            ResourceIdentifier saaSResourceId = default;
             bool? isHiddenSaaS = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("saaSResourceId"u8))
                 {
-                    saaSResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    saaSResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("isHiddenSaaS"u8))

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="location"> The location of the protected item. </param>
         /// <param name="vmGuid"> The GUID of VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProtectedItemProperties(string resourceName, long lastBackUpTime, string resourceGroup, string location, string vmGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProtectedItemProperties(string resourceName, long lastBackUpTime, string resourceGroup, AzureLocation location, string vmGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceName = resourceName;
             LastBackUpTime = lastBackUpTime;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public string ResourceGroup { get; }
 
         /// <summary> The location of the protected item. </summary>
-        public string Location { get; }
+        public AzureLocation Location { get; }
 
         /// <summary> The GUID of VM. </summary>
         public string VmGuid { get; }

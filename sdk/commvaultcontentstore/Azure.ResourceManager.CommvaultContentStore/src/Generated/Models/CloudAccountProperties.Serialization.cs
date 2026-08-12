@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 return null;
             }
             MarketplaceDetails marketplace = default;
-            UserDetails user = default;
+            CommvaultUserDetails user = default;
             ResourceProvisioningState? provisioningState = default;
             string ssoUri = default;
-            EntityInfo backupAdminOnCcaCreate = default;
-            EntityInfo multiPersonAuthorizationOnCcaCreate = default;
+            CommvaultEntityInfo backupAdminOnCcaCreate = default;
+            CommvaultEntityInfo multiPersonAuthorizationOnCcaCreate = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("user"u8))
                 {
-                    user = UserDetails.DeserializeUserDetails(prop.Value, options);
+                    user = CommvaultUserDetails.DeserializeCommvaultUserDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    backupAdminOnCcaCreate = EntityInfo.DeserializeEntityInfo(prop.Value, options);
+                    backupAdminOnCcaCreate = CommvaultEntityInfo.DeserializeCommvaultEntityInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("multiPersonAuthorizationOnCcaCreate"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    multiPersonAuthorizationOnCcaCreate = EntityInfo.DeserializeEntityInfo(prop.Value, options);
+                    multiPersonAuthorizationOnCcaCreate = CommvaultEntityInfo.DeserializeCommvaultEntityInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

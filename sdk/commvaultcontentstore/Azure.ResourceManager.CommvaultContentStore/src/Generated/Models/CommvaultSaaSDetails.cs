@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
@@ -24,13 +25,13 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <summary> Initializes a new instance of <see cref="CommvaultSaaSDetails"/>. </summary>
         /// <param name="saaSResourceId"> SaaS resource id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommvaultSaaSDetails(string saaSResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommvaultSaaSDetails(ResourceIdentifier saaSResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SaaSResourceId = saaSResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> SaaS resource id. </summary>
-        public string SaaSResourceId { get; set; }
+        public ResourceIdentifier SaaSResourceId { get; set; }
     }
 }

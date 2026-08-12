@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            string saaSResourceId = default;
+            ResourceIdentifier saaSResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -175,7 +175,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("saaSResourceId"u8))
                 {
-                    saaSResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    saaSResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

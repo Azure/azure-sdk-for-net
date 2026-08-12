@@ -14,24 +14,24 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CommvaultContentStore
 {
     /// <summary> A Commvault Storage Resource. </summary>
-    public partial class StorageData : ResourceData
+    public partial class CommvaultStorageData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StorageData"/>. </summary>
-        public StorageData()
+        /// <summary> Initializes a new instance of <see cref="CommvaultStorageData"/>. </summary>
+        public CommvaultStorageData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultStorageData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal CommvaultStorageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

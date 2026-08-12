@@ -13,57 +13,52 @@ using Azure.ResourceManager.CommvaultContentStore;
 
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
-    /// <summary> Offer details for the marketplace that is selected by the user. </summary>
-    public partial class OfferDetails : IJsonModel<OfferDetails>
+    /// <summary> User details for an organization. </summary>
+    public partial class CommvaultUserDetails : IJsonModel<CommvaultUserDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="OfferDetails"/> for deserialization. </summary>
-        internal OfferDetails()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OfferDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CommvaultUserDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OfferDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultUserDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOfferDetails(document.RootElement, options);
+                        return DeserializeCommvaultUserDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OfferDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommvaultUserDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OfferDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultUserDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCommvaultContentStoreContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OfferDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommvaultUserDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OfferDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CommvaultUserDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OfferDetails IPersistableModel<OfferDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CommvaultUserDetails IPersistableModel<CommvaultUserDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OfferDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CommvaultUserDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OfferDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CommvaultUserDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,34 +69,35 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OfferDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultUserDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OfferDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CommvaultUserDetails)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("publisherId"u8);
-            writer.WriteStringValue(PublisherId);
-            writer.WritePropertyName("offerId"u8);
-            writer.WriteStringValue(OfferId);
-            if (Optional.IsDefined(PlanId))
+            if (Optional.IsDefined(FirstName))
             {
-                writer.WritePropertyName("planId"u8);
-                writer.WriteStringValue(PlanId);
+                writer.WritePropertyName("firstName"u8);
+                writer.WriteStringValue(FirstName);
             }
-            if (Optional.IsDefined(PlanName))
+            if (Optional.IsDefined(LastName))
             {
-                writer.WritePropertyName("planName"u8);
-                writer.WriteStringValue(PlanName);
+                writer.WritePropertyName("lastName"u8);
+                writer.WriteStringValue(LastName);
             }
-            if (Optional.IsDefined(TermUnit))
+            if (Optional.IsDefined(EmailAddress))
             {
-                writer.WritePropertyName("termUnit"u8);
-                writer.WriteStringValue(TermUnit);
+                writer.WritePropertyName("emailAddress"u8);
+                writer.WriteStringValue(EmailAddress);
             }
-            if (Optional.IsDefined(TermId))
+            if (Optional.IsDefined(Upn))
             {
-                writer.WritePropertyName("termId"u8);
-                writer.WriteStringValue(TermId);
+                writer.WritePropertyName("upn"u8);
+                writer.WriteStringValue(Upn);
+            }
+            if (Optional.IsDefined(PhoneNumber))
+            {
+                writer.WritePropertyName("phoneNumber"u8);
+                writer.WriteStringValue(PhoneNumber);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -122,66 +118,60 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OfferDetails IJsonModel<OfferDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CommvaultUserDetails IJsonModel<CommvaultUserDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OfferDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CommvaultUserDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OfferDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultUserDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OfferDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CommvaultUserDetails)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOfferDetails(document.RootElement, options);
+            return DeserializeCommvaultUserDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OfferDetails DeserializeOfferDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static CommvaultUserDetails DeserializeCommvaultUserDetails(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string publisherId = default;
-            string offerId = default;
-            string planId = default;
-            string planName = default;
-            string termUnit = default;
-            string termId = default;
+            string firstName = default;
+            string lastName = default;
+            string emailAddress = default;
+            string upn = default;
+            string phoneNumber = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("publisherId"u8))
+                if (prop.NameEquals("firstName"u8))
                 {
-                    publisherId = prop.Value.GetString();
+                    firstName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("offerId"u8))
+                if (prop.NameEquals("lastName"u8))
                 {
-                    offerId = prop.Value.GetString();
+                    lastName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("planId"u8))
+                if (prop.NameEquals("emailAddress"u8))
                 {
-                    planId = prop.Value.GetString();
+                    emailAddress = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("planName"u8))
+                if (prop.NameEquals("upn"u8))
                 {
-                    planName = prop.Value.GetString();
+                    upn = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("termUnit"u8))
+                if (prop.NameEquals("phoneNumber"u8))
                 {
-                    termUnit = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("termId"u8))
-                {
-                    termId = prop.Value.GetString();
+                    phoneNumber = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -189,13 +179,12 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OfferDetails(
-                publisherId,
-                offerId,
-                planId,
-                planName,
-                termUnit,
-                termId,
+            return new CommvaultUserDetails(
+                firstName,
+                lastName,
+                emailAddress,
+                upn,
+                phoneNumber,
                 additionalBinaryDataProperties);
         }
     }

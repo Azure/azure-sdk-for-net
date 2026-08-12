@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <summary> Initializes a new instance of <see cref="RoleMappingProperties"/>. </summary>
         public RoleMappingProperties()
         {
-            Roles = new ChangeTrackingList<RoleAssignment>();
+            Roles = new ChangeTrackingList<CommvaultRoleAssignment>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RoleMappingProperties"/>. </summary>
         /// <param name="roles"> The list of role assignments mapping roles to Entra entities (users and groups). </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoleMappingProperties(IList<RoleAssignment> roles, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoleMappingProperties(IList<CommvaultRoleAssignment> roles, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Roles = roles;
             ProvisioningState = provisioningState;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> The list of role assignments mapping roles to Entra entities (users and groups). </summary>
-        public IList<RoleAssignment> Roles { get; }
+        public IList<CommvaultRoleAssignment> Roles { get; }
 
         /// <summary> Provisioning state of the resource. </summary>
         public ResourceProvisioningState? ProvisioningState { get; }

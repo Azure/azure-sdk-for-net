@@ -18,68 +18,68 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CommvaultContentStore
 {
     /// <summary> A Commvault Storage Resource. </summary>
-    public partial class StorageData : ResourceData, IJsonModel<StorageData>
+    public partial class CommvaultStorageData : ResourceData, IJsonModel<CommvaultStorageData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultStorageData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeStorageData(document.RootElement, options);
+                        return DeserializeCommvaultStorageData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommvaultStorageData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultStorageData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCommvaultContentStoreContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(StorageData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommvaultStorageData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StorageData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CommvaultStorageData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StorageData IPersistableModel<StorageData>.Create(BinaryData data, ModelReaderWriterOptions options) => (StorageData)PersistableModelCreateCore(data, options);
+        CommvaultStorageData IPersistableModel<CommvaultStorageData>.Create(BinaryData data, ModelReaderWriterOptions options) => (CommvaultStorageData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StorageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CommvaultStorageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="storageData"> The <see cref="StorageData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(StorageData storageData)
+        /// <param name="commvaultStorageData"> The <see cref="CommvaultStorageData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CommvaultStorageData commvaultStorageData)
         {
-            if (storageData == null)
+            if (commvaultStorageData == null)
             {
                 return null;
             }
-            return RequestContent.Create(storageData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(commvaultStorageData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StorageData"/> from. </param>
-        internal static StorageData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CommvaultStorageData"/> from. </param>
+        internal static CommvaultStorageData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeStorageData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeCommvaultStorageData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<StorageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CommvaultStorageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultStorageData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CommvaultStorageData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -120,24 +120,24 @@ namespace Azure.ResourceManager.CommvaultContentStore
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StorageData IJsonModel<StorageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (StorageData)JsonModelCreateCore(ref reader, options);
+        CommvaultStorageData IJsonModel<CommvaultStorageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CommvaultStorageData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultStorageData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CommvaultStorageData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStorageData(document.RootElement, options);
+            return DeserializeCommvaultStorageData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static StorageData DeserializeStorageData(JsonElement element, ModelReaderWriterOptions options)
+        internal static CommvaultStorageData DeserializeCommvaultStorageData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StorageData(
+            return new CommvaultStorageData(
                 id,
                 name,
                 resourceType,

@@ -12,22 +12,22 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> A role assignment mapping a Commvault role to one or more Entra entities (users or groups). </summary>
-    public partial class RoleAssignment
+    public partial class CommvaultRoleAssignment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RoleAssignment"/>. </summary>
-        public RoleAssignment()
+        /// <summary> Initializes a new instance of <see cref="CommvaultRoleAssignment"/>. </summary>
+        public CommvaultRoleAssignment()
         {
-            Entities = new ChangeTrackingList<EntityInfo>();
+            Entities = new ChangeTrackingList<CommvaultEntityInfo>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RoleAssignment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultRoleAssignment"/>. </summary>
         /// <param name="roleName"> The name of the Commvault role. </param>
         /// <param name="entities"> The Entra entities (users or groups) assigned to this role. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoleAssignment(RoleName? roleName, IList<EntityInfo> entities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommvaultRoleAssignment(RoleName? roleName, IList<CommvaultEntityInfo> entities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RoleName = roleName;
             Entities = entities;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public RoleName? RoleName { get; set; }
 
         /// <summary> The Entra entities (users or groups) assigned to this role. </summary>
-        public IList<EntityInfo> Entities { get; }
+        public IList<CommvaultEntityInfo> Entities { get; }
     }
 }

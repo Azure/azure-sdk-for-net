@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();
-                foreach (RoleAssignment item in Roles)
+                foreach (CommvaultRoleAssignment item in Roles)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 return null;
             }
-            IList<RoleAssignment> roles = default;
+            IList<CommvaultRoleAssignment> roles = default;
             ResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    List<RoleAssignment> array = new List<RoleAssignment>();
+                    List<CommvaultRoleAssignment> array = new List<CommvaultRoleAssignment>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RoleAssignment.DeserializeRoleAssignment(item, options));
+                        array.Add(CommvaultRoleAssignment.DeserializeCommvaultRoleAssignment(item, options));
                     }
                     roles = array;
                     continue;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RoleMappingProperties(roles ?? new ChangeTrackingList<RoleAssignment>(), provisioningState, additionalBinaryDataProperties);
+            return new RoleMappingProperties(roles ?? new ChangeTrackingList<CommvaultRoleAssignment>(), provisioningState, additionalBinaryDataProperties);
         }
     }
 }

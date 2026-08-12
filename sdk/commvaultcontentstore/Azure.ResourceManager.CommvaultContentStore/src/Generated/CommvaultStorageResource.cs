@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CommvaultContentStore
 {
     /// <summary>
-    /// A class representing a Storage along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CloudAccountResource"/> using the GetStorages method.
+    /// A class representing a CommvaultStorage along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CommvaultStorageResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CloudAccountResource"/> using the GetCommvaultStorages method.
     /// </summary>
-    public partial class StorageResource : ArmResource
+    public partial class CommvaultStorageResource : ArmResource
     {
         private readonly ClientDiagnostics _storagesClientDiagnostics;
         private readonly Storages _storagesRestClient;
-        private readonly StorageData _data;
+        private readonly CommvaultStorageData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Commvault.ContentStore/cloudAccounts/storages";
 
-        /// <summary> Initializes a new instance of StorageResource for mocking. </summary>
-        protected StorageResource()
+        /// <summary> Initializes a new instance of CommvaultStorageResource for mocking. </summary>
+        protected CommvaultStorageResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultStorageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal StorageResource(ArmClient client, StorageData data) : this(client, data.Id)
+        internal CommvaultStorageResource(ArmClient client, CommvaultStorageData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultStorageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal StorageResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CommvaultStorageResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string storageApiVersion);
+            TryGetApiVersion(ResourceType, out string commvaultStorageApiVersion);
             _storagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CommvaultContentStore", ResourceType.Namespace, Diagnostics);
-            _storagesRestClient = new Storages(_storagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageApiVersion ?? "2026-07-03-preview");
+            _storagesRestClient = new Storages(_storagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, commvaultStorageApiVersion ?? "2026-07-03-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual StorageData Data
+        public virtual CommvaultStorageData Data
         {
             get
             {
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StorageResource"/>. </description>
+        /// <description> <see cref="CommvaultStorageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StorageResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommvaultStorageResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _storagesClientDiagnostics.CreateScope("StorageResource.Get");
+            using DiagnosticScope scope = _storagesClientDiagnostics.CreateScope("CommvaultStorageResource.Get");
             scope.Start();
             try
             {
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 };
                 HttpMessage message = _storagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StorageData> response = Response.FromValue(StorageData.FromResponse(result), result);
+                Response<CommvaultStorageData> response = Response.FromValue(CommvaultStorageData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new StorageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CommvaultStorageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StorageResource"/>. </description>
+        /// <description> <see cref="CommvaultStorageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StorageResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<CommvaultStorageResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _storagesClientDiagnostics.CreateScope("StorageResource.Get");
+            using DiagnosticScope scope = _storagesClientDiagnostics.CreateScope("CommvaultStorageResource.Get");
             scope.Start();
             try
             {
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 };
                 HttpMessage message = _storagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<StorageData> response = Response.FromValue(StorageData.FromResponse(result), result);
+                Response<CommvaultStorageData> response = Response.FromValue(CommvaultStorageData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new StorageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CommvaultStorageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StorageResource"/>. </description>
+        /// <description> <see cref="CommvaultStorageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _storagesClientDiagnostics.CreateScope("StorageResource.Delete");
+            using DiagnosticScope scope = _storagesClientDiagnostics.CreateScope("CommvaultStorageResource.Delete");
             scope.Start();
             try
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StorageResource"/>. </description>
+        /// <description> <see cref="CommvaultStorageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _storagesClientDiagnostics.CreateScope("StorageResource.Delete");
+            using DiagnosticScope scope = _storagesClientDiagnostics.CreateScope("CommvaultStorageResource.Delete");
             scope.Start();
             try
             {
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         }
 
         /// <summary>
-        /// Update a Storage.
+        /// Update a CommvaultStorage.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StorageResource"/>. </description>
+        /// <description> <see cref="CommvaultStorageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,11 +310,11 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<StorageResource>> UpdateAsync(WaitUntil waitUntil, StorageData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CommvaultStorageResource>> UpdateAsync(WaitUntil waitUntil, CommvaultStorageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _storagesClientDiagnostics.CreateScope("StorageResource.Update");
+            using DiagnosticScope scope = _storagesClientDiagnostics.CreateScope("CommvaultStorageResource.Update");
             scope.Start();
             try
             {
@@ -322,10 +322,10 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storagesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageData.ToRequestContent(data), context);
+                HttpMessage message = _storagesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CommvaultStorageData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CommvaultContentStoreArmOperation<StorageResource> operation = new CommvaultContentStoreArmOperation<StorageResource>(
-                    new StorageResourceOperationSource(Client),
+                CommvaultContentStoreArmOperation<CommvaultStorageResource> operation = new CommvaultContentStoreArmOperation<CommvaultStorageResource>(
+                    new CommvaultStorageResourceOperationSource(Client),
                     _storagesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         }
 
         /// <summary>
-        /// Update a Storage.
+        /// Update a CommvaultStorage.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StorageResource"/>. </description>
+        /// <description> <see cref="CommvaultStorageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -369,11 +369,11 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<StorageResource> Update(WaitUntil waitUntil, StorageData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CommvaultStorageResource> Update(WaitUntil waitUntil, CommvaultStorageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _storagesClientDiagnostics.CreateScope("StorageResource.Update");
+            using DiagnosticScope scope = _storagesClientDiagnostics.CreateScope("CommvaultStorageResource.Update");
             scope.Start();
             try
             {
@@ -381,10 +381,10 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storagesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageData.ToRequestContent(data), context);
+                HttpMessage message = _storagesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CommvaultStorageData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CommvaultContentStoreArmOperation<StorageResource> operation = new CommvaultContentStoreArmOperation<StorageResource>(
-                    new StorageResourceOperationSource(Client),
+                CommvaultContentStoreArmOperation<CommvaultStorageResource> operation = new CommvaultContentStoreArmOperation<CommvaultStorageResource>(
+                    new CommvaultStorageResourceOperationSource(Client),
                     _storagesClientDiagnostics,
                     Pipeline,
                     message.Request,

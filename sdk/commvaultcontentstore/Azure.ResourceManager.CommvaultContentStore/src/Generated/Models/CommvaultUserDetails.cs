@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> User details for an organization. </summary>
-    public partial class UserDetails
+    public partial class CommvaultUserDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UserDetails"/>. </summary>
-        public UserDetails()
+        /// <summary> Initializes a new instance of <see cref="CommvaultUserDetails"/>. </summary>
+        public CommvaultUserDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UserDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultUserDetails"/>. </summary>
         /// <param name="firstName"> First name of the user. </param>
         /// <param name="lastName"> Last name of the user. </param>
         /// <param name="emailAddress"> Email address of the user. </param>
         /// <param name="upn"> User's principal name. </param>
         /// <param name="phoneNumber"> User's phone number. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserDetails(string firstName, string lastName, string emailAddress, string upn, string phoneNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommvaultUserDetails(string firstName, string lastName, string emailAddress, string upn, string phoneNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FirstName = firstName;
             LastName = lastName;

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             }
             writer.WritePropertyName("rules"u8);
             writer.WriteStartArray();
-            foreach (Rule item in Rules)
+            foreach (ProtectionGroupRule item in Rules)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -130,17 +130,17 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 return null;
             }
-            IList<Rule> rules = default;
+            IList<ProtectionGroupRule> rules = default;
             MatchType matchType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("rules"u8))
                 {
-                    List<Rule> array = new List<Rule>();
+                    List<ProtectionGroupRule> array = new List<ProtectionGroupRule>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Rule.DeserializeRule(item, options));
+                        array.Add(ProtectionGroupRule.DeserializeProtectionGroupRule(item, options));
                     }
                     rules = array;
                     continue;
