@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.MachineLearning
         // Customized: preserve the previous list overload shape.
         /// <summary> Lists all the available machine learning workspaces under the specified resource group. <list type="bullet"> <item> <term> Request Path. </term> <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces. </description> </item> <item> <term> Operation Id. </term> <description> Workspaces_ListByResourceGroup. </description> </item> <item> <term> Default Api Version. </term> <description> 2026-03-15-preview. </description> </item> </list> </summary>
         public virtual AsyncPageable<MachineLearningWorkspaceResource> GetAllAsync(string skip, CancellationToken cancellationToken)
-            => GetAllAsync(skip, default, default, cancellationToken);
+            => GetAllAsync(default, skip, default, cancellationToken);
 
         // Customized: preserve the previous list overload shape.
         /// <summary> Lists all the available machine learning workspaces under the specified resource group. <list type="bullet"> <item> <term> Request Path. </term> <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces. </description> </item> <item> <term> Operation Id. </term> <description> Workspaces_ListByResourceGroup. </description> </item> <item> <term> Default Api Version. </term> <description> 2026-03-15-preview. </description> </item> </list> </summary>
         public virtual Pageable<MachineLearningWorkspaceResource> GetAll(string skip, CancellationToken cancellationToken)
-            => GetAll(skip, default, default, cancellationToken);
+            => GetAll(default, skip, default, cancellationToken);
     }
 }

@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <summary> Gets all machine learning workspaces in a subscription. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(string skip, CancellationToken cancellationToken = default)
-            => GetMachineLearningWorkspacesAsync(skip, default, default, cancellationToken);
+            => GetMachineLearningWorkspacesAsync(default, skip, default, cancellationToken);
 
         /// <summary> Gets all machine learning workspaces in a subscription. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(string skip, CancellationToken cancellationToken = default)
-            => GetMachineLearningWorkspaces(skip, default, default, cancellationToken);
+            => GetMachineLearningWorkspaces(default, skip, default, cancellationToken);
 
         /// <summary> Update quota for each VM family in workspace. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
