@@ -13,7 +13,10 @@ on:
         required: true
         type: string
 
-permissions: read-all
+permissions:
+  copilot-requests: write
+  contents: read
+  issues: read
 
 network:
   allowed:
@@ -25,6 +28,7 @@ network:
     - "feedback.azure.com"
 
 safe-outputs:
+  report-failure-as-issue: false
   add-comment:
     max: 1
     target: "*"
