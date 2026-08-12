@@ -213,6 +213,7 @@ namespace Azure.ResourceManager.Fabric.Models
     {
         public FabricCapacityPatch() { }
         public System.Collections.Generic.IList<string> AdministrationMembers { get { throw null; } }
+        public System.Collections.Generic.IList<string> FabricCapacityUpdateAdministrationMembers { get { throw null; } }
         public Azure.ResourceManager.Fabric.Models.FabricCapacityUpdateProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.Fabric.Models.FabricSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
