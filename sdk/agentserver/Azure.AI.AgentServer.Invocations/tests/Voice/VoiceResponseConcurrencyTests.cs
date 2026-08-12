@@ -155,6 +155,69 @@ public class VoiceResponseConcurrencyTests
     }
 
     [Test]
+    public async Task RepeatedCompactionPreservesPreviouslyStartedItemIdentity()
+    {
+        var governor = new VoiceResourceGovernor();
+        var connection = new CoordinatedConnection();
+        connection.AllowFirstSend.TrySetResult();
+        var response = new VoiceResponse(
+            connection,
+            "r_test",
+            new[] { "in_test" },
+            wireOpened: false,
+            accepted: true,
+            CancellationToken.None,
+            governor);
+        var startedItem = response.CreateTextItem();
+        await startedItem.SendTextAsync("started");
+
+        response.ReleaseOutputBuffers();
+        _ = response.CreateTextItem();
+        await response.MarkTerminalAsync();
+        response.ReleaseOutputBuffers();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.OwnsItem(startedItem.ItemId), Is.True);
+            Assert.That(governor.RetainedOutputItems, Is.EqualTo(1));
+        });
+        response.ReleaseRetainedIdentities();
+        Assert.That(governor.RetainedOutputItems, Is.Zero);
+    }
+
+    [Test]
+    public async Task FinalIdentityReleaseCanOvertakeRepeatedCompaction()
+    {
+        var governor = new VoiceResourceGovernor();
+        var connection = new CoordinatedConnection();
+        connection.AllowFirstSend.TrySetResult();
+        var response = new VoiceResponse(
+            connection,
+            "r_test",
+            new[] { "in_test" },
+            wireOpened: false,
+            accepted: true,
+            CancellationToken.None,
+            governor);
+        var startedItem = response.CreateTextItem();
+        await startedItem.SendTextAsync("started");
+        var firstTerminal = new VoiceResponseTermination(
+            IsNewTerminal: true,
+            TerminalKind: "barge_in",
+            response,
+            VoiceTurnTermination.None("barge_in"));
+
+        response.ReleaseOutputBuffers();
+        _ = response.CreateTextItem();
+        await response.MarkTerminalAsync();
+        response.ReleaseRetainedIdentities();
+
+        Assert.DoesNotThrowAsync(async () =>
+            await VoiceTerminationCoordinator.ApplyResponseTermination(firstTerminal));
+        Assert.That(governor.RetainedOutputItems, Is.Zero);
+    }
+
+    [Test]
     public void CancelledSimpleSendDoesNotSelectSimpleItemMode()
     {
         var response = new VoiceResponse(

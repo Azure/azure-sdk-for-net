@@ -50,27 +50,45 @@ public class VoiceResourceGovernorTests
             secondInvoked = true;
             return Task.CompletedTask;
         });
-
-        Assert.Multiple(() =>
+        try
         {
-            Assert.That(firstInvoked, Is.True);
-            Assert.That(secondInvoked, Is.False);
-            Assert.That(governor.CustomerTaskCount, Is.EqualTo(1));
-        });
-        Assert.That(
-            async () => await second,
-            Throws.TypeOf<VoiceResourceExhaustedException>());
+            Assert.Multiple(() =>
+            {
+                Assert.That(firstInvoked, Is.True);
+                Assert.That(secondInvoked, Is.False);
+                Assert.That(governor.CustomerTaskCount, Is.EqualTo(1));
+            });
+            Assert.That(
+                async () => await second,
+                Throws.TypeOf<VoiceResourceExhaustedException>());
 
-        completion.TrySetResult();
-        await first;
-        Assert.That(governor.CustomerTaskCount, Is.Zero);
+            completion.TrySetResult();
+            await first;
+            Assert.That(governor.CustomerTaskCount, Is.Zero);
 
-        await governor.InvokeCustomerTask(() =>
+            await governor.InvokeCustomerTask(() =>
+            {
+                secondInvoked = true;
+                return Task.CompletedTask;
+            });
+            Assert.That(secondInvoked, Is.True);
+        }
+        finally
         {
-            secondInvoked = true;
-            return Task.CompletedTask;
-        });
-        Assert.That(secondInvoked, Is.True);
+            completion.TrySetResult();
+            try
+            {
+                await first;
+            }
+            catch
+            {
+                _ = first.Exception;
+            }
+            if (second.IsFaulted)
+            {
+                _ = second.Exception;
+            }
+        }
     }
 
     [Test]
@@ -219,6 +237,29 @@ public class VoiceResourceGovernorTests
         });
 
         second.ReleaseAll();
+    }
+
+    [Test]
+    public void EncodedReservationCannotCommitAfterContentRelease()
+    {
+        var governor = new VoiceResourceGovernor(new VoiceResourceLimits
+        {
+            MaxEncodedOutputBytes = 1,
+            MaxResponseEncodedOutputBytes = 1,
+        });
+        var first = governor.CreateResponseResources();
+        var second = governor.CreateResponseResources();
+        var staged = first.Reserve(encodedBytes: 1);
+
+        first.ReleaseContent();
+        Assert.That(() => staged.Commit(), Throws.TypeOf<VoiceBridgeConnectionClosedException>());
+        staged.Dispose();
+        Assert.That(governor.EncodedOutputBytes, Is.Zero);
+
+        using var replacement = second.Reserve(encodedBytes: 1);
+        replacement.Commit();
+        second.ReleaseAll();
+        Assert.That(governor.EncodedOutputBytes, Is.Zero);
     }
 
     [Test]

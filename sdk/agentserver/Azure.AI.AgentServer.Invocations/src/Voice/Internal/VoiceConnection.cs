@@ -326,11 +326,12 @@ internal sealed class VoiceConnection : IVoiceConnection
         CancellationToken cancellationToken,
         CancellationToken responseCancellation = default,
         CancellationToken operationDeadlineCancellation = default,
-        Action<Task>? retainedSend = null)
+        Action<Task>? retainedSend = null,
+        VoiceResponseResources? outputResources = null)
     {
         long? firstOutputStarted = null;
         await _sendTransaction.ExecuteAsync(
-            new VoiceFramePayload(messageType, fields),
+            new VoiceFramePayload(messageType, fields, OutputResources: outputResources),
             async transactionCancellation =>
             {
                 await _stateGate.WaitAsync(transactionCancellation).ConfigureAwait(false);
@@ -421,14 +422,16 @@ internal sealed class VoiceConnection : IVoiceConnection
                 {
                     ["response_id"] = response.ResponseId,
                     ["in_reply_to"] = inReplyTo,
-                }));
+                },
+                OutputResources: response.OutputResources));
         }
 
         frames.Add(new VoiceFramePayload(
             messageType,
             fields,
             terminal ? response.ResponseId : null,
-            terminal ? terminalKind : null));
+            terminal ? terminalKind : null,
+            response.OutputResources));
         VoiceResponseTermination responseTermination = default;
         long? firstOutputStarted = null;
         await _sendTransaction.ExecuteAsync(
@@ -558,7 +561,10 @@ internal sealed class VoiceConnection : IVoiceConnection
         try
         {
             await _sendTransaction.ExecuteAsync(
-                new VoiceFramePayload("response.created", fields),
+                new VoiceFramePayload(
+                    "response.created",
+                    fields,
+                    OutputResources: response.OutputResources),
                 async transactionCancellation =>
                 {
                     await _stateGate.WaitAsync(transactionCancellation).ConfigureAwait(false);
@@ -647,7 +653,12 @@ internal sealed class VoiceConnection : IVoiceConnection
         VoiceResponseTermination responseTermination = default;
         long? firstOutputStarted = null;
         await _sendTransaction.ExecuteAsync(
-            new VoiceFramePayload("response.none", fields, response.ResponseId, "none"),
+            new VoiceFramePayload(
+                "response.none",
+                fields,
+                response.ResponseId,
+                "none",
+                response.OutputResources),
             async transactionCancellation =>
             {
                 await _stateGate.WaitAsync(transactionCancellation).ConfigureAwait(false);
@@ -719,7 +730,7 @@ internal sealed class VoiceConnection : IVoiceConnection
         var responseId = response.ResponseId;
         var completion = new TaskCompletionSource<ResponseCancellationOutcome>(TaskCreationOptions.RunContinuationsAsynchronously);
         var waiterRegistered = false;
-        var wireAttempted = false;
+        var wireAttempted = new VoiceWireAttemptSignal();
         CancellationTokenSource? sendDeadline = null;
         var disposeSendDeadline = true;
         var fields = new Dictionary<string, object?> { ["response_id"] = responseId };
@@ -737,7 +748,9 @@ internal sealed class VoiceConnection : IVoiceConnection
             {
                 EnsureReadyLocked();
                 var trackedResponse = FindResponseLocked(responseId);
-                if (!ReferenceEquals(trackedResponse, response) || !response.IsWireOpened)
+                if (!ReferenceEquals(trackedResponse, response) ||
+                    !response.IsWireOpened ||
+                    _termination.IsResponseTerminal(responseId))
                 {
                     throw new VoiceBridgeConnectionClosedException("The response is not open.");
                 }
@@ -768,7 +781,10 @@ internal sealed class VoiceConnection : IVoiceConnection
             }
 
             var sendTask = _sendTransaction.ExecuteAsync(
-                new VoiceFramePayload("response.cancel", fields),
+                new VoiceFramePayload(
+                    "response.cancel",
+                    fields,
+                    OutputResources: response.OutputResources),
                 async transactionCancellation =>
                 {
                     await _stateGate.WaitAsync(transactionCancellation).ConfigureAwait(false);
@@ -792,7 +808,7 @@ internal sealed class VoiceConnection : IVoiceConnection
                 cancellationToken,
                 response.CancellationToken,
                 operationDeadlineCancellation: sendDeadline.Token,
-                wireAttempted: () => Volatile.Write(ref wireAttempted, true));
+                wireAttempted: wireAttempted);
             var firstCompleted = await Task.WhenAny(sendTask, completion.Task).ConfigureAwait(false);
             if (firstCompleted == completion.Task)
             {
@@ -806,7 +822,9 @@ internal sealed class VoiceConnection : IVoiceConnection
             {
                 await sendTask.ConfigureAwait(false);
             }
-            catch (VoiceBridgeConnectionClosedException) when (waiterRegistered)
+            catch (VoiceBridgeConnectionClosedException) when (
+                waiterRegistered &&
+                wireAttempted.IsAttempted)
             {
                 // A bridge terminal can complete the authoritative waiter after
                 // reservation but before or during the response.cancel wire write.
@@ -828,7 +846,7 @@ internal sealed class VoiceConnection : IVoiceConnection
         catch
         {
             var rolledBack = false;
-            if (waiterRegistered && !Volatile.Read(ref wireAttempted))
+            if (waiterRegistered && !wireAttempted.IsAttempted)
             {
                 await _stateGate.WaitAsync(CancellationToken.None).ConfigureAwait(false);
                 try
@@ -920,9 +938,12 @@ internal sealed class VoiceConnection : IVoiceConnection
 
         var initialSendDeadline = new CancellationTokenSource();
         Task? retainedInitialSend = null;
-        var initialWireAttempted = false;
+        var initialWireAttempted = new VoiceWireAttemptSignal();
         var sendTask = _sendTransaction.ExecuteAsync(
-            new VoiceFramePayload("response.created", fields),
+            new VoiceFramePayload(
+                "response.created",
+                fields,
+                OutputResources: response.OutputResources),
             async transactionCancellation =>
             {
                 await _stateGate.WaitAsync(transactionCancellation).ConfigureAwait(false);
@@ -966,7 +987,7 @@ internal sealed class VoiceConnection : IVoiceConnection
             cancellationToken,
             response.CancellationToken,
             operationDeadlineCancellation: initialSendDeadline.Token,
-            wireAttempted: () => Volatile.Write(ref initialWireAttempted, true),
+            wireAttempted: initialWireAttempted,
             retainedSend: task => retainedInitialSend = task);
 
         var arbitrationTask = AwaitProactiveSendArbitrationAsync(
@@ -995,7 +1016,7 @@ internal sealed class VoiceConnection : IVoiceConnection
                 sendTask,
                 initialSendDeadline,
                 () => retainedInitialSend,
-                () => Volatile.Read(ref initialWireAttempted),
+                () => initialWireAttempted.IsAttempted,
                 completion,
                 shouldCancelAdmission));
             if (!tracked)
@@ -1236,7 +1257,8 @@ internal sealed class VoiceConnection : IVoiceConnection
                 CancellationToken.None,
                 response.CancellationToken,
                 deadlineCancellation.Token,
-                task => retainedSend = task).ConfigureAwait(false);
+                task => retainedSend = task,
+                response.OutputResources).ConfigureAwait(false);
         }
         catch (Exception) when (deadlineCancellation.IsCancellationRequested || !response.IsTerminal)
         {
@@ -2102,6 +2124,10 @@ internal sealed class VoiceConnection : IVoiceConnection
             }
 
             termination = _termination.TryTerminateResponse(response, outcome.Kind);
+            if (termination.IsNewTerminal && response.IsWireOpened)
+            {
+                RememberResponseLocked(response);
+            }
             _cancelWaiters.Remove(outcome.ResponseId);
             _abandonedProactiveCancels.Remove(outcome.ResponseId);
             ForgetResponseTimingLocked(outcome.ResponseId);
@@ -2170,7 +2196,12 @@ internal sealed class VoiceConnection : IVoiceConnection
                 responses.Add(response);
                 AddPlaybackOutcomeLocked(timeout.ResponseId);
                 _abandonedProactiveCancels.Remove(timeout.ResponseId);
-                terminations.Add(_termination.TryTerminateResponse(response, "timeout"));
+                var termination = _termination.TryTerminateResponse(response, "timeout");
+                terminations.Add(termination);
+                if (termination.IsNewTerminal && response.IsWireOpened)
+                {
+                    RememberResponseLocked(response);
+                }
                 ForgetResponseTimingLocked(timeout.ResponseId);
 
                 if (_cancelWaiters.Remove(timeout.ResponseId, out var cancelWaiter))
@@ -3032,7 +3063,12 @@ internal sealed class VoiceConnection : IVoiceConnection
             responses.Add(response);
         }
 
-        terminations.Add(_termination.TryTerminateResponse(response, "timeout"));
+        var termination = _termination.TryTerminateResponse(response, "timeout");
+        terminations.Add(termination);
+        if (termination.IsNewTerminal && response.IsWireOpened)
+        {
+            RememberResponseLocked(response);
+        }
         ForgetResponseTimingLocked(response.ResponseId);
     }
 

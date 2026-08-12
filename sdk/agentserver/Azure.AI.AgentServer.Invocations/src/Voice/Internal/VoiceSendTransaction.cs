@@ -16,7 +16,8 @@ internal readonly record struct VoiceFramePayload(
     string MessageType,
     IReadOnlyDictionary<string, object?> Fields,
     string? OwnerResponseId = null,
-    string? TerminalKind = null);
+    string? TerminalKind = null,
+    VoiceResponseResources? OutputResources = null);
 
 /// <summary>
 /// The single in-flight logical send after it crossed the irreversible socket
@@ -26,6 +27,15 @@ internal sealed record VoiceOutboundAttempt(
     long Generation,
     IReadOnlyList<VoiceFramePayload> Frames,
     int AttemptedPrefix);
+
+internal sealed class VoiceWireAttemptSignal
+{
+    private int _attempted;
+
+    public bool IsAttempted => Volatile.Read(ref _attempted) != 0;
+
+    public void MarkAttempted() => Volatile.Write(ref _attempted, 1);
+}
 
 /// <summary>
 /// The single owner of outbound frame preparation, ordering, reservation, wire
@@ -200,8 +210,9 @@ internal sealed class VoiceSendTransaction
         Func<ValueTask>? beforeWireAsync = null,
         Action? wireWriteCompleted = null,
         CancellationToken operationDeadlineCancellation = default,
-        Action? wireAttempted = null,
-        Action<Task>? retainedSend = null) =>
+        VoiceWireAttemptSignal? wireAttempted = null,
+        Action<Task>? retainedSend = null,
+        Action? encodedCommitStarted = null) =>
         ExecuteAsync(
             new[] { frame },
             reserveAsync,
@@ -212,7 +223,8 @@ internal sealed class VoiceSendTransaction
             wireWriteCompleted,
             operationDeadlineCancellation,
             wireAttempted,
-            retainedSend);
+            retainedSend,
+            encodedCommitStarted);
 
     /// <summary>
     /// Executes an ordered group of frames as one reservation. This is used
@@ -236,8 +248,9 @@ internal sealed class VoiceSendTransaction
         Func<ValueTask>? beforeWireAsync = null,
         Action? wireWriteCompleted = null,
         CancellationToken operationDeadlineCancellation = default,
-        Action? wireAttempted = null,
-        Action<Task>? retainedSend = null)
+        VoiceWireAttemptSignal? wireAttempted = null,
+        Action<Task>? retainedSend = null,
+        Action? encodedCommitStarted = null)
     {
         ArgumentNullException.ThrowIfNull(frames);
         ArgumentNullException.ThrowIfNull(reserveAsync);
@@ -256,6 +269,7 @@ internal sealed class VoiceSendTransaction
         long attemptGeneration = 0;
         long? terminalDrainStarted = null;
         var retainAttemptUntilUnderlyingSendCompletes = false;
+        var socketCallStarted = false;
         using var gateCancellation = cancellationToken.CanBeCanceled && operationDeadlineCancellation.CanBeCanceled
             ? CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, operationDeadlineCancellation)
             : null;
@@ -272,6 +286,7 @@ internal sealed class VoiceSendTransaction
                 reservedBytes,
                 control);
             using var preparedFrames = PrepareFrames(frames, frameLease);
+            using var encodedOutputReservation = ReserveEncodedOutput(frames, preparedFrames);
 
             // Caller cancellation is honored before any state is reserved. Once
             // reservation succeeds, the transaction must physically drain and
@@ -347,9 +362,6 @@ internal sealed class VoiceSendTransaction
                         attemptGeneration = PublishAttempt(frames);
                     }
 
-                    MarkFrameAttempted(attemptGeneration, index);
-                    wireAttempted?.Invoke();
-
                     var preparedFrame = preparedFrames.Frames[index];
                     var sendOrOperationDeadline = new SendOperationDeadlineArbiter();
                     var operationDeadlineRegistration = operationDeadlineCancellation.CanBeCanceled
@@ -364,6 +376,29 @@ internal sealed class VoiceSendTransaction
                     Task sendTask;
                     try
                     {
+                        if (index == 0)
+                        {
+                            encodedOutputReservation?.Commit(
+                                () =>
+                                {
+                                    if (_wireCancellation.IsCancellationRequested)
+                                    {
+                                        throw new VoiceBridgeConnectionClosedException(
+                                            "The outbound transaction was terminal before its wire write.");
+                                    }
+
+                                    operationDeadlineCancellation.ThrowIfCancellationRequested();
+                                    if (responseCancellation.IsCancellationRequested)
+                                    {
+                                        throw new VoiceBridgeConnectionClosedException(
+                                            "The outbound transaction lost semantic arbitration before its wire write.");
+                                    }
+                                },
+                                encodedCommitStarted);
+                        }
+                        MarkFrameAttempted(attemptGeneration, index);
+                        wireAttempted?.MarkAttempted();
+                        socketCallStarted = true;
                         sendTask = _webSocket.SendAsync(
                             preparedFrame.WrittenMemory,
                             WebSocketMessageType.Text,
@@ -495,11 +530,19 @@ internal sealed class VoiceSendTransaction
                     }
                 }
             }
-#pragma warning disable CA1031 // Any exception after a wire attempt makes delivery ambiguous.
-            catch (Exception exception) when (exception is not VoiceBridgeConnectionClosedException)
+#pragma warning disable CA1031 // Explicit wire phase, not exception type, decides whether delivery is ambiguous.
+            catch (Exception exception)
 #pragma warning restore CA1031
             {
-                AbortBestEffort();
+                if (socketCallStarted)
+                {
+                    AbortBestEffort();
+                }
+                else if (exception is VoiceBridgeConnectionClosedException or OperationCanceledException)
+                {
+                    throw;
+                }
+
                 throw new VoiceBridgeConnectionClosedException(
                     "The voice connection closed during an outbound transaction.",
                     exception);
@@ -721,6 +764,45 @@ internal sealed class VoiceSendTransaction
         return frames[0].Fields.TryGetValue("response_id", out var openedResponseId) &&
             frames[1].Fields.TryGetValue("response_id", out var terminalResponseId) &&
             string.Equals(openedResponseId as string, terminalResponseId as string, StringComparison.Ordinal);
+    }
+
+    private static VoiceOutputReservation? ReserveEncodedOutput(
+        IReadOnlyList<VoiceFramePayload> frames,
+        PreparedFrameCollection preparedFrames)
+    {
+        VoiceResponseResources? owner = null;
+        long encodedBytes = 0;
+        long terminalEncodedBytes = 0;
+        var protectedControl = IsControlTransaction(frames);
+        for (var index = 0; index < frames.Count; index++)
+        {
+            var frame = frames[index];
+            if (frame.OutputResources is null)
+            {
+                continue;
+            }
+
+            if (owner is not null && !ReferenceEquals(owner, frame.OutputResources))
+            {
+                throw new InvalidOperationException(
+                    "One outbound transaction cannot reserve output for multiple responses.");
+            }
+
+            owner = frame.OutputResources;
+            if (!protectedControl)
+            {
+                encodedBytes = checked(encodedBytes + preparedFrames.Frames[index].WrittenMemory.Length);
+            }
+            else
+            {
+                terminalEncodedBytes = checked(
+                    terminalEncodedBytes + preparedFrames.Frames[index].WrittenMemory.Length);
+            }
+        }
+
+        return owner?.Reserve(
+            encodedBytes: encodedBytes,
+            terminalEncodedBytes: terminalEncodedBytes);
     }
 
     private PreparedFrameCollection PrepareFrames(

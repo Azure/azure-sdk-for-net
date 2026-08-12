@@ -41,6 +41,10 @@ internal sealed class VoiceResourceLimits
 
     public int MaxOutputWrites { get; init; } = 131072;
 
+    public long MaxEncodedOutputBytes { get; init; } = 512L * 1024 * 1024;
+
+    public long MaxTerminalEncodedOutputBytes { get; init; } = 8L * 1024 * 1024;
+
     public long MaxResponseOutputBytes { get; init; } = 2L * VoiceProtocolConstants.MaxResponseBytes;
 
     public int MaxResponseOutputItems { get; init; } = VoiceProtocolConstants.MaxResponseItems;
@@ -48,6 +52,10 @@ internal sealed class VoiceResourceLimits
     public int MaxResponseOutputChunks { get; init; } = 16384;
 
     public int MaxResponseOutputWrites { get; init; } = 17408;
+
+    public long MaxResponseEncodedOutputBytes { get; init; } = 128L * 1024 * 1024;
+
+    public long MaxResponseTerminalEncodedOutputBytes { get; init; } = 2L * VoiceProtocolConstants.MaxFrameBytes;
 }
 
 /// <summary>Raised when host-owned Voice work cannot be admitted safely.</summary>
@@ -86,6 +94,8 @@ internal sealed class VoiceResourceGovernor
     private long _retainedOutputItems;
     private long _retainedOutputChunks;
     private long _outputWriteCount;
+    private long _encodedOutputBytes;
+    private long _terminalEncodedOutputBytes;
 
     public VoiceResourceGovernor()
         : this(new VoiceResourceLimits())
@@ -129,6 +139,10 @@ internal sealed class VoiceResourceGovernor
     internal long RetainedOutputChunks => Read(static governor => governor._retainedOutputChunks);
 
     internal long OutputWriteCount => Read(static governor => governor._outputWriteCount);
+
+    internal long EncodedOutputBytes => Read(static governor => governor._encodedOutputBytes);
+
+    internal long TerminalEncodedOutputBytes => Read(static governor => governor._terminalEncodedOutputBytes);
 
     internal VoiceResourceLease AcquireConnection() =>
         Acquire(
@@ -320,37 +334,82 @@ internal sealed class VoiceResourceGovernor
         long bytes,
         int items,
         int chunks,
-        int writes)
+        int writes,
+        long encodedBytes,
+        long terminalEncodedBytes)
     {
+        long contentGeneration;
         lock (_sync)
         {
-            owner.EnsureAvailable(bytes, items, chunks, writes);
+            owner.EnsureAvailable(bytes, items, chunks, writes, encodedBytes, terminalEncodedBytes);
             EnsureAvailable(_retainedOutputBytes, bytes, _limits.MaxRetainedOutputBytes, "retained output bytes");
             EnsureAvailable(_retainedOutputItems, items, _limits.MaxRetainedOutputItems, "retained output items");
             EnsureAvailable(_retainedOutputChunks, chunks, _limits.MaxRetainedOutputChunks, "retained output chunks");
             EnsureAvailable(_outputWriteCount, writes, _limits.MaxOutputWrites, "output writes");
+            EnsureAvailable(_encodedOutputBytes, encodedBytes, _limits.MaxEncodedOutputBytes, "encoded output bytes");
+            EnsureAvailable(
+                _terminalEncodedOutputBytes,
+                terminalEncodedBytes,
+                _limits.MaxTerminalEncodedOutputBytes,
+                "terminal encoded output bytes");
             _retainedOutputBytes = checked(_retainedOutputBytes + bytes);
             _retainedOutputItems = checked(_retainedOutputItems + items);
             _retainedOutputChunks = checked(_retainedOutputChunks + chunks);
             _outputWriteCount = checked(_outputWriteCount + writes);
+            _encodedOutputBytes = checked(_encodedOutputBytes + encodedBytes);
+            _terminalEncodedOutputBytes = checked(_terminalEncodedOutputBytes + terminalEncodedBytes);
+            contentGeneration = owner.ContentGeneration;
         }
 
-        return new VoiceOutputReservation(this, owner, bytes, items, chunks, writes);
+        return new VoiceOutputReservation(
+            this,
+            owner,
+            bytes,
+            items,
+            chunks,
+            writes,
+            encodedBytes,
+            terminalEncodedBytes,
+            contentGeneration);
     }
 
-    internal void CommitOutput(VoiceResponseResources owner, long bytes, int items, int chunks, int writes)
+    internal void CommitOutput(
+        VoiceResponseResources owner,
+        long bytes,
+        int items,
+        int chunks,
+        int writes,
+        long encodedBytes,
+        long terminalEncodedBytes,
+        long contentGeneration,
+        Action validateCommit)
+    {
+        ArgumentNullException.ThrowIfNull(validateCommit);
+        lock (_sync)
+        {
+            validateCommit();
+            owner.Commit(
+                bytes,
+                items,
+                chunks,
+                writes,
+                encodedBytes,
+                terminalEncodedBytes,
+                contentGeneration);
+        }
+    }
+
+    internal void RollbackOutput(
+        long bytes,
+        int items,
+        int chunks,
+        int writes,
+        long encodedBytes,
+        long terminalEncodedBytes)
     {
         lock (_sync)
         {
-            owner.Commit(bytes, items, chunks, writes);
-        }
-    }
-
-    internal void RollbackOutput(long bytes, int items, int chunks, int writes)
-    {
-        lock (_sync)
-        {
-            ReleaseOutputLocked(bytes, items, chunks, writes);
+            ReleaseOutputLocked(bytes, items, chunks, writes, encodedBytes, terminalEncodedBytes);
         }
     }
 
@@ -359,7 +418,13 @@ internal sealed class VoiceResourceGovernor
         lock (_sync)
         {
             var released = owner.ReleaseAllLocked();
-            ReleaseOutputLocked(released.Bytes, released.Items, released.Chunks, released.Writes);
+            ReleaseOutputLocked(
+                released.Bytes,
+                released.Items,
+                released.Chunks,
+                released.Writes,
+                released.EncodedBytes,
+                released.TerminalEncodedBytes);
         }
     }
 
@@ -368,7 +433,13 @@ internal sealed class VoiceResourceGovernor
         lock (_sync)
         {
             var released = owner.ReleaseContentLocked();
-            ReleaseOutputLocked(released.Bytes, 0, released.Chunks, released.Writes);
+            ReleaseOutputLocked(
+                released.Bytes,
+                0,
+                released.Chunks,
+                released.Writes,
+                released.EncodedBytes,
+                released.TerminalEncodedBytes);
         }
     }
 
@@ -377,7 +448,7 @@ internal sealed class VoiceResourceGovernor
         lock (_sync)
         {
             owner.ReleaseItemsLocked(items);
-            ReleaseOutputLocked(0, items, 0, 0);
+            ReleaseOutputLocked(0, items, 0, 0, 0, 0);
         }
     }
 
@@ -418,12 +489,23 @@ internal sealed class VoiceResourceGovernor
         }
     }
 
-    private void ReleaseOutputLocked(long bytes, long items, long chunks, long writes)
+    private void ReleaseOutputLocked(
+        long bytes,
+        long items,
+        long chunks,
+        long writes,
+        long encodedBytes,
+        long terminalEncodedBytes)
     {
         SubtractExact(ref _retainedOutputBytes, bytes, "retained output bytes");
         SubtractExact(ref _retainedOutputItems, items, "retained output items");
         SubtractExact(ref _retainedOutputChunks, chunks, "retained output chunks");
         SubtractExact(ref _outputWriteCount, writes, "output writes");
+        SubtractExact(ref _encodedOutputBytes, encodedBytes, "encoded output bytes");
+        SubtractExact(
+            ref _terminalEncodedOutputBytes,
+            terminalEncodedBytes,
+            "terminal encoded output bytes");
     }
 
     internal static void EnsureAvailable(long current, long amount, long maximum, string resource)
@@ -465,10 +547,14 @@ internal sealed class VoiceResourceGovernor
             limits.MaxRetainedOutputItems,
             limits.MaxRetainedOutputChunks,
             limits.MaxOutputWrites,
+            limits.MaxEncodedOutputBytes,
+            limits.MaxTerminalEncodedOutputBytes,
             limits.MaxResponseOutputBytes,
             limits.MaxResponseOutputItems,
             limits.MaxResponseOutputChunks,
             limits.MaxResponseOutputWrites,
+            limits.MaxResponseEncodedOutputBytes,
+            limits.MaxResponseTerminalEncodedOutputBytes,
         };
         if (values.Any(value => value <= 0))
         {
@@ -510,6 +596,9 @@ internal sealed class VoiceResponseResources
     private long _items;
     private long _chunks;
     private long _writes;
+    private long _encodedBytes;
+    private long _terminalEncodedBytes;
+    private long _contentGeneration;
     private bool _released;
 
     internal VoiceResponseResources(VoiceResourceGovernor governor, VoiceResourceLimits limits)
@@ -518,16 +607,32 @@ internal sealed class VoiceResponseResources
         _limits = limits;
     }
 
-    internal VoiceOutputReservation Reserve(long bytes = 0, int items = 0, int chunks = 0, int writes = 0)
+    internal VoiceOutputReservation Reserve(
+        long bytes = 0,
+        int items = 0,
+        int chunks = 0,
+        int writes = 0,
+        long encodedBytes = 0,
+        long terminalEncodedBytes = 0)
     {
         if (bytes < 0 || items < 0 || chunks < 0 || writes < 0 ||
-            bytes + items + chunks + writes == 0)
+            encodedBytes < 0 || terminalEncodedBytes < 0 ||
+            bytes + items + chunks + writes + encodedBytes + terminalEncodedBytes == 0)
         {
             throw new ArgumentOutOfRangeException(nameof(bytes));
         }
 
-        return _governor.ReserveOutput(this, bytes, items, chunks, writes);
+        return _governor.ReserveOutput(
+            this,
+            bytes,
+            items,
+            chunks,
+            writes,
+            encodedBytes,
+            terminalEncodedBytes);
     }
+
+    internal long ContentGeneration => _contentGeneration;
 
     internal void ReleaseAll() => _governor.ReleaseOutput(this);
 
@@ -535,7 +640,13 @@ internal sealed class VoiceResponseResources
 
     internal void ReleaseItems(int items) => _governor.ReleaseOutputItems(this, items);
 
-    internal void EnsureAvailable(long bytes, long items, long chunks, long writes)
+    internal void EnsureAvailable(
+        long bytes,
+        long items,
+        long chunks,
+        long writes,
+        long encodedBytes,
+        long terminalEncodedBytes)
     {
         if (_released)
         {
@@ -546,22 +657,54 @@ internal sealed class VoiceResponseResources
         VoiceResourceGovernor.EnsureAvailable(_items, items, _limits.MaxResponseOutputItems, "response output items");
         VoiceResourceGovernor.EnsureAvailable(_chunks, chunks, _limits.MaxResponseOutputChunks, "response output chunks");
         VoiceResourceGovernor.EnsureAvailable(_writes, writes, _limits.MaxResponseOutputWrites, "response output writes");
+        VoiceResourceGovernor.EnsureAvailable(
+            _encodedBytes,
+            encodedBytes,
+            _limits.MaxResponseEncodedOutputBytes,
+            "response encoded output bytes");
+        VoiceResourceGovernor.EnsureAvailable(
+            _terminalEncodedBytes,
+            terminalEncodedBytes,
+            _limits.MaxResponseTerminalEncodedOutputBytes,
+            "response terminal encoded output bytes");
     }
 
-    internal void Commit(long bytes, long items, long chunks, long writes)
+    internal void Commit(
+        long bytes,
+        long items,
+        long chunks,
+        long writes,
+        long encodedBytes,
+        long terminalEncodedBytes,
+        long contentGeneration)
     {
         if (_released)
         {
-            throw new InvalidOperationException("Released Voice response resources cannot be committed.");
+            throw new VoiceBridgeConnectionClosedException(
+                "The voice response released its output resources before the reservation committed.");
+        }
+        if (contentGeneration != _contentGeneration &&
+            bytes + chunks + writes + encodedBytes + terminalEncodedBytes > 0)
+        {
+            throw new VoiceBridgeConnectionClosedException(
+                "The voice response released its output content before the reservation committed.");
         }
 
         _bytes = checked(_bytes + bytes);
         _items = checked(_items + items);
         _chunks = checked(_chunks + chunks);
         _writes = checked(_writes + writes);
+        _encodedBytes = checked(_encodedBytes + encodedBytes);
+        _terminalEncodedBytes = checked(_terminalEncodedBytes + terminalEncodedBytes);
     }
 
-    internal (long Bytes, long Items, long Chunks, long Writes) ReleaseAllLocked()
+    internal (
+        long Bytes,
+        long Items,
+        long Chunks,
+        long Writes,
+        long EncodedBytes,
+        long TerminalEncodedBytes) ReleaseAllLocked()
     {
         if (_released)
         {
@@ -569,25 +712,36 @@ internal sealed class VoiceResponseResources
         }
 
         _released = true;
-        var released = (_bytes, _items, _chunks, _writes);
+        var released = (_bytes, _items, _chunks, _writes, _encodedBytes, _terminalEncodedBytes);
         _bytes = 0;
         _items = 0;
         _chunks = 0;
         _writes = 0;
+        _encodedBytes = 0;
+        _terminalEncodedBytes = 0;
+        _contentGeneration++;
         return released;
     }
 
-    internal (long Bytes, long Chunks, long Writes) ReleaseContentLocked()
+    internal (
+        long Bytes,
+        long Chunks,
+        long Writes,
+        long EncodedBytes,
+        long TerminalEncodedBytes) ReleaseContentLocked()
     {
         if (_released)
         {
             return default;
         }
 
-        var released = (_bytes, _chunks, _writes);
+        var released = (_bytes, _chunks, _writes, _encodedBytes, _terminalEncodedBytes);
         _bytes = 0;
         _chunks = 0;
         _writes = 0;
+        _encodedBytes = 0;
+        _terminalEncodedBytes = 0;
+        _contentGeneration++;
         return released;
     }
 
@@ -611,6 +765,9 @@ internal sealed class VoiceOutputReservation : IDisposable
     private readonly int _items;
     private readonly int _chunks;
     private readonly int _writes;
+    private readonly long _encodedBytes;
+    private readonly long _terminalEncodedBytes;
+    private readonly long _contentGeneration;
     private int _committed;
     private int _disposed;
 
@@ -620,7 +777,10 @@ internal sealed class VoiceOutputReservation : IDisposable
         long bytes,
         int items,
         int chunks,
-        int writes)
+        int writes,
+        long encodedBytes,
+        long terminalEncodedBytes,
+        long contentGeneration)
     {
         _governor = governor;
         _owner = owner;
@@ -628,10 +788,14 @@ internal sealed class VoiceOutputReservation : IDisposable
         _items = items;
         _chunks = chunks;
         _writes = writes;
+        _encodedBytes = encodedBytes;
+        _terminalEncodedBytes = terminalEncodedBytes;
+        _contentGeneration = contentGeneration;
     }
 
-    internal void Commit()
+    internal void Commit(Action? validateCommit = null, Action? commitStarted = null)
     {
+        validateCommit ??= static () => { };
         if (Volatile.Read(ref _disposed) != 0)
         {
             throw new ObjectDisposedException(nameof(VoiceOutputReservation));
@@ -644,7 +808,17 @@ internal sealed class VoiceOutputReservation : IDisposable
 
         try
         {
-            _governor.CommitOutput(_owner, _bytes, _items, _chunks, _writes);
+            commitStarted?.Invoke();
+            _governor.CommitOutput(
+                _owner,
+                _bytes,
+                _items,
+                _chunks,
+                _writes,
+                _encodedBytes,
+                _terminalEncodedBytes,
+                _contentGeneration,
+                validateCommit);
         }
         catch
         {
@@ -662,7 +836,13 @@ internal sealed class VoiceOutputReservation : IDisposable
 
         if (Volatile.Read(ref _committed) == 0)
         {
-            _governor.RollbackOutput(_bytes, _items, _chunks, _writes);
+            _governor.RollbackOutput(
+                _bytes,
+                _items,
+                _chunks,
+                _writes,
+                _encodedBytes,
+                _terminalEncodedBytes);
         }
     }
 }

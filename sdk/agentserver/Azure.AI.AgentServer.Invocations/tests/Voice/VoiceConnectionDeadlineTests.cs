@@ -168,6 +168,100 @@ public class VoiceConnectionDeadlineTests
     }
 
     [Test]
+    public async Task CustomerTaskAdmissionOutlivesConnectionCleanupDeadline()
+    {
+        var governor = new VoiceResourceGovernor(new VoiceResourceLimits
+        {
+            MaxCustomerTasks = 1,
+        });
+        var handler = new ResistantFirstStartupHandler();
+        using var firstCancellation = new CancellationTokenSource();
+        using var firstInnerSocket = new BlockingReceiveWebSocket("unused");
+        using var firstSocket = new TrackingWebSocket(firstInnerSocket, TimeSpan.FromMilliseconds(50));
+        var firstConnection = new VoiceConnection(
+            firstSocket,
+            handler,
+            CreateInvocationContext(),
+            governor,
+            firstCancellation.Token);
+        firstInnerSocket.QueueFrame(SessionStartFrame());
+        var firstRun = firstConnection.RunAsync();
+        CancellationTokenSource? admittedCancellation = null;
+        Task? admittedRun = null;
+
+        try
+        {
+            await handler.FirstStarted.Task.WaitAsync(TestTimeout);
+            await firstCancellation.CancelAsync();
+            await ObserveConnectionCancellationAsync(firstRun);
+            Assert.Multiple(() =>
+            {
+                Assert.That(governor.ConnectionCount, Is.Zero);
+                Assert.That(governor.CustomerTaskCount, Is.EqualTo(1));
+            });
+
+            using var rejectedInnerSocket = new BlockingReceiveWebSocket("session.rejected");
+            using var rejectedSocket = new TrackingWebSocket(rejectedInnerSocket, TimeSpan.FromMilliseconds(50));
+            var rejectedConnection = new VoiceConnection(
+                rejectedSocket,
+                handler,
+                CreateInvocationContext(),
+                governor,
+                CancellationToken.None);
+            rejectedInnerSocket.QueueFrame(SessionStartFrame());
+            var rejectedRun = rejectedConnection.RunAsync();
+            await rejectedInnerSocket.TerminalSent.Task.WaitAsync(TestTimeout);
+            await rejectedRun.WaitAsync(TestTimeout);
+            Assert.Multiple(() =>
+            {
+                Assert.That(handler.StartupCount, Is.EqualTo(1));
+                Assert.That(governor.CustomerTaskCount, Is.EqualTo(1));
+            });
+
+            handler.ReleaseFirst.TrySetResult();
+            await handler.FirstCompleted.Task.WaitAsync(TestTimeout);
+            await WaitForCustomerTasksAsync(governor, expected: 0);
+
+            admittedCancellation = new CancellationTokenSource();
+            using var admittedInnerSocket = new BlockingReceiveWebSocket("unused");
+            using var admittedSocket = new TrackingWebSocket(admittedInnerSocket, TimeSpan.FromMilliseconds(50));
+            var admittedConnection = new VoiceConnection(
+                admittedSocket,
+                handler,
+                CreateInvocationContext(),
+                governor,
+                admittedCancellation.Token);
+            admittedInnerSocket.QueueFrame(SessionStartFrame());
+            admittedRun = admittedConnection.RunAsync();
+            await admittedInnerSocket.ReadySent.Task.WaitAsync(TestTimeout);
+            Assert.That(handler.StartupCount, Is.EqualTo(2));
+            await admittedCancellation.CancelAsync();
+            await ObserveConnectionCancellationAsync(admittedRun);
+        }
+        finally
+        {
+            if (admittedCancellation is not null)
+            {
+                await admittedCancellation.CancelAsync();
+            }
+            if (admittedRun is not null)
+            {
+                await ObserveConnectionCancellationAsync(admittedRun);
+            }
+            admittedCancellation?.Dispose();
+            handler.ReleaseFirst.TrySetResult();
+            await firstCancellation.CancelAsync();
+            await ObserveConnectionCancellationAsync(firstRun);
+            if (handler.FirstStarted.Task.IsCompleted)
+            {
+                await handler.FirstCompleted.Task.WaitAsync(TestTimeout);
+            }
+        }
+
+        await WaitForResourcesReleasedAsync(governor);
+    }
+
+    [Test]
     public async Task FrameArrivingAfterBridgeObservesReadyIsAccepted()
     {
         using var innerSocket = new BlockingReceiveWebSocket("session.ready", injectFrameDuringReady: true);
@@ -473,6 +567,7 @@ public class VoiceConnectionDeadlineTests
         await innerSocket.ReadySent.Task.WaitAsync(TestTimeout);
         innerSocket.QueueFrame(UserMessageFrame());
         await handler.IdleReady.Task.WaitAsync(TestTimeout);
+        await WaitForCleanupTasksAsync(governor, 0);
         var proactiveTask = handler.StartProactiveAsync();
         var responseId = await innerSocket.ProactiveResponseCreated.Task.WaitAsync(TestTimeout);
         VoiceResponse? response = null;
@@ -1047,12 +1142,23 @@ public class VoiceConnectionDeadlineTests
     {
         using var timeout = new CancellationTokenSource(TestTimeout);
         while (governor.ConnectionCount != 0 ||
+            governor.CustomerTaskCount != 0 ||
+            governor.TerminalCustomerTaskCount != 0 ||
             governor.CleanupTaskCount != 0 ||
             governor.PendingOperationCount != 0 ||
             governor.PreparedFrameCount != 0 ||
             governor.PreparedFrameBytes != 0 ||
             governor.ControlFrameCount != 0 ||
-            governor.ControlFrameBytes != 0)
+            governor.ControlFrameBytes != 0 ||
+            governor.CallbackQueueItems != 0 ||
+            governor.CallbackQueueBytes != 0 ||
+            governor.TrackedIdentityBytes != 0 ||
+            governor.RetainedOutputBytes != 0 ||
+            governor.RetainedOutputItems != 0 ||
+            governor.RetainedOutputChunks != 0 ||
+            governor.OutputWriteCount != 0 ||
+            governor.EncodedOutputBytes != 0 ||
+            governor.TerminalEncodedOutputBytes != 0)
         {
             if (timeout.IsCancellationRequested)
             {
@@ -1076,6 +1182,49 @@ public class VoiceConnectionDeadlineTests
             }
 
             await Task.Yield();
+        }
+    }
+
+    private static async Task WaitForCleanupTasksAsync(
+        VoiceResourceGovernor governor,
+        long expected)
+    {
+        using var timeout = new CancellationTokenSource(TestTimeout);
+        while (governor.CleanupTaskCount != expected)
+        {
+            if (timeout.IsCancellationRequested)
+            {
+                throw new TimeoutException($"Cleanup task count did not reach {expected}.");
+            }
+
+            await Task.Yield();
+        }
+    }
+
+    private static async Task WaitForCustomerTasksAsync(
+        VoiceResourceGovernor governor,
+        long expected)
+    {
+        using var timeout = new CancellationTokenSource(TestTimeout);
+        while (governor.CustomerTaskCount != expected)
+        {
+            if (timeout.IsCancellationRequested)
+            {
+                throw new TimeoutException($"Customer task count did not reach {expected}.");
+            }
+
+            await Task.Yield();
+        }
+    }
+
+    private static async Task ObserveConnectionCancellationAsync(Task runTask)
+    {
+        try
+        {
+            await runTask.WaitAsync(TestTimeout);
+        }
+        catch (OperationCanceledException)
+        {
         }
     }
 
@@ -1552,6 +1701,97 @@ public class VoiceConnectionDeadlineTests
         {
             await ReleaseBlockedTerminalSendAsync(innerSocket);
         }
+    }
+
+    [Test]
+    public async Task TerminalBeforeCancelWaiterRegistrationRollsBackOwner()
+    {
+        using var innerSocket = new BlockingReceiveWebSocket("response.cancel");
+        using var webSocket = new TrackingWebSocket(innerSocket, TimeSpan.FromSeconds(1));
+        var governor = new VoiceResourceGovernor();
+        var handler = new TerminalBeforeCancelRegistrationHandler();
+        var connection = new VoiceConnection(
+            webSocket,
+            handler,
+            CreateInvocationContext(),
+            governor,
+            CancellationToken.None);
+        var terminationCoordinator = (VoiceTerminationCoordinator)typeof(VoiceConnection).GetField(
+            "_termination",
+            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!
+            .GetValue(connection)!;
+        var rememberResponse = typeof(VoiceConnection).GetMethod(
+            "RememberResponseLocked",
+            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!;
+
+        innerSocket.QueueFrame(SessionStartFrame());
+        var runTask = connection.RunAsync();
+        Task<Task<ResponseCancellationOutcome>>? beginCancel = null;
+        Task<ResponseCancellationOutcome>? outcome = null;
+        VoiceResponseTermination termination = default;
+        try
+        {
+            await innerSocket.ReadySent.Task.WaitAsync(TestTimeout);
+            innerSocket.QueueFrame(UserMessageFrame());
+            var responseId = await innerSocket.ResponseCreated.Task.WaitAsync(TestTimeout);
+            var response = await handler.ResponseReady.Task.WaitAsync(TestTimeout);
+            response.ReserveCancellation();
+            termination = terminationCoordinator.TryTerminateResponse(response, "barge_in");
+            rememberResponse.Invoke(connection, new object[] { response });
+
+            beginCancel = connection.BeginCancelAsync(response, reason: null, CancellationToken.None);
+            Assert.That(
+                async () => await beginCancel.WaitAsync(TimeSpan.FromSeconds(1)),
+                Throws.TypeOf<VoiceBridgeConnectionClosedException>());
+            Assert.Multiple(() =>
+            {
+                Assert.That(innerSocket.TerminalSendStarted.Task.IsCompleted, Is.False);
+                Assert.That(innerSocket.AbortCount, Is.Zero);
+                Assert.That(governor.PendingOperationCount, Is.Zero);
+                Assert.That(response.IsCancelPending, Is.False);
+            });
+        }
+        finally
+        {
+            if (termination.IsNewTerminal)
+            {
+                var response = await handler.ResponseReady.Task.WaitAsync(TestTimeout);
+                await response.MarkTerminalAsync();
+                await VoiceTerminationCoordinator.ApplyResponseTermination(termination);
+            }
+            innerSocket.QueueFrame(JsonSerializer.Serialize(new
+            {
+                type = "session.end",
+                id = "m_end",
+                ts = "2026-08-03T00:00:03.000Z",
+                reason = "caller_hangup",
+            }));
+            await runTask.WaitAsync(TestTimeout);
+            if (beginCancel is not null)
+            {
+                try
+                {
+                    outcome = await beginCancel.WaitAsync(TestTimeout);
+                }
+                catch
+                {
+                    _ = beginCancel.Exception;
+                }
+            }
+            if (outcome is not null)
+            {
+                try
+                {
+                    await outcome.WaitAsync(TestTimeout);
+                }
+                catch
+                {
+                    _ = outcome.Exception;
+                }
+            }
+        }
+
+        await WaitForResourcesReleasedAsync(governor);
     }
 
     [Test]
@@ -2125,6 +2365,49 @@ public class VoiceConnectionDeadlineTests
             CancellationToken cancellationToken) => Task.CompletedTask;
     }
 
+    private sealed class ResistantFirstStartupHandler : VoiceHandler
+    {
+        private int _startupCount;
+
+        public TaskCompletionSource FirstStarted { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public TaskCompletionSource ReleaseFirst { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public TaskCompletionSource FirstCompleted { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public int StartupCount => Volatile.Read(ref _startupCount);
+
+        protected override async Task OnSessionStartAsync(
+            VoiceSession session,
+            SessionStartEvent startEvent,
+            CancellationToken cancellationToken)
+        {
+            if (Interlocked.Increment(ref _startupCount) != 1)
+            {
+                return;
+            }
+
+            FirstStarted.TrySetResult();
+            try
+            {
+                await ReleaseFirst.Task;
+            }
+            finally
+            {
+                FirstCompleted.TrySetResult();
+            }
+        }
+
+        protected override Task OnUserMessageAsync(
+            VoiceSession session,
+            UserMessageEvent message,
+            VoiceResponse response,
+            CancellationToken cancellationToken) => Task.CompletedTask;
+    }
+
     private sealed class DuringReadyHandler : VoiceHandler
     {
         public TaskCompletionSource UserReceived { get; } =
@@ -2461,6 +2744,35 @@ public class VoiceConnectionDeadlineTests
             await response.SendTextDeltaAsync("cancel", cancellationToken);
             var outcome = await response.CancelAsync(cancellationToken: CancellationToken.None);
             Outcome.TrySetResult(outcome);
+        }
+    }
+
+    private sealed class TerminalBeforeCancelRegistrationHandler : VoiceHandler
+    {
+        public TaskCompletionSource<VoiceResponse> ResponseReady { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public TaskCompletionSource BargeInObserved { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        protected override async Task OnUserMessageAsync(
+            VoiceSession session,
+            UserMessageEvent message,
+            VoiceResponse response,
+            CancellationToken cancellationToken)
+        {
+            await response.SendTextDeltaAsync("cancel", cancellationToken);
+            ResponseReady.TrySetResult(response);
+            await Task.Delay(Timeout.InfiniteTimeSpan, cancellationToken);
+        }
+
+        protected override Task OnBargeInAsync(
+            VoiceSession session,
+            BargeInEvent bargeIn,
+            CancellationToken cancellationToken)
+        {
+            BargeInObserved.TrySetResult();
+            return Task.CompletedTask;
         }
     }
 

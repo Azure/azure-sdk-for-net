@@ -16,7 +16,11 @@
   continuations, response terminal writes have bounded physical drain, and
   teardown shares one absolute cleanup deadline. Host-wide admission bounds
   retained output, prepared frames, callback queues and tasks, pending helpers,
-  identities, and cleanup work across all Voice connections. Content-free
+  identities, exact JSON-encoded response bytes, variable output writes, and
+  cleanup work across all Voice connections. Matching per-response encoded-byte
+  and write budgets prevent many small frames or repeated envelope overhead from
+  bypassing raw-text limits, while a separate bounded encoded-byte reserve keeps
+  mandatory response control transactions available. Content-free
   connection/turn activities preserve the inbound W3C trace hierarchy.
   WebSocket close observability now separates selected intent, mapped transport
   attempt, and final local outcome. Close-event logging uses a bounded

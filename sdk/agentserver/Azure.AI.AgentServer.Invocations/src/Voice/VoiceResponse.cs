@@ -29,6 +29,7 @@ public class VoiceResponse
     private bool _accepted;
     private bool _terminal;
     private bool _sealed;
+    private bool _retainedIdentitiesReleased;
     private bool _cancelPending;
     private bool _connectionShutdownCaptured;
     private long _generation;
@@ -158,6 +159,8 @@ public class VoiceResponse
 
     internal bool IsConnectionCancellationRegistrationDisposed =>
         Volatile.Read(ref _connectionCancellationRegistrationDisposed) != 0;
+
+    internal VoiceResponseResources OutputResources => _outputResources;
 
     internal readonly record struct SendReservation(long Generation, bool OpensResponse);
 
@@ -986,8 +989,22 @@ public class VoiceResponse
     {
         lock (_stateSync)
         {
+            if (_retainedIdentitiesReleased)
+            {
+                foreach (var item in _items)
+                {
+                    item.ReleaseText();
+                }
+
+                _items.Clear();
+                _items.TrimExcess();
+                _simpleItem = null;
+                return;
+            }
+
             if (_items.Count == 0)
             {
+                _outputResources.ReleaseContent();
                 return;
             }
 
@@ -1001,9 +1018,11 @@ public class VoiceResponse
                 }
             }
 
+            var currentStartedItemCount = itemIds.Count;
+            itemIds.AddRange(_releasedItemIds);
             itemIds.Sort();
-            _releasedItemIds = itemIds.ToArray();
-            var unstartedItems = _items.Count - itemIds.Count;
+            _releasedItemIds = itemIds.Distinct().ToArray();
+            var unstartedItems = _items.Count - currentStartedItemCount;
             _items.Clear();
             _items.TrimExcess();
             _simpleItem = null;
@@ -1019,6 +1038,7 @@ public class VoiceResponse
     {
         lock (_stateSync)
         {
+            _retainedIdentitiesReleased = true;
             _releasedItemIds = [];
             _outputResources.ReleaseAll();
         }
@@ -1285,7 +1305,7 @@ public class VoiceResponse
 
     private void EnsureLocallyWritableLocked()
     {
-        if (_terminal || _sealed || _connection.Ending)
+        if (_terminal || _sealed || _retainedIdentitiesReleased || _connection.Ending)
         {
             throw new VoiceBridgeConnectionClosedException("The voice response is terminal.");
         }

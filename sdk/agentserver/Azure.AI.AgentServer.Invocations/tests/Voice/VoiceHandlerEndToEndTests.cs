@@ -94,29 +94,36 @@ public class VoiceHandlerEndToEndTests
 
         await SendAsync(first, SessionStartFrame("m_first"));
         await handler.FirstStarted.Task.WaitAsync(TestTimeout);
-        await SendAsync(rejected, SessionStartFrame("m_rejected"));
-        using var rejection = await ReceiveJsonAsync(rejected);
-        Assert.Multiple(() =>
+        try
         {
-            Assert.That(rejection.RootElement.GetProperty("type").GetString(), Is.EqualTo("session.rejected"));
-            Assert.That(rejection.RootElement.GetProperty("code").GetString(), Is.EqualTo("startup_failed"));
-            Assert.That(handler.StartupCount, Is.EqualTo(1));
-            Assert.That(governor.CustomerTaskCount, Is.EqualTo(1));
-        });
+            await SendAsync(rejected, SessionStartFrame("m_rejected"));
+            using var rejection = await ReceiveJsonAsync(rejected);
+            Assert.Multiple(() =>
+            {
+                Assert.That(rejection.RootElement.GetProperty("type").GetString(), Is.EqualTo("session.rejected"));
+                Assert.That(rejection.RootElement.GetProperty("code").GetString(), Is.EqualTo("startup_failed"));
+                Assert.That(handler.StartupCount, Is.EqualTo(1));
+                Assert.That(governor.CustomerTaskCount, Is.EqualTo(1));
+            });
 
-        handler.AllowFirst.TrySetResult();
-        using var firstReady = await ReceiveJsonAsync(first);
-        Assert.That(firstReady.RootElement.GetProperty("type").GetString(), Is.EqualTo("session.ready"));
-        Assert.That(governor.CustomerTaskCount, Is.Zero);
+            handler.AllowFirst.TrySetResult();
+            using var firstReady = await ReceiveJsonAsync(first);
+            Assert.That(firstReady.RootElement.GetProperty("type").GetString(), Is.EqualTo("session.ready"));
+            Assert.That(governor.CustomerTaskCount, Is.Zero);
 
-        using var admitted = await ConnectAsync(app);
-        await SendAsync(admitted, SessionStartFrame("m_admitted"));
-        using var admittedReady = await ReceiveJsonAsync(admitted);
-        Assert.Multiple(() =>
+            using var admitted = await ConnectAsync(app);
+            await SendAsync(admitted, SessionStartFrame("m_admitted"));
+            using var admittedReady = await ReceiveJsonAsync(admitted);
+            Assert.Multiple(() =>
+            {
+                Assert.That(admittedReady.RootElement.GetProperty("type").GetString(), Is.EqualTo("session.ready"));
+                Assert.That(handler.StartupCount, Is.EqualTo(2));
+            });
+        }
+        finally
         {
-            Assert.That(admittedReady.RootElement.GetProperty("type").GetString(), Is.EqualTo("session.ready"));
-            Assert.That(handler.StartupCount, Is.EqualTo(2));
-        });
+            handler.AllowFirst.TrySetResult();
+        }
     }
 
     [Test]
@@ -203,6 +210,104 @@ public class VoiceHandlerEndToEndTests
             Assert.That(terminal.RootElement.GetProperty("response_id").GetString(),
                 Is.EqualTo(created.RootElement.GetProperty("response_id").GetString()));
         });
+    }
+
+    [Test]
+    public async Task EncodedFrameBudgetIsAppliedBeforeOpeningResponseWireAttempt()
+    {
+        var governor = new VoiceResourceGovernor(new VoiceResourceLimits
+        {
+            MaxResponseEncodedOutputBytes = 1,
+        });
+        var handler = new EncodedFrameBudgetHandler();
+        await using var app = BuildApp(handler, governor);
+        await app.StartAsync();
+        using var webSocket = await ConnectAndActivateAsync(app);
+
+        try
+        {
+            await SendAsync(webSocket, UserMessageFrame("m_user", "in_user", "speak"));
+            var winner = await Task.WhenAny(
+                handler.OutputRejected.Task,
+                handler.OutputUnexpectedlySucceeded.Task).WaitAsync(TestTimeout);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(winner, Is.SameAs(handler.OutputRejected.Task));
+                Assert.That(governor.EncodedOutputBytes, Is.Zero);
+                Assert.That(governor.TerminalEncodedOutputBytes, Is.Zero);
+                Assert.That(governor.RetainedOutputBytes, Is.Zero);
+                Assert.That(governor.RetainedOutputChunks, Is.Zero);
+                Assert.That(governor.OutputWriteCount, Is.Zero);
+                Assert.That(governor.PreparedFrameCount, Is.Zero);
+                Assert.That(governor.PreparedFrameBytes, Is.Zero);
+            });
+
+            handler.ReleaseCallback.TrySetResult();
+            using var created = await ReceiveJsonAsync(webSocket);
+            using var terminal = await ReceiveJsonAsync(webSocket);
+            await WaitForWireResourcesReleasedAsync(governor);
+            Assert.Multiple(() =>
+            {
+                Assert.That(created.RootElement.GetProperty("type").GetString(), Is.EqualTo("response.created"));
+                Assert.That(terminal.RootElement.GetProperty("type").GetString(), Is.EqualTo("error"));
+                Assert.That(terminal.RootElement.GetProperty("code").GetString(), Is.EqualTo("handler_error"));
+                Assert.That(terminal.RootElement.GetProperty("response_id").GetString(),
+                    Is.EqualTo(created.RootElement.GetProperty("response_id").GetString()));
+                Assert.That(governor.EncodedOutputBytes, Is.Zero);
+                Assert.That(governor.TerminalEncodedOutputBytes, Is.Zero);
+                Assert.That(governor.ControlFrameCount, Is.Zero);
+                Assert.That(governor.ControlFrameBytes, Is.Zero);
+            });
+        }
+        finally
+        {
+            handler.ReleaseCallback.TrySetResult();
+        }
+    }
+
+    [Test]
+    public async Task TerminalEncodedBudgetRejectsProductionFailureBeforeWireAttempt()
+    {
+        var governor = new VoiceResourceGovernor(new VoiceResourceLimits
+        {
+            MaxResponseTerminalEncodedOutputBytes = 1,
+        });
+        var handler = new TerminalEncodedBudgetHandler();
+        await using var app = BuildApp(handler, governor);
+        await app.StartAsync();
+        using var webSocket = await ConnectAndActivateAsync(app);
+
+        try
+        {
+            await SendAsync(webSocket, UserMessageFrame("m_user", "in_user", "fail"));
+            var winner = await Task.WhenAny(
+                handler.FailureRejected.Task,
+                handler.FailureUnexpectedlySucceeded.Task).WaitAsync(TestTimeout);
+            await WaitForWireResourcesReleasedAsync(governor);
+            Assert.Multiple(() =>
+            {
+                Assert.That(winner, Is.SameAs(handler.FailureRejected.Task));
+                Assert.That(governor.EncodedOutputBytes, Is.Zero);
+                Assert.That(governor.TerminalEncodedOutputBytes, Is.Zero);
+                Assert.That(governor.ControlFrameCount, Is.Zero);
+                Assert.That(governor.ControlFrameBytes, Is.Zero);
+            });
+
+            await SendAsync(webSocket, """
+                {"type":"session.end","id":"m_end","ts":"2026-08-03T00:00:01.000Z","reason":"caller_hangup"}
+                """);
+            var close = await webSocket.ReceiveAsync(new byte[64], CancellationToken.None).WaitAsync(TestTimeout);
+            Assert.That(close.MessageType, Is.EqualTo(WebSocketMessageType.Close));
+        }
+        finally
+        {
+            handler.ReleaseCallback.TrySetResult();
+            if (handler.CallbackStarted.Task.IsCompleted)
+            {
+                await handler.CallbackExited.Task.WaitAsync(TestTimeout);
+            }
+        }
     }
 
     [Test]
@@ -863,6 +968,106 @@ public class VoiceHandlerEndToEndTests
         Assert.That(proactiveTurn.GetTagItem("gen_ai.response.id"), Is.EqualTo(responseId));
     }
 
+    [TestCase("barge_in")]
+    [TestCase("response.timeout")]
+    public async Task AcceptedProactiveInboundTerminalReleasesItemCapacityWhenConnectionCloses(
+        string terminalType)
+    {
+        var governor = new VoiceResourceGovernor(new VoiceResourceLimits
+        {
+            MaxRetainedOutputItems = 1,
+        });
+        var handler = new SequentialProactiveHandler();
+        await using var app = BuildApp(handler, governor);
+        await app.StartAsync();
+        using var workCancellation = new CancellationTokenSource();
+        Task? firstOutput = null;
+        Task? secondOutput = null;
+
+        try
+        {
+            using (var first = await ConnectAndActivateAsync(app))
+            {
+                firstOutput = handler.SendProactiveDeltaAsync(sessionNumber: 1, workCancellation.Token);
+                using var created = await ReceiveJsonAsync(first);
+                var responseId = created.RootElement.GetProperty("response_id").GetString()!;
+                await SendAsync(first, $$"""
+                    {"type":"response.accepted","id":"m_accept_1","ts":"2026-08-03T00:00:01.000Z","response_id":"{{responseId}}"}
+                    """);
+                using var delta = await ReceiveJsonAsync(first);
+                var itemId = delta.RootElement.GetProperty("item_id").GetString()!;
+                await firstOutput.WaitAsync(TestTimeout);
+
+                var terminalFrame = terminalType switch
+                {
+                    "barge_in" => JsonSerializer.Serialize(new
+                    {
+                        type = terminalType,
+                        id = "m_terminal_1",
+                        ts = "2026-08-03T00:00:02.000Z",
+                        response_id = responseId,
+                        item_id = itemId,
+                        heard_text = "x",
+                    }),
+                    "response.timeout" => JsonSerializer.Serialize(new
+                    {
+                        type = terminalType,
+                        id = "m_terminal_1",
+                        ts = "2026-08-03T00:00:02.000Z",
+                        response_id = responseId,
+                        stage = "idle",
+                    }),
+                    _ => throw new AssertionException($"Unsupported terminal type {terminalType}."),
+                };
+                await SendAsync(first, terminalFrame);
+                await handler.FirstTerminal.Task.WaitAsync(TestTimeout);
+                await SendAsync(first, """
+                    {"type":"session.end","id":"m_end_1","ts":"2026-08-03T00:00:03.000Z","reason":"caller_hangup"}
+                    """);
+            }
+
+            await WaitForConnectionCountAsync(governor, expected: 0);
+            Assert.That(governor.RetainedOutputItems, Is.Zero);
+
+            using (var second = await ConnectAndActivateAsync(app))
+            {
+                secondOutput = handler.SendProactiveDeltaAsync(sessionNumber: 2, workCancellation.Token);
+                using var created = await ReceiveJsonAsync(second);
+                var responseId = created.RootElement.GetProperty("response_id").GetString()!;
+                await SendAsync(second, $$"""
+                    {"type":"response.accepted","id":"m_accept_2","ts":"2026-08-03T00:00:04.000Z","response_id":"{{responseId}}"}
+                    """);
+                using var delta = await ReceiveJsonAsync(second);
+                await secondOutput.WaitAsync(TestTimeout);
+                Assert.That(delta.RootElement.GetProperty("type").GetString(), Is.EqualTo("response.output_text.delta"));
+                await SendAsync(second, """
+                    {"type":"session.end","id":"m_end_2","ts":"2026-08-03T00:00:05.000Z","reason":"caller_hangup"}
+                    """);
+            }
+
+            await WaitForConnectionCountAsync(governor, expected: 0);
+            Assert.That(governor.RetainedOutputItems, Is.Zero);
+        }
+        finally
+        {
+            await workCancellation.CancelAsync();
+            foreach (var output in new[] { firstOutput, secondOutput }.OfType<Task>())
+            {
+                try
+                {
+                    await output.WaitAsync(TestTimeout);
+                }
+                catch (OperationCanceledException) when (workCancellation.IsCancellationRequested)
+                {
+                }
+                catch (VoiceBridgeConnectionClosedException)
+                {
+                    _ = output.Exception;
+                }
+            }
+        }
+    }
+
     [Test]
     public async Task SelfCancelAwaitsResponseCancelledAndSuppressesResponseDone()
     {
@@ -1414,6 +1619,41 @@ public class VoiceHandlerEndToEndTests
         return webSocket;
     }
 
+    private static async Task WaitForConnectionCountAsync(
+        VoiceResourceGovernor governor,
+        long expected)
+    {
+        using var timeout = new CancellationTokenSource(TestTimeout);
+        while (governor.ConnectionCount != expected)
+        {
+            if (timeout.IsCancellationRequested)
+            {
+                throw new TimeoutException($"Connection count did not reach {expected}.");
+            }
+
+            await Task.Yield();
+        }
+    }
+
+    private static async Task WaitForWireResourcesReleasedAsync(VoiceResourceGovernor governor)
+    {
+        using var timeout = new CancellationTokenSource(TestTimeout);
+        while (governor.PreparedFrameCount != 0 ||
+            governor.PreparedFrameBytes != 0 ||
+            governor.ControlFrameCount != 0 ||
+            governor.ControlFrameBytes != 0 ||
+            governor.EncodedOutputBytes != 0 ||
+            governor.TerminalEncodedOutputBytes != 0)
+        {
+            if (timeout.IsCancellationRequested)
+            {
+                throw new TimeoutException("Voice wire resources were not released.");
+            }
+
+            await Task.Yield();
+        }
+    }
+
     private static string SessionStartFrame(string id, bool reconnect = false) => JsonSerializer.Serialize(new
     {
         type = "session.start",
@@ -1627,6 +1867,82 @@ public class VoiceHandlerEndToEndTests
         {
             await response.SendTextDeltaAsync("a", cancellationToken);
             await response.SendTextDeltaAsync("b", cancellationToken);
+        }
+    }
+
+    private sealed class EncodedFrameBudgetHandler : VoiceHandler
+    {
+        public TaskCompletionSource OutputRejected { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public TaskCompletionSource OutputUnexpectedlySucceeded { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public TaskCompletionSource ReleaseCallback { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        protected override async Task OnUserMessageAsync(
+            VoiceSession session,
+            UserMessageEvent message,
+            VoiceResponse response,
+            CancellationToken cancellationToken)
+        {
+            try
+            {
+                await response.SendTextDeltaAsync("a", cancellationToken);
+                OutputUnexpectedlySucceeded.TrySetResult();
+            }
+            catch (VoiceResourceExhaustedException)
+            {
+                OutputRejected.TrySetResult();
+            }
+
+            await ReleaseCallback.Task.WaitAsync(cancellationToken);
+        }
+    }
+
+    private sealed class TerminalEncodedBudgetHandler : VoiceHandler
+    {
+        public TaskCompletionSource FailureRejected { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public TaskCompletionSource FailureUnexpectedlySucceeded { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public TaskCompletionSource CallbackStarted { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public TaskCompletionSource ReleaseCallback { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public TaskCompletionSource CallbackExited { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        protected override async Task OnUserMessageAsync(
+            VoiceSession session,
+            UserMessageEvent message,
+            VoiceResponse response,
+            CancellationToken cancellationToken)
+        {
+            CallbackStarted.TrySetResult();
+            try
+            {
+                try
+                {
+                    await response.FailAsync("agent_error", "failed", cancellationToken);
+                    FailureUnexpectedlySucceeded.TrySetResult();
+                }
+                catch (VoiceResourceExhaustedException)
+                {
+                    FailureRejected.TrySetResult();
+                }
+
+                await ReleaseCallback.Task.WaitAsync(cancellationToken);
+            }
+            finally
+            {
+                CallbackExited.TrySetResult();
+            }
         }
     }
 
@@ -1899,6 +2215,64 @@ public class VoiceHandlerEndToEndTests
             await AllowProactiveCompletion.Task.WaitAsync(cancellationToken);
             await response.SendTextAsync("proactive", cancellationToken);
             await response.CompleteAsync(cancellationToken);
+        }
+    }
+
+    private sealed class SequentialProactiveHandler : VoiceHandler
+    {
+        private readonly TaskCompletionSource<VoiceSession> _firstSession =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+        private readonly TaskCompletionSource<VoiceSession> _secondSession =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+        private int _sessionCount;
+
+        public TaskCompletionSource FirstTerminal { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public async Task SendProactiveDeltaAsync(
+            int sessionNumber,
+            CancellationToken cancellationToken)
+        {
+            var session = await (sessionNumber == 1 ? _firstSession.Task : _secondSession.Task)
+                .WaitAsync(cancellationToken);
+            var response = await session.StartProactiveResponseAsync(cancellationToken: cancellationToken);
+            await response.SendTextDeltaAsync("x", cancellationToken);
+        }
+
+        protected override Task OnSessionStartAsync(
+            VoiceSession session,
+            SessionStartEvent startEvent,
+            CancellationToken cancellationToken)
+        {
+            var started = Interlocked.Increment(ref _sessionCount) == 1
+                ? _firstSession
+                : _secondSession;
+            started.TrySetResult(session);
+            return Task.CompletedTask;
+        }
+
+        protected override Task OnUserMessageAsync(
+            VoiceSession session,
+            UserMessageEvent message,
+            VoiceResponse response,
+            CancellationToken cancellationToken) => Task.CompletedTask;
+
+        protected override Task OnBargeInAsync(
+            VoiceSession session,
+            BargeInEvent bargeIn,
+            CancellationToken cancellationToken)
+        {
+            FirstTerminal.TrySetResult();
+            return Task.CompletedTask;
+        }
+
+        protected override Task OnResponseTimeoutAsync(
+            VoiceSession session,
+            ResponseTimeoutEvent timeout,
+            CancellationToken cancellationToken)
+        {
+            FirstTerminal.TrySetResult();
+            return Task.CompletedTask;
         }
     }
 

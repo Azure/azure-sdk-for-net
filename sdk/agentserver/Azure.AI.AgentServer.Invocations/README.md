@@ -73,7 +73,12 @@ submodule owns activation, framing, response and item IDs, exact duplicate
 handling, ordered callbacks, multi-item output, proactive admission,
 self-cancellation, timeout and barge-in arbitration, handoff, and bounded
 per-connection cleanup while host-wide admission limits retained Voice output,
-frames, callback work, and protocol bookkeeping across connections. Voice Live
+exact JSON-encoded response frames, variable output writes, prepared frames,
+callback work, and protocol bookkeeping across connections. Each response has
+matching encoded-byte and write ceilings; reservations occur after exact frame
+preparation, commit at the first socket attempt, and release on response
+terminal. Mandatory response control transactions use a separate bounded
+encoded-byte reserve so ordinary output cannot consume their wire headroom. Voice Live
 continues to own audio, speech recognition,
 synthesis, voice activity detection, turn-taking, and barge-in. No additional
 NuGet package is required.
