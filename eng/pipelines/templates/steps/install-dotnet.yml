@@ -4,7 +4,7 @@ parameters:
   Container: false
 
 steps:
-  # Need to authenticate so our pipeline can update packages in the feed.
+  # Need to authenticate so our pipeline can update packages in the feed. 
   - task: NuGetAuthenticate@1
 
   # Installation steps need to be uncommented when switching to a newer SDK that's not available on DevOps agents
@@ -12,7 +12,6 @@ steps:
     displayName: 'Use .NET SDK'
     retryCountOnTaskFailure: 3
     inputs:
-      useGlobalJson: true
       performMultiLevelLookup: true
   - task: UseDotNet@2 # We need .NET 9 for the .NET 9 tests
     displayName: 'Use .NET 9.0 SDK'
