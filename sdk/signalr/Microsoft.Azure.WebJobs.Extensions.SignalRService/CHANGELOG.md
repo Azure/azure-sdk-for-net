@@ -1,16 +1,11 @@
 # Release History
 
-## 2.2.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 2.2.0 (2026-08-12)
 
 ### Other Changes
 
 - Updated `System.IdentityModel.Tokens.Jwt` dependency to 8.14.0
+- Updated `MessagePack` dependency to 2.5.302
 
 ## 2.1.0 (2025-07-25)
 
