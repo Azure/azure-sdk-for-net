@@ -22,14 +22,18 @@ namespace Azure.SdkAnalyzers
 
         private const string ShippingLibraryProperty = "build_property.IsShippingClientLibrary";
         private const string ProjectNameProperty = "build_property.MSBuildProjectName";
+        private const string SuppressMessageAttributeName =
+            "System.Diagnostics.CodeAnalysis.SuppressMessageAttribute";
+        private const string UnconditionalSuppressMessageAttributeName =
+            "System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessageAttribute";
         internal const string BarePragmaMessage =
             "A bare #pragma warning disable is not allowed. Remove it, rebuild to identify the hidden warnings, and fix or centrally approve each specific diagnostic.";
 
         private static readonly ImmutableHashSet<string> s_suppressionAttributeNames =
             ImmutableHashSet.Create(
                 StringComparer.Ordinal,
-                "System.Diagnostics.CodeAnalysis.SuppressMessageAttribute",
-                "System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessageAttribute");
+                SuppressMessageAttributeName,
+                UnconditionalSuppressMessageAttributeName);
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } =
             ImmutableArray.Create(Descriptors.AZC0041);
@@ -152,8 +156,13 @@ namespace Azure.SdkAnalyzers
             // Semantic resolution handles aliases, qualified names, and assembly attributes.
             IMethodSymbol constructor =
                 context.SemanticModel.GetSymbolInfo(attribute, context.CancellationToken).Symbol as IMethodSymbol;
-            if (constructor == null ||
-                !s_suppressionAttributeNames.Contains(constructor.ContainingType.ToDisplayString()))
+            if (constructor == null)
+            {
+                return;
+            }
+
+            string attributeName = constructor.ContainingType.ToDisplayString();
+            if (!s_suppressionAttributeNames.Contains(attributeName))
             {
                 return;
             }
@@ -173,10 +182,19 @@ namespace Azure.SdkAnalyzers
 
             // Suppression attributes permit values such as "AZC0015:Unexpected return type".
             string diagnosticId = checkId.Split(':')[0].Trim();
-            if (diagnosticId.Length != 0)
+            if (diagnosticId.Length == 0)
             {
-                ReportSuppression(context, checkIdArgument.Expression.GetLocation(), diagnosticId);
+                return;
             }
+
+            // Trim and AOT tools read these suppressions from the shipped assembly.
+            if (string.Equals(attributeName, UnconditionalSuppressMessageAttributeName, StringComparison.Ordinal) &&
+                IsTrimOrAotDiagnosticId(diagnosticId))
+            {
+                return;
+            }
+
+            ReportSuppression(context, checkIdArgument.Expression.GetLocation(), diagnosticId);
         }
 
         private static void ReportSuppression(SyntaxNodeAnalysisContext context, Location location, string diagnosticId)
@@ -235,6 +253,16 @@ namespace Azure.SdkAnalyzers
             }
 
             return errorCode.ToString().Trim();
+        }
+
+        private static bool IsTrimOrAotDiagnosticId(string diagnosticId)
+        {
+            return diagnosticId.Length == 6 &&
+                diagnosticId.StartsWith("IL", StringComparison.OrdinalIgnoreCase) &&
+                (diagnosticId[2] == '2' || diagnosticId[2] == '3') &&
+                char.IsDigit(diagnosticId[3]) &&
+                char.IsDigit(diagnosticId[4]) &&
+                char.IsDigit(diagnosticId[5]);
         }
     }
 }

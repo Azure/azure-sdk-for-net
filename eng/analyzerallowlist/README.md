@@ -151,7 +151,10 @@ target is not appropriate.
 - Use a justified project-wide `nowarn:CODE` entry only as a last resort when the diagnostic is
   inherently project-wide or cannot be handled by Roslyn's suppression pipeline.
 
-`AZC0041` rejects all warning-disable pragmas and suppression attributes in handwritten source.
+`AZC0041` rejects warning-disable pragmas and suppression attributes in handwritten source, except
+`UnconditionalSuppressMessage` attributes for IL2xxx trimming and IL3xxx AOT diagnostics. These
+attributes must remain in source because downstream trim/AOT tools read them from the shipped
+assembly when customers publish their applications.
 
 ### Removing a project from the code-analysis suppression skip list
 

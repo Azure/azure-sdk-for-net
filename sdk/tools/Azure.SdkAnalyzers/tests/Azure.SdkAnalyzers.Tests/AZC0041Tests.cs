@@ -113,6 +113,7 @@ namespace Azure.Test { public class TestClient { } }
 
         [TestCase("SuppressMessage", "AZC0015")]
         [TestCase("SuppressMessageAttribute", "AZC0015")]
+        [TestCase("SuppressMessage", "IL2026")]
         public async Task ReportsSuppressionAttribute(string attributeName, string diagnosticId)
         {
             string code = $@"
@@ -177,33 +178,69 @@ namespace Azure.Test
             await VerifyAnalyzerAsync(code);
         }
 
-        [Test]
-        public async Task ReportsUnconditionalSuppressionAttribute()
+        [TestCase("AZC0015")]
+        [TestCase("AZC0041")]
+        public async Task ReportsGovernedUnconditionalSuppressionAttribute(string diagnosticId)
         {
-            string code = @"
+            string code = $@"
 #pragma warning disable CS0436
 using System.Diagnostics.CodeAnalysis;
 
 namespace System.Diagnostics.CodeAnalysis
-{
+{{
     [System.AttributeUsage(System.AttributeTargets.All, AllowMultiple = true)]
     public sealed class UnconditionalSuppressMessageAttribute : System.Attribute
-    {
-        public UnconditionalSuppressMessageAttribute(string category, string checkId) { }
-    }
-}
+    {{
+        public UnconditionalSuppressMessageAttribute(string category, string checkId) {{ }}
+    }}
+}}
 
 namespace Azure.Test
-{
-    [UnconditionalSuppressMessage(""Usage"", ""AZC0041"")]
-    public class TestClient { }
-}
+{{
+    [UnconditionalSuppressMessage(""Usage"", ""{diagnosticId}"")]
+    public class TestClient {{ }}
+}}
 ";
 
             await VerifyUnsuppressedAnalyzerAsync(
                 code,
                 UnsuppressedResult(2, 25, 2, 31, "CS0436"),
-                UnsuppressedResult(16, 44, 16, 53, "AZC0041"));
+                UnsuppressedResult(16, 44, 16, 46 + diagnosticId.Length, diagnosticId));
+        }
+
+        [TestCase("Trimming", "IL2026")]
+        [TestCase("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode")]
+        [TestCase("AOT", "IL3050")]
+        public async Task DoesNotReportTrimOrAotUnconditionalSuppressionAttribute(
+            string category,
+            string diagnosticId)
+        {
+            string code = $@"
+using System.Diagnostics.CodeAnalysis;
+
+namespace System.Diagnostics.CodeAnalysis
+{{
+    [System.AttributeUsage(System.AttributeTargets.All, AllowMultiple = true)]
+    public sealed class UnconditionalSuppressMessageAttribute : System.Attribute
+    {{
+        public UnconditionalSuppressMessageAttribute(string category, string checkId) {{ }}
+    }}
+}}
+
+namespace Azure.Test
+{{
+    [UnconditionalSuppressMessage(""{category}"", ""{diagnosticId}"")]
+    public class TestClient {{ }}
+}}
+";
+
+            var test = Verifier.CreateAnalyzer(code);
+            EnableSuppressionValidation(test);
+            test.CompilerDiagnostics = CompilerDiagnostics.All;
+            SuppressCompilerWarning(test, "CS0436");
+            SuppressDocumentationWarnings(test);
+            test.TestBehaviors |= TestBehaviors.SkipSuppressionCheck;
+            await test.RunAsync();
         }
 
         [Test]
@@ -398,13 +435,20 @@ namespace Azure.Test { public class TestClient { } }
         {
             // Compiler-tagged AZC0041 requires CompilerDiagnostics.All in this test framework.
             // Centrally suppress unrelated CS1591 noise so expected results remain AZC0041-focused.
+            SuppressCompilerWarning(test, "CS1591");
+        }
+
+        private static void SuppressCompilerWarning(
+            Microsoft.CodeAnalysis.CSharp.Testing.CSharpAnalyzerTest<CodeAnalysisSuppressionAnalyzer, DefaultVerifier> test,
+            string diagnosticId)
+        {
             test.SolutionTransforms.Add((solution, projectId) =>
             {
                 CompilationOptions options = solution.GetProject(projectId)!.CompilationOptions!;
                 return solution.WithProjectCompilationOptions(
                     projectId,
                     options.WithSpecificDiagnosticOptions(
-                        options.SpecificDiagnosticOptions.SetItem("CS1591", ReportDiagnostic.Suppress)));
+                        options.SpecificDiagnosticOptions.SetItem(diagnosticId, ReportDiagnostic.Suppress)));
             });
         }
 
