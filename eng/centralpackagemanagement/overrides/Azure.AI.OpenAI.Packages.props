@@ -1,5 +1,6 @@
 <Project>
   <ItemGroup>
+    <PackageVersion Include="Microsoft.NET.ILLink.Tasks" Version="9.0.8" />
     <PackageVersion Include="OpenAI" Version="2.9.1" />
   </ItemGroup>
 </Project>
