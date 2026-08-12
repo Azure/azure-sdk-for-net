@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ServiceLinker
     [ModelReaderWriterBuildable(typeof(DryrunProperties))]
     [ModelReaderWriterBuildable(typeof(DryrunResource))]
     [ModelReaderWriterBuildable(typeof(DryrunResourceData))]
-    [ModelReaderWriterBuildable(typeof(EasyAuthMicrosoftEntraIDAuthInfo))]
+    [ModelReaderWriterBuildable(typeof(EasyAuthMicrosoftEntraIdAuthInfo))]
     [ModelReaderWriterBuildable(typeof(FabricPlatformTargetService))]
     [ModelReaderWriterBuildable(typeof(KeyVaultSecretReferenceSecretInfo))]
     [ModelReaderWriterBuildable(typeof(KeyVaultSecretUriSecretInfo))]
