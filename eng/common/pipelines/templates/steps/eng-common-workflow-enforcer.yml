@@ -9,7 +9,7 @@ steps:
         # Find the default branch of the repo. The variable value sets in build step.
         Write-Host "Default Branch: $(DefaultBranch)"
 
-        if ((!"$(System.PullRequest.SourceBranch)".StartsWith("sync-eng/common")) -and "$(System.PullRequest.TargetBranch)" -match "^(refs/heads/)?$(DefaultBranch)$")
+        if ((!"$(System.PullRequest.SourceBranch)".StartsWith("sync-eng-common")) -and "$(System.PullRequest.TargetBranch)" -match "^(refs/heads/)?$(DefaultBranch)$")
         {
           $filesInCommonDir = & "eng/common/scripts/get-changedfiles.ps1" -DiffPath 'eng/common/*' -DiffFilterType ""
           if ($filesInCommonDir.Count -gt 0)
@@ -21,15 +21,18 @@ steps:
         }
         if ((!"$(System.PullRequest.SourceBranch)".StartsWith("sync-.github")) -and "$(System.PullRequest.TargetBranch)" -match "^(refs/heads/)?$(DefaultBranch)$")
         {
-          # This list needs to be kept in sync with the FilePatterns listed in eng/pipelines/sync-.github.yml
-          $filePatterns = @(".github/workflows/*event*", ".github/workflows/post-apiview.yml", ".github/skills/azsdk-common-*/**")
+          # These lists need to be kept in sync with eng/pipelines/sync-.github.yml and
+          # eng/pipelines/sync-.github-skills.yml.
+          $workflowFilePatterns = @(".github/workflows/*event*", ".github/workflows/post-apiview.yml", ".github/workflows/protected-files.yml")
+          $skillsFilePatterns = @(".github/skills/azsdk-common-*/**")
+          $filePatterns = @($workflowFilePatterns + $skillsFilePatterns)
           $filesInCommonDir = @()
           foreach ($filePattern in $filePatterns) {
             $filesInCommonDir += & "eng/common/scripts/get-changedfiles.ps1" -DiffPath $filePattern -DiffFilterType ""
           }
           if ($filesInCommonDir.Count -gt 0)
           {
-            Write-Host "##vso[task.LogIssue type=error;]Changes to selected files under '.github/' directory should not be made in this Repo`n${filesInCommonDir}"
+            Write-Host "##vso[task.LogIssue type=error;]Changes to selected workflow and shared skill files under '.github/' should not be made in this Repo`n${filesInCommonDir}"
             Write-Host "##vso[task.LogIssue type=error;]Follow the workflow at https://github.com/Azure/azure-sdk-tools/blob/main/doc/engsys_workflows_and_skills.md"
             exit 1
           }

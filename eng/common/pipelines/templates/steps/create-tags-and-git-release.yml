@@ -8,14 +8,14 @@ parameters:
   ScriptDirectory: eng/common/scripts
   NpmConfigUserConfig: ''
   NpmConfigRegistry: ''
-  AuthToken: $(azuresdk-github-pat)
+  AuthToken: ''
 
 steps:
 - ${{ if eq(parameters.AuthToken, '') }}:
   - template: /eng/common/pipelines/templates/steps/login-to-github.yml
     parameters:
       TokenOwners:
-        - ${{ split(parameters.RepoId, '/')[0] }}
+        - ${{ parameters.RepoId }}
       ScriptDirectory: ${{ parameters.ScriptDirectory }}
 
 - task: PowerShell@2
