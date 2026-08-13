@@ -112,8 +112,10 @@ namespace Azure.ResourceManager.Reservations
     [ModelReaderWriterBuildable(typeof(SplitContent))]
     [ModelReaderWriterBuildable(typeof(SplitProperties))]
     [ModelReaderWriterBuildable(typeof(SubContent))]
+    [ModelReaderWriterBuildable(typeof(SubscriptionResourceGetCatalogOptions))]
     [ModelReaderWriterBuildable(typeof(SubscriptionScopeProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TenantResourceGetReservationDetailsOptions))]
     public partial class AzureResourceManagerReservationsContext : ModelReaderWriterContext
     {
     }

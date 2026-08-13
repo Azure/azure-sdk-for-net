@@ -8,29 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMageRcm fabric provider specific settings. </summary>
     public partial class InMageRcmFabricCreationContent : FabricSpecificCreationContent
     {
-        /// <summary> Initializes a new instance of <see cref="InMageRcmFabricCreationContent"/>. </summary>
-        /// <param name="vMwareSiteId"> The ARM Id of the VMware site. </param>
-        /// <param name="physicalSiteId"> The ARM Id of the physical site. </param>
-        /// <param name="sourceAgentIdentity"> The identity provider input for source agent authentication. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vMwareSiteId"/>, <paramref name="physicalSiteId"/> or <paramref name="sourceAgentIdentity"/> is null. </exception>
-        public InMageRcmFabricCreationContent(ResourceIdentifier vMwareSiteId, ResourceIdentifier physicalSiteId, IdentityProviderContent sourceAgentIdentity) : base("InMageRcm")
-        {
-            Argument.AssertNotNull(vMwareSiteId, nameof(vMwareSiteId));
-            Argument.AssertNotNull(physicalSiteId, nameof(physicalSiteId));
-            Argument.AssertNotNull(sourceAgentIdentity, nameof(sourceAgentIdentity));
-
-            VMwareSiteId = vMwareSiteId;
-            PhysicalSiteId = physicalSiteId;
-            SourceAgentIdentity = sourceAgentIdentity;
-        }
-
         /// <summary> Initializes a new instance of <see cref="InMageRcmFabricCreationContent"/>. </summary>
         /// <param name="instanceType"> Gets the class type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>

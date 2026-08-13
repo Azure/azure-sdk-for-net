@@ -93,32 +93,6 @@ namespace Azure.Provisioning.Cdn
             }
         }
 
-        /// <summary> Gets the ResourceState. </summary>
-        public BicepValue<OriginGroupResourceState> ResourceState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new OriginGroupProperties();
-                }
-                return Properties.ResourceState;
-            }
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<OriginGroupProvisioningState> ProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new OriginGroupProperties();
-                }
-                return Properties.ProvisioningState;
-            }
-        }
-
         /// <summary> Gets or sets the HealthProbeSettings. </summary>
         public HealthProbeSettings HealthProbeSettings
         {
@@ -184,6 +158,32 @@ namespace Azure.Provisioning.Cdn
                     Properties = new OriginGroupProperties();
                 }
                 Properties.ResponseBasedOriginErrorDetectionSettings = value;
+            }
+        }
+
+        /// <summary> Gets the ResourceState. </summary>
+        public BicepValue<OriginGroupResourceState> ResourceState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new OriginGroupProperties();
+                }
+                return Properties.ResourceState;
+            }
+        }
+
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<OriginGroupProvisioningState> ProvisioningState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new OriginGroupProperties();
+                }
+                return Properties.ProvisioningState;
             }
         }
 

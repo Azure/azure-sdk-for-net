@@ -49,6 +49,9 @@ safe-outputs:
     target: "*"
   noop:
     report-as-issue: false
+  dispatch-workflow:
+    workflows: [issue-investigation]
+    max: 1
   jobs:
     mention_owners:
       description: "Post a routing comment @mentioning team owners on the triggering issue; bypasses safe-outputs mention neutralization"
@@ -633,3 +636,29 @@ Rules for the standard sections:
   - 🔎 Debugging / Reproduction Notes: include diagnostic observations and numbered investigation steps; note similar open issues found via `search_issues` if any
   - 🏷️ Label Confidence: explain category and service label selection; state confidence as High, Medium, or Low with justification; note other labels considered and why they were rejected
   - 👥 Owner Routing: show which CODEOWNERS `# ServiceLabel:` entry matched (with line number) and why; list AzureSdkOwners and ServiceOwners found; state what routing action was taken; briefly note other entries encountered during the bottom-to-top scan and why they were skipped
+
+## Step 8: Dispatch Agentic Investigation
+
+Dispatch the `issue-investigation` workflow after the analysis comment only when the issue is in a clean, just-triaged state:
+
+- The target is an issue
+- Exactly one service label (color `#e99695`) was confidently applied
+- Exactly one category label (color `#ffeb77`) was confidently applied
+- The `customer-reported` label is assigned
+- The issue does not have `needs-triage`
+- The issue does not have `needs-team-triage`
+- The issue does not have `issue-addressed`
+- The issue does not have `needs-author-feedback`
+
+If all conditions are met, use `dispatch_workflow`:
+
+```json
+{
+  "workflow_name": "issue-investigation",
+  "inputs": {
+    "issue_number": "${{ github.event.issue.number || github.event.inputs.issue_number }}"
+  }
+}
+```
+
+If any condition is not met, do not dispatch and call `noop` with a short reason.

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Abstract Nodes definition
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="JobAllNodes"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="JobAllNodes"/>.
     /// </summary>
     public partial class JobNodes : ProvisionableConstruct
     {

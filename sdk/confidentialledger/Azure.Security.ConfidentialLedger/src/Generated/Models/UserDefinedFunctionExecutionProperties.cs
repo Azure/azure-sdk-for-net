@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Security.ConfidentialLedger;
 
 namespace Azure.Security.ConfidentialLedger.Models
 {
     /// <summary> The properties for executing a user defined function. </summary>
     public partial class UserDefinedFunctionExecutionProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UserDefinedFunctionExecutionProperties"/>. </summary>
         public UserDefinedFunctionExecutionProperties()
@@ -58,22 +30,24 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// function. Defaults to main.
         /// </param>
         /// <param name="runtimeOptions"> JS runtime options for user defined endpoints and functions. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UserDefinedFunctionExecutionProperties(IList<string> arguments, string exportedFunctionName, JsRuntimeOptions runtimeOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UserDefinedFunctionExecutionProperties(IList<string> arguments, string exportedFunctionName, JsRuntimeOptions runtimeOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Arguments = arguments;
             ExportedFunctionName = exportedFunctionName;
             RuntimeOptions = runtimeOptions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Runtime arguments of the user defined function. Defaults to an empty list. </summary>
         public IList<string> Arguments { get; }
+
         /// <summary>
         /// Name of the exported function to execute in the code of the user defined
         /// function. Defaults to main.
         /// </summary>
         public string ExportedFunctionName { get; set; }
+
         /// <summary> JS runtime options for user defined endpoints and functions. </summary>
         public JsRuntimeOptions RuntimeOptions { get; set; }
     }
