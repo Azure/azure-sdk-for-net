@@ -35,6 +35,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="path"> The path of the content in the input. </param>
         /// <param name="markdown"> Markdown representation of the content. </param>
         /// <param name="fields"> Extracted fields from the content. </param>
+        /// <param name="metadata"> Metadata extracted from the input as string key/value pairs, such as author, title, creation date, or media properties. Keys and values are strings. Only keys with extracted values are present. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="startTimeMsValue"> Start time of the content in milliseconds. </param>
         /// <param name="endTimeMsValue"> End time of the content in milliseconds. </param>
@@ -44,7 +45,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="keyFrameTimesMsValues"> List of key frames in the video, represented by its timestamp in milliseconds.  Only if returnDetails is true. </param>
         /// <param name="transcriptPhrases"> List of transcript phrases.  Only if returnDetails is true. </param>
         /// <param name="segments"> List of detected content segments.  Only if enableSegment is true. </param>
-        internal AudioVisualContent(AnalysisContentKind kind, string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, IDictionary<string, BinaryData> additionalBinaryDataProperties, long startTimeMsValue, long endTimeMsValue, int? width, int? height, IList<long> cameraShotTimesMsValues, IList<long> keyFrameTimesMsValues, IList<TranscriptPhrase> transcriptPhrases, IList<AudioVisualContentSegment> segments) : base(kind, mimeType, analyzerId, category, path, markdown, fields, additionalBinaryDataProperties)
+        internal AudioVisualContent(AnalysisContentKind kind, string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties, long startTimeMsValue, long endTimeMsValue, int? width, int? height, IList<long> cameraShotTimesMsValues, IList<long> keyFrameTimesMsValues, IList<TranscriptPhrase> transcriptPhrases, IList<AudioVisualContentSegment> segments) : base(kind, mimeType, analyzerId, category, path, markdown, fields, metadata, additionalBinaryDataProperties)
         {
             StartTimeMsValue = startTimeMsValue;
             EndTimeMsValue = endTimeMsValue;

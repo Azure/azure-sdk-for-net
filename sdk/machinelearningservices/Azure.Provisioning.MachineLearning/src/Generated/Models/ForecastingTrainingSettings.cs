@@ -5,24 +5,15 @@
 
 #nullable disable
 
-using System;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary> Forecasting Training related configuration. </summary>
-    public partial class ForecastingTrainingSettings : ProvisionableConstruct
+    public partial class ForecastingTrainingSettings : MachineLearningTrainingSettings
     {
         private BicepList<ForecastingModel> _allowedTrainingAlgorithms;
         private BicepList<ForecastingModel> _blockedTrainingAlgorithms;
-        private BicepValue<bool> _enableDnnTraining;
-        private BicepValue<bool> _enableModelExplainability;
-        private BicepValue<bool> _enableOnnxCompatibleModels;
-        private BicepValue<bool> _enableStackEnsemble;
-        private BicepValue<bool> _enableVoteEnsemble;
-        private BicepValue<TimeSpan> _ensembleModelDownloadTimeout;
-        private MachineLearningStackEnsembleSettings _stackEnsembleSettings;
 
         /// <summary> Creates a new ForecastingTrainingSettings. </summary>
         public ForecastingTrainingSettings()
@@ -59,124 +50,12 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
-        /// <summary> Gets or sets the EnableDnnTraining. </summary>
-        public BicepValue<bool> EnableDnnTraining
-        {
-            get
-            {
-                Initialize();
-                return _enableDnnTraining;
-            }
-            set
-            {
-                Initialize();
-                _enableDnnTraining.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the EnableModelExplainability. </summary>
-        public BicepValue<bool> EnableModelExplainability
-        {
-            get
-            {
-                Initialize();
-                return _enableModelExplainability;
-            }
-            set
-            {
-                Initialize();
-                _enableModelExplainability.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the EnableOnnxCompatibleModels. </summary>
-        public BicepValue<bool> EnableOnnxCompatibleModels
-        {
-            get
-            {
-                Initialize();
-                return _enableOnnxCompatibleModels;
-            }
-            set
-            {
-                Initialize();
-                _enableOnnxCompatibleModels.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the EnableStackEnsemble. </summary>
-        public BicepValue<bool> EnableStackEnsemble
-        {
-            get
-            {
-                Initialize();
-                return _enableStackEnsemble;
-            }
-            set
-            {
-                Initialize();
-                _enableStackEnsemble.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the EnableVoteEnsemble. </summary>
-        public BicepValue<bool> EnableVoteEnsemble
-        {
-            get
-            {
-                Initialize();
-                return _enableVoteEnsemble;
-            }
-            set
-            {
-                Initialize();
-                _enableVoteEnsemble.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the EnsembleModelDownloadTimeout. </summary>
-        public BicepValue<TimeSpan> EnsembleModelDownloadTimeout
-        {
-            get
-            {
-                Initialize();
-                return _ensembleModelDownloadTimeout;
-            }
-            set
-            {
-                Initialize();
-                _ensembleModelDownloadTimeout.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the StackEnsembleSettings. </summary>
-        public MachineLearningStackEnsembleSettings StackEnsembleSettings
-        {
-            get
-            {
-                Initialize();
-                return _stackEnsembleSettings;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _stackEnsembleSettings, value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ForecastingTrainingSettings. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _allowedTrainingAlgorithms = DefineListProperty<ForecastingModel>(nameof(AllowedTrainingAlgorithms), new string[] { "allowedTrainingAlgorithms" });
             _blockedTrainingAlgorithms = DefineListProperty<ForecastingModel>(nameof(BlockedTrainingAlgorithms), new string[] { "blockedTrainingAlgorithms" });
-            _enableDnnTraining = DefineProperty<bool>(nameof(EnableDnnTraining), new string[] { "enableDnnTraining" });
-            _enableModelExplainability = DefineProperty<bool>(nameof(EnableModelExplainability), new string[] { "enableModelExplainability" });
-            _enableOnnxCompatibleModels = DefineProperty<bool>(nameof(EnableOnnxCompatibleModels), new string[] { "enableOnnxCompatibleModels" });
-            _enableStackEnsemble = DefineProperty<bool>(nameof(EnableStackEnsemble), new string[] { "enableStackEnsemble" });
-            _enableVoteEnsemble = DefineProperty<bool>(nameof(EnableVoteEnsemble), new string[] { "enableVoteEnsemble" });
-            _ensembleModelDownloadTimeout = DefineProperty<TimeSpan>(nameof(EnsembleModelDownloadTimeout), new string[] { "ensembleModelDownloadTimeout" }, format: "P");
-            _stackEnsembleSettings = DefineModelProperty<MachineLearningStackEnsembleSettings>(nameof(StackEnsembleSettings), new string[] { "stackEnsembleSettings" });
             DefineAdditionalProperties();
         }
 

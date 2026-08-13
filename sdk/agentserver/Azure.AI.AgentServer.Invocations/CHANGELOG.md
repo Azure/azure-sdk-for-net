@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.6 (2026-08-12)
 
 ### Features Added
 
@@ -13,11 +13,11 @@
   that OpenAPI cannot express. The path extension is authoritative for the
   returned content type — no `Accept` negotiation and no format conversion.
 
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
+
+- Updated the resilient research and multi-turn samples to use `FoundryStateStore`
+  directly for application state with session-scoped store names and invocation tags,
+  without user isolation or per-item call IDs.
 
 ## 1.0.0-beta.5 (2026-06-28)
 

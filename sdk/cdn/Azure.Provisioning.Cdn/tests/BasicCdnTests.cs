@@ -109,14 +109,6 @@ public class BasicCdnTests
               name: endpointName
               location: 'global'
               properties: {
-                origins: [
-                  {
-                    name: 'origin1'
-                    properties: {
-                      hostName: originUrl
-                    }
-                  }
-                ]
                 contentTypesToCompress: [
                   'application/javascript'
                   'application/json'
@@ -130,6 +122,14 @@ public class BasicCdnTests
                 isHttpAllowed: true
                 isHttpsAllowed: true
                 queryStringCachingBehavior: 'IgnoreQueryString'
+                origins: [
+                  {
+                    name: 'origin1'
+                    properties: {
+                      hostName: originUrl
+                    }
+                  }
+                ]
               }
               parent: profile
             }

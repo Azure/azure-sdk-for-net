@@ -4,6 +4,7 @@
 using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.ServerSentEvents;
 using System.Runtime.CompilerServices;
@@ -20,6 +21,7 @@ namespace System.ClientModel;
 /// have a non-null <see cref="PipelineResponse.ContentStream"/>. Factories do
 /// not send a request or process response establishment errors.
 /// </remarks>
+[Experimental("SCME0005")]
 public static class AsyncStreamingClientResult
 {
     private const int DefaultJsonLineLengthLimit = 1024 * 1024 * 1024;
