@@ -134,8 +134,9 @@ public sealed class ResilienceSampleParityEndToEndTests
             }
 
             // Durable watermark + phase checkpoint (no-op unless resilient background).
-            context.ConversationChainMetadata.Set("stream", "phase_complete", phase);
-            await context.ConversationChainMetadata.FlushAsync(ct);
+            var streamMeta = context.ConversationChainMetadata.ForNamespace("stream");
+            streamMeta.Set("phase_complete", phase);
+            await streamMeta.FlushAsync(ct);
             yield return stream.CreateCheckpointEvent();
         }
 
@@ -337,8 +338,9 @@ public sealed class ResilienceSampleParityEndToEndTests
         }
 
         // Accumulate the per-turn counter durably (published sample: cross-turn watermark).
-        context.ConversationChainMetadata.Set("state", "turn_count", turnCount.ToString());
-        await context.ConversationChainMetadata.FlushAsync(ct);
+        var stateMeta = context.ConversationChainMetadata.ForNamespace("state");
+        stateMeta.Set("turn_count", turnCount.ToString());
+        await stateMeta.FlushAsync(ct);
 
         // Second turn must observe the accumulated state; otherwise the chain did not persist.
         if (turnCount >= 2)

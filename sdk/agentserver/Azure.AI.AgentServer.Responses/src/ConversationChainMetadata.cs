@@ -43,17 +43,25 @@ public class ConversationChainMetadata
     public static ConversationChainMetadata Empty { get; } = new InertConversationChainMetadata();
 
     /// <summary>
-    /// Sets a metadata value within the named namespace. The value is buffered until the
-    /// next <see cref="FlushAsync"/>.
+    /// Sets a metadata value in the default namespace. The value is buffered until the next
+    /// <see cref="FlushAsync"/>. To write to another namespace, use
+    /// <see cref="ForNamespace(string)"/> so the write scope and its per-namespace
+    /// <see cref="ConversationChainMetadataNamespace.FlushAsync"/> stay structurally identical.
     /// </summary>
-    /// <param name="namespaceName">The metadata namespace. Must not begin with <c>_</c>.</param>
     /// <param name="key">The metadata key. Must not begin with <c>_</c>.</param>
     /// <param name="value">The metadata value.</param>
     /// <exception cref="ArgumentException">
-    /// Thrown when <paramref name="namespaceName"/> or <paramref name="key"/> begins with the
-    /// reserved <c>_</c> prefix.
+    /// Thrown when <paramref name="key"/> begins with the reserved <c>_</c> prefix.
     /// </exception>
-    public virtual void Set(string namespaceName, string key, string value)
+    public virtual void Set(string key, string value) => SetCore(DefaultNamespaceName, key, value);
+
+    /// <summary>
+    /// Writes a metadata value into a specific namespace. This is the single write path used by
+    /// both <see cref="Set(string, string)"/> (default namespace) and the namespace facade
+    /// (<see cref="ConversationChainMetadataNamespace.Set"/>); the durable-backed implementation
+    /// overrides it to persist into the Core metadata store.
+    /// </summary>
+    internal virtual void SetCore(string namespaceName, string key, string value)
     {
         Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
         Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -174,7 +182,7 @@ public class ConversationChainMetadata
     /// </summary>
     private sealed class InertConversationChainMetadata : ConversationChainMetadata
     {
-        public override void Set(string namespaceName, string key, string value)
+        internal override void SetCore(string namespaceName, string key, string value)
         {
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(key, nameof(key));

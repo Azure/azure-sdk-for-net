@@ -54,9 +54,10 @@ public class ResilientSteeringHandler : ResponseHandler
             turnCount = prior + 1;
         }
 
-        context.ConversationChainMetadata.Set("state", "turn_count", turnCount.ToString());
-        context.ConversationChainMetadata.Set("state", "steered", (steered && pending >= 0).ToString());
-        await context.ConversationChainMetadata.FlushAsync(cancellationToken);
+        var stateMeta = context.ConversationChainMetadata.ForNamespace("state");
+        stateMeta.Set("turn_count", turnCount.ToString());
+        stateMeta.Set("steered", (steered && pending >= 0).ToString());
+        await stateMeta.FlushAsync(cancellationToken);
 
         var stream = new ResponseEventStream(context, request);
 

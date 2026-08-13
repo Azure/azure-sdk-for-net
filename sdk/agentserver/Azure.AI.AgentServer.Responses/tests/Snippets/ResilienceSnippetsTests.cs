@@ -158,8 +158,9 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                     }
 
                     // Stamp the phase watermark and durably flush it, then checkpoint.
-                    context.ConversationChainMetadata.Set("stream", "phase_complete", phase);
-                    await context.ConversationChainMetadata.FlushAsync(cancellationToken);
+                    var streamMeta = context.ConversationChainMetadata.ForNamespace("stream");
+                    streamMeta.Set("phase_complete", phase);
+                    await streamMeta.FlushAsync(cancellationToken);
 
                     // Persist a durable snapshot at the phase boundary
                     // (no-op unless resilient background).
@@ -211,9 +212,10 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                     turnCount = prior + 1;
                 }
 
-                context.ConversationChainMetadata.Set("state", "turn_count", turnCount.ToString());
-                context.ConversationChainMetadata.Set("state", "steered", (steered && pending >= 0).ToString());
-                await context.ConversationChainMetadata.FlushAsync(cancellationToken);
+                var stateMeta = context.ConversationChainMetadata.ForNamespace("state");
+                stateMeta.Set("turn_count", turnCount.ToString());
+                stateMeta.Set("steered", (steered && pending >= 0).ToString());
+                await stateMeta.FlushAsync(cancellationToken);
 
                 var stream = new ResponseEventStream(context, request);
 

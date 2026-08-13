@@ -26,9 +26,9 @@ public class DurableConversationChainMetadataFlushIsolationTests
         var md = new DurableConversationChainMetadata(root);
 
         // Write to two named namespaces and the default root through the same owner facade.
-        md.Set("a", "k", "1");
-        md.Set("b", "k", "2");
-        md.Set(ConversationChainMetadata.DefaultNamespaceName, "k", "root");
+        md.ForNamespace("a").Set("k", "1");
+        md.ForNamespace("b").Set("k", "2");
+        md.Set("k", "root");
 
         // Flushing namespace A persists ONLY A.
         await md.ForNamespace("a").FlushAsync();
@@ -43,8 +43,8 @@ public class DurableConversationChainMetadataFlushIsolationTests
         var root = new RecordingTaskMetadata("<root>", flushed);
         var md = new DurableConversationChainMetadata(root);
 
-        md.Set("a", "k", "1");
-        md.Set(ConversationChainMetadata.DefaultNamespaceName, "k", "root");
+        md.ForNamespace("a").Set("k", "1");
+        md.Set("k", "root");
 
         // The root/default facade flushes ONLY the default namespace, not touched siblings.
         await md.FlushAsync();
@@ -59,8 +59,8 @@ public class DurableConversationChainMetadataFlushIsolationTests
         var root = new RecordingTaskMetadata("<root>", flushed);
         var md = new DurableConversationChainMetadata(root);
 
-        md.Set("a", "k", "1");
-        md.Set("b", "k", "2");
+        md.ForNamespace("a").Set("k", "1");
+        md.ForNamespace("b").Set("k", "2");
 
         await md.ForNamespace("a").FlushAsync();
         Assert.That(flushed, Is.EqualTo(new[] { "a" }));

@@ -9,7 +9,7 @@
   Interrupted background responses are automatically recovered and re-invoked in the next process
   lifetime.
   - Resilient streaming with checkpoint/resumption: handlers persist durable snapshots at safe
-    boundaries via `ResponseEventStream.Checkpoint()` and, on a recovered entry, reconstruct the
+    boundaries via `ResponseEventStream.CreateCheckpointEvent()` and, on a recovered entry, reconstruct the
     resumption response from `ResponseContext.IsRecovery` / `ResponseContext.PersistedResponse`.
   - Steerable conversations (`ResponsesServerOptions.SteerableConversations`) with in-turn steering:
     a superseding turn enqueues and drains against the active turn, observable through

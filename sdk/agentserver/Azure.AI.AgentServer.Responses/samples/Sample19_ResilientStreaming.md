@@ -89,8 +89,9 @@ public class ResilientStreamingHandler : ResponseHandler
             }
 
             // Stamp the phase watermark and durably flush it, then checkpoint.
-            context.ConversationChainMetadata.Set("stream", "phase_complete", phase);
-            await context.ConversationChainMetadata.FlushAsync(cancellationToken);
+            var streamMeta = context.ConversationChainMetadata.ForNamespace("stream");
+            streamMeta.Set("phase_complete", phase);
+            await streamMeta.FlushAsync(cancellationToken);
 
             // Persist a durable snapshot at the phase boundary
             // (no-op unless resilient background).

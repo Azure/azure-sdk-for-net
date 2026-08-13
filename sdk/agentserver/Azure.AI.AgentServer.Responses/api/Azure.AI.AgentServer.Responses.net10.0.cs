@@ -23,7 +23,7 @@ namespace Azure.AI.AgentServer.Responses
         public virtual System.Threading.Tasks.Task FlushAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.ConversationChainMetadataNamespace ForNamespace(string namespaceName = "default") { throw null; }
         public virtual System.Collections.Generic.IReadOnlyDictionary<string, string> GetNamespace(string namespaceName) { throw null; }
-        public virtual void Set(string namespaceName, string key, string value) { }
+        public virtual void Set(string key, string value) { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IReadOnlyDictionary<string, string>> Snapshot() { throw null; }
         public virtual bool TryGet(string namespaceName, string key, out string? value) { throw null; }
     }
@@ -215,12 +215,13 @@ namespace Azure.AI.AgentServer.Responses
     public partial class ResponseContext
     {
         public ResponseContext(string responseId) { }
+        public virtual System.Threading.CancellationToken ClientCancellation { get { throw null; } }
         public virtual System.Collections.Generic.IReadOnlyDictionary<string, string> ClientHeaders { get { throw null; } }
         public virtual string ConversationChainId { get { throw null; } }
         public virtual Azure.AI.AgentServer.Responses.ConversationChainMetadata ConversationChainMetadata { get { throw null; } }
         public virtual bool IsClientCancelled { get { throw null; } }
         public virtual bool IsRecovery { get { throw null; } }
-        public bool IsShutdownRequested { get { throw null; } set { } }
+        public virtual bool IsShutdownRequested { get { throw null; } }
         public virtual bool IsSteeredTurn { get { throw null; } }
         public virtual int PendingInputCount { get { throw null; } }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseObject? PersistedResponse { get { throw null; } }

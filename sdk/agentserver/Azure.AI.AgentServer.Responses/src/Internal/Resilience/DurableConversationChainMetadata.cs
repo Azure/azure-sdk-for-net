@@ -35,7 +35,7 @@ internal sealed class DurableConversationChainMetadata : ConversationChainMetada
             ? _root
             : _root.GetNamespace(namespaceName);
 
-    public override void Set(string namespaceName, string key, string value)
+    internal override void SetCore(string namespaceName, string key, string value)
     {
         Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
         Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -50,6 +50,8 @@ internal sealed class DurableConversationChainMetadata : ConversationChainMetada
     {
         Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
         Argument.AssertNotNullOrEmpty(key, nameof(key));
+        RejectReserved(namespaceName, nameof(namespaceName));
+        RejectReserved(key, nameof(key));
 
         value = null;
         if (Target(namespaceName).TryGetValue(key, out BinaryData? raw) && raw is not null)
@@ -64,6 +66,7 @@ internal sealed class DurableConversationChainMetadata : ConversationChainMetada
     public override IReadOnlyDictionary<string, string> GetNamespace(string namespaceName)
     {
         Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+        RejectReserved(namespaceName, nameof(namespaceName));
 
         var result = new Dictionary<string, string>(StringComparer.Ordinal);
         foreach (KeyValuePair<string, BinaryData> pair in Target(namespaceName).ToDictionary())

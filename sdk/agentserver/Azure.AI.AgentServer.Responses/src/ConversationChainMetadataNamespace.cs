@@ -20,7 +20,7 @@ public sealed class ConversationChainMetadataNamespace
     public string Name { get; }
 
     /// <summary>Sets a key/value in this namespace.</summary>
-    public void Set(string key, string value) => _owner.Set(Name, key, value);
+    public void Set(string key, string value) => _owner.SetCore(Name, key, value);
 
     /// <summary>Attempts to read a key from this namespace.</summary>
     public bool TryGet(string key, out string? value) => _owner.TryGet(Name, key, out value);

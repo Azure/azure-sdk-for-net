@@ -15,7 +15,17 @@ public class ConversationChainMetadataTests
     public void SetAndTryGet_DefaultRoundTrip()
     {
         var md = new ConversationChainMetadata();
-        md.Set("ns", "phase", "analyze");
+        md.Set("phase", "analyze");
+
+        Assert.That(md.TryGet(ConversationChainMetadata.DefaultNamespaceName, "phase", out var value), Is.True);
+        Assert.That(value, Is.EqualTo("analyze"));
+    }
+
+    [Test]
+    public void SetAndTryGet_NamespaceRoundTrip()
+    {
+        var md = new ConversationChainMetadata();
+        md.ForNamespace("ns").Set("phase", "analyze");
 
         Assert.That(md.TryGet("ns", "phase", out var value), Is.True);
         Assert.That(value, Is.EqualTo("analyze"));
@@ -33,8 +43,8 @@ public class ConversationChainMetadataTests
     public void Namespaces_AreIsolated()
     {
         var md = new ConversationChainMetadata();
-        md.Set("a", "k", "1");
-        md.Set("b", "k", "2");
+        md.ForNamespace("a").Set("k", "1");
+        md.ForNamespace("b").Set("k", "2");
 
         Assert.That(md.GetNamespace("a")["k"], Is.EqualTo("1"));
         Assert.That(md.GetNamespace("b")["k"], Is.EqualTo("2"));
@@ -49,10 +59,10 @@ public class ConversationChainMetadataTests
 
     [TestCase("_reserved")]
     [TestCase("_")]
-    public void Set_ReservedNamespace_Throws(string ns)
+    public void ForNamespace_Reserved_Throws(string ns)
     {
         var md = new ConversationChainMetadata();
-        Assert.Throws<ArgumentException>(() => md.Set(ns, "k", "v"));
+        Assert.Throws<ArgumentException>(() => md.ForNamespace(ns));
     }
 
     [TestCase("_reserved")]
@@ -60,24 +70,26 @@ public class ConversationChainMetadataTests
     public void Set_ReservedKey_Throws(string key)
     {
         var md = new ConversationChainMetadata();
-        Assert.Throws<ArgumentException>(() => md.Set("ns", key, "v"));
+        Assert.Throws<ArgumentException>(() => md.Set(key, "v"));
+        Assert.Throws<ArgumentException>(() => md.ForNamespace("ns").Set(key, "v"));
     }
 
     [Test]
     public void Set_NullValue_Throws()
     {
         var md = new ConversationChainMetadata();
-        Assert.Throws<ArgumentNullException>(() => md.Set("ns", "k", null!));
+        Assert.Throws<ArgumentNullException>(() => md.Set("k", null!));
+        Assert.Throws<ArgumentNullException>(() => md.ForNamespace("ns").Set("k", null!));
     }
 
     [Test]
     public async Task FlushAsync_BaseIsNoOp()
     {
         var md = new ConversationChainMetadata();
-        md.Set("ns", "k", "v");
+        md.Set("k", "v");
         await md.FlushAsync();
         // Still readable after no-op flush.
-        Assert.That(md.TryGet("ns", "k", out var v), Is.True);
+        Assert.That(md.TryGet(ConversationChainMetadata.DefaultNamespaceName, "k", out var v), Is.True);
         Assert.That(v, Is.EqualTo("v"));
     }
 
@@ -85,9 +97,9 @@ public class ConversationChainMetadataTests
     public void Snapshot_CapturesAllNamespaces()
     {
         var md = new ConversationChainMetadata();
-        md.Set("a", "k1", "v1");
-        md.Set("a", "k2", "v2");
-        md.Set("b", "k3", "v3");
+        md.ForNamespace("a").Set("k1", "v1");
+        md.ForNamespace("a").Set("k2", "v2");
+        md.ForNamespace("b").Set("k3", "v3");
 
         var snap = md.Snapshot();
 
@@ -104,10 +116,10 @@ public class ConversationChainMetadataTests
     public void Snapshot_IsDefensiveCopy()
     {
         var md = new ConversationChainMetadata();
-        md.Set("a", "k1", "v1");
+        md.ForNamespace("a").Set("k1", "v1");
         var snap = md.Snapshot();
 
-        md.Set("a", "k2", "later");
+        md.ForNamespace("a").Set("k2", "later");
 
         // The earlier snapshot must not observe the later mutation.
         Assert.That(snap["a"].ContainsKey("k2"), Is.False);
@@ -148,6 +160,19 @@ public class ConversationChainMetadataTests
     }
 
     [Test]
+    public void Set_DefaultOverload_WritesDefaultNamespace()
+    {
+        // Set(key, value) and the default namespace facade must target the same buffer, so a
+        // top-level Set is flushed by the default-namespace FlushAsync — write and flush scope
+        // are structurally identical (m-nash #4).
+        var context = new ResponseContext("caresp_default");
+        context.ConversationChainMetadata.Set("k", "v");
+
+        Assert.That(context.ConversationChainMetadata.ForNamespace().TryGet("k", out var v), Is.True);
+        Assert.That(v, Is.EqualTo("v"));
+    }
+
+    [Test]
     public void EachContext_HasIsolatedMetadata_NoCrossContextBleed()
     {
         // Regression: the default ConversationChainMetadata must be a per-instance facade, not a
@@ -172,13 +197,15 @@ public class ConversationChainMetadataTests
     {
         // Regression: Empty is a shared static instance. A write through it must not leak into
         // process-global state observable by a later, unrelated read of the same shared instance.
-        ConversationChainMetadata.Empty.Set("ns", "k", "leaked");
+        ConversationChainMetadata.Empty.Set("k", "leaked");
+        ConversationChainMetadata.Empty.ForNamespace("ns").Set("k", "leaked");
 
         Assert.Multiple(() =>
         {
             Assert.That(ConversationChainMetadata.Empty.TryGet("ns", "k", out _), Is.False);
             Assert.That(ConversationChainMetadata.Empty.GetNamespace("ns"), Is.Empty);
             Assert.That(ConversationChainMetadata.Empty.ForNamespace("ns").TryGet("k", out _), Is.False);
+            Assert.That(ConversationChainMetadata.Empty.ForNamespace().TryGet("k", out _), Is.False);
         });
     }
 
@@ -188,9 +215,10 @@ public class ConversationChainMetadataTests
         // Even inert, Empty preserves the same argument/reserved-name contract as a live store.
         Assert.Multiple(() =>
         {
-            Assert.Throws<ArgumentException>(() => ConversationChainMetadata.Empty.Set("_reserved", "k", "v"));
-            Assert.Throws<ArgumentException>(() => ConversationChainMetadata.Empty.Set("ns", "_k", "v"));
-            Assert.Throws<ArgumentNullException>(() => ConversationChainMetadata.Empty.Set("ns", "k", null!));
+            Assert.Throws<ArgumentException>(() => ConversationChainMetadata.Empty.ForNamespace("_reserved"));
+            Assert.Throws<ArgumentException>(() => ConversationChainMetadata.Empty.Set("_k", "v"));
+            Assert.Throws<ArgumentException>(() => ConversationChainMetadata.Empty.ForNamespace("ns").Set("_k", "v"));
+            Assert.Throws<ArgumentNullException>(() => ConversationChainMetadata.Empty.Set("k", null!));
         });
     }
 
