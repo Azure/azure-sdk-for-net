@@ -25,8 +25,8 @@ Review only new or changed public API relative to the latest stable release. Exi
 ### Scope
 
 1. Read `ApiCompatVersion` from `.csproj`. If absent and never present, treat the whole API surface as new and skip breaking-change checks.
-2. If present, use the public assembly from the released NuGet package at exactly `ApiCompatVersion` as the authoritative GA contract. Inspect metadata only; do not execute package code. Use `Export-GaApiBaseline.ps1 -PackageName <PackageName> -Version <ApiCompatVersion> -TargetFramework <baseline-tfm> -OutputPath <temp-file>` to produce a readable metadata listing. Repository history and current `main` are context, never evidence that an API shipped.
-3. Fetch the released API file from tag `<PackageName>_<Version>`, e.g. `Azure.ResourceManager.Foo_1.0.0`, under `sdk/<service>/<PackageName>/api/<PackageName>.net10.0.cs` or older TFM variants. Use it as the scanner input and readable projection of the assembly, but resolve any discrepancy in favor of released assembly metadata.
+2. If present, fetch the released API file from tag `<PackageName>_<Version>`, e.g. `Azure.ResourceManager.Foo_1.0.0`, under `sdk/<service>/<PackageName>/api/<PackageName>.net10.0.cs` or older TFM variants. Use it as the scanner baseline.
+3. Use CI ApiCompat results as the primary binary-compatibility and parameter-name signal. Export released assembly metadata only when a `PARAMNAME001`, `PARAMORDER001`, `OPTPARAM001`, or `OPTPARAM002` result needs authoritative confirmation before reporting. Use `Export-GaApiBaseline.ps1 -PackageName <PackageName> -Version <ApiCompatVersion> -TargetFramework <baseline-tfm> -OutputPath <temp-file>`. Repository history and current `main` are context, never evidence that an API shipped.
 4. Diff released API against the PR API file. Review only added/modified types, members, and enums.
 
 ### Workflow
@@ -50,6 +50,7 @@ Scanner rule families include `PARAMNAME001`, `PARAMORDER001`, `OPTPARAM001`, `O
 
 Parameter compatibility:
 - Treat the `ApiCompatVersion` assembly as authoritative for parameter names, ordering, types, and optionality. Do not substitute the previous repository source shape.
+- Do not export the assembly when there are no parameter-compatibility candidates. The tagged API file and CI ApiCompat results are sufficient for normal review scope and binary compatibility.
 - Inspect every overload with the same containing type and member name. Compile representative GA calls against synthesized declarations for both the GA and current overload sets: required arguments supplied positionally and by name, omitted optional arguments, positional prefixes, combinations of named arguments, `default`, and explicitly typed defaults where overload types differ.
 - A textual optionality difference is not blocking when another overload preserves every GA call shape. Conversely, report a concrete call that no longer compiles, becomes ambiguous, or binds to a behaviorally incompatible type.
 - Keep signature and runtime-semantic analysis separate. A shim can be source-compatible but forward an argument to the wrong generated parameter; report that as a forwarding bug, not as a fabricated GA signature difference.
