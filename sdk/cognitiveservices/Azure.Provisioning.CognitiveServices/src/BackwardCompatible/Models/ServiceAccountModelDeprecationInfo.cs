@@ -12,7 +12,11 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// Cognitive Services account ModelDeprecationInfo.
 /// </summary>
+// TypeSpec still defines ModelDeprecationInfo below the operation-only AccountModel model graph,
+// which the provisioning emitter excludes. Keep the 1.2.0 type and its provisionable property
+// mappings because CognitiveServicesAccountModel exposed it in the shipped public API.
 [EditorBrowsable(EditorBrowsableState.Never)]
+[Obsolete("This type is obsolete and will be removed in a future release.")]
 public partial class ServiceAccountModelDeprecationInfo : ProvisionableConstruct
 {
     private BicepValue<DateTimeOffset> _fineTuneOn;

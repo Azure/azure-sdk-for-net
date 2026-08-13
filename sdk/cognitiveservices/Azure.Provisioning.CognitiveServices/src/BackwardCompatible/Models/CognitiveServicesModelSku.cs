@@ -12,7 +12,11 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// Describes an available Cognitive Services Model SKU.
 /// </summary>
+// TypeSpec still defines ModelSku below the operation-only AccountModel model graph, which the
+// provisioning emitter excludes. Keep the 1.2.0 type and its provisionable property mappings
+// because CognitiveServicesAccountModel exposed it in the shipped public API.
 [EditorBrowsable(EditorBrowsableState.Never)]
+[Obsolete("This type is obsolete and will be removed in a future release.")]
 public partial class CognitiveServicesModelSku : ProvisionableConstruct
 {
     private BicepValue<string> _name;

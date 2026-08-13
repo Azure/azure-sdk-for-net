@@ -51,6 +51,7 @@ namespace Azure.Provisioning.CognitiveServices
         public Azure.Provisioning.BicepValue<string> CredentialsKey { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.")]
     public partial class BillingMeterInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public BillingMeterInfo() { }
@@ -200,6 +201,7 @@ namespace Azure.Provisioning.CognitiveServices
         Standard = 0,
         Manual = 1,
     }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.")]
     public partial class CognitiveServicesAccountModel : Azure.Provisioning.CognitiveServices.CognitiveServicesAccountDeploymentModel
     {
         public CognitiveServicesAccountModel() { }
@@ -453,6 +455,7 @@ namespace Azure.Provisioning.CognitiveServices
         public Azure.Provisioning.BicepList<string> VectorStoreConnections { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.")]
     public partial class CognitiveServicesCapacityConfig : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public CognitiveServicesCapacityConfig() { }
@@ -919,6 +922,7 @@ namespace Azure.Provisioning.CognitiveServices
         Inactive = 0,
         Active = 1,
     }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.")]
     public partial class CognitiveServicesModelSku : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public CognitiveServicesModelSku() { }
@@ -1483,6 +1487,7 @@ namespace Azure.Provisioning.CognitiveServices
         Active = 1,
         NotApplicable = 2,
     }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.")]
     public enum ModelLifecycleStatus
     {
         GenerallyAvailable = 0,
@@ -1991,6 +1996,7 @@ namespace Azure.Provisioning.CognitiveServices
         DisconnectedContainer = 2,
         ProvisionedWeb = 3,
     }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.")]
     public partial class ServiceAccountModelDeprecationInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ServiceAccountModelDeprecationInfo() { }

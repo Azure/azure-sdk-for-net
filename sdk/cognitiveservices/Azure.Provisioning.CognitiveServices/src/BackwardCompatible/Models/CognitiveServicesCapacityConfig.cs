@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 using Azure.Provisioning.Primitives;
 
@@ -11,7 +12,11 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// The capacity configuration.
 /// </summary>
+// TypeSpec still defines CapacityConfig below the operation-only AccountModel model graph, which
+// the provisioning emitter excludes. Keep the 1.2.0 type and its provisionable property mappings
+// because CognitiveServicesModelSku exposed it in the shipped public API.
 [EditorBrowsable(EditorBrowsableState.Never)]
+[Obsolete("This type is obsolete and will be removed in a future release.")]
 public partial class CognitiveServicesCapacityConfig : ProvisionableConstruct
 {
     private BicepValue<int> _minimum;

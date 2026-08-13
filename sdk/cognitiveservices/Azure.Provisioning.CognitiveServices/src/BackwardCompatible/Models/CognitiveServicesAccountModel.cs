@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
@@ -12,7 +13,11 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// Cognitive Services account Model.
 /// </summary>
+// TypeSpec still defines AccountModel as part of ModelsOperationGroup.list, but the provisioning
+// emitter excludes models that are reachable only from provider actions rather than ARM resource
+// properties. Keep the 1.2.0 type and Bicep mappings for API compatibility.
 [EditorBrowsable(EditorBrowsableState.Never)]
+[Obsolete("This type is obsolete and will be removed in a future release.")]
 public partial class CognitiveServicesAccountModel : CognitiveServicesAccountDeploymentModel
 {
     private CognitiveServicesAccountDeploymentModel _baseModel;
