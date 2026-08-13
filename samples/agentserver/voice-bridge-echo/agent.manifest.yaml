@@ -1,5 +1,0 @@
-name: voice-bridge-echo
-protocols:
-  - invocations_ws
-voiceLiveCompatible: "true"
-bridgeProtocolVersion: "1.0"
