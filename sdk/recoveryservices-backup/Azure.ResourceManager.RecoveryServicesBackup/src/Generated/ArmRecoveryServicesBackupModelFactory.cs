@@ -1698,10 +1698,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <param name="sourceScanAction"> Source scan action to perform. </param>
-        /// <returns> A new <see cref="Models.ProtectedItemConfigureSourceScanRequest"/> instance for mocking. </returns>
-        public static ProtectedItemConfigureSourceScanRequest ProtectedItemConfigureSourceScanRequest(SourceScanAction? sourceScanAction = default)
+        /// <returns> A new <see cref="Models.BackupProtectedItemConfigureSourceScanContent"/> instance for mocking. </returns>
+        public static BackupProtectedItemConfigureSourceScanContent BackupProtectedItemConfigureSourceScanContent(SourceScanAction? sourceScanAction = default)
         {
-            return new ProtectedItemConfigureSourceScanRequest(sourceScanAction, default);
+            return new BackupProtectedItemConfigureSourceScanContent(sourceScanAction, default);
         }
 
         /// <param name="objectType"> Gets the class type. </param>
