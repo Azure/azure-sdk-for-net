@@ -230,17 +230,6 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         return index;
     }
 
-    private Dictionary<string, BinaryData> GetSpecs(string file)
-    {
-        Dictionary<string, object> json = JsonSerializer.Deserialize<Dictionary<string, object>>(File.ReadAllText(GetTestFile("weather_openapi.json")));
-        Dictionary<string, BinaryData> outJson = [];
-        foreach (KeyValuePair<string, object> kv in json)
-        {
-            outJson[kv.Key] = BinaryData.FromObjectAsJson(kv.Value);
-        }
-        return outJson;
-    }
-
     /// <summary>
     /// Get the AgentDefinition, containing tool of a certain type.
     /// </summary>
@@ -309,8 +298,8 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             },
             ToolType.OpenAPI => new OpenApiToolboxTool(new OpenApiFunctionDefinition(
                 name: "get_weather",
-                spec: GetSpecs(GetTestFile("weather_openapi.json")),
-                auth: new OpenAPIAnonymousAuthenticationDetails())
+                specification: BinaryData.FromBytes(File.ReadAllBytes(GetTestFile("weather_openapi.json"))),
+                authentication: new OpenAPIAnonymousAuthenticationDetails())
             )
             {
                 Name = "open-api",

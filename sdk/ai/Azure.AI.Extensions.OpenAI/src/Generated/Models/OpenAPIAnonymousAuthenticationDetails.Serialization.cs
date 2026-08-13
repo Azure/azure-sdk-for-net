@@ -98,13 +98,13 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            OpenApiAuthType @type = default;
+            OpenApiAuthenticationKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new OpenApiAuthType(prop.Value.GetString());
+                    kind = new OpenApiAuthenticationKind(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,7 +112,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OpenAPIAnonymousAuthenticationDetails(@type, additionalBinaryDataProperties);
+            return new OpenAPIAnonymousAuthenticationDetails(kind, additionalBinaryDataProperties);
         }
     }
 }

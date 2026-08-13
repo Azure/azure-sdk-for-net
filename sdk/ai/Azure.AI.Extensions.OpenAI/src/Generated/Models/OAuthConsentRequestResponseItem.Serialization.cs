@@ -72,10 +72,8 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(OAuthConsentRequestResponseItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
             writer.WritePropertyName("consent_link"u8);
-            writer.WriteStringValue(ConsentLink);
+            writer.WriteStringValue(ConsentLink.AbsoluteUri);
             writer.WritePropertyName("server_label"u8);
             writer.WriteStringValue(ServerLabel);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -124,8 +122,7 @@ namespace Azure.AI.Extensions.OpenAI
             string id = default;
             AgentReference agentReference = default;
             string responseId = default;
-            string id0 = default;
-            string consentLink = default;
+            Uri consentLink = default;
             string serverLabel = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -154,14 +151,9 @@ namespace Azure.AI.Extensions.OpenAI
                     responseId = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("id"u8))
-                {
-                    id0 = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("consent_link"u8))
                 {
-                    consentLink = prop.Value.GetString();
+                    consentLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("server_label"u8))
@@ -179,7 +171,6 @@ namespace Azure.AI.Extensions.OpenAI
                 id,
                 agentReference,
                 responseId,
-                id0,
                 consentLink,
                 serverLabel,
                 additionalBinaryDataProperties);

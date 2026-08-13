@@ -9,7 +9,7 @@ namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary>
     /// authentication details for OpenApiFunctionDefinition
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAPIAnonymousAuthenticationDetails"/>, <see cref="OpenApiProjectConnectionAuthenticationDetails"/>, and <see cref="OpenApiManagedAuthDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAPIAnonymousAuthenticationDetails"/>, <see cref="OpenApiProjectConnectionAuthenticationDetails"/>, and <see cref="OpenApiManagedAuthenticationDetails"/>.
     /// </summary>
     public abstract partial class OpenApiAuthenticationDetails
     {
@@ -17,22 +17,12 @@ namespace Azure.AI.Extensions.OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OpenApiAuthenticationDetails"/>. </summary>
-        /// <param name="type"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
-        private protected OpenApiAuthenticationDetails(OpenApiAuthType @type)
-        {
-            Type = @type;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenApiAuthenticationDetails"/>. </summary>
-        /// <param name="type"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
+        /// <param name="kind"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenApiAuthenticationDetails(OpenApiAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OpenApiAuthenticationDetails(OpenApiAuthenticationKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The type of authentication, must be anonymous/project_connection/managed_identity. </summary>
-        internal OpenApiAuthType Type { get; set; }
     }
 }

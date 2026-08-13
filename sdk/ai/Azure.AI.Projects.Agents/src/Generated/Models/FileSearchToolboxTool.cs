@@ -5,10 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-<<<<<<< HEAD
-=======
 using Azure.AI.Extensions.OpenAI;
->>>>>>> 3eff0820fbe8ab973e154b09ff0ca48a66e36b43
 
 namespace Azure.AI.Projects.Agents
 {

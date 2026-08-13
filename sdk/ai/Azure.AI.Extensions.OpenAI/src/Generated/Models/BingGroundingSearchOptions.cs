@@ -5,51 +5,54 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Search configuration for Bing Grounding. </summary>
-    public partial class BingGroundingSearchConfiguration
+    public partial class BingGroundingSearchOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BingGroundingSearchConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BingGroundingSearchOptions"/>. </summary>
         /// <param name="projectConnectionId"> Project connection id for grounding with bing search. </param>
-        internal BingGroundingSearchConfiguration(string projectConnectionId)
+        /// <exception cref="ArgumentNullException"> <paramref name="projectConnectionId"/> is null. </exception>
+        public BingGroundingSearchOptions(string projectConnectionId)
         {
+            Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
+
             ProjectConnectionId = projectConnectionId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BingGroundingSearchConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BingGroundingSearchOptions"/>. </summary>
         /// <param name="projectConnectionId"> Project connection id for grounding with bing search. </param>
         /// <param name="market"> The market where the results come from. </param>
-        /// <param name="bingUserInterfaceLanguage"> The language to use for user interface strings when calling Bing API. </param>
+        /// <param name="language"> The language to use for user interface strings when calling Bing API. </param>
         /// <param name="count"> The number of search results to return in the bing api response. </param>
         /// <param name="freshness"> Filter search results by a specific time range. See [accepted values here](https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/query-parameters). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BingGroundingSearchConfiguration(string projectConnectionId, string market, string bingUserInterfaceLanguage, long? count, string freshness, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BingGroundingSearchOptions(string projectConnectionId, string market, string language, long? count, string freshness, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProjectConnectionId = projectConnectionId;
             Market = market;
-            BingUserInterfaceLanguage = bingUserInterfaceLanguage;
+            Language = language;
             Count = count;
             Freshness = freshness;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Project connection id for grounding with bing search. </summary>
-        public string ProjectConnectionId { get; }
+        public string ProjectConnectionId { get; set; }
 
         /// <summary> The market where the results come from. </summary>
-        public string Market { get; }
+        public string Market { get; set; }
 
         /// <summary> The language to use for user interface strings when calling Bing API. </summary>
-        public string BingUserInterfaceLanguage { get; }
+        public string Language { get; set; }
 
         /// <summary> The number of search results to return in the bing api response. </summary>
-        public long? Count { get; }
+        public long? Count { get; set; }
 
         /// <summary> Filter search results by a specific time range. See [accepted values here](https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/query-parameters). </summary>
-        public string Freshness { get; }
+        public string Freshness { get; set; }
     }
 }

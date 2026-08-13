@@ -39,11 +39,19 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.AI.Projects.Agents.BingCustomSearchConfiguration</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
     <Target>T:Azure.AI.Projects.Agents.BingCustomSearchPreviewTool</Target>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
     <Target>T:Azure.AI.Projects.Agents.BingCustomSearchToolOptions</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.AI.Projects.Agents.BingGroundingSearchConfiguration</Target>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
@@ -148,90 +156,6 @@
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
     <Target>T:Azure.AI.Projects.Agents.ToolProjectConnection</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.BingCustomSearchConfiguration.#ctor(System.String,System.String)</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.BingCustomSearchConfiguration.JsonModelCreateCore(System.Text.Json.Utf8JsonReader@,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.BingCustomSearchConfiguration.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.BingCustomSearchConfiguration.PersistableModelCreateCore(System.BinaryData,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.BingCustomSearchConfiguration.PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.BingCustomSearchConfiguration.set_Count(System.Nullable{System.Int64})</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.BingCustomSearchConfiguration.set_Freshness(System.String)</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.BingCustomSearchConfiguration.set_InstanceName(System.String)</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.BingCustomSearchConfiguration.set_Market(System.String)</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.BingCustomSearchConfiguration.set_ProjectConnectionId(System.String)</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.BingCustomSearchConfiguration.set_SetLang(System.String)</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.BingGroundingSearchConfiguration.#ctor(System.String)</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.BingGroundingSearchConfiguration.JsonModelCreateCore(System.Text.Json.Utf8JsonReader@,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.BingGroundingSearchConfiguration.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.BingGroundingSearchConfiguration.PersistableModelCreateCore(System.BinaryData,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.BingGroundingSearchConfiguration.PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.BingGroundingSearchConfiguration.set_BingUserInterfaceLanguage(System.String)</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.BingGroundingSearchConfiguration.set_Count(System.Nullable{System.Int64})</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.BingGroundingSearchConfiguration.set_Freshness(System.String)</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.BingGroundingSearchConfiguration.set_Market(System.String)</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.BingGroundingSearchConfiguration.set_ProjectConnectionId(System.String)</Target>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
@@ -404,13 +328,5 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Azure.AI.Projects.Agents.WebSearchToolExtensions.set_CustomSearchConfiguration(OpenAI.Responses.WebSearchTool,Azure.AI.Projects.Agents.ProjectWebSearchConfiguration)</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0009</DiagnosticId>
-    <Target>T:Azure.AI.Projects.Agents.BingCustomSearchConfiguration</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0009</DiagnosticId>
-    <Target>T:Azure.AI.Projects.Agents.BingGroundingSearchConfiguration</Target>
   </Suppression>
 </Suppressions>
