@@ -34,7 +34,7 @@ What this primitive solves:
 - **Crash survival.** If the process dies mid-call, the next process picks up the same
   task with the same input and **re-invokes the handler from the top** (or, for a chain
   parked between turns, the next caller resumes it). Progress you want to survive a
-  crash must be written to `Metadata` (or your own store) before the crash; the
+  crash must be written to `FoundryStateStore` (or your own store) before the crash; the
   handler's return value itself is **not** persisted — it only resolves the awaiting
   caller.
 - **Identity.** A `TaskId` is the resilient name of the work. Two callers naming the
@@ -50,13 +50,13 @@ What this primitive deliberately does **not** do:
 
 - **Deterministic replay.** The handler is re-invoked from the top on recovery; the
   framework does not record and replay every effect. Determinism across re-invocations
-  is the handler's responsibility — use `Metadata` watermarks for at-most-once patterns
+  is the handler's responsibility — use durable StateStore checkpoints for at-most-once patterns
   (§6.2).
 - **Workflow orchestration** (fan-out / fan-in / child workflows). If you want
   Temporal-style orchestration, use a workflow engine; you can still wrap resilient
   tasks inside it.
-- **A bulk data store.** `Metadata` is small and JSON-only; conversation history and
-  big blobs belong in your own storage.
+- **A bulk data store.** Conversation history and big blobs belong in
+  `FoundryStateStore` or your own storage.
 - **A queue.** One `TaskId` is one logical job — not a competing-consumer pull queue.
 
 If your work is short, side-effect-free, and does not need to survive a restart, a
@@ -88,7 +88,7 @@ A resilient task is a **named handler** registered at startup; registration retu
 ┌─────────────────────────────────────────────────────────────────┐
 │                     Resilient task framework                      │
 │                                                                   │
-│   - persists input + metadata + lease                             │
+│   - persists input + task state + lease                           │
 │   - invokes your handler with TaskContext<TInput>                 │
 │   - watches for crashes, reclaims abandoned leases                │
 │   - delivers output by resolving the awaited TaskRun<TOutput>     │
@@ -151,7 +151,7 @@ TaskDefinition<string, string> chat = builder.Services
     .AddResilientTasks()
     .AddMultiTurnTask<string, string>("chat", async (ctx, ct) =>
     {
-        // ctx.Input is this turn's message; ctx.Metadata persists across turns.
+        // ctx.Input is this turn's message. Persist application state explicitly.
         return $"reply to: {ctx.Input}";
     });
 
@@ -213,8 +213,8 @@ EntryMode.Recovered  // execution resumed after an interruption (e.g. host resta
 increments each time the task is picked up under a new process instance after a crash
 or takeover (it mirrors the durable lease generation). Treat it as an **observability
 signal**, not a correctness guarantee. If your handler must do something only once
-across recoveries, do **not** branch on `RecoveryCount == 0` — record a marker in
-`Metadata` and check it, which is the durable, race-free way (§6.2).
+across recoveries, do **not** branch on `RecoveryCount == 0` — record and check a
+durable StateStore checkpoint, which is the race-free way (§6.2).
 
 ### 4.3 Inputs and outputs
 
@@ -225,8 +225,11 @@ Inputs and outputs are your own types, serialized to JSON.
   have seen in the lost lifetime.
 - **Outputs are not persisted.** When the handler returns, the value resolves the
   awaiting caller's `Completion` task — that is the only place it appears. If you
-  want a per-turn artifact to survive a crash, write it to `Metadata` (or your own
-  store) *before* you return.
+  want a per-turn artifact to survive a crash, write it to `FoundryStateStore` (or
+  your own store) *before* you return.
+- If the top-level serialized input contains `call_id`, the engine installs it as
+  `FoundryAgentRequestContext.Current.CallId` for every handler attempt, including
+  retries, steering, and recovery. User and session IDs are intentionally not restored.
 - **Per-input size limit ≈ 10 MiB** (after JSON serialization). A larger input is
   rejected with `ArgumentException` at the caller, before any network round-trip.
   Externalize bigger payloads (blob store + reference). Inputs above an internal
@@ -243,7 +246,6 @@ Every turn receives a `TaskContext<TInput>`:
 | `Input` | the typed input for this turn |
 | `TaskId` / `InputId` | identifiers for the run / this input |
 | `EntryMode` | fresh, resumed, or recovered |
-| `Metadata` | durable, namespaced key/value store (§4.5) |
 | `RetryAttempt` | zero-based retry attempt for the current turn |
 | `RecoveryCount` | zero-based crash-recovery count (mirrors the durable lease generation); a signal, not a guarantee (§4.2) |
 | `IsSteeredTurn` | whether this turn was triggered by a steering input |
@@ -257,25 +259,13 @@ Every turn receives a `TaskContext<TInput>`:
 Always pass `ct` (or `ctx.Cancellation`) into the async calls you make, so the run
 stops promptly when cancelled, times out, or the host shuts down.
 
-### 4.5 Metadata
+### 4.5 Application state
 
-`TaskContext.Metadata` is a durable, namespaced key/value store that travels with the
-task across turns and restarts. Values are `BinaryData`, so anything you store is, by
-construction, serializable:
-
-```csharp
-ctx.Metadata["charged"] = BinaryData.FromObjectAsJson(true);
-
-if (ctx.Metadata.TryGetValue("charged", out var raw) && raw.ToObjectFromJson<bool>())
-{
-    // already done — skip the side effect.
-}
-```
-
-Keys beginning with `_` are reserved for the framework **by convention** (SOT §17) but
-are not rejected by the primitive — metadata is namespaced under `payload["metadata"]`, so
-it cannot collide with the framework's top-level `_`-prefixed payload keys. Use
-`Metadata.GetNamespace("billing")` for an isolated sibling namespace with the same surface.
+Task records contain framework orchestration state only. Persist checkpoints,
+conversation history, and idempotency markers explicitly with `FoundryStateStore`.
+Scope the store name to your task, session, or conversation identity. See the
+[State Store guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/StateStoreGuide.md) for local fallback, optimistic concurrency,
+tagging, and recovered-execution patterns.
 
 ### 4.6 The result handle (`TaskRun<TOutput>`)
 
@@ -371,8 +361,8 @@ exactly once and surfaces the first failure. Opt in by setting
 the task's `TaskRetryPolicy`. Across retries:
 
 - `ctx.RetryAttempt` increments (0 on the first try).
-- Durable `Metadata` is preserved, so a marker written before the failure is still
-  visible on the retry — this is how you avoid repeating a side effect.
+- Durable StateStore checkpoints written before the failure remain visible on retry —
+  this is how you avoid repeating a side effect.
 
 `ctx.RetryAttempt` is **persisted, and crash recovery does NOT consume retry budget**.
 If attempt 2 of 3 crashes mid-flight, the recovered handler is re-invoked with
@@ -450,7 +440,7 @@ builder.AddTask<Doc, Summary>("summarize", handler, o => o.Timeout = TimeSpan.Fr
 When the host begins a graceful shutdown, `ctx.Shutdown` is signaled. A long-running
 handler should stop promptly and **leave its work resumable** by calling
 `ctx.ExitForRecoveryAsync()` and then returning. The call does not throw — it flushes
-metadata, releases the lease, and sets a signal the engine reconciles once the handler
+the task record, releases the lease, and sets a signal the engine reconciles once the handler
 returns; the run is then picked up and continued elsewhere (or after restart). Deferral
 is a lifecycle handoff, not a failure: it never surfaces as an exception on the run handle
 (the handle's `Completion` simply stays pending; a caller can bail its own wait with
@@ -571,13 +561,7 @@ construction. The delay bounds (max delay, jitter) are owned by the composed `De
 Retries are off unless a policy
 is set (§4.8).
 
-### 5.8 `TaskMetadata`
-
-Indexer `BinaryData? this[string key]`, `Keys`, `ContainsKey`, `TryGetValue`, `Append`,
-`Increment`, `Remove`, `ToDictionary`, `FlushAsync`, and `Namespace(string)`. Keys
-beginning with `_` are reserved by convention (not rejected).
-
-### 5.9 `EntryMode`
+### 5.8 `EntryMode`
 
 `Fresh`, `Resumed`, `Recovered`.
 
@@ -590,12 +574,21 @@ beginning with `_` are reserved by convention (not rejected).
 ```csharp
 builder.AddMultiTurnTask<string, string>("agent", async (ctx, ct) =>
 {
-    var history = ctx.Metadata.TryGetValue("history", out var h)
-        ? h.ToObjectFromJson<List<string>>() : new List<string>();
+    FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
+        $"agent-history/{ctx.TaskId}", credential);
+    StateStoreItem? item = await store.GetItemAsync("history", cancellationToken: ct);
+    var history = item?.Value["messages"].ToObjectFromJson<List<string>>()
+        ?? new List<string>();
     history.Add(ctx.Input);
     var reply = await Model.RespondAsync(history, ct);
     history.Add(reply);
-    ctx.Metadata["history"] = BinaryData.FromObjectAsJson(history);
+    await store.SetItemAsync(
+        "history",
+        new Dictionary<string, BinaryData>
+        {
+            ["messages"] = BinaryData.FromObjectAsJson(history),
+        },
+        cancellationToken: ct);
     return reply;
 });
 ```
@@ -611,15 +604,22 @@ gateway dedupes it.
 ```csharp
 builder.AddTask<Order, Receipt>("charge", async (ctx, ct) =>
 {
-    if (ctx.Metadata.TryGetValue("receipt", out var prior))
-        return prior!.ToObjectFromJson<Receipt>();      // already charged in a prior lifetime
+    FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
+        $"billing/{ctx.TaskId}", credential);
+    StateStoreItem? item = await store.GetItemAsync("charge", cancellationToken: ct);
+    IReadOnlyDictionary<string, BinaryData> state = item?.Value
+        ?? new Dictionary<string, BinaryData>();
+    if (state.TryGetValue("receipt", out BinaryData? prior))
+        return prior.ToObjectFromJson<Receipt>();       // already charged in a prior lifetime
 
-    // 1. Reserve a dedup token and FLUSH it before the side effect.
-    if (!ctx.Metadata.TryGetValue("charge_token", out var tokenData))
+    // 1. Reserve a dedup token and persist it before the side effect.
+    if (!state.TryGetValue("charge_token", out BinaryData? tokenData))
     {
         tokenData = BinaryData.FromObjectAsJson(Guid.NewGuid().ToString());
-        ctx.Metadata["charge_token"] = tokenData;
-        await ctx.Metadata.FlushAsync(ct);
+        await store.SetItemAsync(
+            "charge",
+            new Dictionary<string, BinaryData> { ["charge_token"] = tokenData },
+            cancellationToken: ct);
     }
     string chargeToken = tokenData!.ToObjectFromJson<string>()!;
 
@@ -627,11 +627,17 @@ builder.AddTask<Order, Receipt>("charge", async (ctx, ct) =>
     Receipt receipt = await Billing.ChargeAsync(
         ctx.Input, idempotencyKey: chargeToken, ct);
 
-    // 3. Record the result and flush it so a later recovery short-circuits at the top.
-    //    Even if the process dies before this flush lands, the reserved token above
+    // 3. Record the result so a later recovery short-circuits at the top.
+    //    Even if the process dies before this write lands, the reserved token above
     //    keeps the charge at-most-once (the gateway dedupes on the idempotency key).
-    ctx.Metadata["receipt"] = BinaryData.FromObjectAsJson(receipt);
-    await ctx.Metadata.FlushAsync(ct);
+    await store.SetItemAsync(
+        "charge",
+        new Dictionary<string, BinaryData>
+        {
+            ["charge_token"] = tokenData,
+            ["receipt"] = BinaryData.FromObjectAsJson(receipt),
+        },
+        cancellationToken: ct);
     return receipt;
 });
 ```
@@ -708,7 +714,8 @@ await chat.StartAsync("next",
 - One-shot tasks complete and become terminal automatically; multi-turn chains must
   be ended explicitly with the multi-turn `TaskDefinition`'s `DeleteAsync`.
 - Make handlers idempotent with respect to recovery: anything observable outside the
-  process (a charge, an email) should be guarded by a `Metadata` marker.
+  process (a charge, an email) should be guarded by a durable checkpoint in
+  `FoundryStateStore` or another external store.
 - Always thread the cancellation token through your async work so cancellation,
   timeout, and shutdown take effect promptly.
 
@@ -716,15 +723,14 @@ await chat.StartAsync("next",
 
 - **Not a deterministic-replay framework.** The handler is re-invoked from the top on
   recovery; the framework does not record and replay every effect. Determinism across
-  re-invocations is the handler's responsibility — use `Metadata` watermarks for
-  at-most-once patterns (§6.2).
+  re-invocations is the handler's responsibility — use durable StateStore checkpoints
+  for at-most-once patterns (§6.2).
 - **Not a workflow engine.** No fan-out / fan-in, no child-workflow orchestration, no
   first-class signals or timers. A handler is plain code; there are no step/activity
   primitives to compose. If you need those, use a workflow engine and wrap resilient
   tasks inside it.
-- **Not a bulk data store.** `Metadata` is intentionally small and JSON-only. Persist
-  conversation history, model outputs, and big checkpoints through your own storage;
-  use metadata only for small watermarks and dedup tokens.
+- **Not a bulk data store.** Persist conversation history, model outputs, and large
+  checkpoints through `FoundryStateStore` or your own storage.
 - **Not a queue.** A `TaskId` identifies one logical unit of work. If you want competing
   consumers off a shared queue, use a different primitive.
 - **Not a background-job scheduler or cron.** There is no "run at 3am" surface — you
@@ -737,9 +743,9 @@ await chat.StartAsync("next",
 **Do I need to know where state is stored?** No. Registration and invocation are the
 whole surface; persistence is automatic and environment-selected.
 
-**How do I make a side effect happen once?** Guard it with a `Metadata` marker and
-check the marker on entry (§6.2). `EntryMode`/`RetryAttempt` are signals, not
-guarantees — the marker is the guarantee.
+**How do I make a side effect happen once?** Guard it with a durable StateStore
+checkpoint and check the checkpoint on entry (§6.2). `EntryMode`/`RetryAttempt` are
+signals, not guarantees — the checkpoint is the guarantee.
 
 **When should I use a plain `Task` instead?** When the work is short, has no external
 side effects, and does not need to survive a restart.
@@ -758,10 +764,9 @@ gets queued (multi-turn, when steering is enabled), or sees a `ResilientTaskExce
 o => o.Retry = new TaskRetryPolicy());`) to opt in. Without a policy a handler
 runs once and surfaces the exception.
 
-**Can I store conversation history in `ctx.Metadata`?** Small histories fit, but
-`Metadata` is intentionally small and JSON-only (values are `BinaryData`). Use a
-dedicated checkpointer (your own database, a vector store, etc.) for large multi-turn
-state, and keep `Metadata` to small watermarks and dedup tokens.
+**Where should I store conversation history and recovery checkpoints?** Use
+`FoundryStateStore` or another application-owned durable store. Keep the framework task
+record limited to orchestration state.
 
 **What if my handler ignores `ctx.Cancellation`?** Cooperative cancellation is a
 request; nothing forces a handler to stop. If your handler must be interruptible,
@@ -771,8 +776,7 @@ cancellation on the in-flight turn — but it does not preempt or abort running 
 A non-cooperating handler keeps running until it returns or throws on its own.
 
 **How do I inspect a task's persisted state from outside the handler?** You don't —
-the public surface is intentionally write-shaped (register + invoke), and the store,
-providers, and wire schema are internal. Read paths stay in the handler via
-`ctx.Metadata`, `ctx.RetryAttempt`, `ctx.RecoveryCount`, and `ctx.EntryMode`. If you
-need external read access, record your own watermarks in `Metadata` and surface them
-from your application.
+the public surface is intentionally write-shaped (register + invoke), and the task
+provider and wire schema are internal. Read application state from your own
+`FoundryStateStore` items. Handler lifecycle signals remain available through
+`ctx.RetryAttempt`, `ctx.RecoveryCount`, and `ctx.EntryMode`.

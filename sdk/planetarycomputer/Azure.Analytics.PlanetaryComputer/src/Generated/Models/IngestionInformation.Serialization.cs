@@ -103,16 +103,21 @@ namespace Azure.Analytics.PlanetaryComputer
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("importType"u8);
-            writer.WriteStringValue(ImportType.ToString());
+            writer.WriteStringValue(ImportKind.ToString());
             if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(SourceCatalogUrl))
+            if (Optional.IsDefined(SourceCatalogUri))
             {
                 writer.WritePropertyName("sourceCatalogUrl"u8);
-                writer.WriteStringValue(SourceCatalogUrl.AbsoluteUri);
+                writer.WriteStringValue(SourceCatalogUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(StacGeoparquetUri))
+            {
+                writer.WritePropertyName("stacGeoparquetUrl"u8);
+                writer.WriteStringValue(StacGeoparquetUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SkipExistingItems))
             {
@@ -127,7 +132,7 @@ namespace Azure.Analytics.PlanetaryComputer
             if (options.Format != "W")
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreationTime, "O");
+                writer.WriteStringValue(CreatedOn, "O");
             }
             if (options.Format != "W")
             {
@@ -177,12 +182,13 @@ namespace Azure.Analytics.PlanetaryComputer
                 return null;
             }
             Guid id = default;
-            IngestionType importType = default;
+            IngestionKind importKind = default;
             string displayName = default;
-            Uri sourceCatalogUrl = default;
+            Uri sourceCatalogUri = default;
+            Uri stacGeoparquetUri = default;
             bool? skipExistingItems = default;
             bool? keepOriginalAssets = default;
-            DateTimeOffset creationTime = default;
+            DateTimeOffset createdOn = default;
             IngestionStatus status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -194,7 +200,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("importType"u8))
                 {
-                    importType = new IngestionType(prop.Value.GetString());
+                    importKind = new IngestionKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("displayName"u8))
@@ -208,7 +214,16 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    sourceCatalogUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    sourceCatalogUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    continue;
+                }
+                if (prop.NameEquals("stacGeoparquetUrl"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    stacGeoparquetUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("skipExistingItems"u8))
@@ -231,7 +246,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("creationTime"u8))
                 {
-                    creationTime = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -246,12 +261,13 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             return new IngestionInformation(
                 id,
-                importType,
+                importKind,
                 displayName,
-                sourceCatalogUrl,
+                sourceCatalogUri,
+                stacGeoparquetUri,
                 skipExistingItems,
                 keepOriginalAssets,
-                creationTime,
+                createdOn,
                 status,
                 additionalBinaryDataProperties);
         }

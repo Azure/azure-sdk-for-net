@@ -7,15 +7,13 @@
 
 using Azure.Core;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary> The PE network resource that is linked to this PE connection. </summary>
-    public partial class RegistryPrivateEndpoint : ProvisionableConstruct
+    public partial class RegistryPrivateEndpoint : PrivateEndpointBase
     {
         private BicepValue<ResourceIdentifier> _subnetArmId;
-        private BicepValue<ResourceIdentifier> _id;
 
         /// <summary> Creates a new RegistryPrivateEndpoint. </summary>
         public RegistryPrivateEndpoint()
@@ -37,22 +35,11 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
-        /// <summary> Gets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
-        {
-            get
-            {
-                Initialize();
-                return _id;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for RegistryPrivateEndpoint. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _subnetArmId = DefineProperty<ResourceIdentifier>(nameof(SubnetArmId), new string[] { "subnetArmId" });
-            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

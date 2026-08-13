@@ -62,6 +62,19 @@ namespace Azure.Generator.Tests.Visitors
             Assert.AreSame(response, expression.Arguments[0]);
         }
 
+        [Test]
+        public void DoesNotThrowForProviderBackedGenericReturnType()
+        {
+            MockHelpers.LoadMockGenerator();
+            var response = new VariableExpression(typeof(Response), "response");
+            var expression = CreateInvocation("CreateResult", typeof(BinaryData), response);
+            var returnType = new TestGenericTypeProvider().Type;
+
+            Assert.DoesNotThrow(() =>
+                new TestStreamingResponseVisitor().Visit(expression, CreateMethod(returnType)));
+            Assert.AreSame(response, expression.Arguments[0]);
+        }
+
         private static InvokeMethodExpression CreateInvocation(string name, CSharpType returnType, ValueExpression response)
         {
             var signature = new MethodSignature(
@@ -103,6 +116,17 @@ namespace Azure.Generator.Tests.Visitors
                 : base(signature, new Mock<TypeProvider>().Object, null)
             {
             }
+        }
+
+        private class TestGenericTypeProvider : TypeProvider
+        {
+            protected override string BuildName() => "SearchResult";
+
+            protected override string BuildNamespace() => "Azure.Search.Documents.Models";
+
+            protected override string BuildRelativeFilePath() => $"{Name}.cs";
+
+            protected override CSharpType[] GetTypeArguments() => [typeof(BinaryData)];
         }
     }
 }

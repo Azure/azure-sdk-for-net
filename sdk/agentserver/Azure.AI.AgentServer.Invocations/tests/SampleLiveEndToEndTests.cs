@@ -299,8 +299,6 @@ public class SampleLiveEndToEndTests
     private async Task<LiveTestEnv> CreateLiveResearchServerAsync()
     {
         ResponsesClient model = CreateLiveResponsesClient();
-        var checkpointStore = new SampleResilientResearchSnippets.CheckpointStore(
-            Path.Combine(Path.GetTempPath(), "live-research-" + Guid.NewGuid().ToString("N")));
 
         var builder = WebApplication.CreateBuilder();
         builder.WebHost.UseTestServer();
@@ -317,7 +315,7 @@ public class SampleLiveEndToEndTests
                  SampleResilientResearchSnippets.ResearchResult>(
             "research",
             (ctx, ct) => SampleResilientResearchSnippets.RunResearchAsync(
-                streamsRef!, model, _model, ctx, checkpointStore,
+                streamsRef!, model, _model, ctx,
                 numPhases: 2, callsPerPhase: 2, ct: ct),
             steerable: true);
         builder.Services.AddSingleton(research);

@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.NetApp
 
         internal NetAppActiveDirectoryConfigResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _activeDirectoryConfigsClientDiagnostics = null;
+            _activeDirectoryConfigsRestClient = null;
+            _ = _activeDirectoryConfigsClientDiagnostics;
+            _ = _activeDirectoryConfigsRestClient;
             ValidateResourceId(id);
         }
 
