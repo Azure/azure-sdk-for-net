@@ -85,9 +85,14 @@ namespace Azure.Generator.Primitives
             "XmlWriterContent.cs",
         ];
 
-        private static void TraverseInput(InputClient rootClient, ref bool hasOperation, ref bool hasLongRunningOperation, ref bool hasStreamingOperation)
+        private static void TraverseInput(
+            InputClient rootClient,
+            ref bool hasOperation,
+            ref bool hasLongRunningOperation,
+            ref bool hasStreamingOperation,
+            ref bool hasOptionalResponseBody)
         {
-            if (hasOperation && hasLongRunningOperation && hasStreamingOperation)
+            if (hasOperation && hasLongRunningOperation && hasStreamingOperation && hasOptionalResponseBody)
             {
                 return;
             }
@@ -103,10 +108,21 @@ namespace Azure.Generator.Primitives
                 {
                     hasStreamingOperation = true;
                 }
+                var successResponses = method.Operation.Responses.Where(response => !response.IsErrorResponse);
+                if (successResponses.Any(response => response.BodyType is not null)
+                    && successResponses.Any(response => response.BodyType is null))
+                {
+                    hasOptionalResponseBody = true;
+                }
             }
             foreach (var inputClient in rootClient.Children)
             {
-                TraverseInput(inputClient, ref hasOperation, ref hasLongRunningOperation, ref hasStreamingOperation);
+                TraverseInput(
+                    inputClient,
+                    ref hasOperation,
+                    ref hasLongRunningOperation,
+                    ref hasStreamingOperation,
+                    ref hasOptionalResponseBody);
             }
         }
 
@@ -166,9 +182,15 @@ namespace Azure.Generator.Primitives
             bool hasOperation = false;
             bool hasLongRunningOperation = false;
             bool hasStreamingOperation = false;
+            bool hasOptionalResponseBody = false;
             foreach (var client in AzureClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
             {
-                TraverseInput(client, ref hasOperation, ref hasLongRunningOperation, ref hasStreamingOperation);
+                TraverseInput(
+                    client,
+                    ref hasOperation,
+                    ref hasLongRunningOperation,
+                    ref hasStreamingOperation,
+                    ref hasOptionalResponseBody);
             }
 
             // Add operation-related shared files if operations are present
@@ -192,6 +214,11 @@ namespace Azure.Generator.Primitives
             if (hasStreamingOperation)
             {
                 compileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude("AzurePipelineResponse.cs"), SharedSourceLinkBase));
+            }
+
+            if (hasOptionalResponseBody)
+            {
+                compileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude("NoValueResponseOfT.cs"), SharedSourceLinkBase));
             }
 
             // Add TaskExtensions if there are multipart form data operations and it hasn't already been added for LRO
