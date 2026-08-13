@@ -5677,7 +5677,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     }
     public partial class ContainerAppWorkloadProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ContainerAppWorkloadProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppWorkloadProfile>
     {
-        public ContainerAppWorkloadProfile(string name, int maximumCount, int minimumCount) { }
+        public ContainerAppWorkloadProfile(string workloadProfileType, int minimumCount, int maximumCount) { }
         public ContainerAppWorkloadProfile(string name, string workloadProfileType) { }
         public bool? EnableFips { get { throw null; } set { } }
         public int MaximumCount { get { throw null; } set { } }
