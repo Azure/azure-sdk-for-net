@@ -10,10 +10,7 @@ using Azure.Provisioning;
 
 namespace Azure.Provisioning.RecoveryServicesBackup
 {
-    /// <summary>
-    /// DPM workload-specific protection container.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BackupServerContainer"/>.
-    /// </summary>
+    /// <summary> DPM workload-specific protection container. </summary>
     public partial class DpmContainer : BackupGenericProtectionContainer
     {
         private BicepValue<bool> _canReRegister;
