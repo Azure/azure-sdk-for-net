@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -9,6 +10,7 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -22,6 +24,40 @@ namespace Azure.Generator.Management.Utilities
         private const string CancellationTokenSuppressionJustification =
             "Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. " +
             "Making it optional would introduce an ambiguous call with the new method.";
+
+        internal static IReadOnlyList<MethodProvider> AddETagBackwardCompatibilityMethods(
+            TypeProvider enclosingType,
+            IReadOnlyList<MethodProvider> currentMethods,
+            IReadOnlyList<MethodProvider> previousMethods)
+        {
+            var methods = new List<MethodProvider>(currentMethods);
+            var candidates = enclosingType.CustomCodeView?.Methods is { } customMethods
+                ? currentMethods.Concat(customMethods)
+                : currentMethods;
+            var candidateList = candidates.ToList();
+
+            foreach (var previousMethod in previousMethods)
+            {
+                if (!IsPublicApi(previousMethod.Signature.Modifiers)
+                    || candidateList.Any(candidate => MethodSignature.MethodSignatureComparer.Equals(candidate.Signature, previousMethod.Signature))
+                    || IsMethodRemovalAcceptedInBaseline(enclosingType, previousMethod.Signature))
+                {
+                    continue;
+                }
+
+                var currentMethod = candidateList.FirstOrDefault(candidate => IsStringToETagMatch(previousMethod.Signature, candidate.Signature));
+                if (currentMethod is null)
+                {
+                    continue;
+                }
+
+                var overload = BuildStringToETagOverload(enclosingType, previousMethod, currentMethod);
+                methods.Add(overload);
+                candidateList.Add(overload);
+            }
+
+            return methods;
+        }
 
         /// <summary>
         /// Applies the management back-compat decorations to the overloads that were added on top of <paramref name="originalMethods"/>.
@@ -84,6 +120,161 @@ namespace Azure.Generator.Management.Utilities
 
             var lastParameter = signature.Parameters[signature.Parameters.Count - 1];
             return lastParameter.DefaultValue is null && lastParameter.Type.Equals(typeof(CancellationToken));
+        }
+
+        private static bool IsStringToETagMatch(MethodSignature previousSignature, MethodSignature currentSignature)
+        {
+            if (previousSignature.Name != currentSignature.Name
+                || previousSignature.Parameters.Count != currentSignature.Parameters.Count
+                || previousSignature.Modifiers.HasFlag(MethodSignatureModifiers.Static) != currentSignature.Modifiers.HasFlag(MethodSignatureModifiers.Static)
+                || !IsPublicApi(currentSignature.Modifiers)
+                || !TypesMatch(previousSignature.ReturnType, currentSignature.ReturnType))
+            {
+                return false;
+            }
+
+            var hasETagChange = false;
+            for (var i = 0; i < previousSignature.Parameters.Count; i++)
+            {
+                var previousParameter = previousSignature.Parameters[i];
+                var currentParameter = currentSignature.Parameters[i];
+                if (previousParameter.Name != currentParameter.Name
+                    || previousParameter.IsRef != currentParameter.IsRef
+                    || previousParameter.IsOut != currentParameter.IsOut
+                    || previousParameter.IsIn != currentParameter.IsIn)
+                {
+                    return false;
+                }
+
+                if (previousParameter.Type.Equals(currentParameter.Type))
+                {
+                    continue;
+                }
+
+                if (!IsConditionalMatchParameter(previousParameter)
+                    || previousParameter.Type is not { IsFrameworkType: true, FrameworkType: { } previousFrameworkType }
+                    || previousFrameworkType != typeof(string)
+                    || currentParameter.Type is not { IsFrameworkType: true, IsNullable: true, FrameworkType: { } frameworkType }
+                    || frameworkType != typeof(ETag)
+                    || previousParameter.IsRef
+                    || previousParameter.IsOut)
+                {
+                    return false;
+                }
+
+                hasETagChange = true;
+            }
+
+            return hasETagChange;
+        }
+
+        private static MethodProvider BuildStringToETagOverload(
+            TypeProvider enclosingType,
+            MethodProvider previousMethod,
+            MethodProvider currentMethod)
+        {
+            var previousSignature = previousMethod.Signature;
+            var currentSignature = currentMethod.Signature;
+            var firstConvertedParameter = -1;
+            for (var i = 0; i < previousSignature.Parameters.Count; i++)
+            {
+                if (!previousSignature.Parameters[i].Type.Equals(currentSignature.Parameters[i].Type)
+                    && firstConvertedParameter < 0)
+                {
+                    firstConvertedParameter = i;
+                }
+            }
+
+            var parameters = previousSignature.Parameters
+                .Select((parameter, index) => CloneParameter(parameter, removeDefault: index <= firstConvertedParameter))
+                .ToArray();
+            var arguments = new ValueExpression[parameters.Length];
+            for (var i = 0; i < parameters.Length; i++)
+            {
+                ValueExpression value = parameters[i];
+                if (!previousSignature.Parameters[i].Type.Equals(currentSignature.Parameters[i].Type))
+                {
+                    value = new TernaryConditionalExpression(
+                        parameters[i].NotEqual(Null),
+                        New.Instance(typeof(ETag), parameters[i]),
+                        new CastExpression(Null, currentSignature.Parameters[i].Type));
+                }
+
+                arguments[i] = parameters[i].IsRef || parameters[i].IsOut
+                    ? value.AsArgument(isRef: parameters[i].IsRef, isOut: parameters[i].IsOut)
+                    : value;
+            }
+
+            var invocationTarget = currentSignature.Modifiers.HasFlag(MethodSignatureModifiers.Static)
+                ? Static(enclosingType.Type)
+                : This;
+            var invocation = invocationTarget.Invoke(currentSignature.Name, arguments);
+            var returnsVoid = currentSignature.ReturnType is null
+                || currentSignature.ReturnType is { IsFrameworkType: true, FrameworkType: { } returnType } && returnType == typeof(void);
+            MethodBodyStatement body = returnsVoid ? invocation.Terminate() : Return(invocation);
+
+            var signature = new MethodSignature(
+                previousSignature.Name,
+                previousSignature.Description,
+                previousSignature.Modifiers & ~MethodSignatureModifiers.Async,
+                previousSignature.ReturnType,
+                previousSignature.ReturnDescription,
+                parameters,
+                Attributes: [.. previousSignature.Attributes, new AttributeStatement(typeof(EditorBrowsableAttribute), FrameworkEnumValue(EditorBrowsableState.Never))],
+                GenericArguments: previousSignature.GenericArguments,
+                GenericParameterConstraints: previousSignature.GenericParameterConstraints,
+                ExplicitInterface: previousSignature.ExplicitInterface,
+                NonDocumentComment: previousSignature.NonDocumentComment);
+
+            return new MethodProvider(signature, body, enclosingType, previousMethod.XmlDocs);
+        }
+
+        private static ParameterProvider CloneParameter(ParameterProvider parameter, bool removeDefault)
+            => new(
+                parameter.Name,
+                parameter.Description,
+                parameter.Type,
+                defaultValue: removeDefault ? null : parameter.DefaultValue,
+                isRef: parameter.IsRef,
+                isOut: parameter.IsOut,
+                isIn: parameter.IsIn,
+                isParams: parameter.IsParams,
+                attributes: parameter.Attributes,
+                property: parameter.Property,
+                field: parameter.Field,
+                initializationValue: parameter.InitializationValue,
+                location: parameter.Location,
+                wireInfo: parameter.WireInfo,
+                validation: parameter.Validation,
+                inputParameter: parameter.InputParameter)
+            {
+                SpreadSource = parameter.SpreadSource
+            };
+
+        private static bool IsConditionalMatchParameter(ParameterProvider parameter)
+            => parameter.Name is "ifMatch" or "ifNoneMatch";
+
+        private static bool IsPublicApi(MethodSignatureModifiers modifiers)
+            => (modifiers.HasFlag(MethodSignatureModifiers.Public) || modifiers.HasFlag(MethodSignatureModifiers.Protected))
+                && !modifiers.HasFlag(MethodSignatureModifiers.Private);
+
+        private static bool TypesMatch(CSharpType? previousType, CSharpType? currentType)
+        {
+            if (previousType is null || currentType is null)
+            {
+                return previousType is null && currentType is null;
+            }
+
+            return previousType.Equals(currentType);
+        }
+
+        private static bool IsMethodRemovalAcceptedInBaseline(TypeProvider enclosingType, MethodSignature previousSignature)
+        {
+            var parameterTypes = previousSignature.Parameters.Select(parameter => parameter.Type).ToArray();
+            return CodeModelGenerator.Instance.SourceInputModel?.ApiCompatBaseline.IsMethodRemovalSuppressed(
+                enclosingType.Type.FullyQualifiedName,
+                previousSignature.Name,
+                parameterTypes) == true;
         }
     }
 }

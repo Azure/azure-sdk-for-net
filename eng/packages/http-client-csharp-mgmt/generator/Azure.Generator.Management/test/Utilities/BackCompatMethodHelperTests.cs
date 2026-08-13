@@ -27,6 +27,102 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model]);
         }
 
+        [TestCase("ifMatch")]
+        [TestCase("ifNoneMatch")]
+        public void AddsStringOverloadForConditionalETagParameter(string parameterName)
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider(parameterName, $"The condition.", new CSharpType(typeof(ETag), isNullable: true), defaultValue: Default),
+                    OptionalCancellationToken()
+                ]);
+            var previousParameter = new ParameterProvider(parameterName, $"The condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default);
+            var previous = CreateMethod(enclosingType, [previousParameter, OptionalCancellationToken()]);
+
+            var result = BackCompatHelper.AddETagBackwardCompatibilityMethods(enclosingType, [current], [previous]);
+            BackCompatHelper.DecorateBackwardCompatibilityMethods(result, [current]);
+
+            Assert.That(result, Has.Count.EqualTo(2));
+            var overload = result.Single(method => !ReferenceEquals(method, current));
+            Assert.That(overload.Signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(string)));
+            Assert.That(overload.Signature.Parameters[0].DefaultValue, Is.Null);
+            Assert.That(overload.Signature.Parameters[1].DefaultValue, Is.Not.Null);
+            Assert.That(previousParameter.DefaultValue, Is.Not.Null);
+            Assert.That(HasForwardsClientCalls(overload), Is.True);
+
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Does.Contain($"Get(string {parameterName}, global::System.Threading.CancellationToken cancellationToken = default)"));
+            Assert.That(rendered, Does.Contain($"return this.Get(({parameterName} != null) ? new global::Azure.ETag({parameterName}) : ((global::Azure.ETag?)null), cancellationToken);"));
+        }
+
+        [Test]
+        public void PreservesDefaultsAfterFirstConditionalETagParameter()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("ifMatch", $"The match condition.", new CSharpType(typeof(ETag), isNullable: true), defaultValue: Default),
+                    new ParameterProvider("ifNoneMatch", $"The non-match condition.", new CSharpType(typeof(ETag), isNullable: true), defaultValue: Default),
+                    OptionalCancellationToken()
+                ]);
+            var previous = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("ifMatch", $"The match condition.", typeof(string), defaultValue: Default),
+                    new ParameterProvider("ifNoneMatch", $"The non-match condition.", typeof(string), defaultValue: Default),
+                    OptionalCancellationToken()
+                ]);
+
+            var result = BackCompatHelper.AddETagBackwardCompatibilityMethods(enclosingType, [current], [previous]);
+
+            var overload = result.Single(method => !ReferenceEquals(method, current));
+            Assert.That(overload.Signature.Parameters[0].DefaultValue, Is.Null);
+            Assert.That(overload.Signature.Parameters[1].DefaultValue, Is.Not.Null);
+            Assert.That(overload.Signature.Parameters[2].DefaultValue, Is.Not.Null);
+        }
+
+        [TestCase("etag")]
+        [TestCase("condition")]
+        public void DoesNotAddStringOverloadForNonConditionalETagParameter(string parameterName)
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [new ParameterProvider(parameterName, $"The value.", new CSharpType(typeof(ETag), isNullable: true))]);
+            var previous = CreateMethod(
+                enclosingType,
+                [new ParameterProvider(parameterName, $"The value.", typeof(string))]);
+
+            var result = BackCompatHelper.AddETagBackwardCompatibilityMethods(enclosingType, [current], [previous]);
+
+            Assert.That(result, Is.EqualTo(new[] { current }));
+        }
+
+        [Test]
+        public void DoesNotAddStringOverloadWhenAnotherParameterTypeChanged()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("name", $"The name.", typeof(int)),
+                    new ParameterProvider("ifMatch", $"The condition.", new CSharpType(typeof(ETag), isNullable: true))
+                ]);
+            var previous = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("name", $"The name.", typeof(string)),
+                    new ParameterProvider("ifMatch", $"The condition.", typeof(string))
+                ]);
+
+            var result = BackCompatHelper.AddETagBackwardCompatibilityMethods(enclosingType, [current], [previous]);
+
+            Assert.That(result, Is.EqualTo(new[] { current }));
+        }
+
         [Test]
         public void AddsForwardsClientCallsToSynthesizedOverload()
         {
