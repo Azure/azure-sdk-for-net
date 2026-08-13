@@ -44,23 +44,23 @@ public sealed class ResilientTaskRegistrationTests
     public void RepeatedAddResilientTasksDoesNotDuplicateHostedServiceAndSharesRegistry()
     {
         var services = new ServiceCollection();
-        ResilientTaskBuilder first = services.AddResilientTasks();
-        ResilientTaskBuilder second = services.AddResilientTasks();
+        services.AddResilientTasks();
+        services.AddResilientTasks();
 
         // The second call registers nothing further (AddHostedService is not idempotent), so the
         // durability service is registered exactly once — no duplicate recovery scan.
         int hostedServiceCount = services.Count(d => d.ServiceType == typeof(IHostedService));
         Assert.That(hostedServiceCount, Is.EqualTo(1), "durability hosted service must be registered once");
 
-        // Both builders must target the SAME registry instance the engine will use; otherwise a
-        // task registered via the second builder would be invisible to the engine.
-        first.AddTask<string, string>("via-first", (ctx, ct) => Task.FromResult(ctx.Input));
-        second.AddTask<string, string>("via-second", (ctx, ct) => Task.FromResult(ctx.Input));
+        // Both calls must target the SAME registry instance the engine will use; otherwise a task
+        // registered after the second call would be invisible to the engine.
+        services.AddResilientTask<string, string>("via-first", (ctx, ct) => Task.FromResult(ctx.Input));
+        services.AddResilientTask<string, string>("via-second", (ctx, ct) => Task.FromResult(ctx.Input));
 
         using var provider = services.BuildServiceProvider();
         TaskRegistry registry = provider.GetRequiredService<TaskRegistry>();
-        Assert.That(registry.TryGet("via-first", out _), Is.True, "task from the first builder must be registered");
-        Assert.That(registry.TryGet("via-second", out _), Is.True, "task from the second builder must be registered");
+        Assert.That(registry.TryGet("via-first", out _), Is.True, "task registered after the first AddResilientTasks call must be registered");
+        Assert.That(registry.TryGet("via-second", out _), Is.True, "task registered after the second AddResilientTasks call must be registered");
     }
 
     [Test]
@@ -83,6 +83,84 @@ public sealed class ResilientTaskRegistrationTests
         services.AddSingleton<TaskEngine>(_ => throw new System.NotSupportedException("never built"));
 
         Assert.Throws<System.InvalidOperationException>(() => services.AddResilientTasks());
+    }
+
+    [Test]
+    public void AddResilientTaskSelfInitializesCoreServicesOnFirstCall()
+    {
+        // AddResilientTask is a flat entry point: it must not require a prior AddResilientTasks()
+        // call to set up the durability hosted service and the rest of the core services.
+        var services = new ServiceCollection();
+        services.AddResilientTask<string, string>("solo", (ctx, ct) => Task.FromResult(ctx.Input));
+
+        bool hostedServiceRegistered = services.Any(d => d.ServiceType == typeof(IHostedService));
+        Assert.That(hostedServiceRegistered, Is.True, "the first AddResilientTask call must self-initialize the core services");
+
+        using var provider = services.BuildServiceProvider();
+        Assert.That(provider.GetRequiredService<TaskRegistry>().TryGet("solo", out _), Is.True);
+    }
+
+    [Test]
+    public void AddResilientTaskRegistersTheDefinitionAsAKeyedSingleton()
+    {
+        var services = new ServiceCollection();
+        TaskDefinition<string, string> registered = services.AddResilientTask<string, string>(
+            "keyed-one-shot", (ctx, ct) => Task.FromResult(ctx.Input));
+
+        using var provider = services.BuildServiceProvider();
+        TaskDefinition<string, string> resolved =
+            provider.GetRequiredKeyedService<TaskDefinition<string, string>>("keyed-one-shot");
+
+        Assert.That(resolved, Is.SameAs(registered), "the keyed registration must be the same instance AddResilientTask returned");
+    }
+
+    [Test]
+    public void AddResilientMultiTurnTaskRegistersTheDefinitionAsAKeyedSingleton()
+    {
+        var services = new ServiceCollection();
+        TaskDefinition<string, string> registered = services.AddResilientMultiTurnTask<string, string>(
+            "keyed-multi-turn", (ctx, ct) => Task.FromResult(ctx.Input), steerable: true);
+
+        using var provider = services.BuildServiceProvider();
+        TaskDefinition<string, string> resolved =
+            provider.GetRequiredKeyedService<TaskDefinition<string, string>>("keyed-multi-turn");
+
+        Assert.That(resolved, Is.SameAs(registered));
+    }
+
+    [Test]
+    public void GetResilientTaskResolvesTheRegisteredDefinition()
+    {
+        var services = new ServiceCollection();
+        TaskDefinition<string, int> registered = services.AddResilientTask<string, int>(
+            "len", (ctx, ct) => Task.FromResult(ctx.Input.Length));
+
+        using var provider = services.BuildServiceProvider();
+        TaskDefinition<string, int> resolved = provider.GetResilientTask<string, int>("len");
+
+        Assert.That(resolved, Is.SameAs(registered));
+    }
+
+    [Test]
+    public void TwoTasksSharingTheSameTypesResolveIndependentlyByName()
+    {
+        // The whole point of keyed-by-name registration: two tasks with the identical
+        // <TInput,TOutput> pair must not collide or shadow one another.
+        var services = new ServiceCollection();
+        TaskDefinition<string, string> a = services.AddResilientTask<string, string>(
+            "task-a", (ctx, ct) => Task.FromResult("a:" + ctx.Input));
+        TaskDefinition<string, string> b = services.AddResilientTask<string, string>(
+            "task-b", (ctx, ct) => Task.FromResult("b:" + ctx.Input));
+
+        using var provider = services.BuildServiceProvider();
+        TaskDefinition<string, string> resolvedA = provider.GetResilientTask<string, string>("task-a");
+        TaskDefinition<string, string> resolvedB = provider.GetResilientTask<string, string>("task-b");
+
+        Assert.That(resolvedA, Is.SameAs(a));
+        Assert.That(resolvedB, Is.SameAs(b));
+        Assert.That(resolvedA, Is.Not.SameAs(resolvedB));
+        Assert.That(resolvedA.Name, Is.EqualTo("task-a"));
+        Assert.That(resolvedB.Name, Is.EqualTo("task-b"));
     }
 
     [TestCase("")]

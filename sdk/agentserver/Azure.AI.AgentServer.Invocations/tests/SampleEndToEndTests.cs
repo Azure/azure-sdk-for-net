@@ -907,7 +907,6 @@ public class SampleEndToEndTests
     {
         var model = CreateMockResponsesClient();
 
-        ResilientTaskBuilder? tasks = null;
         AgentEventStreamRegistry? streamsRef = null;
 
         var env = await CreateTestServerAsync<Snippets.SampleResilientResearchSnippets.ResilientResearchHandler>(
@@ -917,13 +916,12 @@ public class SampleEndToEndTests
                 services.AddAgentEventStreams(o => o.UseInMemoryReplay(
                     ttl: TimeSpan.FromMinutes(5)));
 
-                tasks = services.AddResilientTasks();
-
-                // The typed TaskDefinition returned at registration is the invocation handle.
-                // Register it so the handler resolves it from DI. The stream registry is a
+                // AddResilientMultiTurnTask self-initializes the resilient-tasks services and
+                // registers the returned TaskDefinition as a keyed singleton (keyed by task name),
+                // so the handler resolves it via GetResilientTask. The stream registry is a
                 // singleton resolved from the built provider below and read lazily when a turn
                 // actually runs, so capturing it via streamsRef is safe.
-                var research = tasks.AddMultiTurnTask<Snippets.SampleResilientResearchSnippets.ResearchRequest,
+                services.AddResilientMultiTurnTask<Snippets.SampleResilientResearchSnippets.ResearchRequest,
                              Snippets.SampleResilientResearchSnippets.ResearchResult>(
                         "research",
                         (ctx, ct) => Snippets.SampleResilientResearchSnippets.RunResearchAsync(
@@ -933,7 +931,6 @@ public class SampleEndToEndTests
                             intraPhaseCooldown: TimeSpan.Zero,
                             ct: ct),
                         steerable: true);
-                services.AddSingleton(research);
             },
             configurePostBuild: app =>
             {
@@ -1031,8 +1028,7 @@ public class SampleEndToEndTests
         return await CreateTestServerAsync<Snippets.SampleResilientMultiturnSnippets.ResilientMultiturnHandler>(
             services =>
             {
-                var conversation = services.AddResilientTasks()
-                    .AddMultiTurnTask<Snippets.SampleResilientMultiturnSnippets.ConversationInput,
+                services.AddResilientMultiTurnTask<Snippets.SampleResilientMultiturnSnippets.ConversationInput,
                                       Snippets.SampleResilientMultiturnSnippets.ConversationOutput>(
                         "conversation",
                         (ctx, ct) => Snippets.SampleResilientMultiturnSnippets.RunConversationTurnAsync(
@@ -1040,7 +1036,6 @@ public class SampleEndToEndTests
                             (history, msg, c) => Task.FromResult($"Turn reply: You said \"{msg}\""),
                             ct),
                         steerable: true);
-                services.AddSingleton(conversation);
             });
     }
 

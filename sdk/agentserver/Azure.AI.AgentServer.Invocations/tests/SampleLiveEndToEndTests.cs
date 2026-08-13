@@ -310,15 +310,13 @@ public class SampleLiveEndToEndTests
             ttl: TimeSpan.FromMinutes(5)));
 
         AgentEventStreamRegistry? streamsRef = null;
-        var research = builder.Services.AddResilientTasks()
-            .AddMultiTurnTask<SampleResilientResearchSnippets.ResearchRequest,
+        builder.Services.AddResilientMultiTurnTask<SampleResilientResearchSnippets.ResearchRequest,
                  SampleResilientResearchSnippets.ResearchResult>(
             "research",
             (ctx, ct) => SampleResilientResearchSnippets.RunResearchAsync(
                 streamsRef!, model, _model, ctx,
                 numPhases: 2, callsPerPhase: 2, ct: ct),
             steerable: true);
-        builder.Services.AddSingleton(research);
 
         var app = builder.Build();
 
@@ -340,8 +338,7 @@ public class SampleLiveEndToEndTests
         builder.Services.AddScoped<InvocationHandler,
             SampleResilientMultiturnSnippets.ResilientMultiturnHandler>();
 
-        var conversation = builder.Services.AddResilientTasks()
-            .AddMultiTurnTask<SampleResilientMultiturnSnippets.ConversationInput,
+        builder.Services.AddResilientMultiTurnTask<SampleResilientMultiturnSnippets.ConversationInput,
                               SampleResilientMultiturnSnippets.ConversationOutput>(
                 "conversation",
                 (ctx, ct) => SampleResilientMultiturnSnippets.RunConversationTurnAsync(
@@ -349,7 +346,6 @@ public class SampleLiveEndToEndTests
                     (history, msg, c) => AggregateModelReplyAsync(msg, c),
                     ct),
                 steerable: true);
-        builder.Services.AddSingleton(conversation);
 
         var app = builder.Build();
         app.MapInvocationsServer();

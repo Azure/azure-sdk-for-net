@@ -35,7 +35,7 @@ internal sealed class TaskTestHost : IDisposable
 
     public TaskRegistry Registry { get; }
 
-    public ResilientTaskBuilder Builder { get; }
+    public DefaultResilientTaskBuilder Builder { get; }
 
     public TaskEngine Engine { get; }
 

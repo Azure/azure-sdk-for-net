@@ -245,7 +245,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                     context.PlatformContext.CallId);
 
                 var conversation = request.HttpContext.RequestServices
-                    .GetRequiredService<TaskDefinition<ConversationInput, ConversationOutput>>();
+                    .GetResilientTask<ConversationInput, ConversationOutput>("conversation");
 
                 // Use the session id as the durable TaskId for multi-turn convergence.
                 string taskId = context.SessionId;

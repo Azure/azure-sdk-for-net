@@ -11,11 +11,23 @@ using Azure.AI.AgentServer.Core.Tasks.Engine;
 namespace Azure.AI.AgentServer.Core.Tasks;
 
 /// <summary>
-/// The default <see cref="ResilientTaskBuilder"/> that records registrations into
-/// the shared <see cref="TaskRegistry"/>.
+/// Records task registrations into the shared <see cref="TaskRegistry"/> and hands back the typed
+/// <see cref="TaskDefinition{TInput, TOutput}"/> invocation handle. Used internally by the flat
+/// <c>AddResilientTask</c>/<c>AddResilientMultiTurnTask</c> extension methods on
+/// <see cref="Microsoft.Extensions.DependencyInjection.IServiceCollection"/> (see
+/// <see cref="ResilientTaskServiceCollectionExtensions"/>), and directly by tests that need a
+/// registrar without a DI container.
 /// </summary>
-internal sealed class DefaultResilientTaskBuilder : ResilientTaskBuilder
+internal sealed class DefaultResilientTaskBuilder
 {
+    internal const string ReflectionTrimWarning =
+        "This overload serializes the task input using reflection-based JSON serialization, which is not " +
+        "compatible with trimming. Use the overload that accepts a JsonTypeInfo<TInput> instead.";
+
+    internal const string ReflectionAotWarning =
+        "This overload serializes the task input using reflection-based JSON serialization, which may require " +
+        "runtime code generation. Use the overload that accepts a JsonTypeInfo<TInput> instead.";
+
     private readonly TaskRegistry _registry;
     private readonly TaskEngineAccessor _engine;
 
@@ -25,27 +37,30 @@ internal sealed class DefaultResilientTaskBuilder : ResilientTaskBuilder
         _engine = engine;
     }
 
-    /// <inheritdoc/>
+    /// <summary>Registers a one-shot task (Python <c>@task</c>).</summary>
     [RequiresUnreferencedCode(ReflectionTrimWarning)]
     [RequiresDynamicCode(ReflectionAotWarning)]
-    public override TaskDefinition<TInput, TOutput> AddTask<TInput, TOutput>(
+    public TaskDefinition<TInput, TOutput> AddTask<TInput, TOutput>(
         string name,
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
         Action<TaskRegistrationOptions>? configure = null)
         => Add(name, handler, multiTurn: false, steerable: false, configure);
 
-    /// <inheritdoc/>
+    /// <summary>Registers a multi-turn task (Python <c>@multi_turn_task</c>), optionally steerable.</summary>
     [RequiresUnreferencedCode(ReflectionTrimWarning)]
     [RequiresDynamicCode(ReflectionAotWarning)]
-    public override TaskDefinition<TInput, TOutput> AddMultiTurnTask<TInput, TOutput>(
+    public TaskDefinition<TInput, TOutput> AddMultiTurnTask<TInput, TOutput>(
         string name,
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
         bool steerable = false,
         Action<TaskRegistrationOptions>? configure = null)
         => Add(name, handler, multiTurn: true, steerable, configure);
 
-    /// <inheritdoc/>
-    public override TaskDefinition<TInput, TOutput> AddTask<TInput, TOutput>(
+    /// <summary>
+    /// Registers a one-shot task using a source-generated <see cref="JsonTypeInfo{T}"/> for the
+    /// input type (Native-AOT / trimming-safe).
+    /// </summary>
+    public TaskDefinition<TInput, TOutput> AddTask<TInput, TOutput>(
         string name,
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
 #pragma warning disable AZC0014 // JsonTypeInfo<T> is the sanctioned Native-AOT escape hatch (see Azure.Search.Documents).
@@ -57,8 +72,11 @@ internal sealed class DefaultResilientTaskBuilder : ResilientTaskBuilder
         return Add(name, handler, multiTurn: false, steerable: false, configure, inputTypeInfo);
     }
 
-    /// <inheritdoc/>
-    public override TaskDefinition<TInput, TOutput> AddMultiTurnTask<TInput, TOutput>(
+    /// <summary>
+    /// Registers a multi-turn task (optionally steerable) using a source-generated
+    /// <see cref="JsonTypeInfo{T}"/> for the input type (Native-AOT / trimming-safe).
+    /// </summary>
+    public TaskDefinition<TInput, TOutput> AddMultiTurnTask<TInput, TOutput>(
         string name,
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
 #pragma warning disable AZC0014 // JsonTypeInfo<T> is the sanctioned Native-AOT escape hatch (see Azure.Search.Documents).

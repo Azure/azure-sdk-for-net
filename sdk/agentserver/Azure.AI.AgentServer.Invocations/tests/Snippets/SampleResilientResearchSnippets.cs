@@ -58,14 +58,13 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             // (In-memory replay would lose the pre-crash buffer, defeating this sample's resilience.)
             services.AddAgentEventStreams(o => o.UseFileBackedReplay());
 
-            // AddResilientTasks records registrations into a live registry that the engine reads
-            // when a task is invoked. The provider-aware overloads were removed (the service-locator
-            // shape is being retired ahead of GA), so resolve the handler's singleton dependencies
-            // from the built container once and capture them in the plain delegate — a DI-resolved
-            // handler wrapped in the delegate. The registry is read lazily at invocation time, so
+            // AddResilientTask/AddResilientMultiTurnTask self-initialize the resilient-tasks
+            // services on first use and register the returned TaskDefinition as a keyed singleton
+            // (keyed by task name), so the handler resolves it with GetResilientTask. The provider-
+            // aware overloads were removed (the service-locator shape is being retired ahead of GA),
+            // so resolve the handler's singleton dependencies from the built container once and
+            // capture them in the plain delegate. The registry is read lazily at invocation time, so
             // registering after the provider is built is fine.
-            ResilientTaskBuilder tasks = services.AddResilientTasks();
-
             ServiceProvider provider = services.BuildServiceProvider();
             AgentEventStreamRegistry streams = provider.GetRequiredService<AgentEventStreamRegistry>();
             ResponsesClient model = provider.GetRequiredService<ResponsesClient>();
@@ -74,7 +73,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             // chain per session (TaskId = research-{sessionId}), and a POST while a turn is
             // in flight is enqueued as steering. Each turn streams a real model per sub-call
             // into the event stream keyed by that turn's invocation id (carried on the input).
-            TaskDefinition<ResearchRequest, ResearchResult> research = tasks.AddMultiTurnTask<ResearchRequest, ResearchResult>(
+            services.AddResilientMultiTurnTask<ResearchRequest, ResearchResult>(
                 "research",
                 (ctx, ct) => RunResearchAsync(
                     streams,
@@ -83,11 +82,6 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                     ctx,
                     ct: ct),
                 steerable: true);
-
-            // The typed TaskDefinition returned at registration is the invocation handle.
-            // Register it so the handler resolves TaskDefinition<ResearchRequest, ResearchResult>
-            // instead of the retired ITaskInvoker service-locator.
-            services.AddSingleton(research);
 
             #endregion
         }
@@ -475,7 +469,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 var registry = request.HttpContext.RequestServices
                     .GetRequiredService<AgentEventStreamRegistry>();
                 var research = request.HttpContext.RequestServices
-                    .GetRequiredService<TaskDefinition<ResearchRequest, ResearchResult>>();
+                    .GetResilientTask<ResearchRequest, ResearchResult>("research");
 
                 string taskId = TaskIdForSession(context.SessionId);
                 string invId = context.InvocationId;
@@ -559,7 +553,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 CancellationToken cancellationToken)
             {
                 var research = request.HttpContext.RequestServices
-                    .GetRequiredService<TaskDefinition<ResearchRequest, ResearchResult>>();
+                    .GetResilientTask<ResearchRequest, ResearchResult>("research");
 
                 string taskId = s_taskIdByInvocation.TryGetValue(invocationId, out var mapped)
                     ? mapped

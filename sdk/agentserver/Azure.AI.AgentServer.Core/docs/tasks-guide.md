@@ -134,8 +134,7 @@ conversation) and stays alive between turns until you end it.
 
 ```csharp
 TaskDefinition<string, string> echo = builder.Services
-    .AddResilientTasks()
-    .AddTask<string, string>("echo", async (ctx, ct) =>
+    .AddResilientTask<string, string>("echo", async (ctx, ct) =>
     {
         return $"you said: {ctx.Input}";
     });
@@ -148,8 +147,7 @@ string result = await echo.RunAsync("hello");
 
 ```csharp
 TaskDefinition<string, string> chat = builder.Services
-    .AddResilientTasks()
-    .AddMultiTurnTask<string, string>("chat", async (ctx, ct) =>
+    .AddResilientMultiTurnTask<string, string>("chat", async (ctx, ct) =>
     {
         // ctx.Input is this turn's message. Persist application state explicitly.
         return $"reply to: {ctx.Input}";
@@ -294,7 +292,7 @@ running*. The new input is queued; the running turn observes
 
 ```csharp
 TaskDefinition<string, string> assistant =
-    builder.AddMultiTurnTask<string, string>("assistant", handler, steerable: true);
+    services.AddResilientMultiTurnTask<string, string>("assistant", handler, steerable: true);
 
 // Caller pivots mid-turn — both inputs use the SAME explicit chain id, so the
 // second one steers the running task.
@@ -378,7 +376,7 @@ the `ErrorType`, `Message`, `Attempts`, and the last error.
 
 ```csharp
 var policy = new TaskRetryPolicy { MaxAttempts = 5 };
-builder.AddTask<Order, Receipt>("charge", handler, o => o.Retry = policy);
+services.AddResilientTask<Order, Receipt>("charge", handler, o => o.Retry = policy);
 ```
 
 `TaskRetryPolicy` expresses the delay between attempts as an `Azure.Core.DelayStrategy` (the `Delay`
@@ -432,7 +430,7 @@ recovery to reset the clock. When the timeout fires it is **cooperative**: it si
 
 ```csharp
 // Lower the budget to 2 minutes (values above the 1-day cap are rejected at registration).
-builder.AddTask<Doc, Summary>("summarize", handler, o => o.Timeout = TimeSpan.FromMinutes(2));
+services.AddResilientTask<Doc, Summary>("summarize", handler, o => o.Timeout = TimeSpan.FromMinutes(2));
 ```
 
 ### 4.11 Shutdown
@@ -473,24 +471,30 @@ It is idempotent — a no-op if the chain is already gone.
 ### 5.1 Registration
 
 ```csharp
-ResilientTaskBuilder AddResilientTasks(this IServiceCollection services,
-                                        TokenCredential? credential = null);
+IServiceCollection AddResilientTasks(this IServiceCollection services,
+                                      TokenCredential? credential = null);
 
-TaskDefinition<TInput, TOutput> AddTask<TInput, TOutput>(
+TaskDefinition<TInput, TOutput> AddResilientTask<TInput, TOutput>(
+    this IServiceCollection services,
     string name,
     Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
     Action<TaskRegistrationOptions>? configure = null);
 
-TaskDefinition<TInput, TOutput> AddMultiTurnTask<TInput, TOutput>(
+TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput>(
+    this IServiceCollection services,
     string name,
     Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
     bool steerable = false,
     Action<TaskRegistrationOptions>? configure = null);
 ```
 
-`credential` is required when the host is running in Foundry hosted mode and the
-framework selects hosted task storage. Local development uses the file-backed
-store and does not require a credential.
+`AddResilientTask`/`AddResilientMultiTurnTask` self-initialize the resilient-tasks
+services on first use, so `AddResilientTasks()` is optional — call it explicitly only
+when you need to supply a `credential`, and do so before registering any task (a
+credential cannot be attached once the services are already set up). `credential` is
+required when the host is running in Foundry hosted mode and the framework selects
+hosted task storage; local development uses the file-backed store and does not require
+one.
 
 ### 5.2 `TaskDefinition<TInput, TOutput>`
 
@@ -501,15 +505,11 @@ Task<TaskRun<TOutput>?> GetActiveRunAsync(string taskId, CancellationToken cance
 Task<TaskRun<TOutput>?> GetActiveRunAsync(string taskId, string inputId, CancellationToken cancellationToken = default);
 ```
 
-The handle is returned by `AddTask`/`AddMultiTurnTask`; register it in DI
-(`services.AddSingleton(def)`) to resolve it in request handlers.
-
-> If several tasks share the same `<TInput, TOutput>` pair, registering each handle as
-> `AddSingleton(def)` makes `GetRequiredService<TaskDefinition<TInput, TOutput>>()`
-> ambiguous — DI returns the last registration. Either use keyed registrations
-> (`AddKeyedSingleton(def.Name, def)` / `GetRequiredKeyedService<...>(name)`), or resolve
-> `IEnumerable<TaskDefinition<TInput, TOutput>>` and select by `Name`. When each pair is
-> unique (the common case), a plain `AddSingleton(def)` is enough.
+The handle is returned by `AddResilientTask`/`AddResilientMultiTurnTask`, which also
+register it as a **keyed singleton** service — keyed by `name` — so resolution is never
+ambiguous even when several tasks share the same `<TInput, TOutput>` pair. Resolve it in
+a request handler with `IServiceProvider.GetResilientTask<TInput, TOutput>(name)`
+(equivalent to `GetRequiredKeyedService<TaskDefinition<TInput, TOutput>>(name)`).
 
 Both `RunAsync` and `StartAsync` perform a storage round-trip and so are async.
 `StartAsync` returns once the run has been durably created; awaiting the returned
@@ -572,7 +572,7 @@ is set (§4.8).
 ### 6.1 Multi-turn agent (the common case)
 
 ```csharp
-builder.AddMultiTurnTask<string, string>("agent", async (ctx, ct) =>
+services.AddResilientMultiTurnTask<string, string>("agent", async (ctx, ct) =>
 {
     FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
         $"agent-history/{ctx.TaskId}", credential);
@@ -602,7 +602,7 @@ written, the recovered handler re-charges with the *same* idempotency key, so th
 gateway dedupes it.
 
 ```csharp
-builder.AddTask<Order, Receipt>("charge", async (ctx, ct) =>
+services.AddResilientTask<Order, Receipt>("charge", async (ctx, ct) =>
 {
     FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
         $"billing/{ctx.TaskId}", credential);
@@ -645,7 +645,7 @@ builder.AddTask<Order, Receipt>("charge", async (ctx, ct) =>
 ### 6.3 Steering — interruptible long turn
 
 ```csharp
-builder.AddMultiTurnTask<string, string>("writer", async (ctx, ct) =>
+services.AddResilientMultiTurnTask<string, string>("writer", async (ctx, ct) =>
 {
     var sb = new StringBuilder();
     await foreach (var token in Model.StreamAsync(ctx.Input, ct))
@@ -660,7 +660,7 @@ builder.AddMultiTurnTask<string, string>("writer", async (ctx, ct) =>
 ### 6.4 Graceful shutdown — `ExitForRecoveryAsync`
 
 ```csharp
-builder.AddTask<Job, Result>("batch", async (ctx, ct) =>
+services.AddResilientTask<Job, Result>("batch", async (ctx, ct) =>
 {
     foreach (var item in ctx.Input.Items)
     {
@@ -760,7 +760,7 @@ The second caller either attaches to the first's in-flight run (one-shot converg
 gets queued (multi-turn, when steering is enabled), or sees a `ResilientTaskException` (`Conflict`).
 
 **Does the framework retry by default?** No. Configure retry at registration via
-`TaskRegistrationOptions.Retry` (e.g. `builder.AddTask<TIn, TOut>(name, handler,
+`TaskRegistrationOptions.Retry` (e.g. `services.AddResilientTask<TIn, TOut>(name, handler,
 o => o.Retry = new TaskRetryPolicy());`) to opt in. Without a policy a handler
 runs once and surfaces the exception.
 

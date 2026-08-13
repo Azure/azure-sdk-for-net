@@ -9,8 +9,8 @@ namespace Azure.AI.AgentServer.Core.Tasks;
 
 /// <summary>
 /// A typed handle to a registered resilient task, returned by
-/// <see cref="ResilientTaskBuilder.AddTask{TInput, TOutput}(string, System.Func{TaskContext{TInput}, System.Threading.CancellationToken, System.Threading.Tasks.Task{TOutput}}, System.Action{TaskRegistrationOptions}?)"/>
-/// and <see cref="ResilientTaskBuilder.AddMultiTurnTask{TInput, TOutput}(string, System.Func{TaskContext{TInput}, System.Threading.CancellationToken, System.Threading.Tasks.Task{TOutput}}, bool, System.Action{TaskRegistrationOptions}?)"/>.
+/// <see cref="ResilientTaskServiceCollectionExtensions.AddResilientTask{TInput, TOutput}(Microsoft.Extensions.DependencyInjection.IServiceCollection, string, System.Func{TaskContext{TInput}, System.Threading.CancellationToken, System.Threading.Tasks.Task{TOutput}}, System.Action{TaskRegistrationOptions}?)"/>
+/// and <see cref="ResilientTaskServiceCollectionExtensions.AddResilientMultiTurnTask{TInput, TOutput}(Microsoft.Extensions.DependencyInjection.IServiceCollection, string, System.Func{TaskContext{TInput}, System.Threading.CancellationToken, System.Threading.Tasks.Task{TOutput}}, bool, System.Action{TaskRegistrationOptions}?)"/>.
 /// The task name and its <typeparamref name="TInput"/>/<typeparamref name="TOutput"/> types are
 /// bound once at registration, so starting or running the task is strongly typed — an input or
 /// output that does not match the registration is a compile-time error rather than a runtime failure.

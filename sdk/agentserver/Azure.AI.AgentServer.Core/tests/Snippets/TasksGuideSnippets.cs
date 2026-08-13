@@ -23,9 +23,8 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
         // §3 Hello world — one-shot registration returns a typed TaskDefinition.
         public static async Task<string> OneShotHelloWorld(IServiceCollection services)
         {
-            TaskDefinition<string, string> echo = services
-                .AddResilientTasks()
-                .AddTask<string, string>("echo", async (ctx, ct) =>
+            TaskDefinition<string, string> echo = services.AddResilientTask<string, string>(
+                "echo", async (ctx, ct) =>
                 {
                     await Task.Yield();
                     return $"you said: {ctx.Input}";
@@ -45,9 +44,8 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
         // §3 Hello world — multi-turn chain.
         public static async Task MultiTurnChain(IServiceCollection services)
         {
-            TaskDefinition<string, string> chat = services
-                .AddResilientTasks()
-                .AddMultiTurnTask<string, string>("chat", async (ctx, ct) =>
+            TaskDefinition<string, string> chat = services.AddResilientMultiTurnTask<string, string>(
+                "chat", async (ctx, ct) =>
                 {
                     await Task.Yield();
                     return $"reply to: {ctx.Input}";
@@ -103,8 +101,8 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
             IServiceCollection services,
             Func<TaskContext<string>, CancellationToken, Task<string>> handler)
         {
-            TaskDefinition<string, string> assistant = services.AddResilientTasks()
-                .AddMultiTurnTask<string, string>("assistant", handler, steerable: true);
+            TaskDefinition<string, string> assistant = services.AddResilientMultiTurnTask<string, string>(
+                "assistant", handler, steerable: true);
 
             await using ServiceProvider provider = services.BuildServiceProvider();
             await StartHostedServicesAsync(provider);
@@ -127,8 +125,7 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
         {
             // Retries compose an Azure.Core DelayStrategy — exponential is the default.
             TaskRetryPolicy policy = new() { MaxAttempts = 5 };
-            services.AddResilientTasks()
-                .AddTask<string, string>("charge", handler, o => o.Retry = policy);
+            services.AddResilientTask<string, string>("charge", handler, o => o.Retry = policy);
 
             _ = new TaskRetryPolicy { MaxAttempts = 3, Delay = DelayStrategy.CreateFixedDelayStrategy(TimeSpan.FromSeconds(1)) };
             _ = new TaskRetryPolicy { MaxAttempts = 3, Delay = DelayStrategy.CreateExponentialDelayStrategy(TimeSpan.FromSeconds(1)) };
@@ -140,8 +137,7 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
             IServiceCollection services,
             Func<TaskContext<string>, CancellationToken, Task<string>> handler)
         {
-            services.AddResilientTasks()
-                .AddTask<string, string>("summarize", handler, o => o.Timeout = TimeSpan.FromMinutes(2));
+            services.AddResilientTask<string, string>("summarize", handler, o => o.Timeout = TimeSpan.FromMinutes(2));
         }
 
         // §4.11 Shutdown — leave the work resumable.
