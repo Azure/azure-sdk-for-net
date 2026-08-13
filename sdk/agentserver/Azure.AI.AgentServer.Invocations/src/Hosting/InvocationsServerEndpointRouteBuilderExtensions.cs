@@ -105,7 +105,7 @@ public static class InvocationsServerEndpointRouteBuilderExtensions
             InvocationHandler userHandler) =>
         {
             await endpointHandler.HandleAsync(httpContext, userHandler);
-        });
+        }).WithOrder(int.MinValue);
 
         group.WithTags("Invocations");
 

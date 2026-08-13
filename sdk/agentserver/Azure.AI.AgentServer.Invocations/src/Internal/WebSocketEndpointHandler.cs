@@ -4,7 +4,9 @@
 using System.Diagnostics;
 using System.Net.WebSockets;
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Invocations.Voice;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Azure.AI.AgentServer.Invocations.Internal;
@@ -27,8 +29,6 @@ namespace Azure.AI.AgentServer.Invocations.Internal;
 /// </remarks>
 internal sealed class WebSocketEndpointHandler
 {
-    private const string SessionIdResponseHeader = PlatformHeaders.SessionId;
-
     private readonly InvocationsActivitySource _activitySource;
     private readonly ILogger<WebSocketEndpointHandler> _logger;
 
@@ -45,6 +45,14 @@ internal sealed class WebSocketEndpointHandler
     /// </summary>
     internal async Task HandleAsync(HttpContext httpContext, InvocationHandler handler)
     {
+        var registeredVoiceHandler = httpContext.RequestServices.GetService<VoiceHandler>();
+        if (registeredVoiceHandler is not null &&
+            !ReferenceEquals(handler, registeredVoiceHandler))
+        {
+            httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            return;
+        }
+
         // If the handler does not derive from InvocationWebSocketHandler, refuse
         // the upgrade with HTTP 404 — "endpoint not registered" semantics so a
         // missing handler fails fast instead of accepting and immediately closing.
@@ -62,15 +70,10 @@ internal sealed class WebSocketEndpointHandler
             return;
         }
 
-        // Per-connection identifiers. Honour the platform-injected
-        // FOUNDRY_AGENT_SESSION_ID so HTTP and WebSocket transports on the same
-        // container report the same session ID; fall back to a fresh UUID when
-        // the platform does not inject one. Matches the HTTP precedence used by
-        // POST /invocations (minus the agent_session_id query-param override,
-        // which has no ergonomic equivalent on a long-lived WS connection).
-        var sessionId = !string.IsNullOrEmpty(FoundryEnvironment.SessionId)
-            ? FoundryEnvironment.SessionId!
-            : Guid.NewGuid().ToString();
+        // Reuse the same query → environment → UUID precedence as POST
+        // /invocations. Bridge reconnects supply the stable agent_session_id on
+        // each new WebSocket upgrade.
+        var sessionId = SessionIdResolver.Resolve(httpContext.Request);
 
         // WebSocket has no per-message invocation ID — synthesise one so the
         // context contract (which requires a non-empty InvocationId) holds.
@@ -81,13 +84,6 @@ internal sealed class WebSocketEndpointHandler
         var platformContext = PlatformContext.FromRequest(httpContext.Request);
         var context = new InvocationContext(invocationId, sessionId, clientHeaders, queryParams, platformContext);
 
-        // Surface the session ID on the upgrade response headers so clients can
-        // correlate the connection without having to parse the close frame.
-        if (!string.IsNullOrEmpty(sessionId))
-        {
-            httpContext.Response.Headers[SessionIdResponseHeader] = sessionId;
-        }
-
         // Propagate invocation/session/x-request-id baggage onto the current request
         // Activity for downstream correlation. Reuses the same helper the HTTP
         // `POST /invocations` endpoint uses so HTTP and WS paths produce
@@ -96,7 +92,7 @@ internal sealed class WebSocketEndpointHandler
         // Activity, so any spans the handler starts inherit it directly.
         _activitySource.PropagateInvocationBaggage(context, httpContext.Request.Headers);
 
-        using var logScope = _logger.BeginScope(new Dictionary<string, object>
+        using var logScope = TryBeginScope(new Dictionary<string, object>
         {
             ["SessionId"] = sessionId,
             ["InvocationId"] = invocationId,
@@ -115,57 +111,95 @@ internal sealed class WebSocketEndpointHandler
             }
             catch (Exception acceptEx)
             {
-                _logger.LogError(
+                closeCode = InvocationsWebSocketConstants.CloseInternalError;
+                errorCode = InvocationsWebSocketConstants.ErrorCodeAcceptFailed;
+                TryLogError(
                     acceptEx,
                     "WebSocket accept failed for session {SessionId}",
                     sessionId);
-                closeCode = InvocationsWebSocketConstants.CloseInternalError;
-                errorCode = InvocationsWebSocketConstants.ErrorCodeAcceptFailed;
                 throw;
             }
 
-            try
+            if (webSocketHandler is VoiceHandler voiceHandler)
             {
-                await webSocketHandler.HandleWebSocketAsync(webSocket, context, httpContext.RequestAborted);
+                var connection = new InvocationsWebSocketConnection(webSocket);
+                var outcome = await voiceHandler.HandleWebSocketConnectionAsync(
+                    connection,
+                    context,
+                    httpContext.RequestAborted);
+                closeCode = outcome.Code;
+                errorCode = outcome.ErrorCode;
+                var closeException = await connection.CloseAsync(outcome.Status, outcome.Reason);
+                webSocket = null;
+
+                if (outcome.Exception is not null)
+                {
+                    TryLogError(
+                        outcome.Exception,
+                        "Voice connection failed for session {SessionId}",
+                        sessionId);
+                }
+                if (outcome.CleanupException is not null)
+                {
+                    TryLogError(
+                        outcome.CleanupException,
+                        "Voice cleanup callback raised for session {SessionId}",
+                        sessionId);
+                }
+                if (closeException is not null)
+                {
+                    TryLogDebug(
+                        closeException,
+                        "Error closing WebSocket session {SessionId}",
+                        sessionId);
+                }
             }
-            catch (OperationCanceledException oce)
-                when (oce.CancellationToken == httpContext.RequestAborted
-                      && httpContext.RequestAborted.IsCancellationRequested)
+            else
             {
-                // Connection aborted (client disconnect / server shutdown). Treat
-                // as a clean close — the socket is already gone, so emit a normal
-                // close event and let the caller observe the cancellation.
-                //
-                // The token-identity check (`oce.CancellationToken == httpContext.RequestAborted`)
-                // distinguishes shutdown-driven cancellation from a handler-internal
-                // OperationCanceledException (e.g., a handler's own timeout CTS firing
-                // concurrently with shutdown) — those should still surface as close
-                // code 1011 so real handler bugs aren't masked.
-                closeCode = InvocationsWebSocketConstants.CloseNormal;
-            }
-            catch (Exception ex)
-            {
-                // Handler exception details flow through this LogError(...) only —
-                // they are deliberately NOT included in the close-event log line
-                // so application stack traces never leak into the structured
-                // metric stream.
-                _logger.LogError(
-                    ex,
-                    "WebSocket handler raised for session {SessionId}",
-                    sessionId);
-                closeCode = InvocationsWebSocketConstants.CloseInternalError;
-                errorCode = InvocationsWebSocketConstants.ErrorCodeInternalError;
+                try
+                {
+                    await webSocketHandler.HandleWebSocketAsync(
+                        webSocket,
+                        context,
+                        httpContext.RequestAborted);
+                }
+                catch (OperationCanceledException oce)
+                    when (oce.CancellationToken == httpContext.RequestAborted
+                          && httpContext.RequestAborted.IsCancellationRequested)
+                {
+                    closeCode = InvocationsWebSocketConstants.CloseNormal;
+                }
+                catch (Exception exception)
+                {
+                    closeCode = InvocationsWebSocketConstants.CloseInternalError;
+                    errorCode = InvocationsWebSocketConstants.ErrorCodeInternalError;
+                    TryLogError(
+                        exception,
+                        "WebSocket handler raised for session {SessionId}",
+                        sessionId);
+                }
             }
         }
         finally
         {
             var durationMs = GetElapsedMilliseconds(startTimestamp);
             await CloseSocketAsync(webSocket, closeCode, sessionId);
-            EmitCloseEventLog(sessionId, closeCode, durationMs, errorCode);
+
+            try
+            {
+                EmitCloseEventLog(sessionId, closeCode, durationMs, errorCode);
+            }
+            catch
+            {
+                // Telemetry is observational and cannot alter transport finalization.
+            }
         }
     }
 
-    private async Task CloseSocketAsync(WebSocket? webSocket, int closeCode, string sessionId)
+    private async Task CloseSocketAsync(
+        WebSocket? webSocket,
+        int closeCode,
+        string sessionId)
     {
         if (webSocket is null)
         {
@@ -195,8 +229,7 @@ internal sealed class WebSocketEndpointHandler
         }
         catch (Exception ex) when (ex is WebSocketException or ObjectDisposedException or OperationCanceledException)
         {
-            // Connection already gone — nothing to recover.
-            _logger.LogDebug(ex, "Error closing WebSocket session {SessionId}", sessionId);
+            TryLogDebug(ex, "Error closing WebSocket session {SessionId}", sessionId);
         }
         finally
         {
@@ -251,6 +284,64 @@ internal sealed class WebSocketEndpointHandler
                 closeCode,
                 durationMs,
                 errorCode);
+        }
+    }
+
+    private void TryLogError(Exception exception, string message, string sessionId)
+    {
+        try
+        {
+            _logger.LogError(exception, message, sessionId);
+        }
+        catch
+        {
+            // Telemetry callbacks cannot alter connection finalization.
+        }
+    }
+
+    private void TryLogDebug(Exception exception, string message, string sessionId)
+    {
+        try
+        {
+            _logger.LogDebug(exception, message, sessionId);
+        }
+        catch
+        {
+            // Telemetry callbacks cannot alter connection finalization.
+        }
+    }
+
+    private IDisposable TryBeginScope(IReadOnlyDictionary<string, object> state)
+    {
+        try
+        {
+            return new SafeLogScope(_logger.BeginScope(state));
+        }
+        catch
+        {
+            return SafeLogScope.Empty;
+        }
+    }
+
+    private sealed class SafeLogScope : IDisposable
+    {
+        internal static SafeLogScope Empty { get; } = new(null);
+
+        private IDisposable? _inner;
+
+        internal SafeLogScope(IDisposable? inner) => _inner = inner;
+
+        public void Dispose()
+        {
+            var inner = Interlocked.Exchange(ref _inner, null);
+            try
+            {
+                inner?.Dispose();
+            }
+            catch
+            {
+                // Logging scope disposal is observational only.
+            }
         }
     }
 }

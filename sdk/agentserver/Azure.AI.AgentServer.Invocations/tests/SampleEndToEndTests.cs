@@ -5,11 +5,13 @@ using System.Net;
 using System.Text;
 using System.Text.Json;
 using Azure.AI.AgentServer.Invocations.Tests.Snippets;
+using Azure.AI.AgentServer.Invocations.Voice;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging.Abstractions;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Invocations.Tests;
@@ -486,6 +488,141 @@ public class SampleEndToEndTests
         await SendJsonAsync(ws, new { type = "bye" });
     }
 
+    [Test]
+    public async Task SampleVoice1_TypedRelay_ExplicitlyAcknowledgesAndReplies()
+    {
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddAgentServerCore();
+        builder.Services.AddVoice<Snippets.SampleVoice1Snippets.VoiceSupportHandler>();
+        await using var app = builder.Build();
+        app.UseAgentServerCore();
+        app.MapInvocationsServer();
+        await app.StartAsync();
+        var wsClient = app.GetTestServer().CreateWebSocketClient();
+        using var ws = await wsClient.ConnectAsync(
+            new Uri(app.GetTestServer().BaseAddress, "invocations_ws"),
+            CancellationToken.None);
+
+        await SendJsonAsync(ws, new
+        {
+            type = "session.start",
+            id = "m_start",
+            ts = "2026-08-13T00:00:00.000Z",
+            protocol_version = "1.0",
+            reconnect = false,
+            response_timeouts = new
+            {
+                first_output_ms = 5000,
+                idle_ms = 8000,
+                max_duration_ms = 60000,
+            },
+        });
+        var ready = await ReceiveJsonAsync(ws);
+        Assert.That(ready.GetProperty("type").GetString(), Is.EqualTo("session.ready"));
+
+        await SendJsonAsync(ws, new
+        {
+            type = "user.message",
+            id = "m_user",
+            ts = "2026-08-13T00:00:01.000Z",
+            item_id = "in_1",
+            content = new[] { new { type = "input_text", text = "hello" } },
+        });
+
+        var responseTypes = new List<string>();
+        string? outputText = null;
+        while (!responseTypes.Contains("response.done", StringComparer.Ordinal))
+        {
+            var frame = await ReceiveJsonAsync(ws);
+            var type = frame.GetProperty("type").GetString()!;
+            responseTypes.Add(type);
+            if (type == "response.output_text.done")
+            {
+                outputText = frame.GetProperty("text").GetString();
+            }
+        }
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(responseTypes, Is.EqualTo(new[]
+            {
+                "response.created",
+                "response.output_text.done",
+                "response.done",
+            }));
+            Assert.That(outputText, Is.EqualTo("You said: hello"));
+        });
+        await ws.CloseOutputAsync(
+            System.Net.WebSockets.WebSocketCloseStatus.NormalClosure,
+            "done",
+            CancellationToken.None);
+    }
+
+    [Test]
+    public async Task SampleVoice1_PreResponseTimeoutCancelsApplicationGeneration()
+    {
+        DelayedVoiceSupportHandler.Reset();
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddAgentServerCore();
+        builder.Services.AddVoice<DelayedVoiceSupportHandler>();
+        await using var app = builder.Build();
+        app.UseAgentServerCore();
+        app.MapInvocationsServer();
+        await app.StartAsync();
+        var wsClient = app.GetTestServer().CreateWebSocketClient();
+        using var ws = await wsClient.ConnectAsync(
+            new Uri(app.GetTestServer().BaseAddress, "invocations_ws"),
+            CancellationToken.None);
+
+        await SendJsonAsync(ws, new
+        {
+            type = "session.start",
+            id = "m_start",
+            ts = "2026-08-13T00:00:00.000Z",
+            protocol_version = "1.0",
+            reconnect = false,
+            response_timeouts = new
+            {
+                first_output_ms = 5000,
+                idle_ms = 8000,
+                max_duration_ms = 60000,
+            },
+        });
+        _ = await ReceiveJsonAsync(ws);
+        await SendJsonAsync(ws, new
+        {
+            type = "user.message",
+            id = "m_user",
+            ts = "2026-08-13T00:00:01.000Z",
+            item_id = "in_1",
+            content = new[] { new { type = "input_text", text = "hello" } },
+        });
+        await DelayedVoiceSupportHandler.Started.Task.WaitAsync(TimeSpan.FromSeconds(2));
+
+        try
+        {
+            await SendJsonAsync(ws, new
+            {
+                type = "response.timeout",
+                id = "m_timeout",
+                ts = "2026-08-13T00:00:02.000Z",
+                item_ids = new[] { "in_1" },
+                stage = "first_output",
+            });
+
+            await DelayedVoiceSupportHandler.Cancelled.Task.WaitAsync(TimeSpan.FromSeconds(2));
+        }
+        finally
+        {
+            await ws.CloseOutputAsync(
+                System.Net.WebSockets.WebSocketCloseStatus.NormalClosure,
+                "done",
+                CancellationToken.None);
+        }
+    }
+
     private static async Task<JsonElement> ReceiveJsonAsync(System.Net.WebSockets.WebSocket ws)
     {
         var buffer = new byte[8192];
@@ -504,6 +641,43 @@ public class SampleEndToEndTests
             System.Net.WebSockets.WebSocketMessageType.Text,
             endOfMessage: true,
             CancellationToken.None);
+    }
+
+    private sealed class DelayedVoiceSupportHandler : Snippets.SampleVoice1Snippets.VoiceSupportHandler
+    {
+        public DelayedVoiceSupportHandler()
+            : base(NullLogger<Snippets.SampleVoice1Snippets.VoiceSupportHandler>.Instance)
+        {
+        }
+
+        public static TaskCompletionSource Started { get; private set; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public static TaskCompletionSource Cancelled { get; private set; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public static void Reset()
+        {
+            Started = new(TaskCreationOptions.RunContinuationsAsynchronously);
+            Cancelled = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        }
+
+        protected override async Task<string> GenerateAnswerAsync(
+            string input,
+            CancellationToken cancellationToken)
+        {
+            Started.TrySetResult();
+            try
+            {
+                await Task.Delay(Timeout.InfiniteTimeSpan, cancellationToken);
+                return input;
+            }
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+            {
+                Cancelled.TrySetResult();
+                throw;
+            }
+        }
     }
 
     // ═══════════════════════════════════════════════════════════════════

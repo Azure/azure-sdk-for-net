@@ -70,10 +70,9 @@ public abstract class InvocationWebSocketHandler : InvocationHandler
     /// is preserved unchanged.
     /// </param>
     /// <param name="context">
-    /// Per-connection context. The session ID honours
-    /// <c>FOUNDRY_AGENT_SESSION_ID</c> (matching the HTTP
-    /// <c>POST /invocations</c> precedence, minus the query-param override
-    /// which has no ergonomic equivalent on a long-lived WS connection).
+    /// Per-connection context. The session ID uses the same
+    /// <c>agent_session_id</c> query → <c>FOUNDRY_AGENT_SESSION_ID</c>
+    /// environment → generated UUID precedence as HTTP invocations.
     /// The invocation ID is a generated UUID — WebSocket has no
     /// per-message invocation ID.
     /// </param>
