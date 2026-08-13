@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceLinker.Models;
 
@@ -62,6 +63,7 @@ namespace Azure.ResourceManager.ServiceLinker
     [ModelReaderWriterBuildable(typeof(PermissionsMissingDryrunPrerequisiteResult))]
     [ModelReaderWriterBuildable(typeof(RawValueSecretInfo))]
     [ModelReaderWriterBuildable(typeof(ResourceList))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SecretAuthInfo))]
     [ModelReaderWriterBuildable(typeof(SecretBaseInfo))]
     [ModelReaderWriterBuildable(typeof(SelfHostedServerTargetService))]
