@@ -14,11 +14,11 @@ namespace Azure.Data.AppConfiguration
     public readonly partial struct StatusOverride : IEquatable<StatusOverride>
     {
         private readonly string _value;
-        /// <summary> None. </summary>
+        /// <summary> No status override. </summary>
         private const string NoneValue = "None";
-        /// <summary> Enabled. </summary>
+        /// <summary> Overrides the status to enabled. </summary>
         private const string EnabledValue = "Enabled";
-        /// <summary> Disabled. </summary>
+        /// <summary> Overrides the status to disabled. </summary>
         private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="StatusOverride"/>. </summary>
@@ -31,13 +31,13 @@ namespace Azure.Data.AppConfiguration
             _value = value;
         }
 
-        /// <summary> None. </summary>
+        /// <summary> No status override. </summary>
         public static StatusOverride None { get; } = new StatusOverride(NoneValue);
 
-        /// <summary> Enabled. </summary>
+        /// <summary> Overrides the status to enabled. </summary>
         public static StatusOverride Enabled { get; } = new StatusOverride(EnabledValue);
 
-        /// <summary> Disabled. </summary>
+        /// <summary> Overrides the status to disabled. </summary>
         public static StatusOverride Disabled { get; } = new StatusOverride(DisabledValue);
 
         /// <summary> Determines if two <see cref="StatusOverride"/> values are the same. </summary>
