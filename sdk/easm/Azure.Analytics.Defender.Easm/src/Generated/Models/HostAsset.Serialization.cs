@@ -84,11 +84,11 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
-            if (Optional.IsCollectionDefined(IpAddresses))
+            if (Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
-                foreach (ObservedString item in IpAddresses)
+                foreach (ObservedString item in IPAddresses)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -244,11 +244,11 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IpBlocks))
+            if (Optional.IsCollectionDefined(IPBlocks))
             {
                 writer.WritePropertyName("ipBlocks"u8);
                 writer.WriteStartArray();
-                foreach (IpBlock item in IpBlocks)
+                foreach (IPBlock item in IPBlocks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -349,21 +349,21 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Ipv4))
+            if (Optional.IsCollectionDefined(IPv4))
             {
                 writer.WritePropertyName("ipv4"u8);
                 writer.WriteStartArray();
-                foreach (ObservedBoolean item in Ipv4)
+                foreach (ObservedBoolean item in IPv4)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Ipv6))
+            if (Optional.IsCollectionDefined(IPv6))
             {
                 writer.WritePropertyName("ipv6"u8);
                 writer.WriteStartArray();
-                foreach (ObservedBoolean item in Ipv6)
+                foreach (ObservedBoolean item in IPv6)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -417,7 +417,7 @@ namespace Azure.Analytics.Defender.Easm
             IList<ResourceUri> resourceUrls = default;
             IList<ScanMetadata> scanMetadata = default;
             IList<ObservedLong> asns = default;
-            IList<IpBlock> ipBlocks = default;
+            IList<IPBlock> ipBlocks = default;
             IList<ObservedString> responseBodies = default;
             DomainAsset domainAsset = default;
             IList<ObservedBoolean> nsRecord = default;
@@ -428,8 +428,8 @@ namespace Azure.Analytics.Defender.Easm
             IList<SslServerConfig> sslServerConfig = default;
             IList<ObservedBoolean> isWildcard = default;
             IList<BannerDetails> banners = default;
-            IList<ObservedBoolean> ipv4 = default;
-            IList<ObservedBoolean> ipv6 = default;
+            IList<ObservedBoolean> iPv4 = default;
+            IList<ObservedBoolean> iPv6 = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("host"u8))
@@ -680,10 +680,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<IpBlock> array = new List<IpBlock>();
+                    List<IPBlock> array = new List<IPBlock>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IpBlock.DeserializeIpBlock(item, options));
+                        array.Add(IPBlock.DeserializeIPBlock(item, options));
                     }
                     ipBlocks = array;
                     continue;
@@ -834,7 +834,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         array.Add(ObservedBoolean.DeserializeObservedBoolean(item, options));
                     }
-                    ipv4 = array;
+                    iPv4 = array;
                     continue;
                 }
                 if (prop.NameEquals("ipv6"u8))
@@ -848,7 +848,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         array.Add(ObservedBoolean.DeserializeObservedBoolean(item, options));
                     }
-                    ipv6 = array;
+                    iPv6 = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -878,7 +878,7 @@ namespace Azure.Analytics.Defender.Easm
                 resourceUrls ?? new ChangeTrackingList<ResourceUri>(),
                 scanMetadata ?? new ChangeTrackingList<ScanMetadata>(),
                 asns ?? new ChangeTrackingList<ObservedLong>(),
-                ipBlocks ?? new ChangeTrackingList<IpBlock>(),
+                ipBlocks ?? new ChangeTrackingList<IPBlock>(),
                 responseBodies ?? new ChangeTrackingList<ObservedString>(),
                 domainAsset,
                 nsRecord ?? new ChangeTrackingList<ObservedBoolean>(),
@@ -889,8 +889,8 @@ namespace Azure.Analytics.Defender.Easm
                 sslServerConfig ?? new ChangeTrackingList<SslServerConfig>(),
                 isWildcard ?? new ChangeTrackingList<ObservedBoolean>(),
                 banners ?? new ChangeTrackingList<BannerDetails>(),
-                ipv4 ?? new ChangeTrackingList<ObservedBoolean>(),
-                ipv6 ?? new ChangeTrackingList<ObservedBoolean>());
+                iPv4 ?? new ChangeTrackingList<ObservedBoolean>(),
+                iPv6 ?? new ChangeTrackingList<ObservedBoolean>());
         }
     }
 }
