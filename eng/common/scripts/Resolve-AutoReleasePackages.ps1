@@ -10,8 +10,9 @@ commit, this script:
      'auto-release' label.
   2. Builds a PR diff object (New-GitHubPullRequestDiffObject) from the PR's changed files and reuses
      the repo's existing package-detection logic (Get-PrPkgProperties) to identify the changed packages
-      (honoring triggering paths and deleted files while ignoring files directly under service folders),
-      excluding validation-only packages. Get-PrPkgProperties delegates to each repo's own
+      (honoring triggering paths and deleted files while ignoring only files directly under
+      sdk/<service>/, not files in package subdirectories), excluding validation-only packages.
+      Get-PrPkgProperties delegates to each repo's own
      Get-AllPackageInfoFromRepo (language-settings.ps1), so this script works for any language repo.
   3. Intersects those packages with this pipeline's declared artifacts and emits Azure DevOps output
      variables consumed by the release stages. Both consumption styles are emitted:
