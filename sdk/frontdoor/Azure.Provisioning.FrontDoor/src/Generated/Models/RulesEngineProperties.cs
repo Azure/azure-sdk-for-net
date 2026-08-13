@@ -6,15 +6,13 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.FrontDoor
 {
     /// <summary> The JSON object that contains the properties required to create a Rules Engine Configuration. </summary>
-    internal partial class RulesEngineProperties : ProvisionableConstruct
+    internal partial class RulesEngineProperties : RulesEngineUpdateParameters
     {
         private BicepValue<FrontDoorResourceState> _resourceState;
-        private BicepList<RulesEngineRule> _rules;
 
         /// <summary> Creates a new RulesEngineProperties. </summary>
         public RulesEngineProperties()
@@ -31,27 +29,11 @@ namespace Azure.Provisioning.FrontDoor
             }
         }
 
-        /// <summary> Gets or sets the Rules. </summary>
-        public BicepList<RulesEngineRule> Rules
-        {
-            get
-            {
-                Initialize();
-                return _rules;
-            }
-            set
-            {
-                Initialize();
-                _rules.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for RulesEngineProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _resourceState = DefineProperty<FrontDoorResourceState>(nameof(ResourceState), new string[] { "resourceState" }, isOutput: true);
-            _rules = DefineListProperty<RulesEngineRule>(nameof(Rules), new string[] { "rules" });
             DefineAdditionalProperties();
         }
 

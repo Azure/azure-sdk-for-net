@@ -14,7 +14,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// The MachineLearningWorkspaceConnectionProperties.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AadAuthTypeWorkspaceConnectionProperties"/>, <see cref="AccessKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="AccountKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="ApiKeyAuthWorkspaceConnectionProperties"/>, <see cref="CustomKeysWorkspaceConnectionProperties"/>, <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="OAuth2AuthTypeWorkspaceConnectionProperties"/>, <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningSasAuthTypeWorkspaceConnection"/>, <see cref="ServicePrincipalAuthTypeWorkspaceConnectionProperties"/>, and <see cref="MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AadAuthTypeWorkspaceConnectionProperties"/>, <see cref="AccessKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="AccountKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="ApiKeyAuthWorkspaceConnectionProperties"/>, <see cref="CustomKeysWorkspaceConnectionProperties"/>, <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="OAuth2AuthTypeWorkspaceConnectionProperties"/>, <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningSasAuthTypeWorkspaceConnection"/>, <see cref="ServicePrincipalAuthTypeWorkspaceConnectionProperties"/>, and <see cref="MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>.
     /// </summary>
     public partial class MachineLearningWorkspaceConnectionProperties : ProvisionableConstruct
     {
@@ -213,7 +213,7 @@ namespace Azure.Provisioning.MachineLearning
             _category = DefineProperty<MachineLearningConnectionCategory>(nameof(Category), new string[] { "category" });
             _createdByWorkspaceArmId = DefineProperty<ResourceIdentifier>(nameof(CreatedByWorkspaceArmId), new string[] { "createdByWorkspaceArmId" }, isOutput: true);
             _error = DefineProperty<string>(nameof(Error), new string[] { "error" });
-            _expiryOn = DefineProperty<DateTimeOffset>(nameof(ExpiryOn), new string[] { "expiryTime" });
+            _expiryOn = DefineProperty<DateTimeOffset>(nameof(ExpiryOn), new string[] { "expiryTime" }, format: "O");
             _group = DefineProperty<WorkspaceConnectionGroup>(nameof(Group), new string[] { "group" }, isOutput: true);
             _isSharedToAll = DefineProperty<bool>(nameof(IsSharedToAll), new string[] { "isSharedToAll" });
             _metadata = DefineDictionaryProperty<string>(nameof(Metadata), new string[] { "metadata" });

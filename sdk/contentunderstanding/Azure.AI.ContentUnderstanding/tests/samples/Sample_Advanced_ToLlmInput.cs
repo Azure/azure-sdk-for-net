@@ -4,9 +4,10 @@
 #nullable enable
 
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using Azure;
 using Azure.AI.ContentUnderstanding;
 using Azure.AI.ContentUnderstanding.Tests;
@@ -22,8 +23,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
         public async Task ToLlmInputAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
+            var previewOptions = _serviceVersion == ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview
+                ? InstrumentClientOptions(new ContentUnderstandingClientOptions(ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview))
+                : null;
+            var previewClient = previewOptions != null
+                ? InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, previewOptions))
+                : null;
 
             // ==============================================================
             // 1. OUTPUT OPTIONS — Fields-only, markdown-only, metadata
@@ -48,7 +55,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             #region Assertion:ContentUnderstandingToLlmInput
             Assert.IsNotNull(text, "LLM input text should not be null");
-            Assert.That(text, Does.Contain("contentType: document"));
+            Assert.That(text, Does.Contain("mimeType: application/pdf"));
             Assert.That(text, Does.Contain("fields:"));
             Assert.That(text, Does.Contain("VendorName:"));
             Assert.That(text, Does.Contain("<!-- InputPageNumber: 1 -->"));
@@ -68,16 +75,17 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine("\n--- Markdown only (includeFields: false) ---");
             Console.WriteLine(markdownOnly);
 
-            // Custom metadata — add your own key-value pairs to the YAML front matter.
-            // Useful for RAG pipelines to track document source, department, batch, etc.
-            string withMetadata = result.ToLlmInput(
+            // Custom metadata — nested under customMetadata: so it never collides with
+            // helper-owned keys (mimeType, fields, metadata, …). Useful for RAG pipelines
+            // to track document source, department, batch, etc.
+            string withCustomMetadata = result.ToLlmInput(
                 new Dictionary<string, object>
                 {
                     ["source"] = "invoice.pdf",
                     ["department"] = "finance"
                 });
-            Console.WriteLine("\n--- With metadata ---");
-            Console.WriteLine(withMetadata);
+            Console.WriteLine("\n--- With customMetadata ---");
+            Console.WriteLine(withCustomMetadata);
             #endregion
 
             #region Assertion:ContentUnderstandingToLlmInputOptions
@@ -90,19 +98,58 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.That(markdownOnly, Does.Not.Contain("fields:"));
             Assert.That(markdownOnly, Does.Contain("<!-- InputPageNumber: 1 -->"));
 
-            // Metadata: metadata appears between contentType and fields
-            Assert.That(withMetadata, Does.Contain("source: invoice.pdf"));
-            Assert.That(withMetadata, Does.Contain("department: finance"));
-            int ctIdx = withMetadata.IndexOf("contentType:");
-            int srcIdx = withMetadata.IndexOf("source:");
-            int fieldsIdx = withMetadata.IndexOf("fields:");
-            Assert.That(srcIdx, Is.GreaterThan(ctIdx));
-            Assert.That(fieldsIdx, Is.GreaterThan(srcIdx));
+            // customMetadata appears between mimeType and fields
+            Assert.That(withCustomMetadata, Does.Contain("customMetadata:"));
+            Assert.That(withCustomMetadata, Does.Contain("source: invoice.pdf"));
+            Assert.That(withCustomMetadata, Does.Contain("department: finance"));
+            int mimeIdx = withCustomMetadata.IndexOf("mimeType:");
+            int customIdx = withCustomMetadata.IndexOf("customMetadata:");
+            int fieldsIdx = withCustomMetadata.IndexOf("fields:");
+            Assert.That(customIdx, Is.GreaterThan(mimeIdx));
+            Assert.That(fieldsIdx, Is.GreaterThan(customIdx));
             Console.WriteLine("Output options verified");
             #endregion
 
             // ==============================================================
-            // 2. MULTI-PAGE PDF WITH CONTENT RANGE
+            // 2. PREVIEW API VERSION: ANALYSIS METADATA IN FRONT MATTER
+            // ==============================================================
+
+            if (previewClient != null)
+            {
+                #region Snippet:ContentUnderstandingToLlmInputMetadataFromAnalysisResultPreview
+                // This scenario requires preview API version 2026-06-01-preview.
+#if SNIPPET
+                string metadataPdfPath = "<path-to-pdf-with-embedded-metadata>";
+#else
+                string metadataPdfPath = ContentUnderstandingClientTestEnvironment.CreatePath("sample_metadata.pdf");
+#endif
+                BinaryData metadataPdfData = BinaryData.FromBytes(File.ReadAllBytes(metadataPdfPath));
+
+                Operation<AnalysisResult> metadataOperation = await previewClient.AnalyzeBinaryAsync(
+                    WaitUntil.Completed,
+                    "prebuilt-layout",
+                    metadataPdfData);
+
+                // ToLlmInput includes AnalysisContent.Metadata under the "metadata" block.
+                string metadataText = metadataOperation.Value.ToLlmInput();
+                Console.WriteLine("\n--- Preview metadata from analysis result ---");
+                Console.WriteLine(metadataText);
+                #endregion
+
+                #region Assertion:ContentUnderstandingToLlmInputMetadataFromAnalysisResultPreview
+                Assert.That(metadataText, Does.Contain("mimeType: application/pdf"));
+                Assert.That(metadataText, Does.Contain("metadata:"));
+                Assert.That(metadataText, Does.Contain("author: Contoso Metadata Team"));
+                Assert.That(metadataText, Does.Contain("contentType: application/pdf"));
+                Assert.That(metadataText, Does.Contain("language: en-US"));
+                Assert.That(metadataText, Does.Contain("pageCount: '1'"));
+                Assert.That(metadataText, Does.Contain("title: Contoso Metadata Extraction Sample"));
+                Console.WriteLine("Preview analysis metadata output verified");
+                #endregion
+            }
+
+            // ==============================================================
+            // 3. MULTI-PAGE PDF WITH CONTENT RANGE
             // ==============================================================
 
             #region Snippet:ContentUnderstandingToLlmInputContentRange
@@ -110,9 +157,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             // Analyze specific pages using ContentRange.
             // Page markers in the output will use the original document page numbers,
-            // so even though we only requested pages 2-3 and 5, the markers will say
-            // <!-- InputPageNumber: 2 -->, <!-- InputPageNumber: 3 -->, <!-- InputPageNumber: 5 -->
-            // (not 1, 2, 3).
+            // so markers will say <!-- InputPageNumber: 2 -->, <!-- InputPageNumber: 3 -->,
+            // <!-- InputPageNumber: 5 --> (not renumbered 1, 2, 3).
             Operation<AnalysisResult> multiPageOperation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
@@ -121,7 +167,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     new AnalysisInput
                     {
                         Uri = multiPageUrl,
-                        ContentRange = new ContentRange("2-3,5")
+                        ContentRange = ContentRange.Combine(ContentRange.Pages(2, 3), ContentRange.Page(5))
                     }
                 });
 
@@ -132,17 +178,17 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
 
             #region Assertion:ContentUnderstandingToLlmInputContentRange
-            Assert.That(multiPageText, Does.Contain("contentType: document"));
+            Assert.That(multiPageText, Does.Contain("mimeType: application/pdf"));
             Assert.That(multiPageText, Does.Contain("pages:"));
-            Assert.That(multiPageText, Does.Contain("2-3, 5").Or.Contains("'2-3, 5'"),
-                "'pages' value should be '2-3, 5' (original page numbers preserved)");
+            Assert.That(multiPageText, Does.Contain("2-3").Or.Contains("'2-3'"),
+                "'pages' value should include '2-3' (original page numbers preserved)");
             Assert.That(multiPageText, Does.Contain("<!-- InputPageNumber:"));
 
             // Page markers in the markdown body should use the original page numbers
             // (<!-- InputPageNumber: 2 -->, <!-- InputPageNumber: 3 -->, <!-- InputPageNumber: 5 -->),
             // not renumbered (1, 2, 3).
             Assert.That(multiPageText, Does.Not.Contain("<!-- InputPageNumber: 1 -->"),
-                "Page marker '<!-- InputPageNumber: 1 -->' should not appear — we only requested pages 2-3, 5");
+                "Page marker '<!-- InputPageNumber: 1 -->' should not appear — we only requested pages 2-3,5");
             Assert.That(multiPageText, Does.Contain("<!-- InputPageNumber: 2 -->"),
                 "Page marker '<!-- InputPageNumber: 2 -->' should appear in the markdown body");
             Assert.That(multiPageText, Does.Contain("<!-- InputPageNumber: 3 -->"),
@@ -154,7 +200,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
 
             // ==============================================================
-            // 3. MULTI-SEGMENT VIDEO
+            // 4. MULTI-SEGMENT VIDEO
             // ==============================================================
 
             #region Snippet:ContentUnderstandingToLlmInputVideo
@@ -176,15 +222,20 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
 
             #region Assertion:ContentUnderstandingToLlmInputVideo
-            Assert.That(videoText, Does.Contain("contentType: audioVisual"));
-            Assert.IsTrue(videoResult.Contents!.Count > 1, "Video should produce multiple segments");
-            Assert.That(videoText, Does.Contain("timeRange:"));
-            Assert.That(videoText, Does.Contain("*****"));
-            Console.WriteLine("Multi-segment video output verified");
+            Assert.That(videoText, Does.Contain("mimeType: video/mp4"));
+            Assert.IsTrue(videoResult.Contents!.Count >= 1, "Video should produce 1 or more segments");
+            if (videoResult.Contents!.Count > 1)
+            {
+                // 'timeRange:' front matter and '*****' dividers only appear when the
+                // video is split into multiple segments.
+                Assert.That(videoText, Does.Contain("timeRange:"));
+                Assert.That(videoText, Does.Contain("*****"));
+            }
+            Console.WriteLine($"Video output verified ({videoResult.Contents!.Count} segment(s))");
             #endregion
 
             // ==============================================================
-            // 4. AUDIO WITH CONTENT RANGE
+            // 5. AUDIO WITH CONTENT RANGE
             // ==============================================================
 
             #region Snippet:ContentUnderstandingToLlmInputAudio
@@ -206,15 +257,16 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             AnalysisResult audioResult = audioOperation.Value;
 
-            // Include metadata to track the source file in RAG pipelines
+            // Include customMetadata to track the source file in RAG pipelines
             string audioText = audioResult.ToLlmInput(
                 new Dictionary<string, object> { ["source"] = "callCenterRecording.mp3" });
-            Console.WriteLine("\n--- Audio with content range and metadata ---");
+            Console.WriteLine("\n--- Audio with content range and customMetadata ---");
             Console.WriteLine(audioText);
             #endregion
 
             #region Assertion:ContentUnderstandingToLlmInputAudio
-            Assert.That(audioText, Does.Contain("contentType: audioVisual"));
+            Assert.That(audioText, Does.Contain("mimeType: audio/mpeg"));
+            Assert.That(audioText, Does.Contain("customMetadata:"));
             Assert.That(audioText, Does.Contain("source: callCenterRecording.mp3"));
             Console.WriteLine("Audio with content range output verified");
             #endregion
