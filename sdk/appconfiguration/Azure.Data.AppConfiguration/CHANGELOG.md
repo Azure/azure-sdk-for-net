@@ -1,6 +1,6 @@
 # Release History
 
-## 1.12.0-beta.1 (Unreleased)
+## 1.12.0-beta.1 (2026-08-13)
 
 ### Features Added
 
@@ -8,12 +8,6 @@
 - Added `SettingFields.Description` so `Description` can be requested when retrieving configuration settings.
 - Added support for `2024-09-01`, `2026-04-01`, and `2026-05-01-preview` (default) service API versions.
 - Added support for the new feature flag endpoint via a dedicated `FeatureFlagClient`, which exposes `GetFeatureFlag`, `GetFeatureFlags`, `AddFeatureFlag`, `SetFeatureFlag`, and `DeleteFeatureFlag` operations (and their async counterparts), along with the `FeatureFlag` model and related types (`FeatureFlagConditions`, `FeatureFlagAllocation`, `FeatureFlagTelemetryConfiguration`, `FeatureFlagVariantDefinition`, etc.). Requires the `2026-05-01-preview` service API version.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.11.0 (2026-07-23)
 
