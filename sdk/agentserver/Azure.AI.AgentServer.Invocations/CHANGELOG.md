@@ -19,6 +19,10 @@
 
 ### Other Changes
 
+- Updated the resilient research and multi-turn samples to use `FoundryStateStore`
+  directly for application state with session-scoped store names and invocation tags,
+  without user isolation or per-item call IDs.
+
 ## 1.0.0-beta.5 (2026-06-28)
 
 ### Features Added

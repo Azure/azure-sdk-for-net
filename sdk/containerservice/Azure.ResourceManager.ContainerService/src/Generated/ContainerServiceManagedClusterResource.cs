@@ -2849,11 +2849,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="waitUntil"> if the method should wait to return until the long-running operation has completed on the service;  if it should return after starting the operation. For more information on long-running operations, please see  Azure.Core Long-Running Operation samples. </param>
         /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag? ifMatch, CancellationToken cancellationToken)
         {
             return DeleteAsync(waitUntil: waitUntil, ifMatch: ifMatch, ignorePodDisruptionBudget: default, cancellationToken: cancellationToken);
         }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
 
         /// <summary>
         /// Deletes a managed cluster.
@@ -2862,10 +2865,13 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="waitUntil"> if the method should wait to return until the long-running operation has completed on the service;  if it should return after starting the operation. For more information on long-running operations, please see  Azure.Core Long-Running Operation samples. </param>
         /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual ArmOperation Delete(WaitUntil waitUntil, ETag? ifMatch, CancellationToken cancellationToken)
         {
             return Delete(waitUntil: waitUntil, ifMatch: ifMatch, ignorePodDisruptionBudget: default, cancellationToken: cancellationToken);
         }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

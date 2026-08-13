@@ -16,19 +16,16 @@ internal sealed class TaskRunState<TOutput>
     private readonly TaskCompletionSource<TOutput> _completion =
         new(TaskCreationOptions.RunContinuationsAsynchronously);
 
-    public TaskRunState(string taskId, string inputId, TaskMetadata metadata, bool isQueued)
+    public TaskRunState(string taskId, string inputId, bool isQueued)
     {
         TaskId = taskId;
         InputId = inputId;
-        Metadata = metadata;
         IsQueued = isQueued;
     }
 
     public string TaskId { get; }
 
     public string InputId { get; set; }
-
-    public TaskMetadata Metadata { get; }
 
     public bool IsQueued { get; }
 

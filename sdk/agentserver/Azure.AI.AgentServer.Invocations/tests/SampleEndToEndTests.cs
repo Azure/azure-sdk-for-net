@@ -525,6 +525,25 @@ public class SampleEndToEndTests
     // ═══════════════════════════════════════════════════════════════════
 
     [Test]
+    public void ResilientSampleTaskInputs_SerializeCanonicalCallId()
+    {
+        var research = new Snippets.SampleResilientResearchSnippets.ResearchRequest(
+            "topic", "invocation", "session", "research-call");
+        var conversation = new Snippets.SampleResilientMultiturnSnippets.ConversationInput(
+            "message", "session", "invocation", "conversation-call");
+
+        using JsonDocument researchJson = JsonDocument.Parse(JsonSerializer.Serialize(research));
+        using JsonDocument conversationJson = JsonDocument.Parse(JsonSerializer.Serialize(conversation));
+
+        Assert.That(
+            researchJson.RootElement.GetProperty("call_id").GetString(),
+            Is.EqualTo("research-call"));
+        Assert.That(
+            conversationJson.RootElement.GetProperty("call_id").GetString(),
+            Is.EqualTo("conversation-call"));
+    }
+
+    [Test]
     public async Task ResilientResearch_StreamsEventsAsSse()
     {
         await using var env = await CreateResilientResearchServerAsync();
@@ -886,8 +905,6 @@ public class SampleEndToEndTests
     /// </summary>
     private static async Task<TestEnv> CreateResilientResearchServerAsync()
     {
-        var checkpointStore = new Snippets.SampleResilientResearchSnippets.CheckpointStore(
-            Path.Combine(Path.GetTempPath(), "research-checkpoints-" + Guid.NewGuid().ToString("N")[..8]));
         var model = CreateMockResponsesClient();
 
         ResilientTaskBuilder? tasks = null;
@@ -911,7 +928,7 @@ public class SampleEndToEndTests
                              Snippets.SampleResilientResearchSnippets.ResearchResult>(
                         "research",
                         (ctx, ct) => Snippets.SampleResilientResearchSnippets.RunResearchAsync(
-                            streams, model, "test-model", ctx, checkpointStore,
+                            streams, model, "test-model", ctx,
                             numPhases: 2, callsPerPhase: 2,
                             interPhaseCooldown: TimeSpan.Zero,
                             intraPhaseCooldown: TimeSpan.Zero,

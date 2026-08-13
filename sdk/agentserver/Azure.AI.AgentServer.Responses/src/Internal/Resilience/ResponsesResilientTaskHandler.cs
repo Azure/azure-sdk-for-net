@@ -142,8 +142,7 @@ internal static class ResponsesResilientTaskHandler
             isRecovery: isRecovery,
             persistedResponse: persisted,
             isSteeredTurn: ctx.IsSteeredTurn,
-            pendingInputCountProvider: () => ctx.PendingInputCount,
-            conversationChainMetadata: new DurableConversationChainMetadata(ctx.Metadata));
+            pendingInputCountProvider: () => ctx.PendingInputCount);
 
         if (!isRecovery
             && tracker.TryGet(responseId, out ResponseExecution? existing)
@@ -152,16 +151,7 @@ internal static class ResponsesResilientTaskHandler
             // The endpoint pre-created this execution to bridge response.created back to the caller.
             // Reuse its Context when present (one-shot); otherwise build the steering-aware context
             // now (multi-turn dispatch leaves Context unset so Core's ctx drives steering state).
-            // Either way the context must carry the durable, Core-backed chain-metadata facade so
-            // ConversationChainMetadata.FlushAsync persists into the task record: the endpoint's
-            // pre-created context was built with a plain (non-durable) facade, so attach the durable
-            // one here before the handler runs.
             ResponseContext reuseContext = existing.Context ?? BuildContext();
-            if (reuseContext is ResponseContextImpl reuseImpl)
-            {
-                reuseImpl.AttachDurableConversationChainMetadata(ctx.Metadata);
-            }
-
             existing.Context = reuseContext;
 
             await RunWithExecutionAsync(

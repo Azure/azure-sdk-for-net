@@ -41,6 +41,18 @@ namespace Azure.Security.ConfidentialLedger
             {
                 UseLedgerGateway = useLedgerGateway;
             }
+            if (bool.TryParse(section["EnableArchivedCollectionFallback"], out bool enableArchivedCollectionFallback))
+            {
+                EnableArchivedCollectionFallback = enableArchivedCollectionFallback;
+            }
+            if (Enum.TryParse(section["Failover"], out FailoverSelection failover))
+            {
+                Failover = failover;
+            }
+            if (TimeSpan.TryParse(section["FailoverNetworkTimeout"], out TimeSpan failoverNetworkTimeout))
+            {
+                FailoverNetworkTimeout = failoverNetworkTimeout;
+            }
             ConfigureLogging();
         }
 

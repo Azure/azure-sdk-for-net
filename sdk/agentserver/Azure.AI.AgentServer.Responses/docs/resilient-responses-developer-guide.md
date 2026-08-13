@@ -37,42 +37,33 @@ it; see [Choosing a resume strategy](#choosing-a-resume-strategy).
 |---------|----------|
 | Crash recovery | Handler re-invoked on server restart when `store`, `background`, and `ResilientBackground` are all enabled. |
 | Stream replay | Events are persisted incrementally; reconnecting clients replay from a cursor. |
-| Conversation continuity | `ConversationChainId` and `ConversationChainMetadata` stay stable across turns and recovery attempts. |
+| Conversation continuity | `ConversationChainId` stays stable across turns and recovery attempts so application state can use it as a State Store scope. |
 | Conversation lock | Conflicting concurrent writes are rejected instead of forked. |
 | Non-background cleanup | Foreground or non-resilient responses are marked `failed` on interruption; there is no ghost re-invocation. |
 | TTL-based cleanup | Retained stream events expire according to the replay TTL, which is separate from handler execution time. |
 
 ## Decision Tree
 
-### What is `context.ConversationChainMetadata` for?
+### Where should durable application state live?
 
-`context.ConversationChainMetadata` is a **small key-value store of references
-and watermarks** — it is not the place to keep your application's bulk
-checkpoint data.
-
-Use it for things like:
-
-- An upstream session id, thread id, or durable conversation pointer.
-- A small pointer to the most recently processed input or output.
-- A short workflow step or phase watermark so the recovered handler knows where
-  to resume.
-- A side-effect fence that prevents a recovered attempt from repeating a
-  non-idempotent call.
-
-The actual checkpoint data — graph state, conversation history, generated
-content, intermediate work — belongs in an upstream framework or in your own
-external storage. The metadata pointer is what lets the recovered handler find
-that data.
+Use an explicit Core `FoundryStateStore` for references, watermarks, graph
+state, conversation history, generated content, and intermediate work that must
+survive recovery or span turns. Scope the store with
+`context.ConversationChainId`, and include `context.ResponseId` in values that
+must be idempotent when the same response is re-invoked.
 
 ```csharp
-context.ConversationChainMetadata.Set("myAgent", "phase", "analyze");
-await context.ConversationChainMetadata.FlushAsync();
+FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
+    $"responses/my-agent/{context.ConversationChainId}",
+    credential);
+await store.SetItemAsync(
+    "progress",
+    new Dictionary<string, BinaryData>
+    {
+        ["phase"] = BinaryData.FromObjectAsJson("analyze"),
+        ["last_response_id"] = BinaryData.FromObjectAsJson(context.ResponseId),
+    });
 ```
-
-Why this distinction matters: metadata is persisted alongside the resilient
-response. Small writes are cheap and fast; bulk writes slow down recovery and
-belong in the storage system best suited to them. Treat metadata as a checkpoint
-*index*, not a checkpoint *store*.
 
 ### Do you need multi-turn conversations?
 
@@ -199,7 +190,6 @@ resilient task classifiers and are safe to read regardless of `IsRecovery`:
 | `IsRecovery` | `bool` | `true` when this invocation re-enters after a crash. |
 | `PersistedResponse` | `ResponseObject?` | The last durable snapshot from the prior lifetime (only on recovery). |
 | `ConversationChainId` | `string` | Stable id shared across every turn/attempt of a conversation chain. |
-| `ConversationChainMetadata` | `ConversationChainMetadata` | Durable, explicitly-flushed per-chain metadata. |
 | `IsSteeredTurn` | `bool` | `true` on a steering-drain re-entry. |
 | `PendingInputCount` | `int` | Steering inputs queued behind the current turn. |
 | `IsShutdownRequested` | `bool` | `true` when graceful shutdown is asking the handler to defer. |
@@ -241,15 +231,15 @@ model (see [Choosing a resume strategy](#choosing-a-resume-strategy)):
   has no useful in-flight snapshot to hand you; `PersistedResponse` may carry
   only the shell (id + status), and you rebuild resume state yourself.
 
-### Notes on `context.ConversationChainMetadata`
+### Notes on application State Stores
 
-- Values are buffered until `FlushAsync()` persists them into the snapshot.
-- Namespace names and keys beginning with `_` are **reserved** and rejected.
-- On the base (non-resilient) context, `FlushAsync()` is a no-op.
-- Metadata survives crashes; use it for small watermarks, session ids,
-  checkpoint references, and side-effect fences.
-- Do not store conversation history, LLM outputs, or bulk data in metadata; keep
-  that in an upstream framework or your own storage.
+- State Store writes are independent of task lifecycle PATCHes.
+- Choose store names and item keys that encode the intended conversation,
+  session, or response scope.
+- Use `context.ResponseId` as an idempotency marker so a recovered attempt does
+  not increment counters or repeat side effects.
+- Do not pass an already-cancelled handler token when persisting a final
+  recovery checkpoint.
 
 ## Choosing a resume strategy
 
@@ -297,15 +287,15 @@ in how the stream is seeded and how far work is skipped.
    ```
 
 3. **Upstream-owned resume** — your durable state lives in an upstream
-   framework/store. Rebuild the resumption response from that store, seed the
-   stream from it, and resume. Use `context.ConversationChainMetadata` watermarks
-   to fence non-idempotent side effects across the crash.
+   framework or `FoundryStateStore`. Rebuild the resumption response from that
+   store, seed the stream from it, and resume. Use response-ID-tagged State
+   Store watermarks to fence non-idempotent side effects across the crash.
 
 **Watermark overlay (composable — not a fourth strategy).** Independently of the
 strategy you pick: if your handler makes a **non-idempotent side effect** that
-the upstream cannot deduplicate for you, fence it with a metadata watermark so a
-recovered attempt does not repeat it. Flush the watermark before the side effect,
-and clear/flush it after the side effect has durably committed. A handler may
+the upstream cannot deduplicate for you, fence it with a State Store watermark
+so a recovered attempt does not repeat it. Persist the watermark before the side
+effect, and clear it after the side effect has durably committed. A handler may
 checkpoint its response output **and** watermark a non-response side effect in
 the same turn.
 
@@ -320,7 +310,8 @@ section is the configuration and decision context.
 
 - `context.IsRecovery == true`, plus `context.PersistedResponse` — the last
   resiliently persisted snapshot when framework checkpoints are in use.
-- `context.ConversationChainMetadata` carrying whatever watermarks you flushed.
+- Application state remains available from the explicit `FoundryStateStore`
+  selected by your handler.
 - The same request/input surface as the fresh entry.
 - The cancellation contract still applies. `CancellationToken` may already be
   signalled, `context.ClientCancelled` distinguishes explicit client cancel, and
@@ -421,7 +412,7 @@ Checkpoint writes are idempotent (byte-compared) and fail-closed (a store
 failure is swallowed and tagged as a platform error, never surfaced as a torn
 snapshot).
 
-### Which metadata facility?
+### Which state facility?
 
 Three distinct facilities exist — pick by lifetime and audience:
 
@@ -429,9 +420,9 @@ Three distinct facilities exist — pick by lifetime and audience:
 |----------|------------------|--------------------|---------|
 | `ResponseObject.Metadata` | Single response; client-owned | **Yes** | Values the caller set and expects back on their response. |
 | `internal_metadata` (item- and response-level) | Single turn; framework-internal | **No** — stripped on egress | Per-turn bookkeeping you want to persist for recovery but never leak (for example an upstream run id you re-read from `PersistedResponse`). |
-| `context.ConversationChainMetadata` | Whole conversation chain; survives crash **and** spans turns | **No** | Cross-turn / cross-crash resume state: phase watermarks, turn counts, side-effect fences. |
+| `FoundryStateStore` | Application-defined scope; survives crash **and** spans turns | **No** | Cross-turn / cross-crash resume state: phase watermarks, turn counts, side-effect fences. |
 
-Rule of thumb: reach for `ConversationChainMetadata` for anything that must be
+Rule of thumb: reach for `FoundryStateStore` for anything that must be
 read on a **later turn or a recovery**; use `internal_metadata` for **this
 turn's** private state that should ride along on the persisted response; use
 `ResponseObject.Metadata` only for values the **client** owns.
@@ -445,8 +436,8 @@ reach the client wire:
 - `_internal_metadata` — a response-level entry inside `metadata`; if removing it
   empties `metadata`, `metadata` is normalized to `null`.
 
-These are stripped at every egress path and are not accessible through the
-`ConversationChainMetadata` facade.
+These are stripped at every egress path and are separate from application State
+Store values.
 
 ## Stream Recovery (client-side reconciliation)
 

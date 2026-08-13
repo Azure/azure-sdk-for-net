@@ -1,27 +1,26 @@
 # Sample 19 — Resilient streaming with handler-managed phase checkpoints
 
-A resilient response handler with **no** upstream framework — checkpoints are
-managed entirely via `context.ConversationChainMetadata`. This is the teaching
-shape of the recovery contract; samples that wrap a real upstream framework layer
-additional reconciliation on top of the same pattern.
+A resilient response handler with **no** upstream framework. Each
+`ResponseEventStream.Checkpoint()` persists the completed phase output, and the
+recovered handler uses `context.PersistedResponse.Output.Count` as its resume
+watermark.
 
 The handler runs three phases (`analyze` → `generate` → `refine`) and emits one
-output item per phase. After each phase finishes it stamps a `phase_complete`
-watermark and calls `stream.Checkpoint()` to persist a durable snapshot. On a
+output item per phase. After each phase finishes it calls `stream.Checkpoint()`
+to persist a durable snapshot. On a
 recovered entry, the handler seeds a new `ResponseEventStream` from
 `context.PersistedResponse` (the last checkpoint — it already contains the output
 items for the completed phases), re-emits `response.created` (which the framework
 deduplicates on the durable stream), emits `response.in_progress` as the
-client-visible reset point carrying the seeded prior output, and resumes at the
-first incomplete phase (read from the `phase_complete` watermark).
+client-visible reset point carrying the seeded prior output, and resumes after
+the number of output items already present in the snapshot.
 
 Demonstrates:
 
 - The recovery-aware default pattern from the developer guide.
 - Seeding a `ResponseEventStream` from `context.PersistedResponse` on recovery.
 - Unconditional `response.created` with framework-side single-created dedup.
-- A `phase_complete` watermark in `ConversationChainMetadata` to pick the resume
-  point.
+- The durable response snapshot's completed output count as the resume point.
 - Pre-entry / mid-stream / post-stream cancellation handling.
 
 Options: `ResilientBackground = true`.
@@ -34,8 +33,8 @@ The handler is a `ResponseHandler` whose `CreateAsync` is an async iterator: it
 
 ```C# Snippet:Responses_Sample19_ResilientStreamingHandler
 // Sample 19 — resilient streaming with handler-managed phase checkpoints.
-// Checkpoints are managed entirely via context.ConversationChainMetadata; the
-// handler seeds a ResponseEventStream and resumes at the first incomplete phase.
+// The handler seeds a ResponseEventStream from the last durable response snapshot
+// and resumes after the output items already committed by prior phases.
 public class ResilientStreamingHandler : ResponseHandler
 {
     private static readonly string[] PhaseOrder = { "analyze", "generate", "refine" };
@@ -88,10 +87,6 @@ public class ResilientStreamingHandler : ResponseHandler
                 yield return evt;
             }
 
-            // Stamp the phase watermark and durably flush it, then checkpoint.
-            context.ConversationChainMetadata.Set("stream", "phase_complete", phase);
-            await context.ConversationChainMetadata.FlushAsync(cancellationToken);
-
             // Persist a durable snapshot at the phase boundary
             // (no-op unless resilient background).
             yield return stream.Checkpoint();
@@ -102,17 +97,10 @@ public class ResilientStreamingHandler : ResponseHandler
 
     private static int NextPhaseIndex(ResponseContext context)
     {
-        if (context.ConversationChainMetadata.TryGet("stream", "phase_complete", out var done)
-            && done is not null)
-        {
-            int idx = Array.IndexOf(PhaseOrder, done);
-            if (idx >= 0)
-            {
-                return idx + 1;
-            }
-        }
-
-        return 0;
+        int completedPhases = context.IsRecovery
+            ? context.PersistedResponse?.Output?.Count ?? 0
+            : 0;
+        return Math.Min(completedPhases, PhaseOrder.Length);
     }
 }
 ```
@@ -140,8 +128,8 @@ curl -N -X POST http://localhost:8088/responses \
 
 ## Recovery behavior
 
-- Each phase stamps a durable `phase_complete` watermark (flushed) and calls
-  `stream.Checkpoint()` — a no-op unless the response is resilient background.
+- Each phase calls `stream.Checkpoint()` — a no-op unless the response is
+  resilient background.
   The checkpoint persists the current response snapshot (including the output
   items emitted so far), which becomes `context.PersistedResponse` on recovery.
 - On a recovered entry the handler re-emits `response.created`. The framework
