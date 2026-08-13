@@ -50,6 +50,8 @@ internal sealed class WebSocketEndpointHandler
             !ReferenceEquals(handler, registeredVoiceHandler))
         {
             httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            httpContext.Response.Headers[PlatformHeaders.ErrorSource] =
+                PlatformHeaders.ErrorSourcePlatform;
             return;
         }
 

@@ -55,7 +55,13 @@ public class VoiceRegistrationTests
 
         using var response = await app.GetTestClient().GetAsync("/invocations_ws");
 
-        Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.InternalServerError));
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.InternalServerError));
+            Assert.That(
+                response.Headers.GetValues(PlatformHeaders.ErrorSource).Single(),
+                Is.EqualTo(PlatformHeaders.ErrorSourcePlatform));
+        });
     }
 
     [Test]

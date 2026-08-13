@@ -48,7 +48,7 @@ public class VoiceSupportHandler : VoiceHandler
         return session.SendAsync(new VoiceSessionReadyMessage(), cancellationToken);
     }
 
-    protected override Task OnUserMessageAsync(
+    protected override async Task OnUserMessageAsync(
         VoiceSession session,
         VoiceUserMessageEvent message,
         CancellationToken cancellationToken)
@@ -66,13 +66,23 @@ public class VoiceSupportHandler : VoiceHandler
         }
 
         var input = string.Concat(message.Content.Select(part => part.Text));
+        try
+        {
+            await session.SendAsync(
+                new VoiceResponseCreatedMessage(responseId, new[] { message.ItemId }),
+                generationCancellation.Token);
+        }
+        catch
+        {
+            RemoveGeneration(responseId);
+            throw;
+        }
+
         _ = SendResponseAsync(
             session,
             responseId,
-            message.ItemId,
             input,
             generation);
-        return Task.CompletedTask;
     }
 
     protected override Task OnBargeInAsync(
@@ -135,7 +145,6 @@ public class VoiceSupportHandler : VoiceHandler
     private async Task SendResponseAsync(
         VoiceSession session,
         string responseId,
-        string inputItemId,
         string input,
         Generation generation)
     {
@@ -144,9 +153,6 @@ public class VoiceSupportHandler : VoiceHandler
         try
         {
             var answer = await GenerateAnswerAsync(input, cancellationToken);
-            await session.SendAsync(
-                new VoiceResponseCreatedMessage(responseId, new[] { inputItemId }),
-                cancellationToken);
             await session.SendAsync(
                 new VoiceResponseOutputTextDoneMessage(responseId, itemId, answer),
                 cancellationToken);
@@ -180,11 +186,7 @@ public class VoiceSupportHandler : VoiceHandler
         }
         finally
         {
-            if (_generations.TryRemove(responseId, out var completedGeneration))
-            {
-                _inputGenerations.TryRemove(completedGeneration.InputItemId, out _);
-                completedGeneration.Cancellation.Dispose();
-            }
+            RemoveGeneration(responseId);
         }
     }
 
@@ -194,6 +196,15 @@ public class VoiceSupportHandler : VoiceHandler
         {
             _inputGenerations.TryRemove(generation.InputItemId, out _);
             _ = CancelAndDisposeAsync(generation.Cancellation);
+        }
+    }
+
+    private void RemoveGeneration(string responseId)
+    {
+        if (_generations.TryRemove(responseId, out var generation))
+        {
+            _inputGenerations.TryRemove(generation.InputItemId, out _);
+            generation.Cancellation.Dispose();
         }
     }
 

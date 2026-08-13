@@ -560,7 +560,7 @@ public class SampleEndToEndTests
     }
 
     [Test]
-    public async Task SampleVoice1_PreResponseTimeoutCancelsApplicationGeneration()
+    public async Task SampleVoice1_OpenResponseTimeoutCancelsApplicationGeneration()
     {
         DelayedVoiceSupportHandler.Reset();
         var builder = WebApplication.CreateBuilder();
@@ -600,6 +600,8 @@ public class SampleEndToEndTests
             content = new[] { new { type = "input_text", text = "hello" } },
         });
         await DelayedVoiceSupportHandler.Started.Task.WaitAsync(TimeSpan.FromSeconds(2));
+        var created = await ReceiveJsonAsync(ws).WaitAsync(TimeSpan.FromSeconds(2));
+        Assert.That(created.GetProperty("type").GetString(), Is.EqualTo("response.created"));
 
         try
         {
@@ -608,7 +610,7 @@ public class SampleEndToEndTests
                 type = "response.timeout",
                 id = "m_timeout",
                 ts = "2026-08-13T00:00:02.000Z",
-                item_ids = new[] { "in_1" },
+                response_id = created.GetProperty("response_id").GetString(),
                 stage = "first_output",
             });
 
@@ -622,6 +624,118 @@ public class SampleEndToEndTests
                 CancellationToken.None);
         }
     }
+
+    [Test]
+    public async Task SampleVoice1_ResponseCreatedPreservesInputOrder()
+    {
+        OrderedVoiceSupportHandler.Reset();
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddAgentServerCore();
+        builder.Services.AddVoice<OrderedVoiceSupportHandler>();
+        await using var app = builder.Build();
+        app.UseAgentServerCore();
+        app.MapInvocationsServer();
+        await app.StartAsync();
+        var wsClient = app.GetTestServer().CreateWebSocketClient();
+        using var ws = await wsClient.ConnectAsync(
+            new Uri(app.GetTestServer().BaseAddress, "invocations_ws"),
+            CancellationToken.None);
+
+        await StartVoiceSessionAsync(ws);
+        await SendVoiceUserMessageAsync(ws, "m_first", "in_1", "first");
+        await OrderedVoiceSupportHandler.FirstStarted.Task.WaitAsync(TimeSpan.FromSeconds(2));
+        await SendVoiceUserMessageAsync(ws, "m_second", "in_2", "second");
+
+        try
+        {
+            var firstCreated = await ReceiveJsonAsync(ws).WaitAsync(TimeSpan.FromSeconds(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(firstCreated.GetProperty("type").GetString(), Is.EqualTo("response.created"));
+                Assert.That(
+                    firstCreated.GetProperty("in_reply_to")[0].GetString(),
+                    Is.EqualTo("in_1"));
+            });
+        }
+        finally
+        {
+            OrderedVoiceSupportHandler.ReleaseFirst.TrySetResult();
+            await ws.CloseOutputAsync(
+                System.Net.WebSockets.WebSocketCloseStatus.NormalClosure,
+                "done",
+                CancellationToken.None);
+        }
+    }
+
+    [Test]
+    public async Task SampleVoice1_GenerationFailureOpensResponseBeforeError()
+    {
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddAgentServerCore();
+        builder.Services.AddVoice<FailingVoiceSupportHandler>();
+        await using var app = builder.Build();
+        app.UseAgentServerCore();
+        app.MapInvocationsServer();
+        await app.StartAsync();
+        var wsClient = app.GetTestServer().CreateWebSocketClient();
+        using var ws = await wsClient.ConnectAsync(
+            new Uri(app.GetTestServer().BaseAddress, "invocations_ws"),
+            CancellationToken.None);
+
+        await StartVoiceSessionAsync(ws);
+        await SendVoiceUserMessageAsync(ws, "m_failure", "in_1", "fail");
+        var created = await ReceiveJsonAsync(ws).WaitAsync(TimeSpan.FromSeconds(2));
+        var error = await ReceiveJsonAsync(ws).WaitAsync(TimeSpan.FromSeconds(2));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(created.GetProperty("type").GetString(), Is.EqualTo("response.created"));
+            Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("error"));
+            Assert.That(
+                error.GetProperty("response_id").GetString(),
+                Is.EqualTo(created.GetProperty("response_id").GetString()));
+        });
+        await ws.CloseOutputAsync(
+            System.Net.WebSockets.WebSocketCloseStatus.NormalClosure,
+            "done",
+            CancellationToken.None);
+    }
+
+    private static async Task StartVoiceSessionAsync(System.Net.WebSockets.WebSocket ws)
+    {
+        await SendJsonAsync(ws, new
+        {
+            type = "session.start",
+            id = "m_start",
+            ts = "2026-08-13T00:00:00.000Z",
+            protocol_version = "1.0",
+            reconnect = false,
+            response_timeouts = new
+            {
+                first_output_ms = 5000,
+                idle_ms = 8000,
+                max_duration_ms = 60000,
+            },
+        });
+        var ready = await ReceiveJsonAsync(ws).WaitAsync(TimeSpan.FromSeconds(2));
+        Assert.That(ready.GetProperty("type").GetString(), Is.EqualTo("session.ready"));
+    }
+
+    private static Task SendVoiceUserMessageAsync(
+        System.Net.WebSockets.WebSocket ws,
+        string messageId,
+        string itemId,
+        string text) =>
+        SendJsonAsync(ws, new
+        {
+            type = "user.message",
+            id = messageId,
+            ts = "2026-08-13T00:00:01.000Z",
+            item_id = itemId,
+            content = new[] { new { type = "input_text", text } },
+        });
 
     private static async Task<JsonElement> ReceiveJsonAsync(System.Net.WebSockets.WebSocket ws)
     {
@@ -678,6 +792,51 @@ public class SampleEndToEndTests
                 throw;
             }
         }
+    }
+
+    private sealed class OrderedVoiceSupportHandler : Snippets.SampleVoice1Snippets.VoiceSupportHandler
+    {
+        public OrderedVoiceSupportHandler()
+            : base(NullLogger<Snippets.SampleVoice1Snippets.VoiceSupportHandler>.Instance)
+        {
+        }
+
+        public static TaskCompletionSource FirstStarted { get; private set; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public static TaskCompletionSource ReleaseFirst { get; private set; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public static void Reset()
+        {
+            FirstStarted = new(TaskCreationOptions.RunContinuationsAsynchronously);
+            ReleaseFirst = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        }
+
+        protected override async Task<string> GenerateAnswerAsync(
+            string input,
+            CancellationToken cancellationToken)
+        {
+            if (input == "first")
+            {
+                FirstStarted.TrySetResult();
+                await ReleaseFirst.Task.WaitAsync(cancellationToken);
+            }
+            return $"You said: {input}";
+        }
+    }
+
+    private sealed class FailingVoiceSupportHandler : Snippets.SampleVoice1Snippets.VoiceSupportHandler
+    {
+        public FailingVoiceSupportHandler()
+            : base(NullLogger<Snippets.SampleVoice1Snippets.VoiceSupportHandler>.Instance)
+        {
+        }
+
+        protected override Task<string> GenerateAnswerAsync(
+            string input,
+            CancellationToken cancellationToken) =>
+            Task.FromException<string>(new InvalidOperationException("generation failed"));
     }
 
     // ═══════════════════════════════════════════════════════════════════
