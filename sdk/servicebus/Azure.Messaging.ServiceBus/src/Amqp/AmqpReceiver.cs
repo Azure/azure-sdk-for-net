@@ -301,11 +301,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             SessionId = nonExclusiveFilter.SessionId;
                         }
 
-                        // Fail loudly if non-exclusive mode was requested but the service honored the attach without
-                        // echoing a lock token back. The service-side change is required to be globally available
-                        // before this feature is released, so this should never occur. A service that predates the
-                        // change rejects the attach outright with an "invalid filter type" error, so that case
-                        // surfaces from the attach above rather than reaching this guard.
+                        // An endpoint that honors the attach without assigning a lock token is not offering
+                        // non-exclusive session locking, so report it as unavailable rather than continuing without
+                        // the token. The catch below reports the other shape an unsupporting endpoint produces, a
+                        // refusal naming the filter, as this same exception, so callers have one contract for both.
                         if (SessionLockToken == null)
                         {
                             link.Session.SafeClose();
@@ -371,11 +370,85 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // do not log this as the processor is shutting down
                 throw;
             }
+            catch (AmqpException amqpException)
+                when (_isSessionReceiver && !_isSessionExclusive && IsUnrecognizedFilterRejection(amqpException))
+            {
+                // An endpoint without non-exclusive session locking refuses the attach naming the composite filter
+                // as one it does not recognize. Report that refusal as the same exception the missing-token guard
+                // above throws, so the two shapes an unsupporting endpoint produces - an attach it refuses, and an
+                // attach it honors without assigning a lock token - give a caller one exception to detect that the
+                // endpoint does not offer the feature. The original error is kept as the inner exception for
+                // diagnostics. This sees the endpoint's own error because the attach is issued outside the scope's
+                // translating catch; moving it inside would map the refusal before it arrives here.
+                ServiceBusEventSource.Log.CreateReceiveLinkException(Identifier, amqpException.ToString());
+                throw new NotSupportedException(Resources.NonExclusiveSessionModeNotSupported, amqpException);
+            }
             catch (Exception ex)
             {
                 ServiceBusEventSource.Log.CreateReceiveLinkException(Identifier, ex.ToString());
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Determines whether an attach failure was the endpoint declining a filter it does not recognize, which is
+        /// how an endpoint without non-exclusive session locking refuses the composite filter.
+        /// </summary>
+        ///
+        /// <param name="amqpException">The exception raised while attaching the link.</param>
+        ///
+        /// <returns><c>true</c> if the endpoint refused the filter; otherwise, <c>false</c>.</returns>
+        ///
+        /// <remarks>
+        /// Both the condition and the description are required to match. <see cref="AmqpErrorCode.NotAllowed" /> is a
+        /// general refusal rather than one reserved for this case, so the description is what identifies the refusal
+        /// as the endpoint declining the filter, and any other refusal carrying that condition keeps the exception it
+        /// maps to.
+        /// </remarks>
+        private static bool IsUnrecognizedFilterRejection(AmqpException amqpException) =>
+            amqpException.Error != null
+                && amqpException.Error.Condition.Equals(AmqpErrorCode.NotAllowed)
+                && DescribesUnrecognizedFilter(amqpException.Error.Description);
+
+        /// <summary>
+        /// Determines whether a refusal description names the filter as one the endpoint does not recognize,
+        /// considering only the portion the service authored.
+        /// </summary>
+        ///
+        /// <param name="description">The description carried by the endpoint's refusal.</param>
+        ///
+        /// <returns><c>true</c> if the description names an unrecognized filter; otherwise, <c>false</c>.</returns>
+        ///
+        /// <remarks>
+        /// The description quotes the link name before naming the filter, and that name renders the session id, which
+        /// the caller chooses and may itself contain quotes. Only the text after the final quote is searched: every
+        /// caller-supplied character sits inside the quoted name, so that text is beyond the caller's reach whatever
+        /// the session id holds. A description carrying no quote at all is not the refusal this looks for, and is left
+        /// alone rather than searched whole, which would put the session id back in reach. A quote in the text after
+        /// the name would begin the search past the filter text, so a reworded refusal reports the exception its
+        /// condition maps to, as <see cref="AmqpClientConstants.UnrecognizedFilterErrorFragment" /> describes.
+        /// </remarks>
+        private static bool DescribesUnrecognizedFilter(string description)
+        {
+            if (string.IsNullOrEmpty(description))
+            {
+                return false;
+            }
+
+            var lastQuoteIndex = description.LastIndexOf('\'');
+
+            if (lastQuoteIndex < 0)
+            {
+                return false;
+            }
+
+            var serviceAuthoredStart = lastQuoteIndex + 1;
+
+            return description.IndexOf(
+                AmqpClientConstants.UnrecognizedFilterErrorFragment,
+                serviceAuthoredStart,
+                description.Length - serviceAuthoredStart,
+                StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         /// <summary>

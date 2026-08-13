@@ -428,7 +428,14 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///   exercised without a live connection.
         /// </summary>
         ///
-        internal static Mock<AmqpConnectionScope> CreateMockReceiverScope(Guid? assignedSessionLockToken = null)
+        /// <param name="assignedSessionLockToken">When set, the attach echoes back a non-exclusive session filter carrying this token.</param>
+        /// <param name="attachFailure">When set, the attach fails with this exception, simulating an endpoint that refuses the link.</param>
+        ///
+        /// <returns>A scope whose receiver link attach behaves as requested.</returns>
+        ///
+        internal static Mock<AmqpConnectionScope> CreateMockReceiverScope(
+            Guid? assignedSessionLockToken = null,
+            Exception attachFailure = null)
         {
             var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
             var endpoint = new Uri("amqp://mine.hubs.com");
@@ -482,6 +489,11 @@ namespace Azure.Messaging.ServiceBus.Tests
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(new InvocationAction(invocation =>
                 {
+                    if (attachFailure != null)
+                    {
+                        throw attachFailure;
+                    }
+
                     // Simulate the service honoring the non-exclusive session on attach: echo back the composite
                     // non-exclusive session filter carrying the assigned session id and lock token, so the receiver's
                     // non-exclusive read can be exercised without a live link.

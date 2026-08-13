@@ -54,6 +54,11 @@ namespace Azure.Messaging.ServiceBus
         /// link rather than the receive link, so that messages delivered to a previous holder can still be settled. This
         /// costs a request/response exchange on the shared management link per settlement rather than a disposition on
         /// the receiver's own link, which lowers settlement throughput compared to an exclusive session.
+        ///
+        /// <para>Accepting a session with this set throws <see cref="NotSupportedException"/> when the endpoint declines it,
+        /// either by refusing the request outright or by accepting it without assigning a lock token, so catching that is how
+        /// a caller detects whether the feature is available for a namespace. An endpoint that declines in some other way
+        /// surfaces the exception its own error maps to.</para>
         /// </remarks>
         public bool EnableNonExclusiveSession { get; set; }
 

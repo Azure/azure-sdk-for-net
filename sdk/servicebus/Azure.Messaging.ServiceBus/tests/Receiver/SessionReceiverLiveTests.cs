@@ -167,7 +167,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         [Ignore(NonExclusiveSessionNotDeployedReason)]
         public async Task OriginalHolderLosesSessionLockAfterTakeover()
         {
-            await using var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
+            // The lock duration is set far above the window this test waits for the lock loss in, so that an expiring
+            // lock cannot produce the SessionLockLost the assertions below look for. Without that, a takeover that
+            // failed to displace the original holder would still report the expected outcome once the lock aged out.
+            var lockDuration = TimeSpan.FromMinutes(5);
+            var lockLossWindow = TimeSpan.FromSeconds(30);
+
+            Assert.That(lockLossWindow, Is.LessThan(lockDuration), "The lock must outlast the window, so that ageing out cannot supply the loss under test.");
+
+            await using var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true, lockDuration: lockDuration);
             await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
             ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
@@ -188,14 +196,78 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 sessionId,
                 new ServiceBusSessionReceiverOptions { EnableNonExclusiveSession = true, SessionLockToken = Guid.Parse(receiverA.SessionLockToken) });
 
-            // The original holder has lost the session - settling its message now reports SessionLockLost,
-            // even though the session was handed over non-exclusively rather than expiring.
-            Assert.That(
-                async () => await receiverA.CompleteMessageAsync(received),
-                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.SessionLockLost));
+            // The original holder has lost the session, so settling its message reports SessionLockLost rather than
+            // succeeding, even though the session was handed over non-exclusively rather than expiring. The client
+            // learns of the loss from the detach for its own link, which arrives independently of the attach that
+            // completed for the new holder, so a settle issued immediately after the takeover can still reach the
+            // service before the detach is observed. Assert the shape of the outcome rather than requiring one side
+            // of that race: whichever way it falls, the original holder must never fail for any other reason.
+            var takeoverStartedAt = DateTimeOffset.UtcNow;
+            ServiceBusException originalHolderFailure = null;
 
-            // The new holder can still settle the message that the original holder received.
-            Assert.That(async () => await receiverB.CompleteMessageAsync(received), Throws.Nothing);
+            try
+            {
+                await receiverA.CompleteMessageAsync(received);
+            }
+            catch (ServiceBusException ex)
+            {
+                originalHolderFailure = ex;
+            }
+
+            if (originalHolderFailure != null)
+            {
+                Assert.That(
+                    originalHolderFailure.Reason,
+                    Is.EqualTo(ServiceBusFailureReason.SessionLockLost),
+                    "Losing the session is the only reason the original holder should fail to settle.");
+
+                // The new holder owns the session and can settle the message that the original holder received.
+                Assert.That(async () => await receiverB.CompleteMessageAsync(received), Throws.Nothing);
+            }
+            else
+            {
+                // The settle reached the service before the detach was observed, so the message is already gone. The
+                // new holder still owns the session, which an operation guarded by the session lock demonstrates.
+                Assert.That(async () => await receiverB.GetSessionStateAsync(), Throws.Nothing);
+            }
+
+            // Losing the session is not itself a race: the takeover displaced the original holder, so every operation
+            // guarded by the session lock reports it once the detach has been observed. Waiting for that is what makes
+            // the takeover, rather than the settle that raced it, the thing this test establishes. The window is far
+            // below the lock duration set above, so a lock ageing out cannot supply the loss being waited for.
+            var lockLossDeadline = takeoverStartedAt + lockLossWindow;
+            ServiceBusFailureReason? observedReason = null;
+            ServiceBusException lastUnrelatedFailure = null;
+
+            while (DateTimeOffset.UtcNow < lockLossDeadline)
+            {
+                try
+                {
+                    ServiceBusReceivedMessage strayMessage = await receiverA.ReceiveMessageAsync(TimeSpan.FromSeconds(1));
+
+                    // Nothing else sends to this session, so the displaced holder should receive nothing at all. A
+                    // message here would be the one under test redelivered, which the takeover should have prevented.
+                    Assert.That(strayMessage, Is.Null, "No message should be delivered to the displaced holder.");
+                }
+                catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.SessionLockLost)
+                {
+                    observedReason = ex.Reason;
+                    break;
+                }
+                catch (ServiceBusException ex)
+                {
+                    // A transient failure says nothing about the session lock, so keep waiting for the detach. Hold
+                    // the last one so a run that never sees the loss reports what it saw instead.
+                    lastUnrelatedFailure = ex;
+                }
+
+                await Task.Delay(TimeSpan.FromSeconds(1));
+            }
+
+            Assert.That(
+                observedReason,
+                Is.EqualTo(ServiceBusFailureReason.SessionLockLost),
+                $"The original holder should report the session lock as lost once the takeover detach is observed. Last unrelated failure: {lastUnrelatedFailure?.ToString() ?? "none"}");
         }
 
         [Test]

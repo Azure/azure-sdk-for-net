@@ -53,9 +53,9 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets a value indicating whether the session is locked exclusively by this receiver. This reports the mode the
         /// session was established under, which is exclusive unless
-        /// <see cref="ServiceBusSessionReceiverOptions.EnableNonExclusiveSession"/> was set. A non-exclusive request that
-        /// the service cannot honor fails when the session is accepted rather than falling back to an exclusive lock, so
-        /// this value always matches the mode that was requested.
+        /// <see cref="ServiceBusSessionReceiverOptions.EnableNonExclusiveSession"/> was set. A non-exclusive request the
+        /// endpoint declines throws when the session is accepted rather than falling back to an exclusive lock, so this
+        /// value always matches the mode that was requested.
         /// </summary>
         public virtual bool IsSessionExclusive => InnerReceiver.IsSessionExclusive;
 
