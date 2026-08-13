@@ -10,10 +10,7 @@ using Azure.Provisioning;
 
 namespace Azure.Provisioning.RecoveryServicesBackup
 {
-    /// <summary>
-    /// Azure VM workload-specific protected item.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VmWorkloadSapAseDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDBInstanceProtectedItem"/>, and <see cref="VmWorkloadSqlDatabaseProtectedItem"/>.
-    /// </summary>
+    /// <summary> Azure VM workload-specific protected item. </summary>
     public partial class VmWorkloadProtectedItem : BackupGenericProtectedItem
     {
         private BicepValue<string> _friendlyName;
