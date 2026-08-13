@@ -1,4 +1,4 @@
 directory: specification/synapse/resource-manager/Microsoft.Synapse/Synapse
-commit: f098fb87c68f0e6a500223006bb2238ecabac960
+commit: ccfa6cfb2fc957dbde05c3b50b9aff97726febe9
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json"
