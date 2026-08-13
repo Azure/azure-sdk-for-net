@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
@@ -79,17 +80,25 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
             string queueName = $"rawencoding-{Guid.NewGuid()}";
             var loggerFactory = new NullLoggerFactory();
 
-            QueueClient rawClient = AzuriteNUnitFixture.Instance
-                .GetQueueServiceClient(new QueueClientOptions { MessageEncoding = QueueMessageEncoding.None })
-                .GetQueueClient(queueName);
+            using IHost host = new HostBuilder()
+                .ConfigureAppConfiguration(c => c.AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    { "ConnectionStrings:AzureWebJobsStorage", AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString }
+                }))
+                .ConfigureDefaultTestHost(b =>
+                {
+                    b.Services.AddAzureClients(builder =>
+                        builder.ConfigureDefaults(options => options.Transport = AzuriteNUnitFixture.Instance.GetTransport()));
+                    b.AddAzureStorageQueues();
+                })
+                .Build();
 
-            // Mirrors QueueServiceClientProvider: a registered handler makes the SDK filter
-            // undecodable messages out of peek results instead of throwing.
-            var configuredOptions = new QueueClientOptions { MessageEncoding = QueueMessageEncoding.Base64 };
-            configuredOptions.MessageDecodingFailed += args => Task.CompletedTask;
-            QueueClient configuredClient = AzuriteNUnitFixture.Instance
-                .GetQueueServiceClient(configuredOptions)
-                .GetQueueClient(queueName);
+            var provider = new TestableQueueServiceClientProvider(host.Services);
+            var resolver = new DefaultNameResolver(host.Services.GetRequiredService<IConfiguration>());
+
+            // Resolved through GetRaw rather than hand-built, so the metrics path itself is under test.
+            QueueClient rawClient = provider.GetRaw(null, resolver).GetQueueClient(queueName);
+            QueueClient configuredClient = provider.Get(null, resolver).GetQueueClient(queueName);
 
             await rawClient.CreateIfNotExistsAsync();
             try
@@ -109,7 +118,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
             }
         }
 
-        /// Exposes the protected raw-options override for assertion.
+        /// Builds the real provider from DI, and exposes the protected raw-options override for assertion.
         private sealed class TestableQueueServiceClientProvider : QueueServiceClientProvider
         {
             public TestableQueueServiceClientProvider(IServiceProvider services)
