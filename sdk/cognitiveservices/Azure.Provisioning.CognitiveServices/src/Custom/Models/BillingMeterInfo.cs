@@ -9,12 +9,12 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CognitiveServices;
 
-/// <summary>
-/// The BillingMeterInfo.
-/// </summary>
 // TypeSpec still defines this model under the provider-level models-list response, but the
 // provisioning emitter excludes operation-only model graphs. Keep the 1.2.0 type and its
 // provisionable property mappings so existing consumers remain source and binary compatible.
+/// <summary>
+/// The BillingMeterInfo.
+/// </summary>
 [EditorBrowsable(EditorBrowsableState.Never)]
 [Obsolete("This type is obsolete and will be removed in a future release.")]
 public partial class BillingMeterInfo : ProvisionableConstruct

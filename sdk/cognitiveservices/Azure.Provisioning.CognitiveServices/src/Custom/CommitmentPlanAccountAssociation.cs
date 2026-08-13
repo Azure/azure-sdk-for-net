@@ -5,6 +5,8 @@ namespace Azure.Provisioning.CognitiveServices
 {
     public partial class CommitmentPlanAccountAssociation
     {
+        // TypeSpec generation only emits the configured service versions. Restore the constants
+        // that were public in 1.2.0 so existing source continues to compile.
         public static partial class ResourceVersions
         {
             /// <summary> API version "2022-12-01". Retained for compatibility with previous Azure.Provisioning.CognitiveServices releases. </summary>

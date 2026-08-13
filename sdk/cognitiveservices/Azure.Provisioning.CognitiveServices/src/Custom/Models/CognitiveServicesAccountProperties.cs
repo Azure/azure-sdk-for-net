@@ -12,6 +12,8 @@ namespace Azure.Provisioning.CognitiveServices
 {
     public partial class CognitiveServicesAccountProperties
     {
+        // TypeSpec generation changed this collection to the resource shape. Keep both the new
+        // resource-typed property and the obsolete data-typed property on the same Bicep path.
         private BicepList<CognitiveServicesPrivateEndpointConnection> _privateEndpointConnectionResources;
 
 #pragma warning disable CS0618 // Compatibility shim intentionally exposes the obsolete model type.

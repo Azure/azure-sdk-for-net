@@ -11,6 +11,8 @@ namespace Azure.Provisioning.CognitiveServices
 {
     public partial class ServiceAccountApiProperties
     {
+        // The provisioning generator cannot emit TypeSpec additionalProperties into Bicep yet.
+        // Keep the shipped API-only bag even though it intentionally has no Bicep mapping.
         /// <summary>
         /// Gets or sets additional API properties.
         /// This compatibility property is not supported by the provisioning generator yet and does not emit any Bicep.

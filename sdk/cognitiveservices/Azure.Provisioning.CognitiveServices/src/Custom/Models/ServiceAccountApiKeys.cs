@@ -8,6 +8,8 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CognitiveServices
 {
+    // Provisioning generation does not emit custom ARM action result types yet. Keep the
+    // listKeys output shape used by CognitiveServicesAccount.GetKeys().
     /// <summary> The access keys for the cognitive services account. </summary>
     public partial class ServiceAccountApiKeys : ProvisionableConstruct
     {

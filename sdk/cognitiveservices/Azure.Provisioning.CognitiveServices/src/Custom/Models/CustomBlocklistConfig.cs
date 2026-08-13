@@ -11,6 +11,8 @@ namespace Azure.Provisioning.CognitiveServices
 {
     public partial class CustomBlocklistConfig
     {
+        // TypeSpec generation renamed Blocking to IsBlocking. Forward the shipped property name
+        // so existing source keeps the same Bicep behavior.
         /// <summary> Gets or sets the Blocking. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is obsolete and will be removed in a future release. Use IsBlocking instead.")]

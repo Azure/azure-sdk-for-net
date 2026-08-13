@@ -12,6 +12,8 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.CognitiveServices
 {
+    // Preserve the old public type name and resource path while callers migrate to
+    // CognitiveServicesProjectScopedCapabilityHost.
     /// <summary> Compatibility type for the project-scoped capability host resource name exposed by previous Azure.Provisioning.CognitiveServices releases. Use <see cref="CognitiveServicesProjectScopedCapabilityHost"/> instead. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This type is obsolete and will be removed in a future release. Use CognitiveServicesProjectScopedCapabilityHost instead.")]

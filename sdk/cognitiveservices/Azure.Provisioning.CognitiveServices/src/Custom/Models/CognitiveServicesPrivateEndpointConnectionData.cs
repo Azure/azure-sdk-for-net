@@ -13,6 +13,8 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.CognitiveServices
 {
+    // Preserve the old PrivateEndpointConnections item type and property shape while callers
+    // migrate to CognitiveServicesPrivateEndpointConnection.
     /// <summary> Compatibility model for the private endpoint connection data shape exposed by previous Azure.Provisioning.CognitiveServices releases. Use <see cref="CognitiveServicesPrivateEndpointConnection"/> instead. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This type is obsolete and will be removed in a future release. Use CognitiveServicesPrivateEndpointConnection instead.")]

@@ -8,6 +8,8 @@ namespace Azure.Provisioning.CognitiveServices
 {
     public partial class CognitiveServicesAccount
     {
+        // Provisioning generation does not emit custom ARM actions yet. Keep the shipped
+        // listKeys helper until the generator can produce it.
         /// <summary>
         /// Get access keys for this CognitiveServicesAccount resource.
         /// </summary>
@@ -20,6 +22,8 @@ namespace Azure.Provisioning.CognitiveServices
             return key;
         }
 
+        // TypeSpec generation only emits the configured service versions. Restore the constants
+        // that were public in 1.2.0 so existing source continues to compile.
         public static partial class ResourceVersions
         {
             /// <summary> API version "2017-04-18". Retained for compatibility with previous Azure.Provisioning.CognitiveServices releases. </summary>

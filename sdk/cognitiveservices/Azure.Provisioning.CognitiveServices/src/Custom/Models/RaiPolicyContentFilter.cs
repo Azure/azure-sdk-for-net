@@ -11,6 +11,8 @@ namespace Azure.Provisioning.CognitiveServices
 {
     public partial class RaiPolicyContentFilter
     {
+        // TypeSpec generation renamed Enabled and Blocking to IsEnabled and IsBlocking. Forward
+        // the shipped property names so existing source keeps the same Bicep behavior.
         /// <summary> Gets or sets the Enabled. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is obsolete and will be removed in a future release. Use IsEnabled instead.")]
