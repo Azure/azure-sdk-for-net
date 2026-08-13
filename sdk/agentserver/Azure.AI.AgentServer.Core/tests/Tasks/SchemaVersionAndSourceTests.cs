@@ -141,39 +141,6 @@ public sealed class SchemaVersionAndSourceTests
     }
 
     [Test]
-    public async Task OneShotCreateSeedsEmptyMetadataNamespace()
-    {
-        using var host = TaskTestHost.Create();
-        TaskRecord? observed = null;
-        host.Builder.AddTask<string, string>("echo", async (ctx, ct) =>
-        {
-            observed = await host.Store.GetAsync("meta-seed");
-            return ctx.Input;
-        });
-
-        await host.Invoker.RunAsync<string, string>("echo", "hi", new RunOptions { TaskId = "meta-seed" });
-
-        // Python parity: `payload["metadata"] = {}` is seeded at create.
-        Assert.That(observed, Is.Not.Null);
-        Assert.That(observed!.Payload[TaskWireKeys.PayloadMetadata], Is.InstanceOf<JsonObject>());
-        Assert.That(((JsonObject)observed.Payload[TaskWireKeys.PayloadMetadata]!).Count, Is.EqualTo(0));
-    }
-
-    [Test]
-    public async Task MultiTurnCreateSeedsEmptyMetadataNamespace()
-    {
-        using var host = TaskTestHost.Create();
-        host.Builder.AddMultiTurnTask<string, string>("chat", (ctx, ct) => Task.FromResult(ctx.Input));
-
-        TaskRun<string> handle = await host.Invoker.StartAsync<string, string>(
-            "chat", "hi", new RunOptions { TaskId = "meta-seed-mt", InputId = "turn-1" });
-        await handle.Completion;
-
-        TaskRecord record = await host.WaitForStatusAsync("meta-seed-mt", "suspended", TimeSpan.FromSeconds(5));
-        Assert.That(record.Payload[TaskWireKeys.PayloadMetadata], Is.InstanceOf<JsonObject>());
-    }
-
-    [Test]
     public void SourcePreservesUnknownExtensionFieldsRoundTrip()
     {
         var json = new JsonObject

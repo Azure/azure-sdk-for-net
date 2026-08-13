@@ -51,6 +51,30 @@ namespace Azure.Provisioning.BotService
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class BotChannelSite : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public BotChannelSite() { }
+        public Azure.Provisioning.BicepValue<string> AppId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsBlockUserUploadEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsDetailedLoggingEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsEndpointParametersEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsNoStorageEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsSecureSiteEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsTokenEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsV1Enabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsV3Enabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsWebchatPreviewEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsWebChatSpeechEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Key { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Key2 { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SiteId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SiteName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> TrustedOrigins { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class BotConnectionSetting : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public BotConnectionSetting(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -316,28 +340,9 @@ namespace Azure.Provisioning.BotService
         public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.DirectLineSite> Sites { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class DirectLineSite : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class DirectLineSite : Azure.Provisioning.BotService.BotChannelSite
     {
         public DirectLineSite() { }
-        public Azure.Provisioning.BicepValue<string> AppId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsBlockUserUploadEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsDetailedLoggingEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsEndpointParametersEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsNoStorageEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsSecureSiteEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsTokenEnabled { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> IsV1Enabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsV3Enabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsWebchatPreviewEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsWebChatSpeechEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Key { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Key2 { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> SiteId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> SiteName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> TrustedOrigins { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DirectLineSpeechChannel : Azure.Provisioning.BotService.BotChannelProperties
@@ -668,28 +673,9 @@ namespace Azure.Provisioning.BotService
         public Azure.Provisioning.BicepValue<string> WebChatEmbedCode { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class WebChatSite : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class WebChatSite : Azure.Provisioning.BotService.BotChannelSite
     {
         public WebChatSite() { }
-        public Azure.Provisioning.BicepValue<string> AppId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsBlockUserUploadEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsDetailedLoggingEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsEndpointParametersEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsNoStorageEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsSecureSiteEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsTokenEnabled { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> IsV1Enabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsV3Enabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsWebchatPreviewEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsWebChatSpeechEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Key { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Key2 { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> SiteId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> SiteName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> TrustedOrigins { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
 }

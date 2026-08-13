@@ -1503,21 +1503,21 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Gets the patching schedule of a redis cache. </summary>
-        /// <param name="default"> The name of the RedisPatchSchedule. </param>
+        /// <param name="defaultName"> The name of the RedisPatchSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RedisPatchScheduleResource>> GetRedisPatchScheduleAsync(RedisPatchScheduleDefaultName @default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RedisPatchScheduleResource>> GetRedisPatchScheduleAsync(RedisPatchScheduleDefaultName defaultName, CancellationToken cancellationToken = default)
         {
-            return await GetRedisPatchSchedules().GetAsync(@default, cancellationToken).ConfigureAwait(false);
+            return await GetRedisPatchSchedules().GetAsync(defaultName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the patching schedule of a redis cache. </summary>
-        /// <param name="default"> The name of the RedisPatchSchedule. </param>
+        /// <param name="defaultName"> The name of the RedisPatchSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<RedisPatchScheduleResource> GetRedisPatchSchedule(RedisPatchScheduleDefaultName @default, CancellationToken cancellationToken = default)
+        public virtual Response<RedisPatchScheduleResource> GetRedisPatchSchedule(RedisPatchScheduleDefaultName defaultName, CancellationToken cancellationToken = default)
         {
-            return GetRedisPatchSchedules().Get(@default, cancellationToken);
+            return GetRedisPatchSchedules().Get(defaultName, cancellationToken);
         }
 
         /// <summary> Gets a collection of RedisLinkedServerWithProperties in the <see cref="RedisResource"/>. </summary>
