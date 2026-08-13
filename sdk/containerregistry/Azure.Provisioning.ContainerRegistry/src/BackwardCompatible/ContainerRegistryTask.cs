@@ -3,12 +3,12 @@
 
 #nullable enable
 
+using System;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
-using System;
-using System.ComponentModel;
 
 #pragma warning disable CS0618 // compatibility types intentionally reference each other
 

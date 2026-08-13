@@ -3,8 +3,8 @@
 
 #nullable enable
 
-using Azure.Provisioning.Primitives;
 using System;
+using Azure.Provisioning.Primitives;
 
 #pragma warning disable CS0618 // compatibility types intentionally reference each other
 
