@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
                 FilterType = ServiceBusFilterType.CorrelationFilter,
                 CorrelationFilter = new ServiceBusCorrelationFilter
                 {
-                    Properties =
+                    ApplicationProperties =
 {
 ["topicHint"] = "Crop"
 },
