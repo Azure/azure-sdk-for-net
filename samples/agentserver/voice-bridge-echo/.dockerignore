@@ -1,0 +1,9 @@
+**/bin/
+**/obj/
+**/.git/
+*.cs
+*.csproj
+*.md
+agent.manifest.yaml
+Dockerfile
+publish/**/*.pdb
