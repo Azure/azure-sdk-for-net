@@ -86,50 +86,6 @@ namespace Azure.Provisioning.Enclave
         public Azure.Provisioning.BicepList<Azure.Provisioning.Enclave.VirtualEnclaveSubnetConfiguration> SubnetConfigurations { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public enum GovernedServiceItemEnforcement
-    {
-        Enabled = 0,
-        Disabled = 1,
-    }
-    public enum GovernedServiceItemOption
-    {
-        Allow = 0,
-        Deny = 1,
-        ExceptionOnly = 2,
-        NotApplicable = 3,
-    }
-    public enum GovernedServiceItemPolicyAction
-    {
-        AuditOnly = 0,
-        Enforce = 1,
-        None = 2,
-    }
-    public enum MaintenanceModeConfigurationModelJustification
-    {
-        Networking = 0,
-        Governance = 1,
-        Off = 2,
-    }
-    public enum MaintenanceModeConfigurationModelMode
-    {
-        On = 0,
-        CanNotDelete = 1,
-        Off = 2,
-        General = 3,
-        Advanced = 4,
-    }
-    public partial class MoboBrokerResource : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public MoboBrokerResource() { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public enum PrincipalType
-    {
-        User = 0,
-        Group = 1,
-        ServicePrincipal = 2,
-    }
     public partial class VirtualEnclave : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public VirtualEnclave(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -337,7 +293,7 @@ namespace Azure.Provisioning.Enclave
         public Azure.Provisioning.BicepList<Azure.Provisioning.Enclave.VirtualEnclaveGovernedService> GovernedServiceList { get { throw null; } set { } }
         public Azure.Provisioning.Enclave.VirtualEnclaveBaseApprovalSettings GranularApprovalSettings { get { throw null; } set { } }
         public Azure.Provisioning.Enclave.VirtualEnclaveMaintenanceModeConfiguration MaintenanceModeConfiguration { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Enclave.MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Enclave.VirtualEnclaveManagedOnBehalfOfBroker> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ManagedResourceGroupName { get { throw null; } }
         public Azure.Provisioning.Enclave.VirtualEnclaveMonitoringSettings MonitoringSettings { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Enclave.CommunityPropertiesPolicyOverride> PolicyOverride { get { throw null; } set { } }
@@ -459,10 +415,10 @@ namespace Azure.Provisioning.Enclave
     public partial class VirtualEnclaveGovernedService : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public VirtualEnclaveGovernedService() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Enclave.GovernedServiceItemEnforcement> Enforcement { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Enclave.VirtualEnclaveGovernedServiceItemEnforcement> Enforcement { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> Initiatives { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Enclave.GovernedServiceItemOption> Option { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Enclave.GovernedServiceItemPolicyAction> PolicyAction { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Enclave.VirtualEnclaveGovernedServiceItemOption> Option { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Enclave.VirtualEnclaveGovernedServiceItemPolicyAction> PolicyAction { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Enclave.VirtualEnclaveGovernedServiceIdentifier> ServiceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ServiceName { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -489,12 +445,51 @@ namespace Azure.Provisioning.Enclave
         ServiceBus = 13,
         Storage = 14,
     }
+    public enum VirtualEnclaveGovernedServiceItemEnforcement
+    {
+        Enabled = 0,
+        Disabled = 1,
+    }
+    public enum VirtualEnclaveGovernedServiceItemOption
+    {
+        Allow = 0,
+        Deny = 1,
+        ExceptionOnly = 2,
+        NotApplicable = 3,
+    }
+    public enum VirtualEnclaveGovernedServiceItemPolicyAction
+    {
+        AuditOnly = 0,
+        Enforce = 1,
+        None = 2,
+    }
     public partial class VirtualEnclaveMaintenanceModeConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public VirtualEnclaveMaintenanceModeConfiguration() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Enclave.MaintenanceModeConfigurationModelJustification> Justification { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Enclave.MaintenanceModeConfigurationModelMode> Mode { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Enclave.VirtualEnclaveMaintenanceModeJustification> Justification { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Enclave.VirtualEnclaveMaintenanceModeConfigurationMode> Mode { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Enclave.VirtualEnclavePrincipal> Principals { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum VirtualEnclaveMaintenanceModeConfigurationMode
+    {
+        On = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="CanNotDelete")]
+        CannotDelete = 1,
+        Off = 2,
+        General = 3,
+        Advanced = 4,
+    }
+    public enum VirtualEnclaveMaintenanceModeJustification
+    {
+        Networking = 0,
+        Governance = 1,
+        Off = 2,
+    }
+    public partial class VirtualEnclaveManagedOnBehalfOfBroker : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public VirtualEnclaveManagedOnBehalfOfBroker() { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class VirtualEnclaveMandatoryApprover : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -528,8 +523,14 @@ namespace Azure.Provisioning.Enclave
     {
         public VirtualEnclavePrincipal() { }
         public Azure.Provisioning.BicepValue<string> Id { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Enclave.PrincipalType> Type { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Enclave.VirtualEnclavePrincipalType> Type { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
+    }
+    public enum VirtualEnclavePrincipalType
+    {
+        User = 0,
+        Group = 1,
+        ServicePrincipal = 2,
     }
     public partial class VirtualEnclaveProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -544,7 +545,7 @@ namespace Azure.Provisioning.Enclave
         public Azure.Provisioning.BicepList<Azure.Provisioning.Enclave.VirtualEnclaveGovernedService> GovernedServiceList { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsBastionEnabled { get { throw null; } set { } }
         public Azure.Provisioning.Enclave.VirtualEnclaveMaintenanceModeConfiguration MaintenanceModeConfiguration { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Enclave.MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Enclave.VirtualEnclaveManagedOnBehalfOfBroker> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ManagedResourceGroupName { get { throw null; } }
         public Azure.Provisioning.Enclave.VirtualEnclaveMonitoringSettings MonitoringSettings { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Enclave.VirtualEnclaveProvisioningState> ProvisioningState { get { throw null; } }
@@ -690,7 +691,7 @@ namespace Azure.Provisioning.Enclave
     public partial class VirtualEnclaveWorkloadProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public VirtualEnclaveWorkloadProperties() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Enclave.MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Enclave.VirtualEnclaveManagedOnBehalfOfBroker> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Enclave.VirtualEnclaveProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepList<string> ResourceGroupCollection { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }

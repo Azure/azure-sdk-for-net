@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Enclave
     public partial class VirtualEnclavePrincipal : ProvisionableConstruct
     {
         private BicepValue<string> _id;
-        private BicepValue<PrincipalType> _type;
+        private BicepValue<VirtualEnclavePrincipalType> _type;
 
         /// <summary> Creates a new VirtualEnclavePrincipal. </summary>
         public VirtualEnclavePrincipal()
@@ -37,7 +37,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Type. </summary>
-        public BicepValue<PrincipalType> Type
+        public BicepValue<VirtualEnclavePrincipalType> Type
         {
             get
             {
@@ -56,7 +56,7 @@ namespace Azure.Provisioning.Enclave
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<string>(nameof(Id), new string[] { "id" }, isRequired: true);
-            _type = DefineProperty<PrincipalType>(nameof(Type), new string[] { "type" }, isRequired: true);
+            _type = DefineProperty<VirtualEnclavePrincipalType>(nameof(Type), new string[] { "type" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

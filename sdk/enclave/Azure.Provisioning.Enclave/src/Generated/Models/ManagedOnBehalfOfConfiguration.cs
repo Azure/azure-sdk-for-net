@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Enclave
     /// <summary> Managed-On-Behalf-Of configuration properties. This configuration exists for the resources where a resource provider manages those resources on behalf of the resource owner. </summary>
     internal partial class ManagedOnBehalfOfConfiguration : ProvisionableConstruct
     {
-        private BicepList<MoboBrokerResource> _moboBrokerResources;
+        private BicepList<VirtualEnclaveManagedOnBehalfOfBroker> _moboBrokerResources;
 
         /// <summary> Creates a new ManagedOnBehalfOfConfiguration. </summary>
         public ManagedOnBehalfOfConfiguration()
@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the MoboBrokerResources. </summary>
-        public BicepList<MoboBrokerResource> MoboBrokerResources
+        public BicepList<VirtualEnclaveManagedOnBehalfOfBroker> MoboBrokerResources
         {
             get
             {
@@ -34,7 +34,7 @@ namespace Azure.Provisioning.Enclave
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _moboBrokerResources = DefineListProperty<MoboBrokerResource>(nameof(MoboBrokerResources), new string[] { "moboBrokerResources" }, isOutput: true);
+            _moboBrokerResources = DefineListProperty<VirtualEnclaveManagedOnBehalfOfBroker>(nameof(MoboBrokerResources), new string[] { "moboBrokerResources" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

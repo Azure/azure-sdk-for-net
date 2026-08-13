@@ -15,9 +15,9 @@ namespace Azure.Provisioning.Enclave
     {
         private BicepValue<VirtualEnclaveGovernedServiceIdentifier> _serviceId;
         private BicepValue<string> _serviceName;
-        private BicepValue<GovernedServiceItemOption> _option;
-        private BicepValue<GovernedServiceItemEnforcement> _enforcement;
-        private BicepValue<GovernedServiceItemPolicyAction> _policyAction;
+        private BicepValue<VirtualEnclaveGovernedServiceItemOption> _option;
+        private BicepValue<VirtualEnclaveGovernedServiceItemEnforcement> _enforcement;
+        private BicepValue<VirtualEnclaveGovernedServiceItemPolicyAction> _policyAction;
         private BicepList<string> _initiatives;
 
         /// <summary> Creates a new VirtualEnclaveGovernedService. </summary>
@@ -51,7 +51,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Option. </summary>
-        public BicepValue<GovernedServiceItemOption> Option
+        public BicepValue<VirtualEnclaveGovernedServiceItemOption> Option
         {
             get
             {
@@ -66,7 +66,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Enforcement. </summary>
-        public BicepValue<GovernedServiceItemEnforcement> Enforcement
+        public BicepValue<VirtualEnclaveGovernedServiceItemEnforcement> Enforcement
         {
             get
             {
@@ -81,7 +81,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the PolicyAction. </summary>
-        public BicepValue<GovernedServiceItemPolicyAction> PolicyAction
+        public BicepValue<VirtualEnclaveGovernedServiceItemPolicyAction> PolicyAction
         {
             get
             {
@@ -111,9 +111,9 @@ namespace Azure.Provisioning.Enclave
             base.DefineProvisionableProperties();
             _serviceId = DefineProperty<VirtualEnclaveGovernedServiceIdentifier>(nameof(ServiceId), new string[] { "serviceId" }, isRequired: true);
             _serviceName = DefineProperty<string>(nameof(ServiceName), new string[] { "serviceName" }, isOutput: true);
-            _option = DefineProperty<GovernedServiceItemOption>(nameof(Option), new string[] { "option" });
-            _enforcement = DefineProperty<GovernedServiceItemEnforcement>(nameof(Enforcement), new string[] { "enforcement" });
-            _policyAction = DefineProperty<GovernedServiceItemPolicyAction>(nameof(PolicyAction), new string[] { "policyAction" });
+            _option = DefineProperty<VirtualEnclaveGovernedServiceItemOption>(nameof(Option), new string[] { "option" });
+            _enforcement = DefineProperty<VirtualEnclaveGovernedServiceItemEnforcement>(nameof(Enforcement), new string[] { "enforcement" });
+            _policyAction = DefineProperty<VirtualEnclaveGovernedServiceItemPolicyAction>(nameof(PolicyAction), new string[] { "policyAction" });
             _initiatives = DefineListProperty<string>(nameof(Initiatives), new string[] { "initiatives" }, isOutput: true);
             DefineAdditionalProperties();
         }

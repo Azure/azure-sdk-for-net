@@ -13,9 +13,9 @@ namespace Azure.Provisioning.Enclave
     /// <summary> Maintenance Mode. </summary>
     public partial class VirtualEnclaveMaintenanceModeConfiguration : ProvisionableConstruct
     {
-        private BicepValue<MaintenanceModeConfigurationModelMode> _mode;
+        private BicepValue<VirtualEnclaveMaintenanceModeConfigurationMode> _mode;
         private BicepList<VirtualEnclavePrincipal> _principals;
-        private BicepValue<MaintenanceModeConfigurationModelJustification> _justification;
+        private BicepValue<VirtualEnclaveMaintenanceModeJustification> _justification;
 
         /// <summary> Creates a new VirtualEnclaveMaintenanceModeConfiguration. </summary>
         public VirtualEnclaveMaintenanceModeConfiguration()
@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Mode. </summary>
-        public BicepValue<MaintenanceModeConfigurationModelMode> Mode
+        public BicepValue<VirtualEnclaveMaintenanceModeConfigurationMode> Mode
         {
             get
             {
@@ -53,7 +53,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Justification. </summary>
-        public BicepValue<MaintenanceModeConfigurationModelJustification> Justification
+        public BicepValue<VirtualEnclaveMaintenanceModeJustification> Justification
         {
             get
             {
@@ -71,9 +71,9 @@ namespace Azure.Provisioning.Enclave
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _mode = DefineProperty<MaintenanceModeConfigurationModelMode>(nameof(Mode), new string[] { "mode" }, isRequired: true);
+            _mode = DefineProperty<VirtualEnclaveMaintenanceModeConfigurationMode>(nameof(Mode), new string[] { "mode" }, isRequired: true);
             _principals = DefineListProperty<VirtualEnclavePrincipal>(nameof(Principals), new string[] { "principals" });
-            _justification = DefineProperty<MaintenanceModeConfigurationModelJustification>(nameof(Justification), new string[] { "justification" });
+            _justification = DefineProperty<VirtualEnclaveMaintenanceModeJustification>(nameof(Justification), new string[] { "justification" });
             DefineAdditionalProperties();
         }
 

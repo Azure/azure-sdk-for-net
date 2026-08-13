@@ -236,7 +236,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the MoboBrokerResources. </summary>
-        public BicepList<MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources
+        public BicepList<VirtualEnclaveManagedOnBehalfOfBroker> ManagedOnBehalfOfMoboBrokerResources
         {
             get
             {

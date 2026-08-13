@@ -12,12 +12,12 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Managed-On-Behalf-Of broker resource. This resource is created by the Resource Provider to manage some resources on behalf of the user. </summary>
-    public partial class MoboBrokerResource : ProvisionableConstruct
+    public partial class VirtualEnclaveManagedOnBehalfOfBroker : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _id;
 
-        /// <summary> Creates a new MoboBrokerResource. </summary>
-        public MoboBrokerResource()
+        /// <summary> Creates a new VirtualEnclaveManagedOnBehalfOfBroker. </summary>
+        public VirtualEnclaveManagedOnBehalfOfBroker()
         {
         }
 
@@ -31,7 +31,7 @@ namespace Azure.Provisioning.Enclave
             }
         }
 
-        /// <summary> Define all the provisionable properties for MoboBrokerResource. </summary>
+        /// <summary> Define all the provisionable properties for VirtualEnclaveManagedOnBehalfOfBroker. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -39,7 +39,7 @@ namespace Azure.Provisioning.Enclave
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for MoboBrokerResource that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for VirtualEnclaveManagedOnBehalfOfBroker that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }
