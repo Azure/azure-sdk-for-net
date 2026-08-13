@@ -28,12 +28,11 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
 
             // GetOrCreateAsync fetches the store, or creates it if it does not exist,
             // in a single call — so you can read and write items right away.
-            // When endpoint is null it is resolved from the FOUNDRY_PROJECT_ENDPOINT
-            // environment variable.
+            // Outside Foundry hosting, omitting endpoint uses the local file-backed fallback.
+            // In Foundry hosting, endpoint is resolved from FOUNDRY_PROJECT_ENDPOINT.
             FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
                 "checkpoints/thread-abc",
                 credential,
-                userIsolation: true,
                 itemTtlSeconds: 3600,
                 description: "Checkpoint store for thread abc");
 
@@ -111,6 +110,36 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
             // Deletes are idempotent.
             DeletedStateStoreItem deleted = await store.DeleteItemAsync("step-1");
             Console.WriteLine(deleted.Deleted);
+
+            #endregion
+        }
+
+        [Test]
+        public async Task RecoveredExecution()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync("checkpoints/thread-abc", credential);
+            string persistedCallId = "call-123";
+
+            #region Snippet:Core_Sample3_RecoveredExecution
+
+            // Resilient task inputs should persist the inbound call ID as "call_id".
+            // The task engine restores it for each handler attempt. An explicit callId
+            // can also be used to override the ambient value for a specific operation.
+            StateStoreItem? checkpoint = await store.GetItemAsync(
+                "state",
+                callId: persistedCallId);
+
+            await store.SetItemAsync(
+                "state",
+                new Dictionary<string, BinaryData>
+                {
+                    ["phase"] = BinaryData.FromObjectAsJson("complete"),
+                },
+                tags: null,
+                ifMatch: null,
+                requireExists: false,
+                callId: persistedCallId);
 
             #endregion
         }

@@ -14,6 +14,7 @@ using System.Linq;
 using System.Reflection;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Provisioning.Primitives;
+using Azure.Provisioning;
 
 namespace Azure.Generator.Provisioning.Tests.TestHelpers
 {
@@ -30,7 +31,8 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
             Func<IReadOnlyList<InputClient>>? clients = null,
             Func<ArmProviderSchema>? armProviderSchema = null,
             string? primaryNamespace = null,
-            IEnumerable<string>? customizationSources = null)
+            IEnumerable<string>? customizationSources = null,
+            IReadOnlyDictionary<string, bool>? modelSettableUsage = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? [];
             IReadOnlyList<InputLiteralType> inputNsLiterals = inputLiterals?.Invoke() ?? [];
@@ -58,7 +60,8 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
                     .GetField("_modelSettableUsage", BindingFlags.Instance | BindingFlags.NonPublic)!
                     .SetValue(
                         mockInputLibrary.Object,
-                        inputNsModels.ToDictionary(model => model.CrossLanguageDefinitionId, _ => true));
+                        modelSettableUsage ??
+                            inputNsModels.ToDictionary(model => model.CrossLanguageDefinitionId, _ => true));
             }
 
             var loadMethod = typeof(Configuration).GetMethod("Load", BindingFlags.Static | BindingFlags.NonPublic);
@@ -72,7 +75,10 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
                 : CSharpCompilation.Create(
                     "Customizations",
                     customizationSources.Select(source => CSharpSyntaxTree.ParseText(source)),
-                    [MetadataReference.CreateFromFile(typeof(object).Assembly.Location)],
+                    [
+                        MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+                        MetadataReference.CreateFromFile(typeof(BicepValue<>).Assembly.Location)
+                    ],
                     new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
             mockGenerator.Setup(p => p.SourceInputModel).Returns(new SourceInputModel(customizationCompilation, null));
             var codeModelInstance = typeof(CodeModelGenerator).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
@@ -92,7 +98,7 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
             return new(
                 metadata.ResourceModel,
                 metadata.ResourceName,
-                metadata.ResourceType.SerializedResourceType,
+                metadata.ResourceType,
                 metadata.SingletonResourceName,
                 metadata.ParentResourceId,
                 metadata.NameConstraints,

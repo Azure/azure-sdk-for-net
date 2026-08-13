@@ -219,19 +219,16 @@ namespace Azure.Provisioning.MachineLearning
     {
         Agents = 0,
     }
-    public partial class CapabilityHostProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class CapabilityHostProperties : Azure.Provisioning.MachineLearning.MachineLearningResourceBase
     {
         public CapabilityHostProperties() { }
         public Azure.Provisioning.BicepList<string> AcaEnvironmentConnections { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> AiServicesConnections { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.CapabilityHostKind> CapabilityHostKind { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> CustomerSubnet { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> Messages { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.CapabilityHostProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepList<string> StorageConnections { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> ThreadStorageConnections { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> VectorStoreConnections { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -331,18 +328,11 @@ namespace Azure.Provisioning.MachineLearning
         public Azure.Provisioning.BicepValue<string> WeightColumnName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class ClassificationTrainingSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class ClassificationTrainingSettings : Azure.Provisioning.MachineLearning.MachineLearningTrainingSettings
     {
         public ClassificationTrainingSettings() { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.MachineLearning.ClassificationModel> AllowedTrainingAlgorithms { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.MachineLearning.ClassificationModel> BlockedTrainingAlgorithms { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> EnableDnnTraining { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> EnableModelExplainability { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> EnableOnnxCompatibleModels { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> EnableStackEnsemble { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> EnableVoteEnsemble { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.TimeSpan> EnsembleModelDownloadTimeout { get { throw null; } set { } }
-        public Azure.Provisioning.MachineLearning.MachineLearningStackEnsembleSettings StackEnsembleSettings { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ColumnTransformer : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -713,18 +703,11 @@ namespace Azure.Provisioning.MachineLearning
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.MachineLearningUseStl> UseStl { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class ForecastingTrainingSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class ForecastingTrainingSettings : Azure.Provisioning.MachineLearning.MachineLearningTrainingSettings
     {
         public ForecastingTrainingSettings() { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.MachineLearning.ForecastingModel> AllowedTrainingAlgorithms { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.MachineLearning.ForecastingModel> BlockedTrainingAlgorithms { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> EnableDnnTraining { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> EnableModelExplainability { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> EnableOnnxCompatibleModels { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> EnableStackEnsemble { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> EnableVoteEnsemble { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.TimeSpan> EnsembleModelDownloadTimeout { get { throw null; } set { } }
-        public Azure.Provisioning.MachineLearning.MachineLearningStackEnsembleSettings StackEnsembleSettings { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class FqdnOutboundRule : Azure.Provisioning.MachineLearning.MachineLearningOutboundRule
@@ -791,9 +774,9 @@ namespace Azure.Provisioning.MachineLearning
         public Azure.Provisioning.MachineLearning.OsPatchingStatus OsPatchingStatus { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class ImageModelDistributionSettingsClassification : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class ImageModelDistributionSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public ImageModelDistributionSettingsClassification() { }
+        public ImageModelDistributionSettings() { }
         public Azure.Provisioning.BicepValue<string> AmsGradient { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Augmentations { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Beta1 { get { throw null; } set { } }
@@ -818,65 +801,42 @@ namespace Azure.Provisioning.MachineLearning
         public Azure.Provisioning.BicepValue<string> StepLRGamma { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StepLRStepSize { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> TrainingBatchSize { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> TrainingCropSize { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ValidationBatchSize { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ValidationCropSize { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ValidationResizeSize { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> WarmupCosineLRCycles { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> WarmupCosineLRWarmupEpochs { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> WeightDecay { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ImageModelDistributionSettingsClassification : Azure.Provisioning.MachineLearning.ImageModelDistributionSettings
+    {
+        public ImageModelDistributionSettingsClassification() { }
+        public Azure.Provisioning.BicepValue<string> TrainingCropSize { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ValidationCropSize { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ValidationResizeSize { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> WeightedLoss { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class ImageModelDistributionSettingsObjectDetection : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class ImageModelDistributionSettingsObjectDetection : Azure.Provisioning.MachineLearning.ImageModelDistributionSettings
     {
         public ImageModelDistributionSettingsObjectDetection() { }
-        public Azure.Provisioning.BicepValue<string> AmsGradient { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Augmentations { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Beta1 { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Beta2 { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> BoxDetectionsPerImage { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> BoxScoreThreshold { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Distributed { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> EarlyStopping { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> EarlyStoppingDelay { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> EarlyStoppingPatience { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> EnableOnnxNormalization { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> EvaluationFrequency { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> GradientAccumulationStep { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ImageSize { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> LayersToFreeze { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> LearningRate { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> LearningRateScheduler { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> MaxSize { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> MinSize { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ModelName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ModelSize { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Momentum { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> MultiScale { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Nesterov { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> NmsIouThreshold { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> NumberOfEpochs { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> NumberOfWorkers { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Optimizer { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> RandomSeed { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> StepLRGamma { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> StepLRStepSize { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> TileGridSize { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> TileOverlapRatio { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> TilePredictionsNmsThreshold { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> TrainingBatchSize { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ValidationBatchSize { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ValidationIouThreshold { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ValidationMetricType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> WarmupCosineLRCycles { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> WarmupCosineLRWarmupEpochs { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> WeightDecay { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class ImageModelSettingsClassification : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class ImageModelSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public ImageModelSettingsClassification() { }
+        public ImageModelSettings() { }
         public Azure.Provisioning.BicepValue<string> AdvancedSettings { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> AmsGradient { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Augmentations { get { throw null; } set { } }
@@ -905,64 +865,37 @@ namespace Azure.Provisioning.MachineLearning
         public Azure.Provisioning.BicepValue<float> StepLRGamma { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> StepLRStepSize { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> TrainingBatchSize { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> TrainingCropSize { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> ValidationBatchSize { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> ValidationCropSize { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> ValidationResizeSize { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<float> WarmupCosineLRCycles { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> WarmupCosineLRWarmupEpochs { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<float> WeightDecay { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ImageModelSettingsClassification : Azure.Provisioning.MachineLearning.ImageModelSettings
+    {
+        public ImageModelSettingsClassification() { }
+        public Azure.Provisioning.BicepValue<int> TrainingCropSize { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> ValidationCropSize { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> ValidationResizeSize { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> WeightedLoss { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class ImageModelSettingsObjectDetection : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class ImageModelSettingsObjectDetection : Azure.Provisioning.MachineLearning.ImageModelSettings
     {
         public ImageModelSettingsObjectDetection() { }
-        public Azure.Provisioning.BicepValue<string> AdvancedSettings { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> AmsGradient { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Augmentations { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<float> Beta1 { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<float> Beta2 { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> BoxDetectionsPerImage { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<float> BoxScoreThreshold { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> CheckpointFrequency { get { throw null; } set { } }
-        public Azure.Provisioning.MachineLearning.MachineLearningFlowModelJobInput CheckpointModel { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> CheckpointRunId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> Distributed { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> EarlyStopping { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> EarlyStoppingDelay { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> EarlyStoppingPatience { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> EnableOnnxNormalization { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> EvaluationFrequency { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> GradientAccumulationStep { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> ImageSize { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> LayersToFreeze { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<float> LearningRate { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.LearningRateScheduler> LearningRateScheduler { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> MaxSize { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> MinSize { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ModelName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.MachineLearningModelSize> ModelSize { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<float> Momentum { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> MultiScale { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> Nesterov { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<float> NmsIouThreshold { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> NumberOfEpochs { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> NumberOfWorkers { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.StochasticOptimizer> Optimizer { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> RandomSeed { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<float> StepLRGamma { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> StepLRStepSize { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> TileGridSize { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<float> TileOverlapRatio { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<float> TilePredictionsNmsThreshold { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> TrainingBatchSize { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> ValidationBatchSize { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<float> ValidationIouThreshold { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.ValidationMetricType> ValidationMetricType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<float> WarmupCosineLRCycles { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> WarmupCosineLRWarmupEpochs { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<float> WeightDecay { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ImageObjectDetection : Azure.Provisioning.MachineLearning.AutoMLVertical
@@ -1123,6 +1056,21 @@ namespace Azure.Provisioning.MachineLearning
         Personal = 0,
         Shared = 1,
     }
+    public partial class MachineLearningAssetBase : Azure.Provisioning.MachineLearning.MachineLearningResourceBase
+    {
+        public MachineLearningAssetBase() { }
+        public Azure.Provisioning.BicepValue<bool> IsAnonymous { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsArchived { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class MachineLearningAssetContainer : Azure.Provisioning.MachineLearning.MachineLearningResourceBase
+    {
+        public MachineLearningAssetContainer() { }
+        public Azure.Provisioning.BicepValue<bool> IsArchived { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> LatestVersion { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> NextVersion { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class MachineLearningAssetReferenceBase : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public MachineLearningAssetReferenceBase() { }
@@ -1210,15 +1158,11 @@ namespace Azure.Provisioning.MachineLearning
             public static readonly string V2026_05_01;
         }
     }
-    public partial class MachineLearningBatchDeploymentProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class MachineLearningBatchDeploymentProperties : Azure.Provisioning.MachineLearning.MachineLearningEndpointDeploymentProperties
     {
         public MachineLearningBatchDeploymentProperties() { }
-        public Azure.Provisioning.MachineLearning.MachineLearningCodeConfiguration CodeConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Compute { get { throw null; } set { } }
         public Azure.Provisioning.MachineLearning.BatchDeploymentConfiguration DeploymentConfiguration { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> EnvironmentId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> EnvironmentVariables { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> ErrorThreshold { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.MachineLearningBatchLoggingLevel> LoggingLevel { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> MaxConcurrencyPerInstance { get { throw null; } set { } }
@@ -1226,7 +1170,6 @@ namespace Azure.Provisioning.MachineLearning
         public Azure.Provisioning.MachineLearning.MachineLearningAssetReferenceBase Model { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.MachineLearningBatchOutputAction> OutputAction { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> OutputFileName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.MachineLearningDeploymentProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.MachineLearning.MachineLearningDeploymentResourceConfiguration Resources { get { throw null; } set { } }
         public Azure.Provisioning.MachineLearning.MachineLearningBatchRetrySettings RetrySettings { get { throw null; } set { } }
@@ -1254,17 +1197,11 @@ namespace Azure.Provisioning.MachineLearning
             public static readonly string V2026_05_01;
         }
     }
-    public partial class MachineLearningBatchEndpointProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class MachineLearningBatchEndpointProperties : Azure.Provisioning.MachineLearning.MachineLearningEndpointProperties
     {
         public MachineLearningBatchEndpointProperties() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.MachineLearningEndpointAuthMode> AuthMode { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DefaultsDeploymentName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
-        public Azure.Provisioning.MachineLearning.MachineLearningEndpointAuthKeys Keys { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.MachineLearningEndpointProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.Uri> ScoringUri { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.Uri> SwaggerUri { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum MachineLearningBatchLoggingLevel
@@ -1340,16 +1277,10 @@ namespace Azure.Provisioning.MachineLearning
             public static readonly string V2026_05_01;
         }
     }
-    public partial class MachineLearningCodeContainerProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class MachineLearningCodeContainerProperties : Azure.Provisioning.MachineLearning.MachineLearningAssetContainer
     {
         public MachineLearningCodeContainerProperties() { }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsArchived { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> LatestVersion { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> NextVersion { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.RegistryAssetProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class MachineLearningCodeVersion : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1369,16 +1300,11 @@ namespace Azure.Provisioning.MachineLearning
             public static readonly string V2026_05_01;
         }
     }
-    public partial class MachineLearningCodeVersionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class MachineLearningCodeVersionProperties : Azure.Provisioning.MachineLearning.MachineLearningAssetBase
     {
         public MachineLearningCodeVersionProperties() { }
         public Azure.Provisioning.BicepValue<System.Uri> CodeUri { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsAnonymous { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsArchived { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.RegistryAssetProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class MachineLearningCommandJob : Azure.Provisioning.MachineLearning.MachineLearningJobProperties
@@ -1420,16 +1346,10 @@ namespace Azure.Provisioning.MachineLearning
             public static readonly string V2026_05_01;
         }
     }
-    public partial class MachineLearningComponentContainerProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class MachineLearningComponentContainerProperties : Azure.Provisioning.MachineLearning.MachineLearningAssetContainer
     {
         public MachineLearningComponentContainerProperties() { }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsArchived { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> LatestVersion { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> NextVersion { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.RegistryAssetProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class MachineLearningComponentVersion : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1449,16 +1369,11 @@ namespace Azure.Provisioning.MachineLearning
             public static readonly string V2026_05_01;
         }
     }
-    public partial class MachineLearningComponentVersionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class MachineLearningComponentVersionProperties : Azure.Provisioning.MachineLearning.MachineLearningAssetBase
     {
         public MachineLearningComponentVersionProperties() { }
         public Azure.Provisioning.BicepValue<System.BinaryData> ComponentSpec { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsAnonymous { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsArchived { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.RegistryAssetProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class MachineLearningCompute : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1879,16 +1794,10 @@ namespace Azure.Provisioning.MachineLearning
             public static readonly string V2026_05_01;
         }
     }
-    public partial class MachineLearningDataContainerProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class MachineLearningDataContainerProperties : Azure.Provisioning.MachineLearning.MachineLearningAssetContainer
     {
         public MachineLearningDataContainerProperties() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.MachineLearningDataType> DataType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsArchived { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> LatestVersion { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> NextVersion { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class MachineLearningDataFactoryCompute : Azure.Provisioning.MachineLearning.MachineLearningComputeProperties
@@ -1931,14 +1840,11 @@ namespace Azure.Provisioning.MachineLearning
         public MachineLearningDatastoreCredentials() { }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class MachineLearningDatastoreProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class MachineLearningDatastoreProperties : Azure.Provisioning.MachineLearning.MachineLearningResourceBase
     {
         public MachineLearningDatastoreProperties() { }
         public Azure.Provisioning.MachineLearning.MachineLearningDatastoreCredentials Credentials { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsDefault { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum MachineLearningDataType
@@ -1967,15 +1873,10 @@ namespace Azure.Provisioning.MachineLearning
             public static readonly string V2026_05_01;
         }
     }
-    public partial class MachineLearningDataVersionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class MachineLearningDataVersionProperties : Azure.Provisioning.MachineLearning.MachineLearningAssetBase
     {
         public MachineLearningDataVersionProperties() { }
         public Azure.Provisioning.BicepValue<System.Uri> DataUri { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsAnonymous { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsArchived { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum MachineLearningDayOfWeek
@@ -2003,12 +1904,9 @@ namespace Azure.Provisioning.MachineLearning
         Failed = 5,
         Canceled = 6,
     }
-    public partial class MachineLearningDeploymentResourceConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class MachineLearningDeploymentResourceConfiguration : Azure.Provisioning.MachineLearning.MachineLearningResourceConfiguration
     {
         public MachineLearningDeploymentResourceConfiguration() { }
-        public Azure.Provisioning.BicepValue<int> InstanceCount { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> InstanceType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<System.BinaryData> Properties { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class MachineLearningDistributionConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2046,6 +1944,27 @@ namespace Azure.Provisioning.MachineLearning
         Key = 1,
         AADToken = 2,
     }
+    public partial class MachineLearningEndpointDeploymentProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public MachineLearningEndpointDeploymentProperties() { }
+        public Azure.Provisioning.MachineLearning.MachineLearningCodeConfiguration CodeConfiguration { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> EnvironmentId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> EnvironmentVariables { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class MachineLearningEndpointProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public MachineLearningEndpointProperties() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.MachineLearningEndpointAuthMode> AuthMode { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
+        public Azure.Provisioning.MachineLearning.MachineLearningEndpointAuthKeys Keys { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> ScoringUri { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Uri> SwaggerUri { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public enum MachineLearningEndpointProvisioningState
     {
         Creating = 0,
@@ -2079,16 +1998,10 @@ namespace Azure.Provisioning.MachineLearning
             public static readonly string V2026_05_01;
         }
     }
-    public partial class MachineLearningEnvironmentContainerProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class MachineLearningEnvironmentContainerProperties : Azure.Provisioning.MachineLearning.MachineLearningAssetContainer
     {
         public MachineLearningEnvironmentContainerProperties() { }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsArchived { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> LatestVersion { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> NextVersion { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.RegistryAssetProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum MachineLearningEnvironmentType
@@ -2113,23 +2026,18 @@ namespace Azure.Provisioning.MachineLearning
             public static readonly string V2026_05_01;
         }
     }
-    public partial class MachineLearningEnvironmentVersionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class MachineLearningEnvironmentVersionProperties : Azure.Provisioning.MachineLearning.MachineLearningAssetBase
     {
         public MachineLearningEnvironmentVersionProperties() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.AutoRebuildSetting> AutoRebuild { get { throw null; } set { } }
         public Azure.Provisioning.MachineLearning.MachineLearningBuildContext Build { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> CondaFile { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.MachineLearningEnvironmentType> EnvironmentType { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Image { get { throw null; } set { } }
         public Azure.Provisioning.MachineLearning.MachineLearningInferenceContainerProperties InferenceConfig { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsAnonymous { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsArchived { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.MachineLearningOperatingSystemType> OSType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.RegistryAssetProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Stage { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class MachineLearningError : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2161,14 +2069,11 @@ namespace Azure.Provisioning.MachineLearning
         None = 0,
         Auto = 1,
     }
-    public partial class MachineLearningFeatureProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class MachineLearningFeatureProperties : Azure.Provisioning.MachineLearning.MachineLearningResourceBase
     {
         public MachineLearningFeatureProperties() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.FeatureDataType> DataType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> FeatureName { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class MachineLearningFeatureSetContainer : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2188,16 +2093,10 @@ namespace Azure.Provisioning.MachineLearning
             public static readonly string V2026_05_01;
         }
     }
-    public partial class MachineLearningFeatureSetContainerProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class MachineLearningFeatureSetContainerProperties : Azure.Provisioning.MachineLearning.MachineLearningAssetContainer
     {
         public MachineLearningFeatureSetContainerProperties() { }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsArchived { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> LatestVersion { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> NextVersion { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.RegistryAssetProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class MachineLearningFeatureSetVersion : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2217,19 +2116,14 @@ namespace Azure.Provisioning.MachineLearning
             public static readonly string V2026_05_01;
         }
     }
-    public partial class MachineLearningFeatureSetVersionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class MachineLearningFeatureSetVersionProperties : Azure.Provisioning.MachineLearning.MachineLearningAssetBase
     {
         public MachineLearningFeatureSetVersionProperties() { }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> Entities { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsAnonymous { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsArchived { get { throw null; } set { } }
         public Azure.Provisioning.MachineLearning.MaterializationSettings MaterializationSettings { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.RegistryAssetProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SpecificationPath { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Stage { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class MachineLearningFeatureStoreEntityContainer : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2249,16 +2143,10 @@ namespace Azure.Provisioning.MachineLearning
             public static readonly string V2026_05_01;
         }
     }
-    public partial class MachineLearningFeatureStoreEntityContainerProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class MachineLearningFeatureStoreEntityContainerProperties : Azure.Provisioning.MachineLearning.MachineLearningAssetContainer
     {
         public MachineLearningFeatureStoreEntityContainerProperties() { }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsArchived { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> LatestVersion { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> NextVersion { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.RegistryAssetProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class MachineLearningFeaturestoreEntityVersion : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2278,17 +2166,12 @@ namespace Azure.Provisioning.MachineLearning
             public static readonly string V2026_05_01;
         }
     }
-    public partial class MachineLearningFeatureStoreEntityVersionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class MachineLearningFeatureStoreEntityVersionProperties : Azure.Provisioning.MachineLearning.MachineLearningAssetBase
     {
         public MachineLearningFeatureStoreEntityVersionProperties() { }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.MachineLearning.IndexColumn> IndexColumns { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsAnonymous { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsArchived { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.RegistryAssetProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Stage { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum MachineLearningFeaturizationMode
@@ -2296,6 +2179,12 @@ namespace Azure.Provisioning.MachineLearning
         Auto = 0,
         Custom = 1,
         Off = 2,
+    }
+    public partial class MachineLearningFeaturizationSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public MachineLearningFeaturizationSettings() { }
+        public Azure.Provisioning.BicepValue<string> DatasetLanguage { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class MachineLearningFlavorData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -2439,31 +2328,25 @@ namespace Azure.Provisioning.MachineLearning
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class MachineLearningJobProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class MachineLearningJobProperties : Azure.Provisioning.MachineLearning.MachineLearningResourceBase
     {
         public MachineLearningJobProperties() { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ComponentId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ComputeId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ExperimentName { get { throw null; } set { } }
         public Azure.Provisioning.MachineLearning.MachineLearningIdentityConfiguration Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsArchived { get { throw null; } set { } }
         public Azure.Provisioning.MachineLearning.NotificationSetting NotificationSetting { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<Azure.Provisioning.MachineLearning.MachineLearningJobService> Services { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.MachineLearningJobStatus> Status { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class MachineLearningJobResourceConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class MachineLearningJobResourceConfiguration : Azure.Provisioning.MachineLearning.MachineLearningResourceConfiguration
     {
         public MachineLearningJobResourceConfiguration() { }
         public Azure.Provisioning.BicepValue<string> DockerArgs { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> DockerArgsList { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> InstanceCount { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> InstanceType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<System.BinaryData> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ShmSize { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -2618,16 +2501,10 @@ namespace Azure.Provisioning.MachineLearning
             public static readonly string V2026_05_01;
         }
     }
-    public partial class MachineLearningModelContainerProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class MachineLearningModelContainerProperties : Azure.Provisioning.MachineLearning.MachineLearningAssetContainer
     {
         public MachineLearningModelContainerProperties() { }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsArchived { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> LatestVersion { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> NextVersion { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.RegistryAssetProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum MachineLearningModelSize
@@ -2655,21 +2532,16 @@ namespace Azure.Provisioning.MachineLearning
             public static readonly string V2026_05_01;
         }
     }
-    public partial class MachineLearningModelVersionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class MachineLearningModelVersionProperties : Azure.Provisioning.MachineLearning.MachineLearningAssetBase
     {
         public MachineLearningModelVersionProperties() { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.MachineLearning.DatasetReference> Datasets { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<Azure.Provisioning.MachineLearning.MachineLearningFlavorData> Flavors { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsAnonymous { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsArchived { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> JobName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ModelType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> ModelUri { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.RegistryAssetProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Stage { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum MachineLearningMountAction
@@ -2757,21 +2629,16 @@ namespace Azure.Provisioning.MachineLearning
             public static readonly string V2026_05_01;
         }
     }
-    public partial class MachineLearningOnlineDeploymentProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class MachineLearningOnlineDeploymentProperties : Azure.Provisioning.MachineLearning.MachineLearningEndpointDeploymentProperties
     {
         public MachineLearningOnlineDeploymentProperties() { }
         public Azure.Provisioning.BicepValue<bool> AppInsightsEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.MachineLearning.MachineLearningCodeConfiguration CodeConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.MachineLearning.DataCollector DataCollector { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.MachineLearningEgressPublicNetworkAccessType> EgressPublicNetworkAccess { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> EnvironmentId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> EnvironmentVariables { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> InstanceType { get { throw null; } set { } }
         public Azure.Provisioning.MachineLearning.MachineLearningProbeSettings LivenessProbe { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Model { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ModelMountPath { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.MachineLearningDeploymentProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.MachineLearning.MachineLearningProbeSettings ReadinessProbe { get { throw null; } set { } }
         public Azure.Provisioning.MachineLearning.MachineLearningOnlineRequestSettings RequestSettings { get { throw null; } set { } }
@@ -2801,19 +2668,13 @@ namespace Azure.Provisioning.MachineLearning
             public static readonly string V2026_05_01;
         }
     }
-    public partial class MachineLearningOnlineEndpointProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class MachineLearningOnlineEndpointProperties : Azure.Provisioning.MachineLearning.MachineLearningEndpointProperties
     {
         public MachineLearningOnlineEndpointProperties() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.MachineLearningEndpointAuthMode> AuthMode { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Compute { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
-        public Azure.Provisioning.MachineLearning.MachineLearningEndpointAuthKeys Keys { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<int> MirrorTraffic { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.MachineLearningEndpointProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.PublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.Uri> ScoringUri { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.Uri> SwaggerUri { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<int> Traffic { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -3216,6 +3077,22 @@ namespace Azure.Provisioning.MachineLearning
         Disabled = 1,
         NotSpecified = 2,
     }
+    public partial class MachineLearningResourceBase : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public MachineLearningResourceBase() { }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class MachineLearningResourceConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public MachineLearningResourceConfiguration() { }
+        public Azure.Provisioning.BicepValue<int> InstanceCount { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> InstanceType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<System.BinaryData> Properties { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class MachineLearningSasAuthTypeWorkspaceConnection : Azure.Provisioning.MachineLearning.MachineLearningWorkspaceConnectionProperties
     {
         public MachineLearningSasAuthTypeWorkspaceConnection() { }
@@ -3258,16 +3135,13 @@ namespace Azure.Provisioning.MachineLearning
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.MachineLearningScheduleStatus> Status { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class MachineLearningScheduleProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class MachineLearningScheduleProperties : Azure.Provisioning.MachineLearning.MachineLearningResourceBase
     {
         public MachineLearningScheduleProperties() { }
         public Azure.Provisioning.MachineLearning.MachineLearningScheduleAction Action { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.MachineLearningScheduleProvisioningStatus> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.MachineLearning.MachineLearningTriggerBase Trigger { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -3504,6 +3378,18 @@ namespace Azure.Provisioning.MachineLearning
         public Azure.Provisioning.BicepValue<int> MinInstances { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.TimeSpan> PollingInterval { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> TargetUtilizationPercentage { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class MachineLearningTrainingSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public MachineLearningTrainingSettings() { }
+        public Azure.Provisioning.BicepValue<bool> EnableDnnTraining { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> EnableModelExplainability { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> EnableOnnxCompatibleModels { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> EnableStackEnsemble { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> EnableVoteEnsemble { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.TimeSpan> EnsembleModelDownloadTimeout { get { throw null; } set { } }
+        public Azure.Provisioning.MachineLearning.MachineLearningStackEnsembleSettings StackEnsembleSettings { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class MachineLearningTrialComponent : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -4064,6 +3950,12 @@ namespace Azure.Provisioning.MachineLearning
         public Azure.Provisioning.MachineLearning.MonitoringInputDataBase ReferenceData { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class PrivateEndpointBase : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public PrivateEndpointBase() { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class PrivateEndpointDestination : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PrivateEndpointDestination() { }
@@ -4118,10 +4010,9 @@ namespace Azure.Provisioning.MachineLearning
         Updating = 4,
         Deleting = 5,
     }
-    public partial class RegistryPrivateEndpoint : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class RegistryPrivateEndpoint : Azure.Provisioning.MachineLearning.PrivateEndpointBase
     {
         public RegistryPrivateEndpoint() { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SubnetArmId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -4152,18 +4043,11 @@ namespace Azure.Provisioning.MachineLearning
         public Azure.Provisioning.BicepList<Azure.Provisioning.MachineLearning.StorageAccountDetails> StorageAccountDetails { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class RegressionTrainingSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class RegressionTrainingSettings : Azure.Provisioning.MachineLearning.MachineLearningTrainingSettings
     {
         public RegressionTrainingSettings() { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.MachineLearning.AutoMLVerticalRegressionModel> AllowedTrainingAlgorithms { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.MachineLearning.AutoMLVerticalRegressionModel> BlockedTrainingAlgorithms { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> EnableDnnTraining { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> EnableModelExplainability { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> EnableOnnxCompatibleModels { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> EnableStackEnsemble { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> EnableVoteEnsemble { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.TimeSpan> EnsembleModelDownloadTimeout { get { throw null; } set { } }
-        public Azure.Provisioning.MachineLearning.MachineLearningStackEnsembleSettings StackEnsembleSettings { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class RollingInputData : Azure.Provisioning.MachineLearning.MonitoringInputDataBase
@@ -4349,12 +4233,11 @@ namespace Azure.Provisioning.MachineLearning
         Identity = 1,
         UserDelegationSAS = 2,
     }
-    public partial class TableVerticalFeaturizationSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class TableVerticalFeaturizationSettings : Azure.Provisioning.MachineLearning.MachineLearningFeaturizationSettings
     {
         public TableVerticalFeaturizationSettings() { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.MachineLearning.BlockedTransformer> BlockedTransformers { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<string> ColumnNameAndTypes { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> DatasetLanguage { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnableDnnFeaturization { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.MachineLearningFeaturizationMode> Mode { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<Azure.Provisioning.BicepList<Azure.Provisioning.MachineLearning.ColumnTransformer>> TransformerParams { get { throw null; } set { } }

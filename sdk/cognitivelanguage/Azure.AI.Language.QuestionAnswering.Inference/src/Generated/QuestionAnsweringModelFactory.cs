@@ -107,7 +107,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <param name="scorer"> To specify what scoring algorithm is preferred. </param>
         /// <param name="matchingPolicy"> Policy for controling exact query match behavior. </param>
         /// <returns> A new <see cref="Inference.QueryPreferences"/> instance for mocking. </returns>
-        public static QueryPreferences QueryPreferences(Scorer? scorer = default, MatchingPolicy matchingPolicy = default)
+        public static QueryPreferences QueryPreferences(QuestionAnsweringScorer? scorer = default, MatchingPolicy matchingPolicy = default)
         {
             return new QueryPreferences(scorer, matchingPolicy, additionalBinaryDataProperties: null);
         }

@@ -10,6 +10,7 @@ using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PostgreSql
 {
@@ -168,6 +169,7 @@ namespace Azure.ResourceManager.PostgreSql
     [ModelReaderWriterBuildable(typeof(SkuForPatch))]
     [ModelReaderWriterBuildable(typeof(StartMajorVersionUpgradePrecheckContent))]
     [ModelReaderWriterBuildable(typeof(StartMajorVersionUpgradePrecheckResult))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TuningOptionsList))]
     [ModelReaderWriterBuildable(typeof(TuningOptionsProperties))]

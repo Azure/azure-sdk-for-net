@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Fabric.Models;
 using Azure.ResourceManager.Models;
 
@@ -30,6 +31,7 @@ namespace Azure.ResourceManager.Fabric
     [ModelReaderWriterBuildable(typeof(FabricSkuDetailsForExistingCapacity))]
     [ModelReaderWriterBuildable(typeof(FabricSkuDetailsForNewCapacity))]
     [ModelReaderWriterBuildable(typeof(PagedQuota))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RpSkuEnumerationForExistingResourceResult))]
     [ModelReaderWriterBuildable(typeof(RpSkuEnumerationForNewResourceResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
