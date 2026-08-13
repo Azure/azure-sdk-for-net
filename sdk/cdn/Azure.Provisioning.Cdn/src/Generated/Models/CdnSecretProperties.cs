@@ -6,17 +6,14 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Cdn
 {
     /// <summary> The JSON object that contains the properties of the Secret to create. </summary>
-    internal partial class CdnSecretProperties : ProvisionableConstruct
+    internal partial class CdnSecretProperties : FrontDoorStateProperties
     {
         private BicepValue<string> _profileName;
         private FrontDoorSecretProperties _properties;
-        private BicepValue<FrontDoorProvisioningState> _provisioningState;
-        private BicepValue<FrontDoorDeploymentStatus> _deploymentStatus;
 
         /// <summary> Creates a new CdnSecretProperties. </summary>
         public CdnSecretProperties()
@@ -48,34 +45,12 @@ namespace Azure.Provisioning.Cdn
             }
         }
 
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<FrontDoorProvisioningState> ProvisioningState
-        {
-            get
-            {
-                Initialize();
-                return _provisioningState;
-            }
-        }
-
-        /// <summary> Gets the DeploymentStatus. </summary>
-        public BicepValue<FrontDoorDeploymentStatus> DeploymentStatus
-        {
-            get
-            {
-                Initialize();
-                return _deploymentStatus;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for CdnSecretProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _profileName = DefineProperty<string>(nameof(ProfileName), new string[] { "profileName" }, isOutput: true);
             _properties = DefineModelProperty<FrontDoorSecretProperties>(nameof(Properties), new string[] { "parameters" });
-            _provisioningState = DefineProperty<FrontDoorProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _deploymentStatus = DefineProperty<FrontDoorDeploymentStatus>(nameof(DeploymentStatus), new string[] { "deploymentStatus" }, isOutput: true);
             DefineAdditionalProperties();
         }
 
