@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -19,7 +18,11 @@ public static class AgentEventStreamServiceCollectionExtensions
 {
     /// <summary>
     /// Adds the event-stream registry, selecting and configuring the single backing
-    /// for the process.
+    /// for the process. Safe to call more than once: the first registration wins
+    /// (<see cref="Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddSingleton{TService}(IServiceCollection, System.Func{IServiceProvider, TService})"/>
+    /// semantics), so a composition where more than one component (e.g. a protocol SDK and a
+    /// consumer) registers the streams selects the backing by configuration/first-registration
+    /// rather than throwing on registration order.
     /// </summary>
     /// <param name="services">The service collection.</param>
     /// <param name="configure">An optional configurator that selects the backing; defaults to in-memory live.</param>
@@ -30,17 +33,9 @@ public static class AgentEventStreamServiceCollectionExtensions
     {
         ArgumentNullException.ThrowIfNull(services);
 
-        // A single backing is selected once for the process. TryAddSingleton would silently
-        // discard a second call's configuration, so detect a repeated configuring call and fail
-        // loudly rather than letting the developer's intended backing be dropped without warning.
-        bool alreadyRegistered = services.Any(d => d.ServiceType == typeof(AgentEventStreamRegistry));
-        if (alreadyRegistered && configure is not null)
-        {
-            throw new InvalidOperationException(
-                "AddAgentEventStreams has already been called; the event-stream backing is selected once " +
-                "per process. Remove the duplicate registration or its configuration.");
-        }
-
+        // A single backing is selected once for the process. Registration is first-wins: a later
+        // call (from another protocol SDK or the consumer) is a harmless no-op rather than an
+        // order-dependent throw, so configuration decides the backing regardless of call order.
         var options = new AgentEventStreamOptions();
         configure?.Invoke(options);
 

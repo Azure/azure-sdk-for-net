@@ -10,7 +10,7 @@ Differences from Sample 19:
 
 - `SteerableConversations = true` — each new turn supersedes the prior one; the
   prior turn's handler observes its cancellation token set with **no** cause flag
-  (steering pressure — neither `ClientCancelled` nor `IsShutdownRequested` is set).
+  (steering pressure — neither `IsClientCancelled` nor `IsShutdownRequested` is set).
 - A single message item per turn (no phases). Recovery within a turn does not try
   to checkpoint partial token output — the resumption response is **empty** and
   the recovered attempt re-streams from scratch. This is the realistic case for
@@ -23,7 +23,7 @@ Differences from Sample 19:
 
 When the cancellation token is signaled, inspect the context to find the cause:
 
-| `ClientCancelled` | `IsShutdownRequested` | Meaning | Handler action |
+| `IsClientCancelled` | `IsShutdownRequested` | Meaning | Handler action |
 |-------------------|-----------------------|---------|----------------|
 | `true` | — | Client cancelled | Return without terminal (`cancelled`). |
 | — | `true` | Graceful shutdown | `await context.ExitForRecoveryAsync()` — re-run next lifetime. |
@@ -102,7 +102,7 @@ public class ResilientSteeringHandler : ResponseHandler
         {
             if (cancellationToken.IsCancellationRequested)
             {
-                if (context.ClientCancelled)
+                if (context.IsClientCancelled)
                 {
                     yield break; // client cancelled — no terminal
                 }

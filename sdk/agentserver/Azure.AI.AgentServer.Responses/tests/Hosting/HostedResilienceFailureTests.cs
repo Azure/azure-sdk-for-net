@@ -83,7 +83,16 @@ public class HostedResilienceFailureTests
         services.AddRouting();
         services.AddAgentServerCore();
         services.AddSingleton<ResponseHandler>(new TestHandler());
-        services.AddResponsesServer(o => o.ResilientBackground = true);
+
+        // Hosted registration binds the Foundry credential + endpoint from settings in production;
+        // this unit test drives the shared core directly with a fake credential and the hosted
+        // storage endpoint so it can assert the hosted composition without a live backend.
+        var storageBaseUri = ResponsesServerServiceCollectionExtensions.ResolveStorageBaseUri(
+            new Uri("https://example.com/project"),
+            isDevelopment: false);
+        services.AddResponsesServerCore(
+            o => o.ResilientBackground = true,
+            new ResponsesHostedStorage(new FakeTokenCredential(), storageBaseUri));
 
         return services.BuildServiceProvider();
     }

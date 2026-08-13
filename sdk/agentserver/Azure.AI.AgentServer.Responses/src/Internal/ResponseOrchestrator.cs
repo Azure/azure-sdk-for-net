@@ -285,6 +285,11 @@ internal sealed class ResponseOrchestrator
         // In-progress: signal cancellation (B11).
         execution.CancelRequested = true;
 
+        // Surface the explicit client-cancel cause on the handler's context so a cooperative
+        // handler can distinguish it (ClientCancellation / IsClientCancelled) from a graceful
+        // shutdown or a client disconnect, rather than only observing the generic cancellation token.
+        execution.Context?.SignalClientCancellation();
+
         await _cancellationProvider.CancelResponseAsync(responseId);
 
         // Cancel the execution's CTS so the handler's CancellationToken fires.

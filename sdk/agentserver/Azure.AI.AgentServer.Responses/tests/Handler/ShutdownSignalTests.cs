@@ -26,11 +26,11 @@ public class ShutdownSignalTests
     }
 
     [Test]
-    public void Shutdown_Token_IsSignaled_WhenIsShutdownRequestedSet()
+    public void Shutdown_Token_IsSignaled_WhenSignalShutdownCalled()
     {
         var context = new ResponseContext("resp_signal");
 
-        context.IsShutdownRequested = true;
+        context.SignalShutdown();
 
         Assert.That(context.IsShutdownRequested, Is.True);
         Assert.That(context.Shutdown.IsCancellationRequested, Is.True);
@@ -55,7 +55,7 @@ public class ShutdownSignalTests
             }
         });
 
-        context.IsShutdownRequested = true;
+        context.SignalShutdown();
 
         await woke.Task.WaitAsync(TimeSpan.FromSeconds(5));
         await handler;
