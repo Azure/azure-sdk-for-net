@@ -140,70 +140,6 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceNameValuePair(name, value, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> Gets the ProvisioningState. </param>
-        /// <param name="provisioningDetails"> Gets the ProvisioningDetails. </param>
-        /// <param name="dnsSuffix"> The default custom domain suffix to use for all sites deployed on the ASE. </param>
-        /// <param name="certificateUri"> The URL referencing the Azure Key Vault certificate secret that should be used as the default SSL/TLS certificate for sites with the custom domain suffix. </param>
-        /// <param name="keyVaultReferenceIdentity"> The user-assigned identity to use for resolving the key vault certificate reference. If not specified, the system-assigned ASE identity will be used if available. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.CustomDnsSuffixConfigurationData"/> instance for mocking. </returns>
-        public static CustomDnsSuffixConfigurationData CustomDnsSuffixConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CustomDnsSuffixProvisioningState? provisioningState = default, string provisioningDetails = default, string dnsSuffix = default, Uri certificateUri = default, string keyVaultReferenceIdentity = default, string kind = default)
-        {
-            return new CustomDnsSuffixConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && provisioningDetails is null && dnsSuffix is null && certificateUri is null && keyVaultReferenceIdentity is null ? default : new CustomDnsSuffixConfigurationProperties(
-                    provisioningState,
-                    provisioningDetails,
-                    dnsSuffix,
-                    certificateUri,
-                    keyVaultReferenceIdentity,
-                    default),
-                kind,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="windowsOutboundIPAddresses"> Gets the WindowsOutboundIPAddresses. </param>
-        /// <param name="linuxOutboundIPAddresses"> Gets the LinuxOutboundIPAddresses. </param>
-        /// <param name="externalInboundIPAddresses"> Gets the ExternalInboundIPAddresses. </param>
-        /// <param name="internalInboundIPAddresses"> Gets the InternalInboundIPAddresses. </param>
-        /// <param name="allowNewPrivateEndpointConnections"> Property to enable and disable new private endpoint connection creation on ASE. </param>
-        /// <param name="isFtpEnabled"> Property to enable and disable FTP on ASEV3. </param>
-        /// <param name="isRemoteDebugEnabled"> Property to enable and disable Remote Debug on ASEV3. </param>
-        /// <param name="inboundIPAddressOverride"> Customer provided Inbound IP Address. Only able to be set on Ase create. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.AseV3NetworkingConfigurationData"/> instance for mocking. </returns>
-        public static AseV3NetworkingConfigurationData AseV3NetworkingConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<IPAddress> windowsOutboundIPAddresses = default, IEnumerable<IPAddress> linuxOutboundIPAddresses = default, IEnumerable<IPAddress> externalInboundIPAddresses = default, IEnumerable<IPAddress> internalInboundIPAddresses = default, bool? allowNewPrivateEndpointConnections = default, bool? isFtpEnabled = default, bool? isRemoteDebugEnabled = default, string inboundIPAddressOverride = default, string kind = default)
-        {
-            return new AseV3NetworkingConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                windowsOutboundIPAddresses is null && linuxOutboundIPAddresses is null && externalInboundIPAddresses is null && internalInboundIPAddresses is null && allowNewPrivateEndpointConnections is null && isFtpEnabled is null && isRemoteDebugEnabled is null && inboundIPAddressOverride is null ? default : new AseV3NetworkingConfigurationProperties(
-                    (windowsOutboundIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
-                    (linuxOutboundIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
-                    (externalInboundIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
-                    (internalInboundIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
-                    allowNewPrivateEndpointConnections,
-                    isFtpEnabled,
-                    isRemoteDebugEnabled,
-                    inboundIPAddressOverride,
-                    default),
-                kind,
-                default);
-        }
-
         /// <param name="status"> Result of validation. </param>
         /// <param name="error"> Error details for the case when validation fails. </param>
         /// <returns> A new <see cref="Models.AppServiceValidateResult"/> instance for mocking. </returns>
@@ -360,25 +296,6 @@ namespace Azure.ResourceManager.AppService.Models
                 resourceType,
                 systemData,
                 customHostname is null && region is null && siteResourceIds is null ? default : new CustomHostnameSitesProperties(customHostname, region, (siteResourceIds ?? new ChangeTrackingList<AppServiceIdentifierData>()).ToList(), default),
-                kind,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="value"> String representation of the identity. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.AppServiceIdentifierData"/> instance for mocking. </returns>
-        public static AppServiceIdentifierData AppServiceIdentifierData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string value = default, string kind = default)
-        {
-            return new AppServiceIdentifierData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                value is null ? default : new IdentifierProperties(value, default),
                 kind,
                 default);
         }
@@ -813,74 +730,6 @@ namespace Azure.ResourceManager.AppService.Models
                     nextResetOn,
                     computeMode,
                     siteMode,
-                    default),
-                kind,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Provisioning state of the App Service Environment. </param>
-        /// <param name="status"> Current status of the App Service Environment. </param>
-        /// <param name="virtualNetwork"> Description of the Virtual Network. </param>
-        /// <param name="internalLoadBalancingMode"> Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment. </param>
-        /// <param name="multiSize"> Front-end VM size, e.g. "Medium", "Large". </param>
-        /// <param name="multiRoleCount"> Number of front-end instances. </param>
-        /// <param name="ipSslAddressCount"> Number of IP SSL addresses reserved for the App Service Environment. </param>
-        /// <param name="dnsSuffix"> DNS suffix of the App Service Environment. </param>
-        /// <param name="maximumNumberOfMachines"> Maximum number of VMs in the App Service Environment. </param>
-        /// <param name="frontEndScaleFactor"> Scale factor for front-ends. </param>
-        /// <param name="isSuspended">
-        /// &lt;code&gt;true&lt;/code&gt; if the App Service Environment is suspended; otherwise, &lt;code&gt;false&lt;/code&gt;. The environment can be suspended, e.g. when the management endpoint is no longer available
-        /// (most likely because NSG blocked the incoming traffic).
-        /// </param>
-        /// <param name="clusterSettings"> Custom settings for changing the behavior of the App Service Environment. </param>
-        /// <param name="userWhitelistedIPRanges"> User added ip ranges to whitelist on ASE db. </param>
-        /// <param name="hasLinuxWorkers"> Flag that displays whether an ASE has linux workers or not. </param>
-        /// <param name="upgradePreference"> Upgrade Preference. </param>
-        /// <param name="dedicatedHostCount"> Dedicated Host Count. </param>
-        /// <param name="isZoneRedundant"> Whether or not this App Service Environment is zone-redundant. </param>
-        /// <param name="customDnsSuffixConfiguration"> Full view of the custom domain suffix configuration for ASEv3. </param>
-        /// <param name="networkingConfiguration"> Full view of networking configuration for an ASE. </param>
-        /// <param name="upgradeAvailability"> Whether an upgrade is available for this App Service Environment. </param>
-        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
-        /// <returns> A new <see cref="AppService.AppServiceEnvironmentData"/> instance for mocking. </returns>
-        public static AppServiceEnvironmentData AppServiceEnvironmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ProvisioningState? provisioningState = default, HostingEnvironmentStatus? status = default, AppServiceVirtualNetworkProfile virtualNetwork = default, LoadBalancingMode? internalLoadBalancingMode = default, string multiSize = default, int? multiRoleCount = default, int? ipSslAddressCount = default, string dnsSuffix = default, int? maximumNumberOfMachines = default, int? frontEndScaleFactor = default, bool? isSuspended = default, IEnumerable<AppServiceNameValuePair> clusterSettings = default, IEnumerable<string> userWhitelistedIPRanges = default, bool? hasLinuxWorkers = default, AppServiceEnvironmentUpgradePreference? upgradePreference = default, int? dedicatedHostCount = default, bool? isZoneRedundant = default, CustomDnsSuffixConfigurationData customDnsSuffixConfiguration = default, AseV3NetworkingConfigurationData networkingConfiguration = default, AppServiceEnvironmentUpgradeAvailability? upgradeAvailability = default, string kind = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new AppServiceEnvironmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && status is null && virtualNetwork is null && internalLoadBalancingMode is null && multiSize is null && multiRoleCount is null && ipSslAddressCount is null && dnsSuffix is null && maximumNumberOfMachines is null && frontEndScaleFactor is null && isSuspended is null && clusterSettings is null && userWhitelistedIPRanges is null && hasLinuxWorkers is null && upgradePreference is null && dedicatedHostCount is null && isZoneRedundant is null && customDnsSuffixConfiguration is null && networkingConfiguration is null && upgradeAvailability is null ? default : new AppServiceEnvironmentProperties(
-                    provisioningState,
-                    status,
-                    virtualNetwork,
-                    internalLoadBalancingMode,
-                    multiSize,
-                    multiRoleCount,
-                    ipSslAddressCount,
-                    dnsSuffix,
-                    maximumNumberOfMachines,
-                    frontEndScaleFactor,
-                    isSuspended,
-                    (clusterSettings ?? new ChangeTrackingList<AppServiceNameValuePair>()).ToList(),
-                    (userWhitelistedIPRanges ?? new ChangeTrackingList<string>()).ToList(),
-                    hasLinuxWorkers,
-                    upgradePreference,
-                    dedicatedHostCount,
-                    isZoneRedundant,
-                    customDnsSuffixConfiguration,
-                    networkingConfiguration,
-                    upgradeAvailability,
                     default),
                 kind,
                 default);
@@ -3043,41 +2892,6 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="sku"> Premier add on SKU. </param>
-        /// <param name="product"> Premier add on Product. </param>
-        /// <param name="vendor"> Premier add on Vendor. </param>
-        /// <param name="marketplacePublisher"> Premier add on Marketplace publisher. </param>
-        /// <param name="marketplaceOffer"> Premier add on Marketplace offer. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.PremierAddOnData"/> instance for mocking. </returns>
-        public static PremierAddOnData PremierAddOnData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string sku = default, string product = default, string vendor = default, string marketplacePublisher = default, string marketplaceOffer = default, string kind = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new PremierAddOnData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                sku is null && product is null && vendor is null && marketplacePublisher is null && marketplaceOffer is null ? default : new PremierAddOnProperties(
-                    sku,
-                    product,
-                    vendor,
-                    marketplacePublisher,
-                    marketplaceOffer,
-                    default),
-                kind,
-                default);
-        }
-
         /// <param name="format">
         /// Name of the format. Valid values are:
         /// FileZilla3
@@ -3683,26 +3497,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="vnetName"> The Virtual Network name. </param>
-        /// <param name="vpnPackageUri"> The URI where the VPN package can be downloaded. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.AppServiceVirtualNetworkGatewayData"/> instance for mocking. </returns>
-        public static AppServiceVirtualNetworkGatewayData AppServiceVirtualNetworkGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string vnetName = default, Uri vpnPackageUri = default, string kind = default)
-        {
-            return new AppServiceVirtualNetworkGatewayData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                vnetName is null && vpnPackageUri is null ? default : new VnetGatewayProperties(vnetName, vpnPackageUri, default),
-                kind,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="deletedSiteId"> Numeric id for the deleted site. </param>
         /// <param name="deletedTimestamp"> Time in UTC when the app was deleted. </param>
         /// <param name="subscription"> Subscription containing the deleted site. </param>
@@ -3729,35 +3523,6 @@ namespace Azure.ResourceManager.AppService.Models
                     slot,
                     kindPropertiesKind,
                     geoRegionName,
-                    default),
-                kind,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="metadata"> metadata for the detector. </param>
-        /// <param name="dataset"> Data Set. </param>
-        /// <param name="status"> Indicates status of the most severe insight. </param>
-        /// <param name="dataProvidersMetadata"> Additional configuration for different data providers to be used by the UI. </param>
-        /// <param name="suggestedUtterances"> Suggested utterances where the detector can be applicable. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.AppServiceDetectorData"/> instance for mocking. </returns>
-        public static AppServiceDetectorData AppServiceDetectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DetectorInfo metadata = default, IEnumerable<DiagnosticDataset> dataset = default, AppServiceStatusInfo status = default, IEnumerable<DataProviderMetadata> dataProvidersMetadata = default, QueryUtterancesResults suggestedUtterances = default, string kind = default)
-        {
-            return new AppServiceDetectorData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                metadata is null && dataset is null && status is null && dataProvidersMetadata is null && suggestedUtterances is null ? default : new DetectorResponseProperties(
-                    metadata,
-                    (dataset ?? new ChangeTrackingList<DiagnosticDataset>()).ToList(),
-                    status,
-                    (dataProvidersMetadata ?? new ChangeTrackingList<DataProviderMetadata>()).ToList(),
-                    suggestedUtterances,
                     default),
                 kind,
                 default);
@@ -3890,44 +3655,6 @@ namespace Azure.ResourceManager.AppService.Models
             links ??= new ChangeTrackingList<string>();
 
             return new SampleUtterance(text, (links ?? new ChangeTrackingList<string>()).ToList(), qid, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="description"> Description of the diagnostic category. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.DiagnosticCategoryData"/> instance for mocking. </returns>
-        public static DiagnosticCategoryData DiagnosticCategoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, string kind = default)
-        {
-            return new DiagnosticCategoryData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                description is null ? default : new DiagnosticCategoryProperties(description, default),
-                kind,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="description"> Description of the Analysis. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.WebSiteAnalysisDefinitionData"/> instance for mocking. </returns>
-        public static WebSiteAnalysisDefinitionData WebSiteAnalysisDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, string kind = default)
-        {
-            return new WebSiteAnalysisDefinitionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                description is null ? default : new AnalysisDefinitionProperties(description, default),
-                kind,
-                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -4734,28 +4461,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="token"> OAuth access token. </param>
-        /// <param name="tokenSecret"> OAuth access token secret. </param>
-        /// <param name="refreshToken"> OAuth refresh token. </param>
-        /// <param name="expireOn"> OAuth token expiration. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.AppServiceSourceControlData"/> instance for mocking. </returns>
-        public static AppServiceSourceControlData AppServiceSourceControlData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string token = default, string tokenSecret = default, string refreshToken = default, DateTimeOffset? expireOn = default, string kind = default)
-        {
-            return new AppServiceSourceControlData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                token is null && tokenSecret is null && refreshToken is null && expireOn is null ? default : new SourceControlProperties(token, tokenSecret, refreshToken, expireOn, default),
-                kind,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="defaultHostname"> The default autogenerated hostname for the static site. </param>
@@ -5496,25 +5201,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="allow"> &lt;code&gt;true&lt;/code&gt; to allow access to a publishing method; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.CsmPublishingCredentialsPoliciesEntityData"/> instance for mocking. </returns>
-        public static CsmPublishingCredentialsPoliciesEntityData CsmPublishingCredentialsPoliciesEntityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? allow = default, string kind = default)
-        {
-            return new CsmPublishingCredentialsPoliciesEntityData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                allow is null ? default : new CsmPublishingCredentialsPoliciesEntityProperties(allow.GetValueOrDefault(), default),
-                kind,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="platform"> The configuration settings of the platform of App Service Authentication/Authorization. </param>
         /// <param name="globalValidation"> The configuration settings that determines the validation flow of users using App Service Authentication/Authorization. </param>
         /// <param name="identityProviders"> The configuration settings of each of the identity providers used to configure App Service Authentication/Authorization. </param>
@@ -6111,45 +5797,6 @@ namespace Azure.ResourceManager.AppService.Models
                 resourceType,
                 systemData,
                 snapshotTakenOn is null && snapshotId is null ? default : new SiteConfigurationSnapshotInfoProperties(snapshotTakenOn, snapshotId, default),
-                kind,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="status"> Job status. </param>
-        /// <param name="detailedStatus"> Detailed status. </param>
-        /// <param name="logUri"> Log URL. </param>
-        /// <param name="runCommand"> Run command. </param>
-        /// <param name="uri"> Job URL. </param>
-        /// <param name="extraInfoUri"> Extra Info URL. </param>
-        /// <param name="webJobType"> Job type. </param>
-        /// <param name="error"> Error information. </param>
-        /// <param name="isUsingSdk"> Using SDK?. </param>
-        /// <param name="settings"> Job settings. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.ContinuousWebJobData"/> instance for mocking. </returns>
-        public static ContinuousWebJobData ContinuousWebJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContinuousWebJobStatus? status = default, string detailedStatus = default, Uri logUri = default, string runCommand = default, Uri uri = default, Uri extraInfoUri = default, WebJobType? webJobType = default, string error = default, bool? isUsingSdk = default, IDictionary<string, BinaryData> settings = default, string kind = default)
-        {
-            return new ContinuousWebJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                status is null && detailedStatus is null && logUri is null && runCommand is null && uri is null && extraInfoUri is null && webJobType is null && error is null && isUsingSdk is null && settings is null ? default : new ContinuousWebJobProperties(
-                    status,
-                    detailedStatus,
-                    logUri,
-                    runCommand,
-                    uri,
-                    extraInfoUri,
-                    webJobType,
-                    error,
-                    isUsingSdk,
-                    settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                    default),
                 kind,
                 default);
         }
@@ -6866,51 +6513,6 @@ namespace Azure.ResourceManager.AppService.Models
                 resourceType,
                 systemData,
                 blob is null && publicCertificateLocation is null && thumbprintString is null ? default : new PublicCertificateProperties(blob, publicCertificateLocation, thumbprintString, default),
-                kind,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="image"> Image Name. </param>
-        /// <param name="targetPort"> Target Port. </param>
-        /// <param name="isMain"> &lt;code&gt;true&lt;/code&gt; if the container is the main site container; &lt;code&gt;false&lt;/code&gt; otherwise. </param>
-        /// <param name="startUpCommand"> StartUp Command. </param>
-        /// <param name="authType"> Auth Type. </param>
-        /// <param name="userName"> User Name. </param>
-        /// <param name="passwordSecret"> Password Secret. </param>
-        /// <param name="userManagedIdentityClientId"> UserManagedIdentity ClientId. </param>
-        /// <param name="createdOn"> Created Time. </param>
-        /// <param name="lastModifiedOn"> Last Modified Time. </param>
-        /// <param name="volumeMounts"> List of volume mounts. </param>
-        /// <param name="inheritAppSettingsAndConnectionStrings"> &lt;code&gt;true&lt;/code&gt; if all AppSettings and ConnectionStrings have to be passed to the container as environment variables; &lt;code&gt;false&lt;/code&gt; otherwise. </param>
-        /// <param name="environmentVariables"> List of environment variables. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.SiteContainerData"/> instance for mocking. </returns>
-        public static SiteContainerData SiteContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string image = default, string targetPort = default, bool? isMain = default, string startUpCommand = default, SiteContainerAuthType? authType = default, string userName = default, string passwordSecret = default, string userManagedIdentityClientId = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, IEnumerable<SiteContainerVolumeMount> volumeMounts = default, bool? inheritAppSettingsAndConnectionStrings = default, IEnumerable<WebAppEnvironmentVariable> environmentVariables = default, string kind = default)
-        {
-            return new SiteContainerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                image is null && targetPort is null && isMain is null && startUpCommand is null && authType is null && userName is null && passwordSecret is null && userManagedIdentityClientId is null && createdOn is null && lastModifiedOn is null && volumeMounts is null && inheritAppSettingsAndConnectionStrings is null && environmentVariables is null ? default : new SiteContainerProperties(
-                    image,
-                    targetPort,
-                    isMain.GetValueOrDefault(),
-                    startUpCommand,
-                    authType,
-                    userName,
-                    passwordSecret,
-                    userManagedIdentityClientId,
-                    createdOn,
-                    lastModifiedOn,
-                    (volumeMounts ?? new ChangeTrackingList<SiteContainerVolumeMount>()).ToList(),
-                    inheritAppSettingsAndConnectionStrings,
-                    (environmentVariables ?? new ChangeTrackingList<WebAppEnvironmentVariable>()).ToList(),
-                    default),
                 kind,
                 default);
         }
