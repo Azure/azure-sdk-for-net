@@ -1776,7 +1776,7 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset accessTierChangedOn = default,
             string smartAccessTier = default,
             ETag eTag = default,
-            DownloadHint downloadHint = default)
+            DownloadHint? downloadHint = default)
             => new BlobDownloadDetails
             {
                 BlobType = blobType,

@@ -255,7 +255,8 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary>
         /// Indicates the download hint for the blob.
+        /// Null if the service did not return a download hint.
         /// </summary>
-        public DownloadHint DownloadHint { get; internal set; }
+        public DownloadHint? DownloadHint { get; internal set; }
     }
 }

@@ -9,10 +9,10 @@ namespace Azure.Storage.Blobs
     {
         public static LayoutAwareRouting ResolveAuto(this LayoutAwareRouting layoutAwareRouting)
         {
-            // Auto maps to Disabled today, may change in the future.
+            // Auto maps to Enabled today, may change in the future.
             if (layoutAwareRouting == LayoutAwareRouting.Auto)
             {
-                return LayoutAwareRouting.Disabled;
+                return LayoutAwareRouting.Enabled;
             }
             return layoutAwareRouting;
         }

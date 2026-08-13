@@ -4844,7 +4844,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                     path,
                     new DataLakeFileReadToOptions
                     {
-                        Conditions = new DataLakeRequestConditions() { IfModifiedSince = default }
+                        Conditions = new DataLakeRequestConditions() { IfModifiedSince = default },
+                        LayoutAwareRouting = Blobs.Models.LayoutAwareRouting.Disabled
                     }));
 
                 async Task Verify(Response response)
@@ -4895,7 +4896,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                     resultStream,
                     new DataLakeFileReadToOptions
                     {
-                        Conditions = new DataLakeRequestConditions() { IfModifiedSince = default }
+                        Conditions = new DataLakeRequestConditions() { IfModifiedSince = default },
+                        LayoutAwareRouting = Blobs.Models.LayoutAwareRouting.Disabled
                     });
                 Verify(resultStream);
             }

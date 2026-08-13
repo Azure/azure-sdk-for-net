@@ -332,8 +332,8 @@ namespace Azure.Storage.Blobs
                         initialResponse,
                         ranges,
                         conditionsWithEtag,
-                        cancellationToken,
-                        layoutCache)
+                        layoutCache,
+                        cancellationToken)
                         .ConfigureAwait(false);
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                 }
@@ -344,9 +344,9 @@ namespace Azure.Storage.Blobs
                         initialResponse,
                         ranges,
                         conditionsWithEtag,
+                        layoutCache,
                         async,
-                        cancellationToken,
-                        layoutCache)
+                        cancellationToken)
                         .ConfigureAwait(false);
                 }
 
@@ -365,8 +365,8 @@ namespace Azure.Storage.Blobs
             Response<BlobDownloadStreamingResult> initialResponse,
             IEnumerable<HttpRange> ranges,
             BlobRequestConditions conditionsWithEtag,
-            CancellationToken cancellationToken,
-            AutoRefreshingCache<BlobLayoutSegmentCacheValue> layoutCache = null)
+            AutoRefreshingCache<BlobLayoutSegmentCacheValue> layoutCache,
+            CancellationToken cancellationToken)
         {
             BlobErrors.VerifyParallelismGreaterThanOne(parallel);
 
@@ -386,7 +386,7 @@ namespace Azure.Storage.Blobs
             while (bufferedTasks.Count < parallel - 1 && remainingRanges.MoveNext())
             {
                 bufferedTasks.Enqueue(DownloadAndBufferAsync(
-                    remainingRanges.Current, conditionsWithEtag, cancellationToken, layoutCache));
+                    remainingRanges.Current, conditionsWithEtag, layoutCache, cancellationToken));
             }
 
             // Stream the initial response directly to the destination
@@ -418,7 +418,7 @@ namespace Azure.Storage.Blobs
                     await ConsumeBufferedTask().ConfigureAwait(false);
                 }
                 bufferedTasks.Enqueue(DownloadAndBufferAsync(
-                    remainingRanges.Current, conditionsWithEtag, cancellationToken, layoutCache));
+                    remainingRanges.Current, conditionsWithEtag, layoutCache, cancellationToken));
             }
 
             while (bufferedTasks.Count > 0)
@@ -462,9 +462,9 @@ namespace Azure.Storage.Blobs
             Response<BlobDownloadStreamingResult> initialResponse,
             IEnumerable<HttpRange> ranges,
             BlobRequestConditions conditionsWithEtag,
+            AutoRefreshingCache<BlobLayoutSegmentCacheValue> layoutCache,
             bool async,
-            CancellationToken cancellationToken,
-            AutoRefreshingCache<BlobLayoutSegmentCacheValue> layoutCache = null)
+            CancellationToken cancellationToken)
         {
             // Easiest to rent whether or not we need it. It's just 8 bytes.
             using IDisposable _composedCrc = _arrayPool.RentDisposable(Crc64Len, out byte[] composedCrcBuf);
@@ -587,8 +587,8 @@ namespace Azure.Storage.Blobs
         private async Task<BufferedDownloadResult> DownloadAndBufferAsync(
             HttpRange range,
             BlobRequestConditions conditions,
-            CancellationToken cancellationToken,
-            AutoRefreshingCache<BlobLayoutSegmentCacheValue> layoutCache = null)
+            AutoRefreshingCache<BlobLayoutSegmentCacheValue> layoutCache,
+            CancellationToken cancellationToken)
         {
             Response<BlobDownloadStreamingResult> response = await _client.DownloadStreamingInternal(
                 range,

@@ -1001,7 +1001,9 @@ namespace Azure.Storage.Blobs
                     AccessTierInferred = rawResponse.Headers.TryGetValue("x-ms-access-tier-inferred", out bool? accessTierInferred) && accessTierInferred.GetValueOrDefault(),
                     AccessTierChangedOn = rawResponse.Headers.TryGetValue("x-ms-access-tier-change-time", out DateTimeOffset? accessTierChangedOn) ? accessTierChangedOn.GetValueOrDefault() : default,
                     SmartAccessTier = rawResponse.Headers.TryGetValue("x-ms-smart-access-tier", out string smartAccessTier) ? smartAccessTier : null,
-                    DownloadHint = rawResponse.Headers.TryGetValue("x-ms-download-hint", out string downloadHint) ? downloadHint : null,
+                    DownloadHint = rawResponse.Headers.TryGetValue("x-ms-download-hint", out string downloadHint) && downloadHint != null
+                        ? new DownloadHint(downloadHint)
+                        : (DownloadHint?)null,
                 }
             };
         }
