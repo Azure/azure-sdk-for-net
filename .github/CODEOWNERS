@@ -421,10 +421,10 @@
 # ServiceOwners: @alxhghs @carlovi81 @mattboentoro @nasc17 @nehrao1 @rmendiza
 
 # PRLabel: %Purview
-/sdk/purview/Azure.Analytics.Purview.DataMap/    @JoshLove-msft @qiaozha
+/sdk/purview/Azure.Analytics.Purview.DataMap/    @qiaozha
 
 # ServiceLabel: %Purview
-# ServiceOwners: @JoshLove-msft @qiaozha
+# ServiceOwners: @qiaozha
 
 # PRLabel: %Schema Registry
 /sdk/schemaregistry/    @axisc @hmlam @sjkwak
