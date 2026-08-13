@@ -348,52 +348,6 @@ ReturnExceptionDetails = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConfidentialLedger_GetLedgerEntry_GetLedgerEntry()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
-
-            Response response = client.GetLedgerEntry("2.15", null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("state").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConfidentialLedger_GetLedgerEntry_GetLedgerEntry_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
-
-            Response response = await client.GetLedgerEntryAsync("2.15", null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("state").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_ConfidentialLedger_GetLedgerEntry_GetLedgerEntry_Convenience()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
-
-            Response<LedgerQueryResult> response = client.GetLedgerEntry("2.15");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConfidentialLedger_GetLedgerEntry_GetLedgerEntry_Convenience_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
-
-            Response<LedgerQueryResult> response = await client.GetLedgerEntryAsync("2.15");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetReceipt_GetReceipt()
         {
             TokenCredential credential = new DefaultAzureCredential();
@@ -486,52 +440,6 @@ ReturnExceptionDetails = true,
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<TransactionStatus> response = await client.GetTransactionStatusAsync("4.2");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_ConfidentialLedger_GetCurrentLedgerEntry_GetCurrentLedgerEntry()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
-
-            Response response = client.GetCurrentLedgerEntry(null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("contents").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConfidentialLedger_GetCurrentLedgerEntry_GetCurrentLedgerEntry_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
-
-            Response response = await client.GetCurrentLedgerEntryAsync(null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("contents").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_ConfidentialLedger_GetCurrentLedgerEntry_GetCurrentLedgerEntry_Convenience()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
-
-            Response<LedgerEntry> response = client.GetCurrentLedgerEntry();
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConfidentialLedger_GetCurrentLedgerEntry_GetCurrentLedgerEntry_Convenience_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
-
-            Response<LedgerEntry> response = await client.GetCurrentLedgerEntryAsync();
         }
 
         [Test]

@@ -4,8 +4,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.AI.AgentServer.Core.Tasks;
+using Azure.Core;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
@@ -67,20 +67,6 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
                 EntryMode.Recovered => true,
                 _ => false,
             };
-        }
-
-        // §4.5 Metadata — durable idempotency marker.
-        public static void MetadataIdempotency(TaskContext<string> ctx)
-        {
-            ctx.Metadata["charged"] = BinaryData.FromObjectAsJson(true);
-
-            if (ctx.Metadata.TryGetValue("charged", out var raw) && raw.ToObjectFromJson<bool>())
-            {
-                // already done — skip the side effect.
-            }
-
-            TaskMetadata billing = ctx.Metadata.GetNamespace("billing");
-            _ = billing;
         }
 
         // §4.6 The result handle.
