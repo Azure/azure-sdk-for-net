@@ -13,52 +13,52 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Extra details needed to run the user's request. </summary>
-    public partial class BulkActionExecutionParameterDetail : IJsonModel<BulkActionExecutionParameterDetail>
+    /// <summary> The execution parameters the scheduled action is supposed to follow. </summary>
+    public partial class ScheduledActionsExecutionParametersContent : IJsonModel<ScheduledActionsExecutionParametersContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BulkActionExecutionParameterDetail PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ScheduledActionsExecutionParametersContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkActionExecutionParameterDetail>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionsExecutionParametersContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBulkActionExecutionParameterDetail(document.RootElement, options);
+                        return DeserializeScheduledActionsExecutionParametersContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BulkActionExecutionParameterDetail)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledActionsExecutionParametersContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkActionExecutionParameterDetail>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionsExecutionParametersContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BulkActionExecutionParameterDetail)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledActionsExecutionParametersContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BulkActionExecutionParameterDetail>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ScheduledActionsExecutionParametersContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BulkActionExecutionParameterDetail IPersistableModel<BulkActionExecutionParameterDetail>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ScheduledActionsExecutionParametersContent IPersistableModel<ScheduledActionsExecutionParametersContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BulkActionExecutionParameterDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ScheduledActionsExecutionParametersContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BulkActionExecutionParameterDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ScheduledActionsExecutionParametersContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkActionExecutionParameterDetail>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionsExecutionParametersContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BulkActionExecutionParameterDetail)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledActionsExecutionParametersContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(OptimizationPreference))
             {
@@ -83,16 +83,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 writer.WritePropertyName("retryPolicy"u8);
                 writer.WriteObjectValue(RetryPolicy, options);
-            }
-            if (Optional.IsDefined(ShouldVerifyVmAgentHealth))
-            {
-                writer.WritePropertyName("verifyVmAgentHealth"u8);
-                writer.WriteBooleanValue(ShouldVerifyVmAgentHealth.Value);
-            }
-            if (Optional.IsDefined(CapacityRecommendationParameters))
-            {
-                writer.WritePropertyName("capacityRecommendationParameters"u8);
-                writer.WriteObjectValue(CapacityRecommendationParameters, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -113,33 +103,31 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BulkActionExecutionParameterDetail IJsonModel<BulkActionExecutionParameterDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ScheduledActionsExecutionParametersContent IJsonModel<ScheduledActionsExecutionParametersContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BulkActionExecutionParameterDetail JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ScheduledActionsExecutionParametersContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkActionExecutionParameterDetail>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionsExecutionParametersContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BulkActionExecutionParameterDetail)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledActionsExecutionParametersContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBulkActionExecutionParameterDetail(document.RootElement, options);
+            return DeserializeScheduledActionsExecutionParametersContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BulkActionExecutionParameterDetail DeserializeBulkActionExecutionParameterDetail(JsonElement element, ModelReaderWriterOptions options)
+        internal static ScheduledActionsExecutionParametersContent DeserializeScheduledActionsExecutionParametersContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             OptimizationPreference? optimizationPreference = default;
-            BulkOperationRetryPolicy retryPolicy = default;
-            bool? shouldVerifyVmAgentHealth = default;
-            CapacityRecommendationParameters capacityRecommendationParameters = default;
+            ScheduledActionsRetryPolicy retryPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -158,25 +146,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    retryPolicy = BulkOperationRetryPolicy.DeserializeBulkOperationRetryPolicy(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("verifyVmAgentHealth"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    shouldVerifyVmAgentHealth = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("capacityRecommendationParameters"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    capacityRecommendationParameters = CapacityRecommendationParameters.DeserializeCapacityRecommendationParameters(prop.Value, options);
+                    retryPolicy = ScheduledActionsRetryPolicy.DeserializeScheduledActionsRetryPolicy(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -184,7 +154,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BulkActionExecutionParameterDetail(optimizationPreference, retryPolicy, shouldVerifyVmAgentHealth, capacityRecommendationParameters, additionalBinaryDataProperties);
+            return new ScheduledActionsExecutionParametersContent(optimizationPreference, retryPolicy, additionalBinaryDataProperties);
         }
     }
 }
