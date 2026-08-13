@@ -137,10 +137,10 @@ public class ConversationChainMetadataTests
     }
 
     [Test]
-    public void MetadataNamespace_ExtensionUsesDefaultNamespace()
+    public void ForNamespace_DefaultOverload_UsesDefaultNamespace()
     {
         var context = new ResponseContext("caresp_test");
-        var ns = context.MetadataNamespace();
+        var ns = context.ConversationChainMetadata.ForNamespace();
 
         ns.Set("k", "v");
 
@@ -156,14 +156,64 @@ public class ConversationChainMetadataTests
         var contextA = new ResponseContext("caresp_a");
         var contextB = new ResponseContext("caresp_b");
 
-        contextA.MetadataNamespace().Set("k", "from-a");
+        contextA.ConversationChainMetadata.ForNamespace().Set("k", "from-a");
 
         Assert.Multiple(() =>
         {
             Assert.That(contextA.ConversationChainMetadata, Is.Not.SameAs(contextB.ConversationChainMetadata));
-            Assert.That(contextB.MetadataNamespace().TryGet("k", out _), Is.False);
-            Assert.That(contextA.MetadataNamespace().TryGet("k", out var v), Is.True);
+            Assert.That(contextB.ConversationChainMetadata.ForNamespace().TryGet("k", out _), Is.False);
+            Assert.That(contextA.ConversationChainMetadata.ForNamespace().TryGet("k", out var v), Is.True);
             Assert.That(v, Is.EqualTo("from-a"));
         });
+    }
+
+    [Test]
+    public void Empty_DiscardsWrites_NeverAccumulatesSharedState()
+    {
+        // Regression: Empty is a shared static instance. A write through it must not leak into
+        // process-global state observable by a later, unrelated read of the same shared instance.
+        ConversationChainMetadata.Empty.Set("ns", "k", "leaked");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(ConversationChainMetadata.Empty.TryGet("ns", "k", out _), Is.False);
+            Assert.That(ConversationChainMetadata.Empty.GetNamespace("ns"), Is.Empty);
+            Assert.That(ConversationChainMetadata.Empty.ForNamespace("ns").TryGet("k", out _), Is.False);
+        });
+    }
+
+    [Test]
+    public void Empty_StillValidatesArguments()
+    {
+        // Even inert, Empty preserves the same argument/reserved-name contract as a live store.
+        Assert.Multiple(() =>
+        {
+            Assert.Throws<ArgumentException>(() => ConversationChainMetadata.Empty.Set("_reserved", "k", "v"));
+            Assert.Throws<ArgumentException>(() => ConversationChainMetadata.Empty.Set("ns", "_k", "v"));
+            Assert.Throws<ArgumentNullException>(() => ConversationChainMetadata.Empty.Set("ns", "k", null!));
+        });
+    }
+
+    [TestCase("_reserved")]
+    [TestCase("_")]
+    public void TryGet_ReservedNamespace_Throws(string ns)
+    {
+        var md = new ConversationChainMetadata();
+        Assert.Throws<ArgumentException>(() => md.TryGet(ns, "k", out _));
+    }
+
+    [Test]
+    public void TryGet_ReservedKey_Throws()
+    {
+        var md = new ConversationChainMetadata();
+        Assert.Throws<ArgumentException>(() => md.TryGet("ns", "_k", out _));
+    }
+
+    [TestCase("_reserved")]
+    [TestCase("_")]
+    public void GetNamespace_Reserved_Throws(string ns)
+    {
+        var md = new ConversationChainMetadata();
+        Assert.Throws<ArgumentException>(() => md.GetNamespace(ns));
     }
 }

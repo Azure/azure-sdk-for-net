@@ -200,7 +200,7 @@ public class ResponseContext
     /// <see cref="IsShutdownRequested"/> (server shutting down) and client disconnect;
     /// handlers can use this to stop work in response to an explicit cancel request.
     /// </summary>
-    public virtual bool ClientCancelled => false;
+    public virtual bool IsClientCancelled => false;
 
     /// <summary>
     /// Defers the current handler invocation for recovery instead of failing. Used during a

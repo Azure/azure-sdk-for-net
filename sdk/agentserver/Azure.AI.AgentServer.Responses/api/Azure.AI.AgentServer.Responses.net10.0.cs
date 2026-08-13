@@ -24,7 +24,7 @@ namespace Azure.AI.AgentServer.Responses
         public virtual Azure.AI.AgentServer.Responses.ConversationChainMetadataNamespace ForNamespace(string namespaceName = "default") { throw null; }
         public virtual System.Collections.Generic.IReadOnlyDictionary<string, string> GetNamespace(string namespaceName) { throw null; }
         public virtual void Set(string namespaceName, string key, string value) { }
-        protected internal System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IReadOnlyDictionary<string, string>> Snapshot() { throw null; }
+        public System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IReadOnlyDictionary<string, string>> Snapshot() { throw null; }
         public virtual bool TryGet(string namespaceName, string key, out string? value) { throw null; }
     }
     public sealed partial class ConversationChainMetadataNamespace
@@ -215,10 +215,10 @@ namespace Azure.AI.AgentServer.Responses
     public partial class ResponseContext
     {
         public ResponseContext(string responseId) { }
-        public virtual bool ClientCancelled { get { throw null; } }
         public virtual System.Collections.Generic.IReadOnlyDictionary<string, string> ClientHeaders { get { throw null; } }
         public virtual string ConversationChainId { get { throw null; } }
         public virtual Azure.AI.AgentServer.Responses.ConversationChainMetadata ConversationChainMetadata { get { throw null; } }
+        public virtual bool IsClientCancelled { get { throw null; } }
         public virtual bool IsRecovery { get { throw null; } }
         public bool IsShutdownRequested { get { throw null; } set { } }
         public virtual bool IsSteeredTurn { get { throw null; } }
@@ -236,7 +236,6 @@ namespace Azure.AI.AgentServer.Responses
     }
     public static partial class ResponseContextExtensions
     {
-        public static Azure.AI.AgentServer.Responses.ConversationChainMetadataNamespace MetadataNamespace(this Azure.AI.AgentServer.Responses.ResponseContext context, string namespaceName = "default") { throw null; }
         public static string NewApplyPatchCallItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
         public static string NewApplyPatchCallOutputItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
         public static string NewCodeInterpreterCallItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
@@ -270,7 +269,7 @@ namespace Azure.AI.AgentServer.Responses
         protected ResponseEventStream() { }
         public ResponseEventStream(Azure.AI.AgentServer.Responses.ResponseContext context, Azure.AI.AgentServer.Responses.Models.CreateResponse request) { }
         public ResponseEventStream(Azure.AI.AgentServer.Responses.ResponseContext context, Azure.AI.AgentServer.Responses.Models.ResponseObject persistedResponse) { }
-        public virtual System.Collections.Generic.IDictionary<string, string> InternalMetadata { get { throw null; } }
+        public virtual System.Collections.Generic.IDictionary<string, string> PersistedMetadata { get { throw null; } }
         public Azure.AI.AgentServer.Responses.Models.ResponseObject Response { get { throw null; } }
         public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemApplyPatchToolCall> AddOutputItemApplyPatchCall() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemApplyPatchToolCallOutput> AddOutputItemApplyPatchCallOutput() { throw null; }
@@ -296,7 +295,7 @@ namespace Azure.AI.AgentServer.Responses
         public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.StructuredOutputsOutputItem> AddOutputItemStructuredOutputs() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemWebSearchCallBuilder AddOutputItemWebSearchCall() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<T> AddOutputItem<T>(string itemId) where T : Azure.AI.AgentServer.Responses.Models.OutputItem { throw null; }
-        public Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent Checkpoint() { throw null; }
+        public virtual Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent CreateCheckpointEvent() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseCompletedEvent EmitCompleted(Azure.AI.AgentServer.Responses.Models.ResponseUsage? usage = null) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseCreatedEvent EmitCreated(Azure.AI.AgentServer.Responses.Models.ResponseStatus status = Azure.AI.AgentServer.Responses.Models.ResponseStatus.InProgress) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseFailedEvent EmitFailed(Azure.AI.AgentServer.Responses.Models.ResponseErrorCode code, string message = "An internal server error occurred.", Azure.AI.AgentServer.Responses.Models.ResponseUsage? usage = null) { throw null; }

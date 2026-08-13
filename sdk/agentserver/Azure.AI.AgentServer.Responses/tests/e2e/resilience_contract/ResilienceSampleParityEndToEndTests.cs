@@ -136,7 +136,7 @@ public sealed class ResilienceSampleParityEndToEndTests
             // Durable watermark + phase checkpoint (no-op unless resilient background).
             context.ConversationChainMetadata.Set("stream", "phase_complete", phase);
             await context.ConversationChainMetadata.FlushAsync(ct);
-            yield return stream.Checkpoint();
+            yield return stream.CreateCheckpointEvent();
         }
 
         yield return stream.EmitCompleted();

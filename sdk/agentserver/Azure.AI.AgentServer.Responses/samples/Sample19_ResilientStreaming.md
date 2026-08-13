@@ -94,7 +94,7 @@ public class ResilientStreamingHandler : ResponseHandler
 
             // Persist a durable snapshot at the phase boundary
             // (no-op unless resilient background).
-            yield return stream.Checkpoint();
+            yield return stream.CreateCheckpointEvent();
         }
 
         yield return stream.EmitCompleted();

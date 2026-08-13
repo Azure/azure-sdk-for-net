@@ -35,11 +35,12 @@ public class ConversationChainMetadata
     }
 
     /// <summary>
-    /// Gets a shared empty, no-op instance used as the default on a
-    /// <see cref="ResponseContext"/> that is not backed by durable persistence
-    /// (e.g., a test-constructed context). Flushing this instance is a no-op.
+    /// Gets a shared inert instance used as the default on a <see cref="ResponseContext"/> that is
+    /// not backed by durable persistence (e.g., a test-constructed context). Writes are ignored and
+    /// reads always return empty, so this shared instance never accumulates process-global state;
+    /// flushing is a no-op.
     /// </summary>
-    public static ConversationChainMetadata Empty { get; } = new ConversationChainMetadata();
+    public static ConversationChainMetadata Empty { get; } = new InertConversationChainMetadata();
 
     /// <summary>
     /// Sets a metadata value within the named namespace. The value is buffered until the
@@ -75,6 +76,8 @@ public class ConversationChainMetadata
     {
         Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
         Argument.AssertNotNullOrEmpty(key, nameof(key));
+        RejectReserved(namespaceName, nameof(namespaceName));
+        RejectReserved(key, nameof(key));
 
         value = null;
         return _namespaces.TryGetValue(namespaceName, out var bucket) && bucket.TryGetValue(key, out value);
@@ -89,6 +92,7 @@ public class ConversationChainMetadata
     public virtual IReadOnlyDictionary<string, string> GetNamespace(string namespaceName)
     {
         Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+        RejectReserved(namespaceName, nameof(namespaceName));
         if (_namespaces.TryGetValue(namespaceName, out var bucket))
         {
             return new Dictionary<string, string>(bucket, StringComparer.Ordinal);
@@ -138,7 +142,7 @@ public class ConversationChainMetadata
     /// Used by the durable implementation to persist metadata on flush.
     /// </summary>
     /// <returns>A snapshot mapping namespace name to its key/value pairs.</returns>
-    protected internal IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> Snapshot()
+    public IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> Snapshot()
     {
         var result = new Dictionary<string, IReadOnlyDictionary<string, string>>(StringComparer.Ordinal);
         foreach (var pair in _namespaces)
@@ -159,6 +163,26 @@ public class ConversationChainMetadata
             throw new ArgumentException(
                 $"Conversation chain metadata {paramName} '{value}' is invalid: names and keys beginning with '_' are reserved for internal use.",
                 paramName);
+        }
+    }
+
+    /// <summary>
+    /// The inert backing for <see cref="Empty"/>: writes are ignored and reads return empty, so the
+    /// shared static instance can never accumulate process-global state that leaks between unrelated
+    /// contexts. Argument validation (including the reserved-prefix rejection) is preserved so misuse
+    /// still surfaces the same errors as a live store.
+    /// </summary>
+    private sealed class InertConversationChainMetadata : ConversationChainMetadata
+    {
+        public override void Set(string namespaceName, string key, string value)
+        {
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+            RejectReserved(namespaceName, nameof(namespaceName));
+            RejectReserved(key, nameof(key));
+
+            // Intentionally discard: the shared Empty instance never retains state.
         }
     }
 }

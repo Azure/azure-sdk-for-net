@@ -32,7 +32,7 @@ public class ResilientMultiTurnHandler : ResponseHandler
             string inputText = await context.GetInputTextAsync(cancellationToken: ct);
 
             // Durable per-conversation state is scoped to the stable chain id.
-            ConversationChainMetadataNamespace state = context.MetadataNamespace("state");
+            ConversationChainMetadataNamespace state = context.ConversationChainMetadata.ForNamespace("state");
             string chainId = context.ConversationChainId;
 
             int turnCount = 1;

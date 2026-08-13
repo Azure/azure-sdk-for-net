@@ -163,7 +163,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
                     // Persist a durable snapshot at the phase boundary
                     // (no-op unless resilient background).
-                    yield return stream.Checkpoint();
+                    yield return stream.CreateCheckpointEvent();
                 }
 
                 yield return stream.EmitCompleted();
@@ -233,7 +233,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 {
                     if (cancellationToken.IsCancellationRequested)
                     {
-                        if (context.ClientCancelled)
+                        if (context.IsClientCancelled)
                         {
                             yield break; // client cancelled — no terminal
                         }
@@ -285,7 +285,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                     string inputText = await context.GetInputTextAsync(cancellationToken: ct);
 
                     // Durable per-conversation state is scoped to the stable chain id.
-                    ConversationChainMetadataNamespace state = context.MetadataNamespace("state");
+                    ConversationChainMetadataNamespace state = context.ConversationChainMetadata.ForNamespace("state");
                     string chainId = context.ConversationChainId;
 
                     int turnCount = 1;

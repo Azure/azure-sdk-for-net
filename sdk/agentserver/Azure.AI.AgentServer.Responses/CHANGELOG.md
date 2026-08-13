@@ -37,7 +37,7 @@
 ### Breaking Changes
 - Removed the public `ResponsesStreamProvider` abstract class and the public `IAsyncObserver<T>`
   interface. SSE streaming is now composed on the `Azure.AI.AgentServer.Core` event-stream
-  primitive (`IEventStreamRegistry` / `IEventStream`) rather than a Responses-owned stream
+  primitive (`AgentEventStreamRegistry` / `AgentEventStream`) rather than a Responses-owned stream
   provider, matching the Python implementation. The local default event-stream backing is
   in-memory replay, upgraded automatically to durable file-backed replay when resilient
   background is enabled outside a hosted environment.

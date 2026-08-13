@@ -122,12 +122,12 @@ public class TestConversationChainMetadataDurabilityTests
 
         if (nextTurn() == 1)
         {
-            context.MetadataNamespace("agent").Set("phase", "analyze");
-            await context.MetadataNamespace("agent").FlushAsync(ct);
+            context.ConversationChainMetadata.ForNamespace("agent").Set("phase", "analyze");
+            await context.ConversationChainMetadata.ForNamespace("agent").FlushAsync(ct);
         }
         else
         {
-            if (!context.MetadataNamespace("agent").TryGet("phase", out var value) || value != "analyze")
+            if (!context.ConversationChainMetadata.ForNamespace("agent").TryGet("phase", out var value) || value != "analyze")
             {
                 throw new InvalidOperationException(
                     "Durable conversation-chain metadata flushed on turn 1 was not visible on turn 2 — flush did not persist.");

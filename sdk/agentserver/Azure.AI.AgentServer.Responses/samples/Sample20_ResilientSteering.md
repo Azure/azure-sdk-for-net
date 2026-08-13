@@ -76,7 +76,7 @@ public class ResilientSteeringHandler : ResponseHandler
         {
             if (cancellationToken.IsCancellationRequested)
             {
-                if (context.ClientCancelled)
+                if (context.IsClientCancelled)
                 {
                     yield break; // client cancelled — no terminal
                 }
