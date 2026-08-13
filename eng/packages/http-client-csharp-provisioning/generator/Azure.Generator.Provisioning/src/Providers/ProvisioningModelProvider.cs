@@ -45,28 +45,6 @@ namespace Azure.Generator.Provisioning.Providers
         protected override TypeSignatureModifiers BuildDeclarationModifiers()
             => TypeSignatureModifiers.Public | TypeSignatureModifiers.Partial | TypeSignatureModifiers.Class;
 
-        protected override FormattableString BuildDescription()
-        {
-            var description = base.BuildDescription();
-            if (_inputModel.DiscriminatedSubtypes.Count == 0)
-                return description;
-
-            // TODO https://github.com/microsoft/typespec/issues/11397: Remove this override when
-            // discriminator-derived models are retained without relying on XML documentation references.
-            var derivedModels = DerivedModels
-                .Where(model => model.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public))
-                .ToList();
-            var derivedDescription = "Please note this is the abstract base class. The derived classes available for instantiation are: ";
-            var useOxfordComma = derivedModels.Count > 2;
-            for (var i = 0; i < derivedModels.Count; i++)
-            {
-                derivedDescription = i != derivedModels.Count - 1
-                    ? derivedDescription + $"<see cref=\"{derivedModels[i].Type.FullyQualifiedName}\"/>" + (useOxfordComma ? ", " : " ")
-                    : derivedDescription + (i > 0 ? "and " : string.Empty) + $"<see cref=\"{derivedModels[i].Type.FullyQualifiedName}\"/>.";
-            }
-            return $"{description}\n{derivedDescription}";
-        }
-
         protected override CSharpType? BuildBaseType()
             => base.BuildBaseType() ?? new CSharpType(typeof(ProvisionableConstruct));
 
@@ -148,6 +126,11 @@ namespace Azure.Generator.Provisioning.Providers
         {
             var properties = new Dictionary<string, PropertyProvider>(StringComparer.Ordinal);
             var visitedTypes = new HashSet<CSharpType>();
+
+            // TypeProvider.BaseTypeProvider is the direct provider chain used by the core generator,
+            // but it is internal to Microsoft.TypeSpec.Generator and cannot be accessed from this
+            // generator assembly. Walk the public BaseType chain instead and resolve each provider
+            // here so generated and customization-only bases can both contribute canonical properties.
             var baseType = BaseType;
 
             while (baseType != null && visitedTypes.Add(baseType))
@@ -188,7 +171,7 @@ namespace Azure.Generator.Provisioning.Providers
             // A base declared entirely in custom code is not a ModelProvider and has no
             // InputModelType. Resolve its Roslyn-backed provider directly so its canonical
             // properties still participate in the same reconciliation as generated bases.
-            provider = ProvisioningGenerator.Instance.SourceInputModel.FindForTypeInCustomization(
+            provider = ProvisioningGenerator.Instance.SourceInputModel.FindForTypeInCurrentCompilation(
                 type.Namespace,
                 type.Name,
                 type.DeclaringType?.Name,
@@ -218,17 +201,10 @@ namespace Azure.Generator.Provisioning.Providers
                 return true;
             }
 
-            // Provisioning properties carry behavior that is not represented by their C# signature.
-            // A same-name, same-type property can still differ in TypeSpec-defined behavior such as
-            // Bicep path, output status, requiredness, default value, or literal formatting.
-            // IsSettable is deliberately excluded: it is inferred from how a model is used by
-            // resources, so the same TypeSpec property can be settable on one generated model and
-            // read-only on another without representing a different property contract.
-            return property.BicepPath.SequenceEqual(baseProvisioningProperty.BicepPath, StringComparer.Ordinal)
-                && property.IsOutput == baseProvisioningProperty.IsOutput
-                && property.IsRequired == baseProvisioningProperty.IsRequired
-                && string.Equals(property.DefaultValue, baseProvisioningProperty.DefaultValue, StringComparison.Ordinal)
-                && string.Equals(property.Format, baseProvisioningProperty.Format, StringComparison.Ordinal);
+            // The same InputModelProperty instance represents the same TypeSpec declaration, including
+            // all metadata that is not visible in the C# signature. Different instances represent a
+            // redeclaration and must remain distinct even when their resolved name and type match.
+            return ReferenceEquals(property.InputProperty, baseProvisioningProperty.InputProperty);
         }
 
         protected override ConstructorProvider[] BuildConstructors()
