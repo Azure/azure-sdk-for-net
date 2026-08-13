@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CognitiveServices
 {
     /// <summary>
     /// Represents a policy for authorizing applications based on specified authentication and authorization schemes.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CognitiveServicesRoleBasedBuiltInAuthorizationPolicy"/>, <see cref="OrganizationSharedBuiltInAuthorizationPolicy"/>, and <see cref="ChannelsBuiltInAuthorizationPolicy"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="CognitiveServicesRoleBasedBuiltInAuthorizationPolicy"/>, <see cref="OrganizationSharedBuiltInAuthorizationPolicy"/>, and <see cref="ChannelsBuiltInAuthorizationPolicy"/>.
     /// </summary>
     public partial class CognitiveServicesApplicationAuthorizationPolicy : ProvisionableConstruct
     {

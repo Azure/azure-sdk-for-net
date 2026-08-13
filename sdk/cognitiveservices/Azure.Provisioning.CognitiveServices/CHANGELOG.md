@@ -9,8 +9,6 @@
 
 ### Breaking Changes
 
-- Updated generated types and resource shapes to match the TypeSpec-based generator output. API compatibility mitigations are still being evaluated.
-
 ### Bugs Fixed
 
 ### Other Changes
