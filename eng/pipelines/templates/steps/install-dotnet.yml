@@ -12,6 +12,7 @@ steps:
     displayName: 'Use .NET SDK'
     retryCountOnTaskFailure: 3
     inputs:
+      version: '10.0.1xx'
       performMultiLevelLookup: true
   - task: UseDotNet@2 # We need .NET 9 for the .NET 9 tests
     displayName: 'Use .NET 9.0 SDK'
