@@ -93,23 +93,6 @@ namespace Azure.Provisioning.Cdn
             }
         }
 
-        /// <summary> Gets or sets the HostName. </summary>
-        public BicepValue<string> HostName
-        {
-            get
-            {
-                return Properties is null ? default : Properties.HostName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new OriginProperties();
-                }
-                Properties.HostName = value;
-            }
-        }
-
         /// <summary> Gets or sets the HttpPort. </summary>
         public BicepValue<int> HttpPort
         {
@@ -316,23 +299,6 @@ namespace Azure.Provisioning.Cdn
                     Properties = new OriginProperties();
                 }
                 return Properties.PrivateEndpointStatus;
-            }
-        }
-
-        /// <summary> Gets or sets the HostName. </summary>
-        public new BicepValue<string> HostName
-        {
-            get
-            {
-                return Properties is null ? default : Properties.HostName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new OriginProperties();
-                }
-                Properties.HostName = value;
             }
         }
 
