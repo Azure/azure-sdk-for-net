@@ -17,6 +17,20 @@ public class VoiceTransportTests
     private static readonly TimeSpan TestTimeout = TimeSpan.FromSeconds(2);
 
     [Test]
+    public void MockSessionHasUsableInvocationContext()
+    {
+        var session = new MockVoiceSession();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(session.InvocationContext, Is.Not.Null);
+            Assert.That(session.InvocationContext.InvocationId, Is.EqualTo("invocation_mock"));
+            Assert.That(session.InvocationContext.SessionId, Is.EqualTo("session_mock"));
+            Assert.That(session.InvocationContext.PlatformContext, Is.SameAs(PlatformContext.Empty));
+        });
+    }
+
+    [Test]
     public async Task ProtocolFailureClosesSessionBeforeCleanupAndPreservesCode()
     {
         using var webSocket = new ScriptedWebSocket(
@@ -150,6 +164,53 @@ public class VoiceTransportTests
             Assert.That(outcome.Code, Is.EqualTo(1011));
             Assert.That(outcome.Exception, Is.Not.Null);
             Assert.That((int?)webSocket.SentCloseStatus, Is.EqualTo(1011));
+        });
+    }
+
+    [TestCase("websocket")]
+    [TestCase("io")]
+    [TestCase("disposed")]
+    [TestCase("operation-canceled")]
+    public async Task ConnectionSendFailureMapsTo1006(string exceptionKind)
+    {
+        var sendException = CreateTransportShapedException(exceptionKind, "transport send failed");
+        using var webSocket = new ScriptedWebSocket(SessionStartFrame())
+        {
+            SendException = sendException,
+        };
+        var connection = new InvocationsWebSocketConnection(webSocket, TimeSpan.FromSeconds(1));
+
+        var outcome = await RunHandlerAsync(new ReadySendingHandler(), connection);
+        await connection.CloseAsync(outcome.Status, outcome.Reason).WaitAsync(TestTimeout);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(outcome.Code, Is.EqualTo(1006));
+            Assert.That(outcome.Exception, Is.SameAs(sendException));
+            Assert.That(webSocket.SentCloseStatus, Is.Null);
+        });
+    }
+
+    [Test]
+    public async Task ConnectionSendFailurePreservesOriginalExceptionForCallback()
+    {
+        var sendException = new WebSocketException("transport send failed");
+        using var webSocket = new ScriptedWebSocket(
+            SessionStartFrame(),
+            ReceiveFrame.Close(WebSocketCloseStatus.NormalClosure, "done"))
+        {
+            SendException = sendException,
+        };
+        var connection = new InvocationsWebSocketConnection(webSocket, TimeSpan.FromSeconds(1));
+        var handler = new SendFailureCatchingHandler();
+
+        var outcome = await RunHandlerAsync(handler, connection);
+        await connection.CloseAsync(outcome.Status, outcome.Reason).WaitAsync(TestTimeout);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(handler.CaughtException, Is.SameAs(sendException));
+            Assert.That(outcome.Code, Is.EqualTo(1000));
         });
     }
 
@@ -347,6 +408,15 @@ public class VoiceTransportTests
         new Dictionary<string, StringValues>(),
         PlatformContext.Empty);
 
+    private static Exception CreateTransportShapedException(string exceptionKind, string message) =>
+        exceptionKind switch
+        {
+            "websocket" => new WebSocketException(message),
+            "io" => new IOException(message),
+            "disposed" => new ObjectDisposedException(message),
+            _ => new OperationCanceledException(message),
+        };
+
     private static ReceiveFrame SessionStartFrame() => new(
         Encoding.UTF8.GetBytes("""
             {"type":"session.start","id":"m_1","ts":"2026-08-13T00:00:00.000Z","protocol_version":"1.0","reconnect":false,"response_timeouts":{"first_output_ms":1,"idle_ms":2,"max_duration_ms":3}}
@@ -414,13 +484,40 @@ public class VoiceTransportTests
         protected override Task OnSessionStartAsync(
             VoiceSession session,
             VoiceSessionStartEvent start,
-            CancellationToken cancellationToken) => throw _exceptionKind switch
-            {
-                "websocket" => new WebSocketException("application websocket failure"),
-                "io" => new IOException("application I/O failure"),
-                _ => new ObjectDisposedException("application resource"),
-            };
+            CancellationToken cancellationToken) =>
+            throw CreateTransportShapedException(_exceptionKind, "application callback failure");
     }
+
+    private sealed class ReadySendingHandler : VoiceHandler
+    {
+        protected override Task OnSessionStartAsync(
+            VoiceSession session,
+            VoiceSessionStartEvent start,
+            CancellationToken cancellationToken) =>
+            session.SendAsync(new VoiceSessionReadyMessage(), cancellationToken);
+    }
+
+    private sealed class SendFailureCatchingHandler : VoiceHandler
+    {
+        public WebSocketException? CaughtException { get; private set; }
+
+        protected override async Task OnSessionStartAsync(
+            VoiceSession session,
+            VoiceSessionStartEvent start,
+            CancellationToken cancellationToken)
+        {
+            try
+            {
+                await session.SendAsync(new VoiceSessionReadyMessage(), cancellationToken);
+            }
+            catch (WebSocketException exception)
+            {
+                CaughtException = exception;
+            }
+        }
+    }
+
+    private sealed class MockVoiceSession : VoiceSession;
 
     private sealed class RequestCancellationHandler : VoiceHandler
     {
@@ -492,6 +589,8 @@ public class VoiceTransportTests
 
         public bool ApplicationWasNotifiedAtClose { get; private set; }
 
+        public Exception? SendException { get; init; }
+
         public int CloseCount { get; private set; }
 
         public WebSocketCloseStatus? SentCloseStatus { get; private set; }
@@ -559,7 +658,8 @@ public class VoiceTransportTests
             ArraySegment<byte> buffer,
             WebSocketMessageType messageType,
             bool endOfMessage,
-            CancellationToken cancellationToken) => Task.CompletedTask;
+            CancellationToken cancellationToken) =>
+            SendException is null ? Task.CompletedTask : Task.FromException(SendException);
 
         public override void Dispose() => _state = WebSocketState.Closed;
     }

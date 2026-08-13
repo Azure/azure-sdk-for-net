@@ -29,17 +29,7 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
             connection,
             context,
             cancellationToken).ConfigureAwait(false);
-        var closeException = await connection.CloseAsync(outcome.Status, outcome.Reason).ConfigureAwait(false);
-        if (closeException is not null)
-        {
-            outcome = outcome with
-            {
-                CleanupException = outcome.CleanupException is null
-                    ? closeException
-                    : new AggregateException(outcome.CleanupException, closeException),
-            };
-        }
-        context.WebSocketCloseResult = outcome;
+        await connection.CloseAsync(outcome.Status, outcome.Reason).ConfigureAwait(false);
     }
 
     /// <summary>Handles an explicit application start event.</summary>
@@ -145,6 +135,15 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
                               cancellationToken.IsCancellationRequested)
                     {
                         throw;
+                    }
+                    catch (Exception exception) when (connection.IsSendFailure(exception))
+                    {
+                        outcome = new InvocationsWebSocketCloseResult(
+                            Status: null,
+                            Reason: string.Empty,
+                            ErrorCode: null,
+                            exception);
+                        break;
                     }
                     catch (Exception exception)
                     {

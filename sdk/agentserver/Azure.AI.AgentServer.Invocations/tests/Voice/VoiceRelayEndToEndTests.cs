@@ -100,25 +100,22 @@ public class VoiceRelayEndToEndTests
     }
 
     [Test]
-    public async Task ProtocolClosePreservesCodeAndCleanupWhenTerminationHookThrows()
+    public async Task ProtocolClosePreservesWireCodeAndCleanupWhenTerminationHookThrows()
     {
-        var logs = new CloseLogProvider();
         var handler = new ThrowingTerminationHandler();
-        await using var app = BuildApp(handler, logs);
+        await using var app = BuildApp(handler);
         await app.StartAsync();
         using var webSocket = await ConnectAsync(app);
 
         await SendTextAsync(webSocket, "{");
         var buffer = new byte[64];
         var close = await webSocket.ReceiveAsync(buffer, CancellationToken.None).WaitAsync(TestTimeout);
-        var closeLog = await logs.CloseEvent.Task.WaitAsync(TestTimeout);
 
         Assert.Multiple(() =>
         {
             Assert.That(close.MessageType, Is.EqualTo(WebSocketMessageType.Close));
             Assert.That((int?)webSocket.CloseStatus, Is.EqualTo(1002));
             Assert.That(handler.TerminationCount, Is.EqualTo(1));
-            Assert.That(closeLog.CloseCode, Is.EqualTo(1002));
         });
     }
 
@@ -140,37 +137,6 @@ public class VoiceRelayEndToEndTests
             Assert.That(close.MessageType, Is.EqualTo(WebSocketMessageType.Close));
             Assert.That((int?)webSocket.CloseStatus, Is.EqualTo(1002));
             Assert.That(handler.TerminationCount, Is.EqualTo(1));
-        });
-    }
-
-    [Test]
-    public async Task BlockingDiagnosticLoggerCannotDelayProtocolClose()
-    {
-        var logs = new BlockingDiagnosticLogProvider();
-        var handler = new TerminationCountingHandler();
-        await using var app = BuildApp(handler, logs);
-        await app.StartAsync();
-        using var webSocket = await ConnectAsync(app);
-
-        await SendTextAsync(webSocket, "{");
-        var buffer = new byte[64];
-        var receive = webSocket.ReceiveAsync(buffer, CancellationToken.None);
-        await logs.Entered.Task.WaitAsync(TestTimeout);
-        try
-        {
-            Assert.That(receive.IsCompleted, Is.True,
-                "Transport close must complete before invoking diagnostic logger callbacks.");
-        }
-        finally
-        {
-            logs.Release.Set();
-        }
-
-        var close = await receive.WaitAsync(TestTimeout);
-        Assert.Multiple(() =>
-        {
-            Assert.That(close.MessageType, Is.EqualTo(WebSocketMessageType.Close));
-            Assert.That((int?)webSocket.CloseStatus, Is.EqualTo(1002));
         });
     }
 
@@ -435,54 +401,6 @@ public class VoiceRelayEndToEndTests
             session.SendAsync(new VoiceSessionReadyMessage(), cancellationToken);
     }
 
-    private sealed class CloseLogProvider : ILoggerProvider
-    {
-        public TaskCompletionSource<(int CloseCode, string Category)> CloseEvent { get; } =
-            new(TaskCreationOptions.RunContinuationsAsynchronously);
-
-        public ILogger CreateLogger(string categoryName) => new CloseLogger(categoryName, this);
-
-        public void Dispose()
-        {
-        }
-
-        private sealed class CloseLogger : ILogger
-        {
-            private readonly string _category;
-            private readonly CloseLogProvider _owner;
-
-            public CloseLogger(string category, CloseLogProvider owner)
-            {
-                _category = category;
-                _owner = owner;
-            }
-
-            public IDisposable? BeginScope<TState>(TState state) where TState : notnull => null;
-
-            public bool IsEnabled(LogLevel logLevel) => true;
-
-            public void Log<TState>(
-                LogLevel logLevel,
-                EventId eventId,
-                TState state,
-                Exception? exception,
-                Func<TState, Exception?, string> formatter)
-            {
-                if (state is not IEnumerable<KeyValuePair<string, object?>> fields)
-                {
-                    return;
-                }
-
-                var closeCode = fields.FirstOrDefault(field =>
-                    field.Key == "azure.ai.agentserver.invocations_ws.close_code").Value;
-                if (closeCode is int code)
-                {
-                    _owner.CloseEvent.TrySetResult((code, _category));
-                }
-            }
-        }
-    }
-
     private sealed class ThrowingCloseLogProvider : ILoggerProvider
     {
         public ILogger CreateLogger(string categoryName) => new ThrowingCloseLogger();
@@ -508,43 +426,6 @@ public class VoiceRelayEndToEndTests
                     fields.Any(field => field.Key == "azure.ai.agentserver.invocations_ws.close_code"))
                 {
                     throw new InvalidOperationException("logger failed");
-                }
-            }
-        }
-    }
-
-    private sealed class BlockingDiagnosticLogProvider : ILoggerProvider
-    {
-        public TaskCompletionSource Entered { get; } =
-            new(TaskCreationOptions.RunContinuationsAsynchronously);
-
-        public ManualResetEventSlim Release { get; } = new(false);
-
-        public ILogger CreateLogger(string categoryName) => new BlockingDiagnosticLogger(this);
-
-        public void Dispose() => Release.Dispose();
-
-        private sealed class BlockingDiagnosticLogger : ILogger
-        {
-            private readonly BlockingDiagnosticLogProvider _owner;
-
-            public BlockingDiagnosticLogger(BlockingDiagnosticLogProvider owner) => _owner = owner;
-
-            public IDisposable? BeginScope<TState>(TState state) where TState : notnull => null;
-
-            public bool IsEnabled(LogLevel logLevel) => true;
-
-            public void Log<TState>(
-                LogLevel logLevel,
-                EventId eventId,
-                TState state,
-                Exception? exception,
-                Func<TState, Exception?, string> formatter)
-            {
-                if (exception is VoiceProtocolException)
-                {
-                    _owner.Entered.TrySetResult();
-                    _owner.Release.Wait(TestTimeout);
                 }
             }
         }

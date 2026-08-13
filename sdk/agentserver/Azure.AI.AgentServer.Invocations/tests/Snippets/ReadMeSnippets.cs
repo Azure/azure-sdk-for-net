@@ -123,8 +123,11 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             protected override Task OnSessionStartAsync(
                 VoiceSession session,
                 VoiceSessionStartEvent start,
-                CancellationToken cancellationToken) =>
-                session.SendAsync(new VoiceSessionReadyMessage(), cancellationToken);
+                CancellationToken cancellationToken) => start.ProtocolVersion == "1.0"
+                    ? session.SendAsync(new VoiceSessionReadyMessage(), cancellationToken)
+                    : session.SendAsync(
+                        new VoiceSessionRejectedMessage("protocol_mismatch", retriable: false),
+                        cancellationToken);
 
             protected override async Task OnUserMessageAsync(
                 VoiceSession session,

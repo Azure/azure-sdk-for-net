@@ -185,7 +185,7 @@ internal static partial class VoiceProtocolCodec
             throw new ArgumentException("Voice message contains invalid JSON.", nameof(message), exception);
         }
 
-        return output.WrittenMemory.ToArray();
+        return output.WrittenMemory;
     }
 
     private static VoiceSessionStartEvent ParseSessionStart(

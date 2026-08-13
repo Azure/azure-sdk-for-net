@@ -503,6 +503,50 @@ public class SampleEndToEndTests
     }
 
     [Test]
+    public async Task ReadMe_VoiceEchoHandler_RejectsUnsupportedProtocolVersion()
+    {
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddAgentServerCore();
+        builder.Services.AddVoice<Snippets.ReadMeSnippets.VoiceEchoHandler>();
+        await using var app = builder.Build();
+        app.UseAgentServerCore();
+        app.MapInvocationsServer();
+        await app.StartAsync();
+        var wsClient = app.GetTestServer().CreateWebSocketClient();
+        using var ws = await wsClient.ConnectAsync(
+            new Uri(app.GetTestServer().BaseAddress, "invocations_ws"),
+            CancellationToken.None);
+
+        await SendJsonAsync(ws, new
+        {
+            type = "session.start",
+            id = "m_start",
+            ts = "2026-08-13T00:00:00.000Z",
+            protocol_version = "2.0",
+            reconnect = false,
+            response_timeouts = new
+            {
+                first_output_ms = 5000,
+                idle_ms = 8000,
+                max_duration_ms = 60000,
+            },
+        });
+        var rejected = await ReceiveJsonAsync(ws).WaitAsync(TimeSpan.FromSeconds(2));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(rejected.GetProperty("type").GetString(), Is.EqualTo("session.rejected"));
+            Assert.That(rejected.GetProperty("code").GetString(), Is.EqualTo("protocol_mismatch"));
+            Assert.That(rejected.GetProperty("retriable").GetBoolean(), Is.False);
+        });
+        await ws.CloseOutputAsync(
+            System.Net.WebSockets.WebSocketCloseStatus.NormalClosure,
+            "done",
+            CancellationToken.None);
+    }
+
+    [Test]
     public async Task SampleVoice1_TypedRelay_ExplicitlyAcknowledgesAndReplies()
     {
         var builder = WebApplication.CreateBuilder();

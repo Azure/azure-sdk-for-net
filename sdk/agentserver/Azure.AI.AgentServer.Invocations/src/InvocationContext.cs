@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.AI.AgentServer.Core;
-using Azure.AI.AgentServer.Invocations.Internal;
 using Microsoft.Extensions.Primitives;
 
 namespace Azure.AI.AgentServer.Invocations;
@@ -74,6 +73,4 @@ public sealed class InvocationContext
     /// when the platform headers are absent (e.g., local development).
     /// </summary>
     public PlatformContext PlatformContext { get; }
-
-    internal InvocationsWebSocketCloseResult? WebSocketCloseResult { get; set; }
 }

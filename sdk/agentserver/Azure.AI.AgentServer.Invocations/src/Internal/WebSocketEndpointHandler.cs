@@ -127,25 +127,6 @@ internal sealed class WebSocketEndpointHandler
             try
             {
                 await webSocketHandler.HandleWebSocketAsync(webSocket, context, httpContext.RequestAborted);
-                if (context.WebSocketCloseResult is { } outcome)
-                {
-                    closeCode = outcome.Code;
-                    errorCode = outcome.ErrorCode;
-                    if (outcome.Exception is not null)
-                    {
-                        _logger.LogError(
-                        outcome.Exception,
-                        "WebSocket handler raised for session {SessionId}",
-                        sessionId);
-                    }
-                    if (outcome.CleanupException is not null)
-                    {
-                        _logger.LogError(
-                        outcome.CleanupException,
-                        "WebSocket cleanup callback raised for session {SessionId}",
-                        sessionId);
-                    }
-                }
             }
             catch (OperationCanceledException oce)
                 when (oce.CancellationToken == httpContext.RequestAborted

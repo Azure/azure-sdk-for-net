@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Invocations.Internal;
+using Microsoft.Extensions.Primitives;
 
 namespace Azure.AI.AgentServer.Invocations.Voice;
 
@@ -12,8 +14,13 @@ public class VoiceSession
 
     /// <summary>Initializes a mockable Voice session.</summary>
     protected VoiceSession()
+        : this(new InvocationContext(
+            invocationId: "invocation_mock",
+            sessionId: "session_mock",
+            clientHeaders: new Dictionary<string, string>(),
+            queryParameters: new Dictionary<string, StringValues>(),
+            platformContext: PlatformContext.Empty))
     {
-        InvocationContext = null!;
     }
 
     /// <summary>Initializes a mock Voice session with an explicit invocation context.</summary>

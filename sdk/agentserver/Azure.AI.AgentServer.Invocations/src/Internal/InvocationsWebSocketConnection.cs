@@ -3,6 +3,7 @@
 
 using System.Diagnostics;
 using System.Net.WebSockets;
+using System.Runtime.CompilerServices;
 
 namespace Azure.AI.AgentServer.Invocations.Internal;
 
@@ -20,9 +21,11 @@ internal readonly record struct InvocationsWebSocketCloseResult(
 internal sealed class InvocationsWebSocketConnection
 {
     private static readonly TimeSpan DefaultCloseTimeout = TimeSpan.FromSeconds(5);
+    private static readonly object SendFailureMarker = new();
     private readonly WebSocket _webSocket;
     private readonly TimeSpan _closeTimeout;
     private readonly SemaphoreSlim _writeGate = new(1, 1);
+    private readonly ConditionalWeakTable<Exception, object> _sendFailures = new();
     private int _terminating;
     private int _disposed;
 
@@ -51,17 +54,30 @@ internal sealed class InvocationsWebSocketConnection
         try
         {
             ThrowIfTerminating();
-            await _webSocket.SendAsync(
-                payload,
-                WebSocketMessageType.Text,
-                endOfMessage: true,
-                cancellationToken).ConfigureAwait(false);
+            try
+            {
+                await _webSocket.SendAsync(
+                    payload,
+                    WebSocketMessageType.Text,
+                    endOfMessage: true,
+                    cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+                when (exception is WebSocketException or IOException or ObjectDisposedException ||
+                      (exception is OperationCanceledException && !cancellationToken.IsCancellationRequested))
+            {
+                _sendFailures.GetValue(exception, static _ => SendFailureMarker);
+                throw;
+            }
         }
         finally
         {
             _writeGate.Release();
         }
     }
+
+    internal bool IsSendFailure(Exception exception) =>
+        _sendFailures.TryGetValue(exception, out _);
 
     internal void StopSending() => Interlocked.Exchange(ref _terminating, 1);
 

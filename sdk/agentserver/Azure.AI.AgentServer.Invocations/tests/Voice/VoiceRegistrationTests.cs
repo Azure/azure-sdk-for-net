@@ -75,9 +75,10 @@ public class VoiceRegistrationTests
     [Test]
     public async Task UpgradeIncludesServerIdentityAndSessionHeader()
     {
+        SessionCapturingVoiceHandler.Reset();
         var headers = new TaskCompletionSource<IReadOnlyDictionary<string, string>>(
             TaskCreationOptions.RunContinuationsAsynchronously);
-        await using var app = BuildApp<TestVoiceHandler>(application =>
+        await using var app = BuildApp<SessionCapturingVoiceHandler>(application =>
         {
             application.Use(async (context, next) =>
             {
@@ -93,14 +94,16 @@ public class VoiceRegistrationTests
             });
         }, configureBeforeCore: true);
         await app.StartAsync();
-        using var webSocket = await ConnectAsync(app, "invocations_ws?agent_session_id=stable");
+        using var webSocket = await ConnectAsync(app);
         var captured = await headers.Task.WaitAsync(TestTimeout);
+        await SendSessionStartAsync(webSocket);
+        var resolvedSessionId = await SessionCapturingVoiceHandler.SessionId.Task.WaitAsync(TestTimeout);
 
         Assert.Multiple(() =>
         {
             Assert.That(captured, Does.ContainKey(PlatformHeaders.ServerVersion));
             Assert.That(captured, Does.ContainKey(PlatformHeaders.SessionId));
-            Assert.That(Guid.TryParse(captured[PlatformHeaders.SessionId], out _), Is.True);
+            Assert.That(captured[PlatformHeaders.SessionId], Is.EqualTo(resolvedSessionId));
         });
         await webSocket.CloseOutputAsync(
             WebSocketCloseStatus.NormalClosure,
@@ -162,6 +165,24 @@ public class VoiceRegistrationTests
             CancellationToken.None);
 
     private sealed class TestVoiceHandler : VoiceHandler;
+
+    private sealed class SessionCapturingVoiceHandler : VoiceHandler
+    {
+        public static TaskCompletionSource<string> SessionId { get; private set; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public static void Reset() =>
+            SessionId = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        protected override Task OnSessionStartAsync(
+            VoiceSession session,
+            VoiceSessionStartEvent start,
+            CancellationToken cancellationToken)
+        {
+            SessionId.TrySetResult(session.InvocationContext.SessionId);
+            return Task.CompletedTask;
+        }
+    }
 
     private sealed class RawHandler : InvocationHandler
     {
