@@ -187,6 +187,29 @@ public class VoiceCodecTests
     }
 
     [Test]
+    public void ResponseTimeoutItemIdsRejectWrongPrefixAsProtocolError()
+    {
+        var validFrame = Frame(
+            "response.timeout",
+            "\"item_ids\":[\"in_1\"],\"stage\":\"first_output\"");
+        var invalidFrame = Frame(
+            "response.timeout",
+            "\"item_ids\":[\"bad\"],\"stage\":\"first_output\"");
+
+        var valid = (VoiceResponseTimeoutEvent)VoiceProtocolCodec.Decode(Encoding.UTF8.GetBytes(validFrame))!;
+        var exception = Assert.Throws<VoiceProtocolException>(() =>
+            VoiceProtocolCodec.Decode(Encoding.UTF8.GetBytes(invalidFrame)));
+        var retry = (VoiceResponseTimeoutEvent)VoiceProtocolCodec.Decode(Encoding.UTF8.GetBytes(validFrame))!;
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(valid.ItemIds, Is.EqualTo(new[] { "in_1" }));
+            Assert.That(exception!.CloseCode, Is.EqualTo(1002));
+            Assert.That(retry.ItemIds, Is.EqualTo(new[] { "in_1" }));
+        });
+    }
+
+    [Test]
     public void InvalidUnicodeObjectKeyIsRejected()
     {
         var frame = Frame(

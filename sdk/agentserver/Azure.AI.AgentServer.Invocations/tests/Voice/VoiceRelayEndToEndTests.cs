@@ -348,6 +348,30 @@ public class VoiceRelayEndToEndTests
     }
 
     [Test]
+    public async Task MalformedResponseTimeoutItemIdUsesProtocolClose()
+    {
+        var handler = new TimeoutCountingHandler();
+        await using var app = BuildApp(handler);
+        await app.StartAsync();
+        using var webSocket = await ConnectAsync(app);
+
+        await SendTextAsync(webSocket, """
+            {"type":"response.timeout","id":"m_timeout","ts":"2026-08-13T00:00:00.000Z","item_ids":["bad"],"stage":"first_output"}
+            """);
+        var buffer = new byte[64];
+        var close = await webSocket.ReceiveAsync(buffer, CancellationToken.None).WaitAsync(TestTimeout);
+        await handler.Terminating.Task.WaitAsync(TestTimeout);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(close.MessageType, Is.EqualTo(WebSocketMessageType.Close));
+            Assert.That((int?)webSocket.CloseStatus, Is.EqualTo(1002));
+            Assert.That(handler.TimeoutCount, Is.Zero);
+            Assert.That(handler.TerminationCount, Is.EqualTo(1));
+        });
+    }
+
+    [Test]
     public async Task ThrowingCloseLoggerCannotSuppressProtocolClose()
     {
         var handler = new TerminationCountingHandler();
@@ -629,6 +653,31 @@ public class VoiceRelayEndToEndTests
 
         public TaskCompletionSource Terminating { get; } =
             new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        protected override void OnConnectionTerminating(VoiceSession session)
+        {
+            TerminationCount++;
+            Terminating.TrySetResult();
+        }
+    }
+
+    private sealed class TimeoutCountingHandler : VoiceHandler
+    {
+        public int TimeoutCount { get; private set; }
+
+        public int TerminationCount { get; private set; }
+
+        public TaskCompletionSource Terminating { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        protected override Task OnResponseTimeoutAsync(
+            VoiceSession session,
+            VoiceResponseTimeoutEvent timeout,
+            CancellationToken cancellationToken)
+        {
+            TimeoutCount++;
+            return Task.CompletedTask;
+        }
 
         protected override void OnConnectionTerminating(VoiceSession session)
         {

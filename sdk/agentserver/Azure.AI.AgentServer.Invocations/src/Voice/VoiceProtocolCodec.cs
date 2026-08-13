@@ -24,6 +24,7 @@ internal sealed class VoiceProtocolException : Exception
 internal static partial class VoiceProtocolCodec
 {
     internal const int MaxFrameBytes = 1024 * 1024;
+    internal const int MaxJsonDepth = 256;
     private const int MaxAdmissionTimeoutMs = 60000;
 
     private static readonly HashSet<string> KnownExcludedInbound = new(StringComparer.Ordinal)
@@ -80,7 +81,7 @@ internal static partial class VoiceProtocolCodec
             {
                 AllowTrailingCommas = false,
                 CommentHandling = JsonCommentHandling.Disallow,
-                MaxDepth = int.MaxValue,
+                MaxDepth = MaxJsonDepth,
             });
         }
         catch (Exception exception) when (exception is JsonException or ArgumentException)
@@ -301,7 +302,7 @@ internal static partial class VoiceProtocolCodec
         }
 
         var itemIds = itemIdsElement.EnumerateArray()
-            .Select(item => ValidatePrefixedIdentifier(ElementString(item, "item_ids"), "item_ids", "in_"))
+            .Select(item => ValidateInboundPrefixedIdentifier(ElementString(item, "item_ids"), "item_ids", "in_"))
             .ToArray();
         if (itemIds.Distinct(StringComparer.Ordinal).Count() != itemIds.Length)
         {
