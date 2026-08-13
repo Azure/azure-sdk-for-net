@@ -24,8 +24,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Backup is VMAppContainer
         /// </param>
         /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <param name="sourceLocation"> Source location of the container. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownProtectionContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType != default ? containerType : "unknown", protectableObjectType, additionalBinaryDataProperties)
+        internal UnknownProtectionContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, string sourceLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType != default ? containerType : "unknown", protectableObjectType, sourceLocation, additionalBinaryDataProperties)
         {
         }
     }

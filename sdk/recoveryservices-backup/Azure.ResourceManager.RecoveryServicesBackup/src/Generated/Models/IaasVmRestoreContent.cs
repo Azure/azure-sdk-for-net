@@ -193,26 +193,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> Stores Secured VM Details. </summary>
-        internal SecuredVMDetails SecuredVMDetails { get; set; }
+        public SecuredVMDetails SecuredVMDetails { get; set; }
 
         /// <summary> Specifies target network access settings for disks of VM to be restored,. </summary>
         public BackupTargetDiskNetworkAccessSettings TargetDiskNetworkAccessSettings { get; set; }
-
-        /// <summary> Gets or Sets Disk Encryption Set Id for Secured VM OS Disk. </summary>
-        public ResourceIdentifier SecuredVmOSDiskEncryptionSetId
-        {
-            get
-            {
-                return SecuredVMDetails is null ? default : SecuredVMDetails.SecuredVmOSDiskEncryptionSetId;
-            }
-            set
-            {
-                if (SecuredVMDetails is null)
-                {
-                    SecuredVMDetails = new SecuredVMDetails();
-                }
-                SecuredVMDetails.SecuredVmOSDiskEncryptionSetId = value;
-            }
-        }
     }
 }

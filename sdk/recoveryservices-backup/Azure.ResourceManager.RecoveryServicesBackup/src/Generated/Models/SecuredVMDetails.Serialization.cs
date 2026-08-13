@@ -15,7 +15,7 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Restore request parameters for Secured VMs. </summary>
-    internal partial class SecuredVMDetails : IJsonModel<SecuredVMDetails>
+    public partial class SecuredVMDetails : IJsonModel<SecuredVMDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -80,6 +80,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("securedVMOsDiskEncryptionSetId"u8);
                 writer.WriteStringValue(SecuredVmOSDiskEncryptionSetId);
             }
+            if (Optional.IsDefined(DataDiskEncryptionSettings))
+            {
+                writer.WritePropertyName("dataDiskEncryptionSettings"u8);
+                writer.WriteObjectValue(DataDiskEncryptionSettings, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -123,6 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             ResourceIdentifier securedVmOSDiskEncryptionSetId = default;
+            DataDiskEncryptionSettings dataDiskEncryptionSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -135,12 +141,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     securedVmOSDiskEncryptionSetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("dataDiskEncryptionSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataDiskEncryptionSettings = DataDiskEncryptionSettings.DeserializeDataDiskEncryptionSettings(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SecuredVMDetails(securedVmOSDiskEncryptionSetId, additionalBinaryDataProperties);
+            return new SecuredVMDetails(securedVmOSDiskEncryptionSetId, dataDiskEncryptionSettings, additionalBinaryDataProperties);
         }
     }
 }

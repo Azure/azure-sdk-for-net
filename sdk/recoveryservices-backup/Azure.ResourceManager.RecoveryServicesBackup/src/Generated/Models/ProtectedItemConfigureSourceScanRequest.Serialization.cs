@@ -9,56 +9,67 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Recovery Point Contract for Update Recovery Point API. </summary>
-    internal partial class PatchRecoveryPointInput : IJsonModel<PatchRecoveryPointInput>
+    /// <summary> Request to configure source scan for a protected item. </summary>
+    public partial class ProtectedItemConfigureSourceScanRequest : IJsonModel<ProtectedItemConfigureSourceScanRequest>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PatchRecoveryPointInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ProtectedItemConfigureSourceScanRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PatchRecoveryPointInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectedItemConfigureSourceScanRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePatchRecoveryPointInput(document.RootElement, options);
+                        return DeserializeProtectedItemConfigureSourceScanRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PatchRecoveryPointInput)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectedItemConfigureSourceScanRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PatchRecoveryPointInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectedItemConfigureSourceScanRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PatchRecoveryPointInput)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectedItemConfigureSourceScanRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PatchRecoveryPointInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ProtectedItemConfigureSourceScanRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PatchRecoveryPointInput IPersistableModel<PatchRecoveryPointInput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ProtectedItemConfigureSourceScanRequest IPersistableModel<ProtectedItemConfigureSourceScanRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PatchRecoveryPointInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProtectedItemConfigureSourceScanRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="protectedItemConfigureSourceScanRequest"> The <see cref="ProtectedItemConfigureSourceScanRequest"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ProtectedItemConfigureSourceScanRequest protectedItemConfigureSourceScanRequest)
+        {
+            if (protectedItemConfigureSourceScanRequest == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(protectedItemConfigureSourceScanRequest, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PatchRecoveryPointInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProtectedItemConfigureSourceScanRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,15 +80,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PatchRecoveryPointInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectedItemConfigureSourceScanRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PatchRecoveryPointInput)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectedItemConfigureSourceScanRequest)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(RecoveryPointProperties))
+            if (Optional.IsDefined(SourceScanAction))
             {
-                writer.WritePropertyName("recoveryPointProperties"u8);
-                writer.WriteObjectValue(RecoveryPointProperties, options);
+                writer.WritePropertyName("sourceScanAction"u8);
+                writer.WriteStringValue(SourceScanAction.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -98,40 +109,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PatchRecoveryPointInput IJsonModel<PatchRecoveryPointInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ProtectedItemConfigureSourceScanRequest IJsonModel<ProtectedItemConfigureSourceScanRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PatchRecoveryPointInput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ProtectedItemConfigureSourceScanRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PatchRecoveryPointInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectedItemConfigureSourceScanRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PatchRecoveryPointInput)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectedItemConfigureSourceScanRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePatchRecoveryPointInput(document.RootElement, options);
+            return DeserializeProtectedItemConfigureSourceScanRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PatchRecoveryPointInput DeserializePatchRecoveryPointInput(JsonElement element, ModelReaderWriterOptions options)
+        internal static ProtectedItemConfigureSourceScanRequest DeserializeProtectedItemConfigureSourceScanRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            PatchRecoveryPointPropertiesInput recoveryPointProperties = default;
+            SourceScanAction? sourceScanAction = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("recoveryPointProperties"u8))
+                if (prop.NameEquals("sourceScanAction"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryPointProperties = PatchRecoveryPointPropertiesInput.DeserializePatchRecoveryPointPropertiesInput(prop.Value, options);
+                    sourceScanAction = new SourceScanAction(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +150,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PatchRecoveryPointInput(recoveryPointProperties, additionalBinaryDataProperties);
+            return new ProtectedItemConfigureSourceScanRequest(sourceScanAction, additionalBinaryDataProperties);
         }
     }
 }
