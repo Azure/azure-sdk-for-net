@@ -158,6 +158,9 @@ try {
         }
         Push-Location $TempTypeSpecDir
         try {
+            # Generate models
+            npx tsp compile $EntrypointTsp --config $TypespecProjectDir --output-dir "$TspOut" --emit @typespec/http-client-csharp
+            # Create openapi.virtual-public-preview.yaml
             npx tsp compile $EntrypointTsp --config $TypespecProjectDir --output-dir "$TspOut" --emit @typespec/openapi3
             if ($LASTEXITCODE -ne 0) { throw "tsp compile failed" }
         } finally {
@@ -181,6 +184,13 @@ try {
         $tspInternal = Join-Path $tspGenerated "Internal"
 
         if (Test-Path $tspModels) {
+            # Replace Azure.AI.Agents.Contracts.V2.Models by Azure.AI.AgentServer.Responses.Models.
+            Get-ChildItem -Path $tspModels -Filter "*.cs" -Recurse | ForEach-Object {
+                $content = Get-Content -Raw $_.FullName
+                if ($content -match 'namespace Azure[.]AI[.]Agents[.]Contracts[.]V2.Models') {
+                    Set-Content -Path $_.FullName -Value ($content -replace 'namespace Azure[.]AI[.]Agents[.]Contracts[.]V2.Models', 'namespace Azure.AI.AgentServer.Responses.Models') -NoNewline
+                }
+            }
             Copy-Item -Recurse -Force (Join-Path $tspModels "*") $modelsDir
         }
         # The model factory is hand-maintained in Custom/AgentServerResponsesModelFactory.cs
