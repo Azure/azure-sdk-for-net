@@ -6,6 +6,11 @@
 
 ### Breaking Changes
 
+- `CreateEntry(BinaryData, bool?, CancellationToken)`, `GetEntry(string, CancellationToken)`, and
+  `GetOperation(string, CancellationToken)` (and their `Async` counterparts) now return
+  `NullableResponse<BinaryData>` instead of `Response<BinaryData>` to model success responses that
+  intentionally carry no body (for example, a `303`/`302` redirect or a pending `202`).
+
 ### Bugs Fixed
 
 ### Other Changes
