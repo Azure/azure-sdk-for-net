@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="prerequisiteResults"> the result of the dryrun. </param>
         /// <param name="operationPreviews"> the preview of the operations for creation. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        /// <returns> A new <see cref="ServiceLinker.DryrunResourceData"/> instance for mocking. </returns>
-        public static DryrunResourceData DryrunResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DryrunContent parameters = default, IEnumerable<DryrunPrerequisiteResult> prerequisiteResults = default, IEnumerable<DryrunOperationPreview> operationPreviews = default, string provisioningState = default)
+        /// <returns> A new <see cref="ServiceLinker.LinkerDryrunData"/> instance for mocking. </returns>
+        public static LinkerDryrunData LinkerDryrunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DryrunContent parameters = default, IEnumerable<DryrunPrerequisiteResult> prerequisiteResults = default, IEnumerable<DryrunOperationPreview> operationPreviews = default, string provisioningState = default)
         {
-            return new DryrunResourceData(
+            return new LinkerDryrunData(
                 id,
                 name,
                 resourceType,
@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             return new AzureKeyVaultProperties(default, default, doesConnectAsKubernetesCsiDriver);
         }
 
-        /// <param name="connectWithKubernetesExtension"> True if connection enables app configuration kubernetes extension. </param>
+        /// <param name="isConnectedWithKubernetesExtension"> True if connection enables app configuration kubernetes extension. </param>
         /// <returns> A new <see cref="Models.AzureAppConfigProperties"/> instance for mocking. </returns>
-        public static AzureAppConfigProperties AzureAppConfigProperties(bool? connectWithKubernetesExtension = default)
+        public static AzureAppConfigProperties AzureAppConfigProperties(bool? isConnectedWithKubernetesExtension = default)
         {
-            return new AzureAppConfigProperties(default, default, connectWithKubernetesExtension);
+            return new AzureAppConfigProperties(default, default, isConnectedWithKubernetesExtension);
         }
 
         /// <param name="endpoint"> The endpoint of service. </param>
@@ -592,11 +592,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <param name="value"></param>
         /// <param name="description"> Description for the configuration name. </param>
-        /// <param name="required"> Represent the configuration is required or not. </param>
+        /// <param name="isRequired"> Represent the configuration is required or not. </param>
         /// <returns> A new <see cref="Models.LinkerConfigurationName"/> instance for mocking. </returns>
-        public static LinkerConfigurationName LinkerConfigurationName(string value = default, string description = default, bool? @required = default)
+        public static LinkerConfigurationName LinkerConfigurationName(string value = default, string description = default, bool? isRequired = default)
         {
-            return new LinkerConfigurationName(value, description, @required, default);
+            return new LinkerConfigurationName(value, description, isRequired, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceLinker.LinkerResourceData"/>. </summary>

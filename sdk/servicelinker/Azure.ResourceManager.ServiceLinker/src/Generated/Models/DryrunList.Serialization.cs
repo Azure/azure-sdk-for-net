@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (DryrunResourceData item in Value)
+                foreach (LinkerDryrunData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            IList<DryrunResourceData> value = default;
+            IList<LinkerDryrunData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     {
                         continue;
                     }
-                    List<DryrunResourceData> array = new List<DryrunResourceData>();
+                    List<LinkerDryrunData> array = new List<LinkerDryrunData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DryrunResourceData.DeserializeDryrunResourceData(item, options));
+                        array.Add(LinkerDryrunData.DeserializeLinkerDryrunData(item, options));
                     }
                     value = array;
                     continue;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DryrunList(value ?? new ChangeTrackingList<DryrunResourceData>(), nextLink, additionalBinaryDataProperties);
+            return new DryrunList(value ?? new ChangeTrackingList<LinkerDryrunData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

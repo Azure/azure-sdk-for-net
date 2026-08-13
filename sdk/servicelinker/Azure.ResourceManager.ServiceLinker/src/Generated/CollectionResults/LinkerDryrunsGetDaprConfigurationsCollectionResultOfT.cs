@@ -14,19 +14,19 @@ using Azure.ResourceManager.ServiceLinker.Models;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
-    internal partial class DryrunsGetDaprConfigurationsCollectionResultOfT : Pageable<DaprConfiguration>
+    internal partial class LinkerDryrunsGetDaprConfigurationsCollectionResultOfT : Pageable<DaprConfiguration>
     {
-        private readonly Dryruns _client;
+        private readonly LinkerDryruns _client;
         private readonly string _resourceUri;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of DryrunsGetDaprConfigurationsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Dryruns client used to send requests. </param>
+        /// <summary> Initializes a new instance of LinkerDryrunsGetDaprConfigurationsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The LinkerDryruns client used to send requests. </param>
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DryrunsGetDaprConfigurationsCollectionResultOfT(Dryruns client, string resourceUri, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public LinkerDryrunsGetDaprConfigurationsCollectionResultOfT(LinkerDryruns client, string resourceUri, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _resourceUri = resourceUri;
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.ServiceLinker
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of DryrunsGetDaprConfigurationsCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of LinkerDryrunsGetDaprConfigurationsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DryrunsGetDaprConfigurationsCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of LinkerDryrunsGetDaprConfigurationsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<DaprConfiguration>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;

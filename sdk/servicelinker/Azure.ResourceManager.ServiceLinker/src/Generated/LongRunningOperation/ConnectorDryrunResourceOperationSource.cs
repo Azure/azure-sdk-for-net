@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceLinker
         ConnectorDryrunResource IOperationSource<ConnectorDryrunResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DryrunResourceData data = DryrunResourceData.DeserializeDryrunResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            LinkerDryrunData data = LinkerDryrunData.DeserializeLinkerDryrunData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ConnectorDryrunResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ServiceLinker
         async ValueTask<ConnectorDryrunResource> IOperationSource<ConnectorDryrunResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DryrunResourceData data = DryrunResourceData.DeserializeDryrunResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            LinkerDryrunData data = LinkerDryrunData.DeserializeLinkerDryrunData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ConnectorDryrunResource(_client, data);
         }
     }

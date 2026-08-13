@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ServiceLinker
     {
         private readonly ClientDiagnostics _connectorDryrunClientDiagnostics;
         private readonly ConnectorDryrun _connectorDryrunRestClient;
-        private readonly DryrunResourceData _data;
+        private readonly LinkerDryrunData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ServiceLinker/locations/dryruns";
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <summary> Initializes a new instance of <see cref="ConnectorDryrunResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ConnectorDryrunResource(ArmClient client, DryrunResourceData data) : this(client, data.Id)
+        internal ConnectorDryrunResource(ArmClient client, LinkerDryrunData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ServiceLinker
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual DryrunResourceData Data
+        public virtual LinkerDryrunData Data
         {
             get
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 };
                 HttpMessage message = _connectorDryrunRestClient.CreateGetDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DryrunResourceData> response = Response.FromValue(DryrunResourceData.FromResponse(result), result);
+                Response<LinkerDryrunData> response = Response.FromValue(LinkerDryrunData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 };
                 HttpMessage message = _connectorDryrunRestClient.CreateGetDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DryrunResourceData> response = Response.FromValue(DryrunResourceData.FromResponse(result), result);
+                Response<LinkerDryrunData> response = Response.FromValue(LinkerDryrunData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

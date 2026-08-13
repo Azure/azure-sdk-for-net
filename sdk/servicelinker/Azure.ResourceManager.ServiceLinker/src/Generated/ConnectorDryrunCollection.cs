@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ConnectorDryrunResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dryrunName, DryrunResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ConnectorDryrunResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dryrunName, LinkerDryrunData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
             Argument.AssertNotNull(data, nameof(data));
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorDryrunRestClient.CreateCreateDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, dryrunName, DryrunResourceData.ToRequestContent(data), context);
+                HttpMessage message = _connectorDryrunRestClient.CreateCreateDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, dryrunName, LinkerDryrunData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceLinkerArmOperation<ConnectorDryrunResource> operation = new ServiceLinkerArmOperation<ConnectorDryrunResource>(
                     new ConnectorDryrunResourceOperationSource(Client),
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ConnectorDryrunResource> CreateOrUpdate(WaitUntil waitUntil, string dryrunName, DryrunResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ConnectorDryrunResource> CreateOrUpdate(WaitUntil waitUntil, string dryrunName, LinkerDryrunData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
             Argument.AssertNotNull(data, nameof(data));
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorDryrunRestClient.CreateCreateDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, dryrunName, DryrunResourceData.ToRequestContent(data), context);
+                HttpMessage message = _connectorDryrunRestClient.CreateCreateDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, dryrunName, LinkerDryrunData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceLinkerArmOperation<ConnectorDryrunResource> operation = new ServiceLinkerArmOperation<ConnectorDryrunResource>(
                     new ConnectorDryrunResourceOperationSource(Client),
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 };
                 HttpMessage message = _connectorDryrunRestClient.CreateGetDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, dryrunName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DryrunResourceData> response = Response.FromValue(DryrunResourceData.FromResponse(result), result);
+                Response<LinkerDryrunData> response = Response.FromValue(LinkerDryrunData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 };
                 HttpMessage message = _connectorDryrunRestClient.CreateGetDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, dryrunName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DryrunResourceData> response = Response.FromValue(DryrunResourceData.FromResponse(result), result);
+                Response<LinkerDryrunData> response = Response.FromValue(LinkerDryrunData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ServiceLinker
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DryrunResourceData, ConnectorDryrunResource>(new ConnectorDryrunGetDryrunAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<LinkerDryrunData, ConnectorDryrunResource>(new ConnectorDryrunGetDryrunAsyncCollectionResultOfT(
                 _connectorDryrunRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ServiceLinker
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DryrunResourceData, ConnectorDryrunResource>(new ConnectorDryrunGetDryrunCollectionResultOfT(
+            return new PageableWrapper<LinkerDryrunData, ConnectorDryrunResource>(new ConnectorDryrunGetDryrunCollectionResultOfT(
                 _connectorDryrunRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -377,14 +377,14 @@ namespace Azure.ResourceManager.ServiceLinker
                 HttpMessage message = _connectorDryrunRestClient.CreateGetDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, dryrunName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<DryrunResourceData> response = default;
+                Response<LinkerDryrunData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DryrunResourceData.FromResponse(result), result);
+                        response = Response.FromValue(LinkerDryrunData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DryrunResourceData)null, result);
+                        response = Response.FromValue((LinkerDryrunData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -434,14 +434,14 @@ namespace Azure.ResourceManager.ServiceLinker
                 HttpMessage message = _connectorDryrunRestClient.CreateGetDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, dryrunName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<DryrunResourceData> response = default;
+                Response<LinkerDryrunData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DryrunResourceData.FromResponse(result), result);
+                        response = Response.FromValue(LinkerDryrunData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DryrunResourceData)null, result);
+                        response = Response.FromValue((LinkerDryrunData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -491,14 +491,14 @@ namespace Azure.ResourceManager.ServiceLinker
                 HttpMessage message = _connectorDryrunRestClient.CreateGetDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, dryrunName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<DryrunResourceData> response = default;
+                Response<LinkerDryrunData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DryrunResourceData.FromResponse(result), result);
+                        response = Response.FromValue(LinkerDryrunData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DryrunResourceData)null, result);
+                        response = Response.FromValue((LinkerDryrunData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -552,14 +552,14 @@ namespace Azure.ResourceManager.ServiceLinker
                 HttpMessage message = _connectorDryrunRestClient.CreateGetDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, dryrunName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<DryrunResourceData> response = default;
+                Response<LinkerDryrunData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DryrunResourceData.FromResponse(result), result);
+                        response = Response.FromValue(LinkerDryrunData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DryrunResourceData)null, result);
+                        response = Response.FromValue((LinkerDryrunData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

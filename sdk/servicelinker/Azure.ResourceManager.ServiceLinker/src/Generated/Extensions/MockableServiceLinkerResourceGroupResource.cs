@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
             return GetConnectorDryruns(location).Get(dryrunName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Connectors in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <summary> Gets a collection of LinkerConnectors in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
-        /// <returns> An object representing collection of Connectors and their operations over a ConnectorResource. </returns>
-        public virtual ConnectorCollection GetConnectors(string location)
+        /// <returns> An object representing collection of LinkerConnectors and their operations over a LinkerConnectorResource. </returns>
+        public virtual LinkerConnectorCollection GetLinkerConnectors(string location)
         {
-            return GetCachedClient(client => new ConnectorCollection(client, Id, location));
+            return GetCachedClient(client => new LinkerConnectorCollection(client, Id, location));
         }
 
         /// <summary>
@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ConnectorResource>> GetConnectorAsync(string location, string connectorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LinkerConnectorResource>> GetLinkerConnectorAsync(string location, string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            return await GetConnectors(location).GetAsync(connectorName, cancellationToken).ConfigureAwait(false);
+            return await GetLinkerConnectors(location).GetAsync(connectorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -160,11 +160,11 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ConnectorResource> GetConnector(string location, string connectorName, CancellationToken cancellationToken = default)
+        public virtual Response<LinkerConnectorResource> GetLinkerConnector(string location, string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            return GetConnectors(location).Get(connectorName, cancellationToken);
+            return GetLinkerConnectors(location).Get(connectorName, cancellationToken);
         }
     }
 }

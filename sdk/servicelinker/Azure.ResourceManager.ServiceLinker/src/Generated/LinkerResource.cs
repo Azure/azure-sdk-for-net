@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.ServiceLinker
     {
         private readonly ClientDiagnostics _linkerResourcesClientDiagnostics;
         private readonly LinkerResources _linkerResourcesRestClient;
-        private readonly ClientDiagnostics _dryrunsClientDiagnostics;
-        private readonly Dryruns _dryrunsRestClient;
+        private readonly ClientDiagnostics _linkerDryrunsClientDiagnostics;
+        private readonly LinkerDryruns _linkerDryrunsRestClient;
         private readonly LinkerResourceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ServiceLinker/linkers";
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.ServiceLinker
             TryGetApiVersion(ResourceType, out string linkerResourceApiVersion);
             _linkerResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", ResourceType.Namespace, Diagnostics);
             _linkerResourcesRestClient = new LinkerResources(_linkerResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, linkerResourceApiVersion ?? "2024-07-01-preview");
-            _dryrunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", ResourceType.Namespace, Diagnostics);
-            _dryrunsRestClient = new Dryruns(_dryrunsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, linkerResourceApiVersion ?? "2024-07-01-preview");
+            _linkerDryrunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", ResourceType.Namespace, Diagnostics);
+            _linkerDryrunsRestClient = new LinkerDryruns(_linkerDryrunsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, linkerResourceApiVersion ?? "2024-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SourceConfigurationResult>> GenerateConfigurationsAsync(LinkerConfigurationInfo content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _dryrunsClientDiagnostics.CreateScope("LinkerResource.GenerateConfigurations");
+            using DiagnosticScope scope = _linkerDryrunsClientDiagnostics.CreateScope("LinkerResource.GenerateConfigurations");
             scope.Start();
             try
             {
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dryrunsRestClient.CreateGenerateConfigurationsRequest(Id.Parent.ToString(), Id.Name, LinkerConfigurationInfo.ToRequestContent(content), context);
+                HttpMessage message = _linkerDryrunsRestClient.CreateGenerateConfigurationsRequest(Id.Parent.ToString(), Id.Name, LinkerConfigurationInfo.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SourceConfigurationResult> response = Response.FromValue(SourceConfigurationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SourceConfigurationResult> GenerateConfigurations(LinkerConfigurationInfo content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _dryrunsClientDiagnostics.CreateScope("LinkerResource.GenerateConfigurations");
+            using DiagnosticScope scope = _linkerDryrunsClientDiagnostics.CreateScope("LinkerResource.GenerateConfigurations");
             scope.Start();
             try
             {
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dryrunsRestClient.CreateGenerateConfigurationsRequest(Id.Parent.ToString(), Id.Name, LinkerConfigurationInfo.ToRequestContent(content), context);
+                HttpMessage message = _linkerDryrunsRestClient.CreateGenerateConfigurationsRequest(Id.Parent.ToString(), Id.Name, LinkerConfigurationInfo.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SourceConfigurationResult> response = Response.FromValue(SourceConfigurationResult.FromResponse(result), result);
                 if (response.Value == null)

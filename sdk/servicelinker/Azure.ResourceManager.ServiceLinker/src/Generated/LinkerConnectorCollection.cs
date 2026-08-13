@@ -20,32 +20,32 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ServiceLinker
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ConnectorResource"/> and their operations.
-    /// Each <see cref="ConnectorResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="ConnectorCollection"/> instance call the GetConnectors method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="LinkerConnectorResource"/> and their operations.
+    /// Each <see cref="LinkerConnectorResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="LinkerConnectorCollection"/> instance call the GetLinkerConnectors method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class ConnectorCollection : ArmCollection, IEnumerable<ConnectorResource>, IAsyncEnumerable<ConnectorResource>
+    public partial class LinkerConnectorCollection : ArmCollection, IEnumerable<LinkerConnectorResource>, IAsyncEnumerable<LinkerConnectorResource>
     {
         private readonly ClientDiagnostics _connectorClientDiagnostics;
         private readonly Connector _connectorRestClient;
         /// <summary> The location. </summary>
         private readonly string _location;
 
-        /// <summary> Initializes a new instance of ConnectorCollection for mocking. </summary>
-        protected ConnectorCollection()
+        /// <summary> Initializes a new instance of LinkerConnectorCollection for mocking. </summary>
+        protected LinkerConnectorCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectorCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkerConnectorCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         /// <param name="location"> The location for the resource. </param>
-        internal ConnectorCollection(ArmClient client, ResourceIdentifier id, string location) : base(client, id)
+        internal LinkerConnectorCollection(ArmClient client, ResourceIdentifier id, string location) : base(client, id)
         {
-            TryGetApiVersion(ConnectorResource.ResourceType, out string connectorApiVersion);
+            TryGetApiVersion(LinkerConnectorResource.ResourceType, out string linkerConnectorApiVersion);
             _location = location;
-            _connectorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", ConnectorResource.ResourceType.Namespace, Diagnostics);
-            _connectorRestClient = new Connector(_connectorClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, connectorApiVersion ?? "2024-07-01-preview");
+            _connectorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", LinkerConnectorResource.ResourceType.Namespace, Diagnostics);
+            _connectorRestClient = new Connector(_connectorClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, linkerConnectorApiVersion ?? "2024-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ConnectorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectorName, LinkerResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<LinkerConnectorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectorName, LinkerResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _connectorClientDiagnostics.CreateScope("ConnectorCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _connectorClientDiagnostics.CreateScope("LinkerConnectorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.ServiceLinker
                 };
                 HttpMessage message = _connectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, LinkerResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ServiceLinkerArmOperation<ConnectorResource> operation = new ServiceLinkerArmOperation<ConnectorResource>(
-                    new ConnectorResourceOperationSource(Client),
+                ServiceLinkerArmOperation<LinkerConnectorResource> operation = new ServiceLinkerArmOperation<LinkerConnectorResource>(
+                    new LinkerConnectorResourceOperationSource(Client),
                     _connectorClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -140,12 +140,12 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ConnectorResource> CreateOrUpdate(WaitUntil waitUntil, string connectorName, LinkerResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LinkerConnectorResource> CreateOrUpdate(WaitUntil waitUntil, string connectorName, LinkerResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _connectorClientDiagnostics.CreateScope("ConnectorCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _connectorClientDiagnostics.CreateScope("LinkerConnectorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -155,8 +155,8 @@ namespace Azure.ResourceManager.ServiceLinker
                 };
                 HttpMessage message = _connectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, LinkerResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ServiceLinkerArmOperation<ConnectorResource> operation = new ServiceLinkerArmOperation<ConnectorResource>(
-                    new ConnectorResourceOperationSource(Client),
+                ServiceLinkerArmOperation<LinkerConnectorResource> operation = new ServiceLinkerArmOperation<LinkerConnectorResource>(
+                    new LinkerConnectorResourceOperationSource(Client),
                     _connectorClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -196,11 +196,11 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ConnectorResource>> GetAsync(string connectorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LinkerConnectorResource>> GetAsync(string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            using DiagnosticScope scope = _connectorClientDiagnostics.CreateScope("ConnectorCollection.Get");
+            using DiagnosticScope scope = _connectorClientDiagnostics.CreateScope("LinkerConnectorCollection.Get");
             scope.Start();
             try
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConnectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LinkerConnectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -245,11 +245,11 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ConnectorResource> Get(string connectorName, CancellationToken cancellationToken = default)
+        public virtual Response<LinkerConnectorResource> Get(string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            using DiagnosticScope scope = _connectorClientDiagnostics.CreateScope("ConnectorCollection.Get");
+            using DiagnosticScope scope = _connectorClientDiagnostics.CreateScope("LinkerConnectorCollection.Get");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConnectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LinkerConnectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -291,20 +291,20 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConnectorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConnectorResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="LinkerConnectorResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LinkerConnectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LinkerResourceData, ConnectorResource>(new ConnectorGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<LinkerResourceData, LinkerConnectorResource>(new ConnectorGetAllAsyncCollectionResultOfT(
                 _connectorRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 _location,
                 context,
-                "ConnectorCollection.GetAll"), data => new ConnectorResource(Client, data));
+                "LinkerConnectorCollection.GetAll"), data => new LinkerConnectorResource(Client, data));
         }
 
         /// <summary>
@@ -325,20 +325,20 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConnectorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConnectorResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="LinkerConnectorResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LinkerConnectorResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LinkerResourceData, ConnectorResource>(new ConnectorGetAllCollectionResultOfT(
+            return new PageableWrapper<LinkerResourceData, LinkerConnectorResource>(new ConnectorGetAllCollectionResultOfT(
                 _connectorRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 _location,
                 context,
-                "ConnectorCollection.GetAll"), data => new ConnectorResource(Client, data));
+                "LinkerConnectorCollection.GetAll"), data => new LinkerConnectorResource(Client, data));
         }
 
         /// <summary>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            using DiagnosticScope scope = _connectorClientDiagnostics.CreateScope("ConnectorCollection.Exists");
+            using DiagnosticScope scope = _connectorClientDiagnostics.CreateScope("LinkerConnectorCollection.Exists");
             scope.Start();
             try
             {
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            using DiagnosticScope scope = _connectorClientDiagnostics.CreateScope("ConnectorCollection.Exists");
+            using DiagnosticScope scope = _connectorClientDiagnostics.CreateScope("LinkerConnectorCollection.Exists");
             scope.Start();
             try
             {
@@ -476,11 +476,11 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ConnectorResource>> GetIfExistsAsync(string connectorName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<LinkerConnectorResource>> GetIfExistsAsync(string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            using DiagnosticScope scope = _connectorClientDiagnostics.CreateScope("ConnectorCollection.GetIfExists");
+            using DiagnosticScope scope = _connectorClientDiagnostics.CreateScope("LinkerConnectorCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -505,9 +505,9 @@ namespace Azure.ResourceManager.ServiceLinker
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ConnectorResource>(response.GetRawResponse());
+                    return new NoValueResponse<LinkerConnectorResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConnectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LinkerConnectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -537,11 +537,11 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ConnectorResource> GetIfExists(string connectorName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<LinkerConnectorResource> GetIfExists(string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            using DiagnosticScope scope = _connectorClientDiagnostics.CreateScope("ConnectorCollection.GetIfExists");
+            using DiagnosticScope scope = _connectorClientDiagnostics.CreateScope("LinkerConnectorCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -566,9 +566,9 @@ namespace Azure.ResourceManager.ServiceLinker
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ConnectorResource>(response.GetRawResponse());
+                    return new NoValueResponse<LinkerConnectorResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConnectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LinkerConnectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.ServiceLinker
             }
         }
 
-        IEnumerator<ConnectorResource> IEnumerable<ConnectorResource>.GetEnumerator()
+        IEnumerator<LinkerConnectorResource> IEnumerable<LinkerConnectorResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.ServiceLinker
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ConnectorResource> IAsyncEnumerable<ConnectorResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<LinkerConnectorResource> IAsyncEnumerable<LinkerConnectorResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

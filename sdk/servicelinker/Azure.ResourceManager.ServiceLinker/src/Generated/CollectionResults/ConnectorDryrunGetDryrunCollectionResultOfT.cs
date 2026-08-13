@@ -14,7 +14,7 @@ using Azure.ResourceManager.ServiceLinker.Models;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
-    internal partial class ConnectorDryrunGetDryrunCollectionResultOfT : Pageable<DryrunResourceData>
+    internal partial class ConnectorDryrunGetDryrunCollectionResultOfT : Pageable<LinkerDryrunData>
     {
         private readonly ConnectorDryrun _client;
         private readonly string _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ConnectorDryrunGetDryrunCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DryrunResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<LinkerDryrunData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 }
                 DryrunList result = DryrunList.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<DryrunResourceData>.FromValues((IReadOnlyList<DryrunResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<LinkerDryrunData>.FromValues((IReadOnlyList<LinkerDryrunData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

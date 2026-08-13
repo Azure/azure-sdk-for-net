@@ -15,19 +15,19 @@ using Azure.ResourceManager.ServiceLinker.Models;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
-    internal partial class DryrunsGetDryrunAsyncCollectionResultOfT : AsyncPageable<DryrunResourceData>
+    internal partial class LinkerDryrunsGetDaprConfigurationsAsyncCollectionResultOfT : AsyncPageable<DaprConfiguration>
     {
-        private readonly Dryruns _client;
+        private readonly LinkerDryruns _client;
         private readonly string _resourceUri;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of DryrunsGetDryrunAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Dryruns client used to send requests. </param>
+        /// <summary> Initializes a new instance of LinkerDryrunsGetDaprConfigurationsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The LinkerDryruns client used to send requests. </param>
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DryrunsGetDryrunAsyncCollectionResultOfT(Dryruns client, string resourceUri, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public LinkerDryrunsGetDaprConfigurationsAsyncCollectionResultOfT(LinkerDryruns client, string resourceUri, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _resourceUri = resourceUri;
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.ServiceLinker
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of DryrunsGetDryrunAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of LinkerDryrunsGetDaprConfigurationsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DryrunsGetDryrunAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<DryrunResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of LinkerDryrunsGetDaprConfigurationsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<DaprConfiguration>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     yield break;
                 }
-                DryrunList result = DryrunList.FromResponse(response);
+                DaprConfigurationList result = DaprConfigurationList.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<DryrunResourceData>.FromValues((IReadOnlyList<DryrunResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<DaprConfiguration>.FromValues((IReadOnlyList<DaprConfiguration>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetDryrunRequest(nextLink, _resourceUri, _context) : _client.CreateGetDryrunRequest(_resourceUri, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetDaprConfigurationsRequest(nextLink, _resourceUri, _context) : _client.CreateGetDaprConfigurationsRequest(_resourceUri, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 throw new FormatException($"The model {nameof(AzureAppConfigProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ConnectWithKubernetesExtension))
+            if (Optional.IsDefined(IsConnectedWithKubernetesExtension))
             {
                 writer.WritePropertyName("connectWithKubernetesExtension"u8);
-                writer.WriteBooleanValue(ConnectWithKubernetesExtension.Value);
+                writer.WriteBooleanValue(IsConnectedWithKubernetesExtension.Value);
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
             AzureResourceType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            bool? connectWithKubernetesExtension = default;
+            bool? isConnectedWithKubernetesExtension = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        connectWithKubernetesExtension = null;
+                        isConnectedWithKubernetesExtension = null;
                         continue;
                     }
-                    connectWithKubernetesExtension = prop.Value.GetBoolean();
+                    isConnectedWithKubernetesExtension = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureAppConfigProperties(@type, additionalBinaryDataProperties, connectWithKubernetesExtension);
+            return new AzureAppConfigProperties(@type, additionalBinaryDataProperties, isConnectedWithKubernetesExtension);
         }
     }
 }

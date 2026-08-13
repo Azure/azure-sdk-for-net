@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableServiceLinkerArmClient : ArmResource
     {
-        private ClientDiagnostics _dryrunsClientDiagnostics;
-        private Dryruns _dryrunsRestClient;
+        private ClientDiagnostics _linkerDryrunsClientDiagnostics;
+        private LinkerDryruns _linkerDryrunsRestClient;
 
         /// <summary> Initializes a new instance of MockableServiceLinkerArmClient for mocking. </summary>
         protected MockableServiceLinkerArmClient()
@@ -35,39 +35,25 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         {
         }
 
-        private ClientDiagnostics DryrunsClientDiagnostics => _dryrunsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceLinker.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics LinkerDryrunsClientDiagnostics => _linkerDryrunsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceLinker.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Dryruns DryrunsRestClient => _dryrunsRestClient ??= new Dryruns(DryrunsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-07-01-preview");
+        private LinkerDryruns LinkerDryrunsRestClient => _linkerDryrunsRestClient ??= new LinkerDryruns(LinkerDryrunsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-07-01-preview");
 
-        /// <summary> Gets an object representing a <see cref="DryrunResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="LinkerDryrunResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DryrunResource"/> object. </returns>
-        public virtual DryrunResource GetDryrunResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LinkerDryrunResource"/> object. </returns>
+        public virtual LinkerDryrunResource GetLinkerDryrunResource(ResourceIdentifier id)
         {
-            DryrunResource.ValidateResourceId(id);
-            return new DryrunResource(Client, id);
+            LinkerDryrunResource.ValidateResourceId(id);
+            return new LinkerDryrunResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="DryrunCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="LinkerDryrunCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="DryrunResource"/> objects. </returns>
-        public virtual DryrunCollection GetDryruns(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="LinkerDryrunResource"/> objects. </returns>
+        public virtual LinkerDryrunCollection GetLinkerDryruns(ResourceIdentifier scope)
         {
-            return new DryrunCollection(Client, scope);
-        }
-
-        /// <summary> get a dryrun job. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="dryrunName"> The name of dryrun. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DryrunResource> GetDryrun(ResourceIdentifier scope, string dryrunName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
-
-            return GetDryruns(scope).Get(dryrunName, cancellationToken);
+            return new LinkerDryrunCollection(Client, scope);
         }
 
         /// <summary> get a dryrun job. </summary>
@@ -77,11 +63,25 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DryrunResource>> GetDryrunAsync(ResourceIdentifier scope, string dryrunName, CancellationToken cancellationToken = default)
+        public virtual Response<LinkerDryrunResource> GetLinkerDryrun(ResourceIdentifier scope, string dryrunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
 
-            return await GetDryruns(scope).GetAsync(dryrunName, cancellationToken).ConfigureAwait(false);
+            return GetLinkerDryruns(scope).Get(dryrunName, cancellationToken);
+        }
+
+        /// <summary> get a dryrun job. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="dryrunName"> The name of dryrun. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<LinkerDryrunResource>> GetLinkerDryrunAsync(ResourceIdentifier scope, string dryrunName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
+
+            return await GetLinkerDryruns(scope).GetAsync(dryrunName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="LinkerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -138,13 +138,13 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
             return new ConnectorDryrunResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ConnectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="LinkerConnectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConnectorResource"/> object. </returns>
-        public virtual ConnectorResource GetConnectorResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LinkerConnectorResource"/> object. </returns>
+        public virtual LinkerConnectorResource GetLinkerConnectorResource(ResourceIdentifier id)
         {
-            ConnectorResource.ValidateResourceId(id);
-            return new ConnectorResource(Client, id);
+            LinkerConnectorResource.ValidateResourceId(id);
+            return new LinkerConnectorResource(Client, id);
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DryrunsGetDaprConfigurationsAsyncCollectionResultOfT(DryrunsRestClient, scope.ToString(), context, "MockableServiceLinkerArmClient.GetDaprConfigurations");
+            return new LinkerDryrunsGetDaprConfigurationsAsyncCollectionResultOfT(LinkerDryrunsRestClient, scope.ToString(), context, "MockableServiceLinkerArmClient.GetDaprConfigurations");
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DryrunsGetDaprConfigurationsCollectionResultOfT(DryrunsRestClient, scope.ToString(), context, "MockableServiceLinkerArmClient.GetDaprConfigurations");
+            return new LinkerDryrunsGetDaprConfigurationsCollectionResultOfT(LinkerDryrunsRestClient, scope.ToString(), context, "MockableServiceLinkerArmClient.GetDaprConfigurations");
         }
     }
 }

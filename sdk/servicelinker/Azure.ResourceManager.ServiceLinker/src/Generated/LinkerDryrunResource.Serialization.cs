@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.ServiceLinker
 {
     /// <summary></summary>
-    public partial class ConnectorDryrunResource : IJsonModel<LinkerDryrunData>
+    public partial class LinkerDryrunResource : IJsonModel<LinkerDryrunData>
     {
         private static IJsonModel<LinkerDryrunData> s_dataDeserializationInstance;
 

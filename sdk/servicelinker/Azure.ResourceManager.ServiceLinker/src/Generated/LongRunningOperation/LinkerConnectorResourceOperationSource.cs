@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ServiceLinker
 {
     /// <summary></summary>
-    internal partial class DryrunResourceOperationSource : IOperationSource<DryrunResource>
+    internal partial class LinkerConnectorResourceOperationSource : IOperationSource<LinkerConnectorResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal DryrunResourceOperationSource(ArmClient client)
+        internal LinkerConnectorResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        DryrunResource IOperationSource<DryrunResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        LinkerConnectorResource IOperationSource<LinkerConnectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DryrunResourceData data = DryrunResourceData.DeserializeDryrunResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DryrunResource(_client, data);
+            LinkerResourceData data = LinkerResourceData.DeserializeLinkerResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new LinkerConnectorResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<DryrunResource> IOperationSource<DryrunResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<LinkerConnectorResource> IOperationSource<LinkerConnectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DryrunResourceData data = DryrunResourceData.DeserializeDryrunResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DryrunResource(_client, data);
+            LinkerResourceData data = LinkerResourceData.DeserializeLinkerResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new LinkerConnectorResource(_client, data);
         }
     }
 }

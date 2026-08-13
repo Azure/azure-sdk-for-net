@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Initializes a new instance of <see cref="AzureAppConfigProperties"/>. </summary>
         /// <param name="type"> The azure resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="connectWithKubernetesExtension"> True if connection enables app configuration kubernetes extension. </param>
-        internal AzureAppConfigProperties(AzureResourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? connectWithKubernetesExtension) : base(@type, additionalBinaryDataProperties)
+        /// <param name="isConnectedWithKubernetesExtension"> True if connection enables app configuration kubernetes extension. </param>
+        internal AzureAppConfigProperties(AzureResourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? isConnectedWithKubernetesExtension) : base(@type, additionalBinaryDataProperties)
         {
-            ConnectWithKubernetesExtension = connectWithKubernetesExtension;
+            IsConnectedWithKubernetesExtension = isConnectedWithKubernetesExtension;
         }
 
         /// <summary> True if connection enables app configuration kubernetes extension. </summary>
-        public bool? ConnectWithKubernetesExtension { get; set; }
+        public bool? IsConnectedWithKubernetesExtension { get; set; }
     }
 }
