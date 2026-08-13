@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Linq;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Core.Streaming;
 using Azure.AI.AgentServer.Core.Tasks;
@@ -155,33 +154,30 @@ public static class ResponsesServerServiceCollectionExtensions
 
         // The Responses layer does not own an event-stream store. SSE events are published onto
         // the Core event-stream primitive (AgentEventStreamRegistry/AgentEventStream) — matching Python,
-        // which uses the core EventStream registry directly. Register it once here. The backing is
-        // chosen from the bound configuration: local + ResilientBackground uses a durable file-backed
-        // replay so a reconnecting client can replay pre-restart SSE events after a single-sandbox
-        // recovery; otherwise an in-memory replay buffer is sufficient. Core's AddAgentEventStreams
-        // selects the backing exactly once per process and throws on a second configuring call, so
-        // only register when no backing has been chosen yet — a consumer (or test) that registered
-        // its own backing first wins, preserving the prior override semantics.
+        // which uses the core EventStream registry directly. The backing is chosen from the bound
+        // configuration (ResponsesServerSettings): local + ResilientBackground uses a durable
+        // file-backed replay so a reconnecting client can replay pre-restart SSE events after a
+        // single-sandbox recovery; otherwise an in-memory replay buffer is sufficient. Core's
+        // AddAgentEventStreams is first-wins (TryAddSingleton) and no longer throws on a repeated
+        // registration, so configuration — not registration order — decides the backing: this call
+        // is a harmless no-op when a consumer or another protocol SDK already selected a backing.
         var eagerOptions = new ResponsesServerOptions();
         configure?.Invoke(eagerOptions);
         var useDurableStreams = eagerOptions.ResilientBackground && hostedStorage is null;
         var streamTtl = new InMemoryProviderOptions().EventStreamTtl;
-        if (!services.Any(d => d.ServiceType == typeof(AgentEventStreamRegistry)))
+        services.AddAgentEventStreams(o =>
         {
-            services.AddAgentEventStreams(o =>
+            if (useDurableStreams)
             {
-                if (useDurableStreams)
-                {
-                    o.UseFileBackedReplay(
-                        storageDirectory: Internal.Resilience.ResponsesStatePaths.StreamsRoot(),
-                        ttl: streamTtl);
-                }
-                else
-                {
-                    o.UseInMemoryReplay(ttl: streamTtl);
-                }
-            });
-        }
+                o.UseFileBackedReplay(
+                    storageDirectory: Internal.Resilience.ResponsesStatePaths.StreamsRoot(),
+                    ttl: streamTtl);
+            }
+            else
+            {
+                o.UseInMemoryReplay(ttl: streamTtl);
+            }
+        });
 
         services.AddSingleton<ResponseExecutionTracker>();
         services.AddHostedService(sp => sp.GetRequiredService<ResponseExecutionTracker>());
