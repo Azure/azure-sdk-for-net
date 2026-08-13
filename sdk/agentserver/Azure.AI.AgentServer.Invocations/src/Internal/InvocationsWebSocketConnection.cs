@@ -12,7 +12,8 @@ internal readonly record struct InvocationsWebSocketCloseResult(
     string Reason,
     string? ErrorCode,
     Exception? Exception,
-    Exception? CleanupException = null)
+    Exception? CleanupException = null,
+    Exception? CloseException = null)
 {
     internal int Code => Status is null ? 1006 : (int)Status.Value;
 }
@@ -100,7 +101,7 @@ internal sealed class InvocationsWebSocketConnection
                 if (remaining <= TimeSpan.Zero)
                 {
                     TryAbort();
-                    return null;
+                    return CreateCloseTimeoutException();
                 }
                 var closeTask = _webSocket.CloseOutputAsync(
                     status.Value,
@@ -115,6 +116,7 @@ internal sealed class InvocationsWebSocketConnection
                 {
                     TryAbort();
                     ObserveLateTask(closeTask);
+                    return CreateCloseTimeoutException();
                 }
             }
             else if (status is null)
@@ -123,6 +125,11 @@ internal sealed class InvocationsWebSocketConnection
             }
 
             return null;
+        }
+        catch (OperationCanceledException) when (acquired && closeCancellation.IsCancellationRequested)
+        {
+            TryAbort();
+            return CreateCloseTimeoutException();
         }
         catch (Exception exception)
         {
@@ -138,6 +145,9 @@ internal sealed class InvocationsWebSocketConnection
             DisposeSocket();
         }
     }
+
+    private static TimeoutException CreateCloseTimeoutException() =>
+        new("Timed out closing the Voice WebSocket connection.");
 
     private void ThrowIfTerminating()
     {

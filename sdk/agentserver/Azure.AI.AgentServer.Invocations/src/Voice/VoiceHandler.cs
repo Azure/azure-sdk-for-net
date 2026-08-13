@@ -24,12 +24,24 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
         InvocationContext context,
         CancellationToken cancellationToken)
     {
+        _ = await HandleWebSocketWithOutcomeAsync(
+            webSocket,
+            context,
+            cancellationToken).ConfigureAwait(false);
+    }
+
+    internal sealed override async Task<InvocationsWebSocketCloseResult?> HandleWebSocketWithOutcomeAsync(
+        WebSocket webSocket,
+        InvocationContext context,
+        CancellationToken cancellationToken)
+    {
         var connection = new InvocationsWebSocketConnection(webSocket);
         var outcome = await HandleWebSocketConnectionAsync(
             connection,
             context,
             cancellationToken).ConfigureAwait(false);
-        await connection.CloseAsync(outcome.Status, outcome.Reason).ConfigureAwait(false);
+        var closeException = await connection.CloseAsync(outcome.Status, outcome.Reason).ConfigureAwait(false);
+        return outcome with { CloseException = closeException };
     }
 
     /// <summary>Handles an explicit application start event.</summary>

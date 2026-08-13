@@ -5,9 +5,12 @@ using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
+using Azure.AI.AgentServer.Invocations.Internal;
 using Azure.AI.AgentServer.Invocations.Voice;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -100,22 +103,247 @@ public class VoiceRelayEndToEndTests
     }
 
     [Test]
-    public async Task ProtocolClosePreservesWireCodeAndCleanupWhenTerminationHookThrows()
+    public async Task ProtocolClosePreservesWireCodeAndTelemetryWhenCleanupThrows()
     {
+        var logs = new CapturingVoiceLogProvider();
         var handler = new ThrowingTerminationHandler();
-        await using var app = BuildApp(handler);
+        var requestCompleted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        await using var app = BuildApp(handler, logs, requestCompleted);
         await app.StartAsync();
         using var webSocket = await ConnectAsync(app);
 
         await SendTextAsync(webSocket, "{");
         var buffer = new byte[64];
         var close = await webSocket.ReceiveAsync(buffer, CancellationToken.None).WaitAsync(TestTimeout);
+        var closeEvent = await logs.WaitForCloseEventAsync(TestTimeout);
+        await requestCompleted.Task.WaitAsync(TestTimeout);
 
         Assert.Multiple(() =>
         {
             Assert.That(close.MessageType, Is.EqualTo(WebSocketMessageType.Close));
             Assert.That((int?)webSocket.CloseStatus, Is.EqualTo(1002));
             Assert.That(handler.TerminationCount, Is.EqualTo(1));
+            Assert.That(closeEvent.GetValue(InvocationsWebSocketConstants.AttrSpanCloseCode), Is.EqualTo(1002));
+            Assert.That(closeEvent.GetValue(InvocationsWebSocketConstants.AttrSpanErrorCode), Is.EqualTo("protocol_error"));
+            Assert.That(logs.CloseEvents, Has.Count.EqualTo(1));
+            Assert.That(logs.ExceptionEntries.Count(entry => entry.Exception is VoiceProtocolException), Is.EqualTo(1));
+            Assert.That(logs.ExceptionEntries.Count(entry => ReferenceEquals(entry.Exception, handler.Failure)), Is.EqualTo(1));
+        });
+    }
+
+    [Test]
+    public async Task CallbackFailurePreserves1011TelemetryAndExceptionIdentity()
+    {
+        var logs = new CapturingVoiceLogProvider();
+        var handler = new ThrowingStartHandler();
+        var requestCompleted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        await using var app = BuildApp(handler, logs, requestCompleted);
+        await app.StartAsync();
+        using var webSocket = await ConnectAsync(app);
+
+        await SendTextAsync(webSocket, """
+            {"type":"session.start","id":"m_start","ts":"2026-08-13T00:00:00.000Z","protocol_version":"1.0","reconnect":false,"response_timeouts":{"first_output_ms":1,"idle_ms":2,"max_duration_ms":3}}
+            """);
+        var buffer = new byte[64];
+        var close = await webSocket.ReceiveAsync(buffer, CancellationToken.None).WaitAsync(TestTimeout);
+        var closeEvent = await logs.WaitForCloseEventAsync(TestTimeout);
+        await requestCompleted.Task.WaitAsync(TestTimeout);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That((int?)close.CloseStatus, Is.EqualTo(1011));
+            Assert.That(closeEvent.GetValue(InvocationsWebSocketConstants.AttrSpanCloseCode), Is.EqualTo(1011));
+            Assert.That(closeEvent.GetValue(InvocationsWebSocketConstants.AttrSpanErrorCode), Is.EqualTo("internal_error"));
+            Assert.That(logs.CloseEvents, Has.Count.EqualTo(1));
+            Assert.That(logs.ExceptionEntries.Count(entry => ReferenceEquals(entry.Exception, handler.Failure)), Is.EqualTo(1));
+            Assert.That(logs.ExceptionEntries, Has.Count.EqualTo(1));
+        });
+    }
+
+    [Test]
+    public async Task PeerClosePreserves1001TelemetryWithoutErrorDiagnostic()
+    {
+        var logs = new CapturingVoiceLogProvider();
+        var handler = new TerminationCountingHandler();
+        var requestCompleted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        await using var app = BuildApp(handler, logs, requestCompleted);
+        await app.StartAsync();
+        using var webSocket = await ConnectAsync(app);
+
+        await webSocket.CloseOutputAsync(
+            WebSocketCloseStatus.EndpointUnavailable,
+            "service-shutdown",
+            CancellationToken.None);
+        var buffer = new byte[64];
+        var close = await webSocket.ReceiveAsync(buffer, CancellationToken.None).WaitAsync(TestTimeout);
+        var closeEvent = await logs.WaitForCloseEventAsync(TestTimeout);
+        await requestCompleted.Task.WaitAsync(TestTimeout);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That((int?)close.CloseStatus, Is.EqualTo(1001));
+            Assert.That(closeEvent.GetValue(InvocationsWebSocketConstants.AttrSpanCloseCode), Is.EqualTo(1001));
+            Assert.That(closeEvent.State, Does.Not.ContainKey(InvocationsWebSocketConstants.AttrSpanErrorCode));
+            Assert.That(logs.CloseEvents, Has.Count.EqualTo(1));
+            Assert.That(logs.ExceptionEntries, Is.Empty);
+            Assert.That(handler.TerminationCount, Is.EqualTo(1));
+        });
+    }
+
+    [Test]
+    public async Task AbnormalTransportLossPreserves1006Telemetry()
+    {
+        var logs = new CapturingVoiceLogProvider();
+        var handler = new TerminationCountingHandler();
+        var requestCompleted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        await using var app = BuildApp(handler, logs, requestCompleted);
+        await app.StartAsync();
+        var webSocket = await ConnectAsync(app);
+
+        webSocket.Abort();
+        webSocket.Dispose();
+        await handler.Terminating.Task.WaitAsync(TestTimeout);
+        var closeEvent = await logs.WaitForCloseEventAsync(TestTimeout);
+        await requestCompleted.Task.WaitAsync(TestTimeout);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(closeEvent.GetValue(InvocationsWebSocketConstants.AttrSpanCloseCode), Is.EqualTo(1006));
+            Assert.That(logs.CloseEvents, Has.Count.EqualTo(1));
+            Assert.That(handler.TerminationCount, Is.EqualTo(1));
+        });
+    }
+
+    [Test]
+    public async Task HostedCloseFailureIsSecondaryAndDiagnosedExactlyOnce()
+    {
+        var closeException = new WebSocketException("close failed");
+        using var webSocket = new FailureInjectingWebSocket(
+            Encoding.UTF8.GetBytes("{"),
+            closeException: closeException);
+        var logs = new CapturingVoiceLogProvider();
+        var requestCompleted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        await using var app = BuildApp(
+            new TerminationCountingHandler(),
+            logs,
+            requestCompleted,
+            new TestWebSocketFeature(webSocket));
+        await app.StartAsync();
+
+        using var response = await app.GetTestClient().GetAsync("/invocations_ws").WaitAsync(TestTimeout);
+        var closeEvent = await logs.WaitForCloseEventAsync(TestTimeout);
+        await requestCompleted.Task.WaitAsync(TestTimeout);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That((int?)webSocket.SentCloseStatus, Is.EqualTo(1002));
+            Assert.That(closeEvent.GetValue(InvocationsWebSocketConstants.AttrSpanCloseCode), Is.EqualTo(1002));
+            Assert.That(closeEvent.GetValue(InvocationsWebSocketConstants.AttrSpanErrorCode), Is.EqualTo("protocol_error"));
+            Assert.That(logs.CloseEvents, Has.Count.EqualTo(1));
+            Assert.That(logs.ExceptionEntries.Count(entry => entry.Exception is VoiceProtocolException), Is.EqualTo(1));
+            Assert.That(logs.ExceptionEntries.Count(entry => ReferenceEquals(entry.Exception, closeException)), Is.EqualTo(1));
+        });
+    }
+
+    [Test]
+    public async Task HostedSendFailurePreserves1006TelemetryAndExceptionIdentity()
+    {
+        var sendException = new WebSocketException("send failed");
+        using var webSocket = new FailureInjectingWebSocket(
+            Encoding.UTF8.GetBytes("""
+                {"type":"session.start","id":"m_start","ts":"2026-08-13T00:00:00.000Z","protocol_version":"1.0","reconnect":false,"response_timeouts":{"first_output_ms":1,"idle_ms":2,"max_duration_ms":3}}
+                """),
+            sendException: sendException);
+        var logs = new CapturingVoiceLogProvider();
+        var requestCompleted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        await using var app = BuildApp(
+            new ImmediateReadinessHandler(),
+            logs,
+            requestCompleted,
+            new TestWebSocketFeature(webSocket));
+        await app.StartAsync();
+
+        using var response = await app.GetTestClient().GetAsync("/invocations_ws").WaitAsync(TestTimeout);
+        var closeEvent = await logs.WaitForCloseEventAsync(TestTimeout);
+        await requestCompleted.Task.WaitAsync(TestTimeout);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(webSocket.SentCloseStatus, Is.Null);
+            Assert.That(webSocket.AbortCount, Is.EqualTo(1));
+            Assert.That(closeEvent.GetValue(InvocationsWebSocketConstants.AttrSpanCloseCode), Is.EqualTo(1006));
+            Assert.That(closeEvent.State, Does.Not.ContainKey(InvocationsWebSocketConstants.AttrSpanErrorCode));
+            Assert.That(logs.CloseEvents, Has.Count.EqualTo(1));
+            Assert.That(logs.ExceptionEntries.Count(entry => ReferenceEquals(entry.Exception, sendException)), Is.EqualTo(1));
+        });
+    }
+
+    [Test]
+    public async Task HostedRequestCancellationPreserves1006WithoutErrorDiagnostic()
+    {
+        using var requestCancellation = new CancellationTokenSource();
+        using var webSocket = new FailureInjectingWebSocket(blockReceive: true);
+        var logs = new CapturingVoiceLogProvider();
+        var requestCompleted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        await using var app = BuildApp(
+            new TerminationCountingHandler(),
+            logs,
+            requestCompleted,
+            new TestWebSocketFeature(webSocket),
+            requestCancellation.Token);
+        await app.StartAsync();
+
+        var request = app.GetTestClient().GetAsync("/invocations_ws");
+        await webSocket.ReceiveStarted.Task.WaitAsync(TestTimeout);
+        await requestCancellation.CancelAsync();
+        using var response = await request.WaitAsync(TestTimeout);
+        var closeEvent = await logs.WaitForCloseEventAsync(TestTimeout);
+        await requestCompleted.Task.WaitAsync(TestTimeout);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(webSocket.AbortCount, Is.EqualTo(1));
+            Assert.That(closeEvent.GetValue(InvocationsWebSocketConstants.AttrSpanCloseCode), Is.EqualTo(1006));
+            Assert.That(closeEvent.State, Does.Not.ContainKey(InvocationsWebSocketConstants.AttrSpanErrorCode));
+            Assert.That(logs.CloseEvents, Has.Count.EqualTo(1));
+            Assert.That(logs.ExceptionEntries, Is.Empty);
+        });
+    }
+
+    [Test]
+    public async Task ProtocolFailureDoesNotLeakOutcomeToNextConnection()
+    {
+        var logs = new CapturingVoiceLogProvider();
+        var handler = new TerminationCountingHandler();
+        await using var app = BuildApp(handler, logs);
+        await app.StartAsync();
+
+        using (var first = await ConnectAsync(app))
+        {
+            await SendTextAsync(first, "{");
+            var buffer = new byte[64];
+            var close = await first.ReceiveAsync(buffer, CancellationToken.None).WaitAsync(TestTimeout);
+            Assert.That((int?)close.CloseStatus, Is.EqualTo(1002));
+        }
+        await logs.WaitForCloseEventCountAsync(1, TestTimeout);
+
+        using (var second = await ConnectAsync(app))
+        {
+            await second.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "done", CancellationToken.None);
+            var buffer = new byte[64];
+            var close = await second.ReceiveAsync(buffer, CancellationToken.None).WaitAsync(TestTimeout);
+            Assert.That((int?)close.CloseStatus, Is.EqualTo(1000));
+        }
+
+        await logs.WaitForCloseEventCountAsync(2, TestTimeout);
+        await app.StopAsync();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(
+                logs.CloseEvents.Select(entry => entry.GetValue(InvocationsWebSocketConstants.AttrSpanCloseCode)),
+                Is.EqualTo(new object?[] { 1002, 1000 }));
+            Assert.That(handler.TerminationCount, Is.EqualTo(2));
         });
     }
 
@@ -176,7 +404,12 @@ public class VoiceRelayEndToEndTests
         await webSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "done", CancellationToken.None);
     }
 
-    private static WebApplication BuildApp(VoiceHandler handler, ILoggerProvider? loggerProvider = null)
+    private static WebApplication BuildApp(
+        VoiceHandler handler,
+        ILoggerProvider? loggerProvider = null,
+        TaskCompletionSource? requestCompleted = null,
+        IHttpWebSocketFeature? webSocketFeature = null,
+        CancellationToken requestAborted = default)
     {
         var builder = WebApplication.CreateBuilder();
         builder.WebHost.UseTestServer();
@@ -190,6 +423,36 @@ public class VoiceRelayEndToEndTests
 
         var app = builder.Build();
         app.UseAgentServerCore();
+        if (webSocketFeature is not null)
+        {
+            app.Use(async (context, next) =>
+            {
+                context.Features.Set(webSocketFeature);
+                await next();
+            });
+        }
+        if (requestAborted.CanBeCanceled)
+        {
+            app.Use(async (context, next) =>
+            {
+                context.RequestAborted = requestAborted;
+                await next();
+            });
+        }
+        if (requestCompleted is not null)
+        {
+            app.Use(async (context, next) =>
+            {
+                try
+                {
+                    await next();
+                }
+                finally
+                {
+                    requestCompleted.TrySetResult();
+                }
+            });
+        }
         app.MapInvocationsServer();
         return app;
     }
@@ -339,13 +602,25 @@ public class VoiceRelayEndToEndTests
 
     private sealed class ThrowingTerminationHandler : VoiceHandler
     {
+        public InvalidOperationException Failure { get; } = new("cleanup failed");
+
         public int TerminationCount { get; private set; }
 
         protected override void OnConnectionTerminating(VoiceSession session)
         {
             TerminationCount++;
-            throw new InvalidOperationException("cleanup failed");
+            throw Failure;
         }
+    }
+
+    private sealed class ThrowingStartHandler : VoiceHandler
+    {
+        public InvalidOperationException Failure { get; } = new("callback failed");
+
+        protected override Task OnSessionStartAsync(
+            VoiceSession session,
+            VoiceSessionStartEvent start,
+            CancellationToken cancellationToken) => throw Failure;
     }
 
     private sealed class TerminationCountingHandler : VoiceHandler
@@ -399,6 +674,196 @@ public class VoiceRelayEndToEndTests
             VoiceSessionStartEvent start,
             CancellationToken cancellationToken) =>
             session.SendAsync(new VoiceSessionReadyMessage(), cancellationToken);
+    }
+
+    private sealed class CapturingVoiceLogProvider : ILoggerProvider
+    {
+        private readonly System.Collections.Concurrent.ConcurrentQueue<CapturedVoiceLogEntry> _entries = new();
+        private readonly TaskCompletionSource<CapturedVoiceLogEntry> _closeEvent =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+        private readonly TaskCompletionSource _secondCloseEvent =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+        private int _closeEventCount;
+
+        public IReadOnlyList<CapturedVoiceLogEntry> CloseEvents =>
+            _entries.Where(entry => entry.State.ContainsKey(InvocationsWebSocketConstants.AttrSpanCloseCode)).ToArray();
+
+        public IReadOnlyList<CapturedVoiceLogEntry> ExceptionEntries =>
+            _entries.Where(entry => entry.Exception is not null).ToArray();
+
+        public ILogger CreateLogger(string categoryName) => new CapturingVoiceLogger(this);
+
+        public Task<CapturedVoiceLogEntry> WaitForCloseEventAsync(TimeSpan timeout) =>
+            _closeEvent.Task.WaitAsync(timeout);
+
+        public Task WaitForCloseEventCountAsync(int count, TimeSpan timeout) => count switch
+        {
+            1 => _closeEvent.Task.WaitAsync(timeout),
+            2 => _secondCloseEvent.Task.WaitAsync(timeout),
+            _ => throw new ArgumentOutOfRangeException(nameof(count)),
+        };
+
+        public void Dispose()
+        {
+        }
+
+        private void Record(CapturedVoiceLogEntry entry)
+        {
+            _entries.Enqueue(entry);
+            if (entry.State.ContainsKey(InvocationsWebSocketConstants.AttrSpanCloseCode))
+            {
+                _closeEvent.TrySetResult(entry);
+                if (Interlocked.Increment(ref _closeEventCount) == 2)
+                {
+                    _secondCloseEvent.TrySetResult();
+                }
+            }
+        }
+
+        private sealed class CapturingVoiceLogger : ILogger
+        {
+            private readonly CapturingVoiceLogProvider _owner;
+
+            public CapturingVoiceLogger(CapturingVoiceLogProvider owner) => _owner = owner;
+
+            public IDisposable? BeginScope<TState>(TState state) where TState : notnull => null;
+
+            public bool IsEnabled(LogLevel logLevel) => true;
+
+            public void Log<TState>(
+                LogLevel logLevel,
+                EventId eventId,
+                TState state,
+                Exception? exception,
+                Func<TState, Exception?, string> formatter)
+            {
+                var fields = new Dictionary<string, object?>();
+                if (state is IEnumerable<KeyValuePair<string, object?>> pairs)
+                {
+                    foreach (var pair in pairs)
+                    {
+                        fields[pair.Key] = pair.Value;
+                    }
+                }
+                _owner.Record(new CapturedVoiceLogEntry(exception, fields));
+            }
+        }
+    }
+
+    private sealed record CapturedVoiceLogEntry(
+        Exception? Exception,
+        IReadOnlyDictionary<string, object?> State)
+    {
+        public object? GetValue(string key) => State.TryGetValue(key, out var value) ? value : null;
+    }
+
+    private sealed class TestWebSocketFeature : IHttpWebSocketFeature
+    {
+        private readonly WebSocket _webSocket;
+
+        public TestWebSocketFeature(WebSocket webSocket) => _webSocket = webSocket;
+
+        public bool IsWebSocketRequest => true;
+
+        public Task<WebSocket> AcceptAsync(WebSocketAcceptContext context) =>
+            Task.FromResult(_webSocket);
+    }
+
+    private sealed class FailureInjectingWebSocket : WebSocket
+    {
+        private readonly byte[]? _receivePayload;
+        private readonly Exception? _sendException;
+        private readonly Exception? _closeException;
+        private readonly bool _blockReceive;
+        private WebSocketState _state = WebSocketState.Open;
+        private bool _received;
+
+        public FailureInjectingWebSocket(
+            byte[]? receivePayload = null,
+            Exception? sendException = null,
+            Exception? closeException = null,
+            bool blockReceive = false)
+        {
+            _receivePayload = receivePayload;
+            _sendException = sendException;
+            _closeException = closeException;
+            _blockReceive = blockReceive;
+        }
+
+        public TaskCompletionSource ReceiveStarted { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public int AbortCount { get; private set; }
+
+        public WebSocketCloseStatus? SentCloseStatus { get; private set; }
+
+        public override WebSocketCloseStatus? CloseStatus => null;
+
+        public override string? CloseStatusDescription => null;
+
+        public override WebSocketState State => _state;
+
+        public override string? SubProtocol => null;
+
+        public override void Abort()
+        {
+            AbortCount++;
+            _state = WebSocketState.Aborted;
+        }
+
+        public override Task CloseAsync(
+            WebSocketCloseStatus closeStatus,
+            string? statusDescription,
+            CancellationToken cancellationToken) =>
+            CloseOutputAsync(closeStatus, statusDescription, cancellationToken);
+
+        public override Task CloseOutputAsync(
+            WebSocketCloseStatus closeStatus,
+            string? statusDescription,
+            CancellationToken cancellationToken)
+        {
+            SentCloseStatus = closeStatus;
+            if (_closeException is not null)
+            {
+                return Task.FromException(_closeException);
+            }
+            _state = WebSocketState.CloseSent;
+            return Task.CompletedTask;
+        }
+
+        public override async Task<WebSocketReceiveResult> ReceiveAsync(
+            ArraySegment<byte> buffer,
+            CancellationToken cancellationToken)
+        {
+            ReceiveStarted.TrySetResult();
+            if (_blockReceive)
+            {
+                await Task.Delay(Timeout.InfiniteTimeSpan, cancellationToken);
+            }
+            if (_received)
+            {
+                throw new InvalidOperationException("The terminal Voice frame must be read exactly once.");
+            }
+            _received = true;
+            if (_receivePayload is null)
+            {
+                throw new InvalidOperationException("No receive payload was configured.");
+            }
+            _receivePayload.AsSpan().CopyTo(buffer.AsSpan());
+            return new WebSocketReceiveResult(
+                count: _receivePayload.Length,
+                WebSocketMessageType.Text,
+                endOfMessage: true);
+        }
+
+        public override Task SendAsync(
+            ArraySegment<byte> buffer,
+            WebSocketMessageType messageType,
+            bool endOfMessage,
+            CancellationToken cancellationToken) =>
+            _sendException is null ? Task.CompletedTask : Task.FromException(_sendException);
+
+        public override void Dispose() => _state = WebSocketState.Closed;
     }
 
     private sealed class ThrowingCloseLogProvider : ILoggerProvider
