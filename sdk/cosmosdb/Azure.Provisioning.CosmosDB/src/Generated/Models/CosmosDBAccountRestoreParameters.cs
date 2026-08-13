@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.CosmosDB
@@ -13,6 +14,8 @@ namespace Azure.Provisioning.CosmosDB
     public partial class CosmosDBAccountRestoreParameters : RestoreParametersBase
     {
         private BicepValue<CosmosDBAccountRestoreMode> _restoreMode;
+        private BicepValue<string> _restoreSource;
+        private BicepValue<DateTimeOffset> _restoreTimestampInUtc;
         private BicepList<DatabaseRestoreResourceInfo> _databasesToRestore;
         private BicepList<GremlinDatabaseRestoreResourceInfo> _gremlinDatabasesToRestore;
         private BicepList<string> _tablesToRestore;
@@ -35,6 +38,36 @@ namespace Azure.Provisioning.CosmosDB
             {
                 Initialize();
                 _restoreMode.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the RestoreSource. </summary>
+        public new BicepValue<string> RestoreSource
+        {
+            get
+            {
+                Initialize();
+                return _restoreSource;
+            }
+            set
+            {
+                Initialize();
+                _restoreSource.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the RestoreTimestampInUtc. </summary>
+        public new BicepValue<DateTimeOffset> RestoreTimestampInUtc
+        {
+            get
+            {
+                Initialize();
+                return _restoreTimestampInUtc;
+            }
+            set
+            {
+                Initialize();
+                _restoreTimestampInUtc.Assign(value);
             }
         }
 
@@ -103,6 +136,8 @@ namespace Azure.Provisioning.CosmosDB
         {
             base.DefineProvisionableProperties();
             _restoreMode = DefineProperty<CosmosDBAccountRestoreMode>(nameof(RestoreMode), new string[] { "restoreMode" });
+            _restoreSource = DefineProperty<string>(nameof(RestoreSource), new string[] { "restoreSource" });
+            _restoreTimestampInUtc = DefineProperty<DateTimeOffset>(nameof(RestoreTimestampInUtc), new string[] { "restoreTimestampInUtc" }, format: "O");
             _databasesToRestore = DefineListProperty<DatabaseRestoreResourceInfo>(nameof(DatabasesToRestore), new string[] { "databasesToRestore" });
             _gremlinDatabasesToRestore = DefineListProperty<GremlinDatabaseRestoreResourceInfo>(nameof(GremlinDatabasesToRestore), new string[] { "gremlinDatabasesToRestore" });
             _tablesToRestore = DefineListProperty<string>(nameof(TablesToRestore), new string[] { "tablesToRestore" });

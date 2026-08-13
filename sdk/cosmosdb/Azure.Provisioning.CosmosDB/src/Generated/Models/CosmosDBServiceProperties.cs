@@ -13,7 +13,7 @@ namespace Azure.Provisioning.CosmosDB
 {
     /// <summary>
     /// Services response resource.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataTransferServiceProperties"/>, <see cref="SqlDedicatedGatewayServiceProperties"/>, <see cref="GraphApiComputeServiceProperties"/>, and <see cref="MaterializedViewsBuilderServiceProperties"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="DataTransferServiceProperties"/>, <see cref="SqlDedicatedGatewayServiceProperties"/>, <see cref="GraphApiComputeServiceProperties"/>, and <see cref="MaterializedViewsBuilderServiceProperties"/>.
     /// </summary>
     public partial class CosmosDBServiceProperties : ProvisionableConstruct
     {
