@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             }
             string id = default;
             string displayName = default;
-            EntityType? entityType = default;
+            CommvaultEntityType? entityType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    entityType = new EntityType(prop.Value.GetString());
+                    entityType = new CommvaultEntityType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="displayName"> The display name of the Entra entity. </param>
         /// <param name="entityType"> The type of entity - user or group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommvaultEntityInfo(string id, string displayName, EntityType? entityType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommvaultEntityInfo(string id, string displayName, CommvaultEntityType? entityType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             DisplayName = displayName;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public string DisplayName { get; set; }
 
         /// <summary> The type of entity - user or group. </summary>
-        public EntityType? EntityType { get; set; }
+        public CommvaultEntityType? EntityType { get; set; }
     }
 }

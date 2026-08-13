@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="location"> Location of the Commvault Plan. </param>
         /// <param name="storagePlans"> The storage plans associated with the Commvault Plan. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storagePlans"/> is null. </exception>
-        public CommvaultPlanProperties(AzureLocation location, IEnumerable<StoragePlan> storagePlans)
+        public CommvaultPlanProperties(AzureLocation location, IEnumerable<CommvaultStoragePlan> storagePlans)
         {
             Argument.AssertNotNull(storagePlans, nameof(storagePlans));
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="retention"> The Commvault Plan Retention. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommvaultPlanProperties(AzureLocation location, IList<StoragePlan> storagePlans, IList<CommvaultBackupSchedule> schedules, Retention retention, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommvaultPlanProperties(AzureLocation location, IList<CommvaultStoragePlan> storagePlans, IList<CommvaultBackupSchedule> schedules, Retention retention, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             StoragePlans = storagePlans;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public AzureLocation Location { get; set; }
 
         /// <summary> The storage plans associated with the Commvault Plan. </summary>
-        public IList<StoragePlan> StoragePlans { get; }
+        public IList<CommvaultStoragePlan> StoragePlans { get; }
 
         /// <summary> The Commvault Plan Schedule. </summary>
         public IList<CommvaultBackupSchedule> Schedules { get; }

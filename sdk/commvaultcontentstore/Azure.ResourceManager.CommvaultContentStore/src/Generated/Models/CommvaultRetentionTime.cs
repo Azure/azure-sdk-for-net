@@ -12,7 +12,7 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The retention time for Commvault Plan. </summary>
-    public readonly partial struct RetentionTime : IEquatable<RetentionTime>
+    public readonly partial struct CommvaultRetentionTime : IEquatable<CommvaultRetentionTime>
     {
         private readonly string _value;
         /// <summary> Monthly retention time. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <summary> Yearly retention time. </summary>
         private const string YearlyValue = "yearly";
 
-        /// <summary> Initializes a new instance of <see cref="RetentionTime"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultRetentionTime"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RetentionTime(string value)
+        public CommvaultRetentionTime(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> Monthly retention time. </summary>
-        public static RetentionTime Monthly { get; } = new RetentionTime(MonthlyValue);
+        public static CommvaultRetentionTime Monthly { get; } = new CommvaultRetentionTime(MonthlyValue);
 
         /// <summary> Yearly retention time. </summary>
-        public static RetentionTime Yearly { get; } = new RetentionTime(YearlyValue);
+        public static CommvaultRetentionTime Yearly { get; } = new CommvaultRetentionTime(YearlyValue);
 
-        /// <summary> Determines if two <see cref="RetentionTime"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="CommvaultRetentionTime"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(RetentionTime left, RetentionTime right) => left.Equals(right);
+        public static bool operator ==(CommvaultRetentionTime left, CommvaultRetentionTime right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RetentionTime"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="CommvaultRetentionTime"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(RetentionTime left, RetentionTime right) => !left.Equals(right);
+        public static bool operator !=(CommvaultRetentionTime left, CommvaultRetentionTime right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RetentionTime"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CommvaultRetentionTime"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RetentionTime(string value) => new RetentionTime(value);
+        public static implicit operator CommvaultRetentionTime(string value) => new CommvaultRetentionTime(value);
 
-        /// <summary> Converts a string to a <see cref="RetentionTime"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CommvaultRetentionTime"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RetentionTime?(string value) => value == null ? null : new RetentionTime(value);
+        public static implicit operator CommvaultRetentionTime?(string value) => value == null ? null : new CommvaultRetentionTime(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RetentionTime other && Equals(other);
+        public override bool Equals(object obj) => obj is CommvaultRetentionTime other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(RetentionTime other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CommvaultRetentionTime other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

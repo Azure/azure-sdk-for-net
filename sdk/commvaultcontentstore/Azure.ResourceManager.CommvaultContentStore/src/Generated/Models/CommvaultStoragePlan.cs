@@ -12,15 +12,15 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The properties of Commvault Storage Plan. </summary>
-    public partial class StoragePlan
+    public partial class CommvaultStoragePlan
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StoragePlan"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultStoragePlan"/>. </summary>
         /// <param name="name"> The name of the Storage resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public StoragePlan(string name)
+        public CommvaultStoragePlan(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             ExtendedRetention = new ChangeTrackingList<ExtendedRetentionTime>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StoragePlan"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultStoragePlan"/>. </summary>
         /// <param name="name"> The name of the Storage resource. </param>
         /// <param name="storagePoolId"> Id of the Storage Pool. </param>
         /// <param name="copyName"> Copy Name from Commvault. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="backupRuleType"> Backup Rule Type. </param>
         /// <param name="extendedRetention"> Extended Retention Policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StoragePlan(string name, string storagePoolId, string copyName, int? copyPrecedence, int? retentionPeriod, RetentionTime? retentionTime, BackupRuleType? backupRuleType, IList<ExtendedRetentionTime> extendedRetention, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommvaultStoragePlan(string name, string storagePoolId, string copyName, int? copyPrecedence, int? retentionPeriod, CommvaultRetentionTime? retentionTime, BackupRuleType? backupRuleType, IList<ExtendedRetentionTime> extendedRetention, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             StoragePoolId = storagePoolId;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public int? RetentionPeriod { get; set; }
 
         /// <summary> Indicates the retention timeframe valid only if the type of retention chosen in CUSTOM. </summary>
-        public RetentionTime? RetentionTime { get; set; }
+        public CommvaultRetentionTime? RetentionTime { get; set; }
 
         /// <summary> Backup Rule Type. </summary>
         public BackupRuleType? BackupRuleType { get; set; }

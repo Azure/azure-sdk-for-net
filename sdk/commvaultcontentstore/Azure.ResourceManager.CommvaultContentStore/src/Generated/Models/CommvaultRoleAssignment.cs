@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="roleName"> The name of the Commvault role. </param>
         /// <param name="entities"> The Entra entities (users or groups) assigned to this role. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommvaultRoleAssignment(RoleName? roleName, IList<CommvaultEntityInfo> entities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommvaultRoleAssignment(CommvaultRoleName? roleName, IList<CommvaultEntityInfo> entities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RoleName = roleName;
             Entities = entities;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> The name of the Commvault role. </summary>
-        public RoleName? RoleName { get; set; }
+        public CommvaultRoleName? RoleName { get; set; }
 
         /// <summary> The Entra entities (users or groups) assigned to this role. </summary>
         public IList<CommvaultEntityInfo> Entities { get; }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="retentionPeriod"> Retention period for Extended Retention. </param>
         /// <param name="backupRuleType"> Backup Rule Type for Extended Retention. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtendedRetentionTime(RetentionTime? retentionTime, int? retentionPeriod, BackupRuleType? backupRuleType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExtendedRetentionTime(CommvaultRetentionTime? retentionTime, int? retentionPeriod, BackupRuleType? backupRuleType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RetentionTime = retentionTime;
             RetentionPeriod = retentionPeriod;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> Retention time for Extended Retention. </summary>
-        public RetentionTime? RetentionTime { get; set; }
+        public CommvaultRetentionTime? RetentionTime { get; set; }
 
         /// <summary> Retention period for Extended Retention. </summary>
         public int? RetentionPeriod { get; set; }

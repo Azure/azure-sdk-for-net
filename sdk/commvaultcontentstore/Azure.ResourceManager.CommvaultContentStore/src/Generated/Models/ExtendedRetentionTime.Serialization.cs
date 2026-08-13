@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 return null;
             }
-            RetentionTime? retentionTime = default;
+            CommvaultRetentionTime? retentionTime = default;
             int? retentionPeriod = default;
             BackupRuleType? backupRuleType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    retentionTime = new RetentionTime(prop.Value.GetString());
+                    retentionTime = new CommvaultRetentionTime(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("retentionPeriod"u8))

@@ -12,16 +12,16 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> Vendor of Commvault Storage. </summary>
-    public readonly partial struct Vendor : IEquatable<Vendor>
+    public readonly partial struct CommvaultVendor : IEquatable<CommvaultVendor>
     {
         private readonly string _value;
         /// <summary> Azure Blob Storage. </summary>
         private const string AzureBlobStorageValue = "Azure_Blob_Storage";
 
-        /// <summary> Initializes a new instance of <see cref="Vendor"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultVendor"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Vendor(string value)
+        public CommvaultVendor(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> Azure Blob Storage. </summary>
-        public static Vendor AzureBlobStorage { get; } = new Vendor(AzureBlobStorageValue);
+        public static CommvaultVendor AzureBlobStorage { get; } = new CommvaultVendor(AzureBlobStorageValue);
 
-        /// <summary> Determines if two <see cref="Vendor"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="CommvaultVendor"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(Vendor left, Vendor right) => left.Equals(right);
+        public static bool operator ==(CommvaultVendor left, CommvaultVendor right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Vendor"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="CommvaultVendor"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(Vendor left, Vendor right) => !left.Equals(right);
+        public static bool operator !=(CommvaultVendor left, CommvaultVendor right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Vendor"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CommvaultVendor"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Vendor(string value) => new Vendor(value);
+        public static implicit operator CommvaultVendor(string value) => new CommvaultVendor(value);
 
-        /// <summary> Converts a string to a <see cref="Vendor"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CommvaultVendor"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Vendor?(string value) => value == null ? null : new Vendor(value);
+        public static implicit operator CommvaultVendor?(string value) => value == null ? null : new CommvaultVendor(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Vendor other && Equals(other);
+        public override bool Equals(object obj) => obj is CommvaultVendor other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Vendor other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CommvaultVendor other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -12,7 +12,7 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The type of the entity. </summary>
-    public readonly partial struct EntityType : IEquatable<EntityType>
+    public readonly partial struct CommvaultEntityType : IEquatable<CommvaultEntityType>
     {
         private readonly string _value;
         /// <summary> The entity is an Entra user. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <summary> The entity is an Entra security group. </summary>
         private const string GroupValue = "Group";
 
-        /// <summary> Initializes a new instance of <see cref="EntityType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultEntityType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EntityType(string value)
+        public CommvaultEntityType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> The entity is an Entra user. </summary>
-        public static EntityType User { get; } = new EntityType(UserValue);
+        public static CommvaultEntityType User { get; } = new CommvaultEntityType(UserValue);
 
         /// <summary> The entity is an Entra security group. </summary>
-        public static EntityType Group { get; } = new EntityType(GroupValue);
+        public static CommvaultEntityType Group { get; } = new CommvaultEntityType(GroupValue);
 
-        /// <summary> Determines if two <see cref="EntityType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="CommvaultEntityType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(EntityType left, EntityType right) => left.Equals(right);
+        public static bool operator ==(CommvaultEntityType left, CommvaultEntityType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="EntityType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="CommvaultEntityType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(EntityType left, EntityType right) => !left.Equals(right);
+        public static bool operator !=(CommvaultEntityType left, CommvaultEntityType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="EntityType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CommvaultEntityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EntityType(string value) => new EntityType(value);
+        public static implicit operator CommvaultEntityType(string value) => new CommvaultEntityType(value);
 
-        /// <summary> Converts a string to a <see cref="EntityType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CommvaultEntityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EntityType?(string value) => value == null ? null : new EntityType(value);
+        public static implicit operator CommvaultEntityType?(string value) => value == null ? null : new CommvaultEntityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EntityType other && Equals(other);
+        public override bool Equals(object obj) => obj is CommvaultEntityType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(EntityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CommvaultEntityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

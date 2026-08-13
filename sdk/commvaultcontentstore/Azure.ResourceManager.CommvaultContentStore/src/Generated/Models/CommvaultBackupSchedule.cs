@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="time"> Time of Retention. </param>
         /// <param name="timeZone"> Time Zone. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommvaultBackupSchedule(CommvaultBackupType backupType, Frequency? frequency, int? runsEvery, WeekOfMonth? weekOfMonth, CommvaultDayOfWeek? dayOfWeek, MonthOfYear? monthOfYear, int? dayOfMonth, IList<WeeklyDays> weeklyDays, string time, string timeZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommvaultBackupSchedule(CommvaultBackupType backupType, CommvaultBackupFrequency? frequency, int? runsEvery, WeekOfMonth? weekOfMonth, CommvaultDayOfWeek? dayOfWeek, MonthOfYear? monthOfYear, int? dayOfMonth, IList<WeeklyDays> weeklyDays, string time, string timeZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackupType = backupType;
             Frequency = frequency;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public CommvaultBackupType BackupType { get; set; }
 
         /// <summary> Frequency of Retention. </summary>
-        public Frequency? Frequency { get; set; }
+        public CommvaultBackupFrequency? Frequency { get; set; }
 
         /// <summary> Interval of Retention. </summary>
         public int? RunsEvery { get; set; }

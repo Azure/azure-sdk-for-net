@@ -12,7 +12,7 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> Types of Restore Supported. </summary>
-    public readonly partial struct RestoreType : IEquatable<RestoreType>
+    public readonly partial struct CommvaultRestoreType : IEquatable<CommvaultRestoreType>
     {
         private readonly string _value;
         /// <summary> Azure In place Restore. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <summary> Azure Attach disk restore to existing VM. </summary>
         private const string DiskAttachValue = "DISK_ATTACH";
 
-        /// <summary> Initializes a new instance of <see cref="RestoreType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultRestoreType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RestoreType(string value)
+        public CommvaultRestoreType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> Azure In place Restore. </summary>
-        public static RestoreType None { get; } = new RestoreType(NoneValue);
+        public static CommvaultRestoreType None { get; } = new CommvaultRestoreType(NoneValue);
 
         /// <summary> Azure Out of Place. </summary>
-        public static RestoreType VirtualMachine { get; } = new RestoreType(VirtualMachineValue);
+        public static CommvaultRestoreType VirtualMachine { get; } = new CommvaultRestoreType(VirtualMachineValue);
 
         /// <summary> Azure Attach disk restore to existing VM. </summary>
-        public static RestoreType DiskAttach { get; } = new RestoreType(DiskAttachValue);
+        public static CommvaultRestoreType DiskAttach { get; } = new CommvaultRestoreType(DiskAttachValue);
 
-        /// <summary> Determines if two <see cref="RestoreType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="CommvaultRestoreType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(RestoreType left, RestoreType right) => left.Equals(right);
+        public static bool operator ==(CommvaultRestoreType left, CommvaultRestoreType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RestoreType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="CommvaultRestoreType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(RestoreType left, RestoreType right) => !left.Equals(right);
+        public static bool operator !=(CommvaultRestoreType left, CommvaultRestoreType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RestoreType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CommvaultRestoreType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RestoreType(string value) => new RestoreType(value);
+        public static implicit operator CommvaultRestoreType(string value) => new CommvaultRestoreType(value);
 
-        /// <summary> Converts a string to a <see cref="RestoreType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CommvaultRestoreType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RestoreType?(string value) => value == null ? null : new RestoreType(value);
+        public static implicit operator CommvaultRestoreType?(string value) => value == null ? null : new CommvaultRestoreType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RestoreType other && Equals(other);
+        public override bool Equals(object obj) => obj is CommvaultRestoreType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(RestoreType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CommvaultRestoreType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

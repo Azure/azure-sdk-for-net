@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 return null;
             }
             CommvaultBackupType backupType = default;
-            Frequency? frequency = default;
+            CommvaultBackupFrequency? frequency = default;
             int? runsEvery = default;
             WeekOfMonth? weekOfMonth = default;
             CommvaultDayOfWeek? dayOfWeek = default;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    frequency = new Frequency(prop.Value.GetString());
+                    frequency = new CommvaultBackupFrequency(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("runsEvery"u8))

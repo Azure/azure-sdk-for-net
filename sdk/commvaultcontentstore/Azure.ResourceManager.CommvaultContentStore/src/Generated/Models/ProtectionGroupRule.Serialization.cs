@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 return null;
             }
-            RuleProperty @property = default;
+            ProtectionGroupRuleProperty @property = default;
             CommvaultMatchOperator @operator = default;
             string value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 if (prop.NameEquals("property"u8))
                 {
-                    @property = new RuleProperty(prop.Value.GetString());
+                    @property = new ProtectionGroupRuleProperty(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("operator"u8))

@@ -12,7 +12,7 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> Class of Commvault Storage. </summary>
-    public readonly partial struct StorageClassType : IEquatable<StorageClassType>
+    public readonly partial struct CommvaultStorageClassType : IEquatable<CommvaultStorageClassType>
     {
         private readonly string _value;
         /// <summary> Cold storage class. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <summary> Hot storage class. </summary>
         private const string HotValue = "HOT";
 
-        /// <summary> Initializes a new instance of <see cref="StorageClassType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultStorageClassType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageClassType(string value)
+        public CommvaultStorageClassType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> Cold storage class. </summary>
-        public static StorageClassType Cool { get; } = new StorageClassType(CoolValue);
+        public static CommvaultStorageClassType Cool { get; } = new CommvaultStorageClassType(CoolValue);
 
         /// <summary> Hot storage class. </summary>
-        public static StorageClassType Hot { get; } = new StorageClassType(HotValue);
+        public static CommvaultStorageClassType Hot { get; } = new CommvaultStorageClassType(HotValue);
 
-        /// <summary> Determines if two <see cref="StorageClassType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="CommvaultStorageClassType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(StorageClassType left, StorageClassType right) => left.Equals(right);
+        public static bool operator ==(CommvaultStorageClassType left, CommvaultStorageClassType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="StorageClassType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="CommvaultStorageClassType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(StorageClassType left, StorageClassType right) => !left.Equals(right);
+        public static bool operator !=(CommvaultStorageClassType left, CommvaultStorageClassType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="StorageClassType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CommvaultStorageClassType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageClassType(string value) => new StorageClassType(value);
+        public static implicit operator CommvaultStorageClassType(string value) => new CommvaultStorageClassType(value);
 
-        /// <summary> Converts a string to a <see cref="StorageClassType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CommvaultStorageClassType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageClassType?(string value) => value == null ? null : new StorageClassType(value);
+        public static implicit operator CommvaultStorageClassType?(string value) => value == null ? null : new CommvaultStorageClassType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is StorageClassType other && Equals(other);
+        public override bool Equals(object obj) => obj is CommvaultStorageClassType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(StorageClassType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CommvaultStorageClassType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

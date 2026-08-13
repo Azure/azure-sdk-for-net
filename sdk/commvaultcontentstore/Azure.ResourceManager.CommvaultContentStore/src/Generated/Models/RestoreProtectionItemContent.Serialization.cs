@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 return null;
             }
             bool isInPlaceRestore = default;
-            RestoreType? restoreType = default;
+            CommvaultRestoreType? restoreType = default;
             string toTime = default;
             VmDestinationInfo vmDestinationInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    restoreType = new RestoreType(prop.Value.GetString());
+                    restoreType = new CommvaultRestoreType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("toTime"u8))

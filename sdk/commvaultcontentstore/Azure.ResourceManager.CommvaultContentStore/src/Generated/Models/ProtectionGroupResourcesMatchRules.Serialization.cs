@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 return null;
             }
             IList<ProtectionGroupRule> rules = default;
-            MatchType matchType = default;
+            ProtectionGroupMatchType matchType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("matchType"u8))
                 {
-                    matchType = new MatchType(prop.Value.GetString());
+                    matchType = new ProtectionGroupMatchType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -12,17 +12,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The properties of Commvault Storage. </summary>
-    public partial class StorageProperties
+    public partial class CommvaultStorageProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StorageProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultStorageProperties"/>. </summary>
         /// <param name="location"> Location of the Commvault Storage. </param>
         /// <param name="storageType"> The type of Commvault Storage. </param>
         /// <param name="vendor"> The vendor of Commvault Storage. </param>
         /// <param name="class"> The class of Commvault Storage. </param>
-        public StorageProperties(AzureLocation location, StorageType storageType, Vendor vendor, StorageClassType @class)
+        public CommvaultStorageProperties(AzureLocation location, CommvaultStorageType storageType, CommvaultVendor vendor, CommvaultStorageClassType @class)
         {
             Location = location;
             StorageType = storageType;
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             Class = @class;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultStorageProperties"/>. </summary>
         /// <param name="location"> Location of the Commvault Storage. </param>
         /// <param name="storageType"> The type of Commvault Storage. </param>
         /// <param name="vendor"> The vendor of Commvault Storage. </param>
         /// <param name="class"> The class of Commvault Storage. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageProperties(AzureLocation location, StorageType storageType, Vendor vendor, StorageClassType @class, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommvaultStorageProperties(AzureLocation location, CommvaultStorageType storageType, CommvaultVendor vendor, CommvaultStorageClassType @class, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             StorageType = storageType;
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public AzureLocation Location { get; set; }
 
         /// <summary> The type of Commvault Storage. </summary>
-        public StorageType StorageType { get; set; }
+        public CommvaultStorageType StorageType { get; set; }
 
         /// <summary> The vendor of Commvault Storage. </summary>
-        public Vendor Vendor { get; set; }
+        public CommvaultVendor Vendor { get; set; }
 
         /// <summary> The class of Commvault Storage. </summary>
-        public StorageClassType Class { get; set; }
+        public CommvaultStorageClassType Class { get; set; }
 
         /// <summary> Provisioning state of the resource. </summary>
         public ResourceProvisioningState? ProvisioningState { get; }

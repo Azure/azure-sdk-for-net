@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="displayName"> The display name of the Entra entity. </param>
         /// <param name="entityType"> The type of entity - user or group. </param>
         /// <returns> A new <see cref="Models.CommvaultEntityInfo"/> instance for mocking. </returns>
-        public static CommvaultEntityInfo CommvaultEntityInfo(string id = default, string displayName = default, EntityType? entityType = default)
+        public static CommvaultEntityInfo CommvaultEntityInfo(string id = default, string displayName = default, CommvaultEntityType? entityType = default)
         {
             return new CommvaultEntityInfo(id, displayName, entityType, default);
         }
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="CommvaultContentStore.CommvaultStorageData"/> instance for mocking. </returns>
-        public static CommvaultStorageData CommvaultStorageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StorageProperties properties = default)
+        public static CommvaultStorageData CommvaultStorageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CommvaultStorageProperties properties = default)
         {
             return new CommvaultStorageData(
                 id,
@@ -197,10 +197,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="vendor"> The vendor of Commvault Storage. </param>
         /// <param name="class"> The class of Commvault Storage. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Models.StorageProperties"/> instance for mocking. </returns>
-        public static StorageProperties StorageProperties(AzureLocation location = default, StorageType storageType = default, Vendor vendor = default, StorageClassType @class = default, ResourceProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.CommvaultStorageProperties"/> instance for mocking. </returns>
+        public static CommvaultStorageProperties CommvaultStorageProperties(AzureLocation location = default, CommvaultStorageType storageType = default, CommvaultVendor vendor = default, CommvaultStorageClassType @class = default, ResourceProvisioningState? provisioningState = default)
         {
-            return new StorageProperties(
+            return new CommvaultStorageProperties(
                 location,
                 storageType,
                 vendor,
@@ -232,14 +232,14 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="retentionNumberOfSnapshots"> Number of Snapshots. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.CommvaultPlanProperties"/> instance for mocking. </returns>
-        public static CommvaultPlanProperties CommvaultPlanProperties(AzureLocation location = default, IEnumerable<StoragePlan> storagePlans = default, IEnumerable<CommvaultBackupSchedule> schedules = default, int? retentionNumberOfSnapshots = default, ResourceProvisioningState? provisioningState = default)
+        public static CommvaultPlanProperties CommvaultPlanProperties(AzureLocation location = default, IEnumerable<CommvaultStoragePlan> storagePlans = default, IEnumerable<CommvaultBackupSchedule> schedules = default, int? retentionNumberOfSnapshots = default, ResourceProvisioningState? provisioningState = default)
         {
-            storagePlans ??= new ChangeTrackingList<StoragePlan>();
+            storagePlans ??= new ChangeTrackingList<CommvaultStoragePlan>();
             schedules ??= new ChangeTrackingList<CommvaultBackupSchedule>();
 
             return new CommvaultPlanProperties(
                 location,
-                (storagePlans ?? new ChangeTrackingList<StoragePlan>()).ToList(),
+                (storagePlans ?? new ChangeTrackingList<CommvaultStoragePlan>()).ToList(),
                 (schedules ?? new ChangeTrackingList<CommvaultBackupSchedule>()).ToList(),
                 retentionNumberOfSnapshots is null ? default : new Retention(retentionNumberOfSnapshots, default),
                 provisioningState,
@@ -254,12 +254,12 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="retentionTime"> Indicates the retention timeframe valid only if the type of retention chosen in CUSTOM. </param>
         /// <param name="backupRuleType"> Backup Rule Type. </param>
         /// <param name="extendedRetention"> Extended Retention Policy. </param>
-        /// <returns> A new <see cref="Models.StoragePlan"/> instance for mocking. </returns>
-        public static StoragePlan StoragePlan(string name = default, string storagePoolId = default, string copyName = default, int? copyPrecedence = default, int? retentionPeriod = default, RetentionTime? retentionTime = default, BackupRuleType? backupRuleType = default, IEnumerable<ExtendedRetentionTime> extendedRetention = default)
+        /// <returns> A new <see cref="Models.CommvaultStoragePlan"/> instance for mocking. </returns>
+        public static CommvaultStoragePlan CommvaultStoragePlan(string name = default, string storagePoolId = default, string copyName = default, int? copyPrecedence = default, int? retentionPeriod = default, CommvaultRetentionTime? retentionTime = default, BackupRuleType? backupRuleType = default, IEnumerable<ExtendedRetentionTime> extendedRetention = default)
         {
             extendedRetention ??= new ChangeTrackingList<ExtendedRetentionTime>();
 
-            return new StoragePlan(
+            return new CommvaultStoragePlan(
                 name,
                 storagePoolId,
                 copyName,
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="retentionPeriod"> Retention period for Extended Retention. </param>
         /// <param name="backupRuleType"> Backup Rule Type for Extended Retention. </param>
         /// <returns> A new <see cref="Models.ExtendedRetentionTime"/> instance for mocking. </returns>
-        public static ExtendedRetentionTime ExtendedRetentionTime(RetentionTime? retentionTime = default, int? retentionPeriod = default, BackupRuleType? backupRuleType = default)
+        public static ExtendedRetentionTime ExtendedRetentionTime(CommvaultRetentionTime? retentionTime = default, int? retentionPeriod = default, BackupRuleType? backupRuleType = default)
         {
             return new ExtendedRetentionTime(retentionTime, retentionPeriod, backupRuleType, default);
         }
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="time"> Time of Retention. </param>
         /// <param name="timeZone"> Time Zone. </param>
         /// <returns> A new <see cref="Models.CommvaultBackupSchedule"/> instance for mocking. </returns>
-        public static CommvaultBackupSchedule CommvaultBackupSchedule(CommvaultBackupType backupType = default, Frequency? frequency = default, int? runsEvery = default, WeekOfMonth? weekOfMonth = default, CommvaultDayOfWeek? dayOfWeek = default, MonthOfYear? monthOfYear = default, int? dayOfMonth = default, IEnumerable<WeeklyDays> weeklyDays = default, string time = default, string timeZone = default)
+        public static CommvaultBackupSchedule CommvaultBackupSchedule(CommvaultBackupType backupType = default, CommvaultBackupFrequency? frequency = default, int? runsEvery = default, WeekOfMonth? weekOfMonth = default, CommvaultDayOfWeek? dayOfWeek = default, MonthOfYear? monthOfYear = default, int? dayOfMonth = default, IEnumerable<WeeklyDays> weeklyDays = default, string time = default, string timeZone = default)
         {
             weeklyDays ??= new ChangeTrackingList<WeeklyDays>();
 
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="backupActivityStatus"> The backup activity status indicating if backup is enabled or not on the protection group. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.ProtectionGroupProperties"/> instance for mocking. </returns>
-        public static ProtectionGroupProperties ProtectionGroupProperties(string plan = default, ProtectionGroupResources resources = default, ProtectionStatus? protectionStatus = default, int? numberOfProtectedItems = default, long? lastBackUpTime = default, string backupActivityStatus = default, ResourceProvisioningState? provisioningState = default)
+        public static ProtectionGroupProperties ProtectionGroupProperties(string plan = default, ProtectionGroupResources resources = default, CommvaultProtectionStatus? protectionStatus = default, int? numberOfProtectedItems = default, long? lastBackUpTime = default, string backupActivityStatus = default, ResourceProvisioningState? provisioningState = default)
         {
             return new ProtectionGroupProperties(
                 default,
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="rules"> rules to match. </param>
         /// <param name="matchType"> match Type all or any. </param>
         /// <returns> A new <see cref="Models.ProtectionGroupResourcesMatchRules"/> instance for mocking. </returns>
-        public static ProtectionGroupResourcesMatchRules ProtectionGroupResourcesMatchRules(IEnumerable<ProtectionGroupRule> rules = default, MatchType matchType = default)
+        public static ProtectionGroupResourcesMatchRules ProtectionGroupResourcesMatchRules(IEnumerable<ProtectionGroupRule> rules = default, ProtectionGroupMatchType matchType = default)
         {
             rules ??= new ChangeTrackingList<ProtectionGroupRule>();
 
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="operator"> property of the rule. </param>
         /// <param name="value"> property of the rule. </param>
         /// <returns> A new <see cref="Models.ProtectionGroupRule"/> instance for mocking. </returns>
-        public static ProtectionGroupRule ProtectionGroupRule(RuleProperty @property = default, CommvaultMatchOperator @operator = default, string value = default)
+        public static ProtectionGroupRule ProtectionGroupRule(ProtectionGroupRuleProperty @property = default, CommvaultMatchOperator @operator = default, string value = default)
         {
             return new ProtectionGroupRule(@property, @operator, value, default);
         }
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="vmInfoList"> List of information on VMs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmInfoList"/> is null. </exception>
         /// <returns> A new <see cref="Models.RestoreProtectionItemContent"/> instance for mocking. </returns>
-        public static RestoreProtectionItemContent RestoreProtectionItemContent(bool isInPlaceRestore = default, RestoreType? restoreType = default, string toTime = default, IEnumerable<VmInfo> vmInfoList = default)
+        public static RestoreProtectionItemContent RestoreProtectionItemContent(bool isInPlaceRestore = default, CommvaultRestoreType? restoreType = default, string toTime = default, IEnumerable<VmInfo> vmInfoList = default)
         {
             return new RestoreProtectionItemContent(isInPlaceRestore, restoreType, toTime, vmInfoList is null ? default : new VmDestinationInfo((vmInfoList ?? new ChangeTrackingList<VmInfo>()).ToList(), default), default);
         }
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="roleName"> The name of the Commvault role. </param>
         /// <param name="entities"> The Entra entities (users or groups) assigned to this role. </param>
         /// <returns> A new <see cref="Models.CommvaultRoleAssignment"/> instance for mocking. </returns>
-        public static CommvaultRoleAssignment CommvaultRoleAssignment(RoleName? roleName = default, IEnumerable<CommvaultEntityInfo> entities = default)
+        public static CommvaultRoleAssignment CommvaultRoleAssignment(CommvaultRoleName? roleName = default, IEnumerable<CommvaultEntityInfo> entities = default)
         {
             entities ??= new ChangeTrackingList<CommvaultEntityInfo>();
 

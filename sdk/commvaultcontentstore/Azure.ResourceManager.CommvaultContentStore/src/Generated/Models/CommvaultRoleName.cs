@@ -12,7 +12,7 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> Supported Commvault role names. </summary>
-    public readonly partial struct RoleName : IEquatable<RoleName>
+    public readonly partial struct CommvaultRoleName : IEquatable<CommvaultRoleName>
     {
         private readonly string _value;
         /// <summary> Backup Administrator - full access to all resources. </summary>
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <summary> MPA Administrator - can authorize critical operations protected by MPA. </summary>
         private const string MultiPersonAuthorizationValue = "MultiPersonAuthorization";
 
-        /// <summary> Initializes a new instance of <see cref="RoleName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultRoleName"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RoleName(string value)
+        public CommvaultRoleName(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -37,44 +37,44 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> Backup Administrator - full access to all resources. </summary>
-        public static RoleName BackupAdmin { get; } = new RoleName(BackupAdminValue);
+        public static CommvaultRoleName BackupAdmin { get; } = new CommvaultRoleName(BackupAdminValue);
 
         /// <summary> Backup Operator - can manage resources but cannot delete storage or plans. </summary>
-        public static RoleName BackupOperator { get; } = new RoleName(BackupOperatorValue);
+        public static CommvaultRoleName BackupOperator { get; } = new CommvaultRoleName(BackupOperatorValue);
 
         /// <summary> Backup User - can manage protection groups, read-only on plans and storage. </summary>
-        public static RoleName BackupUser { get; } = new RoleName(BackupUserValue);
+        public static CommvaultRoleName BackupUser { get; } = new CommvaultRoleName(BackupUserValue);
 
         /// <summary> Security Administrator - can manage CCA enrollment and user management. </summary>
-        public static RoleName SecurityAdmin { get; } = new RoleName(SecurityAdminValue);
+        public static CommvaultRoleName SecurityAdmin { get; } = new CommvaultRoleName(SecurityAdminValue);
 
         /// <summary> MPA Administrator - can authorize critical operations protected by MPA. </summary>
-        public static RoleName MultiPersonAuthorization { get; } = new RoleName(MultiPersonAuthorizationValue);
+        public static CommvaultRoleName MultiPersonAuthorization { get; } = new CommvaultRoleName(MultiPersonAuthorizationValue);
 
-        /// <summary> Determines if two <see cref="RoleName"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="CommvaultRoleName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(RoleName left, RoleName right) => left.Equals(right);
+        public static bool operator ==(CommvaultRoleName left, CommvaultRoleName right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RoleName"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="CommvaultRoleName"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(RoleName left, RoleName right) => !left.Equals(right);
+        public static bool operator !=(CommvaultRoleName left, CommvaultRoleName right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RoleName"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CommvaultRoleName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoleName(string value) => new RoleName(value);
+        public static implicit operator CommvaultRoleName(string value) => new CommvaultRoleName(value);
 
-        /// <summary> Converts a string to a <see cref="RoleName"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CommvaultRoleName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoleName?(string value) => value == null ? null : new RoleName(value);
+        public static implicit operator CommvaultRoleName?(string value) => value == null ? null : new CommvaultRoleName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RoleName other && Equals(other);
+        public override bool Equals(object obj) => obj is CommvaultRoleName other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(RoleName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CommvaultRoleName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

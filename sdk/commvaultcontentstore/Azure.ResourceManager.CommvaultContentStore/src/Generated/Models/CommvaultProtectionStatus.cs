@@ -12,7 +12,7 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The Protection Status. </summary>
-    public readonly partial struct ProtectionStatus : IEquatable<ProtectionStatus>
+    public readonly partial struct CommvaultProtectionStatus : IEquatable<CommvaultProtectionStatus>
     {
         private readonly string _value;
         /// <summary> The protection group status is All. </summary>
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <summary> The protection group status is discovered. </summary>
         private const string DiscoveredValue = "discovered";
 
-        /// <summary> Initializes a new instance of <see cref="ProtectionStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultProtectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProtectionStatus(string value)
+        public CommvaultProtectionStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -39,47 +39,47 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> The protection group status is All. </summary>
-        public static ProtectionStatus All { get; } = new ProtectionStatus(AllValue);
+        public static CommvaultProtectionStatus All { get; } = new CommvaultProtectionStatus(AllValue);
 
         /// <summary> The protection group status is Protected. </summary>
-        public static ProtectionStatus Protected { get; } = new ProtectionStatus(ProtectedValue);
+        public static CommvaultProtectionStatus Protected { get; } = new CommvaultProtectionStatus(ProtectedValue);
 
         /// <summary> The protection group status is Not Protected. </summary>
-        public static ProtectionStatus NotProtected { get; } = new ProtectionStatus(NotProtectedValue);
+        public static CommvaultProtectionStatus NotProtected { get; } = new CommvaultProtectionStatus(NotProtectedValue);
 
         /// <summary> The protection group status is Pending. </summary>
-        public static ProtectionStatus Pending { get; } = new ProtectionStatus(PendingValue);
+        public static CommvaultProtectionStatus Pending { get; } = new CommvaultProtectionStatus(PendingValue);
 
         /// <summary> The protection group status is backed_up_with_error. </summary>
-        public static ProtectionStatus BackedUpWithError { get; } = new ProtectionStatus(BackedUpWithErrorValue);
+        public static CommvaultProtectionStatus BackedUpWithError { get; } = new CommvaultProtectionStatus(BackedUpWithErrorValue);
 
         /// <summary> The protection group status is discovered. </summary>
-        public static ProtectionStatus Discovered { get; } = new ProtectionStatus(DiscoveredValue);
+        public static CommvaultProtectionStatus Discovered { get; } = new CommvaultProtectionStatus(DiscoveredValue);
 
-        /// <summary> Determines if two <see cref="ProtectionStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="CommvaultProtectionStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ProtectionStatus left, ProtectionStatus right) => left.Equals(right);
+        public static bool operator ==(CommvaultProtectionStatus left, CommvaultProtectionStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ProtectionStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="CommvaultProtectionStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ProtectionStatus left, ProtectionStatus right) => !left.Equals(right);
+        public static bool operator !=(CommvaultProtectionStatus left, CommvaultProtectionStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ProtectionStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CommvaultProtectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProtectionStatus(string value) => new ProtectionStatus(value);
+        public static implicit operator CommvaultProtectionStatus(string value) => new CommvaultProtectionStatus(value);
 
-        /// <summary> Converts a string to a <see cref="ProtectionStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CommvaultProtectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProtectionStatus?(string value) => value == null ? null : new ProtectionStatus(value);
+        public static implicit operator CommvaultProtectionStatus?(string value) => value == null ? null : new CommvaultProtectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ProtectionStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is CommvaultProtectionStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ProtectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CommvaultProtectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

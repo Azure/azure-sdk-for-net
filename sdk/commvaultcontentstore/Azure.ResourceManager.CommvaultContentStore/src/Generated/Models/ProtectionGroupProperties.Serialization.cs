@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             string dataSourceType = default;
             string plan = default;
             ProtectionGroupResources resources = default;
-            ProtectionStatus? protectionStatus = default;
+            CommvaultProtectionStatus? protectionStatus = default;
             int? numberOfProtectedItems = default;
             long? lastBackUpTime = default;
             string backupActivityStatus = default;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    protectionStatus = new ProtectionStatus(prop.Value.GetString());
+                    protectionStatus = new CommvaultProtectionStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("numberOfProtectedItems"u8))

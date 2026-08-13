@@ -12,16 +12,16 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> Storage Type of Commvault Storage. </summary>
-    public readonly partial struct StorageType : IEquatable<StorageType>
+    public readonly partial struct CommvaultStorageType : IEquatable<CommvaultStorageType>
     {
         private readonly string _value;
         /// <summary> Air Gap Protect. </summary>
         private const string AirGapProtectValue = "Air_Gap_Protect";
 
-        /// <summary> Initializes a new instance of <see cref="StorageType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultStorageType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageType(string value)
+        public CommvaultStorageType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> Air Gap Protect. </summary>
-        public static StorageType AirGapProtect { get; } = new StorageType(AirGapProtectValue);
+        public static CommvaultStorageType AirGapProtect { get; } = new CommvaultStorageType(AirGapProtectValue);
 
-        /// <summary> Determines if two <see cref="StorageType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="CommvaultStorageType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(StorageType left, StorageType right) => left.Equals(right);
+        public static bool operator ==(CommvaultStorageType left, CommvaultStorageType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="StorageType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="CommvaultStorageType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(StorageType left, StorageType right) => !left.Equals(right);
+        public static bool operator !=(CommvaultStorageType left, CommvaultStorageType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="StorageType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CommvaultStorageType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageType(string value) => new StorageType(value);
+        public static implicit operator CommvaultStorageType(string value) => new CommvaultStorageType(value);
 
-        /// <summary> Converts a string to a <see cref="StorageType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CommvaultStorageType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageType?(string value) => value == null ? null : new StorageType(value);
+        public static implicit operator CommvaultStorageType?(string value) => value == null ? null : new CommvaultStorageType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is StorageType other && Equals(other);
+        public override bool Equals(object obj) => obj is CommvaultStorageType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(StorageType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CommvaultStorageType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

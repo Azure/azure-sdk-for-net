@@ -12,7 +12,7 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The match type. </summary>
-    public readonly partial struct MatchType : IEquatable<MatchType>
+    public readonly partial struct ProtectionGroupMatchType : IEquatable<ProtectionGroupMatchType>
     {
         private readonly string _value;
         /// <summary> All rules should match. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <summary> Any rule should match. </summary>
         private const string AnyValue = "any";
 
-        /// <summary> Initializes a new instance of <see cref="MatchType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectionGroupMatchType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MatchType(string value)
+        public ProtectionGroupMatchType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> All rules should match. </summary>
-        public static MatchType All { get; } = new MatchType(AllValue);
+        public static ProtectionGroupMatchType All { get; } = new ProtectionGroupMatchType(AllValue);
 
         /// <summary> Any rule should match. </summary>
-        public static MatchType Any { get; } = new MatchType(AnyValue);
+        public static ProtectionGroupMatchType Any { get; } = new ProtectionGroupMatchType(AnyValue);
 
-        /// <summary> Determines if two <see cref="MatchType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ProtectionGroupMatchType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(MatchType left, MatchType right) => left.Equals(right);
+        public static bool operator ==(ProtectionGroupMatchType left, ProtectionGroupMatchType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="MatchType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ProtectionGroupMatchType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(MatchType left, MatchType right) => !left.Equals(right);
+        public static bool operator !=(ProtectionGroupMatchType left, ProtectionGroupMatchType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="MatchType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ProtectionGroupMatchType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MatchType(string value) => new MatchType(value);
+        public static implicit operator ProtectionGroupMatchType(string value) => new ProtectionGroupMatchType(value);
 
-        /// <summary> Converts a string to a <see cref="MatchType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ProtectionGroupMatchType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MatchType?(string value) => value == null ? null : new MatchType(value);
+        public static implicit operator ProtectionGroupMatchType?(string value) => value == null ? null : new ProtectionGroupMatchType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MatchType other && Equals(other);
+        public override bool Equals(object obj) => obj is ProtectionGroupMatchType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(MatchType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ProtectionGroupMatchType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

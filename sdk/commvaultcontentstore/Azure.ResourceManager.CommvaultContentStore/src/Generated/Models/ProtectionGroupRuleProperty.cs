@@ -12,7 +12,7 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The Rule property. </summary>
-    public readonly partial struct RuleProperty : IEquatable<RuleProperty>
+    public readonly partial struct ProtectionGroupRuleProperty : IEquatable<ProtectionGroupRuleProperty>
     {
         private readonly string _value;
         /// <summary> The resource group of the rule. </summary>
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <summary> The status of the rule. </summary>
         private const string StatusValue = "status";
 
-        /// <summary> Initializes a new instance of <see cref="RuleProperty"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectionGroupRuleProperty"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RuleProperty(string value)
+        public ProtectionGroupRuleProperty(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -39,47 +39,47 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> The resource group of the rule. </summary>
-        public static RuleProperty ResourceGroup { get; } = new RuleProperty(ResourceGroupValue);
+        public static ProtectionGroupRuleProperty ResourceGroup { get; } = new ProtectionGroupRuleProperty(ResourceGroupValue);
 
         /// <summary> The name of the rule. </summary>
-        public static RuleProperty Name { get; } = new RuleProperty(NameValue);
+        public static ProtectionGroupRuleProperty Name { get; } = new ProtectionGroupRuleProperty(NameValue);
 
         /// <summary> The tag name of the rule. </summary>
-        public static RuleProperty TagName { get; } = new RuleProperty(TagNameValue);
+        public static ProtectionGroupRuleProperty TagName { get; } = new ProtectionGroupRuleProperty(TagNameValue);
 
         /// <summary> The tag value of the rule. </summary>
-        public static RuleProperty TagValue { get; } = new RuleProperty(TagValueValue);
+        public static ProtectionGroupRuleProperty TagValue { get; } = new ProtectionGroupRuleProperty(TagValueValue);
 
         /// <summary> The region of the rule. </summary>
-        public static RuleProperty Region { get; } = new RuleProperty(RegionValue);
+        public static ProtectionGroupRuleProperty Region { get; } = new ProtectionGroupRuleProperty(RegionValue);
 
         /// <summary> The status of the rule. </summary>
-        public static RuleProperty Status { get; } = new RuleProperty(StatusValue);
+        public static ProtectionGroupRuleProperty Status { get; } = new ProtectionGroupRuleProperty(StatusValue);
 
-        /// <summary> Determines if two <see cref="RuleProperty"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ProtectionGroupRuleProperty"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(RuleProperty left, RuleProperty right) => left.Equals(right);
+        public static bool operator ==(ProtectionGroupRuleProperty left, ProtectionGroupRuleProperty right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RuleProperty"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ProtectionGroupRuleProperty"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(RuleProperty left, RuleProperty right) => !left.Equals(right);
+        public static bool operator !=(ProtectionGroupRuleProperty left, ProtectionGroupRuleProperty right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RuleProperty"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ProtectionGroupRuleProperty"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuleProperty(string value) => new RuleProperty(value);
+        public static implicit operator ProtectionGroupRuleProperty(string value) => new ProtectionGroupRuleProperty(value);
 
-        /// <summary> Converts a string to a <see cref="RuleProperty"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ProtectionGroupRuleProperty"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuleProperty?(string value) => value == null ? null : new RuleProperty(value);
+        public static implicit operator ProtectionGroupRuleProperty?(string value) => value == null ? null : new ProtectionGroupRuleProperty(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RuleProperty other && Equals(other);
+        public override bool Equals(object obj) => obj is ProtectionGroupRuleProperty other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(RuleProperty other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ProtectionGroupRuleProperty other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

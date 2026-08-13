@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            StorageProperties properties = default;
+            CommvaultStorageProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                     {
                         continue;
                     }
-                    properties = StorageProperties.DeserializeStorageProperties(prop.Value, options);
+                    properties = CommvaultStorageProperties.DeserializeCommvaultStorageProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

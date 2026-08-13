@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="rules"> rules to match. </param>
         /// <param name="matchType"> match Type all or any. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rules"/> is null. </exception>
-        public ProtectionGroupResourcesMatchRules(IEnumerable<ProtectionGroupRule> rules, MatchType matchType)
+        public ProtectionGroupResourcesMatchRules(IEnumerable<ProtectionGroupRule> rules, ProtectionGroupMatchType matchType)
         {
             Argument.AssertNotNull(rules, nameof(rules));
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="rules"> rules to match. </param>
         /// <param name="matchType"> match Type all or any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProtectionGroupResourcesMatchRules(IList<ProtectionGroupRule> rules, MatchType matchType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProtectionGroupResourcesMatchRules(IList<ProtectionGroupRule> rules, ProtectionGroupMatchType matchType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Rules = rules;
             MatchType = matchType;
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public IList<ProtectionGroupRule> Rules { get; }
 
         /// <summary> match Type all or any. </summary>
-        public MatchType MatchType { get; set; }
+        public ProtectionGroupMatchType MatchType { get; set; }
     }
 }

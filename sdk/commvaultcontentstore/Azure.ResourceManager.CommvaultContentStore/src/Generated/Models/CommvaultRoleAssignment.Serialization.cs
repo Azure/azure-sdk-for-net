@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 return null;
             }
-            RoleName? roleName = default;
+            CommvaultRoleName? roleName = default;
             IList<CommvaultEntityInfo> entities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    roleName = new RoleName(prop.Value.GetString());
+                    roleName = new CommvaultRoleName(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("entities"u8))

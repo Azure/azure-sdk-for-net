@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="operator"> property of the rule. </param>
         /// <param name="value"> property of the rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProtectionGroupRule(RuleProperty @property, CommvaultMatchOperator @operator, string value)
+        public ProtectionGroupRule(ProtectionGroupRuleProperty @property, CommvaultMatchOperator @operator, string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="operator"> property of the rule. </param>
         /// <param name="value"> property of the rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProtectionGroupRule(RuleProperty @property, CommvaultMatchOperator @operator, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProtectionGroupRule(ProtectionGroupRuleProperty @property, CommvaultMatchOperator @operator, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Property = @property;
             Operator = @operator;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> property of the rule. </summary>
-        public RuleProperty Property { get; set; }
+        public ProtectionGroupRuleProperty Property { get; set; }
 
         /// <summary> property of the rule. </summary>
         public CommvaultMatchOperator Operator { get; set; }

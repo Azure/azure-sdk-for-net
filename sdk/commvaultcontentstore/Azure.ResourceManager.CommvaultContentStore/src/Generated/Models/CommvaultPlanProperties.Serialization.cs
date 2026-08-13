@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("storagePlans"u8);
             writer.WriteStartArray();
-            foreach (StoragePlan item in StoragePlans)
+            foreach (CommvaultStoragePlan item in StoragePlans)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 return null;
             }
             AzureLocation location = default;
-            IList<StoragePlan> storagePlans = default;
+            IList<CommvaultStoragePlan> storagePlans = default;
             IList<CommvaultBackupSchedule> schedules = default;
             Retention retention = default;
             ResourceProvisioningState? provisioningState = default;
@@ -166,10 +166,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("storagePlans"u8))
                 {
-                    List<StoragePlan> array = new List<StoragePlan>();
+                    List<CommvaultStoragePlan> array = new List<CommvaultStoragePlan>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(StoragePlan.DeserializeStoragePlan(item, options));
+                        array.Add(CommvaultStoragePlan.DeserializeCommvaultStoragePlan(item, options));
                     }
                     storagePlans = array;
                     continue;
