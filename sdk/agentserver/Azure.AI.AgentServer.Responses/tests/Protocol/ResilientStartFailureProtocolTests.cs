@@ -101,7 +101,7 @@ public class ResilientStartFailureProtocolTests
             Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", "1.0.0");
             FoundryEnvironment.Reload();
 
-            using var factory = NewFailingStartFactory(tasksDir, responsesDir, invoker);
+            using var factory = NewFailingStartFactory(tasksDir, responsesDir, invoker, hosted: true);
             using var client = factory.CreateClient();
 
             var response = await client.PostAsync(
@@ -125,8 +125,9 @@ public class ResilientStartFailureProtocolTests
         }
     }
 
-    private static TestWebApplicationFactory NewFailingStartFactory(string tasksDir, string responsesDir, FailingTaskInvoker? invoker = null)
+    private static TestWebApplicationFactory NewFailingStartFactory(string tasksDir, string responsesDir, FailingTaskInvoker? invoker = null, bool hosted = false)
         => new TestWebApplicationFactory(
+            hosted: hosted,
             configureOptions: o =>
             {
                 // ResilientBackground engages the local Core task subsystem for background responses,

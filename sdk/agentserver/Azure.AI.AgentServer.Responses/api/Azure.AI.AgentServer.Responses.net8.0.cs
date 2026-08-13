@@ -372,6 +372,12 @@ namespace Azure.AI.AgentServer.Responses
     {
         public static Microsoft.AspNetCore.Routing.RouteGroupBuilder MapResponsesServer(this Microsoft.AspNetCore.Routing.IEndpointRouteBuilder endpoints, string? prefix = null) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class ResponsesServerHostExtensions
+    {
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddResponsesServer(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddResponsesServer(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.AgentServer.Responses.ResponsesServerSettings>? configureSettings) { throw null; }
+    }
     public partial class ResponsesServerOptions
     {
         public ResponsesServerOptions() { }
@@ -384,6 +390,18 @@ namespace Azure.AI.AgentServer.Responses
     public static partial class ResponsesServerServiceCollectionExtensions
     {
         public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddResponsesServer(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, System.Action<Azure.AI.AgentServer.Responses.ResponsesServerOptions>? configure = null) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class ResponsesServerSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public ResponsesServerSettings() { }
+        public int DefaultFetchHistoryCount { get { throw null; } set { } }
+        public string? DefaultModel { get { throw null; } set { } }
+        public System.Uri? Endpoint { get { throw null; } set { } }
+        public bool ResilientBackground { get { throw null; } set { } }
+        public System.Func<Azure.AI.AgentServer.Responses.Models.CreateResponse, Azure.AI.AgentServer.Responses.ResponseContext, Azure.AI.AgentServer.Responses.Models.ResponseObject>? ResponseAcceptor { get { throw null; } set { } }
+        public bool SteerableConversations { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class TextContentBuilder
     {

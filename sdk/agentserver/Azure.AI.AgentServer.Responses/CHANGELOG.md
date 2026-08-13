@@ -41,6 +41,29 @@
   provider, matching the Python implementation. The local default event-stream backing is
   in-memory replay, upgraded automatically to durable file-backed replay when resilient
   background is enabled outside a hosted environment.
+- Hosted registration now uses the `ClientSettings` pattern. Register via the new
+  `AddResponsesServer(IHostApplicationBuilder host, string sectionName)` /
+  `AddResponsesServer(IHostApplicationBuilder host, string sectionName, Action<ResponsesServerSettings>)`
+  overloads, which bind a new `ResponsesServerSettings : ClientSettings` (Foundry credential,
+  `Endpoint`, and the option flags) from a single configuration section — so response storage and
+  resilient-task storage bind the same identity and endpoint and cannot diverge. The
+  `AddResponsesServer(IServiceCollection, Action<ResponsesServerOptions>)` overload remains for
+  local / non-hosted scenarios and now throws in a hosted Foundry environment (directing callers to
+  the `IHostApplicationBuilder` overload). The internal `FOUNDRY_PROJECT_ENDPOINT` /
+  `DEFAULT_FETCH_HISTORY_ITEM_COUNT` environment-variable reads and the ambient
+  `TokenCredential` registration are removed; the HTTPS-in-non-development check now honors
+  `IHostEnvironment.IsDevelopment()` rather than reading `ASPNETCORE_ENVIRONMENT` /
+  `DOTNET_ENVIRONMENT` directly.
+- `ResponseContext` cancellation is now expressed as tokens: added `ClientCancellation`
+  (`CancellationToken`) alongside `Shutdown`; `IsShutdownRequested` and `IsClientCancelled` are
+  get-only virtual passthroughs over the corresponding tokens (the settable `IsShutdownRequested`
+  was removed).
+- `ConversationChainMetadata.Set` no longer takes a namespace parameter (`Set(string key, string value)`);
+  write to a non-default namespace via `ForNamespace(ns).Set(...)` so write scope and per-namespace
+  `FlushAsync` are structurally identical. `ResponseEventStream.Checkpoint()` was renamed to the
+  virtual `CreateCheckpointEvent()`; `ResponseEventStream.InternalMetadata` was renamed to
+  `PersistedMetadata`; the `ResponseContextExtensions.MetadataNamespace(...)` extension was removed
+  (use `ConversationChainMetadata.ForNamespace(...)`).
 
 ### Bugs Fixed
 
