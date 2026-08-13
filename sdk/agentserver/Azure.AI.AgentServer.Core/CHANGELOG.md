@@ -1,5 +1,13 @@
 # Release History
 
+## 1.0.0-beta.29 (Unreleased)
+
+### Breaking Changes
+- `AddAgentEventStreams` no longer throws on a repeated configuring call. It is now plain
+  first-wins (`TryAddSingleton`), so a composition where more than one component (a protocol SDK
+  and a consumer, or two protocols) selects the event-stream backing is harmless regardless of
+  registration order — configuration/first-registration decides the backing rather than call order.
+
 ## 1.0.0-beta.28 (2026-08-12)
 
 ### Features Added

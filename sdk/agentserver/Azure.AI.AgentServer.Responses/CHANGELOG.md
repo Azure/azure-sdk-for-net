@@ -1,5 +1,32 @@
 # Release History
 
+## 1.0.0-beta.9 (Unreleased)
+
+### Features Added
+- Added `AddResponsesServer(IHostApplicationBuilder host, string sectionName)` and
+  `AddResponsesServer(IHostApplicationBuilder host, string sectionName, Action<ResponsesServerSettings>)`,
+  which bind a new `ResponsesServerSettings : ClientSettings` (the Foundry credential, `Endpoint`,
+  and option flags) from a single configuration section. Because response storage and
+  resilient-task storage bind the same identity and endpoint from one section, the two cannot
+  diverge. This is the required entry point in hosted Foundry environments.
+- Added `ResponseContext.ClientCancellation` (a `CancellationToken`) alongside
+  `ResponseContext.Shutdown`, so an explicit client cancel is composable as a token.
+
+### Breaking Changes
+- Hosted registration now uses the `ClientSettings` pattern. The
+  `AddResponsesServer(IServiceCollection, Action<ResponsesServerOptions>)` overload remains for
+  local / non-hosted scenarios and now throws in a hosted Foundry environment (use the
+  `IHostApplicationBuilder` overload there). The internal `FOUNDRY_PROJECT_ENDPOINT` /
+  `DEFAULT_FETCH_HISTORY_ITEM_COUNT` environment-variable reads and the ambient `TokenCredential`
+  registration were removed; the HTTPS-in-non-development check now honors
+  `IHostEnvironment.IsDevelopment()` rather than reading `ASPNETCORE_ENVIRONMENT` /
+  `DOTNET_ENVIRONMENT` directly.
+- `ResponseEventStream.Checkpoint()` was renamed to the virtual `CreateCheckpointEvent()`, and
+  `ResponseEventStream.InternalMetadata` was renamed to `PersistedMetadata`.
+- `ResponseContext.ClientCancelled` was renamed to `IsClientCancelled`. `IsShutdownRequested` and
+  `IsClientCancelled` are now get-only virtual passthroughs over the `Shutdown` /
+  `ClientCancellation` tokens; the settable `IsShutdownRequested` was removed.
+
 ## 1.0.0-beta.8 (2026-08-12)
 
 ### Features Added
@@ -40,7 +67,7 @@
   `ResponseContext.ConversationChainId`.
 - Removed the public `ResponsesStreamProvider` abstract class and the public `IAsyncObserver<T>`
   interface. SSE streaming is now composed on the `Azure.AI.AgentServer.Core` event-stream
-  primitive (`IEventStreamRegistry` / `IEventStream`) rather than a Responses-owned stream
+  primitive (`AgentEventStreamRegistry` / `AgentEventStream`) rather than a Responses-owned stream
   provider, matching the Python implementation. The local default event-stream backing is
   in-memory replay, upgraded automatically to durable file-backed replay when resilient
   background is enabled outside a hosted environment.

@@ -208,7 +208,7 @@ internal static class ResponsesResilientTaskHandler
         using CancellationTokenRegistration shutdownRegistration = ctx.Shutdown.Register(() =>
         {
             execution.ShutdownRequested = true;
-            context.IsShutdownRequested = true;
+            context.SignalShutdown();
         });
 
         CancellationToken providerCt =
@@ -254,7 +254,7 @@ internal static class ResponsesResilientTaskHandler
             }
         }
 
-        context.IsShutdownRequested = true;
+        context.SignalShutdown();
         await ctx.ExitForRecoveryAsync(cancellationToken).ConfigureAwait(false);
     }
 

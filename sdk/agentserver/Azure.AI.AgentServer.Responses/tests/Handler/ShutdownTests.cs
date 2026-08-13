@@ -190,7 +190,7 @@ public class ShutdownTests : IDisposable
 
         // Simulate shutdown
         execution.ShutdownRequested = true;
-        context.IsShutdownRequested = true;
+        context.SignalShutdown();
 
         // After shutdown
         Assert.That(context.IsShutdownRequested, Is.True);

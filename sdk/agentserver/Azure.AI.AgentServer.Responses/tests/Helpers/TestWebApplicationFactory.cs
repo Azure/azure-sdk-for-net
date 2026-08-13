@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.AI.AgentServer.Core;
+using Azure.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
@@ -23,7 +24,8 @@ public sealed class TestWebApplicationFactory : IDisposable
         Action<ResponsesServerOptions>? configureOptions = null,
         string? routePrefix = null,
         Action<IServiceCollection>? configureTestServices = null,
-        Action<AgentHostOptions>? configureHostOptions = null)
+        Action<AgentHostOptions>? configureHostOptions = null,
+        bool hosted = false)
     {
         var testHandler = handler ?? new TestHandler();
 
@@ -41,7 +43,23 @@ public sealed class TestWebApplicationFactory : IDisposable
                     }
                     services.AddSingleton<ResponseHandler>(testHandler);
                     configureTestServices?.Invoke(services);
-                    services.AddResponsesServer(configureOptions);
+                    if (hosted)
+                    {
+                        // Hosted registration binds the Foundry credential + endpoint from settings in
+                        // production; the test harness (which uses the legacy IHostBuilder, not an
+                        // IHostApplicationBuilder) drives the same shared core directly with a fake
+                        // credential and a development storage endpoint.
+                        var storageBaseUri = ResponsesServerServiceCollectionExtensions.ResolveStorageBaseUri(
+                            new Uri("https://example.com/api/projects/proj"),
+                            isDevelopment: false);
+                        services.AddResponsesServerCore(
+                            configureOptions,
+                            new ResponsesHostedStorage(new FakeTokenCredential(), storageBaseUri));
+                    }
+                    else
+                    {
+                        services.AddResponsesServer(configureOptions);
+                    }
                 });
                 webHost.Configure(app =>
                 {
