@@ -16,7 +16,7 @@
 
 ## Summary
 
-- Total libraries: 447
+- Total libraries: 446
 - Management Plane (MPG): 260
   - Autorest/Swagger: 43
   - New Emitter (TypeSpec): 217
@@ -25,9 +25,9 @@
   - Autorest/Swagger: 30
   - New Emitter (TypeSpec): 52
   - Old TypeSpec: 0
-- Provisioning: 58
+- Provisioning: 57
   - Reflection-based generator: 25
-  - TypeSpec-based generator: 31
+  - TypeSpec-based generator: 30
   - No generator: 2
 - No generator: 47
 
@@ -414,7 +414,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 43
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 31 / 58 migrated to TypeSpec-based generator
+**Migration Status**: 30 / 57 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
@@ -447,7 +447,6 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | keyvault | Azure.Provisioning.KeyVault | Azure.ResourceManager.KeyVault ✅ | TypeSpec ✅ |
 | kubernetesconfiguration | Azure.Provisioning.KubernetesConfiguration | Azure.ResourceManager.KubernetesConfiguration | Reflection |
 | kusto | Azure.Provisioning.Kusto | Azure.ResourceManager.Kusto ✅ | Reflection |
-| loadtestservice | Azure.Provisioning.LoadTesting | Azure.ResourceManager.LoadTesting ✅ | TypeSpec ✅ |
 | logic | Azure.Provisioning.Logic | Azure.ResourceManager.Logic | Reflection |
 | machinelearningservices | Azure.Provisioning.MachineLearning | Azure.ResourceManager.MachineLearning ✅ | TypeSpec ✅ |
 | monitor | Azure.Provisioning.Monitor | Azure.ResourceManager.Monitor ✅ | Reflection |
