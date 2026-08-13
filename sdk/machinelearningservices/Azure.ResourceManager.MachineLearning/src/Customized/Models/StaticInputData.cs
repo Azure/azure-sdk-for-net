@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class StaticInputData
     {
         /// <summary> Initializes a new instance of <see cref="StaticInputData"/>. </summary>
-        // TODO: Remove these compatibility constructors after https://github.com/microsoft/typespec/issues/11588 is fixed.
         public StaticInputData(JobInputType jobInputType, Uri uri, DateTimeOffset windowStart, DateTimeOffset windowEnd) : base(MonitoringInputDataType.Static, jobInputType, uri)
         {
             WindowEnd = windowEnd;

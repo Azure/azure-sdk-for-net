@@ -56,7 +56,6 @@ namespace Azure.ResourceManager.AppService.Models
             => AppServiceEnvironmentAddressResult(id, name, resourceType, systemData, kind, serviceIPAddress, internalIPAddress, outboundIPAddresses, virtualIPMappings);
 
         /// <summary> Initializes a new instance of CsmDeploymentStatus. </summary>
-        // TODO: Remove this compatibility parameter mapping after https://github.com/Azure/azure-sdk-for-net/issues/61815 is fixed.
         public static CsmDeploymentStatus CsmDeploymentStatus(
             ResourceIdentifier id = null,
             string name = null,

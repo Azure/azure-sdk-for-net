@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="workloadProfileType"> Workload profile type for the workloads to run on. </param>
         /// <param name="minimumCount"> The minimum capacity. </param>
         /// <param name="maximumCount"> The maximum capacity. </param>
-        // TODO: Remove this compatibility constructor after https://github.com/microsoft/typespec/issues/11588 is fixed.
         public ContainerAppWorkloadProfile(string workloadProfileType, int minimumCount, int maximumCount)
             : this(workloadProfileType, workloadProfileType)
         {
