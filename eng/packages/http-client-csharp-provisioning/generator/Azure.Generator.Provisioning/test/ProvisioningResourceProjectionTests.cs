@@ -6,6 +6,7 @@ using Azure.Generator.Provisioning.Primitives;
 using Azure.Generator.Provisioning.Providers;
 using Azure.Generator.Provisioning.Tests.TestHelpers;
 using Azure.Generator.Provisioning.Utilities;
+using Azure.Provisioning.Primitives;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
@@ -360,6 +361,176 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
+        public void DerivedModelPropertyHidingBasePropertyUsesNewModifier()
+        {
+            var baseProperty = CreateProperty("HostName");
+            var derivedProperty = CreateProperty("HostName", isRequired: true);
+            var baseModel = CreateModel("BaseOriginProperties", [baseProperty]);
+            var derivedModel = CreateModel("OriginProperties", [derivedProperty], baseModel);
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [baseModel, derivedModel],
+                armProviderSchema: () => new ArmProviderSchema([], []));
+            var modelProvider = new ProvisioningModelProvider(derivedModel);
+
+            var property = modelProvider.Properties.Single(property => property.Name == "HostName");
+
+            Assert.That(property.Modifiers.HasFlag(MethodSignatureModifiers.New), Is.True);
+        }
+
+        [Test]
+        public void DerivedModelPropertyWithDifferentBicepPathUsesNewModifier()
+        {
+            var baseProperty = CreateProperty("HostName", serializedName: "host");
+            var derivedProperty = CreateProperty("HostName", serializedName: "hostName");
+            var baseModel = CreateModel("BaseOriginProperties", [baseProperty]);
+            var derivedModel = CreateModel("OriginProperties", [derivedProperty], baseModel);
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [baseModel, derivedModel],
+                armProviderSchema: () => new ArmProviderSchema([], []));
+            var modelProvider = new ProvisioningModelProvider(derivedModel);
+
+            var property = modelProvider.Properties.Single(property => property.Name == "HostName");
+
+            Assert.That(property.Modifiers.HasFlag(MethodSignatureModifiers.New), Is.True);
+            Assert.That(((ProvisioningPropertyProvider)property).BicepPath, Is.EqualTo(new[] { "hostName" }));
+        }
+
+        [Test]
+        public void GeneratedBasePropertiesRemainOnGeneratedBase()
+        {
+            var baseModel = CreateModel(
+                "BaseOriginProperties",
+                [CreateProperty("HostName")]);
+            var derivedModel = CreateModel(
+                "OriginProperties",
+                [CreateProperty("Priority")],
+                baseModel);
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [baseModel, derivedModel],
+                armProviderSchema: () => new ArmProviderSchema([], []));
+
+            var modelProvider = new ProvisioningModelProvider(derivedModel);
+
+            Assert.That(modelProvider.BaseModelProvider, Is.Not.Null);
+            Assert.That(
+                modelProvider.Properties.Select(property => property.Name),
+                Is.EquivalentTo(new[] { "Priority" }));
+        }
+
+        [Test]
+        public void GeneratedBasePropertyUsageDifferencesDoNotRequireNewProperty()
+        {
+            var baseModel = CreateModel(
+                "WriteableSubResourceData",
+                [CreateProperty("Id", isRequired: true)]);
+            var derivedModel = CreateModel(
+                "SubResourceDataWithStatus",
+                [CreateProperty("Status")],
+                baseModel);
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [baseModel, derivedModel],
+                armProviderSchema: () => new ArmProviderSchema([], []),
+                modelSettableUsage: new Dictionary<string, bool>
+                {
+                    [baseModel.CrossLanguageDefinitionId] = true,
+                    [derivedModel.CrossLanguageDefinitionId] = false
+                });
+
+            var modelProvider = new ProvisioningModelProvider(derivedModel);
+
+            Assert.That(modelProvider.BaseModelProvider, Is.Not.Null);
+            Assert.That(
+                modelProvider.Properties.Select(property => property.Name),
+                Is.EquivalentTo(new[] { "Status" }));
+        }
+
+        [Test]
+        public void PropertyProvidedByCustomOnlyBaseIsNotGeneratedAgain()
+        {
+            var model = CreateModel(
+                "CustomDerivedModel",
+                [
+                    CreateProperty("HostName"),
+                    CreateProperty("Priority")
+                ]);
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [model],
+                armProviderSchema: () => new ArmProviderSchema([], []),
+                customizationSources:
+                [
+                    """
+                    namespace Azure.Provisioning.Tests
+                    {
+                        public class CustomBase
+                        {
+                            public BicepValue<string> HostName { get; }
+                        }
+
+                        public partial class CustomDerivedModel : CustomBase
+                        {
+                        }
+                    }
+                    """
+                ]);
+
+            var modelProvider = new ProvisioningModelProvider(model);
+
+            Assert.That(modelProvider.BaseType?.Name, Is.EqualTo("CustomBase"));
+            Assert.That(
+                modelProvider.Properties.Select(property => property.Name),
+                Is.EquivalentTo(new[] { "Priority" }));
+        }
+
+        [Test]
+        public void MostDerivedPropertyWinsWhenSkippedInputBasesRepeatAName()
+        {
+            var skippedBase = CreateModel(
+                "Resource",
+                [CreateProperty("Name", serializedName: "baseName")],
+                crossLanguageDefinitionId: "Azure.ResourceManager.CommonTypes.Resource");
+            var derivedModel = CreateModel(
+                "ExportRun",
+                [CreateProperty("Name", serializedName: "derivedName")],
+                skippedBase);
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [skippedBase, derivedModel],
+                armProviderSchema: () => new ArmProviderSchema([], []));
+
+            var modelProvider = new ProvisioningModelProvider(derivedModel);
+            var property = modelProvider.Properties.Single(property => property.Name == "Name");
+
+            Assert.That(((ProvisioningPropertyProvider)property).BicepPath, Is.EqualTo(new[] { "derivedName" }));
+        }
+
+        [Test]
+        public void InputBasePropertiesAreFlattenedWhenBaseIsNotRepresentedInGeneratedHierarchy()
+        {
+            var resourceBase = CreateModel(
+                "Resource",
+                [
+                    CreateProperty("Id", isReadOnly: true),
+                    CreateProperty("Name", isReadOnly: true),
+                    CreateProperty("Type", isReadOnly: true),
+                    CreateProperty("SystemData", isReadOnly: true)
+                ],
+                crossLanguageDefinitionId: "Azure.ResourceManager.CommonTypes.Resource");
+            var exportRun = CreateModel(
+                "ExportRun",
+                [CreateProperty("ETag")],
+                resourceBase);
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [resourceBase, exportRun],
+                armProviderSchema: () => new ArmProviderSchema([], []));
+
+            var modelProvider = new ProvisioningModelProvider(exportRun);
+
+            Assert.That(modelProvider.Type.BaseType, Is.EqualTo(new CSharpType(typeof(ProvisionableConstruct))));
+            Assert.That(
+                modelProvider.Properties.Select(property => property.Name),
+                Is.EquivalentTo(new[] { "ETag", "Id", "Name", "Type", "SystemData" }));
+        }
+
+        [Test]
         public void ReadOnlyResourceModelReferencedByWritableParentBodyIsSettable()
         {
             var childNameProperty = CreateProperty("Name", isRequired: true);
@@ -431,11 +602,24 @@ namespace Azure.Generator.Provisioning.Tests
                 resourceName: "ProfileRevision",
                 methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)],
                 parentResourceId: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/profiles/{profileName}");
-            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [sharedModel]);
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [sharedModel],
+                customizationSources:
+                [
+                    """
+                    namespace Azure.Provisioning.Tests;
+
+                    public partial class Profile
+                    {
+                    }
+                    """
+                ]);
             var providers = CreateAndRegisterResourceProviders(writableResource, readOnlySiblingResource);
             var writableProvider = providers[0];
             var readOnlySiblingProvider = providers[1];
 
+            Assert.That(writableProvider.Name, Is.EqualTo("Profile"));
+            Assert.That(readOnlySiblingProvider.Name, Is.EqualTo("ProfileRevision"));
             var writablePropertyInfo = ((IProvisioningPropertyInfo)writableProvider).GetProvisioningPropertyInfo(valueProperty);
             var readOnlySiblingPropertyInfo = ((IProvisioningPropertyInfo)readOnlySiblingProvider).GetProvisioningPropertyInfo(valueProperty);
 
@@ -859,11 +1043,12 @@ namespace Azure.Generator.Provisioning.Tests
             InputModelType? baseModel = null,
             IReadOnlyList<InputModelType>? derivedModels = null,
             string? discriminatorValue = null,
-            InputModelProperty? discriminatorProperty = null)
+            InputModelProperty? discriminatorProperty = null,
+            string? crossLanguageDefinitionId = null)
             => new(
                 name,
                 "Sample.Models",
-                $"Sample.Models.{name}",
+                crossLanguageDefinitionId ?? $"Sample.Models.{name}",
                 "public",
                 null,
                 string.Empty,

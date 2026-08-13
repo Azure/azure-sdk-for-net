@@ -56,6 +56,7 @@ namespace Azure.ResourceManager.AppService.Models
             => AppServiceEnvironmentAddressResult(id, name, resourceType, systemData, kind, serviceIPAddress, internalIPAddress, outboundIPAddresses, virtualIPMappings);
 
         /// <summary> Initializes a new instance of CsmDeploymentStatus. </summary>
+        // TODO: Remove this compatibility parameter mapping after https://github.com/Azure/azure-sdk-for-net/issues/61815 is fixed.
         public static CsmDeploymentStatus CsmDeploymentStatus(
             ResourceIdentifier id = null,
             string name = null,
@@ -64,8 +65,8 @@ namespace Azure.ResourceManager.AppService.Models
             string kind = null,
             string deploymentId = null,
             DeploymentBuildStatus? status = null,
-            int? numberOfInstancesSuccessful = null,
             int? numberOfInstancesInProgress = null,
+            int? numberOfInstancesSuccessful = null,
             int? numberOfInstancesFailed = null,
             IEnumerable<string> failedInstancesLogs = null,
             IEnumerable<ResponseError> errors = null)
@@ -89,13 +90,13 @@ namespace Azure.ResourceManager.AppService.Models
             SystemData systemData,
             string deploymentId,
             DeploymentBuildStatus? status,
-            int? numberOfInstancesSuccessful,
             int? numberOfInstancesInProgress,
+            int? numberOfInstancesSuccessful,
             int? numberOfInstancesFailed,
             IEnumerable<string> failedInstancesLogs,
             IEnumerable<ResponseError> errors,
             string kind)
-            => CsmDeploymentStatus(id, name, resourceType, systemData, kind, deploymentId, status, numberOfInstancesSuccessful, numberOfInstancesInProgress, numberOfInstancesFailed, failedInstancesLogs, errors);
+            => CsmDeploymentStatus(id, name, resourceType, systemData, kind, deploymentId, status, numberOfInstancesInProgress, numberOfInstancesSuccessful, numberOfInstancesFailed, failedInstancesLogs, errors);
 
         /// <summary> Initializes a new instance of SiteAuthSettingsV2. </summary>
         public static SiteAuthSettingsV2 SiteAuthSettingsV2(
