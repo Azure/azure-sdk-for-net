@@ -35,13 +35,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -87,7 +92,7 @@ namespace Azure.Provisioning.Network
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
-            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true, defaultValue: "dafault");
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<ApplicationGatewayWafDynamicManifestPropertiesResult>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Network
 {
     /// <summary>
     /// Properties of a rule.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ApplicationRule"/>, <see cref="NatRule"/>, and <see cref="NetworkRule"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="ApplicationRule"/>, <see cref="NatRule"/>, and <see cref="NetworkRule"/>.
     /// </summary>
     public partial class FirewallPolicyRule : ProvisionableConstruct
     {

@@ -921,7 +921,7 @@ namespace Azure.Provisioning.Network
         internal ApplicationGatewayWafDynamicManifest() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.ApplicationGatewayFirewallManifestRuleSet> AvailableRuleSets { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> RuleSetType { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> RuleSetVersion { get { throw null; } }
         protected override void DefineProvisionableProperties() { }

@@ -13,7 +13,10 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Network
 {
-    /// <summary> Network base admin rule. </summary>
+    /// <summary>
+    /// Network base admin rule.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="NetworkAdminRule"/> and <see cref="NetworkDefaultAdminRule"/>.
+    /// </summary>
     public partial class BaseAdminRule : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
