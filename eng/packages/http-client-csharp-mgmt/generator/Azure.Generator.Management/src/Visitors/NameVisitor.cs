@@ -113,6 +113,22 @@ internal class NameVisitor : ScmLibraryVisitor
         return base.PreVisitProperty(property, propertyProvider);
     }
 
+    protected override ClientProvider? Visit(InputClient client, ClientProvider? clientProvider)
+    {
+        foreach (var method in client.Methods)
+        {
+            foreach (var parameter in method.Parameters)
+            {
+                DoPreVisitParameterForTimeName(parameter);
+            }
+            foreach (var parameter in method.Operation.Parameters)
+            {
+                DoPreVisitParameterForTimeName(parameter);
+            }
+        }
+        return base.Visit(client, clientProvider);
+    }
+
     private void DoPreVisitPropertyForResourceTypeName(InputProperty property, PropertyProvider? propertyProvider)
     {
         if (propertyProvider == null || property is not InputModelProperty)
@@ -151,43 +167,73 @@ internal class NameVisitor : ScmLibraryVisitor
             {"Expiration", "Expire"},
             {"Modification", "Modified"},
         };
+
     private void DoPreVisitPropertyForTimePropertyName(InputProperty property, PropertyProvider? propertyProvider)
     {
-        if (propertyProvider != null && IsDateTimeInputType(property.Type))
+        if (propertyProvider != null &&
+            IsDateTimeInputType(property.Type) &&
+            TryTransformDateTimeName(propertyProvider.Name, out var newPropertyName))
         {
-            var propertyName = propertyProvider.Name;
-            // Skip properties that are not following the pattern we want to change
-            if (propertyName.StartsWith("From", StringComparison.Ordinal) ||
-                propertyName.StartsWith("To", StringComparison.Ordinal) ||
-                propertyName.EndsWith("PointInTime", StringComparison.Ordinal))
-            {
-                return;
-            }
-
-            var lengthToCut = 0;
-            if (propertyName.Length > 8 &&
-                propertyName.EndsWith("DateTime", StringComparison.Ordinal))
-            {
-                lengthToCut = 8;
-            }
-            else if (propertyName.Length > 4 &&
-                (propertyName.EndsWith("Time", StringComparison.Ordinal) ||
-                propertyName.EndsWith("Date", StringComparison.Ordinal)))
-            {
-                lengthToCut = 4;
-            }
-            else if (propertyName.Length > 2 &&
-                propertyName.EndsWith("At", StringComparison.Ordinal))
-            {
-                lengthToCut = 2;
-            }
-            if (lengthToCut > 0)
-            {
-                var prefix = propertyName.Substring(0, propertyName.Length - lengthToCut);
-                var newPropertyName = (_nounToVerbDicts.TryGetValue(prefix, out var verb) ? verb : prefix) + "On";
-                propertyProvider.Update(name: newPropertyName);
-            }
+            propertyProvider.Update(name: newPropertyName);
         }
+    }
+
+    private void DoPreVisitParameterForTimeName(InputParameter parameter)
+    {
+        if (IsDateTimeInputType(parameter.Type) &&
+            TryTransformDateTimeName(parameter.Name, out var newParameterName))
+        {
+            parameter.Update(name: newParameterName);
+        }
+    }
+
+    private static bool TryTransformDateTimeName(string name, [MaybeNullWhen(false)] out string newName)
+    {
+        newName = null;
+        if (name.StartsWith("From", StringComparison.OrdinalIgnoreCase) ||
+            name.StartsWith("To", StringComparison.OrdinalIgnoreCase) ||
+            name.EndsWith("PointInTime", StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        var lengthToCut = 0;
+        if (name.Length > 9 &&
+            (name.EndsWith("Timestamp", StringComparison.Ordinal) ||
+            name.EndsWith("TimeStamp", StringComparison.Ordinal)))
+        {
+            lengthToCut = 9;
+        }
+        else if (name.Length > 8 &&
+            name.EndsWith("DateTime", StringComparison.Ordinal))
+        {
+            lengthToCut = 8;
+        }
+        else if (name.Length > 4 &&
+            (name.EndsWith("Time", StringComparison.Ordinal) ||
+            name.EndsWith("Date", StringComparison.Ordinal)))
+        {
+            lengthToCut = 4;
+        }
+        else if (name.Equals("Date", StringComparison.OrdinalIgnoreCase))
+        {
+            lengthToCut = 4;
+        }
+        else if (name.Length > 2 &&
+            name.EndsWith("At", StringComparison.Ordinal))
+        {
+            lengthToCut = 2;
+        }
+
+        if (lengthToCut == 0)
+        {
+            return false;
+        }
+
+        var prefix = name.Substring(0, name.Length - lengthToCut);
+        newName = (_nounToVerbDicts.TryGetValue(prefix, out var verb) ? verb : prefix) +
+            (prefix.Length == 0 && char.IsLower(name[0]) ? "on" : "On");
+        return true;
     }
 
     // Dictionary to hold property name renaming mappings

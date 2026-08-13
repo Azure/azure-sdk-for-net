@@ -38,12 +38,19 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(type?.Properties[0].Name, Is.EqualTo(testPropertyName.Replace("Url", "Uri")));
         }
 
-        [Test]
-        public void TestTransformTimePropertyName()
+        [TestCase("StartTime", "dateTime", "StartOn")]
+        [TestCase("StartTimestamp", "dateTime", "StartOn")]
+        [TestCase("EndTimeStamp", "dateTime", "EndOn")]
+        [TestCase("Date", "plainDate", "On")]
+        [TestCase("LastTimestamp", "nullableDateTime", "LastOn")]
+        [TestCase("StartTimestamp", "string", "StartTimestamp")]
+        [TestCase("FromTimestamp", "dateTime", "FromTimestamp")]
+        [TestCase("ToTimeStamp", "dateTime", "ToTimeStamp")]
+        [TestCase("RestorePointInTime", "dateTime", "RestorePointInTime")]
+        public void TestTransformTimePropertyName(string testPropertyName, string inputTypeName, string expectedName)
         {
             const string testModelName = "TestModel";
-            const string testPropertyName = "StartTime";
-            var modelProperty = InputFactory.Property(testPropertyName, InputPrimitiveType.PlainDate, serializedName: "testName", isRequired: true);
+            var modelProperty = InputFactory.Property(testPropertyName, GetInputType(inputTypeName), serializedName: "testName", isRequired: true);
             var model = InputFactory.Model(testModelName, properties: [modelProperty]);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: model);
             var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
@@ -59,7 +66,43 @@ namespace Azure.Generator.Mgmt.Tests
 
             // PreVisitModel is called during the model creation
             var type = plugin.Object.TypeFactory.CreateModel(model);
-            Assert.That(type?.Properties[0].Name, Is.EqualTo(testPropertyName.Replace("Time", "On")));
+            Assert.That(type?.Properties[0].Name, Is.EqualTo(expectedName));
+        }
+
+        [TestCase("startTimestamp", "dateTime", "startOn")]
+        [TestCase("endTimeStamp", "nullableDateTime", "endOn")]
+        [TestCase("date", "plainDate", "on")]
+        [TestCase("startTimestamp", "string", "startTimestamp")]
+        [TestCase("fromTimestamp", "dateTime", "fromTimestamp")]
+        [TestCase("toTimeStamp", "dateTime", "toTimeStamp")]
+        [TestCase("restorePointInTime", "dateTime", "restorePointInTime")]
+        public void TestTransformTimeMethodParameterName(string parameterName, string inputTypeName, string expectedName)
+        {
+            var parameter = InputFactory.MethodParameter(
+                parameterName,
+                GetInputType(inputTypeName),
+                serializedName: parameterName,
+                location: InputRequestLocation.Query);
+            var operation = InputFactory.Operation(
+                name: "get",
+                parameters: [parameter],
+                path: "/providers/a/test",
+                decorators: []);
+            var client = InputFactory.Client(
+                TestClientName,
+                methods: [InputFactory.BasicServiceMethod("Get", operation, parameters: [parameter])],
+                crossLanguageDefinitionId: $"Test.{TestClientName}",
+                decorators: []);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(clients: () => [client]);
+
+            var provider = plugin.Object.TypeFactory.CreateClient(client);
+            var generatedParameterNames = provider!.Methods
+                .SelectMany(method => method.Signature.Parameters)
+                .Where(methodParameter => methodParameter.WireInfo.SerializedName == parameterName)
+                .Select(methodParameter => methodParameter.Name);
+
+            Assert.That(generatedParameterNames, Is.Not.Empty);
+            Assert.That(generatedParameterNames, Is.All.EqualTo(expectedName));
         }
 
         [Test]
@@ -151,5 +194,18 @@ namespace Azure.Generator.Mgmt.Tests
 
             Assert.That(type?.Name, Is.EqualTo("OperationSpecificUpdateShape"));
         }
+
+        private static InputType GetInputType(string inputTypeName) => inputTypeName switch
+        {
+            "dateTime" => new InputDateTimeType(
+                DateTimeKnownEncoding.Rfc3339,
+                "utcDateTime",
+                "TypeSpec.utcDateTime",
+                InputPrimitiveType.String),
+            "nullableDateTime" => new InputNullableType(GetInputType("dateTime")),
+            "plainDate" => InputPrimitiveType.PlainDate,
+            "string" => InputPrimitiveType.String,
+            _ => throw new ArgumentOutOfRangeException(nameof(inputTypeName))
+        };
     }
 }
