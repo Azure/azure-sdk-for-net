@@ -41,6 +41,8 @@ namespace Azure.Generator.Mgmt.Tests
         [TestCase("StartTime", "dateTime", "StartOn")]
         [TestCase("StartTimestamp", "dateTime", "StartOn")]
         [TestCase("EndTimeStamp", "dateTime", "EndOn")]
+        [TestCase("Timestamp", "dateTime", "On")]
+        [TestCase("TimeStamp", "dateTime", "On")]
         [TestCase("Date", "plainDate", "On")]
         [TestCase("LastTimestamp", "nullableDateTime", "LastOn")]
         [TestCase("StartTimestamp", "string", "StartTimestamp")]
@@ -71,6 +73,7 @@ namespace Azure.Generator.Mgmt.Tests
 
         [TestCase("startTimestamp", "dateTime", "startOn")]
         [TestCase("endTimeStamp", "nullableDateTime", "endOn")]
+        [TestCase("timestamp", "dateTime", "on")]
         [TestCase("date", "plainDate", "on")]
         [TestCase("startTimestamp", "string", "startTimestamp")]
         [TestCase("fromTimestamp", "dateTime", "fromTimestamp")]

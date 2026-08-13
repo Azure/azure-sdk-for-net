@@ -198,9 +198,11 @@ internal class NameVisitor : ScmLibraryVisitor
         }
 
         var lengthToCut = 0;
-        if (name.Length > 9 &&
+        if ((name.Length > 9 &&
             (name.EndsWith("Timestamp", StringComparison.Ordinal) ||
-            name.EndsWith("TimeStamp", StringComparison.Ordinal)))
+            name.EndsWith("TimeStamp", StringComparison.Ordinal))) ||
+            name.Equals("Timestamp", StringComparison.OrdinalIgnoreCase) ||
+            name.Equals("TimeStamp", StringComparison.OrdinalIgnoreCase))
         {
             lengthToCut = 9;
         }
