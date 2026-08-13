@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure;
@@ -95,17 +96,44 @@ namespace Azure.Generator.Visitors
 
         private static bool TryGetOptionalResponse(
             ScmMethodProvider method,
-            out CSharpType responseBodyType,
+            [NotNullWhen(true)] out CSharpType? responseBodyType,
             out IReadOnlyList<int> noBodyStatusCodes)
         {
-            responseBodyType = null!;
+            responseBodyType = null;
             noBodyStatusCodes = [];
 
-            var successResponses = method.ServiceMethod!.Operation.Responses
-                .Where(response => !response.IsErrorResponse)
-                .ToList();
-            if (!successResponses.Any(response => response.BodyType is not null)
-                || !successResponses.Any(response => response.BodyType is null))
+            var bodyStatusCodes = new HashSet<int>();
+            var candidateNoBodyStatusCodes = new List<int>();
+            var candidateNoBodyStatusCodeSet = new HashSet<int>();
+            foreach (var response in method.ServiceMethod!.Operation.Responses)
+            {
+                if (response.IsErrorResponse)
+                {
+                    continue;
+                }
+
+                if (response.BodyType is not null)
+                {
+                    bodyStatusCodes.UnionWith(response.StatusCodes);
+                    continue;
+                }
+
+                foreach (int statusCode in response.StatusCodes)
+                {
+                    if (candidateNoBodyStatusCodeSet.Add(statusCode))
+                    {
+                        candidateNoBodyStatusCodes.Add(statusCode);
+                    }
+                }
+            }
+
+            if (bodyStatusCodes.Count == 0 || candidateNoBodyStatusCodes.Count == 0)
+            {
+                return false;
+            }
+
+            candidateNoBodyStatusCodes.RemoveAll(bodyStatusCodes.Contains);
+            if (candidateNoBodyStatusCodes.Count == 0)
             {
                 return false;
             }
@@ -134,19 +162,8 @@ namespace Azure.Generator.Visitors
             }
 
             responseBodyType = returnType.Arguments[0].WithNullable(false);
-            var bodyStatusCodes = successResponses
-                .Where(response => response.BodyType is not null)
-                .SelectMany(response => response.StatusCodes)
-                .ToHashSet();
-            noBodyStatusCodes =
-            [
-                .. successResponses
-                    .Where(response => response.BodyType is null)
-                    .SelectMany(response => response.StatusCodes)
-                    .Where(statusCode => !bodyStatusCodes.Contains(statusCode))
-                    .Distinct()
-            ];
-            return noBodyStatusCodes.Count > 0;
+            noBodyStatusCodes = candidateNoBodyStatusCodes;
+            return true;
         }
     }
 }

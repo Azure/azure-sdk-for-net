@@ -57,6 +57,38 @@ namespace Azure.Generator.Tests.Visitors
         }
 
         [Test]
+        public void CombinesMultipleNoBodyStatusCodes()
+        {
+            var operation = InputFactory.Operation(
+                "GetLayout",
+                responses:
+                [
+                    InputFactory.OperationResponse([200], InputPrimitiveType.String),
+                    InputFactory.OperationResponse([204, 205])
+                ]);
+            var serviceMethod = InputFactory.BasicServiceMethod("GetLayout", operation);
+            var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
+
+            MockHelpers.LoadMockGenerator(
+                createCSharpTypeCore: inputType => inputType == InputPrimitiveType.String
+                    ? new CSharpType(typeof(string))
+                    : new CSharpType(typeof(bool)),
+                clients: () => [inputClient]);
+
+            var client = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            Assert.IsNotNull(client);
+            var methodCollection = new ScmMethodProviderCollection(serviceMethod, client!);
+            var method = methodCollection.Single(
+                m => m.Kind == ScmMethodKind.Convenience && m.Signature.Name == "GetLayout");
+
+            new TestOptionalResponseBodyVisitor().Visit(method);
+
+            StringAssert.Contains(
+                "if (((result.Status == 204) || (result.Status == 205)))",
+                method.BodyStatements!.ToDisplayString());
+        }
+
+        [Test]
         public void DoesNotUseNullableResponseWhenStatusCodeCannotDiscriminateBody()
         {
             var operation = InputFactory.Operation(
