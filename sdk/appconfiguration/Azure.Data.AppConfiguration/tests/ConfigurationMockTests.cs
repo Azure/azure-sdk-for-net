@@ -31,6 +31,7 @@ namespace Azure.Data.AppConfiguration.Tests
         private static readonly string s_connectionString = $"Endpoint={s_endpoint};Id={s_credential};Secret={s_secret}";
         private static readonly string s_troubleshootingLink = "https://aka.ms/azsdk/net/appconfiguration/troubleshoot";
         private static readonly string s_version = new ConfigurationClientOptions().Version;
+        private static readonly string s_featureFlagVersion = new FeatureFlagClientOptions().Version;
 
         private static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting("test_key", "test_value")
         {
@@ -55,6 +56,16 @@ namespace Azure.Data.AppConfiguration.Tests
             var client = InstrumentClient(new ConfigurationClient(s_connectionString, options));
 
             return client;
+        }
+
+        private FeatureFlagClient CreateFeatureFlagTestService(HttpPipelineTransport transport)
+        {
+            var options = new FeatureFlagClientOptions
+            {
+                Transport = transport
+            };
+
+            return InstrumentClient(new FeatureFlagClient(s_connectionString, options));
         }
 
         [Test]
@@ -844,13 +855,41 @@ namespace Azure.Data.AppConfiguration.Tests
 
             MockRequest request1 = mockTransport.Requests[0];
             Assert.That(request1.Method, Is.EqualTo(RequestMethod.Get));
-            Assert.That(request1.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/labels?api-version={s_version}"));
+            Assert.That(request1.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/labels?api-version={s_version}&resourceType=kv").IgnoreCase);
             AssertRequestCommon(request1);
 
             MockRequest request2 = mockTransport.Requests[1];
             Assert.That(request2.Method, Is.EqualTo(RequestMethod.Get));
             Assert.That(request2.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/labels?after=5&api-version={s_version}"));
             AssertRequestCommon(request1);
+        }
+
+        [Test]
+        public async Task GetLabelsWithResourceType()
+        {
+            var response = new MockResponse(200);
+            var responseLabels = new[]
+            {
+                CreateLabel(0),
+                CreateLabel(1)
+            };
+            response.SetContent(SerializationHelpers.Serialize((Items: responseLabels, NextLink: (string)null), SerializeLabels));
+
+            var mockTransport = new MockTransport(response);
+            FeatureFlagClient service = CreateFeatureFlagTestService(mockTransport);
+
+            var query = new FeatureFlagLabelSelector();
+
+            await foreach (SettingLabel label in service.GetLabelsAsync(query, CancellationToken.None))
+            {
+            }
+
+            Assert.That(mockTransport.Requests.Count, Is.EqualTo(1));
+
+            MockRequest request = mockTransport.Requests[0];
+            Assert.That(request.Method, Is.EqualTo(RequestMethod.Get));
+            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/labels?api-version={s_featureFlagVersion}&resourceType=ff").IgnoreCase);
+            AssertRequestCommon(request);
         }
 
         [Test]

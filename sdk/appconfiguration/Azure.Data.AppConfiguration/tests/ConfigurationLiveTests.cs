@@ -16,8 +16,10 @@ using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
 {
+    // Test against the latest GA, plus the latest preview when newer than GA.
     [ClientTestFixture(
-        ConfigurationClientOptions.ServiceVersion.V2026_04_01)]
+        ConfigurationClientOptions.ServiceVersion.V2026_04_01,
+        ConfigurationClientOptions.ServiceVersion.V2026_05_01_Preview)]
     public class ConfigurationLiveTests : RecordedTestBase<AppConfigurationTestEnvironment>
     {
         private readonly ConfigurationClientOptions.ServiceVersion _serviceVersion;
@@ -28,6 +30,38 @@ namespace Azure.Data.AppConfiguration.Tests
         {
             _serviceVersion = serviceVersion;
         }
+
+        [SetUp]
+        public async Task SkipUnsupportedPreviewFixtureAsync()
+        {
+            if (_serviceVersion != ConfigurationClientOptions.ServiceVersion.V2026_05_01_Preview)
+            {
+                return;
+            }
+
+            if (Mode != RecordedTestMode.Live)
+            {
+                Assert.Ignore("Preview API fixture only runs in Live mode.");
+            }
+
+            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
+
+            try
+            {
+                await service.GetConfigurationSettingAsync("preview-version-probe", label: null, cancellationToken: default).ConfigureAwait(false);
+            }
+            catch (RequestFailedException ex) when (IsUnsupportedApiVersion(ex))
+            {
+                Assert.Ignore($"Configuration tests require API version {ConfigurationClientOptions.ServiceVersion.V2026_05_01_Preview}.");
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+                // Expected when API version is supported and the probe key does not exist.
+            }
+        }
+
+        private static bool IsUnsupportedApiVersion(RequestFailedException ex)
+            => ex.Status == 400 && ex.Message.IndexOf("Unsupported API version", StringComparison.OrdinalIgnoreCase) >= 0;
 
         private string GenerateKeyId(string prefix = null)
         {

@@ -34,7 +34,7 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(conditions, nameof(conditions));
 
-            var conditionalPageable = pageable as AsyncConditionalPageable;
+            var conditionalPageable = pageable as AsyncConditionalPageable<ConfigurationSetting>;
 
             if (conditionalPageable is null)
             {
@@ -66,7 +66,7 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(conditions, nameof(conditions));
 
-            var conditionalPageable = pageable as ConditionalPageable;
+            var conditionalPageable = pageable as ConditionalPageable<ConfigurationSetting>;
 
             if (conditionalPageable is null)
             {
