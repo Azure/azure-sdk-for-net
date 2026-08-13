@@ -147,7 +147,7 @@ What the SDK does for you when the registered handler derives from `InvocationWe
 - Emits a structured close-event log line carrying `session_id`, `close_code`, and `duration_ms`. No framework-level OpenTelemetry span is created for the connection — ASP.NET Core auto-propagates the inbound W3C trace context, so any spans your handler starts are parented correctly without a per-connection wrapper.
 - When the registered handler is a plain `InvocationHandler` (not an `InvocationWebSocketHandler`), an upgrade attempt receives HTTP `404 Not Found` — the WS endpoint short-circuits with "endpoint not registered" semantics so a missing handler fails fast instead of accepting and immediately closing.
 
-The session ID uses the `agent_session_id` query parameter, then `FOUNDRY_AGENT_SESSION_ID`, then a generated UUID. Bridge reconnects can therefore retain a stable session ID on each WebSocket upgrade.
+The session ID honours `FOUNDRY_AGENT_SESSION_ID` (matching the HTTP `POST /invocations` precedence, minus the query-param override which has no ergonomic equivalent on a long-lived WS connection), falling back to a generated UUID. Both transports on the same container therefore report the same session ID.
 
 ### Typed Voice relay
 

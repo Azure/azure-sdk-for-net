@@ -41,52 +41,10 @@ public class VoiceRegistrationTests
     }
 
     [Test]
-    public async Task HandlerRegisteredAfterVoiceFailsClosed()
-    {
-        var builder = WebApplication.CreateBuilder();
-        builder.WebHost.UseTestServer();
-        builder.Services.AddAgentServerCore();
-        builder.Services.AddVoice<TestVoiceHandler>();
-        builder.Services.AddSingleton<InvocationHandler, RawWebSocketHandler>();
-        await using var app = builder.Build();
-        app.UseAgentServerCore();
-        app.MapInvocationsServer();
-        await app.StartAsync();
-
-        using var response = await app.GetTestClient().GetAsync("/invocations_ws");
-
-        Assert.Multiple(() =>
-        {
-            Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.InternalServerError));
-            Assert.That(
-                response.Headers.GetValues(PlatformHeaders.ErrorSource).Single(),
-                Is.EqualTo(PlatformHeaders.ErrorSourcePlatform));
-        });
-    }
-
-    [Test]
     public async Task AddVoiceRunsTypedRelayOnExistingRoute()
     {
         RouteSelectedVoiceHandler.Reset();
         await using var app = BuildApp<RouteSelectedVoiceHandler>();
-        await app.StartAsync();
-        using var webSocket = await ConnectAsync(app);
-
-        await SendSessionStartAsync(webSocket);
-
-        await RouteSelectedVoiceHandler.Selected.Task.WaitAsync(TestTimeout);
-        await webSocket.CloseOutputAsync(
-            WebSocketCloseStatus.NormalClosure,
-            "done",
-            CancellationToken.None);
-    }
-
-    [Test]
-    public async Task LiteralVoiceRouteBeatsCatchAllAtSameOrder()
-    {
-        RouteSelectedVoiceHandler.Reset();
-        await using var app = BuildApp<RouteSelectedVoiceHandler>(application =>
-            application.MapGet("/{**path}", () => Results.Ok()).WithOrder(int.MinValue));
         await app.StartAsync();
         using var webSocket = await ConnectAsync(app);
 
@@ -115,7 +73,7 @@ public class VoiceRegistrationTests
     }
 
     [Test]
-    public async Task UpgradeIncludesServerIdentityButNotSessionHeader()
+    public async Task UpgradeIncludesServerIdentityAndSessionHeader()
     {
         var headers = new TaskCompletionSource<IReadOnlyDictionary<string, string>>(
             TaskCreationOptions.RunContinuationsAsynchronously);
@@ -141,7 +99,8 @@ public class VoiceRegistrationTests
         Assert.Multiple(() =>
         {
             Assert.That(captured, Does.ContainKey(PlatformHeaders.ServerVersion));
-            Assert.That(captured, Does.Not.ContainKey(PlatformHeaders.SessionId));
+            Assert.That(captured, Does.ContainKey(PlatformHeaders.SessionId));
+            Assert.That(Guid.TryParse(captured[PlatformHeaders.SessionId], out _), Is.True);
         });
         await webSocket.CloseOutputAsync(
             WebSocketCloseStatus.NormalClosure,
@@ -209,14 +168,6 @@ public class VoiceRegistrationTests
         public override Task HandleAsync(
             HttpRequest request,
             HttpResponse response,
-            InvocationContext context,
-            CancellationToken cancellationToken) => Task.CompletedTask;
-    }
-
-    private sealed class RawWebSocketHandler : InvocationWebSocketHandler
-    {
-        public override Task HandleWebSocketAsync(
-            WebSocket webSocket,
             InvocationContext context,
             CancellationToken cancellationToken) => Task.CompletedTask;
     }

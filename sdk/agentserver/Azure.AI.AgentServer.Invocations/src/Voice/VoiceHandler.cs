@@ -8,16 +8,6 @@ using Azure.AI.AgentServer.Invocations.Internal;
 
 namespace Azure.AI.AgentServer.Invocations.Voice;
 
-internal readonly record struct VoiceWebSocketCloseResult(
-    WebSocketCloseStatus? Status,
-    string Reason,
-    string? ErrorCode,
-    Exception? Exception,
-    Exception? CleanupException = null)
-{
-    internal int Code => Status is null ? 1006 : (int)Status.Value;
-}
-
 /// <summary>Thin typed event relay for Voice Live Bridge Protocol 1.0.</summary>
 /// <remarks>
 /// Callbacks are awaited in wire order. Applications that need work to outlive a callback
@@ -39,11 +29,17 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
             connection,
             context,
             cancellationToken).ConfigureAwait(false);
-        await connection.CloseAsync(outcome.Status, outcome.Reason).ConfigureAwait(false);
-        if (outcome.Exception is not null)
+        var closeException = await connection.CloseAsync(outcome.Status, outcome.Reason).ConfigureAwait(false);
+        if (closeException is not null)
         {
-            throw outcome.Exception;
+            outcome = outcome with
+            {
+                CleanupException = outcome.CleanupException is null
+                    ? closeException
+                    : new AggregateException(outcome.CleanupException, closeException),
+            };
         }
+        context.WebSocketCloseResult = outcome;
     }
 
     /// <summary>Handles an explicit application start event.</summary>
@@ -114,13 +110,13 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
     {
     }
 
-    internal async Task<VoiceWebSocketCloseResult> HandleWebSocketConnectionAsync(
+    internal async Task<InvocationsWebSocketCloseResult> HandleWebSocketConnectionAsync(
         InvocationsWebSocketConnection connection,
         InvocationContext context,
         CancellationToken cancellationToken)
     {
         var session = new VoiceSession(connection, context);
-        VoiceWebSocketCloseResult outcome;
+        InvocationsWebSocketCloseResult outcome;
         try
         {
             while (true)
@@ -129,7 +125,7 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
                 if (received.IsClose)
                 {
                     var peerStatus = connection.PeerCloseStatus;
-                    outcome = new VoiceWebSocketCloseResult(
+                    outcome = new InvocationsWebSocketCloseResult(
                         peerStatus,
                         connection.PeerCloseStatusDescription ?? string.Empty,
                         ErrorCode: null,
@@ -152,7 +148,7 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
                     }
                     catch (Exception exception)
                     {
-                        outcome = new VoiceWebSocketCloseResult(
+                        outcome = new InvocationsWebSocketCloseResult(
                             WebSocketCloseStatus.InternalServerError,
                             "Internal server error",
                             InvocationsWebSocketConstants.ErrorCodeInternalError,
@@ -170,7 +166,7 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
             when (exception.CancellationToken == cancellationToken &&
                   cancellationToken.IsCancellationRequested)
         {
-            outcome = new VoiceWebSocketCloseResult(
+            outcome = new InvocationsWebSocketCloseResult(
                 Status: null,
                 Reason: string.Empty,
                 ErrorCode: null,
@@ -178,7 +174,7 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
         }
         catch (Exception exception) when (exception is WebSocketException or IOException or ObjectDisposedException)
         {
-            outcome = new VoiceWebSocketCloseResult(
+            outcome = new InvocationsWebSocketCloseResult(
                 Status: null,
                 Reason: string.Empty,
                 ErrorCode: null,
@@ -186,7 +182,7 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
         }
         catch (Exception exception)
         {
-            outcome = new VoiceWebSocketCloseResult(
+            outcome = new InvocationsWebSocketCloseResult(
                 WebSocketCloseStatus.InternalServerError,
                 "Internal server error",
                 InvocationsWebSocketConstants.ErrorCodeInternalError,
@@ -323,7 +319,7 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
         }
     }
 
-    private static VoiceWebSocketCloseResult ProtocolOutcome(VoiceProtocolException exception) =>
+    private static InvocationsWebSocketCloseResult ProtocolOutcome(VoiceProtocolException exception) =>
         new(
             (WebSocketCloseStatus)exception.CloseCode,
             exception.CloseCode switch

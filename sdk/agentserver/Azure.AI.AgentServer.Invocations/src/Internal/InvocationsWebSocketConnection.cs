@@ -6,6 +6,16 @@ using System.Net.WebSockets;
 
 namespace Azure.AI.AgentServer.Invocations.Internal;
 
+internal readonly record struct InvocationsWebSocketCloseResult(
+    WebSocketCloseStatus? Status,
+    string Reason,
+    string? ErrorCode,
+    Exception? Exception,
+    Exception? CleanupException = null)
+{
+    internal int Code => Status is null ? 1006 : (int)Status.Value;
+}
+
 /// <summary>Serializes application frames and the final close frame.</summary>
 internal sealed class InvocationsWebSocketConnection
 {

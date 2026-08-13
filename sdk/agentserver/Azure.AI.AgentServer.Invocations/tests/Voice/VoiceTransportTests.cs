@@ -331,7 +331,7 @@ public class VoiceTransportTests
         webSocket.ReleaseClose.TrySetResult();
     }
 
-    private static Task<VoiceWebSocketCloseResult> RunHandlerAsync(
+    private static Task<InvocationsWebSocketCloseResult> RunHandlerAsync(
         VoiceHandler handler,
         InvocationsWebSocketConnection connection,
         CancellationToken cancellationToken = default) =>

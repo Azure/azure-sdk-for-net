@@ -307,34 +307,6 @@ public class WebSocketEndpointTests
     }
 
     [Test]
-    public async Task SessionId_QueryParameterPrecedesEnvironment()
-    {
-        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_ID", "ws-session-from-env");
-        FoundryEnvironment.Reload();
-
-        var observed = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
-        var app = BuildApp(new CaptureSessionIdInvocationHandler(observed));
-        await app.StartAsync();
-        try
-        {
-            var server = app.GetTestServer();
-            var wsClient = server.CreateWebSocketClient();
-            var uri = new Uri(server.BaseAddress, "invocations_ws?agent_session_id=stable-query-session");
-
-            using var ws = await wsClient.ConnectAsync(uri, CancellationToken.None);
-            await ws.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "client done", CancellationToken.None);
-
-            Assert.That(
-                await observed.Task.WaitAsync(TimeSpan.FromSeconds(5)),
-                Is.EqualTo("stable-query-session"));
-        }
-        finally
-        {
-            await app.StopAsync();
-        }
-    }
-
-    [Test]
     public async Task SessionId_FallsBackToGeneratedUuid_WhenEnvUnset()
     {
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_ID", null);

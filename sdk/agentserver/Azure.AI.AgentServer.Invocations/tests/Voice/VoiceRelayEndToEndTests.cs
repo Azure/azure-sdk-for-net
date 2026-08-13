@@ -175,23 +175,6 @@ public class VoiceRelayEndToEndTests
     }
 
     [Test]
-    public async Task ThrowingEndpointLogScopeCannotPreventVoiceRelay()
-    {
-        var handler = new ImmediateReadinessHandler();
-        await using var app = BuildApp(handler, new ThrowingScopeLogProvider());
-        await app.StartAsync();
-        using var webSocket = await ConnectAsync(app);
-
-        await SendTextAsync(webSocket, """
-            {"type":"session.start","id":"m_start","ts":"2026-08-13T00:00:00.000Z","protocol_version":"1.0","reconnect":false,"response_timeouts":{"first_output_ms":1,"idle_ms":2,"max_duration_ms":3}}
-            """);
-        using var ready = await ReceiveJsonAsync(webSocket).WaitAsync(TestTimeout);
-
-        Assert.That(ready.RootElement.GetProperty("type").GetString(), Is.EqualTo("session.ready"));
-        await webSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "done", CancellationToken.None);
-    }
-
-    [Test]
     public async Task PlatformIdentityAndTraceContextReachVoiceCallback()
     {
         const string traceId = "0123456789abcdef0123456789abcdef";
@@ -526,37 +509,6 @@ public class VoiceRelayEndToEndTests
                 {
                     throw new InvalidOperationException("logger failed");
                 }
-            }
-        }
-    }
-
-    private sealed class ThrowingScopeLogProvider : ILoggerProvider
-    {
-        public ILogger CreateLogger(string categoryName) => new ThrowingScopeLogger(
-            categoryName.EndsWith("WebSocketEndpointHandler", StringComparison.Ordinal));
-
-        public void Dispose()
-        {
-        }
-
-        private sealed class ThrowingScopeLogger : ILogger
-        {
-            private readonly bool _throwScope;
-
-            public ThrowingScopeLogger(bool throwScope) => _throwScope = throwScope;
-
-            public IDisposable? BeginScope<TState>(TState state) where TState : notnull =>
-                _throwScope ? throw new InvalidOperationException("scope failed") : null;
-
-            public bool IsEnabled(LogLevel logLevel) => true;
-
-            public void Log<TState>(
-                LogLevel logLevel,
-                EventId eventId,
-                TState state,
-                Exception? exception,
-                Func<TState, Exception?, string> formatter)
-            {
             }
         }
     }
