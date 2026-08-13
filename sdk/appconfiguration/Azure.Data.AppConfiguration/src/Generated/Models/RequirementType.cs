@@ -10,13 +10,13 @@ using System.ComponentModel;
 
 namespace Azure.Data.AppConfiguration
 {
-    /// <summary> Requirement Type. </summary>
+    /// <summary> Controls how multiple feature-flag filters are combined. </summary>
     public readonly partial struct RequirementType : IEquatable<RequirementType>
     {
         private readonly string _value;
-        /// <summary> Any. </summary>
+        /// <summary> Enables the feature flag when any filter matches. </summary>
         private const string AnyValue = "Any";
-        /// <summary> All. </summary>
+        /// <summary> Enables the feature flag only when all filters match. </summary>
         private const string AllValue = "All";
 
         /// <summary> Initializes a new instance of <see cref="RequirementType"/>. </summary>
@@ -29,10 +29,10 @@ namespace Azure.Data.AppConfiguration
             _value = value;
         }
 
-        /// <summary> Any. </summary>
+        /// <summary> Enables the feature flag when any filter matches. </summary>
         public static RequirementType Any { get; } = new RequirementType(AnyValue);
 
-        /// <summary> All. </summary>
+        /// <summary> Enables the feature flag only when all filters match. </summary>
         public static RequirementType All { get; } = new RequirementType(AllValue);
 
         /// <summary> Determines if two <see cref="RequirementType"/> values are the same. </summary>

@@ -82,7 +82,7 @@ namespace Azure.Data.AppConfiguration
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Items)
                 {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureDataAppConfigurationContext.Default));
+                    items.Add(ModelReaderWriter.Write(item, ModelReaderWriterOptions.Json, AzureDataAppConfigurationContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
