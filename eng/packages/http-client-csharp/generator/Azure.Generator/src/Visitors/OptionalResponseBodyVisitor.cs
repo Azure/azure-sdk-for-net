@@ -134,11 +134,16 @@ namespace Azure.Generator.Visitors
             }
 
             responseBodyType = returnType.Arguments[0].WithNullable(false);
+            var bodyStatusCodes = successResponses
+                .Where(response => response.BodyType is not null)
+                .SelectMany(response => response.StatusCodes)
+                .ToHashSet();
             noBodyStatusCodes =
             [
                 .. successResponses
                     .Where(response => response.BodyType is null)
                     .SelectMany(response => response.StatusCodes)
+                    .Where(statusCode => !bodyStatusCodes.Contains(statusCode))
                     .Distinct()
             ];
             return noBodyStatusCodes.Count > 0;

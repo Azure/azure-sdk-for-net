@@ -56,6 +56,39 @@ namespace Azure.Generator.Tests.Visitors
                 methodBody);
         }
 
+        [Test]
+        public void DoesNotUseNullableResponseWhenStatusCodeCannotDiscriminateBody()
+        {
+            var operation = InputFactory.Operation(
+                "GetLayout",
+                responses:
+                [
+                    InputFactory.OperationResponse([200], InputPrimitiveType.String),
+                    InputFactory.OperationResponse([200])
+                ]);
+            var serviceMethod = InputFactory.BasicServiceMethod("GetLayout", operation);
+            var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
+
+            MockHelpers.LoadMockGenerator(
+                createCSharpTypeCore: inputType => inputType == InputPrimitiveType.String
+                    ? new CSharpType(typeof(string))
+                    : new CSharpType(typeof(bool)),
+                clients: () => [inputClient]);
+
+            var client = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            Assert.IsNotNull(client);
+            var methodCollection = new ScmMethodProviderCollection(serviceMethod, client!);
+            var method = methodCollection.Single(
+                m => m.Kind == ScmMethodKind.Convenience && m.Signature.Name == "GetLayout");
+            var originalReturnType = method.Signature.ReturnType;
+            var originalBody = method.BodyStatements!.ToDisplayString();
+
+            new TestOptionalResponseBodyVisitor().Visit(method);
+
+            Assert.AreEqual(originalReturnType, method.Signature.ReturnType);
+            Assert.AreEqual(originalBody, method.BodyStatements!.ToDisplayString());
+        }
+
         private sealed class TestOptionalResponseBodyVisitor : OptionalResponseBodyVisitor
         {
             public void Visit(ScmMethodProvider method) => VisitMethod(method);

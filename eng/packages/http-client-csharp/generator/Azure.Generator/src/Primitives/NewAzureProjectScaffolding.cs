@@ -109,8 +109,15 @@ namespace Azure.Generator.Primitives
                     hasStreamingOperation = true;
                 }
                 var successResponses = method.Operation.Responses.Where(response => !response.IsErrorResponse);
-                if (successResponses.Any(response => response.BodyType is not null)
-                    && successResponses.Any(response => response.BodyType is null))
+                var bodyStatusCodes = successResponses
+                    .Where(response => response.BodyType is not null)
+                    .SelectMany(response => response.StatusCodes)
+                    .ToHashSet();
+                if (bodyStatusCodes.Count > 0
+                    && successResponses
+                    .Where(response => response.BodyType is null)
+                    .SelectMany(response => response.StatusCodes)
+                    .Any(statusCode => !bodyStatusCodes.Contains(statusCode)))
                 {
                     hasOptionalResponseBody = true;
                 }
