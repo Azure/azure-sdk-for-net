@@ -5,19 +5,24 @@
 ### Features Added
 
 - Added distributed tracing support.
+- Added preview support for creating voice agents and retrieving their persisted conversations, responses, items, metrics, and audio.
+- Added preview real-time voice-agent sessions over WebSockets, including text and binary message exchange.
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
 - Fixed listing of Agent Optimization Jobs.
 - Fixed the `StopSession` and `StopSessionAsync` calls.
 
 ### Other Changes
 
 ### Sample Updates
+
 - Added sample demonstrating disabling and enabling Hosted Agent.
 - Added samples for Agent optimization jobs.
 - Added sample for creating Agent version drafts.
+- Added a sample demonstrating voice-agent creation, real-time interaction, and persisted conversation retrieval.
 
 ## 2.1.0-beta.4 (2026-06-30)
 

@@ -62,11 +62,22 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("GetSessionLogStreamAsync", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
 public partial class AgentAdministrationClient
 {
+    private readonly AuthenticationTokenProvider _tokenProvider;
     private AgentToolboxes _cachedAgentsToolboxes;
     [Experimental("AAIP001")]
     private ProjectAgentSkills _cachedAgentSkills;
     [Experimental("AAIP001")]
     private AgentOptimizationJobs _cachedAgentOptimizationJobs;
+    [Experimental("AAIP001")]
+    private VoiceAgentWebSocket _cachedVoiceAgentWebSocket;
+    [Experimental("AAIP001")]
+    private AgentEndpointConversations _cachedAgentEndpointConversations;
+
+    internal AgentAdministrationClient(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion, AuthenticationTokenProvider tokenProvider)
+        : this(clientDiagnostics, pipeline, endpoint, apiVersion)
+    {
+        _tokenProvider = tokenProvider;
+    }
     /// <summary>
     /// Initializes a new <see cref="AgentAdministrationClient"/> with the specified
     /// service endpoint and authentication token provider.
@@ -79,6 +90,7 @@ public partial class AgentAdministrationClient
         Argument.AssertNotNull(endpoint, nameof(endpoint));
         Argument.AssertNotNull(tokenProvider, nameof(tokenProvider));
         options ??= new();
+        _tokenProvider = tokenProvider;
 
         Dictionary<string, object>[] _flows = new Dictionary<string, object>[]
         {
@@ -1121,6 +1133,20 @@ public partial class AgentAdministrationClient
     [Experimental("AAIP001")]
     public virtual AgentOptimizationJobs GetAgentOptimizationJobs()
     {
-           return Volatile.Read(ref _cachedAgentOptimizationJobs) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobs, new AgentOptimizationJobs(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobs;
+        return Volatile.Read(ref _cachedAgentOptimizationJobs) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobs, new AgentOptimizationJobs(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobs;
+    }
+
+    /// <summary> Gets the client for starting real-time voice-agent sessions. </summary>
+    [Experimental("AAIP001")]
+    public virtual VoiceAgentWebSocket GetVoiceAgentWebSocket()
+    {
+        return Volatile.Read(ref _cachedVoiceAgentWebSocket) ?? Interlocked.CompareExchange(ref _cachedVoiceAgentWebSocket, new VoiceAgentWebSocket(Pipeline, _endpoint, _apiVersion, _tokenProvider), null) ?? _cachedVoiceAgentWebSocket;
+    }
+
+    /// <summary> Gets the client for retrieving persisted voice-agent conversations. </summary>
+    [Experimental("AAIP001")]
+    public virtual AgentEndpointConversations GetAgentEndpointConversations()
+    {
+        return Volatile.Read(ref _cachedAgentEndpointConversations) ?? Interlocked.CompareExchange(ref _cachedAgentEndpointConversations, new AgentEndpointConversations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentEndpointConversations;
     }
 }
