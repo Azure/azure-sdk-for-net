@@ -11,3 +11,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Synapse
       safeName: AzureResourceManagerSynapse
+    - name: Azure.Provisioning.Synapse
+      safeName: AzureProvisioningSynapse
