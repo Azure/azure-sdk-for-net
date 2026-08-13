@@ -6554,13 +6554,18 @@
       "crossLanguageDefinitionId": "BasicTypeSpec.StreamingItem",
       "usage": "Input,Output,Json",
       "decorators": [],
-      "serializationOptions": {},
+      "serializationOptions": {
+        "json": {
+          "name": "StreamingItem"
+        }
+      },
       "isExactName": false,
       "properties": [
         {
           "$id": "490",
           "kind": "property",
           "name": "message",
+          "serializedName": "message",
           "type": {
             "$id": "491",
             "kind": "string",
@@ -6574,7 +6579,11 @@
           "flatten": false,
           "decorators": [],
           "crossLanguageDefinitionId": "BasicTypeSpec.StreamingItem.message",
-          "serializationOptions": {},
+          "serializationOptions": {
+            "json": {
+              "name": "message"
+            }
+          },
           "isHttpMetadata": false,
           "isExactName": false
         }
