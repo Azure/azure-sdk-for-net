@@ -117,11 +117,16 @@ internal class NameVisitor : ScmLibraryVisitor
     {
         foreach (var method in client.Methods)
         {
+            var parameters = new HashSet<InputParameter>();
             foreach (var parameter in method.Parameters)
             {
-                DoPreVisitParameterForTimeName(parameter);
+                parameters.Add(parameter);
             }
             foreach (var parameter in method.Operation.Parameters)
+            {
+                parameters.Add(parameter);
+            }
+            foreach (var parameter in parameters)
             {
                 DoPreVisitParameterForTimeName(parameter);
             }
@@ -201,8 +206,7 @@ internal class NameVisitor : ScmLibraryVisitor
         if ((name.Length > 9 &&
             (name.EndsWith("Timestamp", StringComparison.Ordinal) ||
             name.EndsWith("TimeStamp", StringComparison.Ordinal))) ||
-            name.Equals("Timestamp", StringComparison.OrdinalIgnoreCase) ||
-            name.Equals("TimeStamp", StringComparison.OrdinalIgnoreCase))
+            name.Equals("Timestamp", StringComparison.OrdinalIgnoreCase))
         {
             lengthToCut = 9;
         }
