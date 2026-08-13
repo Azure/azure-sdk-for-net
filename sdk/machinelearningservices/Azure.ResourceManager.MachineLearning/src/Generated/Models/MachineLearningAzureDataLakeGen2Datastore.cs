@@ -15,21 +15,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningAzureDataLakeGen2Datastore : MachineLearningDatastoreProperties
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningAzureDataLakeGen2Datastore"/>. </summary>
-        /// <param name="credentials"> [Required] Account credentials. </param>
-        /// <param name="accountName"> [Required] Storage account name. </param>
-        /// <param name="filesystem"> [Required] The name of the Data Lake Gen2 filesystem. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credentials"/>, <paramref name="accountName"/> or <paramref name="filesystem"/> is null. </exception>
-        public MachineLearningAzureDataLakeGen2Datastore(MachineLearningDatastoreCredentials credentials, string accountName, string filesystem) : base(credentials, DatastoreType.AzureDataLakeGen2)
-        {
-            Argument.AssertNotNull(credentials, nameof(credentials));
-            Argument.AssertNotNull(accountName, nameof(accountName));
-            Argument.AssertNotNull(filesystem, nameof(filesystem));
-
-            AccountName = accountName;
-            Filesystem = filesystem;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningAzureDataLakeGen2Datastore"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
