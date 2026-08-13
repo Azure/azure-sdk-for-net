@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingBenefitsExtendedStatusInfo"/>. </summary>
-        public BillingBenefitsExtendedStatusInfo()
+        internal BillingBenefitsExtendedStatusInfo()
         {
         }
 
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         }
 
         /// <summary> Status code providing additional information. </summary>
-        public string StatusCode { get; set; }
+        public string StatusCode { get; }
 
         /// <summary> The message giving detailed information about the status code. </summary>
-        public string Message { get; set; }
+        public string Message { get; }
     }
 }

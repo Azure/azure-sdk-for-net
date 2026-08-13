@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(HciEdgeDeviceResource.ResourceType, out string hciEdgeDeviceApiVersion);
             _edgeDevicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", HciEdgeDeviceResource.ResourceType.Namespace, Diagnostics);
-            _edgeDevicesRestClient = new EdgeDevices(_edgeDevicesClientDiagnostics, Pipeline, Endpoint, hciEdgeDeviceApiVersion ?? "2026-04-01-preview");
+            _edgeDevicesRestClient = new EdgeDevices(_edgeDevicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciEdgeDeviceApiVersion ?? "2026-05-01-preview");
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeDevicesRestClient.CreateCreateOrUpdateRequest(Id, edgeDeviceName, HciEdgeDeviceData.ToRequestContent(data), context);
+                HttpMessage message = _edgeDevicesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), edgeDeviceName, HciEdgeDeviceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciEdgeDeviceResource> operation = new HciArmOperation<HciEdgeDeviceResource>(
-                    new HciEdgeDeviceOperationSource(Client),
+                    new HciEdgeDeviceResourceOperationSource(Client),
                     _edgeDevicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeDevicesRestClient.CreateCreateOrUpdateRequest(Id, edgeDeviceName, HciEdgeDeviceData.ToRequestContent(data), context);
+                HttpMessage message = _edgeDevicesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), edgeDeviceName, HciEdgeDeviceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciEdgeDeviceResource> operation = new HciArmOperation<HciEdgeDeviceResource>(
-                    new HciEdgeDeviceOperationSource(Client),
+                    new HciEdgeDeviceResourceOperationSource(Client),
                     _edgeDevicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id, edgeDeviceName, context);
+                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id.ToString(), edgeDeviceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HciEdgeDeviceData> response = Response.FromValue(HciEdgeDeviceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id, edgeDeviceName, context);
+                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id.ToString(), edgeDeviceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HciEdgeDeviceData> response = Response.FromValue(HciEdgeDeviceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciEdgeDeviceData, HciEdgeDeviceResource>(new EdgeDevicesGetAllAsyncCollectionResultOfT(_edgeDevicesRestClient, Id, context, "HciEdgeDeviceCollection.GetAll"), data => new HciEdgeDeviceResource(Client, data));
+            return new AsyncPageableWrapper<HciEdgeDeviceData, HciEdgeDeviceResource>(new EdgeDevicesGetAllAsyncCollectionResultOfT(_edgeDevicesRestClient, Id.ToString(), context, "HciEdgeDeviceCollection.GetAll"), data => new HciEdgeDeviceResource(Client, data));
         }
 
         /// <summary>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciEdgeDeviceData, HciEdgeDeviceResource>(new EdgeDevicesGetAllCollectionResultOfT(_edgeDevicesRestClient, Id, context, "HciEdgeDeviceCollection.GetAll"), data => new HciEdgeDeviceResource(Client, data));
+            return new PageableWrapper<HciEdgeDeviceData, HciEdgeDeviceResource>(new EdgeDevicesGetAllCollectionResultOfT(_edgeDevicesRestClient, Id.ToString(), context, "HciEdgeDeviceCollection.GetAll"), data => new HciEdgeDeviceResource(Client, data));
         }
 
         /// <summary>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id, edgeDeviceName, context);
+                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id.ToString(), edgeDeviceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HciEdgeDeviceData> response = default;
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id, edgeDeviceName, context);
+                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id.ToString(), edgeDeviceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HciEdgeDeviceData> response = default;
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id, edgeDeviceName, context);
+                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id.ToString(), edgeDeviceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HciEdgeDeviceData> response = default;
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id, edgeDeviceName, context);
+                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id.ToString(), edgeDeviceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HciEdgeDeviceData> response = default;

@@ -6,27 +6,27 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Storage.Common;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The BlobLayoutRanges. </summary>
+    /// <summary> The ranges that make up a blob. </summary>
     public partial class BlobLayoutRanges
     {
         /// <summary> Initializes a new instance of <see cref="BlobLayoutRanges"/>. </summary>
         internal BlobLayoutRanges()
         {
-            Range = new ChangeTrackingList<BlobLayoutRangesRangeItem>();
+            Range = new ChangeTrackingList<BlobLayoutRange>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobLayoutRanges"/>. </summary>
-        /// <param name="range"></param>
-        internal BlobLayoutRanges(IReadOnlyList<BlobLayoutRangesRangeItem> range)
+        /// <param name="range"> The list of ranges. </param>
+        internal BlobLayoutRanges(IList<BlobLayoutRange> range)
         {
             Range = range;
         }
 
-        /// <summary> Gets the range. </summary>
-        public IReadOnlyList<BlobLayoutRangesRangeItem> Range { get; }
+        /// <summary> The list of ranges. </summary>
+        public IList<BlobLayoutRange> Range { get; }
     }
 }

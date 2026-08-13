@@ -145,7 +145,7 @@ namespace Azure.Data.SchemaRegistry
             return message;
         }
 
-        internal HttpMessage CreateGetSchemaPropertiesByContentRequest(string groupName, string schemaName, string contentType, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetSchemaPropertiesByContentRequest(string groupName, string schemaName, RequestContent content, string contentType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -167,7 +167,7 @@ namespace Azure.Data.SchemaRegistry
             return message;
         }
 
-        internal HttpMessage CreateRegisterSchemaRequest(string groupName, string schemaName, string contentType, RequestContent content, RequestContext context)
+        internal HttpMessage CreateRegisterSchemaRequest(string groupName, string schemaName, RequestContent content, string contentType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

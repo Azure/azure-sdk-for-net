@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Billing
 {
+    /// <summary></summary>
     public partial class BillingProfileResource : IJsonModel<BillingProfileData>
     {
-        private static BillingProfileData s_dataDeserializationInstance;
-        private static BillingProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<BillingProfileData> s_dataDeserializationInstance;
 
+        private static IJsonModel<BillingProfileData> DataDeserializationInstance => s_dataDeserializationInstance ??= new BillingProfileData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BillingProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BillingProfileData>)Data).Write(writer, options);
 
-        BillingProfileData IJsonModel<BillingProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingProfileData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BillingProfileData IJsonModel<BillingProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<BillingProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BillingProfileData>(Data, options, AzureResourceManagerBillingContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         BillingProfileData IPersistableModel<BillingProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingProfileData>(data, options, AzureResourceManagerBillingContext.Default);
 
-        string IPersistableModel<BillingProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BillingProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

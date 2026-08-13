@@ -1,16 +1,20 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0-beta.2 (Unreleased)
 
 ### Features Added
 
-- Upgraded API version to 2025-08-01 and 2026-01-01-preview.
-
 ### Breaking Changes
 
-- Migrated from AutoRest to TypeSpec-based code generation.
+### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0-beta.1 (2026-05-07)
+
+### Features Added
+
+- Upgraded api-version to 2026-01-31-preview.
 
 ## 1.3.1 (2026-03-20)
 

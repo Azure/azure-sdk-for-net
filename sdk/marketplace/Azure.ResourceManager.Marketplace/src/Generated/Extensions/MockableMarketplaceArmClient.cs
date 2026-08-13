@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableMarketplaceArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableMarketplaceArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableMarketplaceArmClient for mocking. </summary>
         protected MockableMarketplaceArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMarketplaceArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableMarketplaceArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableMarketplaceArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableMarketplaceArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="PrivateStoreResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateStoreResource.CreateResourceIdentifier" /> to create a <see cref="PrivateStoreResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="PrivateStoreResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateStoreResource"/> object. </returns>
         public virtual PrivateStoreResource GetPrivateStoreResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.Marketplace.Mocking
             return new PrivateStoreResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="MarketplaceApprovalRequestResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MarketplaceApprovalRequestResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceApprovalRequestResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="MarketplaceApprovalRequestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MarketplaceApprovalRequestResource"/> object. </returns>
         public virtual MarketplaceApprovalRequestResource GetMarketplaceApprovalRequestResource(ResourceIdentifier id)
@@ -58,10 +44,7 @@ namespace Azure.ResourceManager.Marketplace.Mocking
             return new MarketplaceApprovalRequestResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="MarketplaceAdminApprovalRequestResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MarketplaceAdminApprovalRequestResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceAdminApprovalRequestResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="MarketplaceAdminApprovalRequestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MarketplaceAdminApprovalRequestResource"/> object. </returns>
         public virtual MarketplaceAdminApprovalRequestResource GetMarketplaceAdminApprovalRequestResource(ResourceIdentifier id)
@@ -70,10 +53,7 @@ namespace Azure.ResourceManager.Marketplace.Mocking
             return new MarketplaceAdminApprovalRequestResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="PrivateStoreCollectionInfoResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateStoreCollectionInfoResource.CreateResourceIdentifier" /> to create a <see cref="PrivateStoreCollectionInfoResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="PrivateStoreCollectionInfoResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateStoreCollectionInfoResource"/> object. </returns>
         public virtual PrivateStoreCollectionInfoResource GetPrivateStoreCollectionInfoResource(ResourceIdentifier id)
@@ -82,10 +62,7 @@ namespace Azure.ResourceManager.Marketplace.Mocking
             return new PrivateStoreCollectionInfoResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="PrivateStoreOfferResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateStoreOfferResource.CreateResourceIdentifier" /> to create a <see cref="PrivateStoreOfferResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="PrivateStoreOfferResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateStoreOfferResource"/> object. </returns>
         public virtual PrivateStoreOfferResource GetPrivateStoreOfferResource(ResourceIdentifier id)

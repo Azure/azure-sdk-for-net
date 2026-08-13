@@ -37,8 +37,8 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     // --- Response envelopes ---
     private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
 
-    // --- Chat isolation keys (response ID → creation-time chat isolation key) ---
-    private readonly ConcurrentDictionary<string, string> _chatIsolationKeys = new();
+    // --- User ID keys (response ID → creation-time user ID key) ---
+    private readonly ConcurrentDictionary<string, string> _userIdKeys = new();
 
     // --- Item store (all items by ID) ---
     private readonly ConcurrentDictionary<string, OutputItem> _itemStore = new();
@@ -88,7 +88,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     /// <inheritdoc/>
     public override Task CreateResponseAsync(
         CreateResponseRequest request,
-        IsolationContext isolation,
+        PlatformContext context,
         CancellationToken cancellationToken = default)
     {
         var response = request.Response;
@@ -100,10 +100,10 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
             throw new InvalidOperationException($"Response '{response.Id}' already exists.");
         }
 
-        // Record the creation-time chat isolation key for enforcement on subsequent operations
-        if (isolation.ChatIsolationKey is not null)
+        // Record the creation-time user ID key for enforcement on subsequent operations
+        if (context.UserIdKey is not null)
         {
-            _chatIsolationKeys[response.Id] = isolation.ChatIsolationKey;
+            _userIdKeys[response.Id] = context.UserIdKey;
         }
 
         // Store input items in the item store and track their ordered IDs
@@ -139,7 +139,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     }
 
     /// <inheritdoc/>
-    public override Task<Models.ResponseObject> GetResponseAsync(string responseId, IsolationContext isolation, CancellationToken cancellationToken = default)
+    public override Task<Models.ResponseObject> GetResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default)
     {
         // Deleted response → 404 (spec: post-deletion, response not found)
         bool isDeleted;
@@ -158,13 +158,13 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
             throw new ResourceNotFoundException($"Response '{responseId}' not found.");
         }
 
-        EnforceChatIsolation(responseId, isolation);
+        EnforceUserIsolation(responseId, context);
 
         return Task.FromResult(response);
     }
 
     /// <inheritdoc/>
-    public override Task UpdateResponseAsync(Models.ResponseObject response, IsolationContext isolation, CancellationToken cancellationToken = default)
+    public override Task UpdateResponseAsync(Models.ResponseObject response, PlatformContext context, CancellationToken cancellationToken = default)
     {
         _responses[response.Id] = response;
 
@@ -183,15 +183,15 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     }
 
     /// <inheritdoc/>
-    public override Task DeleteResponseAsync(string responseId, IsolationContext isolation, CancellationToken cancellationToken = default)
+    public override Task DeleteResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default)
     {
-        // Check existence first (before isolation) to maintain consistent 404 for unknown IDs
+        // Check existence first (before user isolation) to maintain consistent 404 for unknown IDs
         if (!_responses.ContainsKey(responseId))
         {
             throw new ResourceNotFoundException($"Response '{responseId}' not found.");
         }
 
-        EnforceChatIsolation(responseId, isolation);
+        EnforceUserIsolation(responseId, context);
 
         if (!_responses.TryRemove(responseId, out _))
         {
@@ -205,22 +205,22 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
             _deletedResponseIds.Add(responseId);
         }
 
-        // Clean up isolation key tracking
-        _chatIsolationKeys.TryRemove(responseId, out _);
+        // Clean up user ID key tracking
+        _userIdKeys.TryRemove(responseId, out _);
 
         return Task.CompletedTask;
     }
 
     /// <summary>
-    /// Enforces chat isolation key for persisted responses.
-    /// If the response was created with a chat isolation key, the caller must
+    /// Enforces the user ID key for persisted responses.
+    /// If the response was created with a user ID key, the caller must
     /// provide the same key; mismatches are treated as "not found" to prevent
-    /// cross-chat information leakage.
+    /// cross-user information leakage.
     /// </summary>
-    private void EnforceChatIsolation(string responseId, IsolationContext isolation)
+    private void EnforceUserIsolation(string responseId, PlatformContext context)
     {
-        if (_chatIsolationKeys.TryGetValue(responseId, out var expectedKey)
-            && !string.Equals(expectedKey, isolation.ChatIsolationKey, StringComparison.Ordinal))
+        if (_userIdKeys.TryGetValue(responseId, out var expectedKey)
+            && !string.Equals(expectedKey, context.UserIdKey, StringComparison.Ordinal))
         {
             throw new ResourceNotFoundException($"Response '{responseId}' not found.");
         }
@@ -233,7 +233,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     /// <inheritdoc/>
     public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
         string responseId,
-        IsolationContext isolation,
+        PlatformContext context,
         int limit = 20,
         bool ascending = false,
         string? after = null,
@@ -258,7 +258,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
             throw new ResourceNotFoundException($"Response '{responseId}' not found.");
         }
 
-        EnforceChatIsolation(responseId, isolation);
+        EnforceUserIsolation(responseId, context);
 
         // Combine history + current input items by resolving IDs from the item store
         var allItems = new List<OutputItem>();
@@ -327,7 +327,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     /// <inheritdoc/>
     public override Task<IEnumerable<OutputItem?>> GetItemsAsync(
         IEnumerable<string> itemIds,
-        IsolationContext isolation,
+        PlatformContext context,
         CancellationToken cancellationToken = default)
     {
         var results = itemIds.Select(id => _itemStore.TryGetValue(id, out var item) ? item : null);
@@ -339,7 +339,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         string? previousResponseId,
         string? conversationId,
         int limit,
-        IsolationContext isolation,
+        PlatformContext context,
         CancellationToken cancellationToken = default)
     {
         // previousResponseId path: return history + input + output of the previous response

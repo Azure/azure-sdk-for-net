@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct IngestionMode : IEquatable<IngestionMode>
     {
         private readonly string _value;
+        /// <summary> No records should be ingested when invalid records are detected. </summary>
+        private const string IngestOnlyIfAllAreValidValue = "IngestOnlyIfAllAreValid";
+        /// <summary> Valid records should still be ingested when invalid records are detected. </summary>
+        private const string IngestAnyValidRecordsValue = "IngestAnyValidRecords";
+        /// <summary> Unspecified. </summary>
+        private const string UnspecifiedValue = "Unspecified";
 
         /// <summary> Initializes a new instance of <see cref="IngestionMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IngestionMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string IngestOnlyIfAllAreValidValue = "IngestOnlyIfAllAreValid";
-        private const string IngestAnyValidRecordsValue = "IngestAnyValidRecords";
-        private const string UnspecifiedValue = "Unspecified";
+            _value = value;
+        }
 
         /// <summary> No records should be ingested when invalid records are detected. </summary>
         public static IngestionMode IngestOnlyIfAllAreValid { get; } = new IngestionMode(IngestOnlyIfAllAreValidValue);
+
         /// <summary> Valid records should still be ingested when invalid records are detected. </summary>
         public static IngestionMode IngestAnyValidRecords { get; } = new IngestionMode(IngestAnyValidRecordsValue);
+
         /// <summary> Unspecified. </summary>
         public static IngestionMode Unspecified { get; } = new IngestionMode(UnspecifiedValue);
+
         /// <summary> Determines if two <see cref="IngestionMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IngestionMode left, IngestionMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IngestionMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IngestionMode left, IngestionMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IngestionMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IngestionMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IngestionMode(string value) => new IngestionMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IngestionMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IngestionMode?(string value) => value == null ? null : new IngestionMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IngestionMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IngestionMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

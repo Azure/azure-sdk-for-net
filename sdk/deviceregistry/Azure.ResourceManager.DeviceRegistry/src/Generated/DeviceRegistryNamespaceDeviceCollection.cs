@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(DeviceRegistryNamespaceDeviceResource.ResourceType, out string deviceRegistryNamespaceDeviceApiVersion);
             _namespaceDevicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistryNamespaceDeviceResource.ResourceType.Namespace, Diagnostics);
-            _namespaceDevicesRestClient = new NamespaceDevices(_namespaceDevicesClientDiagnostics, Pipeline, Endpoint, deviceRegistryNamespaceDeviceApiVersion ?? "2026-03-01-preview");
+            _namespaceDevicesRestClient = new NamespaceDevices(_namespaceDevicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistryNamespaceDeviceApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 HttpMessage message = _namespaceDevicesRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deviceName, DeviceRegistryNamespaceDeviceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeviceRegistryArmOperation<DeviceRegistryNamespaceDeviceResource> operation = new DeviceRegistryArmOperation<DeviceRegistryNamespaceDeviceResource>(
-                    new DeviceRegistryNamespaceDeviceOperationSource(Client),
+                    new DeviceRegistryNamespaceDeviceResourceOperationSource(Client),
                     _namespaceDevicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 HttpMessage message = _namespaceDevicesRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deviceName, DeviceRegistryNamespaceDeviceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeviceRegistryArmOperation<DeviceRegistryNamespaceDeviceResource> operation = new DeviceRegistryArmOperation<DeviceRegistryNamespaceDeviceResource>(
-                    new DeviceRegistryNamespaceDeviceOperationSource(Client),
+                    new DeviceRegistryNamespaceDeviceResourceOperationSource(Client),
                     _namespaceDevicesClientDiagnostics,
                     Pipeline,
                     message.Request,

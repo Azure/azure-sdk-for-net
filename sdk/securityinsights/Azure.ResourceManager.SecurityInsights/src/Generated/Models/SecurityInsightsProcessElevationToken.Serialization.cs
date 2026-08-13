@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     internal static partial class SecurityInsightsProcessElevationTokenExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SecurityInsightsProcessElevationToken value) => value switch
         {
             SecurityInsightsProcessElevationToken.Default => "Default",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SecurityInsightsProcessElevationToken value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SecurityInsightsProcessElevationToken ToSecurityInsightsProcessElevationToken(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default")) return SecurityInsightsProcessElevationToken.Default;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Full")) return SecurityInsightsProcessElevationToken.Full;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Limited")) return SecurityInsightsProcessElevationToken.Limited;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default"))
+            {
+                return SecurityInsightsProcessElevationToken.Default;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Full"))
+            {
+                return SecurityInsightsProcessElevationToken.Full;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Limited"))
+            {
+                return SecurityInsightsProcessElevationToken.Limited;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SecurityInsightsProcessElevationToken value.");
         }
     }

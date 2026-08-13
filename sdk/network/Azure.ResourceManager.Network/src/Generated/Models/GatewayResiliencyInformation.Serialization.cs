@@ -8,17 +8,64 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class GatewayResiliencyInformation : IUtf8JsonSerializable, IJsonModel<GatewayResiliencyInformation>
+    /// <summary> Gateway Resiliency Information. </summary>
+    public partial class GatewayResiliencyInformation : IJsonModel<GatewayResiliencyInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GatewayResiliencyInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GatewayResiliencyInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GatewayResiliencyInformation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGatewayResiliencyInformation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GatewayResiliencyInformation)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GatewayResiliencyInformation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GatewayResiliencyInformation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GatewayResiliencyInformation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GatewayResiliencyInformation IPersistableModel<GatewayResiliencyInformation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GatewayResiliencyInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GatewayResiliencyInformation"/> from. </param>
+        internal static GatewayResiliencyInformation FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeGatewayResiliencyInformation(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GatewayResiliencyInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +77,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GatewayResiliencyInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GatewayResiliencyInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GatewayResiliencyInformation)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(OverallScore))
             {
                 writer.WritePropertyName("overallScore"u8);
@@ -70,21 +116,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("components"u8);
                 writer.WriteStartArray();
-                foreach (var item in Components)
+                foreach (ResiliencyRecommendationComponents item in Components)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -93,22 +139,27 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        GatewayResiliencyInformation IJsonModel<GatewayResiliencyInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GatewayResiliencyInformation IJsonModel<GatewayResiliencyInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GatewayResiliencyInformation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GatewayResiliencyInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GatewayResiliencyInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GatewayResiliencyInformation)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGatewayResiliencyInformation(document.RootElement, options);
         }
 
-        internal static GatewayResiliencyInformation DeserializeGatewayResiliencyInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GatewayResiliencyInformation DeserializeGatewayResiliencyInformation(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -117,59 +168,58 @@ namespace Azure.ResourceManager.Network.Models
             string scoreChange = default;
             string minScoreFromRecommendations = default;
             string maxScoreFromRecommendations = default;
-            DateTimeOffset? lastComputedTime = default;
-            DateTimeOffset? nextEligibleComputeTime = default;
+            DateTimeOffset? lastComputedOn = default;
+            DateTimeOffset? nextEligibleComputeOn = default;
             IReadOnlyList<ResiliencyRecommendationComponents> components = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("overallScore"u8))
+                if (prop.NameEquals("overallScore"u8))
                 {
-                    overallScore = property.Value.GetString();
+                    overallScore = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scoreChange"u8))
+                if (prop.NameEquals("scoreChange"u8))
                 {
-                    scoreChange = property.Value.GetString();
+                    scoreChange = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("minScoreFromRecommendations"u8))
+                if (prop.NameEquals("minScoreFromRecommendations"u8))
                 {
-                    minScoreFromRecommendations = property.Value.GetString();
+                    minScoreFromRecommendations = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxScoreFromRecommendations"u8))
+                if (prop.NameEquals("maxScoreFromRecommendations"u8))
                 {
-                    maxScoreFromRecommendations = property.Value.GetString();
+                    maxScoreFromRecommendations = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastComputedTime"u8))
+                if (prop.NameEquals("lastComputedTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastComputedTime = property.Value.GetDateTimeOffset("O");
+                    lastComputedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("nextEligibleComputeTime"u8))
+                if (prop.NameEquals("nextEligibleComputeTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nextEligibleComputeTime = property.Value.GetDateTimeOffset("O");
+                    nextEligibleComputeOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("components"u8))
+                if (prop.NameEquals("components"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ResiliencyRecommendationComponents> array = new List<ResiliencyRecommendationComponents>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ResiliencyRecommendationComponents.DeserializeResiliencyRecommendationComponents(item, options));
                     }
@@ -178,214 +228,18 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new GatewayResiliencyInformation(
                 overallScore,
                 scoreChange,
                 minScoreFromRecommendations,
                 maxScoreFromRecommendations,
-                lastComputedTime,
-                nextEligibleComputeTime,
+                lastComputedOn,
+                nextEligibleComputeOn,
                 components ?? new ChangeTrackingList<ResiliencyRecommendationComponents>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OverallScore), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  overallScore: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OverallScore))
-                {
-                    builder.Append("  overallScore: ");
-                    if (OverallScore.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{OverallScore}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{OverallScore}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScoreChange), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  scoreChange: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ScoreChange))
-                {
-                    builder.Append("  scoreChange: ");
-                    if (ScoreChange.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ScoreChange}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ScoreChange}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinScoreFromRecommendations), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  minScoreFromRecommendations: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MinScoreFromRecommendations))
-                {
-                    builder.Append("  minScoreFromRecommendations: ");
-                    if (MinScoreFromRecommendations.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{MinScoreFromRecommendations}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{MinScoreFromRecommendations}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxScoreFromRecommendations), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  maxScoreFromRecommendations: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxScoreFromRecommendations))
-                {
-                    builder.Append("  maxScoreFromRecommendations: ");
-                    if (MaxScoreFromRecommendations.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{MaxScoreFromRecommendations}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{MaxScoreFromRecommendations}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastComputedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  lastComputedTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LastComputedOn))
-                {
-                    builder.Append("  lastComputedTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(LastComputedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextEligibleComputeOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nextEligibleComputeTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NextEligibleComputeOn))
-                {
-                    builder.Append("  nextEligibleComputeTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(NextEligibleComputeOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Components), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  components: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Components))
-                {
-                    if (Components.Any())
-                    {
-                        builder.Append("  components: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Components)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  components: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<GatewayResiliencyInformation>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GatewayResiliencyInformation>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(GatewayResiliencyInformation)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        GatewayResiliencyInformation IPersistableModel<GatewayResiliencyInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GatewayResiliencyInformation>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeGatewayResiliencyInformation(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GatewayResiliencyInformation)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<GatewayResiliencyInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

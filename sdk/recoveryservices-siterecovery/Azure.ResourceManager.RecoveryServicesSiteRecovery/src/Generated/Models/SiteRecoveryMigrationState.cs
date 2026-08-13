@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,83 +15,132 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct SiteRecoveryMigrationState : IEquatable<SiteRecoveryMigrationState>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> EnableMigrationInProgress. </summary>
+        private const string EnableMigrationInProgressValue = "EnableMigrationInProgress";
+        /// <summary> EnableMigrationFailed. </summary>
+        private const string EnableMigrationFailedValue = "EnableMigrationFailed";
+        /// <summary> DisableMigrationInProgress. </summary>
+        private const string DisableMigrationInProgressValue = "DisableMigrationInProgress";
+        /// <summary> DisableMigrationFailed. </summary>
+        private const string DisableMigrationFailedValue = "DisableMigrationFailed";
+        /// <summary> InitialSeedingInProgress. </summary>
+        private const string InitialSeedingInProgressValue = "InitialSeedingInProgress";
+        /// <summary> InitialSeedingFailed. </summary>
+        private const string InitialSeedingFailedValue = "InitialSeedingFailed";
+        /// <summary> Replicating. </summary>
+        private const string ReplicatingValue = "Replicating";
+        /// <summary> MigrationInProgress. </summary>
+        private const string MigrationInProgressValue = "MigrationInProgress";
+        /// <summary> MigrationSucceeded. </summary>
+        private const string MigrationSucceededValue = "MigrationSucceeded";
+        /// <summary> MigrationFailed. </summary>
+        private const string MigrationFailedValue = "MigrationFailed";
+        /// <summary> ResumeInProgress. </summary>
+        private const string ResumeInProgressValue = "ResumeInProgress";
+        /// <summary> ResumeInitiated. </summary>
+        private const string ResumeInitiatedValue = "ResumeInitiated";
+        /// <summary> SuspendingProtection. </summary>
+        private const string SuspendingProtectionValue = "SuspendingProtection";
+        /// <summary> ProtectionSuspended. </summary>
+        private const string ProtectionSuspendedValue = "ProtectionSuspended";
+        /// <summary> MigrationCompletedWithInformation. </summary>
+        private const string MigrationCompletedWithInformationValue = "MigrationCompletedWithInformation";
+        /// <summary> MigrationPartiallySucceeded. </summary>
+        private const string MigrationPartiallySucceededValue = "MigrationPartiallySucceeded";
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryMigrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SiteRecoveryMigrationState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string EnableMigrationInProgressValue = "EnableMigrationInProgress";
-        private const string EnableMigrationFailedValue = "EnableMigrationFailed";
-        private const string DisableMigrationInProgressValue = "DisableMigrationInProgress";
-        private const string DisableMigrationFailedValue = "DisableMigrationFailed";
-        private const string InitialSeedingInProgressValue = "InitialSeedingInProgress";
-        private const string InitialSeedingFailedValue = "InitialSeedingFailed";
-        private const string ReplicatingValue = "Replicating";
-        private const string MigrationInProgressValue = "MigrationInProgress";
-        private const string MigrationSucceededValue = "MigrationSucceeded";
-        private const string MigrationFailedValue = "MigrationFailed";
-        private const string ResumeInProgressValue = "ResumeInProgress";
-        private const string ResumeInitiatedValue = "ResumeInitiated";
-        private const string SuspendingProtectionValue = "SuspendingProtection";
-        private const string ProtectionSuspendedValue = "ProtectionSuspended";
-        private const string MigrationCompletedWithInformationValue = "MigrationCompletedWithInformation";
-        private const string MigrationPartiallySucceededValue = "MigrationPartiallySucceeded";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static SiteRecoveryMigrationState None { get; } = new SiteRecoveryMigrationState(NoneValue);
+
         /// <summary> EnableMigrationInProgress. </summary>
         public static SiteRecoveryMigrationState EnableMigrationInProgress { get; } = new SiteRecoveryMigrationState(EnableMigrationInProgressValue);
+
         /// <summary> EnableMigrationFailed. </summary>
         public static SiteRecoveryMigrationState EnableMigrationFailed { get; } = new SiteRecoveryMigrationState(EnableMigrationFailedValue);
+
         /// <summary> DisableMigrationInProgress. </summary>
         public static SiteRecoveryMigrationState DisableMigrationInProgress { get; } = new SiteRecoveryMigrationState(DisableMigrationInProgressValue);
+
         /// <summary> DisableMigrationFailed. </summary>
         public static SiteRecoveryMigrationState DisableMigrationFailed { get; } = new SiteRecoveryMigrationState(DisableMigrationFailedValue);
+
         /// <summary> InitialSeedingInProgress. </summary>
         public static SiteRecoveryMigrationState InitialSeedingInProgress { get; } = new SiteRecoveryMigrationState(InitialSeedingInProgressValue);
+
         /// <summary> InitialSeedingFailed. </summary>
         public static SiteRecoveryMigrationState InitialSeedingFailed { get; } = new SiteRecoveryMigrationState(InitialSeedingFailedValue);
+
         /// <summary> Replicating. </summary>
         public static SiteRecoveryMigrationState Replicating { get; } = new SiteRecoveryMigrationState(ReplicatingValue);
+
         /// <summary> MigrationInProgress. </summary>
         public static SiteRecoveryMigrationState MigrationInProgress { get; } = new SiteRecoveryMigrationState(MigrationInProgressValue);
+
         /// <summary> MigrationSucceeded. </summary>
         public static SiteRecoveryMigrationState MigrationSucceeded { get; } = new SiteRecoveryMigrationState(MigrationSucceededValue);
+
         /// <summary> MigrationFailed. </summary>
         public static SiteRecoveryMigrationState MigrationFailed { get; } = new SiteRecoveryMigrationState(MigrationFailedValue);
+
         /// <summary> ResumeInProgress. </summary>
         public static SiteRecoveryMigrationState ResumeInProgress { get; } = new SiteRecoveryMigrationState(ResumeInProgressValue);
+
         /// <summary> ResumeInitiated. </summary>
         public static SiteRecoveryMigrationState ResumeInitiated { get; } = new SiteRecoveryMigrationState(ResumeInitiatedValue);
+
         /// <summary> SuspendingProtection. </summary>
         public static SiteRecoveryMigrationState SuspendingProtection { get; } = new SiteRecoveryMigrationState(SuspendingProtectionValue);
+
         /// <summary> ProtectionSuspended. </summary>
         public static SiteRecoveryMigrationState ProtectionSuspended { get; } = new SiteRecoveryMigrationState(ProtectionSuspendedValue);
+
         /// <summary> MigrationCompletedWithInformation. </summary>
         public static SiteRecoveryMigrationState MigrationCompletedWithInformation { get; } = new SiteRecoveryMigrationState(MigrationCompletedWithInformationValue);
+
         /// <summary> MigrationPartiallySucceeded. </summary>
         public static SiteRecoveryMigrationState MigrationPartiallySucceeded { get; } = new SiteRecoveryMigrationState(MigrationPartiallySucceededValue);
+
         /// <summary> Determines if two <see cref="SiteRecoveryMigrationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SiteRecoveryMigrationState left, SiteRecoveryMigrationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SiteRecoveryMigrationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SiteRecoveryMigrationState left, SiteRecoveryMigrationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SiteRecoveryMigrationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SiteRecoveryMigrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SiteRecoveryMigrationState(string value) => new SiteRecoveryMigrationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SiteRecoveryMigrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SiteRecoveryMigrationState?(string value) => value == null ? null : new SiteRecoveryMigrationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SiteRecoveryMigrationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SiteRecoveryMigrationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

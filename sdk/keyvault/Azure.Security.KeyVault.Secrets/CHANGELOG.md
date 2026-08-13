@@ -1,6 +1,6 @@
 # Release History
 
-## 4.11.0-beta.1 (Unreleased)
+## 4.12.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,14 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- Internal: the `SecretClient` transport now delegates to a TypeSpec-generated implementation. Public API surface, default service version, exception contracts, on-the-wire requests, and OpenTelemetry / `DiagnosticListener` activity names are all unchanged. `SecretClientOptions` (custom retry, transport, diagnostics allow-lists, `AddPolicy` entries) continues to flow end-to-end. The TypeSpec emitter incidentally adds one additive public type (`AzureSecurityKeyVaultSecretsContext`, the `ModelReaderWriterContext` required for AOT-friendly `ModelReaderWriter` round-trip), matching the sibling `Azure.Security.KeyVault.Administration` package convention.
+
+## 4.11.0 (2026-05-05)
+
+### Other Changes
+
+- Updated dependency on `Azure.Core` to `1.54.0`, which includes fixes for duplicate schema registration.
 
 ## 4.10.0 (2026-04-13)
 

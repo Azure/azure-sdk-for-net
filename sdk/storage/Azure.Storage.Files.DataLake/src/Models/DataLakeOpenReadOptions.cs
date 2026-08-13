@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Storage.Blobs.Models;
+
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
@@ -32,14 +34,14 @@ namespace Azure.Storage.Files.DataLake.Models
         public DownloadTransferValidationOptions TransferValidation { get; set; }
 
         /// <summary>
-        /// When set to true, enables locality-aware routing for the buffered range
-        /// requests issued by the returned read stream. The file's layout is fetched
-        /// on demand and cached (with automatic background refresh), and each range
-        /// download is routed to the optimal endpoint for the chunk being read.
+        /// Determines whether locality-aware routing is used for the buffered range
+        /// requests issued by the returned read stream. When enabled, the file's layout
+        /// is fetched on demand and cached (with automatic background refresh), and each
+        /// range download is routed to the optimal endpoint for the chunk being read.
         /// This is a performance optimization only - the bytes returned are identical
-        /// to a non-locality-aware download. Default is false.
+        /// to a non-locality-aware download.
         /// </summary>
-        public bool EnableDataLocality { get; set; }
+        public LayoutAwareRouting LayoutAwareRouting { get; set; } = LayoutAwareRouting.Auto;
 
         internal bool AllowModifications { get; }
 

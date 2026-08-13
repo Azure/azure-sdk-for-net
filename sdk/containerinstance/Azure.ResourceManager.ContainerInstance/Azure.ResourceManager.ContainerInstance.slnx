@@ -1,0 +1,9 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="src/Azure.ResourceManager.ContainerInstance.csproj" />
+  <Project Path="tests/Azure.ResourceManager.ContainerInstance.Tests.csproj" />
+</Solution>

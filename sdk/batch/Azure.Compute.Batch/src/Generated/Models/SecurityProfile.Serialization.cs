@@ -73,10 +73,10 @@ namespace Azure.Compute.Batch
             {
                 throw new FormatException($"The model {nameof(SecurityProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EncryptionAtHost))
+            if (Optional.IsDefined(IsEncryptedAtHost))
             {
                 writer.WritePropertyName("encryptionAtHost"u8);
-                writer.WriteBooleanValue(EncryptionAtHost.Value);
+                writer.WriteBooleanValue(IsEncryptedAtHost.Value);
             }
             if (Optional.IsDefined(ProxyAgentSettings))
             {
@@ -135,7 +135,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            bool? encryptionAtHost = default;
+            bool? isEncryptedAtHost = default;
             ProxyAgentSettings proxyAgentSettings = default;
             SecurityTypes? securityType = default;
             BatchUefiSettings uefiSettings = default;
@@ -148,7 +148,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    encryptionAtHost = prop.Value.GetBoolean();
+                    isEncryptedAtHost = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("proxyAgentSettings"u8))
@@ -183,7 +183,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SecurityProfile(encryptionAtHost, proxyAgentSettings, securityType, uefiSettings, additionalBinaryDataProperties);
+            return new SecurityProfile(isEncryptedAtHost, proxyAgentSettings, securityType, uefiSettings, additionalBinaryDataProperties);
         }
     }
 }

@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.NotificationHubs
                     yield break;
                 }
                 NotificationHubListResult result = NotificationHubListResult.FromResponse(response);
-                yield return Page<NotificationHubData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NotificationHubData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

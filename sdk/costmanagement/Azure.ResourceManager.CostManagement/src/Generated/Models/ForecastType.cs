@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct ForecastType : IEquatable<ForecastType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ForecastType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ForecastType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UsageValue = "Usage";
         private const string ActualCostValue = "ActualCost";
         private const string AmortizedCostValue = "AmortizedCost";
 
-        /// <summary> Usage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ForecastType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Usage. </summary>
         public static ForecastType Usage { get; } = new ForecastType(UsageValue);
-        /// <summary> ActualCost. </summary>
+
+        /// <summary> Gets the ActualCost. </summary>
         public static ForecastType ActualCost { get; } = new ForecastType(ActualCostValue);
-        /// <summary> AmortizedCost. </summary>
+
+        /// <summary> Gets the AmortizedCost. </summary>
         public static ForecastType AmortizedCost { get; } = new ForecastType(AmortizedCostValue);
+
         /// <summary> Determines if two <see cref="ForecastType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ForecastType left, ForecastType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ForecastType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ForecastType left, ForecastType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ForecastType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ForecastType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ForecastType(string value) => new ForecastType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ForecastType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ForecastType?(string value) => value == null ? null : new ForecastType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ForecastType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ForecastType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

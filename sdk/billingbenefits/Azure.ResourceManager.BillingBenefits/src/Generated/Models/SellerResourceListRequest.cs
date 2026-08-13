@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new SellerResourceListRequestProperties();
                 }
-                Properties.IncludeContributors = value.Value;
+                Properties.IncludeContributors = value;
             }
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new SellerResourceListRequestProperties();
                 }
-                Properties.IncludeMilestones = value.Value;
+                Properties.IncludeMilestones = value;
             }
         }
 

@@ -14,7 +14,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// The list of byte ranges that make up the file's layout.
         /// </summary>
-        public IReadOnlyList<DataLakeFileLayoutRangesRangeItem> Range { get; internal set; }
+        public IList<DataLakeFileLayoutRange> Range { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of <see cref="DataLakeFileLayoutRanges"/> instances.

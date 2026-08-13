@@ -1447,6 +1447,14 @@ namespace Azure.Analytics.Defender.Easm
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.ValidateResult>> ValidateDiscoveryGroupAsync(Azure.Analytics.Defender.Easm.DiscoveryGroupPayload body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ValidateDiscoveryGroupAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class EasmClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddEasmClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddEasmClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Analytics.Defender.Easm.EasmClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedEasmClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedEasmClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Analytics.Defender.Easm.EasmClientSettings> configureSettings) { throw null; }
+    }
     public partial class EasmClientOptions : Azure.Core.ClientOptions
     {
         public EasmClientOptions(Azure.Analytics.Defender.Easm.EasmClientOptions.ServiceVersion version = Azure.Analytics.Defender.Easm.EasmClientOptions.ServiceVersion.V2024_10_01_Preview) { }
@@ -2873,14 +2881,5 @@ namespace Azure.Analytics.Defender.Easm
         Azure.Analytics.Defender.Easm.WebComponent System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.WebComponent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.WebComponent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.WebComponent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-}
-namespace Microsoft.Extensions.Azure
-{
-    public static partial class DefenderEasmClientBuilderExtensions
-    {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Defender.Easm.EasmClient, Azure.Analytics.Defender.Easm.EasmClientOptions> AddEasmClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Defender.Easm.EasmClient, Azure.Analytics.Defender.Easm.EasmClientOptions> AddEasmClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

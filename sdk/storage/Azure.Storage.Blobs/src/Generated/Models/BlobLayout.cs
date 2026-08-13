@@ -7,7 +7,6 @@
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The BlobLayout. </summary>
     internal partial class BlobLayout
     {
         /// <summary> Initializes a new instance of <see cref="BlobLayout"/>. </summary>
@@ -16,8 +15,8 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobLayout"/>. </summary>
-        /// <param name="ranges"></param>
-        /// <param name="endpoints"></param>
+        /// <param name="ranges"> The ranges that make up the blob. </param>
+        /// <param name="endpoints"> The endpoints that serve the ranges of the blob. </param>
         /// <param name="marker"> The continuation marker used for this request. </param>
         /// <param name="nextMarker"> If the number of ranges exceeds MaxResults, a NextMarker is returned for use in subsequent requests to continue listing. </param>
         /// <param name="maxResults"> The maximum number of ranges to return per request. </param>
@@ -30,14 +29,18 @@ namespace Azure.Storage.Blobs.Models
             MaxResults = maxResults;
         }
 
-        /// <summary> Gets the ranges. </summary>
+        /// <summary> The ranges that make up the blob. </summary>
         public BlobLayoutRanges Ranges { get; }
-        /// <summary> Gets the endpoints. </summary>
+
+        /// <summary> The endpoints that serve the ranges of the blob. </summary>
         public BlobLayoutEndpoints Endpoints { get; }
+
         /// <summary> The continuation marker used for this request. </summary>
         public string Marker { get; }
+
         /// <summary> If the number of ranges exceeds MaxResults, a NextMarker is returned for use in subsequent requests to continue listing. </summary>
         public string NextMarker { get; }
+
         /// <summary> The maximum number of ranges to return per request. </summary>
         public int? MaxResults { get; }
     }

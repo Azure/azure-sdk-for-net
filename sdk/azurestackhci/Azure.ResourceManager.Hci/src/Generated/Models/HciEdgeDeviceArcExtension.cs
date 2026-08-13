@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Hci.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceArcExtension"/>. </summary>
-        public HciEdgeDeviceArcExtension()
+        internal HciEdgeDeviceArcExtension()
         {
             ErrorDetails = new ChangeTrackingList<HciValidationFailureDetail>();
         }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,51 +15,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class StaticInputData : MonitoringInputDataBase
     {
         /// <summary> Initializes a new instance of <see cref="StaticInputData"/>. </summary>
-        /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
-        /// <param name="uri"> [Required] Input Asset URI. </param>
-        /// <param name="windowStart"> [Required] The start date of the data window. </param>
-        /// <param name="windowEnd"> [Required] The end date of the data window. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public StaticInputData(JobInputType jobInputType, Uri uri, DateTimeOffset windowStart, DateTimeOffset windowEnd) : base(jobInputType, uri)
-        {
-            Argument.AssertNotNull(uri, nameof(uri));
-
-            WindowStart = windowStart;
-            WindowEnd = windowEnd;
-            InputDataType = MonitoringInputDataType.Static;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StaticInputData"/>. </summary>
-        /// <param name="inputDataType"> [Required] Specifies the type of signal to monitor. </param>
-        /// <param name="dataContext"> The context metadata of the data source. </param>
-        /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
-        /// <param name="uri"> [Required] Input Asset URI. </param>
         /// <param name="columns"> Mapping of column names to special uses. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="windowStart"> [Required] The start date of the data window. </param>
-        /// <param name="windowEnd"> [Required] The end date of the data window. </param>
+        /// <param name="dataContext"> The context metadata of the data source. </param>
+        /// <param name="inputDataType"> [Required] Specifies the type of signal to monitor. </param>
+        /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
+        /// <param name="uri"> [Required] Input Asset URI. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="preprocessingComponentId"> Reference to the component asset used to preprocess the data. </param>
-        internal StaticInputData(MonitoringInputDataType inputDataType, string dataContext, JobInputType jobInputType, Uri uri, IDictionary<string, string> columns, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset windowStart, DateTimeOffset windowEnd, string preprocessingComponentId) : base(inputDataType, dataContext, jobInputType, uri, columns, serializedAdditionalRawData)
+        /// <param name="windowEnd"> [Required] The end date of the data window. </param>
+        /// <param name="windowStart"> [Required] The start date of the data window. </param>
+        internal StaticInputData(IDictionary<string, string> columns, string dataContext, MonitoringInputDataType inputDataType, JobInputType jobInputType, Uri uri, IDictionary<string, BinaryData> additionalBinaryDataProperties, string preprocessingComponentId, DateTimeOffset windowEnd, DateTimeOffset windowStart) : base(columns, dataContext, inputDataType, jobInputType, uri, additionalBinaryDataProperties)
         {
-            WindowStart = windowStart;
-            WindowEnd = windowEnd;
             PreprocessingComponentId = preprocessingComponentId;
-            InputDataType = inputDataType;
+            WindowEnd = windowEnd;
+            WindowStart = windowStart;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StaticInputData"/> for deserialization. </summary>
-        internal StaticInputData()
-        {
-        }
+        /// <summary> Reference to the component asset used to preprocess the data. </summary>
+        [WirePath("preprocessingComponentId")]
+        public string PreprocessingComponentId { get; set; }
+
+        /// <summary> [Required] The end date of the data window. </summary>
+        [WirePath("windowEnd")]
+        public DateTimeOffset WindowEnd { get; set; }
 
         /// <summary> [Required] The start date of the data window. </summary>
         [WirePath("windowStart")]
         public DateTimeOffset WindowStart { get; set; }
-        /// <summary> [Required] The end date of the data window. </summary>
-        [WirePath("windowEnd")]
-        public DateTimeOffset WindowEnd { get; set; }
-        /// <summary> Reference to the component asset used to preprocess the data. </summary>
-        [WirePath("preprocessingComponentId")]
-        public string PreprocessingComponentId { get; set; }
     }
 }

@@ -12,11 +12,17 @@ using Azure.Security.ConfidentialLedger.Certificate;
 
 namespace Azure.Security.ConfidentialLedger
 {
+    [CodeGenSuppress("ConfidentialLedgerClient", typeof(Uri))]
+    [CodeGenSuppress("ConfidentialLedgerClient", typeof(Uri), typeof(ConfidentialLedgerClientOptions))]
     [CodeGenSuppress("PostLedgerEntry", typeof(RequestContent), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("PostLedgerEntryAsync", typeof(RequestContent), typeof(string), typeof(RequestContext))]
     public partial class ConfidentialLedgerClient
     {
+        private static readonly string[] AuthorizationScopes = new string[] { "https://confidential-ledger.azure.com/.default" };
+        private readonly TokenCredential _tokenCredential;
+        private readonly Uri _ledgerEndpoint;
         private const string Default_Certificate_Endpoint = "https://identity.confidential-ledger.core.azure.com";
+        private readonly bool _useLedgerGateway;
 
         /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
         /// <param name="ledgerEndpoint"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
@@ -62,24 +68,54 @@ namespace Azure.Security.ConfidentialLedger
                     throw new ArgumentNullException(nameof(credential));
             }
             var actualOptions = ledgerOptions ?? new ConfidentialLedgerClientOptions();
-            X509Certificate2 serviceCert = identityServiceCert ?? GetIdentityServerTlsCert(ledgerEndpoint, certificateClientOptions ?? new ConfidentialLedgerCertificateClientOptions(), ledgerOptions: ledgerOptions).Cert;
 
-            var transportOptions = GetIdentityServerTlsCertAndTrust(serviceCert, ledgerOptions?.VerifyConnection ?? true);
-            if (clientCertificate != null)
+            HttpPipelineTransportOptions transportOptions;
+            if (actualOptions.UseLedgerGateway)
             {
-                transportOptions.ClientCertificates.Add(clientCertificate);
+                // The Ledger Gateway terminates TLS with a publicly-rooted certificate
+                // (e.g. DigiCert Global Root G2 -> Microsoft Azure RSA TLS Issuing CA), which is
+                // already present in every client's OS trust store. As a result, none of the CCF
+                // identity-service bootstrap is required: we do not need to fetch the per-ledger
+                // self-signed network certificate, pin it as a custom trust root, or install a
+                // custom server-certificate validation callback. Bearer-token authentication is
+                // also the only auth mode supported by the gateway (no client-side mTLS).
+                if (clientCertificate != null)
+                {
+                    throw new ArgumentException(
+                        $"Client certificate (mTLS) authentication is not supported when {nameof(ConfidentialLedgerClientOptions.UseLedgerGateway)} is enabled. Use a {nameof(TokenCredential)} instead.",
+                        nameof(clientCertificate));
+                }
+
+                // HttpPipelineBuilder.Build requires a non-null transportOptions; supplying an
+                // empty instance preserves the system-default trust chain and validation policy.
+                transportOptions = new HttpPipelineTransportOptions();
+            }
+            else
+            {
+                // Legacy CCF direct path: each ledger has a self-signed network certificate that
+                // is not in any public PKI, so we must fetch it from the identity service and
+                // install it as the only acceptable root for the request transport.
+                X509Certificate2 serviceCert = identityServiceCert ?? GetIdentityServerTlsCert(ledgerEndpoint, certificateClientOptions ?? new ConfidentialLedgerCertificateClientOptions(), ledgerOptions: ledgerOptions).Cert;
+
+                transportOptions = GetIdentityServerTlsCertAndTrust(serviceCert, ledgerOptions?.VerifyConnection ?? true);
+                if (clientCertificate != null)
+                {
+                    transportOptions.ClientCertificates.Add(clientCertificate);
+                }
             }
             ClientDiagnostics = new ClientDiagnostics(actualOptions);
             _tokenCredential = credential;
+            _useLedgerGateway = actualOptions.UseLedgerGateway;
             _pipeline = HttpPipelineBuilder.Build(
                 actualOptions,
-                new HttpPipelinePolicy[] { new ConfidentialLedgerRedirectPolicy() },
+                new HttpPipelinePolicy[] { new ConfidentialLedgerRedirectPolicy(ledgerEndpoint, cachePrimaryNode: !actualOptions.UseLedgerGateway) },
                 _tokenCredential == null ?
                     Array.Empty<HttpPipelinePolicy>() :
                     new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) },
                 transportOptions,
                 new ConfidentialLedgerResponseClassifier());
             _ledgerEndpoint = ledgerEndpoint;
+            _endpoint = ledgerEndpoint;
             _apiVersion = actualOptions.Version;
         }
 
@@ -123,10 +159,18 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, tags, context);
+                if (_useLedgerGateway)
+                {
+                    // The Ledger Gateway can respond with either 200 (synchronous commit, mirrors
+                    // legacy CCF behavior) or 202 (write was queued and an operation id was returned
+                    // for polling). Both must flow back to the caller without throwing. Layer "202 is a
+                    // success" over the message's existing classifier so any RequestContext.AddClassifier
+                    // the caller supplied is preserved rather than replaced.
+                    message.ResponseClassifier = new LedgerGatewayAccept202Classifier(message.ResponseClassifier);
+                }
                 var response = _pipeline.ProcessMessage(message, context);
-                response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
 
-                var operation = new PostLedgerEntryOperation(this, transactionId);
+                var operation = CreatePostLedgerEntryOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(context?.CancellationToken ?? default);
@@ -171,10 +215,15 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, tags, context);
+                if (_useLedgerGateway)
+                {
+                    // Layer "202 is a success" over the message's existing classifier so any
+                    // RequestContext.AddClassifier the caller supplied is preserved rather than replaced.
+                    message.ResponseClassifier = new LedgerGatewayAccept202Classifier(message.ResponseClassifier);
+                }
                 var response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
 
-                var operation = new PostLedgerEntryOperation(this, transactionId);
+                var operation = CreatePostLedgerEntryOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(context?.CancellationToken ?? default).ConfigureAwait(false);
@@ -186,6 +235,61 @@ namespace Azure.Security.ConfidentialLedger
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private PostLedgerEntryOperation CreatePostLedgerEntryOperation(Response response)
+        {
+            // 202 indicates the Ledger Gateway has queued the write and returned an operation
+            // id for asynchronous polling. The operation id is published in the
+            // x-ms-webfe-operation-id header; if absent for any reason, fall back to the response
+            // body (a JSON object containing an "operationId" property).
+            if (response.Status == 202)
+            {
+                if (!response.Headers.TryGetValue(ConfidentialLedgerConstants.OperationIdHeaderName, out string operationId)
+                    || string.IsNullOrEmpty(operationId))
+                {
+                    operationId = TryReadOperationIdFromBody(response);
+                }
+
+                if (string.IsNullOrEmpty(operationId))
+                {
+                    throw new RequestFailedException(
+                        response.Status,
+                        $"The Confidential Ledger Gateway returned HTTP 202 without a '{ConfidentialLedgerConstants.OperationIdHeaderName}' header or a body-level 'operationId' field, so the write cannot be tracked.");
+                }
+
+                return new PostLedgerEntryOperation(this, operationId, PostLedgerEntryOperation.PollingMode.LedgerGateway, response);
+            }
+
+            // Standard synchronous-commit path. Works for both legacy CCF and the Ledger Gateway
+            // when the latter chooses to commit synchronously (returning 200).
+            response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
+            return new PostLedgerEntryOperation(this, transactionId, PostLedgerEntryOperation.PollingMode.Direct, response);
+        }
+
+        private static string TryReadOperationIdFromBody(Response response)
+        {
+            try
+            {
+                if (response.Content == null || response.Content.ToMemory().Length == 0)
+                {
+                    return null;
+                }
+
+                using JsonDocument document = JsonDocument.Parse(response.Content);
+                if (document.RootElement.ValueKind == JsonValueKind.Object
+                    && document.RootElement.TryGetProperty("operationId", out JsonElement op)
+                    && op.ValueKind == JsonValueKind.String)
+                {
+                    return op.GetString();
+                }
+            }
+            catch (JsonException)
+            {
+                // Body wasn't JSON or didn't contain operationId; fall through to null.
+            }
+
+            return null;
         }
 
         internal static (X509Certificate2 Cert, string PEM) GetIdentityServerTlsCert(Uri ledgerUri, ConfidentialLedgerCertificateClientOptions options, ConfidentialLedgerCertificateClient client = null, ConfidentialLedgerClientOptions ledgerOptions = null)

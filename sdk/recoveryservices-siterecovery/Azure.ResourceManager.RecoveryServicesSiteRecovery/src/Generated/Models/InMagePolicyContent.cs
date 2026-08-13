@@ -15,39 +15,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         /// <summary> Initializes a new instance of <see cref="InMagePolicyContent"/>. </summary>
         /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'. </param>
-        public InMagePolicyContent(SetMultiVmSyncStatus multiVmSyncStatus)
+        public InMagePolicyContent(SetMultiVmSyncStatus multiVmSyncStatus) : base("InMage")
         {
             MultiVmSyncStatus = multiVmSyncStatus;
-            InstanceType = "InMage";
         }
 
         /// <summary> Initializes a new instance of <see cref="InMagePolicyContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointThresholdInMinutes"> The recovery point threshold in minutes. </param>
         /// <param name="recoveryPointHistory"> The duration in minutes until which the recovery points need to be stored. </param>
         /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency (in minutes). </param>
         /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'. </param>
-        internal InMagePolicyContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? recoveryPointThresholdInMinutes, int? recoveryPointHistory, int? appConsistentFrequencyInMinutes, SetMultiVmSyncStatus multiVmSyncStatus) : base(instanceType, serializedAdditionalRawData)
+        internal InMagePolicyContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? recoveryPointThresholdInMinutes, int? recoveryPointHistory, int? appConsistentFrequencyInMinutes, SetMultiVmSyncStatus multiVmSyncStatus) : base(instanceType, additionalBinaryDataProperties)
         {
             RecoveryPointThresholdInMinutes = recoveryPointThresholdInMinutes;
             RecoveryPointHistory = recoveryPointHistory;
             AppConsistentFrequencyInMinutes = appConsistentFrequencyInMinutes;
             MultiVmSyncStatus = multiVmSyncStatus;
-            InstanceType = instanceType ?? "InMage";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="InMagePolicyContent"/> for deserialization. </summary>
-        internal InMagePolicyContent()
-        {
         }
 
         /// <summary> The recovery point threshold in minutes. </summary>
         public int? RecoveryPointThresholdInMinutes { get; set; }
+
         /// <summary> The duration in minutes until which the recovery points need to be stored. </summary>
         public int? RecoveryPointHistory { get; set; }
+
         /// <summary> The app consistent snapshot frequency (in minutes). </summary>
         public int? AppConsistentFrequencyInMinutes { get; set; }
+
         /// <summary> A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'. </summary>
         public SetMultiVmSyncStatus MultiVmSyncStatus { get; }
     }

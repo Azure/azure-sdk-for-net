@@ -394,6 +394,7 @@ namespace Azure.Generator.Tests.Common
         /// <param name="decorators"></param>
         /// <param name="isDynamicModel"></param>
         /// <param name="serializationOptions"></param>
+        /// <param name="externalTypeMetadata"></param>
         /// <returns></returns>
         public static InputModelType Model(
             string name,
@@ -409,7 +410,8 @@ namespace Azure.Generator.Tests.Common
             IEnumerable<InputModelType>? derivedModels = null,
             IReadOnlyList<InputDecoratorInfo>? decorators = null,
             bool isDynamicModel = false,
-            InputSerializationOptions? serializationOptions = null)
+            InputSerializationOptions? serializationOptions = null,
+            InputExternalTypeMetadata? externalTypeMetadata = null)
         {
             IEnumerable<InputModelProperty> propertiesList = properties ?? [Property("StringProperty", InputPrimitiveType.String)];
             var model = new InputModelType(
@@ -436,6 +438,12 @@ namespace Azure.Generator.Tests.Common
                 var decoratorProperty = typeof(InputModelType).GetProperty(nameof(InputModelType.Decorators));
                 var setDecoratorMethod = decoratorProperty?.GetSetMethod(true);
                 setDecoratorMethod!.Invoke(model, [decorators]);
+            }
+            if (externalTypeMetadata is not null)
+            {
+                var externalTypeMetadataProperty = typeof(InputModelType).GetProperty(nameof(InputModelType.External));
+                var setExternalTypeMetadataMethod = externalTypeMetadataProperty?.GetSetMethod(true);
+                setExternalTypeMetadataMethod!.Invoke(model, [externalTypeMetadata]);
             }
             return model;
         }
@@ -622,7 +630,7 @@ namespace Azure.Generator.Tests.Common
                 path ?? string.Empty,
                 null,
                 requestMediaTypes is null ? null : [.. requestMediaTypes],
-                false,
+                true,
                 true,
                 true,
                 name,
@@ -641,15 +649,22 @@ namespace Azure.Generator.Tests.Common
         /// </summary>
         /// <param name="statusCodes"></param>
         /// <param name="bodytype"></param>
+        /// <param name="contentTypes"></param>
+        /// <param name="serializationOptions"></param>
         /// <returns></returns>
-        public static InputOperationResponse OperationResponse(IEnumerable<int>? statusCodes = null, InputType? bodytype = null)
+        public static InputOperationResponse OperationResponse(
+            IEnumerable<int>? statusCodes = null,
+            InputType? bodytype = null,
+            IReadOnlyList<string>? contentTypes = null,
+            InputSerializationOptions? serializationOptions = null)
         {
             return new InputOperationResponse(
                 statusCodes is null ? [200] : [.. statusCodes],
                 bodytype,
                 [],
                 false,
-                ["application/json"]);
+                contentTypes ?? ["application/json"],
+                serializationOptions);
         }
 
         private static readonly Dictionary<InputClient, IList<InputClient>> _childClientsCache = new();

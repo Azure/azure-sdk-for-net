@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class WebAppMSDeployLogEntryTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this WebAppMSDeployLogEntryType value) => value switch
         {
             WebAppMSDeployLogEntryType.Message => "Message",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WebAppMSDeployLogEntryType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static WebAppMSDeployLogEntryType ToWebAppMSDeployLogEntryType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Message")) return WebAppMSDeployLogEntryType.Message;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Warning")) return WebAppMSDeployLogEntryType.Warning;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Error")) return WebAppMSDeployLogEntryType.Error;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Message"))
+            {
+                return WebAppMSDeployLogEntryType.Message;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Warning"))
+            {
+                return WebAppMSDeployLogEntryType.Warning;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Error"))
+            {
+                return WebAppMSDeployLogEntryType.Error;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WebAppMSDeployLogEntryType value.");
         }
     }

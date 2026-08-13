@@ -6,27 +6,27 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Storage.Common;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The BlobLayoutEndpoints. </summary>
+    /// <summary> The endpoints that serve the ranges of a blob. </summary>
     public partial class BlobLayoutEndpoints
     {
         /// <summary> Initializes a new instance of <see cref="BlobLayoutEndpoints"/>. </summary>
         internal BlobLayoutEndpoints()
         {
-            Endpoint = new ChangeTrackingList<BlobLayoutEndpointsEndpointItem>();
+            Endpoint = new ChangeTrackingList<BlobLayoutEndpoint>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobLayoutEndpoints"/>. </summary>
-        /// <param name="endpoint"></param>
-        internal BlobLayoutEndpoints(IReadOnlyList<BlobLayoutEndpointsEndpointItem> endpoint)
+        /// <param name="endpoint"> The list of endpoints. </param>
+        internal BlobLayoutEndpoints(IList<BlobLayoutEndpoint> endpoint)
         {
             Endpoint = endpoint;
         }
 
-        /// <summary> Gets the endpoint. </summary>
-        public IReadOnlyList<BlobLayoutEndpointsEndpointItem> Endpoint { get; }
+        /// <summary> The list of endpoints. </summary>
+        public IList<BlobLayoutEndpoint> Endpoint { get; }
     }
 }

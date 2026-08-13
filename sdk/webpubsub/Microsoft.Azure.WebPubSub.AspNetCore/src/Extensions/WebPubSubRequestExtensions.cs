@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +21,6 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     /// </summary>
     internal static class WebPubSubRequestExtensions
     {
-        private static JsonSerializerOptions _innerSerializer => CreateSystemTextJsonSerializer();
         /// <summary>
         /// Parse request to system/user type ServiceRequest.
         /// </summary>
@@ -65,12 +63,12 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                         var content = await new StreamReader(request.Body).ReadToEndAsync().ConfigureAwait(false);
                         if (context is MqttConnectionContext mqttContext)
                         {
-                            var requestBody = JsonSerializer.Deserialize<MqttConnectEventRequestContent>(content);
-                            return new MqttConnectEventRequest(mqttContext, requestBody.Claims, requestBody.Query, requestBody.ClientCertificates, requestBody.Headers, requestBody.Mqtt);
+                            var eventRequest = JsonSerializer.Deserialize(content, WebPubSubCommonJsonSerializerContext.Default.MqttConnectEventRequest);
+                            return new MqttConnectEventRequest(mqttContext, eventRequest.Claims, eventRequest.Query, eventRequest.ClientCertificates, eventRequest.Headers, eventRequest.Mqtt);
                         }
                         else
                         {
-                            var eventRequest = JsonSerializer.Deserialize<ConnectEventRequest>(content);
+                            var eventRequest = JsonSerializer.Deserialize(content, WebPubSubCommonJsonSerializerContext.Default.ConnectEventRequest);
                             return new ConnectEventRequest(context, eventRequest.Claims, eventRequest.Query, eventRequest.Subprotocols, eventRequest.ClientCertificates, eventRequest.Headers);
                         }
                     }
@@ -95,26 +93,26 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                         var content = await new StreamReader(request.Body).ReadToEndAsync().ConfigureAwait(false);
                         if (context is MqttConnectionContext mqttContext)
                         {
-                            var requestBody = JsonSerializer.Deserialize<MqttDisconnectedEventRequestContent>(content);
-                            return new MqttDisconnectedEventRequest(mqttContext, requestBody.Reason, requestBody.Mqtt);
+                            var eventRequest = JsonSerializer.Deserialize(content, WebPubSubCommonJsonSerializerContext.Default.MqttDisconnectedEventRequest);
+                            return new MqttDisconnectedEventRequest(mqttContext, eventRequest.Reason, eventRequest.Mqtt);
                         }
                         else
                         {
-                            var eventRequest = JsonSerializer.Deserialize<DisconnectedEventRequest>(content);
+                            var eventRequest = JsonSerializer.Deserialize(content, WebPubSubCommonJsonSerializerContext.Default.DisconnectedEventRequest);
                             return new DisconnectedEventRequest(context, eventRequest.Reason);
                         }
                     }
                 case RequestType.JoinedGroupEvent:
                     {
                         var content = await new StreamReader(request.Body).ReadToEndAsync().ConfigureAwait(false);
-                        var payload = JsonSerializer.Deserialize<GroupEventRequestPayload>(content);
-                        return new JoinedGroupEventRequest(context, payload.Group);
+                        var eventRequest = JsonSerializer.Deserialize(content, WebPubSubCommonJsonSerializerContext.Default.JoinedGroupEventRequest);
+                        return new JoinedGroupEventRequest(context, eventRequest.Group);
                     }
                 case RequestType.LeftGroupEvent:
                     {
                         var content = await new StreamReader(request.Body).ReadToEndAsync().ConfigureAwait(false);
-                        var payload = JsonSerializer.Deserialize<GroupEventRequestPayload>(content);
-                        return new LeftGroupEventRequest(context, payload.Group);
+                        var eventRequest = JsonSerializer.Deserialize(content, WebPubSubCommonJsonSerializerContext.Default.LeftGroupEventRequest);
+                        return new LeftGroupEventRequest(context, eventRequest.Group);
                     }
                 default:
                     return null;
@@ -138,12 +136,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 
         internal static Dictionary<string, BinaryData> DecodeConnectionStates(this string connectionStates)
         {
-            if (!string.IsNullOrEmpty(connectionStates))
-            {
-                var strongTyped = JsonSerializer.Deserialize<IReadOnlyDictionary<string, BinaryData>>(Convert.FromBase64String(connectionStates), _innerSerializer);
-                return new Dictionary<string, BinaryData>(strongTyped);
-            }
-            return null;
+            return ConnectionStatesConverter.Decode(connectionStates);
         }
 
         internal static Dictionary<string, BinaryData> UpdateStates(this WebPubSubConnectionContext connectionContext, IReadOnlyDictionary<string, BinaryData> newStates)
@@ -179,7 +172,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 
         internal static string EncodeConnectionStates(this IReadOnlyDictionary<string, BinaryData> value)
         {
-            return Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(value, _innerSerializer)));
+            return ConnectionStatesConverter.Encode(value);
         }
 
         private static bool TryParseCloudEvents(this HttpRequest request, out WebPubSubConnectionContext connectionContext)
@@ -305,12 +298,5 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 Constants.ContentTypes.JsonContentType => WebPubSubDataType.Json,
                 _ => throw new ArgumentException($"Invalid content type: {mediaType}")
             };
-
-        private static JsonSerializerOptions CreateSystemTextJsonSerializer()
-        {
-            var options = new JsonSerializerOptions();
-            options.Converters.Add(new ConnectionStatesConverter());
-            return options;
-        }
     }
 }

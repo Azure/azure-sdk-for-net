@@ -34,7 +34,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task EnableDataLocality_FetchesLayoutAndRoutesChunksToLayoutEndpoints()
+        public async Task LayoutAwareRouting_FetchesLayoutAndRoutesChunksToLayoutEndpoints()
         {
             // Arrange - 100 byte blob, 20 byte buffer ⇒ 5 chunked reads at
             // offsets 0, 20, 40, 60, 80. Layout splits the blob across two hosts.
@@ -56,7 +56,7 @@ namespace Azure.Storage.Blobs.Test
             SetupGetLayout(blockClient, expectedSegments, blobContentLength: blobLength);
 
             // Act
-            Stream readStream = await InvokeOpenReadAsync(blockClient.Object, bufferSize, enableDataLocality: true);
+            Stream readStream = await InvokeOpenReadAsync(blockClient.Object, bufferSize, layoutAwareRouting: LayoutAwareRouting.Enabled);
             MemoryStream destination = new MemoryStream();
             await CopyAsync(readStream, destination);
 
@@ -68,7 +68,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(5, capturedCalls.Count, "Expected 5 buffer-fill downloads (100 bytes / 20-byte buffer)");
 
             AutoRefreshingCache<BlobLayoutSegmentCacheValue> sharedCache = capturedCalls[0].LayoutCache;
-            Assert.IsNotNull(sharedCache, "OpenRead with EnableDataLocality=true should pass a layout cache to the very first chunk");
+            Assert.IsNotNull(sharedCache, "OpenRead with LayoutAwareRouting.Enabled should pass a layout cache to the very first chunk");
 
             int hostACount = 0;
             int hostBCount = 0;
@@ -114,7 +114,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(1)] // very small offset
         [TestCase(50)] // mid-blob (boundary between two layout segments)
         [TestCase(99)] // last byte
-        public async Task EnableDataLocality_Position_ReturnsRangedData(long position)
+        public async Task LayoutAwareRouting_Position_ReturnsRangedData(long position)
         {
             // Arrange - 100 byte blob, 20 byte buffer, layout split across two hosts.
             // OpenRead is invoked with a non-zero starting position; the returned
@@ -138,7 +138,7 @@ namespace Azure.Storage.Blobs.Test
             SetupGetLayout(blockClient, segments, blobContentLength: blobLength);
 
             // Act
-            Stream readStream = await InvokeOpenReadAsync(blockClient.Object, bufferSize, enableDataLocality: true, position: position);
+            Stream readStream = await InvokeOpenReadAsync(blockClient.Object, bufferSize, layoutAwareRouting: LayoutAwareRouting.Enabled, position: position);
             MemoryStream destination = new MemoryStream();
             await CopyAsync(readStream, destination);
 
@@ -188,7 +188,7 @@ namespace Azure.Storage.Blobs.Test
             SetupDownloadStreamingWithCapture(blockClient, dataSource, capturedCalls);
 
             // Act
-            Stream readStream = await InvokeOpenReadAsync(blockClient.Object, bufferSize, enableDataLocality: false);
+            Stream readStream = await InvokeOpenReadAsync(blockClient.Object, bufferSize, layoutAwareRouting: LayoutAwareRouting.Disabled);
             MemoryStream destination = new MemoryStream();
             await CopyAsync(readStream, destination);
 
@@ -203,7 +203,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(5, capturedCalls.Count);
             foreach (var (range, layoutCache) in capturedCalls)
             {
-                Assert.IsNull(layoutCache, $"Layout cache should be null at offset {range.Offset} when EnableDataLocality is false");
+                Assert.IsNull(layoutCache, $"Layout cache should be null at offset {range.Offset} when LayoutAwareRouting is Disabled");
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.Storage.Blobs.Test
             blockClient.Setup(c => c.GetLayout(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>())).Throws(softFailure);
 
             // Act
-            Stream readStream = await InvokeOpenReadAsync(blockClient.Object, bufferSize, enableDataLocality: true);
+            Stream readStream = await InvokeOpenReadAsync(blockClient.Object, bufferSize, layoutAwareRouting: LayoutAwareRouting.Enabled);
             MemoryStream destination = new MemoryStream();
             await CopyAsync(readStream, destination);
 
@@ -257,7 +257,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert - on soft GetLayout failure we DO fall back to GetProperties exactly
             // once (this is the only branch in OpenRead that issues GetProperties when
-            // EnableDataLocality is true).
+            // LayoutAwareRouting is Enabled).
             VerifyGetPropertiesCalledOnce(blockClient);
         }
 
@@ -296,7 +296,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act + Assert - OpenRead must propagate the exception unchanged.
             RequestFailedException thrown = Assert.ThrowsAsync<RequestFailedException>(
-                async () => await InvokeOpenReadAsync(blockClient.Object, bufferSize, enableDataLocality: true));
+                async () => await InvokeOpenReadAsync(blockClient.Object, bufferSize, layoutAwareRouting: LayoutAwareRouting.Enabled));
 
             Assert.AreEqual(status, thrown.Status, "OpenRead should propagate the original status");
             Assert.AreSame(hardFailure, thrown, "OpenRead should propagate the original exception instance, not wrap it");
@@ -314,7 +314,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task EnableDataLocality_LayoutCacheSharedAcrossEveryChunk()
+        public async Task LayoutAwareRouting_LayoutCacheSharedAcrossEveryChunk()
         {
             // Arrange - assert that the same AutoRefreshingCache instance is passed
             // to every buffer-fill download. This guards against a refactor that
@@ -337,7 +337,7 @@ namespace Azure.Storage.Blobs.Test
             SetupGetLayout(blockClient, segments, blobContentLength: blobLength);
 
             // Act
-            Stream readStream = await InvokeOpenReadAsync(blockClient.Object, bufferSize, enableDataLocality: true);
+            Stream readStream = await InvokeOpenReadAsync(blockClient.Object, bufferSize, layoutAwareRouting: LayoutAwareRouting.Enabled);
             MemoryStream destination = new MemoryStream();
             await CopyAsync(readStream, destination);
 
@@ -364,10 +364,10 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task EnableDataLocality_DoesNotCallGetProperties_GetLayoutOnceEvenAcrossChunks()
+        public async Task LayoutAwareRouting_DoesNotCallGetProperties_GetLayoutOnceEvenAcrossChunks()
         {
             // This test locks in the bootstrap-swap contract directly:
-            //   1. With EnableDataLocality=true, OpenRead must NOT call GetProperties.
+            //   1. With LayoutAwareRouting.Enabled, OpenRead must NOT call GetProperties.
             //      The single GetLayout call supplies ETag, BlobContentLength, and Metadata.
             //   2. GetLayout must be called exactly once for the entire OpenRead lifetime,
             //      even when many chunk-downloads happen (the layout cache de-dups them).
@@ -394,7 +394,7 @@ namespace Azure.Storage.Blobs.Test
             SetupGetLayout(blockClient, segments, blobContentLength: blobLength);
 
             // Act
-            Stream readStream = await InvokeOpenReadAsync(blockClient.Object, bufferSize, enableDataLocality: true);
+            Stream readStream = await InvokeOpenReadAsync(blockClient.Object, bufferSize, layoutAwareRouting: LayoutAwareRouting.Enabled);
             MemoryStream destination = new MemoryStream();
             await CopyAsync(readStream, destination);
 
@@ -493,8 +493,8 @@ namespace Azure.Storage.Blobs.Test
 
         private static void SetupGetLayout(Mock<BlobBaseClient> blockClient, BlobLayoutSegment[] segments, long blobContentLength)
         {
-            var rangeItems = new List<BlobLayoutRangesRangeItem>();
-            var endpointItems = new List<BlobLayoutEndpointsEndpointItem>();
+            var rangeItems = new List<BlobLayoutRange>();
+            var endpointItems = new List<BlobLayoutEndpoint>();
             var endpointMap = new Dictionary<string, int>();
 
             foreach (var seg in segments)
@@ -503,12 +503,12 @@ namespace Azure.Storage.Blobs.Test
                 {
                     idx = endpointMap.Count;
                     endpointMap[seg.Endpoint] = idx;
-                    endpointItems.Add(BlobsModelFactory.BlobLayoutEndpointsEndpointItem(index: idx, value: seg.Endpoint));
+                    endpointItems.Add(BlobsModelFactory.BlobLayoutEndpoint(index: idx, value: seg.Endpoint));
                 }
-                rangeItems.Add(BlobsModelFactory.BlobLayoutRangesRangeItem(start: seg.Start, end: seg.End, endpointIndex: idx));
+                rangeItems.Add(BlobsModelFactory.BlobLayoutRange(start: seg.Start, end: seg.End, endpointIndex: idx));
             }
 
-            // OpenRead bootstraps from GetLayout when EnableDataLocality is true, so the
+            // OpenRead bootstraps from GetLayout when LayoutAwareRouting is Enabled, so the
             // returned BlobLayoutInfo must carry the headers that previously came from
             // GetProperties (BlobContentLength, ETag, Metadata).
             BlobLayoutInfo layoutInfo = new BlobLayoutInfo
@@ -552,7 +552,7 @@ namespace Azure.Storage.Blobs.Test
 
         private static void VerifyGetPropertiesNotCalled(Mock<BlobBaseClient> blockClient)
         {
-            // With EnableDataLocality=true and a successful GetLayout, OpenRead must not
+            // With LayoutAwareRouting.Enabled and a successful GetLayout, OpenRead must not
             // also issue a GetProperties call — the layout response carries the headers
             // (ETag, BlobContentLength, Metadata) needed to bootstrap the stream.
             blockClient.Verify(c => c.GetPropertiesInternal(
@@ -573,23 +573,23 @@ namespace Azure.Storage.Blobs.Test
                 It.IsAny<string>()), Times.Once);
         }
 
-        private async Task<Stream> InvokeOpenReadAsync(BlobBaseClient client, int bufferSize, bool enableDataLocality, long position = 0)
+        private async Task<Stream> InvokeOpenReadAsync(BlobBaseClient client, int bufferSize, LayoutAwareRouting layoutAwareRouting, long position = 0)
         {
             BlobOpenReadOptions options = new BlobOpenReadOptions(allowModifications: false)
             {
                 BufferSize = bufferSize,
-                EnableDataLocality = enableDataLocality,
+                LayoutAwareRouting = layoutAwareRouting,
                 Position = position,
             };
 
-            // Internal overload exposes the enableDataLocality + async + cancellationToken parameters directly.
+            // Internal overload exposes the LayoutAwareRouting + async + cancellationToken parameters directly.
             return await client.OpenReadInternal(
                 position: options.Position,
                 bufferSize: options.BufferSize,
                 conditions: options.Conditions,
                 allowModifications: false,
                 transferValidationOverride: options.TransferValidation,
-                enableDataLocality: options.EnableDataLocality,
+                layoutAwareRouting: options.LayoutAwareRouting,
                 async: _async,
                 cancellationToken: s_cancellationToken).ConfigureAwait(false);
         }

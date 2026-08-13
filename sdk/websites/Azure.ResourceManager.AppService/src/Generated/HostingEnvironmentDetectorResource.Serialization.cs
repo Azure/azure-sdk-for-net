@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class HostingEnvironmentDetectorResource : IJsonModel<AppServiceDetectorData>
     {
-        private static AppServiceDetectorData s_dataDeserializationInstance;
-        private static AppServiceDetectorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AppServiceDetectorData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AppServiceDetectorData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AppServiceDetectorData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AppServiceDetectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceDetectorData>)Data).Write(writer, options);
 
-        AppServiceDetectorData IJsonModel<AppServiceDetectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceDetectorData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppServiceDetectorData IJsonModel<AppServiceDetectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AppServiceDetectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppServiceDetectorData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AppServiceDetectorData IPersistableModel<AppServiceDetectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppServiceDetectorData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<AppServiceDetectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppServiceDetectorData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AppServiceDetectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

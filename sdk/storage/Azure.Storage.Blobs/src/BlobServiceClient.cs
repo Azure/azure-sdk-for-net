@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -14,6 +14,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Common;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Sas;
+using static Azure.Storage.Blobs.BlobExtensions;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs
@@ -358,19 +359,34 @@ namespace Azure.Storage.Blobs
             HttpPipelinePolicy authentication,
             TokenCredential tokenCredential,
             BlobClientOptions options)
-            : this(serviceUri,
-                  new BlobClientConfiguration(
-                      pipeline: options.Build(authentication),
-                      tokenCredential: tokenCredential,
-                      clientDiagnostics: new ClientDiagnostics(options),
-                      version: options?.Version ?? BlobClientOptions.LatestVersion,
-                      customerProvidedKey: options?.CustomerProvidedKey,
-                      transferValidation: options.TransferValidation,
-                      encryptionScope: options?.EncryptionScope,
-                      trimBlobNameSlashes: options?.TrimBlobNameSlashes ?? false),
-                  authentication,
-                  options?._clientSideEncryptionOptions?.Clone())
         {
+            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
+
+            if (tokenCredential != null)
+            {
+                SessionProvider sessionProvider = options.SessionOptions?.SessionProvider
+                    ?? new ContainerSessionProvider(serviceUri, tokenCredential, options);
+                authentication = new SessionAuthenticationPolicy(
+                    fallbackAuthPolicy: authentication,
+                    sessionProvider: sessionProvider,
+                    sessionOptions: options.SessionOptions);
+            }
+
+            _uri = serviceUri;
+            _clientConfiguration = new BlobClientConfiguration(
+                pipeline: options.Build(authentication),
+                tokenCredential: tokenCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options?.Version ?? BlobClientOptions.LatestVersion,
+                customerProvidedKey: options?.CustomerProvidedKey,
+                transferValidation: options.TransferValidation,
+                encryptionScope: options?.EncryptionScope,
+                trimBlobNameSlashes: options?.TrimBlobNameSlashes ?? false);
+            _authenticationPolicy = authentication;
+            _clientSideEncryption = options?._clientSideEncryptionOptions?.Clone();
+            _serviceRestClient = BuildServiceRestClient(serviceUri);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>
@@ -552,11 +568,26 @@ namespace Azure.Storage.Blobs
                 clientSideEncryption: null);
         }
 
+        /// <summary>
+        /// Creates a <see cref="SessionAuthenticationPolicy"/> wrapping the given bearer token policy.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected static HttpPipelinePolicy CreateSessionAuthenticationPolicy(
+            HttpPipelinePolicy fallbackAuthPolicy,
+            SessionProvider sessionProvider,
+            SessionOptions sessionOptions)
+        {
+            return new SessionAuthenticationPolicy(
+                fallbackAuthPolicy,
+                sessionProvider,
+                sessionOptions);
+        }
+
         private ServiceRestClient BuildServiceRestClient(Uri uri)
             => new ServiceRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: uri.AbsoluteUri,
+                endpoint: uri,
                 version: _clientConfiguration.Version.ToVersionString());
         #endregion ctors
 
@@ -857,11 +888,11 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders> response;
+                    Response<ListContainersSegmentResponse> response;
 
                     if (async)
                     {
-                        response = await ServiceRestClient.ListContainersSegmentAsync(
+                        response = await ServiceRestClient.GetContainersSegmentAsync(
                             prefix: prefix,
                             marker: continuationToken,
                             maxresults: pageSizeHint,
@@ -871,7 +902,7 @@ namespace Azure.Storage.Blobs
                     }
                     else
                     {
-                        response = ServiceRestClient.ListContainersSegment(
+                        response = ServiceRestClient.GetContainersSegment(
                             prefix: prefix,
                             marker: continuationToken,
                             maxresults: pageSizeHint,
@@ -1013,7 +1044,7 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<ServiceGetAccountInfoHeaders> response;
+                    Response response;
 
                     if (async)
                     {
@@ -1028,8 +1059,8 @@ namespace Azure.Storage.Blobs
                     }
 
                     return Response.FromValue(
-                        response.ToAccountInfo(),
-                        response.GetRawResponse());
+                        response.ToAccountInfo(AccountInfoHeaderType.Service),
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -1146,7 +1177,7 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<BlobServiceProperties, ServiceGetPropertiesHeaders> response;
+                    Response<BlobServiceProperties> response;
 
                     if (async)
                     {
@@ -1302,23 +1333,24 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<ServiceSetPropertiesHeaders> response;
+                    Argument.AssertNotNull(properties, nameof(properties));
+                    Response response;
 
                     if (async)
                     {
                         response = await ServiceRestClient.SetPropertiesAsync(
-                            blobServiceProperties: properties,
+                            storageServiceProperties: properties,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = ServiceRestClient.SetProperties(
-                            blobServiceProperties: properties,
+                            storageServiceProperties: properties,
                             cancellationToken: cancellationToken);
                     }
 
-                    return response.GetRawResponse();
+                    return response;
                 }
                 catch (Exception ex)
                 {
@@ -1441,7 +1473,7 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<BlobServiceStatistics, ServiceGetStatisticsHeaders> response;
+                    Response<BlobServiceStatistics> response;
 
                     if (async)
                     {
@@ -1707,13 +1739,12 @@ namespace Azure.Storage.Blobs
                         throw Errors.InvalidDateTimeUtc(nameof(expiresOn));
                     }
 
-                    KeyInfo keyInfo = new KeyInfo(expiresOn.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture))
-                    {
-                        Start = startsOn?.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture),
-                        DelegatedUserTid = delegatedUserTenantId
-                    };
+                    KeyInfo keyInfo = new KeyInfo(
+                        startsOn?.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture),
+                        expiresOn.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture),
+                        delegatedUserTenantId);
 
-                    ResponseWithHeaders<UserDelegationKey, ServiceGetUserDelegationKeyHeaders> response;
+                    Response<UserDelegationKey> response;
 
                     if (async)
                     {
@@ -1941,7 +1972,7 @@ namespace Azure.Storage.Blobs
         #region UndeleteBlobContainer
         /// <summary>
         /// Restores a previously deleted container.
-        /// This API is only functional is Container Soft Delete is enabled
+        /// This API is only functional if Container Soft Delete is enabled
         /// for the storage account associated with the container.
         /// </summary>
         /// <param name="deletedContainerName">
@@ -1977,7 +2008,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Restores a previously deleted container.
-        /// This API is only functional is Container Soft Delete is enabled
+        /// This API is only functional if Container Soft Delete is enabled
         /// for the storage account associated with the container.
         /// </summary>
         /// <param name="deletedContainerName">
@@ -2013,7 +2044,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Restores a previously deleted container.
-        /// This API is only functional is Container Soft Delete is enabled
+        /// This API is only functional if Container Soft Delete is enabled
         /// for the storage account associated with the container.
         /// </summary>
         /// <param name="deletedContainerName">
@@ -2055,7 +2086,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Restores a previously deleted container.
-        /// This API is only functional is Container Soft Delete is enabled
+        /// This API is only functional if Container Soft Delete is enabled
         /// for the storage account associated with the container.
         /// </summary>
         /// <param name="deletedContainerName">
@@ -2097,7 +2128,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Restores a previously deleted container.
-        /// This API is only functional is Container Soft Delete is enabled
+        /// This API is only functional if Container Soft Delete is enabled
         /// for the storage account associated with the container.
         /// </summary>
         /// <param name="deletedContainerName">
@@ -2157,7 +2188,7 @@ namespace Azure.Storage.Blobs
                         containerClient = GetBlobContainerClient(deletedContainerName);
                     }
 
-                    ResponseWithHeaders<ContainerRestoreHeaders> response;
+                    Response response;
 
                     if (async)
                     {
@@ -2337,7 +2368,8 @@ namespace Azure.Storage.Blobs
 
                     BlobContainerClient containerClient = GetBlobContainerClient(destinationContainerName);
 
-                    ResponseWithHeaders<ContainerRenameHeaders> response;
+                    Response response;
+                    Argument.AssertNotNull(sourceContainerName, nameof(sourceContainerName));
 
                     if (async)
                     {
@@ -2463,12 +2495,12 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<FilterBlobSegment, ServiceFilterBlobsHeaders> response;
+                    Response<FilterBlobSegment> response;
 
                     if (async)
                     {
                         response = await ServiceRestClient.FilterBlobsAsync(
-                            where: expression,
+                            filterExpression: expression,
                             marker: marker,
                             maxresults: pageSizeHint,
                             cancellationToken: cancellationToken)
@@ -2477,7 +2509,7 @@ namespace Azure.Storage.Blobs
                     else
                     {
                         response = ServiceRestClient.FilterBlobs(
-                            where: expression,
+                            filterExpression: expression,
                             marker: marker,
                             maxresults: pageSizeHint,
                             cancellationToken: cancellationToken);

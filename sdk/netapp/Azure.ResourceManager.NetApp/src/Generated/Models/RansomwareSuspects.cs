@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> List of suspects identified in an Advanced Ransomware Protection (ARP) report. </summary>
     public partial class RansomwareSuspects
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RansomwareSuspects"/>. </summary>
         internal RansomwareSuspects()
@@ -56,22 +28,25 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="resolution"> ARP report suspect resolution. </param>
         /// <param name="fileCount"> The number of suspect files at the time of ARP report, this number can change as files get created and report status progresses. </param>
         /// <param name="suspectFiles"> Suspect files. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RansomwareSuspects(string extension, RansomwareSuspectResolution? resolution, int? fileCount, IReadOnlyList<SuspectFile> suspectFiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RansomwareSuspects(string extension, RansomwareSuspectResolution? resolution, int? fileCount, IReadOnlyList<SuspectFile> suspectFiles, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Extension = extension;
             Resolution = resolution;
             FileCount = fileCount;
             SuspectFiles = suspectFiles;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Suspect File extension. </summary>
         public string Extension { get; }
+
         /// <summary> ARP report suspect resolution. </summary>
         public RansomwareSuspectResolution? Resolution { get; }
+
         /// <summary> The number of suspect files at the time of ARP report, this number can change as files get created and report status progresses. </summary>
         public int? FileCount { get; }
+
         /// <summary> Suspect files. </summary>
         public IReadOnlyList<SuspectFile> SuspectFiles { get; }
     }

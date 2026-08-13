@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Definition of a single resource metric. </summary>
     public partial class MetricSpecification
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MetricSpecification"/>. </summary>
         internal MetricSpecification()
@@ -72,8 +44,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="availabilities"></param>
         /// <param name="supportedTimeGrainTypes"></param>
         /// <param name="supportedAggregationTypes"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetricSpecification(string name, string displayName, string displayDescription, string unit, string aggregationType, bool? isInstanceLevelAggregationSupported, bool? isRegionalMdmAccountEnabled, string sourceMdmAccount, string sourceMdmNamespace, string metricFilterPattern, bool? fillGapWithZero, bool? isInternal, IReadOnlyList<MetricDimension> dimensions, string category, IReadOnlyList<MetricAvailability> availabilities, IReadOnlyList<string> supportedTimeGrainTypes, IReadOnlyList<string> supportedAggregationTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MetricSpecification(string name, string displayName, string displayDescription, string unit, string aggregationType, bool? isInstanceLevelAggregationSupported, bool? isRegionalMdmAccountEnabled, string sourceMdmAccount, string sourceMdmNamespace, string metricFilterPattern, bool? fillGapWithZero, bool? isInternal, IReadOnlyList<MetricDimension> dimensions, string category, IReadOnlyList<MetricAvailability> availabilities, IReadOnlyList<string> supportedTimeGrainTypes, IReadOnlyList<string> supportedAggregationTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DisplayName = displayName;
@@ -92,58 +64,74 @@ namespace Azure.ResourceManager.AppService.Models
             Availabilities = availabilities;
             SupportedTimeGrainTypes = supportedTimeGrainTypes;
             SupportedAggregationTypes = supportedAggregationTypes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the name. </summary>
+        /// <summary> Gets the Name. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> Gets the display name. </summary>
+
+        /// <summary> Gets the DisplayName. </summary>
         [WirePath("displayName")]
         public string DisplayName { get; }
-        /// <summary> Gets the display description. </summary>
+
+        /// <summary> Gets the DisplayDescription. </summary>
         [WirePath("displayDescription")]
         public string DisplayDescription { get; }
-        /// <summary> Gets the unit. </summary>
+
+        /// <summary> Gets the Unit. </summary>
         [WirePath("unit")]
         public string Unit { get; }
-        /// <summary> Gets the aggregation type. </summary>
+
+        /// <summary> Gets the AggregationType. </summary>
         [WirePath("aggregationType")]
         public string AggregationType { get; }
-        /// <summary> Gets the is instance level aggregation supported. </summary>
+
+        /// <summary> Gets the IsInstanceLevelAggregationSupported. </summary>
         [WirePath("supportsInstanceLevelAggregation")]
         public bool? IsInstanceLevelAggregationSupported { get; }
-        /// <summary> Gets the is regional mdm account enabled. </summary>
+
+        /// <summary> Gets the IsRegionalMdmAccountEnabled. </summary>
         [WirePath("enableRegionalMdmAccount")]
         public bool? IsRegionalMdmAccountEnabled { get; }
-        /// <summary> Gets the source mdm account. </summary>
+
+        /// <summary> Gets the SourceMdmAccount. </summary>
         [WirePath("sourceMdmAccount")]
         public string SourceMdmAccount { get; }
-        /// <summary> Gets the source mdm namespace. </summary>
+
+        /// <summary> Gets the SourceMdmNamespace. </summary>
         [WirePath("sourceMdmNamespace")]
         public string SourceMdmNamespace { get; }
-        /// <summary> Gets the metric filter pattern. </summary>
+
+        /// <summary> Gets the MetricFilterPattern. </summary>
         [WirePath("metricFilterPattern")]
         public string MetricFilterPattern { get; }
-        /// <summary> Gets the fill gap with zero. </summary>
+
+        /// <summary> Gets the FillGapWithZero. </summary>
         [WirePath("fillGapWithZero")]
         public bool? FillGapWithZero { get; }
-        /// <summary> Gets the is internal. </summary>
+
+        /// <summary> Gets the IsInternal. </summary>
         [WirePath("isInternal")]
         public bool? IsInternal { get; }
-        /// <summary> Gets the dimensions. </summary>
+
+        /// <summary> Gets the Dimensions. </summary>
         [WirePath("dimensions")]
         public IReadOnlyList<MetricDimension> Dimensions { get; }
-        /// <summary> Gets the category. </summary>
+
+        /// <summary> Gets the Category. </summary>
         [WirePath("category")]
         public string Category { get; }
-        /// <summary> Gets the availabilities. </summary>
+
+        /// <summary> Gets the Availabilities. </summary>
         [WirePath("availabilities")]
         public IReadOnlyList<MetricAvailability> Availabilities { get; }
-        /// <summary> Gets the supported time grain types. </summary>
+
+        /// <summary> Gets the SupportedTimeGrainTypes. </summary>
         [WirePath("supportedTimeGrainTypes")]
         public IReadOnlyList<string> SupportedTimeGrainTypes { get; }
-        /// <summary> Gets the supported aggregation types. </summary>
+
+        /// <summary> Gets the SupportedAggregationTypes. </summary>
         [WirePath("supportedAggregationTypes")]
         public IReadOnlyList<string> SupportedAggregationTypes { get; }
     }

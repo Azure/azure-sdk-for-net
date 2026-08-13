@@ -2,10 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub;
+
+#nullable enable
 
 internal class WebPubSubServiceAccessFactory
 {
@@ -29,5 +32,40 @@ internal class WebPubSubServiceAccessFactory
             _configuration.GetSection(sectionName),
             _azureComponentFactory,
             out access);
+    }
+
+    /// <summary>
+    /// Resolves a list of configuration section names to <see cref="WebPubSubServiceAccess"/> instances.
+    /// Falls back to <paramref name="defaultAccess"/> when <paramref name="sectionNames"/> is null or empty.
+    /// Returns null when neither is configured (signals "no signature/abuse validation"); a one-time
+    /// warning is logged in that case.
+    /// </summary>
+    public WebPubSubServiceAccess[]? ResolveAccessesOrDefault(IList<string>? sectionNames, WebPubSubServiceAccess? defaultAccess)
+    {
+        if (sectionNames != null && sectionNames.Count > 0)
+        {
+            var resolved = new List<WebPubSubServiceAccess>(sectionNames.Count);
+            foreach (var sectionName in sectionNames)
+            {
+                if (string.IsNullOrEmpty(sectionName))
+                {
+                    throw new InvalidOperationException("Web PubSub connection section name cannot be null or empty.");
+                }
+                if (!TryCreateFromSectionName(sectionName, out var access) || access == null)
+                {
+                    throw new InvalidOperationException(
+                        $"Unable to resolve Web PubSub connection from configuration section '{sectionName}'.");
+                }
+                resolved.Add(access);
+            }
+            return resolved.ToArray();
+        }
+
+        if (defaultAccess != null)
+        {
+            return new[] { defaultAccess };
+        }
+
+        return null;
     }
 }

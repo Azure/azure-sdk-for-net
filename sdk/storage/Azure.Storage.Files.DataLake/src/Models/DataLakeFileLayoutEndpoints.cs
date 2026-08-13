@@ -14,7 +14,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// The list of endpoints that the file's data is distributed across.
         /// </summary>
-        public IReadOnlyList<DataLakeFileLayoutEndpointsEndpointItem> Endpoint { get; internal set; }
+        public IList<DataLakeFileLayoutEndpoint> Endpoint { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of <see cref="DataLakeFileLayoutEndpoints"/> instances.

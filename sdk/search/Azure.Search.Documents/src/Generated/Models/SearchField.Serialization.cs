@@ -118,6 +118,31 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("facetable"u8);
                 writer.WriteBooleanValue(IsFacetable.Value);
             }
+            if (Optional.IsDefined(PermissionFilter))
+            {
+                writer.WritePropertyName("permissionFilter"u8);
+                writer.WriteStringValue(PermissionFilter.Value.ToString());
+            }
+            if (Optional.IsDefined(SensitivityLabelId))
+            {
+                writer.WritePropertyName("sensitivityLabelId"u8);
+                writer.WriteBooleanValue(SensitivityLabelId.Value);
+            }
+            if (Optional.IsDefined(SensitivityLabelName))
+            {
+                writer.WritePropertyName("sensitivityLabelName"u8);
+                writer.WriteBooleanValue(SensitivityLabelName.Value);
+            }
+            if (Optional.IsDefined(SourceDocumentId))
+            {
+                writer.WritePropertyName("sourceDocumentId"u8);
+                writer.WriteBooleanValue(SourceDocumentId.Value);
+            }
+            if (Optional.IsDefined(SharepointSiteUrl))
+            {
+                writer.WritePropertyName("sharepointSiteUrl"u8);
+                writer.WriteBooleanValue(SharepointSiteUrl.Value);
+            }
             if (Optional.IsDefined(AnalyzerName))
             {
                 writer.WritePropertyName("analyzer"u8);
@@ -229,6 +254,11 @@ namespace Azure.Search.Documents.Indexes.Models
             bool? isFilterable = default;
             bool? isSortable = default;
             bool? isFacetable = default;
+            PermissionFilter? permissionFilter = default;
+            bool? sensitivityLabelId = default;
+            bool? sensitivityLabelName = default;
+            bool? sourceDocumentId = default;
+            bool? sharepointSiteUrl = default;
             LexicalAnalyzerName? analyzerName = default;
             LexicalAnalyzerName? searchAnalyzerName = default;
             LexicalAnalyzerName? indexAnalyzerName = default;
@@ -312,6 +342,52 @@ namespace Azure.Search.Documents.Indexes.Models
                         continue;
                     }
                     isFacetable = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("permissionFilter"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        permissionFilter = null;
+                        continue;
+                    }
+                    permissionFilter = new PermissionFilter(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("sensitivityLabelId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sensitivityLabelId = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("sensitivityLabelName"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sensitivityLabelName = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("sourceDocumentId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceDocumentId = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("sharepointSiteUrl"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sharepointSiteUrl = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("analyzer"u8))
@@ -433,6 +509,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 isFilterable,
                 isSortable,
                 isFacetable,
+                permissionFilter,
+                sensitivityLabelId,
+                sensitivityLabelName,
+                sourceDocumentId,
+                sharepointSiteUrl,
                 analyzerName,
                 searchAnalyzerName,
                 indexAnalyzerName,

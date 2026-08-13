@@ -60,7 +60,19 @@ public class ResourceNotFoundExceptionTests
         var ex = new ResourceNotFoundException("Response 'resp_123' not found.");
 
         Assert.That(ex.Message, Is.EqualTo("Response 'resp_123' not found."));
+        Assert.That(ex.Code, Is.Null);
+        Assert.That(ex.Param, Is.Null);
         Assert.That(ex.InnerException, Is.Null);
+    }
+
+    [Test]
+    public void Constructor_WithMessageCodeAndParam_SetsAll()
+    {
+        var ex = new ResourceNotFoundException("Response not found.", "invalid_request_error", "response_id");
+
+        Assert.That(ex.Message, Is.EqualTo("Response not found."));
+        Assert.That(ex.Code, Is.EqualTo("invalid_request_error"));
+        Assert.That(ex.Param, Is.EqualTo("response_id"));
     }
 
     [Test]
@@ -71,6 +83,8 @@ public class ResourceNotFoundExceptionTests
 
         Assert.That(ex.Message, Is.EqualTo("Not found"));
         Assert.That(ex.InnerException, Is.SameAs(inner));
+        Assert.That(ex.Code, Is.Null);
+        Assert.That(ex.Param, Is.Null);
     }
 
     [Test]

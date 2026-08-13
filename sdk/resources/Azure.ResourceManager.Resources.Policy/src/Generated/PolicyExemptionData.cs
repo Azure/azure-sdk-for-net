@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Resources.Policy
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties for the policy exemption. </param>
-        internal PolicyExemptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PolicyExemptionProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyExemptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PolicyExemptionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties for the policy exemption. </summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary> The policy exemption category. Possible values are Waiver and Mitigated. </summary>
-        public PolicyExemptionCategory ExemptionCategory
+        public PolicyExemptionCategory? ExemptionCategory
         {
             get
             {
@@ -79,11 +79,14 @@ namespace Azure.ResourceManager.Resources.Policy
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new PolicyExemptionProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new PolicyExemptionProperties();
+                    }
+                    Properties.ExemptionCategory = value.Value;
                 }
-                Properties.ExemptionCategory = value;
             }
         }
 
@@ -100,7 +103,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     Properties = new PolicyExemptionProperties();
                 }
-                Properties.ExpiresOn = value.Value;
+                Properties.ExpiresOn = value;
             }
         }
 
@@ -181,7 +184,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     Properties = new PolicyExemptionProperties();
                 }
-                Properties.AssignmentScopeValidation = value.Value;
+                Properties.AssignmentScopeValidation = value;
             }
         }
     }

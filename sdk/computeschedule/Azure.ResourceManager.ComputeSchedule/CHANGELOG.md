@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.3 (Unreleased)
+## 1.2.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,28 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.5 (2026-08-06)
+
+### Other Changes
+
+- The spec change in [PR #42886](https://github.com/Azure/azure-rest-api-specs/pull/42886) made the rank property optional.
+
+## 1.2.0-beta.4 (2026-05-14)
+
+### Features Added
+
+- Make `VMSizeProfile.Rank` as optional
+- Make `ZoneAllocationPolicy.DistributionStrategy` as required
+- Make `ZonePreference.Rank` as optional
+
+## 1.2.0-beta.3 (2026-05-01)
+
+### Features Added
+
+- Updated the ComputeSchedule RP api-version from `2026-03-01-preview` to `2026-04-15-preview`.
+- Updated the property type `baseProfile` -> `virtualMachineBaseProfile` with strongly-typed model for validation
+- Updated the property type `resourceOverrides` -> `virtualMachineOverrides` with strongly-typed model for validation
 
 ## 1.2.0-beta.2 (2026-04-15)
 

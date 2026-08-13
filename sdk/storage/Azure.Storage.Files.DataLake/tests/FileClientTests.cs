@@ -1597,8 +1597,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathSystemProperties systemProperties = await file.GetSystemPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(systemProperties.CreationTime);
-            Assert.IsNotNull(systemProperties.LastModifiedTime);
+            Assert.IsNotNull(systemProperties.CreatedOn);
+            Assert.IsNotNull(systemProperties.LastModifiedOn);
             Assert.IsNotNull(systemProperties.ETag);
             Assert.IsNotNull(systemProperties.ContentLength);
             Assert.IsNotNull(systemProperties.IsDirectory);
@@ -1630,8 +1630,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathSystemProperties systemProperties = await oauthFile.GetSystemPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(systemProperties.CreationTime);
-            Assert.IsNotNull(systemProperties.LastModifiedTime);
+            Assert.IsNotNull(systemProperties.CreatedOn);
+            Assert.IsNotNull(systemProperties.LastModifiedOn);
             Assert.IsNotNull(systemProperties.ETag);
             Assert.IsNotNull(systemProperties.ContentLength);
             Assert.IsNotNull(systemProperties.IsDirectory);
@@ -1665,8 +1665,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathSystemProperties systemProperties = await sasFile.GetSystemPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(systemProperties.CreationTime);
-            Assert.IsNotNull(systemProperties.LastModifiedTime);
+            Assert.IsNotNull(systemProperties.CreatedOn);
+            Assert.IsNotNull(systemProperties.LastModifiedOn);
             Assert.IsNotNull(systemProperties.ETag);
             Assert.IsNotNull(systemProperties.ContentLength);
             Assert.IsNotNull(systemProperties.IsDirectory);
@@ -1706,8 +1706,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathSystemProperties systemProperties = await identitySasFile.GetSystemPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(systemProperties.CreationTime);
-            Assert.IsNotNull(systemProperties.LastModifiedTime);
+            Assert.IsNotNull(systemProperties.CreatedOn);
+            Assert.IsNotNull(systemProperties.LastModifiedOn);
             Assert.IsNotNull(systemProperties.ETag);
             Assert.IsNotNull(systemProperties.ContentLength);
             Assert.IsNotNull(systemProperties.IsDirectory);
@@ -1743,8 +1743,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathSystemProperties systemProperties = await sasFile.GetSystemPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(systemProperties.CreationTime);
-            Assert.IsNotNull(systemProperties.LastModifiedTime);
+            Assert.IsNotNull(systemProperties.CreatedOn);
+            Assert.IsNotNull(systemProperties.LastModifiedOn);
             Assert.IsNotNull(systemProperties.ETag);
             Assert.IsNotNull(systemProperties.ContentLength);
             Assert.IsNotNull(systemProperties.IsDirectory);
@@ -1785,8 +1785,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathSystemProperties systemProperties = await identitySasFile.GetSystemPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(systemProperties.CreationTime);
-            Assert.IsNotNull(systemProperties.LastModifiedTime);
+            Assert.IsNotNull(systemProperties.CreatedOn);
+            Assert.IsNotNull(systemProperties.LastModifiedOn);
             Assert.IsNotNull(systemProperties.ETag);
             Assert.IsNotNull(systemProperties.ContentLength);
             Assert.IsNotNull(systemProperties.IsDirectory);
@@ -1901,8 +1901,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsNotNull(systemProperties.EncryptionKeySha256);
-            Assert.IsNotNull(systemProperties.CreationTime);
-            Assert.IsNotNull(systemProperties.LastModifiedTime);
+            Assert.IsNotNull(systemProperties.CreatedOn);
+            Assert.IsNotNull(systemProperties.LastModifiedOn);
             Assert.IsNotNull(systemProperties.ETag);
             Assert.IsNotNull(systemProperties.ContentLength);
             Assert.IsNotNull(systemProperties.IsDirectory);
@@ -3323,7 +3323,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     file.AppendAsync(
                         content: stream,
                         offset: 0),
-                    e => Assert.AreEqual("body", e.ParamName));
+                    e => Assert.AreEqual("content", e.ParamName));
             }
         }
 
@@ -4911,7 +4911,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [LiveOnly]
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
-        public async Task ReadToAsync_EnableDataLocality_WithRequestAsserts()
+        public async Task ReadToAsync_LayoutAwareRouting_WithRequestAsserts()
         {
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -4946,7 +4946,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 DataLakeFileReadToOptions readOptions = new()
                 {
-                    EnableDataLocality = true,
+                    LayoutAwareRouting = Blobs.Models.LayoutAwareRouting.Enabled,
                     TransferOptions = new StorageTransferOptions
                     {
                         MaximumConcurrency = 10,
@@ -4990,7 +4990,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [LiveOnly]
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
-        public async Task OpenReadAsync_EnableDataLocality_WithRequestAsserts()
+        public async Task OpenReadAsync_LayoutAwareRouting_WithRequestAsserts()
         {
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -5023,11 +5023,11 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Use a 5 MB buffer so a 20 MB file requires 4 buffer fills total,
             // all of which should be routed to layout endpoints because the
-            // layout cache is built upfront when EnableDataLocality is true.
+            // layout cache is built upfront when LayoutAwareRouting is Enabled.
             int bufferSize = 5 * Constants.MB;
             DataLakeOpenReadOptions readOptions = new(allowModifications: false)
             {
-                EnableDataLocality = true,
+                LayoutAwareRouting = Blobs.Models.LayoutAwareRouting.Enabled,
                 BufferSize = bufferSize,
             };
 
@@ -5044,7 +5044,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests =
                 trackingPolicy.TrackedRequests.Where(r => r.HasHostHeader).ToList();
 
-            // With EnableDataLocality, the layout cache is constructed upfront,
+            // With LayoutAwareRouting, the layout cache is constructed upfront,
             // so every buffer-fill request should be routed to a layout endpoint.
             // With a 5 MB buffer and a 20 MB file, OpenRead issues 4 range downloads,
             // all of which should be rewritten.
@@ -5070,7 +5070,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [LiveOnly]
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
-        public async Task OpenReadAsync_EnableDataLocality_WithPosition_WithRequestAsserts()
+        public async Task OpenReadAsync_LayoutAwareRouting_WithPosition_WithRequestAsserts()
         {
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -5108,7 +5108,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             int bufferSize = 5 * Constants.MB;
             DataLakeOpenReadOptions readOptions = new(allowModifications: false)
             {
-                EnableDataLocality = true,
+                LayoutAwareRouting = Blobs.Models.LayoutAwareRouting.Enabled,
                 BufferSize = bufferSize,
                 Position = position,
             };
@@ -5133,7 +5133,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests =
                 trackingPolicy.TrackedRequests.Where(r => r.HasHostHeader).ToList();
 
-            // With EnableDataLocality, every buffer-fill request should be rewritten.
+            // With LayoutAwareRouting, every buffer-fill request should be rewritten.
             // Opening at 8 MB into a 20 MB file with a 5 MB buffer ⇒ 3 buffer fills.
             Assert.AreEqual(3, rewrittenRequests.Count,
                 "Expected DataLocalityPolicy to rewrite the host on every buffer-fill request when opening at a non-zero Position.");
@@ -5686,7 +5686,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                 // Verify ranges have valid start/end byte offsets
                 Assert.IsNotEmpty(layoutInfo.Ranges.Range);
-                foreach (DataLakeFileLayoutRangesRangeItem rangeItem in layoutInfo.Ranges.Range)
+                foreach (DataLakeFileLayoutRange rangeItem in layoutInfo.Ranges.Range)
                 {
                     Assert.GreaterOrEqual(rangeItem.Start, 0);
                     Assert.Greater(rangeItem.End, rangeItem.Start);
@@ -5703,13 +5703,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Verify endpoints are present and each range's EndpointIndex resolves
                 Assert.IsNotEmpty(layoutInfo.Endpoints.Endpoint);
                 Dictionary<int, string> endpointMap = new Dictionary<int, string>();
-                foreach (DataLakeFileLayoutEndpointsEndpointItem ep in layoutInfo.Endpoints.Endpoint)
+                foreach (DataLakeFileLayoutEndpoint ep in layoutInfo.Endpoints.Endpoint)
                 {
                     Assert.IsNotNull(ep.Value);
                     Assert.IsNotEmpty(ep.Value);
                     endpointMap[ep.Index] = ep.Value;
                 }
-                foreach (DataLakeFileLayoutRangesRangeItem rangeItem in layoutInfo.Ranges.Range)
+                foreach (DataLakeFileLayoutRange rangeItem in layoutInfo.Ranges.Range)
                 {
                     Assert.IsTrue(endpointMap.ContainsKey(rangeItem.EndpointIndex),
                         $"Range [{rangeItem.Start}-{rangeItem.End}] references EndpointIndex {rangeItem.EndpointIndex} not found in endpoints");
@@ -5829,7 +5829,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Verify endpoints are returned and resolvable
                 Assert.IsNotNull(layoutInfo.Endpoints);
                 Assert.IsNotEmpty(layoutInfo.Endpoints.Endpoint);
-                foreach (DataLakeFileLayoutEndpointsEndpointItem ep in layoutInfo.Endpoints.Endpoint)
+                foreach (DataLakeFileLayoutEndpoint ep in layoutInfo.Endpoints.Endpoint)
                 {
                     Assert.IsNotNull(ep.Value);
                     Assert.IsNotEmpty(ep.Value);

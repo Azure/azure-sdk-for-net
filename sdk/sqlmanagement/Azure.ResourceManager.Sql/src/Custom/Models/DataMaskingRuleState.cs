@@ -1,0 +1,20 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System.ComponentModel;
+
+namespace Azure.ResourceManager.Sql.Models
+{
+    // Spec breaking change, preserve the original fixed enum for binary back-compat.
+    /// <summary> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn't already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public enum DataMaskingRuleState
+    {
+        /// <summary> Disabled. </summary>
+        Disabled,
+        /// <summary> Enabled. </summary>
+        Enabled,
+    }
+}

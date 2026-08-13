@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DataBoxEdgeRoleType kind = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             CloudEdgeManagementRoleProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,8 +179,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
                 kind,
+                additionalBinaryDataProperties,
                 properties);
         }
     }

@@ -9,7 +9,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// The ProjectsAgentDefinition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HostedAgentDefinition"/>, <see cref="DeclarativeAgentDefinition"/>, and <see cref="WorkflowAgentDefinition"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HostedAgentDefinition"/>, <see cref="DeclarativeAgentDefinition"/>, <see cref="WorkflowAgentDefinition"/>, and <see cref="ExternalAgentDefinition"/>.
     /// </summary>
     public abstract partial class ProjectsAgentDefinition
     {

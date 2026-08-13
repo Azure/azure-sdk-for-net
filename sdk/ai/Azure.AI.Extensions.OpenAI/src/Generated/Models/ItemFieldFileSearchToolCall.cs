@@ -18,7 +18,7 @@ namespace Azure.AI.Extensions.OpenAI
         ///   `searching`, `incomplete` or `failed`,
         /// </param>
         /// <param name="queries"> The queries used to search for files. </param>
-        internal ItemFieldFileSearchToolCall(string id, OutputItemFileSearchToolCallStatus status, IEnumerable<string> queries) : base(ItemFieldType.FileSearchCall)
+        internal ItemFieldFileSearchToolCall(string id, InputItemFileSearchToolCallStatus status, IEnumerable<string> queries) : base(ItemFieldType.FileSearchCall)
         {
             Id = id;
             Status = status;
@@ -36,7 +36,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// </param>
         /// <param name="queries"> The queries used to search for files. </param>
         /// <param name="results"></param>
-        internal ItemFieldFileSearchToolCall(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, OutputItemFileSearchToolCallStatus status, IList<string> queries, IList<FileSearchToolCallResults> results) : base(@type, additionalBinaryDataProperties)
+        internal ItemFieldFileSearchToolCall(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, InputItemFileSearchToolCallStatus status, IList<string> queries, IList<FileSearchToolCallResults> results) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
@@ -51,7 +51,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// The status of the file search tool call. One of `in_progress`,
         ///   `searching`, `incomplete` or `failed`,
         /// </summary>
-        public OutputItemFileSearchToolCallStatus Status { get; }
+        public InputItemFileSearchToolCallStatus Status { get; }
 
         /// <summary> The queries used to search for files. </summary>
         public IList<string> Queries { get; }

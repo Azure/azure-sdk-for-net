@@ -19,7 +19,7 @@ var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/mo
 AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
 
 var credential = new DefaultAzureCredential();
-BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, "https://ai.azure.com/.default");
 clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
 
 ImageEmbeddingsClient imageEmbeddingsClient = new ImageEmbeddingsClient(new Uri(inferenceEndpoint), credential, clientOptions);
@@ -51,7 +51,7 @@ var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/mo
 AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
 
 var credential = new DefaultAzureCredential();
-BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, "https://ai.azure.com/.default");
 clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
 
 ImageEmbeddingsClient imageEmbeddingsClient = new ImageEmbeddingsClient(new Uri(inferenceEndpoint), credential, clientOptions);

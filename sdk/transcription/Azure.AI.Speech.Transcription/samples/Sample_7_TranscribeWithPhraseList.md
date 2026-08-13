@@ -35,7 +35,7 @@ ClientResult<TranscriptionResult> response = await client.TranscribeAsync(option
 TranscriptionResult result = response.Value;
 
 Console.WriteLine("Transcription with custom phrase list:");
-var channelPhrases = result.PhrasesByChannel.First();
+var channelPhrases = result.CombinedPhrases.First();
 Console.WriteLine(channelPhrases.Text);
 ```
 

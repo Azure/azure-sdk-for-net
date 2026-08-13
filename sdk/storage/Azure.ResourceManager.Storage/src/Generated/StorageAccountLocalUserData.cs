@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Storage
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Storage account local user properties. </param>
-        internal StorageAccountLocalUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, LocalUserProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageAccountLocalUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LocalUserProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Storage account local user properties. </summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     Properties = new LocalUserProperties();
                 }
-                Properties.HasSharedKey = value.Value;
+                Properties.HasSharedKey = value;
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     Properties = new LocalUserProperties();
                 }
-                Properties.HasSshKey = value.Value;
+                Properties.HasSshKey = value;
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     Properties = new LocalUserProperties();
                 }
-                Properties.HasSshPassword = value.Value;
+                Properties.HasSshPassword = value;
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     Properties = new LocalUserProperties();
                 }
-                Properties.GroupId = value.Value;
+                Properties.GroupId = value;
             }
         }
 
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     Properties = new LocalUserProperties();
                 }
-                Properties.IsAclAuthorizationAllowed = value.Value;
+                Properties.IsAclAuthorizationAllowed = value;
             }
         }
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     Properties = new LocalUserProperties();
                 }
-                Properties.IsNfsV3Enabled = value.Value;
+                Properties.IsNfsV3Enabled = value;
             }
         }
     }

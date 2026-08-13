@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.CosmosDB;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableCosmosDBResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableCosmosDBResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableCosmosDBResourceGroupResource for mocking. </summary>
         protected MockableCosmosDBResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableCosmosDBResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableCosmosDBResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableCosmosDBResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of CosmosDBAccountResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of CosmosDBAccountResources and their operations over a CosmosDBAccountResource. </returns>
+        /// <summary> Gets a collection of CosmosDBAccounts in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of CosmosDBAccounts and their operations over a CosmosDBAccountResource. </returns>
         public virtual CosmosDBAccountCollection GetCosmosDBAccounts()
         {
             return GetCachedClient(client => new CosmosDBAccountCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// Retrieves the properties of an existing Azure Cosmos DB database account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<CosmosDBAccountResource>> GetCosmosDBAccountAsync(string accountName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
             return await GetCosmosDBAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// Retrieves the properties of an existing Azure Cosmos DB database account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,11 +91,13 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         [ForwardsClientCalls]
         public virtual Response<CosmosDBAccountResource> GetCosmosDBAccount(string accountName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
             return GetCosmosDBAccounts().Get(accountName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CassandraClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of CassandraClusterResources and their operations over a CassandraClusterResource. </returns>
+        /// <summary> Gets a collection of CassandraClusters in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of CassandraClusters and their operations over a CassandraClusterResource. </returns>
         public virtual CassandraClusterCollection GetCassandraClusters()
         {
             return GetCachedClient(client => new CassandraClusterCollection(client, Id));
@@ -113,20 +107,16 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// Get the properties of a managed Cassandra cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CassandraClusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ClusterResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CassandraClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,6 +127,8 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<CassandraClusterResource>> GetCassandraClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
             return await GetCassandraClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -144,20 +136,16 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// Get the properties of a managed Cassandra cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CassandraClusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ClusterResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CassandraClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,11 +156,13 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         [ForwardsClientCalls]
         public virtual Response<CassandraClusterResource> GetCassandraCluster(string clusterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
             return GetCassandraClusters().Get(clusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CosmosDBFleetResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of CosmosDBFleetResources and their operations over a CosmosDBFleetResource. </returns>
+        /// <summary> Gets a collection of CosmosDBFleets in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of CosmosDBFleets and their operations over a CosmosDBFleetResource. </returns>
         public virtual CosmosDBFleetCollection GetCosmosDBFleets()
         {
             return GetCachedClient(client => new CosmosDBFleetCollection(client, Id));
@@ -182,20 +172,16 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// Retrieves the properties of an existing Azure Cosmos DB fleet under a subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Fleet_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FleetResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBFleetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,6 +192,8 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<CosmosDBFleetResource>> GetCosmosDBFleetAsync(string fleetName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
+
             return await GetCosmosDBFleets().GetAsync(fleetName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -213,20 +201,16 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// Retrieves the properties of an existing Azure Cosmos DB fleet under a subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Fleet_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FleetResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBFleetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,6 +221,8 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         [ForwardsClientCalls]
         public virtual Response<CosmosDBFleetResource> GetCosmosDBFleet(string fleetName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
+
             return GetCosmosDBFleets().Get(fleetName, cancellationToken);
         }
     }

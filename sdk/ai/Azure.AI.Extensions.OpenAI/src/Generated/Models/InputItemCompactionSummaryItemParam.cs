@@ -35,6 +35,6 @@ namespace Azure.AI.Extensions.OpenAI
         public string Id { get; set; }
 
         /// <summary> The encrypted content of the compaction summary. </summary>
-        public string EncryptedContent { get; }
+        public string EncryptedContent { get; set; }
     }
 }

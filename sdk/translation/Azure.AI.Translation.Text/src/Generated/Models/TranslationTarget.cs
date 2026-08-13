@@ -66,13 +66,12 @@ namespace Azure.AI.Translation.Text
         /// If no system is found with the specific category, the request will return a 400 status code. allowFallback=true 
         /// specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
         /// </param>
-        /// <param name="grade"> Defines complexity of LLM prompts to provide high accuracy translation. </param>
-        /// <param name="tone"> Desired tone of target translation. </param>
-        /// <param name="gender"> Desired gender of target translation. </param>
+        /// <param name="tone"> Desired tone of target translation. Accepted values are formal, informal, or neutral. </param>
+        /// <param name="gender"> Desired gender of target translation. Accepted values are female, male, or neutral. </param>
         /// <param name="adaptiveDatasetId"> Reference dataset ID having sentence pair to generate adaptive customized translation. </param>
         /// <param name="referenceTextPairs"> Reference text pairs to generate adaptive customized translation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TranslationTarget(string language, string script, ProfanityAction? profanityAction, ProfanityMarker? profanityMarker, string deploymentName, bool? allowFallback, string grade, string tone, string gender, string adaptiveDatasetId, IList<ReferenceTextPair> referenceTextPairs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranslationTarget(string language, string script, ProfanityAction? profanityAction, ProfanityMarker? profanityMarker, string deploymentName, bool? allowFallback, TranslationTone? tone, TranslationGender? gender, string adaptiveDatasetId, IList<ReferenceTextPair> referenceTextPairs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Language = language;
             Script = script;
@@ -80,7 +79,6 @@ namespace Azure.AI.Translation.Text
             ProfanityMarker = profanityMarker;
             DeploymentName = deploymentName;
             AllowFallback = allowFallback;
-            Grade = grade;
             Tone = tone;
             Gender = gender;
             AdaptiveDatasetId = adaptiveDatasetId;
@@ -134,14 +132,11 @@ namespace Azure.AI.Translation.Text
         /// </summary>
         public bool? AllowFallback { get; set; }
 
-        /// <summary> Defines complexity of LLM prompts to provide high accuracy translation. </summary>
-        public string Grade { get; set; }
+        /// <summary> Desired tone of target translation. Accepted values are formal, informal, or neutral. </summary>
+        public TranslationTone? Tone { get; set; }
 
-        /// <summary> Desired tone of target translation. </summary>
-        public string Tone { get; set; }
-
-        /// <summary> Desired gender of target translation. </summary>
-        public string Gender { get; set; }
+        /// <summary> Desired gender of target translation. Accepted values are female, male, or neutral. </summary>
+        public TranslationGender? Gender { get; set; }
 
         /// <summary> Reference dataset ID having sentence pair to generate adaptive customized translation. </summary>
         public string AdaptiveDatasetId { get; set; }

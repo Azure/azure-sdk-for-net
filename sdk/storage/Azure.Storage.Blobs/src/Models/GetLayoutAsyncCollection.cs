@@ -34,7 +34,7 @@ namespace Azure.Storage.Blobs.Models
             bool async,
             CancellationToken cancellationToken)
         {
-            ResponseWithHeaders<BlobLayout, BlobGetLayoutHeaders> response;
+            NullableResponse<BlobLayout> response;
 
             // ETag locking on subsequent GetLayout requests
             BlobRequestConditions conditions = _etag.HasValue
@@ -71,7 +71,7 @@ namespace Azure.Storage.Blobs.Models
 
             return Page<BlobLayoutInfo>.FromValues(
                 new[] { blobLayoutInfo },
-                response.Value?.NextMarker,
+                response.HasValue ? response.Value?.NextMarker : null,
                 response.GetRawResponse());
         }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.AppService.Models
     public readonly partial struct ResourceScopeType : IEquatable<ResourceScopeType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ResourceScopeType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ResourceScopeType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ServerFarmValue = "ServerFarm";
         private const string SubscriptionValue = "Subscription";
         private const string WebSiteValue = "WebSite";
 
-        /// <summary> ServerFarm. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceScopeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ResourceScopeType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the ServerFarm. </summary>
         public static ResourceScopeType ServerFarm { get; } = new ResourceScopeType(ServerFarmValue);
-        /// <summary> Subscription. </summary>
+
+        /// <summary> Gets the Subscription. </summary>
         public static ResourceScopeType Subscription { get; } = new ResourceScopeType(SubscriptionValue);
-        /// <summary> WebSite. </summary>
+
+        /// <summary> Gets the WebSite. </summary>
         public static ResourceScopeType WebSite { get; } = new ResourceScopeType(WebSiteValue);
+
         /// <summary> Determines if two <see cref="ResourceScopeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceScopeType left, ResourceScopeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceScopeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceScopeType left, ResourceScopeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceScopeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceScopeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceScopeType(string value) => new ResourceScopeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceScopeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceScopeType?(string value) => value == null ? null : new ResourceScopeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceScopeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceScopeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

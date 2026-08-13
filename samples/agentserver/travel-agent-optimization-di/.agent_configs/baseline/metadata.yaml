@@ -1,0 +1,4 @@
+model: gpt-4.1-mini
+instruction_file: instructions.md
+skill_dir: skills
+tools_file: tools.json

@@ -11,6 +11,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
@@ -755,7 +757,7 @@ namespace Azure.Storage.Blobs.Test
                     blob.UploadPagesAsync(
                         content: stream,
                         offset: 0),
-                    e => Assert.AreEqual("body", e.ParamName));
+                    e => Assert.AreEqual("content", e.ParamName));
             }
         }
 
@@ -1063,6 +1065,39 @@ namespace Azure.Storage.Blobs.Test
             using var actualStream = new MemoryStream(actualData);
             await response.Value.Content.CopyToAsync(actualStream);
             TestHelper.AssertSequenceEqual(expectedData, actualData);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_10_06)]
+        public async Task UploadPagesAsync_MD5()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            await blob.CreateIfNotExistsAsync(Constants.KB);
+
+            PageBlobUploadPagesOptions options = new PageBlobUploadPagesOptions
+            {
+                TransferValidation = new UploadTransferValidationOptions
+                {
+                    ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
+                    PrecalculatedChecksum = MD5.Create().ComputeHash(data)
+                }
+            };
+
+            // Act
+            using MemoryStream stream = new MemoryStream(data);
+            Response<PageInfo> response = await blob.UploadPagesAsync(
+                content: stream,
+                offset: 0,
+                options: options);
+
+            // Assert
+            Assert.IsNotNull(response.Value.ContentHash);
+            Assert.IsNotNull(response.Value.ContentCrc64);
         }
 
         [RecordedTest]
@@ -3646,6 +3681,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_10_06)]
         public async Task UploadPagesFromUriAsync_MD5()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -3670,11 +3706,15 @@ namespace Azure.Storage.Blobs.Test
                 };
 
                 // Act
-                await destBlob.UploadPagesFromUriAsync(
+                Response<PageInfo> response = await destBlob.UploadPagesFromUriAsync(
                     sourceUri: sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                     sourceRange: range,
                     range: range,
                     options: options);
+
+                // Assert
+                Assert.IsNotNull(response.Value.ContentHash);
+                Assert.IsNotNull(response.Value.ContentCrc64);
             }
         }
 
@@ -4443,5 +4483,97 @@ namespace Azure.Storage.Blobs.Test
 
             return Tuple.Create(pageBlob, prevSnapshot, snapshot);
         }
+
+        #region Session Authentication
+
+        [RecordedTest]
+        public async Task GetPageRangesAsync_Sessions_FallbackToBearer()
+        {
+            var containerName = GetNewContainerName();
+            var countingPolicy = new BlobBaseClientTests.SessionAuthCountingPolicy(containerName);
+            BlobClientOptions options = GetOptions();
+            options.SessionOptions = new SessionOptions()
+            {
+                SessionMode = SessionMode.Enabled,
+                AccountName = Tenants.TestConfigOAuth.AccountName,
+            };
+            options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+            BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthServiceClient);
+
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobWithRangesAsync(test.Container);
+
+            // Act — GetPageRanges carries `comp=pagelist`, so the session auth policy
+            // should fall back to Bearer authentication rather than issue a session-auth
+            // request or a CreateSession POST.
+            countingPolicy.Start();
+            await blob.GetPageRangesAsync(
+                range: new HttpRange(0, 4 * Constants.KB),
+                snapshot: null,
+                conditions: null,
+                cancellationToken: CancellationToken.None);
+
+            // Assert
+            Assert.AreEqual(0, countingPolicy.CreateSessionCount, "Expected no create session request for GetPageRanges operations");
+            Assert.AreEqual(0, countingPolicy.GetSessionAuthCount, "Expected GetPageRanges requests to not use Session authorization");
+            Assert.AreEqual(0, countingPolicy.NonGetSessionAuthCount, "Expected no non-GET requests to use Session authorization");
+            Assert.IsTrue(countingPolicy.BearerGetBlobCount >= 1, "Expected GetPageRanges requests to use Bearer authorization");
+        }
+
+        [RecordedTest]
+        public async Task GetPageRangesDiffAsync_Sessions_FallbackToBearer()
+        {
+            var containerName = GetNewContainerName();
+            var countingPolicy = new BlobBaseClientTests.SessionAuthCountingPolicy(containerName);
+            BlobClientOptions options = GetOptions();
+            options.SessionOptions = new SessionOptions()
+            {
+                SessionMode = SessionMode.Enabled,
+                AccountName = Tenants.TestConfigOAuth.AccountName,
+            };
+            options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+            BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthServiceClient);
+
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+            var data = GetRandomBuffer(Constants.KB);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadPagesAsync(stream, 0);
+            }
+
+            Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
+            var prevSnapshot = response.Value.Snapshot;
+
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadPagesAsync(stream, 2 * Constants.KB);
+            }
+
+            response = await blob.CreateSnapshotAsync();
+            var snapshot = response.Value.Snapshot;
+
+            // Act — GetPageRangesDiff carries `comp=pagelist`, so the session auth
+            // policy should fall back to Bearer authentication rather than issue a
+            // session-auth request or a CreateSession POST.
+            countingPolicy.Start();
+            await blob.GetPageRangesDiffAsync(
+                range: new HttpRange(0, 4 * Constants.KB),
+                snapshot,
+                prevSnapshot,
+                conditions: null,
+                cancellationToken: CancellationToken.None);
+
+            // Assert
+            Assert.AreEqual(0, countingPolicy.CreateSessionCount, "Expected no create session request for GetPageRangesDiff operations");
+            Assert.AreEqual(0, countingPolicy.GetSessionAuthCount, "Expected GetPageRangesDiff requests to not use Session authorization");
+            Assert.AreEqual(0, countingPolicy.NonGetSessionAuthCount, "Expected no non-GET requests to use Session authorization");
+            Assert.IsTrue(countingPolicy.BearerGetBlobCount >= 1, "Expected GetPageRangesDiff requests to use Bearer authorization");
+        }
+
+        #endregion Session Authentication
     }
 }

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> BGP peer status details. </summary>
     public partial class BgpPeerStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BgpPeerStatus"/>. </summary>
         internal BgpPeerStatus()
@@ -59,8 +31,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="routesReceived"> The number of routes learned from this peer. </param>
         /// <param name="messagesSent"> The number of BGP messages sent. </param>
         /// <param name="messagesReceived"> The number of BGP messages received. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BgpPeerStatus(string localAddress, string neighbor, long? asn, BgpPeerState? state, TimeSpan? connectedDuration, long? routesReceived, long? messagesSent, long? messagesReceived, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BgpPeerStatus(string localAddress, string neighbor, long? asn, BgpPeerState? state, TimeSpan? connectedDuration, long? routesReceived, long? messagesSent, long? messagesReceived, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LocalAddress = localAddress;
             Neighbor = neighbor;
@@ -70,30 +42,37 @@ namespace Azure.ResourceManager.Network.Models
             RoutesReceived = routesReceived;
             MessagesSent = messagesSent;
             MessagesReceived = messagesReceived;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The virtual network gateway's local address. </summary>
         [WirePath("localAddress")]
         public string LocalAddress { get; }
+
         /// <summary> The remote BGP peer. </summary>
         [WirePath("neighbor")]
         public string Neighbor { get; }
+
         /// <summary> The autonomous system number of the remote BGP peer. </summary>
         [WirePath("asn")]
         public long? Asn { get; }
+
         /// <summary> The BGP peer state. </summary>
         [WirePath("state")]
         public BgpPeerState? State { get; }
+
         /// <summary> For how long the peering has been up. </summary>
         [WirePath("connectedDuration")]
         public TimeSpan? ConnectedDuration { get; }
+
         /// <summary> The number of routes learned from this peer. </summary>
         [WirePath("routesReceived")]
         public long? RoutesReceived { get; }
+
         /// <summary> The number of BGP messages sent. </summary>
         [WirePath("messagesSent")]
         public long? MessagesSent { get; }
+
         /// <summary> The number of BGP messages received. </summary>
         [WirePath("messagesReceived")]
         public long? MessagesReceived { get; }

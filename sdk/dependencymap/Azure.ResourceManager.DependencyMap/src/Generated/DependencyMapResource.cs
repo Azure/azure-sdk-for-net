@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DependencyMap
         {
             TryGetApiVersion(ResourceType, out string dependencyMapApiVersion);
             _mapsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DependencyMap", ResourceType.Namespace, Diagnostics);
-            _mapsRestClient = new Maps(_mapsClientDiagnostics, Pipeline, Endpoint, dependencyMapApiVersion ?? "2025-07-01-preview");
+            _mapsRestClient = new Maps(_mapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dependencyMapApiVersion ?? "2025-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DependencyMap
                 HttpMessage message = _mapsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DependencyMapPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DependencyMapArmOperation<DependencyMapResource> operation = new DependencyMapArmOperation<DependencyMapResource>(
-                    new DependencyMapOperationSource(Client),
+                    new DependencyMapResourceOperationSource(Client),
                     _mapsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DependencyMap
                 HttpMessage message = _mapsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DependencyMapPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DependencyMapArmOperation<DependencyMapResource> operation = new DependencyMapArmOperation<DependencyMapResource>(
-                    new DependencyMapOperationSource(Client),
+                    new DependencyMapResourceOperationSource(Client),
                     _mapsClientDiagnostics,
                     Pipeline,
                     message.Request,

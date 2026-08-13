@@ -9,6 +9,8 @@ using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
@@ -593,6 +595,39 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_10_06)]
+        public async Task StageBlockAsync_MD5()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            const int blobSize = Constants.KB;
+            byte[] data = GetRandomBuffer(blobSize);
+
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            BlockBlobStageBlockOptions options = new BlockBlobStageBlockOptions
+            {
+                TransferValidation = new UploadTransferValidationOptions
+                {
+                    ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
+                    PrecalculatedChecksum = MD5.Create().ComputeHash(data)
+                }
+            };
+
+            // Act
+            using MemoryStream stream = new MemoryStream(data);
+            Response<BlockInfo> response = await blob.StageBlockAsync(
+                base64BlockId: ToBase64(GetNewBlockName()),
+                content: stream,
+                options: options);
+
+            // Assert
+            Assert.IsNotNull(response.Value.ContentHash);
+            Assert.IsNotNull(response.Value.ContentCrc64);
+        }
+
+        [RecordedTest]
         public async Task StageBlockFromUriAsync_Min()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -853,6 +888,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_10_06)]
         public async Task StageBlockFromUriAsync_MD5()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -875,12 +911,16 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Act
-            await RetryAsync(
+            Response<BlockInfo> response = await RetryAsync(
                 async () => await destBlob.StageBlockFromUriAsync(
                     sourceUri: sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                     base64BlockId: ToBase64(GetNewBlockName()),
                     options: options),
                 _retryStageBlockFromUri);
+
+            // Assert
+            Assert.IsNotNull(response.Value.ContentHash);
+            Assert.IsNotNull(response.Value.ContentCrc64);
         }
 
         [RecordedTest]
@@ -3569,7 +3609,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_10_06)]
         public async Task SyncUploadFromUriAsync_ContentMd5()
         {
             // Arrange
@@ -3595,6 +3635,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(sourceContentMd5, response.Value.ContentHash);
+            Assert.IsNotNull(response.Value.ContentCrc64);
         }
 
         [RecordedTest]
@@ -3992,5 +4033,51 @@ namespace Azure.Storage.Blobs.Test
             public int CommittedCount { get; set; }
             public int UncommittedCount { get; set; }
         }
+
+        #region Session Authentication
+
+        [RecordedTest]
+        public async Task GetBlockListAsync_Sessions_FallbackToBearer()
+        {
+            var containerName = GetNewContainerName();
+            var countingPolicy = new BlobBaseClientTests.SessionAuthCountingPolicy(containerName);
+            BlobClientOptions options = GetOptions();
+            options.SessionOptions = new SessionOptions()
+            {
+                SessionMode = SessionMode.Enabled,
+                AccountName = Tenants.TestConfigOAuth.AccountName,
+            };
+            options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+            BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthServiceClient);
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            var blockId = ToBase64(GetNewBlockName());
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.StageBlockAsync(blockId, stream);
+            }
+
+            // Act — GetBlockList carries `comp=blocklist`, so the session auth policy
+            // should fall back to Bearer authentication rather than issue a session-auth
+            // request or a CreateSession POST.
+            countingPolicy.Start();
+            await blob.GetBlockListAsync();
+
+            // Assert
+            Assert.AreEqual(0, countingPolicy.CreateSessionCount, "Expected no create session request for GetBlockList operations");
+            Assert.AreEqual(0, countingPolicy.GetSessionAuthCount, "Expected GetBlockList requests to not use Session authorization");
+            Assert.AreEqual(0, countingPolicy.NonGetSessionAuthCount, "Expected no non-GET requests to use Session authorization");
+            Assert.IsTrue(countingPolicy.BearerGetBlobCount >= 1, "Expected GetBlockList requests to use Bearer authorization");
+        }
+
+        #endregion Session Authentication
     }
 }

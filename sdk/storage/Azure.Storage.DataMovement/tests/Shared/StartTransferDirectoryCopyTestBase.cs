@@ -305,6 +305,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(0, 10)]
         [TestCase(DataMovementTestConstants.KB / 2, 10)]
         [TestCase(DataMovementTestConstants.KB, 10)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/59220")]
         public async Task DirectoryToDirectory_SmallSize(long size, int waitTimeInSec)
         {
             // Arrange
@@ -382,6 +383,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/59220")]
         public async Task DirectoryToDirectory_EmptyFolder()
         {
             // Arrange
@@ -422,6 +424,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        [Ignore("Temporarily ignore this test until we revert enabling Sessions by default")]
         public async Task DirectoryToDirectory_SingleFile()
         {
             // Arrange
@@ -446,6 +449,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        [Ignore("Temporarily ignore this test until we revert enabling Sessions by default")]
         public async Task DirectoryToDirectory_ManySubDirectories()
         {
             // Arrange
@@ -483,6 +487,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(3)]
+        [Ignore("Temporarily ignore this test until we revert enabling Sessions by default")]
         public async Task DirectoryToDirectory_SubDirectoriesLevels(int level)
         {
             // Arrange
@@ -514,6 +519,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        [Ignore("Temporarily ignore this test until we revert enabling Sessions by default")]
         public async Task DirectoryToDirectory_OverwriteExists()
         {
             // Arrange
@@ -563,6 +569,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        [Ignore("Temporarily ignore this test until we revert enabling Sessions by default")]
         public async Task DirectoryToDirectory_OverwriteNotExists()
         {
             // Arrange
@@ -610,6 +617,7 @@ namespace Azure.Storage.DataMovement.Tests
         [RecordedTest]
         [TestCase("source=path@#%")]
         [TestCase("source%21path%40%23%25")]
+        [Ignore("Temporarily ignore this test until we revert enabling Sessions by default")]
         public async Task DirectoryToDirectory_SpecialChars(string prefix)
         {
             // Arrange
@@ -646,6 +654,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        [Ignore("Temporarily ignore this test until we revert enabling Sessions by default")]
         public virtual async Task DirectoryToDirectory_OAuth()
         {
             // Arrange
@@ -971,6 +980,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase((int)TransferPropertiesTestType.Preserve)]
         [TestCase((int)TransferPropertiesTestType.NoPreserve)]
         [TestCase((int)TransferPropertiesTestType.NewProperties)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/59220")]
         public async Task CopyRemoteObjects_VerifyProperties(int propertiesType)
         {
             // Arrange

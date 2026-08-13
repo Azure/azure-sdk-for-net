@@ -139,13 +139,17 @@ try {
         $tspGenerated = Join-Path $TspOut "src" "Generated"
         $tspModels = Join-Path $tspGenerated "Models"
         $tspInternal = Join-Path $tspGenerated "Internal"
-        $tspFactory = Join-Path $tspGenerated "AzureAIAgentServerResponsesModelFactory.cs"
 
         if (Test-Path $tspModels) {
             Copy-Item -Recurse -Force (Join-Path $tspModels "*") $modelsDir
         }
-        if (Test-Path $tspFactory) {
-            Copy-Item -Force $tspFactory $modelsDir
+        # The model factory is hand-maintained in Custom/AgentServerResponsesModelFactory.cs
+        # because the emitter-generated version has constructor parameter ordering mismatches
+        # with our customized models. Remove any emitter-generated factory from Models/.
+        $generatedFactories = Get-ChildItem $modelsDir -Filter "*ModelFactory.cs" -ErrorAction SilentlyContinue
+        foreach ($f in $generatedFactories) {
+            Write-Host "  Removing emitter-generated factory: $($f.Name) (hand-maintained in Custom/)"
+            Remove-Item $f.FullName -Force
         }
         if (Test-Path $tspInternal) {
             Copy-Item -Force (Join-Path $tspInternal "*.cs") $internalDir

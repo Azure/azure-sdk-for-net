@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs
@@ -23,6 +24,11 @@ namespace Azure.Storage.Blobs
         public static RequestFailedException InvalidRangeWithNonEmptyBlob(RequestFailedException ex) =>
             new RequestFailedException("Invalid range exception during ranged download despite non-empty blob", ex);
 
+        public static InvalidOperationException AccountNameRequiredForSessionSigning()
+             => new InvalidOperationException(
+                    $"The storage account name could not be determined from the request URL. " +
+                    $"Set {nameof(SessionOptions)}.{nameof(SessionOptions.AccountName)} when using a custom endpoint URL.");
+
         internal static void VerifyHttpsCustomerProvidedKey(Uri uri, CustomerProvidedKey? customerProvidedKey)
         {
             if (customerProvidedKey.HasValue && !string.Equals(uri.Scheme, Constants.Https, StringComparison.OrdinalIgnoreCase))
@@ -41,5 +47,21 @@ namespace Azure.Storage.Blobs
 
         public static ArgumentException ParsingFullHttpRangeFailed(string range)
             => new ArgumentException("Could not obtain the total length from HTTP range " + range);
+
+        public static void VerifyParallelismGreaterThanOne(int parallelism)
+        {
+            if (parallelism <= 1)
+            {
+                throw new ArgumentException("Parallel must be greater than 1 for parallel download.", nameof(parallelism));
+            }
+        }
+
+        public static void VerifyNoExtraData(int extraDataLength)
+        {
+            if (extraDataLength > 0)
+            {
+                throw new InvalidOperationException("The response contained more data than was indicated by the Content-Length header.");
+            }
+        }
     }
 }

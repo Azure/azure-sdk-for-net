@@ -33,12 +33,14 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="status"> The status of item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API. </param>
         /// <param name="role"> The role of the message. One of `unknown`, `user`, `assistant`, `system`, `critic`, `discriminator`, `developer`, or `tool`. </param>
         /// <param name="content"> The content of the message. </param>
-        internal ItemFieldMessage(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, MessageStatus status, MessageRole role, IList<MessageContent> content) : base(@type, additionalBinaryDataProperties)
+        /// <param name="phase"></param>
+        internal ItemFieldMessage(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, MessageStatus status, MessageRole role, IList<MessageContent> content, MessagePhase? phase) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
             Role = role;
             Content = content;
+            Phase = phase;
         }
 
         /// <summary> The unique ID of the message. </summary>
@@ -52,5 +54,8 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> The content of the message. </summary>
         public IList<MessageContent> Content { get; }
+
+        /// <summary> Gets the Phase. </summary>
+        public MessagePhase? Phase { get; }
     }
 }

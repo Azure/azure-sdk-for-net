@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SapOpenHubLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="SapOpenHubLinkedService"/>. </summary>
-        public SapOpenHubLinkedService()
+        public SapOpenHubLinkedService() : base("SapOpenHub")
         {
-            LinkedServiceType = "SapOpenHub";
+
         }
 
         /// <summary> Initializes a new instance of <see cref="SapOpenHubLinkedService"/>. </summary>
@@ -27,55 +27,186 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="server"> Host name of the SAP BW instance where the open hub destination is located. Type: string (or Expression with resultType string). </param>
-        /// <param name="systemNumber"> System number of the BW system where the open hub destination is located. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string). </param>
-        /// <param name="clientId"> Client ID of the client on the BW system where the open hub destination is located. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string). </param>
-        /// <param name="language"> Language of the BW system where the open hub destination is located. The default value is EN. Type: string (or Expression with resultType string). </param>
-        /// <param name="systemId"> SystemID of the SAP system where the table is located. Type: string (or Expression with resultType string). </param>
-        /// <param name="userName"> Username to access the SAP BW server where the open hub destination is located. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> Password to access the SAP BW server where the open hub destination is located. </param>
-        /// <param name="messageServer"> The hostname of the SAP Message Server. Type: string (or Expression with resultType string). </param>
-        /// <param name="messageServerService"> The service name or port number of the Message Server. Type: string (or Expression with resultType string). </param>
-        /// <param name="logonGroup"> The Logon Group for the SAP System. Type: string (or Expression with resultType string). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal SapOpenHubLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> server, DataFactoryElement<string> systemNumber, DataFactoryElement<string> clientId, DataFactoryElement<string> language, DataFactoryElement<string> systemId, DataFactoryElement<string> userName, DataFactorySecret password, DataFactoryElement<string> messageServer, DataFactoryElement<string> messageServerService, DataFactoryElement<string> logonGroup, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Properties specific to SAP Business Warehouse Open Hub Destination linked service type. </param>
+        /// <param name="password"></param>
+        internal SapOpenHubLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, SapOpenHubLinkedServiceTypeProperties typeProperties, DataFactorySecret password) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            Server = server;
-            SystemNumber = systemNumber;
-            ClientId = clientId;
-            Language = language;
-            SystemId = systemId;
-            UserName = userName;
+            TypeProperties = typeProperties;
             Password = password;
-            MessageServer = messageServer;
-            MessageServerService = messageServerService;
-            LogonGroup = logonGroup;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "SapOpenHub";
         }
 
+        /// <summary> Properties specific to SAP Business Warehouse Open Hub Destination linked service type. </summary>
+        internal SapOpenHubLinkedServiceTypeProperties TypeProperties { get; set; }
+
         /// <summary> Host name of the SAP BW instance where the open hub destination is located. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Server { get; set; }
+        public DataFactoryElement<string> Server
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Server;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOpenHubLinkedServiceTypeProperties();
+                }
+                TypeProperties.Server = value;
+            }
+        }
+
         /// <summary> System number of the BW system where the open hub destination is located. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SystemNumber { get; set; }
+        public DataFactoryElement<string> SystemNumber
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SystemNumber;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOpenHubLinkedServiceTypeProperties();
+                }
+                TypeProperties.SystemNumber = value;
+            }
+        }
+
         /// <summary> Client ID of the client on the BW system where the open hub destination is located. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ClientId { get; set; }
+        public DataFactoryElement<string> ClientId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ClientId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOpenHubLinkedServiceTypeProperties();
+                }
+                TypeProperties.ClientId = value;
+            }
+        }
+
         /// <summary> Language of the BW system where the open hub destination is located. The default value is EN. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Language { get; set; }
+        public DataFactoryElement<string> Language
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Language;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOpenHubLinkedServiceTypeProperties();
+                }
+                TypeProperties.Language = value;
+            }
+        }
+
         /// <summary> SystemID of the SAP system where the table is located. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SystemId { get; set; }
+        public DataFactoryElement<string> SystemId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SystemId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOpenHubLinkedServiceTypeProperties();
+                }
+                TypeProperties.SystemId = value;
+            }
+        }
+
         /// <summary> Username to access the SAP BW server where the open hub destination is located. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> UserName { get; set; }
-        /// <summary> Password to access the SAP BW server where the open hub destination is located. </summary>
-        public DataFactorySecret Password { get; set; }
+        public DataFactoryElement<string> UserName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UserName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOpenHubLinkedServiceTypeProperties();
+                }
+                TypeProperties.UserName = value;
+            }
+        }
+
         /// <summary> The hostname of the SAP Message Server. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> MessageServer { get; set; }
+        public DataFactoryElement<string> MessageServer
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.MessageServer;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOpenHubLinkedServiceTypeProperties();
+                }
+                TypeProperties.MessageServer = value;
+            }
+        }
+
         /// <summary> The service name or port number of the Message Server. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> MessageServerService { get; set; }
+        public DataFactoryElement<string> MessageServerService
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.MessageServerService;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOpenHubLinkedServiceTypeProperties();
+                }
+                TypeProperties.MessageServerService = value;
+            }
+        }
+
         /// <summary> The Logon Group for the SAP System. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> LogonGroup { get; set; }
+        public DataFactoryElement<string> LogonGroup
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.LogonGroup;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOpenHubLinkedServiceTypeProperties();
+                }
+                TypeProperties.LogonGroup = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOpenHubLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

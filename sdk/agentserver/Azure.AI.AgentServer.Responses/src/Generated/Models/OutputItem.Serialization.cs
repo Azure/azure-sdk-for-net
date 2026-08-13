@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary>
     /// The OutputItem.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StructuredOutputsOutputItem"/>, <see cref="WorkflowActionOutputItem"/>, <see cref="OAuthConsentRequestOutputItem"/>, <see cref="MemorySearchToolCallItemResource"/>, <see cref="BingGroundingToolCall"/>, <see cref="BingGroundingToolCallOutput"/>, <see cref="SharepointGroundingToolCall"/>, <see cref="SharepointGroundingToolCallOutput"/>, <see cref="AzureAISearchToolCall"/>, <see cref="AzureAISearchToolCallOutput"/>, <see cref="BingCustomSearchToolCall"/>, <see cref="BingCustomSearchToolCallOutput"/>, <see cref="OpenApiToolCall"/>, <see cref="OpenApiToolCallOutput"/>, <see cref="BrowserAutomationToolCall"/>, <see cref="BrowserAutomationToolCallOutput"/>, <see cref="FabricDataAgentToolCall"/>, <see cref="FabricDataAgentToolCallOutput"/>, <see cref="AzureFunctionToolCall"/>, <see cref="AzureFunctionToolCallOutput"/>, <see cref="A2AToolCall"/>, <see cref="A2AToolCallOutput"/>, <see cref="FunctionToolCallOutputResource"/>, <see cref="OutputItemFileSearchToolCall"/>, <see cref="OutputItemFunctionToolCall"/>, <see cref="OutputItemWebSearchToolCall"/>, <see cref="OutputItemComputerToolCall"/>, <see cref="OutputItemReasoningItem"/>, <see cref="OutputItemCompactionBody"/>, <see cref="OutputItemImageGenToolCall"/>, <see cref="OutputItemCodeInterpreterToolCall"/>, <see cref="OutputItemLocalShellToolCall"/>, <see cref="OutputItemFunctionShellCall"/>, <see cref="OutputItemFunctionShellCallOutput"/>, <see cref="OutputItemApplyPatchToolCall"/>, <see cref="OutputItemApplyPatchToolCallOutput"/>, <see cref="OutputItemMcpToolCall"/>, <see cref="OutputItemMcpListTools"/>, <see cref="OutputItemMcpApprovalRequest"/>, <see cref="OutputItemCustomToolCall"/>, <see cref="OutputItemMessage"/>, <see cref="OutputItemComputerToolCallOutputResource"/>, <see cref="OutputItemLocalShellToolCallOutput"/>, <see cref="OutputItemMcpApprovalResponseResource"/>, and <see cref="OutputItemCustomToolCallOutput"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StructuredOutputsOutputItem"/>, <see cref="WorkflowActionOutputItem"/>, <see cref="OAuthConsentRequestOutputItem"/>, <see cref="MemorySearchToolCallItemResource"/>, <see cref="BingGroundingToolCall"/>, <see cref="BingGroundingToolCallOutput"/>, <see cref="SharepointGroundingToolCall"/>, <see cref="SharepointGroundingToolCallOutput"/>, <see cref="AzureAISearchToolCall"/>, <see cref="AzureAISearchToolCallOutput"/>, <see cref="BingCustomSearchToolCall"/>, <see cref="BingCustomSearchToolCallOutput"/>, <see cref="OpenApiToolCall"/>, <see cref="OpenApiToolCallOutput"/>, <see cref="BrowserAutomationToolCall"/>, <see cref="BrowserAutomationToolCallOutput"/>, <see cref="FabricDataAgentToolCall"/>, <see cref="FabricDataAgentToolCallOutput"/>, <see cref="AzureFunctionToolCall"/>, <see cref="AzureFunctionToolCallOutput"/>, <see cref="A2AToolCall"/>, <see cref="A2AToolCallOutput"/>, <see cref="OutputItemCustomToolCall"/>, <see cref="OutputItemCustomToolCallOutput"/>, <see cref="OutputItemFileSearchToolCall"/>, <see cref="OutputItemFunctionToolCall"/>, <see cref="OutputItemFunctionToolCallOutput"/>, <see cref="OutputItemWebSearchToolCall"/>, <see cref="OutputItemComputerToolCall"/>, <see cref="OutputItemComputerToolCallOutput"/>, <see cref="OutputItemReasoningItem"/>, <see cref="OutputItemToolSearchCall"/>, <see cref="OutputItemToolSearchOutput"/>, <see cref="OutputItemCompactionBody"/>, <see cref="OutputItemImageGenToolCall"/>, <see cref="OutputItemCodeInterpreterToolCall"/>, <see cref="OutputItemLocalShellToolCall"/>, <see cref="OutputItemLocalShellToolCallOutput"/>, <see cref="OutputItemFunctionShellCall"/>, <see cref="OutputItemFunctionShellCallOutput"/>, <see cref="OutputItemApplyPatchToolCall"/>, <see cref="OutputItemApplyPatchToolCallOutput"/>, <see cref="OutputItemMcpToolCall"/>, <see cref="OutputItemMcpListTools"/>, <see cref="OutputItemMcpApprovalRequest"/>, <see cref="OutputItemMcpApprovalResponseResource"/>, and <see cref="OutputItemMessage"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownOutputItem))]
     public abstract partial class OutputItem : IJsonModel<OutputItem>
@@ -195,20 +195,30 @@ namespace Azure.AI.AgentServer.Responses.Models
                         return A2AToolCall.DeserializeA2AToolCall(element, options);
                     case "a2a_preview_call_output":
                         return A2AToolCallOutput.DeserializeA2AToolCallOutput(element, options);
-                    case "function_call_output":
-                        return FunctionToolCallOutputResource.DeserializeFunctionToolCallOutputResource(element, options);
+                    case "custom_tool_call":
+                        return OutputItemCustomToolCall.DeserializeOutputItemCustomToolCall(element, options);
+                    case "custom_tool_call_output":
+                        return OutputItemCustomToolCallOutput.DeserializeOutputItemCustomToolCallOutput(element, options);
                     case "output_message":
                         return OutputItemOutputMessage.DeserializeOutputItemOutputMessage(element, options);
                     case "file_search_call":
                         return OutputItemFileSearchToolCall.DeserializeOutputItemFileSearchToolCall(element, options);
                     case "function_call":
                         return OutputItemFunctionToolCall.DeserializeOutputItemFunctionToolCall(element, options);
+                    case "function_call_output":
+                        return OutputItemFunctionToolCallOutput.DeserializeOutputItemFunctionToolCallOutput(element, options);
                     case "web_search_call":
                         return OutputItemWebSearchToolCall.DeserializeOutputItemWebSearchToolCall(element, options);
                     case "computer_call":
                         return OutputItemComputerToolCall.DeserializeOutputItemComputerToolCall(element, options);
+                    case "computer_call_output":
+                        return OutputItemComputerToolCallOutput.DeserializeOutputItemComputerToolCallOutput(element, options);
                     case "reasoning":
                         return OutputItemReasoningItem.DeserializeOutputItemReasoningItem(element, options);
+                    case "tool_search_call":
+                        return OutputItemToolSearchCall.DeserializeOutputItemToolSearchCall(element, options);
+                    case "tool_search_output":
+                        return OutputItemToolSearchOutput.DeserializeOutputItemToolSearchOutput(element, options);
                     case "compaction":
                         return OutputItemCompactionBody.DeserializeOutputItemCompactionBody(element, options);
                     case "image_generation_call":
@@ -217,6 +227,8 @@ namespace Azure.AI.AgentServer.Responses.Models
                         return OutputItemCodeInterpreterToolCall.DeserializeOutputItemCodeInterpreterToolCall(element, options);
                     case "local_shell_call":
                         return OutputItemLocalShellToolCall.DeserializeOutputItemLocalShellToolCall(element, options);
+                    case "local_shell_call_output":
+                        return OutputItemLocalShellToolCallOutput.DeserializeOutputItemLocalShellToolCallOutput(element, options);
                     case "shell_call":
                         return OutputItemFunctionShellCall.DeserializeOutputItemFunctionShellCall(element, options);
                     case "shell_call_output":
@@ -231,18 +243,10 @@ namespace Azure.AI.AgentServer.Responses.Models
                         return OutputItemMcpListTools.DeserializeOutputItemMcpListTools(element, options);
                     case "mcp_approval_request":
                         return OutputItemMcpApprovalRequest.DeserializeOutputItemMcpApprovalRequest(element, options);
-                    case "custom_tool_call":
-                        return OutputItemCustomToolCall.DeserializeOutputItemCustomToolCall(element, options);
-                    case "message":
-                        return OutputItemMessage.DeserializeOutputItemMessage(element, options);
-                    case "computer_call_output":
-                        return OutputItemComputerToolCallOutputResource.DeserializeOutputItemComputerToolCallOutputResource(element, options);
-                    case "local_shell_call_output":
-                        return OutputItemLocalShellToolCallOutput.DeserializeOutputItemLocalShellToolCallOutput(element, options);
                     case "mcp_approval_response":
                         return OutputItemMcpApprovalResponseResource.DeserializeOutputItemMcpApprovalResponseResource(element, options);
-                    case "custom_tool_call_output":
-                        return OutputItemCustomToolCallOutput.DeserializeOutputItemCustomToolCallOutput(element, options);
+                    case "message":
+                        return OutputItemMessage.DeserializeOutputItemMessage(element, options);
                 }
             }
             return UnknownOutputItem.DeserializeUnknownOutputItem(element, options);

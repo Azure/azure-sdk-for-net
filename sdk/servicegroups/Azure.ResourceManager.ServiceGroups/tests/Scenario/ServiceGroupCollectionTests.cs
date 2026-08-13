@@ -113,7 +113,8 @@ namespace Azure.ResourceManager.ServiceGroups.Tests.Scenario
             lro = await serviceGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, serviceGroupName3, data3);
             ServiceGroupResource serviceGroup3 = lro.Value;
 
-            var ancestors = await serviceGroupCollection.GetAncestorsAsync(serviceGroup3.Data.Name).ToEnumerableAsync();
+            ResourceIdentifier resourceId = ServiceGroupResource.CreateResourceIdentifier(serviceGroup3.Data.Name);
+            var ancestors = await Client.GetServiceGroupResource(resourceId).GetAncestorsAsync().ToEnumerableAsync();
             Assert.IsNotNull(ancestors);
             Assert.IsNotEmpty(ancestors);
             Assert.IsTrue(ancestors.Any(ancestor => ancestor.Data.Name.Equals(serviceGroupName)));

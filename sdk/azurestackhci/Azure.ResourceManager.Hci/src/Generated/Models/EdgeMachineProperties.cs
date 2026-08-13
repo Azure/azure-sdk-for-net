@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="cloudId"> Unique, immutable resource id. </param>
         /// <param name="arcMachineResourceGroupId"> Optional property to create arc machine in custom resource group. </param>
         /// <param name="arcMachineResourceId"> Arc machine instance resource id. </param>
+        /// <param name="lifecycleDetails"> Lifecycle details of the resource. </param>
         /// <param name="arcGatewayResourceId"> Link to Arc Gateway ARM resource Id. </param>
         /// <param name="siteDetails"> Service fetches common configuration from site. </param>
         /// <param name="ownershipVoucherDetails"> Ownership voucher details for provisioned machine. </param>
@@ -42,13 +43,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="operationDetails"> operation status details for edge machine. </param>
         /// <param name="lastSyncedOn"> Last time data updated to service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeMachineProperties(EdgeMachineKind? edgeMachineKind, HciProvisioningState? provisioningState, string cloudId, ResourceIdentifier arcMachineResourceGroupId, ResourceIdentifier arcMachineResourceId, ResourceIdentifier arcGatewayResourceId, HciSiteDetails siteDetails, OwnershipVoucherDetails ownershipVoucherDetails, HciProvisioningDetails provisioningDetails, string devicePoolResourceId, EdgeMachineState? machineState, EdgeMachineConnectivityStatus? connectivityStatus, string claimedBy, EdgeMachineReportedProperties reportedProperties, IReadOnlyList<HciOperationDetail> operationDetails, DateTimeOffset? lastSyncedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineProperties(EdgeMachineKind? edgeMachineKind, HciProvisioningState? provisioningState, string cloudId, ResourceIdentifier arcMachineResourceGroupId, ResourceIdentifier arcMachineResourceId, LifecycleDetails lifecycleDetails, ResourceIdentifier arcGatewayResourceId, HciSiteDetails siteDetails, OwnershipVoucherDetails ownershipVoucherDetails, HciProvisioningDetails provisioningDetails, string devicePoolResourceId, EdgeMachineState? machineState, EdgeMachineConnectivityStatus? connectivityStatus, string claimedBy, EdgeMachineReportedProperties reportedProperties, IReadOnlyList<HciOperationDetail> operationDetails, DateTimeOffset? lastSyncedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EdgeMachineKind = edgeMachineKind;
             ProvisioningState = provisioningState;
             CloudId = cloudId;
             ArcMachineResourceGroupId = arcMachineResourceGroupId;
             ArcMachineResourceId = arcMachineResourceId;
+            LifecycleDetails = lifecycleDetails;
             ArcGatewayResourceId = arcGatewayResourceId;
             SiteDetails = siteDetails;
             OwnershipVoucherDetails = ownershipVoucherDetails;
@@ -82,6 +84,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Arc machine instance resource id. </summary>
         [WirePath("arcMachineResourceId")]
         public ResourceIdentifier ArcMachineResourceId { get; set; }
+
+        /// <summary> Lifecycle details of the resource. </summary>
+        [WirePath("lifecycleDetails")]
+        public LifecycleDetails LifecycleDetails { get; }
 
         /// <summary> Link to Arc Gateway ARM resource Id. </summary>
         [WirePath("arcGatewayResourceId")]

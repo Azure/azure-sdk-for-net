@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeIPv4Config"/>. </summary>
-        public DataBoxEdgeIPv4Config()
+        internal DataBoxEdgeIPv4Config()
         {
         }
 

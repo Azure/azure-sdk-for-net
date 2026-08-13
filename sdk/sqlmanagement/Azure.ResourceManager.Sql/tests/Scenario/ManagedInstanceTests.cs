@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Tests
             // 1.CreateOrUpdate
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
             string vnetName = Recording.GenerateAssetName("vnet-");
-            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName,vnetName,DefaultLocation,_resourceGroup);
+            var managedInstance = await CreateDefaultManagedInstance(managedInstanceName, vnetName, DefaultLocation, _resourceGroup);
             Assert.IsNotNull(managedInstance.Data);
             Assert.AreEqual(managedInstanceName, managedInstance.Data.Name);
             Assert.AreEqual("westus2", managedInstance.Data.Location.ToString());

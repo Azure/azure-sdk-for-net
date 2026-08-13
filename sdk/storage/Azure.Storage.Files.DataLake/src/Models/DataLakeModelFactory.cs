@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using Microsoft.TypeSpec.Generator.Customizations;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Files.DataLake.Models
@@ -12,6 +13,8 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// DataLakeModelFactory provides utilities for mocking.
     /// </summary>
+    [CodeGenType("FilesDataLakeModelFactory")]
+    [CodeGenSuppress("FileSystemItem", typeof(string))]
     public static partial class DataLakeModelFactory
     {
         #region DataLakeFileReadResult
@@ -437,8 +440,8 @@ namespace Azure.Storage.Files.DataLake.Models
             PathPermissions permissions)
             => new PathSystemProperties()
             {
-                CreationTime = creationTime,
-                LastModifiedTime = lastModifiedTime,
+                CreatedOn = creationTime,
+                LastModifiedOn = lastModifiedTime,
                 ETag = eTag,
                 ContentLength = contentLength,
                 IsDirectory = isDirectory,
@@ -1103,57 +1106,57 @@ namespace Azure.Storage.Files.DataLake.Models
             };
         #endregion GetPathTagResult
 
-        #region DataLakeFileLayoutEndpointsEndpointItem
+        #region DataLakeFileLayoutEndpoint
         /// <summary>
-        /// Creates a new <see cref="Models.DataLakeFileLayoutEndpointsEndpointItem"/> instance for mocking.
+        /// Creates a new <see cref="Models.DataLakeFileLayoutEndpoint"/> instance for mocking.
         /// </summary>
-        public static DataLakeFileLayoutEndpointsEndpointItem DataLakeFileLayoutEndpointsEndpointItem(
+        public static DataLakeFileLayoutEndpoint DataLakeFileLayoutEndpoint(
             int index,
             string value)
-            => new DataLakeFileLayoutEndpointsEndpointItem()
+            => new DataLakeFileLayoutEndpoint()
             {
                 Index = index,
                 Value = value
             };
-        #endregion DataLakeFileLayoutEndpointsEndpointItem
+        #endregion DataLakeFileLayoutEndpoint
 
         #region DataLakeFileLayoutEndpoints
         /// <summary>
         /// Creates a new <see cref="Models.DataLakeFileLayoutEndpoints"/> instance for mocking.
         /// </summary>
         public static DataLakeFileLayoutEndpoints DataLakeFileLayoutEndpoints(
-            IEnumerable<DataLakeFileLayoutEndpointsEndpointItem> endpoint)
+            IEnumerable<DataLakeFileLayoutEndpoint> endpoint)
             => new DataLakeFileLayoutEndpoints()
             {
-                Endpoint = endpoint == null ? null : new List<DataLakeFileLayoutEndpointsEndpointItem>(endpoint)
+                Endpoint = endpoint == null ? null : new List<DataLakeFileLayoutEndpoint>(endpoint)
             };
         #endregion DataLakeFileLayoutEndpoints
 
-        #region DataLakeFileLayoutRangesRangeItem
+        #region DataLakeFileLayoutRange
         /// <summary>
-        /// Creates a new <see cref="Models.DataLakeFileLayoutRangesRangeItem"/> instance for mocking.
+        /// Creates a new <see cref="Models.DataLakeFileLayoutRange"/> instance for mocking.
         /// </summary>
-        public static DataLakeFileLayoutRangesRangeItem DataLakeFileLayoutRangesRangeItem(
+        public static DataLakeFileLayoutRange DataLakeFileLayoutRange(
             long start,
             long end,
             int endpointIndex)
-            => new DataLakeFileLayoutRangesRangeItem()
+            => new DataLakeFileLayoutRange()
             {
                 Start = start,
                 End = end,
                 EndpointIndex = endpointIndex
             };
-        #endregion DataLakeFileLayoutRangesRangeItem
+        #endregion DataLakeFileLayoutRange
 
         #region DataLakeFileLayoutRanges
         /// <summary>
         /// Creates a new <see cref="Models.DataLakeFileLayoutRanges"/> instance for mocking.
         /// </summary>
         public static DataLakeFileLayoutRanges DataLakeFileLayoutRanges(
-            IEnumerable<DataLakeFileLayoutRangesRangeItem> range)
+            IEnumerable<DataLakeFileLayoutRange> range)
             => new DataLakeFileLayoutRanges()
             {
-                Range = range == null ? null : new List<DataLakeFileLayoutRangesRangeItem>(range)
+                Range = range == null ? null : new List<DataLakeFileLayoutRange>(range)
             };
         #endregion DataLakeFileLayoutRanges
 
@@ -1242,5 +1245,57 @@ namespace Azure.Storage.Files.DataLake.Models
                 FileCreatedOn = fileCreatedOn
             };
         #endregion DataLakeFileLayoutInfo
+
+        #region FileSystemAccessPolicy
+        /// <summary>
+        /// Creates a new <see cref="Models.FileSystemAccessPolicy"/> instance for mocking.
+        /// </summary>
+        public static FileSystemAccessPolicy FileSystemAccessPolicy(
+            PublicAccessType dataLakePublicAccess,
+            ETag eTag,
+            DateTimeOffset lastModified,
+            IEnumerable<DataLakeSignedIdentifier> signedIdentifiers)
+            => new FileSystemAccessPolicy()
+            {
+                DataLakePublicAccess = dataLakePublicAccess,
+                ETag = eTag,
+                LastModified = lastModified,
+                SignedIdentifiers = signedIdentifiers
+            };
+        #endregion FileSystemAccessPolicy
+
+        #region PathDeletedItem
+        /// <summary>
+        /// Creates a new <see cref="Models.PathDeletedItem"/> instance for mocking.
+        /// </summary>
+        public static PathDeletedItem PathDeletedItem(
+            string path,
+            string deletionId,
+            DateTimeOffset? deletedOn,
+            int? remainingRetentionDays)
+            => new PathDeletedItem()
+            {
+                Path = path,
+                DeletionId = deletionId,
+                DeletedOn = deletedOn,
+                RemainingRetentionDays = remainingRetentionDays
+            };
+        #endregion PathDeletedItem
+
+        #region AccessControlChangeResult
+        /// <summary>
+        /// Creates a new <see cref="Models.AccessControlChangeResult"/> instance for mocking.
+        /// </summary>
+        public static AccessControlChangeResult AccessControlChangeResult(
+            AccessControlChangeCounters counters,
+            string continuationToken,
+            AccessControlChangeFailure[] batchFailures)
+            => new AccessControlChangeResult()
+            {
+                Counters = counters,
+                ContinuationToken = continuationToken,
+                BatchFailures = batchFailures
+            };
+        #endregion AccessControlChangeResult
     }
 }

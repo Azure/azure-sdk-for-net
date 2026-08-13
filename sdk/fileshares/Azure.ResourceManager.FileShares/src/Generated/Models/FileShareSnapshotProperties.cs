@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.FileShares.Models
         public string SnapshotTime { get; }
 
         /// <summary> The initiator of the FileShareSnapshot. This is a user-defined value. </summary>
-        public string InitiatorId { get; }
+        public string InitiatorId { get; set; }
 
         /// <summary> The metadata. </summary>
         public IDictionary<string, string> Metadata { get; }

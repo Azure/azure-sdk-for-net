@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetResourceGroupId"> The target resource group ARM Id. </param>
         /// <param name="processServerId"> The process server Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fabricDiscoveryMachineId"/> or <paramref name="targetResourceGroupId"/> is null. </exception>
-        public InMageRcmEnableProtectionContent(string fabricDiscoveryMachineId, ResourceIdentifier targetResourceGroupId, Guid processServerId)
+        public InMageRcmEnableProtectionContent(string fabricDiscoveryMachineId, ResourceIdentifier targetResourceGroupId, Guid processServerId) : base("InMageRcm")
         {
             Argument.AssertNotNull(fabricDiscoveryMachineId, nameof(fabricDiscoveryMachineId));
             Argument.AssertNotNull(targetResourceGroupId, nameof(targetResourceGroupId));
@@ -32,12 +33,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             SeedManagedDiskTags = new ChangeTrackingList<UserCreatedResourceTag>();
             TargetManagedDiskTags = new ChangeTrackingList<UserCreatedResourceTag>();
             TargetNicTags = new ChangeTrackingList<UserCreatedResourceTag>();
-            InstanceType = "InMageRcm";
         }
 
         /// <summary> Initializes a new instance of <see cref="InMageRcmEnableProtectionContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fabricDiscoveryMachineId"> The ARM Id of discovered machine. </param>
         /// <param name="disksToInclude"> The disks to include list. </param>
         /// <param name="disksDefault"> The default disk input. </param>
@@ -64,7 +64,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetNicTags"> The tags for the target NICs. </param>
         /// <param name="userSelectedOSName"> The OS name selected by user. </param>
         /// <param name="targetVmSecurityProfile"> The target VM security profile. </param>
-        internal InMageRcmEnableProtectionContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string fabricDiscoveryMachineId, IList<InMageRcmDiskContent> disksToInclude, InMageRcmDisksDefaultContent disksDefault, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, string targetSubnetName, string testSubnetName, string targetVmName, string targetVmSize, SiteRecoveryLicenseType? licenseType, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, string runAsAccountId, Guid processServerId, string multiVmGroupName, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, IList<UserCreatedResourceTag> targetVmTags, IList<UserCreatedResourceTag> seedManagedDiskTags, IList<UserCreatedResourceTag> targetManagedDiskTags, IList<UserCreatedResourceTag> targetNicTags, string userSelectedOSName, RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile) : base(instanceType, serializedAdditionalRawData)
+        /// <param name="targetCapacityReservationGroupId"> The target capacity reservation group ARM Id. </param>
+        internal InMageRcmEnableProtectionContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string fabricDiscoveryMachineId, IList<InMageRcmDiskContent> disksToInclude, InMageRcmDisksDefaultContent disksDefault, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, string targetSubnetName, string testSubnetName, string targetVmName, string targetVmSize, SiteRecoveryLicenseType? licenseType, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, string runAsAccountId, Guid processServerId, string multiVmGroupName, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, IList<UserCreatedResourceTag> targetVmTags, IList<UserCreatedResourceTag> seedManagedDiskTags, IList<UserCreatedResourceTag> targetManagedDiskTags, IList<UserCreatedResourceTag> targetNicTags, string userSelectedOSName, RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile, string targetCapacityReservationGroupId) : base(instanceType, additionalBinaryDataProperties)
         {
             FabricDiscoveryMachineId = fabricDiscoveryMachineId;
             DisksToInclude = disksToInclude;
@@ -92,65 +93,88 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TargetNicTags = targetNicTags;
             UserSelectedOSName = userSelectedOSName;
             TargetVmSecurityProfile = targetVmSecurityProfile;
-            InstanceType = instanceType ?? "InMageRcm";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="InMageRcmEnableProtectionContent"/> for deserialization. </summary>
-        internal InMageRcmEnableProtectionContent()
-        {
+            TargetCapacityReservationGroupId = targetCapacityReservationGroupId;
         }
 
         /// <summary> The ARM Id of discovered machine. </summary>
         public string FabricDiscoveryMachineId { get; }
+
         /// <summary> The disks to include list. </summary>
         public IList<InMageRcmDiskContent> DisksToInclude { get; }
+
         /// <summary> The default disk input. </summary>
         public InMageRcmDisksDefaultContent DisksDefault { get; set; }
+
         /// <summary> The target resource group ARM Id. </summary>
         public ResourceIdentifier TargetResourceGroupId { get; }
+
         /// <summary> The selected target network ARM Id. </summary>
         public ResourceIdentifier TargetNetworkId { get; set; }
+
         /// <summary> The selected test network ARM Id. </summary>
         public ResourceIdentifier TestNetworkId { get; set; }
+
         /// <summary> The selected target subnet name. </summary>
         public string TargetSubnetName { get; set; }
+
         /// <summary> The selected test subnet name. </summary>
         public string TestSubnetName { get; set; }
+
         /// <summary> The target VM name. </summary>
         public string TargetVmName { get; set; }
+
         /// <summary> The target VM size. </summary>
         public string TargetVmSize { get; set; }
+
         /// <summary> The license type. </summary>
         public SiteRecoveryLicenseType? LicenseType { get; set; }
+
         /// <summary> The target availability set ARM Id. </summary>
         public ResourceIdentifier TargetAvailabilitySetId { get; set; }
+
         /// <summary> The target availability zone. </summary>
         public string TargetAvailabilityZone { get; set; }
+
         /// <summary> The target proximity placement group Id. </summary>
         public ResourceIdentifier TargetProximityPlacementGroupId { get; set; }
+
         /// <summary> The target boot diagnostics storage account ARM Id. </summary>
         public ResourceIdentifier TargetBootDiagnosticsStorageAccountId { get; set; }
+
         /// <summary> The run-as account Id. </summary>
         public string RunAsAccountId { get; set; }
+
         /// <summary> The process server Id. </summary>
         public Guid ProcessServerId { get; }
+
         /// <summary> The multi VM group name. </summary>
         public string MultiVmGroupName { get; set; }
+
         /// <summary> The SQL Server license type. </summary>
         public SiteRecoverySqlServerLicenseType? SqlServerLicenseType { get; set; }
+
         /// <summary> The license type for Linux VM's. </summary>
         public RecoveryServicesSiteRecoveryLinuxLicenseType? LinuxLicenseType { get; set; }
+
         /// <summary> The target VM tags. </summary>
         public IList<UserCreatedResourceTag> TargetVmTags { get; }
+
         /// <summary> The tags for the seed managed disks. </summary>
         public IList<UserCreatedResourceTag> SeedManagedDiskTags { get; }
+
         /// <summary> The tags for the target managed disks. </summary>
         public IList<UserCreatedResourceTag> TargetManagedDiskTags { get; }
+
         /// <summary> The tags for the target NICs. </summary>
         public IList<UserCreatedResourceTag> TargetNicTags { get; }
+
         /// <summary> The OS name selected by user. </summary>
         public string UserSelectedOSName { get; set; }
+
         /// <summary> The target VM security profile. </summary>
         public RecoveryServicesSiteRecoverySecurityProfileProperties TargetVmSecurityProfile { get; set; }
+
+        /// <summary> The target capacity reservation group ARM Id. </summary>
+        public string TargetCapacityReservationGroupId { get; set; }
     }
 }

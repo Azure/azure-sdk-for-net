@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("zone"u8);
                 writer.WriteStringValue(Zone);
             }
-            if (Optional.IsDefined(StrictPlacementPolicy))
+            if (Optional.IsDefined(IsStrictPlacementPolicyEnabled))
             {
                 writer.WritePropertyName("strictPlacementPolicy"u8);
-                writer.WriteBooleanValue(StrictPlacementPolicy.Value);
+                writer.WriteBooleanValue(IsStrictPlacementPolicyEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 return null;
             }
             string zone = default;
-            bool? strictPlacementPolicy = default;
+            bool? isStrictPlacementPolicyEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    strictPlacementPolicy = prop.Value.GetBoolean();
+                    isStrictPlacementPolicyEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HciVmInstancePlacementProfile(zone, strictPlacementPolicy, additionalBinaryDataProperties);
+            return new HciVmInstancePlacementProfile(zone, isStrictPlacementPolicyEnabled, additionalBinaryDataProperties);
         }
     }
 }

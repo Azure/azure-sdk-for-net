@@ -58,6 +58,13 @@ namespace Azure.Developer.DevCenter
         public virtual Azure.AsyncPageable<System.BinaryData> GetEnvironmentTypesAsync(string projectName, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Developer.DevCenter.Models.DevCenterEnvironmentType> GetEnvironmentTypesAsync(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public static partial class DeploymentEnvironmentsClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddDeploymentEnvironmentsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddDeploymentEnvironmentsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Developer.DevCenter.DeploymentEnvironmentsClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDeploymentEnvironmentsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDeploymentEnvironmentsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Developer.DevCenter.DeploymentEnvironmentsClientSettings> configureSettings) { throw null; }
+    }
     public partial class DeploymentEnvironmentsClientSettings : System.ClientModel.Primitives.ClientSettings
     {
         public DeploymentEnvironmentsClientSettings() { }
@@ -149,6 +156,13 @@ namespace Azure.Developer.DevCenter
         public virtual System.Threading.Tasks.Task<Azure.Operation> StopDevBoxAsync(Azure.WaitUntil waitUntil, string projectName, string userId, string devBoxName, bool? hibernate, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> StopDevBoxAsync(Azure.WaitUntil waitUntil, string projectName, string userId, string devBoxName, bool? hibernate = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public static partial class DevBoxesClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddDevBoxesClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddDevBoxesClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Developer.DevCenter.DevBoxesClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDevBoxesClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDevBoxesClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Developer.DevCenter.DevBoxesClientSettings> configureSettings) { throw null; }
+    }
     public partial class DevBoxesClientSettings : System.ClientModel.Primitives.ClientSettings
     {
         public DevBoxesClientSettings() { }
@@ -173,6 +187,13 @@ namespace Azure.Developer.DevCenter
         public virtual Azure.Pageable<Azure.Developer.DevCenter.Models.DevCenterProject> GetProjects(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetProjectsAsync(Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Developer.DevCenter.Models.DevCenterProject> GetProjectsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public static partial class DevCenterClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddDevCenterClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddDevCenterClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Developer.DevCenter.DevCenterClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDevCenterClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDevCenterClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Developer.DevCenter.DevCenterClientSettings> configureSettings) { throw null; }
     }
     public partial class DevCenterClientOptions : Azure.Core.ClientOptions
     {

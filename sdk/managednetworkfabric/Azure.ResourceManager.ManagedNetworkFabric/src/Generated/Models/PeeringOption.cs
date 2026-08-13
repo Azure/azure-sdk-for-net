@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct PeeringOption : IEquatable<PeeringOption>
     {
         private readonly string _value;
+        /// <summary> PeeringOption-OptionA. </summary>
+        private const string OptionAValue = "OptionA";
+        /// <summary> PeeringOption-OptionB. </summary>
+        private const string OptionBValue = "OptionB";
 
         /// <summary> Initializes a new instance of <see cref="PeeringOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PeeringOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string OptionAValue = "OptionA";
-        private const string OptionBValue = "OptionB";
-
-        /// <summary> OptionA. </summary>
+        /// <summary> PeeringOption-OptionA. </summary>
         public static PeeringOption OptionA { get; } = new PeeringOption(OptionAValue);
-        /// <summary> OptionB. </summary>
+
+        /// <summary> PeeringOption-OptionB. </summary>
         public static PeeringOption OptionB { get; } = new PeeringOption(OptionBValue);
+
         /// <summary> Determines if two <see cref="PeeringOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PeeringOption left, PeeringOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PeeringOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PeeringOption left, PeeringOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PeeringOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PeeringOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PeeringOption(string value) => new PeeringOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PeeringOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PeeringOption?(string value) => value == null ? null : new PeeringOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PeeringOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PeeringOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

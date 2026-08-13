@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _upgradeChannel = DefineProperty<UpgradeChannel>(nameof(UpgradeChannel), new string[] { "upgradeChannel" });
             _nodeOSUpgradeChannel = DefineProperty<ManagedClusterNodeOSUpgradeChannel>(nameof(NodeOSUpgradeChannel), new string[] { "nodeOSUpgradeChannel" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterAutoUpgradeProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

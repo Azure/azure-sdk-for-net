@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ImpactReporting
         {
             TryGetApiVersion(ImpactConnectorResource.ResourceType, out string impactConnectorApiVersion);
             _connectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImpactReporting", ImpactConnectorResource.ResourceType.Namespace, Diagnostics);
-            _connectorsRestClient = new Connectors(_connectorsClientDiagnostics, Pipeline, Endpoint, impactConnectorApiVersion ?? "2024-05-01-preview");
+            _connectorsRestClient = new Connectors(_connectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, impactConnectorApiVersion ?? "2024-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 HttpMessage message = _connectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, connectorName, ImpactConnectorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ImpactReportingArmOperation<ImpactConnectorResource> operation = new ImpactReportingArmOperation<ImpactConnectorResource>(
-                    new ImpactConnectorOperationSource(Client),
+                    new ImpactConnectorResourceOperationSource(Client),
                     _connectorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 HttpMessage message = _connectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, connectorName, ImpactConnectorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ImpactReportingArmOperation<ImpactConnectorResource> operation = new ImpactReportingArmOperation<ImpactConnectorResource>(
-                    new ImpactConnectorOperationSource(Client),
+                    new ImpactConnectorResourceOperationSource(Client),
                     _connectorsClientDiagnostics,
                     Pipeline,
                     message.Request,

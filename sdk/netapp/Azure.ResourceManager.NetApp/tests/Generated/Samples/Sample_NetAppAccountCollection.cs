@@ -76,15 +76,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // invoke the operation
             string accountName = "account1";
-            NetAppAccountData data = new NetAppAccountData(new AzureLocation("eastus"))
-            {
-                LdapConfiguration = new NetAppLdapConfiguration
-                {
-                    Domain = "example.com",
-                    LdapServers = { "192.0.2.1", "192.0.2.2" },
-                    IsLdapOverTlsEnabled = false,
-                },
-            };
+            NetAppAccountData data = new NetAppAccountData(new AzureLocation("eastus"));
             ArmOperation<NetAppAccountResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, data);
             NetAppAccountResource result = lro.Value;
 

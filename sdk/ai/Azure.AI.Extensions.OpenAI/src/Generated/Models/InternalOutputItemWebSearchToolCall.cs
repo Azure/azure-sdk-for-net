@@ -16,7 +16,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// An object describing the specific action taken in this web search call.
         ///   Includes details on how the model used the web (search, open_page, find_in_page).
         /// </param>
-        public InternalOutputItemWebSearchToolCall(OutputItemWebSearchToolCallStatus status, BinaryData action) : base(AgentResponseItemKind.WebSearchCall)
+        public InternalOutputItemWebSearchToolCall(InputItemWebSearchToolCallStatus status, BinaryData action) : base(AgentResponseItemKind.WebSearchCall)
         {
             Status = status;
             Action = action;
@@ -33,14 +33,14 @@ namespace Azure.AI.Extensions.OpenAI
         /// An object describing the specific action taken in this web search call.
         ///   Includes details on how the model used the web (search, open_page, find_in_page).
         /// </param>
-        internal InternalOutputItemWebSearchToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, OutputItemWebSearchToolCallStatus status, BinaryData action) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemWebSearchToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, InputItemWebSearchToolCallStatus status, BinaryData action) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             Status = status;
             Action = action;
         }
 
         /// <summary> The status of the web search tool call. </summary>
-        public OutputItemWebSearchToolCallStatus Status { get; set; }
+        public InputItemWebSearchToolCallStatus Status { get; set; }
 
         /// <summary>
         /// An object describing the specific action taken in this web search call.

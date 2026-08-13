@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -16,22 +15,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="BackupJobSubTask"/>. </summary>
-        /// <param name="taskId"> Task Id of the Sub Task. </param>
-        /// <param name="taskName"> Name of the Sub Task. </param>
-        /// <param name="taskStatus"> Status of the Sub Task. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> or <paramref name="taskStatus"/> is null. </exception>
-        public BackupJobSubTask(int taskId, string taskName, string taskStatus)
-        {
-            Argument.AssertNotNull(taskName, nameof(taskName));
-            Argument.AssertNotNull(taskStatus, nameof(taskStatus));
-
-            AdditionalDetails = new ChangeTrackingDictionary<string, string>();
-            TaskId = taskId;
-            TaskName = taskName;
-            TaskStatus = taskStatus;
-        }
 
         /// <summary> Initializes a new instance of <see cref="BackupJobSubTask"/>. </summary>
         /// <param name="additionalDetails"> Additional details of Sub Tasks. </param>
@@ -53,16 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Additional details of Sub Tasks. </summary>
         public IReadOnlyDictionary<string, string> AdditionalDetails { get; }
 
-        /// <summary> Task Id of the Sub Task. </summary>
-        public int TaskId { get; set; }
-
-        /// <summary> Name of the Sub Task. </summary>
-        public string TaskName { get; set; }
-
         /// <summary> Progress of the Sub Task. </summary>
         public string TaskProgress { get; }
-
-        /// <summary> Status of the Sub Task. </summary>
-        public string TaskStatus { get; set; }
     }
 }

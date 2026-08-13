@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     internal static partial class PostgreSqlFlexbileServerCapabilityStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this PostgreSqlFlexbileServerCapabilityStatus value) => value switch
         {
             PostgreSqlFlexbileServerCapabilityStatus.Visible => "Visible",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PostgreSqlFlexbileServerCapabilityStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static PostgreSqlFlexbileServerCapabilityStatus ToPostgreSqlFlexbileServerCapabilityStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Visible")) return PostgreSqlFlexbileServerCapabilityStatus.Visible;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Available")) return PostgreSqlFlexbileServerCapabilityStatus.Available;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default")) return PostgreSqlFlexbileServerCapabilityStatus.Default;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return PostgreSqlFlexbileServerCapabilityStatus.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Visible"))
+            {
+                return PostgreSqlFlexbileServerCapabilityStatus.Visible;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Available"))
+            {
+                return PostgreSqlFlexbileServerCapabilityStatus.Available;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default"))
+            {
+                return PostgreSqlFlexbileServerCapabilityStatus.Default;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
+            {
+                return PostgreSqlFlexbileServerCapabilityStatus.Disabled;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PostgreSqlFlexbileServerCapabilityStatus value.");
         }
     }

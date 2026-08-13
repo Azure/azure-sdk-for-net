@@ -111,6 +111,9 @@ namespace Azure.Search.Documents.Models
             bool? exhaustive = default;
             double? oversampling = default;
             float? weight = default;
+            VectorThreshold threshold = default;
+            string filterOverride = default;
+            int? perDocumentVectorLimit = default;
             VectorQueryKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -156,6 +159,29 @@ namespace Azure.Search.Documents.Models
                     weight = prop.Value.GetSingle();
                     continue;
                 }
+                if (prop.NameEquals("threshold"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    threshold = VectorThreshold.DeserializeVectorThreshold(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("filterOverride"u8))
+                {
+                    filterOverride = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("perDocumentVectorLimit"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    perDocumentVectorLimit = prop.Value.GetInt32();
+                    continue;
+                }
                 if (prop.NameEquals("kind"u8))
                 {
                     kind = new VectorQueryKind(prop.Value.GetString());
@@ -172,6 +198,9 @@ namespace Azure.Search.Documents.Models
                 exhaustive,
                 oversampling,
                 weight,
+                threshold,
+                filterOverride,
+                perDocumentVectorLimit,
                 kind,
                 additionalBinaryDataProperties);
         }

@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         PlannedFailover IOperationSource<PlannedFailover>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            PlannedFailover result = PlannedFailover.DeserializePlannedFailover(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return PlannedFailover.DeserializePlannedFailover(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         async ValueTask<PlannedFailover> IOperationSource<PlannedFailover>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            PlannedFailover result = PlannedFailover.DeserializePlannedFailover(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return PlannedFailover.DeserializePlannedFailover(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

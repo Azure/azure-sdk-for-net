@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct NetAppVolumeStorageToNetworkProximity : IEquatable<NetAppVolumeStorageToNetworkProximity>
     {
         private readonly string _value;
+        /// <summary> Basic storage to network connectivity. </summary>
+        private const string DefaultValue = "Default";
+        /// <summary> Standard T1 storage to network connectivity. </summary>
+        private const string T1Value = "T1";
+        /// <summary> Standard T2 storage to network connectivity. </summary>
+        private const string T2Value = "T2";
+        /// <summary> Standard AcrossT2 storage to network connectivity. </summary>
+        private const string AcrossT2Value = "AcrossT2";
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeStorageToNetworkProximity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetAppVolumeStorageToNetworkProximity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "Default";
-        private const string T1Value = "T1";
-        private const string T2Value = "T2";
-        private const string AcrossT2Value = "AcrossT2";
+            _value = value;
+        }
 
         /// <summary> Basic storage to network connectivity. </summary>
         public static NetAppVolumeStorageToNetworkProximity Default { get; } = new NetAppVolumeStorageToNetworkProximity(DefaultValue);
+
         /// <summary> Standard T1 storage to network connectivity. </summary>
         public static NetAppVolumeStorageToNetworkProximity T1 { get; } = new NetAppVolumeStorageToNetworkProximity(T1Value);
+
         /// <summary> Standard T2 storage to network connectivity. </summary>
         public static NetAppVolumeStorageToNetworkProximity T2 { get; } = new NetAppVolumeStorageToNetworkProximity(T2Value);
+
         /// <summary> Standard AcrossT2 storage to network connectivity. </summary>
         public static NetAppVolumeStorageToNetworkProximity AcrossT2 { get; } = new NetAppVolumeStorageToNetworkProximity(AcrossT2Value);
+
         /// <summary> Determines if two <see cref="NetAppVolumeStorageToNetworkProximity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetAppVolumeStorageToNetworkProximity left, NetAppVolumeStorageToNetworkProximity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetAppVolumeStorageToNetworkProximity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetAppVolumeStorageToNetworkProximity left, NetAppVolumeStorageToNetworkProximity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppVolumeStorageToNetworkProximity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetAppVolumeStorageToNetworkProximity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetAppVolumeStorageToNetworkProximity(string value) => new NetAppVolumeStorageToNetworkProximity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetAppVolumeStorageToNetworkProximity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetAppVolumeStorageToNetworkProximity?(string value) => value == null ? null : new NetAppVolumeStorageToNetworkProximity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetAppVolumeStorageToNetworkProximity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetAppVolumeStorageToNetworkProximity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -47,7 +47,6 @@ known_presence_issues:
   - ['sdk/cognitiveservices/Language.LUIS.Runtime','Track 1']
   - ['sdk/cognitiveservices/Language.SpellCheck','Track 1']
   - ['sdk/cognitiveservices/Language.TextAnalytics','Track 1']
-  - ['sdk/cognitiveservices/Personalizer','Track 1']
   - ['sdk/cognitiveservices/Search.BingAutoSuggest','Track 1']
   - ['sdk/cognitiveservices/Search.BingCustomImageSearch','Track 1']
   - ['sdk/cognitiveservices/Search.BingCustomSearch','Track 1']
@@ -91,7 +90,6 @@ known_content_issues:
   - ['sdk/batch/Microsoft.Azure.Batch/README.md','Track 1']
   - ['sdk/cognitiveservices/FormRecognizer/README.md','Track 1']
   - ['sdk/cognitiveservices/Language.TextAnalytics/src/README.md','Track 1']
-  - ['sdk/cognitiveservices/Personalizer/src/README.md','Track 1']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs/README.md','Track 1']
   - ['sdk/keyvault/Microsoft.Azure.KeyVault/README.md','Track 1']
   - ['sdk/servicebus/Microsoft.Azure.ServiceBus/README.md','Track 1']
@@ -103,7 +101,6 @@ known_content_issues:
   - ['sdk/eventgrid/README.md','Not a package: azure-sdk-tools/issues/42']
   - ['sdk/eventhub/README.md','Not a package: azure-sdk-tools/issues/42']
   - ['sdk/extensions/README.md','Not a package: azure-sdk-tools/issues/42']
-  - ['sdk/personalizer/README.md','Not a package: azure-sdk-tools/issues/42']
   - ['sdk/provisioning/README.md','Not a package: azure-sdk-tools/issues/42']
   - ['sdk/search/README.md','Not a package: azure-sdk-tools/issues/42']
   - ['sdk/storage/README.md','Not a package: azure-sdk-tools/issues/42']
@@ -134,7 +131,6 @@ known_content_issues:
   - ['sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
 
   - ['sdk/anomalydetector/Azure.AI.AnomalyDetector/README.md', '#25936: Needs Examples']
-  - ['sdk/personalizer/Azure.AI.Personalizer/README.md','#24535: Needs content']
   - ['sdk/storage/Azure.Storage.Files.DataLake/README.md', 'Storage: #11492: Needs auth section']
   - ['sdk/storage/Azure.Storage.Files.Shares/README.md', 'Storage: #11492: Needs auth section']
 
@@ -150,6 +146,7 @@ known_content_issues:
   - ['sdk/agentserver/Azure.AI.AgentServer.Core/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/agentserver/Azure.AI.AgentServer.Responses/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/agentserver/Azure.AI.AgentServer.Invocations/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/agentserver/Azure.AI.AgentServer.Optimization/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
 
   - ['sdk/tools/Azure.SdkAnalyzers/README.md','Not a package - internal tooling']
   - ['eng/centralpackagemanagement/README.md','Not a package - internal tooling']

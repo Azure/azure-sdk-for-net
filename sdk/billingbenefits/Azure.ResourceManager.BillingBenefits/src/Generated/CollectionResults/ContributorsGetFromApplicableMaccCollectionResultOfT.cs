@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.BillingBenefits
                     yield break;
                 }
                 ContributorList result = ContributorList.FromResponse(response);
-                yield return Page<ContributorData>.FromValues((IReadOnlyList<ContributorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ContributorData>.FromValues((IReadOnlyList<ContributorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

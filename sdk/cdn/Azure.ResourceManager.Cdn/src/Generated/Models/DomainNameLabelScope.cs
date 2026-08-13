@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct DomainNameLabelScope : IEquatable<DomainNameLabelScope>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DomainNameLabelScope"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DomainNameLabelScope(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string TenantReuseValue = "TenantReuse";
         private const string SubscriptionReuseValue = "SubscriptionReuse";
         private const string ResourceGroupReuseValue = "ResourceGroupReuse";
         private const string NoReuseValue = "NoReuse";
 
-        /// <summary> TenantReuse. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainNameLabelScope"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DomainNameLabelScope(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the TenantReuse. </summary>
         public static DomainNameLabelScope TenantReuse { get; } = new DomainNameLabelScope(TenantReuseValue);
-        /// <summary> SubscriptionReuse. </summary>
+
+        /// <summary> Gets the SubscriptionReuse. </summary>
         public static DomainNameLabelScope SubscriptionReuse { get; } = new DomainNameLabelScope(SubscriptionReuseValue);
-        /// <summary> ResourceGroupReuse. </summary>
+
+        /// <summary> Gets the ResourceGroupReuse. </summary>
         public static DomainNameLabelScope ResourceGroupReuse { get; } = new DomainNameLabelScope(ResourceGroupReuseValue);
-        /// <summary> NoReuse. </summary>
+
+        /// <summary> Gets the NoReuse. </summary>
         public static DomainNameLabelScope NoReuse { get; } = new DomainNameLabelScope(NoReuseValue);
+
         /// <summary> Determines if two <see cref="DomainNameLabelScope"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DomainNameLabelScope left, DomainNameLabelScope right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DomainNameLabelScope"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DomainNameLabelScope left, DomainNameLabelScope right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DomainNameLabelScope"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DomainNameLabelScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DomainNameLabelScope(string value) => new DomainNameLabelScope(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DomainNameLabelScope"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DomainNameLabelScope?(string value) => value == null ? null : new DomainNameLabelScope(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DomainNameLabelScope other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DomainNameLabelScope other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             TryGetApiVersion(ProviderMonitorSettingResource.ResourceType, out string providerMonitorSettingApiVersion);
             _providerMonitorSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderMonitorSettingResource.ResourceType.Namespace, Diagnostics);
-            _providerMonitorSettingsRestClient = new ProviderMonitorSettings(_providerMonitorSettingsClientDiagnostics, Pipeline, Endpoint, providerMonitorSettingApiVersion ?? "2024-09-01");
+            _providerMonitorSettingsRestClient = new ProviderMonitorSettings(_providerMonitorSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, providerMonitorSettingApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ProviderHub
                 HttpMessage message = _providerMonitorSettingsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerMonitorSettingName, ProviderMonitorSettingData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ProviderHubArmOperation<ProviderMonitorSettingResource> operation = new ProviderHubArmOperation<ProviderMonitorSettingResource>(
-                    new ProviderMonitorSettingOperationSource(Client),
+                    new ProviderMonitorSettingResourceOperationSource(Client),
                     _providerMonitorSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ProviderHub
                 HttpMessage message = _providerMonitorSettingsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerMonitorSettingName, ProviderMonitorSettingData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ProviderHubArmOperation<ProviderMonitorSettingResource> operation = new ProviderHubArmOperation<ProviderMonitorSettingResource>(
-                    new ProviderMonitorSettingOperationSource(Client),
+                    new ProviderMonitorSettingResourceOperationSource(Client),
                     _providerMonitorSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     Properties = new ClusterPatchProperties();
                 }
-                Properties.AadClientId = value.Value;
+                Properties.AadClientId = value;
             }
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     Properties = new ClusterPatchProperties();
                 }
-                Properties.AadTenantId = value.Value;
+                Properties.AadTenantId = value;
             }
         }
 

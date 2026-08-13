@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Text;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs.Models
@@ -15,12 +16,41 @@ namespace Azure.Storage.Blobs.Models
     /// This class holds BlobModelFactory overloads we need for backwards compatibility.
     /// </summary>
     [CodeGenType("StorageBlobsModelFactory")]
+    [CodeGenSuppress("BlobItem", typeof(string), typeof(bool), typeof(string), typeof(string), typeof(bool?), typeof(BlobItemProperties), typeof(IDictionary<string, string>), typeof(BlobTags), typeof(IDictionary<string, string>), typeof(bool?))]
+    [CodeGenSuppress("BlobProperties", typeof(DateTimeOffset?), typeof(DateTimeOffset), typeof(ETag), typeof(long), typeof(string), typeof(string), typeof(string), typeof(BinaryData), typeof(string), typeof(string), typeof(long), typeof(BlobType), typeof(LeaseStatus), typeof(LeaseState), typeof(LeaseDurationType), typeof(string), typeof(CopyStatus), typeof(Uri), typeof(string), typeof(DateTimeOffset?), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(DateTimeOffset?), typeof(int?), typeof(string), typeof(bool), typeof(string), typeof(string), typeof(string), typeof(DateTimeOffset?), typeof(long), typeof(DateTimeOffset), typeof(bool), typeof(string), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(BlobImmutabilityPolicy), typeof(bool?))]
     public static partial class BlobsModelFactory
     {
         #region BlobContentInfo
         /// <summary>
         /// Creates a new BlobContentInfo instance for mocking.
         /// </summary>
+        public static BlobContentInfo BlobContentInfo(
+            ETag eTag = default,
+            DateTimeOffset lastModified = default,
+            byte[] contentHash = default,
+            byte[] contentCrc64 = default,
+            string versionId = default,
+            string encryptionKeySha256 = default,
+            string encryptionScope = default,
+            long blobSequenceNumber = default)
+        {
+            return new BlobContentInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                ContentHash = contentHash,
+                ContentCrc64 = contentCrc64,
+                VersionId = versionId,
+                EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
+                BlobSequenceNumber = blobSequenceNumber,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobContentInfo instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobContentInfo BlobContentInfo(
             ETag eTag,
             DateTimeOffset lastModified,
@@ -1741,6 +1771,10 @@ namespace Azure.Storage.Blobs.Models
             string objectReplicationDestinationPolicy = default,
             bool hasLegalHold = default,
             DateTimeOffset createdOn = default,
+            string accessTier = default,
+            bool accessTierInferred = default,
+            DateTimeOffset accessTierChangedOn = default,
+            string smartAccessTier = default,
             ETag eTag = default,
             DownloadHint downloadHint = default)
             => new BlobDownloadDetails
@@ -1779,6 +1813,10 @@ namespace Azure.Storage.Blobs.Models
                 ObjectReplicationDestinationPolicyId = objectReplicationDestinationPolicy,
                 HasLegalHold = hasLegalHold,
                 CreatedOn = createdOn,
+                AccessTier = accessTier,
+                AccessTierInferred = accessTierInferred,
+                AccessTierChangedOn = accessTierChangedOn,
+                SmartAccessTier = smartAccessTier,
                 ETag = eTag,
                 DownloadHint = downloadHint
             };
@@ -1788,41 +1826,128 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobDownloadDetails BlobDownloadDetails(
-            BlobType blobType,
-            long contentLength,
-            string contentType,
-            byte[] contentHash,
-            DateTimeOffset lastModified,
-            IDictionary<string, string> metadata,
-            string contentRange,
-            string contentEncoding,
-            string cacheControl,
-            string contentDisposition,
-            string contentLanguage,
-            long blobSequenceNumber,
-            DateTimeOffset copyCompletedOn,
-            string copyStatusDescription,
-            string copyId,
-            string copyProgress,
-            Uri copySource,
-            CopyStatus copyStatus,
-            LeaseDurationType leaseDuration,
-            LeaseState leaseState,
-            LeaseStatus leaseStatus,
-            string acceptRanges,
-            int blobCommittedBlockCount,
-            bool isServerEncrypted,
-            string encryptionKeySha256,
-            string encryptionScope,
-            byte[] blobContentHash,
-            long tagCount,
-            string versionId,
-            bool isSealed,
-            IList<ObjectReplicationPolicy> objectReplicationSourceProperties,
-            string objectReplicationDestinationPolicy,
-            bool hasLegalHold,
-            DateTimeOffset createdOn,
-            ETag eTag)
+            BlobType blobType = default,
+            long contentLength = default,
+            string contentType = default,
+            byte[] contentHash = default,
+            DateTimeOffset lastModified = default,
+            IDictionary<string, string> metadata = default,
+            string contentRange = default,
+            string contentEncoding = default,
+            string cacheControl = default,
+            string contentDisposition = default,
+            string contentLanguage = default,
+            long blobSequenceNumber = default,
+            DateTimeOffset copyCompletedOn = default,
+            string copyStatusDescription = default,
+            string copyId = default,
+            string copyProgress = default,
+            Uri copySource = default,
+            CopyStatus copyStatus = default,
+            LeaseDurationType leaseDuration = default,
+            LeaseState leaseState = default,
+            LeaseStatus leaseStatus = default,
+            string acceptRanges = default,
+            int blobCommittedBlockCount = default,
+            bool isServerEncrypted = default,
+            string encryptionKeySha256 = default,
+            string encryptionScope = default,
+            byte[] blobContentHash = default,
+            long tagCount = default,
+            string versionId = default,
+            bool isSealed = default,
+            IList<ObjectReplicationPolicy> objectReplicationSourceProperties = default,
+            string objectReplicationDestinationPolicy = default,
+            bool hasLegalHold = default,
+            DateTimeOffset createdOn = default,
+            string accessTier = default,
+            bool accessTierInferred = default,
+            DateTimeOffset accessTierChangedOn = default,
+            string smartAccessTier = default,
+            ETag eTag = default)
+            => new BlobDownloadDetails
+            {
+                BlobType = blobType,
+                ContentLength = contentLength,
+                ContentType = contentType,
+                ContentHash = contentHash,
+                LastModified = lastModified,
+                Metadata = metadata,
+                ContentRange = contentRange,
+                ContentEncoding = contentEncoding,
+                CacheControl = cacheControl,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                BlobSequenceNumber = blobSequenceNumber,
+                CopyCompletedOn = copyCompletedOn,
+                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
+                CopyProgress = copyProgress,
+                CopySource = copySource,
+                CopyStatus = copyStatus,
+                LeaseDuration = leaseDuration,
+                LeaseState = leaseState,
+                LeaseStatus = leaseStatus,
+                AcceptRanges = acceptRanges,
+                BlobCommittedBlockCount = blobCommittedBlockCount,
+                IsServerEncrypted = isServerEncrypted,
+                EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
+                BlobContentHash = blobContentHash,
+                TagCount = tagCount,
+                VersionId = versionId,
+                IsSealed = isSealed,
+                ObjectReplicationSourceProperties = objectReplicationSourceProperties,
+                ObjectReplicationDestinationPolicyId = objectReplicationDestinationPolicy,
+                HasLegalHold = hasLegalHold,
+                CreatedOn = createdOn,
+                AccessTier = accessTier,
+                AccessTierInferred = accessTierInferred,
+                AccessTierChangedOn = accessTierChangedOn,
+                SmartAccessTier = smartAccessTier,
+                ETag = eTag
+            };
+
+        /// <summary>
+        /// Creates a new BlobDownloadDetails instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobDownloadDetails BlobDownloadDetails(
+            BlobType blobType = default,
+            long contentLength = default,
+            string contentType = default,
+            byte[] contentHash = default,
+            DateTimeOffset lastModified = default,
+            IDictionary<string, string> metadata = default,
+            string contentRange = default,
+            string contentEncoding = default,
+            string cacheControl = default,
+            string contentDisposition = default,
+            string contentLanguage = default,
+            long blobSequenceNumber = default,
+            DateTimeOffset copyCompletedOn = default,
+            string copyStatusDescription = default,
+            string copyId = default,
+            string copyProgress = default,
+            Uri copySource = default,
+            CopyStatus copyStatus = default,
+            LeaseDurationType leaseDuration = default,
+            LeaseState leaseState = default,
+            LeaseStatus leaseStatus = default,
+            string acceptRanges = default,
+            int blobCommittedBlockCount = default,
+            bool isServerEncrypted = default,
+            string encryptionKeySha256 = default,
+            string encryptionScope = default,
+            byte[] blobContentHash = default,
+            long tagCount = default,
+            string versionId = default,
+            bool isSealed = default,
+            IList<ObjectReplicationPolicy> objectReplicationSourceProperties = default,
+            string objectReplicationDestinationPolicy = default,
+            bool hasLegalHold = default,
+            DateTimeOffset createdOn = default,
+            ETag eTag = default)
             => new BlobDownloadDetails
             {
                 BlobType = blobType,
@@ -2749,6 +2874,29 @@ namespace Azure.Storage.Blobs.Models
                 ClearRanges = clearRanges
             };
         }
+        #endregion
+
+        #region BlobLegalHoldResult
+        /// <summary>
+        /// Creates a new <see cref="Models.BlobLegalHoldResult"/> instance for mocking.
+        /// </summary>
+        public static BlobLegalHoldResult BlobLegalHoldResult(bool hasLegalHold)
+            => new BlobLegalHoldResult()
+            {
+                HasLegalHold = hasLegalHold
+            };
+        #endregion
+
+        #region PageRangeItem
+        /// <summary>
+        /// Creates a new <see cref="Models.PageRangeItem"/> instance for mocking.
+        /// </summary>
+        public static PageRangeItem PageRangeItem(HttpRange range, bool isClear)
+            => new PageRangeItem()
+            {
+                Range = range,
+                IsClear = isClear
+            };
         #endregion
 
         #region BlobLayoutInfo

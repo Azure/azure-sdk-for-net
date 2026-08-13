@@ -22,7 +22,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         ///   Includes details on how the model used the web (search, open_page, find_in_page).
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="action"/> is null. </exception>
-        public OutputItemWebSearchToolCall(string id, OutputItemWebSearchToolCallStatus status, BinaryData action) : base(OutputItemType.WebSearchCall)
+        public OutputItemWebSearchToolCall(string id, ItemWebSearchToolCallStatus status, BinaryData action) : base(OutputItemType.WebSearchCall)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(action, nameof(action));
@@ -44,7 +44,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// An object describing the specific action taken in this web search call.
         ///   Includes details on how the model used the web (search, open_page, find_in_page).
         /// </param>
-        internal OutputItemWebSearchToolCall(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, OutputItemWebSearchToolCallStatus status, BinaryData action) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemWebSearchToolCall(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, ItemWebSearchToolCallStatus status, BinaryData action) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
@@ -55,7 +55,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         public string Id { get; set; }
 
         /// <summary> The status of the web search tool call. </summary>
-        public OutputItemWebSearchToolCallStatus Status { get; set; }
+        public ItemWebSearchToolCallStatus Status { get; set; }
 
         /// <summary>
         /// An object describing the specific action taken in this web search call.

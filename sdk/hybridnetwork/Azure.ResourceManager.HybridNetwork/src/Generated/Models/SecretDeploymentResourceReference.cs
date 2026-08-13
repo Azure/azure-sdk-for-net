@@ -15,19 +15,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public partial class SecretDeploymentResourceReference : DeploymentResourceIdReference
     {
         /// <summary> Initializes a new instance of <see cref="SecretDeploymentResourceReference"/>. </summary>
-        public SecretDeploymentResourceReference()
+        public SecretDeploymentResourceReference() : base(IdType.Secret)
         {
-            IdType = IdType.Secret;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecretDeploymentResourceReference"/>. </summary>
         /// <param name="idType"> The resource reference arm id type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> Resource ID. </param>
-        internal SecretDeploymentResourceReference(IdType idType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier id) : base(idType, serializedAdditionalRawData)
+        internal SecretDeploymentResourceReference(IdType idType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier id) : base(idType, additionalBinaryDataProperties)
         {
             Id = id;
-            IdType = idType;
         }
 
         /// <summary> Resource ID. </summary>

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,56 +15,92 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct ApiManagementServiceSkuType : IEquatable<ApiManagementServiceSkuType>
     {
         private readonly string _value;
+        /// <summary> Developer SKU of Api Management. </summary>
+        private const string DeveloperValue = "Developer";
+        /// <summary> Standard SKU of Api Management. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> Premium SKU of Api Management. </summary>
+        private const string PremiumValue = "Premium";
+        /// <summary> Basic SKU of Api Management. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> Consumption SKU of Api Management. </summary>
+        private const string ConsumptionValue = "Consumption";
+        /// <summary> Isolated SKU of Api Management. </summary>
+        private const string IsolatedValue = "Isolated";
+        /// <summary> BasicV2 SKU of Api Management. </summary>
+        private const string BasicV2Value = "BasicV2";
+        /// <summary> StandardV2 SKU of Api Management. </summary>
+        private const string StandardV2Value = "StandardV2";
+        /// <summary> PremiumV2 SKU of Api Management. </summary>
+        private const string PremiumV2Value = "PremiumV2";
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementServiceSkuType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApiManagementServiceSkuType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DeveloperValue = "Developer";
-        private const string StandardValue = "Standard";
-        private const string PremiumValue = "Premium";
-        private const string BasicValue = "Basic";
-        private const string ConsumptionValue = "Consumption";
-        private const string IsolatedValue = "Isolated";
-        private const string BasicV2Value = "BasicV2";
-        private const string StandardV2Value = "StandardV2";
+            _value = value;
+        }
 
         /// <summary> Developer SKU of Api Management. </summary>
         public static ApiManagementServiceSkuType Developer { get; } = new ApiManagementServiceSkuType(DeveloperValue);
+
         /// <summary> Standard SKU of Api Management. </summary>
         public static ApiManagementServiceSkuType Standard { get; } = new ApiManagementServiceSkuType(StandardValue);
+
         /// <summary> Premium SKU of Api Management. </summary>
         public static ApiManagementServiceSkuType Premium { get; } = new ApiManagementServiceSkuType(PremiumValue);
+
         /// <summary> Basic SKU of Api Management. </summary>
         public static ApiManagementServiceSkuType Basic { get; } = new ApiManagementServiceSkuType(BasicValue);
+
         /// <summary> Consumption SKU of Api Management. </summary>
         public static ApiManagementServiceSkuType Consumption { get; } = new ApiManagementServiceSkuType(ConsumptionValue);
+
         /// <summary> Isolated SKU of Api Management. </summary>
         public static ApiManagementServiceSkuType Isolated { get; } = new ApiManagementServiceSkuType(IsolatedValue);
+
         /// <summary> BasicV2 SKU of Api Management. </summary>
         public static ApiManagementServiceSkuType BasicV2 { get; } = new ApiManagementServiceSkuType(BasicV2Value);
+
         /// <summary> StandardV2 SKU of Api Management. </summary>
         public static ApiManagementServiceSkuType StandardV2 { get; } = new ApiManagementServiceSkuType(StandardV2Value);
+
+        /// <summary> PremiumV2 SKU of Api Management. </summary>
+        public static ApiManagementServiceSkuType PremiumV2 { get; } = new ApiManagementServiceSkuType(PremiumV2Value);
+
         /// <summary> Determines if two <see cref="ApiManagementServiceSkuType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApiManagementServiceSkuType left, ApiManagementServiceSkuType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApiManagementServiceSkuType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApiManagementServiceSkuType left, ApiManagementServiceSkuType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApiManagementServiceSkuType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApiManagementServiceSkuType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApiManagementServiceSkuType(string value) => new ApiManagementServiceSkuType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApiManagementServiceSkuType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApiManagementServiceSkuType?(string value) => value == null ? null : new ApiManagementServiceSkuType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApiManagementServiceSkuType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApiManagementServiceSkuType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

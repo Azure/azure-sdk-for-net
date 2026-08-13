@@ -57,6 +57,9 @@ function Merge-ChangeLogEntries {
     - If both have a dated entry for the same version, release wins (it has
       the latest content from prepare-release).
     - Otherwise keep main's entry.
+  After merging, any (Unreleased) prerelease entry in main whose
+  Major.Minor.Patch matches a dated stable (GA/Patch) release entry is
+  removed because it has been superseded by the GA/Patch release.
   Returns the merged entries (unordered — Set-ChangeLogContent handles sorting).
   #>
   param(
@@ -82,6 +85,41 @@ function Merge-ChangeLogEntries {
             $MainEntries[$version].ReleaseStatus -ne $CHANGELOG_UNRELEASED_STATUS) {
       $MainEntries[$version] = $releaseEntry
       Write-Host "  Replaced changelog entry for $version with release content"
+    }
+  }
+
+  # Collect dated stable release versions (e.g. 1.11.0) coming from the
+  # release branch.  Any (Unreleased) prerelease in main with the same
+  # Major.Minor.Patch (e.g. 1.11.0-beta.1) is now superseded and should be
+  # removed so the changelog does not contain both the GA and a stale beta
+  # entry for the same version.
+  $datedStableReleases = @()
+  foreach ($version in $ReleaseEntries.Keys) {
+    if ($ReleaseEntries[$version].ReleaseStatus -eq $CHANGELOG_UNRELEASED_STATUS) { continue }
+    $semVer = [AzureEngSemanticVersion]::ParseVersionString($version)
+    if ($semVer -and -not $semVer.IsPrerelease) {
+      $datedStableReleases += $semVer
+    }
+  }
+
+  if ($datedStableReleases.Count -gt 0) {
+    $toRemove = @()
+    foreach ($version in @($MainEntries.Keys)) {
+      if ($MainEntries[$version].ReleaseStatus -ne $CHANGELOG_UNRELEASED_STATUS) { continue }
+      $entrySemVer = [AzureEngSemanticVersion]::ParseVersionString($version)
+      if (-not $entrySemVer -or -not $entrySemVer.IsPrerelease) { continue }
+      foreach ($stable in $datedStableReleases) {
+        if ($entrySemVer.Major -eq $stable.Major -and
+            $entrySemVer.Minor -eq $stable.Minor -and
+            $entrySemVer.Patch -eq $stable.Patch) {
+          $toRemove += $version
+          break
+        }
+      }
+    }
+    foreach ($version in $toRemove) {
+      $MainEntries.Remove($version)
+      Write-Host "  Removed unreleased prerelease entry $version superseded by stable release"
     }
   }
 

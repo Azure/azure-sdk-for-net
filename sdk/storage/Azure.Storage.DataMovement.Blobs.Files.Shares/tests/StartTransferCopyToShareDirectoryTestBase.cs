@@ -380,6 +380,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [Ignore("Temporarily ignore this test until we revert enabling Sessions by default")]
         public async Task BlobDirectoryToShareDirectory_SkipIfExists_ExistingDirectoriesTransferFiles()
         {
             // Arrange

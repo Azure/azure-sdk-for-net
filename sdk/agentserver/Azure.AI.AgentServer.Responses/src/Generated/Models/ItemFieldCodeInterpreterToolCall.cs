@@ -20,7 +20,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="containerId"> The ID of the container used to run the code. </param>
         /// <param name="code"></param>
         /// <param name="outputs"></param>
-        internal ItemFieldCodeInterpreterToolCall(string id, OutputItemCodeInterpreterToolCallStatus status, string containerId, string code, IEnumerable<BinaryData> outputs) : base(ItemFieldType.CodeInterpreterCall)
+        internal ItemFieldCodeInterpreterToolCall(string id, ItemCodeInterpreterToolCallStatus status, string containerId, string code, IEnumerable<BinaryData> outputs) : base(ItemFieldType.CodeInterpreterCall)
         {
             Id = id;
             Status = status;
@@ -37,7 +37,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="containerId"> The ID of the container used to run the code. </param>
         /// <param name="code"></param>
         /// <param name="outputs"></param>
-        internal ItemFieldCodeInterpreterToolCall(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, OutputItemCodeInterpreterToolCallStatus status, string containerId, string code, IList<BinaryData> outputs) : base(@type, additionalBinaryDataProperties)
+        internal ItemFieldCodeInterpreterToolCall(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, ItemCodeInterpreterToolCallStatus status, string containerId, string code, IList<BinaryData> outputs) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
@@ -50,7 +50,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         public string Id { get; }
 
         /// <summary> The status of the code interpreter tool call. Valid values are `in_progress`, `completed`, `incomplete`, `interpreting`, and `failed`. </summary>
-        public OutputItemCodeInterpreterToolCallStatus Status { get; }
+        public ItemCodeInterpreterToolCallStatus Status { get; }
 
         /// <summary> The ID of the container used to run the code. </summary>
         public string ContainerId { get; }

@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A computer screenshot image used with the computer use tool. </summary>
-    internal partial class ComputerScreenshotImage : IJsonModel<ComputerScreenshotImage>
+    public partial class ComputerScreenshotImage : IJsonModel<ComputerScreenshotImage>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -71,11 +71,11 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(ComputerScreenshotImage)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
-            if (Optional.IsDefined(ImageUrl))
+            writer.WriteStringValue(ImageKind);
+            if (Optional.IsDefined(ImageUri))
             {
                 writer.WritePropertyName("image_url"u8);
-                writer.WriteStringValue(ImageUrl.AbsoluteUri);
+                writer.WriteStringValue(ImageUri.AbsoluteUri);
             }
             if (Optional.IsDefined(FileId))
             {
@@ -124,15 +124,15 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            string @type = default;
-            Uri imageUrl = default;
+            string imageKind = default;
+            Uri imageUri = default;
             string fileId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    imageKind = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("image_url"u8))
@@ -141,7 +141,7 @@ namespace Azure.AI.Extensions.OpenAI
                     {
                         continue;
                     }
-                    imageUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    imageUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("file_id"u8))
@@ -154,7 +154,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputerScreenshotImage(@type, imageUrl, fileId, additionalBinaryDataProperties);
+            return new ComputerScreenshotImage(imageKind, imageUri, fileId, additionalBinaryDataProperties);
         }
     }
 }
