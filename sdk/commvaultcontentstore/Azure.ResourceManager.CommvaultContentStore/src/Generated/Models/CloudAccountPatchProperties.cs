@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The updatable properties of the CloudAccount. </summary>
-    public partial class CloudAccountUpdateProperties
+    public partial class CloudAccountPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CloudAccountUpdateProperties"/>. </summary>
-        public CloudAccountUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="CloudAccountPatchProperties"/>. </summary>
+        public CloudAccountPatchProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudAccountUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudAccountPatchProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CloudAccountUpdateProperties(MarketplaceDetails marketplace, CommvaultUserDetails user, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CloudAccountPatchProperties(MarketplaceDetails marketplace, CommvaultUserDetails user, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Marketplace = marketplace;
             User = user;

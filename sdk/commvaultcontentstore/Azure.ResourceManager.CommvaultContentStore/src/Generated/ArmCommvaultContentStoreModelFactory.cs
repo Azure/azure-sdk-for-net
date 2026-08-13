@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.CloudAccountPatch"/> instance for mocking. </returns>
-        public static CloudAccountPatch CloudAccountPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, CloudAccountUpdateProperties properties = default)
+        public static CloudAccountPatch CloudAccountPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, CloudAccountPatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
-        /// <returns> A new <see cref="Models.CloudAccountUpdateProperties"/> instance for mocking. </returns>
-        public static CloudAccountUpdateProperties CloudAccountUpdateProperties(MarketplaceDetails marketplace = default, CommvaultUserDetails user = default)
+        /// <returns> A new <see cref="Models.CloudAccountPatchProperties"/> instance for mocking. </returns>
+        public static CloudAccountPatchProperties CloudAccountPatchProperties(MarketplaceDetails marketplace = default, CommvaultUserDetails user = default)
         {
-            return new CloudAccountUpdateProperties(marketplace, user, default);
+            return new CloudAccountPatchProperties(marketplace, user, default);
         }
 
         /// <param name="saaSResourceId"> SaaS resource id. </param>

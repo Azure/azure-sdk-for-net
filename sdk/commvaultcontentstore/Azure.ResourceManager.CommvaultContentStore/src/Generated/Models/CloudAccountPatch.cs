@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CloudAccountPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, CloudAccountUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CloudAccountPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, CloudAccountPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             Tags = tags;
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public CloudAccountUpdateProperties Properties { get; set; }
+        public CloudAccountPatchProperties Properties { get; set; }
     }
 }
