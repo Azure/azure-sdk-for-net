@@ -505,6 +505,12 @@
       ]
     },
     {
+      "filename": "**/sdk/databasefleetmanager/**/*.cs",
+      "words": [
+        "unregisters"
+      ]
+    },
+    {
       "filename": "**/sdk/databox/**/*.cs",
       "words": [
         "errored"
