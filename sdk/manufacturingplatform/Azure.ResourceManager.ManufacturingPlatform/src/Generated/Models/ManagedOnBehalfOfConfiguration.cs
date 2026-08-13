@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedOnBehalfOfConfiguration"/>. </summary>
-        /// <param name="brokerResources"> Associated broker resources managed on behalf of the service. </param>
+        /// <param name="brokerResources"> Associated MoboBrokerResources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ManagedOnBehalfOfConfiguration(IReadOnlyList<ManagedOnBehalfOfBrokerResourceInfo> brokerResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Associated broker resources managed on behalf of the service. </summary>
+        /// <summary> Associated MoboBrokerResources. </summary>
         public IReadOnlyList<ManagedOnBehalfOfBrokerResourceInfo> BrokerResources { get; } = new ChangeTrackingList<ManagedOnBehalfOfBrokerResourceInfo>();
     }
 }

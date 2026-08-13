@@ -14,7 +14,7 @@ using Azure.ResourceManager.ManufacturingPlatform;
 
 namespace Azure.ResourceManager.ManufacturingPlatform.Models
 {
-    /// <summary> Broker resource managed on behalf of the service. </summary>
+    /// <summary> MoboBroker resource. </summary>
     public partial class ManagedOnBehalfOfBrokerResourceInfo : IJsonModel<ManagedOnBehalfOfBrokerResourceInfo>
     {
         /// <param name="data"> The data to parse. </param>

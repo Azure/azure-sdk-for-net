@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             return new ManagedResourceGroupConfiguration(name, location, default);
         }
 
-        /// <param name="id"> Resource identifier of the broker resource. </param>
+        /// <param name="id"> Resource Id of MoboBrokerResource. </param>
         /// <returns> A new <see cref="Models.ManagedOnBehalfOfBrokerResourceInfo"/> instance for mocking. </returns>
         public static ManagedOnBehalfOfBrokerResourceInfo ManagedOnBehalfOfBrokerResourceInfo(ResourceIdentifier id = default)
         {

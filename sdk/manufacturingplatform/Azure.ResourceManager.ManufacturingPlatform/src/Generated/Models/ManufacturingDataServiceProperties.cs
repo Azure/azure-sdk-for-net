@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
             }
         }
 
-        /// <summary> Associated broker resources managed on behalf of the service. </summary>
+        /// <summary> Associated MoboBrokerResources. </summary>
         public IReadOnlyList<ManagedOnBehalfOfBrokerResourceInfo> ManagedOnBehalfOfBrokerResources
         {
             get

@@ -1638,6 +1638,12 @@
       ]
     },
     {
+      "filename": "**/sdk/manufacturingplatform/**/*.cs",
+      "words": [
+        "mobo"
+      ]
+    },
+    {
       "filename": "/sdk/virtualenclaves/**/*.cs",
       "words": [
         "mobo"
