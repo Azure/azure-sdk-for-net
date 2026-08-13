@@ -16,14 +16,14 @@
 
 ## Summary
 
-- Total libraries: 446
+- Total libraries: 447
 - Management Plane (MPG): 260
   - Autorest/Swagger: 43
   - New Emitter (TypeSpec): 217
   - Old TypeSpec: 0
-- Data Plane (DPG): 129
+- Data Plane (DPG): 130
   - Autorest/Swagger: 30
-  - New Emitter (TypeSpec): 52
+  - New Emitter (TypeSpec): 53
   - Old TypeSpec: 0
 - Provisioning: 57
   - Reflection-based generator: 25
@@ -36,7 +36,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 52 / 52 (100%)
+**Migration Status**: 53 / 53 (100%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
@@ -62,6 +62,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | contentunderstanding | Azure.AI.ContentUnderstanding | ✅ |  |
 | devcenter | Azure.Developer.DevCenter | ✅ |  |
 | deviceupdate | Azure.IoT.DeviceUpdate | ✅ |  |
+| discovery | Azure.AI.Discovery | ✅ |  |
 | documentintelligence | Azure.AI.DocumentIntelligence | ✅ |  |
 | easm | Azure.Analytics.Defender.Easm | ✅ |  |
 | eventgrid | Azure.Messaging.EventGrid.Namespaces | ✅ |  |
