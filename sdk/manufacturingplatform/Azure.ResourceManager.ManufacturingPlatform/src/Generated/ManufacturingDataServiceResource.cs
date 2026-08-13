@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AvailableVersionListResult>> GetAvailableVersionsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManufacturingDataServiceAvailableVersionListResult>> GetAvailableVersionsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _manufacturingDataServicesClientDiagnostics.CreateScope("ManufacturingDataServiceResource.GetAvailableVersions");
             scope.Start();
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform
                 };
                 HttpMessage message = _manufacturingDataServicesRestClient.CreateGetAvailableVersionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AvailableVersionListResult> response = Response.FromValue(AvailableVersionListResult.FromResponse(result), result);
+                Response<ManufacturingDataServiceAvailableVersionListResult> response = Response.FromValue(ManufacturingDataServiceAvailableVersionListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AvailableVersionListResult> GetAvailableVersions(CancellationToken cancellationToken = default)
+        public virtual Response<ManufacturingDataServiceAvailableVersionListResult> GetAvailableVersions(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _manufacturingDataServicesClientDiagnostics.CreateScope("ManufacturingDataServiceResource.GetAvailableVersions");
             scope.Start();
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform
                 };
                 HttpMessage message = _manufacturingDataServicesRestClient.CreateGetAvailableVersionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AvailableVersionListResult> response = Response.FromValue(AvailableVersionListResult.FromResponse(result), result);
+                Response<ManufacturingDataServiceAvailableVersionListResult> response = Response.FromValue(ManufacturingDataServiceAvailableVersionListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

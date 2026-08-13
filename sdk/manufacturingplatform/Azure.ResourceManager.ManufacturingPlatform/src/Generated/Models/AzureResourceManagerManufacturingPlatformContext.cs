@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.ManufacturingPlatform
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AdxProfile))]
     [ModelReaderWriterBuildable(typeof(AksProfile))]
-    [ModelReaderWriterBuildable(typeof(AvailableVersionListResult))]
     [ModelReaderWriterBuildable(typeof(CmkProfile))]
     [ModelReaderWriterBuildable(typeof(DatabaseProfile))]
     [ModelReaderWriterBuildable(typeof(DenyAssignmentExclusion))]
@@ -29,6 +28,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform
     [ModelReaderWriterBuildable(typeof(ManagedResourceGroupConfiguration))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ManufacturingDataServiceApplicationVersion))]
+    [ModelReaderWriterBuildable(typeof(ManufacturingDataServiceAvailableVersionListResult))]
     [ModelReaderWriterBuildable(typeof(ManufacturingDataServiceData))]
     [ModelReaderWriterBuildable(typeof(ManufacturingDataServicePatch))]
     [ModelReaderWriterBuildable(typeof(ManufacturingDataServiceProperties))]

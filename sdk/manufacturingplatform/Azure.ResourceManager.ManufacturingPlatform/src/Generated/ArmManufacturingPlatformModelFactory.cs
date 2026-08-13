@@ -184,12 +184,12 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         }
 
         /// <param name="versions"> The list of versions. </param>
-        /// <returns> A new <see cref="Models.AvailableVersionListResult"/> instance for mocking. </returns>
-        public static AvailableVersionListResult AvailableVersionListResult(IEnumerable<ManufacturingDataServiceApplicationVersion> versions = default)
+        /// <returns> A new <see cref="Models.ManufacturingDataServiceAvailableVersionListResult"/> instance for mocking. </returns>
+        public static ManufacturingDataServiceAvailableVersionListResult ManufacturingDataServiceAvailableVersionListResult(IEnumerable<ManufacturingDataServiceApplicationVersion> versions = default)
         {
             versions ??= new ChangeTrackingList<ManufacturingDataServiceApplicationVersion>();
 
-            return new AvailableVersionListResult((versions ?? new ChangeTrackingList<ManufacturingDataServiceApplicationVersion>()).ToList(), default);
+            return new ManufacturingDataServiceAvailableVersionListResult((versions ?? new ChangeTrackingList<ManufacturingDataServiceApplicationVersion>()).ToList(), default);
         }
 
         /// <param name="version"> Application Version. </param>

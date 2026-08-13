@@ -15,63 +15,63 @@ using Azure.ResourceManager.ManufacturingPlatform;
 namespace Azure.ResourceManager.ManufacturingPlatform.Models
 {
     /// <summary> The list of available versions. </summary>
-    public partial class AvailableVersionListResult : IJsonModel<AvailableVersionListResult>
+    public partial class ManufacturingDataServiceAvailableVersionListResult : IJsonModel<ManufacturingDataServiceAvailableVersionListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="AvailableVersionListResult"/> for deserialization. </summary>
-        internal AvailableVersionListResult()
+        /// <summary> Initializes a new instance of <see cref="ManufacturingDataServiceAvailableVersionListResult"/> for deserialization. </summary>
+        internal ManufacturingDataServiceAvailableVersionListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AvailableVersionListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManufacturingDataServiceAvailableVersionListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvailableVersionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManufacturingDataServiceAvailableVersionListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAvailableVersionListResult(document.RootElement, options);
+                        return DeserializeManufacturingDataServiceAvailableVersionListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailableVersionListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManufacturingDataServiceAvailableVersionListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvailableVersionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManufacturingDataServiceAvailableVersionListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerManufacturingPlatformContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AvailableVersionListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManufacturingDataServiceAvailableVersionListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AvailableVersionListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ManufacturingDataServiceAvailableVersionListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AvailableVersionListResult IPersistableModel<AvailableVersionListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ManufacturingDataServiceAvailableVersionListResult IPersistableModel<ManufacturingDataServiceAvailableVersionListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AvailableVersionListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManufacturingDataServiceAvailableVersionListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AvailableVersionListResult"/> from. </param>
-        internal static AvailableVersionListResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ManufacturingDataServiceAvailableVersionListResult"/> from. </param>
+        internal static ManufacturingDataServiceAvailableVersionListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAvailableVersionListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeManufacturingDataServiceAvailableVersionListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AvailableVersionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManufacturingDataServiceAvailableVersionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvailableVersionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManufacturingDataServiceAvailableVersionListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableVersionListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManufacturingDataServiceAvailableVersionListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("versions"u8);
             writer.WriteStartArray();
@@ -113,24 +113,24 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AvailableVersionListResult IJsonModel<AvailableVersionListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ManufacturingDataServiceAvailableVersionListResult IJsonModel<ManufacturingDataServiceAvailableVersionListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AvailableVersionListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManufacturingDataServiceAvailableVersionListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvailableVersionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManufacturingDataServiceAvailableVersionListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableVersionListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManufacturingDataServiceAvailableVersionListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAvailableVersionListResult(document.RootElement, options);
+            return DeserializeManufacturingDataServiceAvailableVersionListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AvailableVersionListResult DeserializeAvailableVersionListResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManufacturingDataServiceAvailableVersionListResult DeserializeManufacturingDataServiceAvailableVersionListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AvailableVersionListResult(versions, additionalBinaryDataProperties);
+            return new ManufacturingDataServiceAvailableVersionListResult(versions, additionalBinaryDataProperties);
         }
     }
 }

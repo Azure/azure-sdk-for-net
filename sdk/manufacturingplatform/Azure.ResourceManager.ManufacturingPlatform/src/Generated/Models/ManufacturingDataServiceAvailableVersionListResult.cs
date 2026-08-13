@@ -12,22 +12,22 @@ using System.Linq;
 namespace Azure.ResourceManager.ManufacturingPlatform.Models
 {
     /// <summary> The list of available versions. </summary>
-    public partial class AvailableVersionListResult
+    public partial class ManufacturingDataServiceAvailableVersionListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AvailableVersionListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManufacturingDataServiceAvailableVersionListResult"/>. </summary>
         /// <param name="versions"> The list of versions. </param>
-        internal AvailableVersionListResult(IEnumerable<ManufacturingDataServiceApplicationVersion> versions)
+        internal ManufacturingDataServiceAvailableVersionListResult(IEnumerable<ManufacturingDataServiceApplicationVersion> versions)
         {
             Versions = versions.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvailableVersionListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManufacturingDataServiceAvailableVersionListResult"/>. </summary>
         /// <param name="versions"> The list of versions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvailableVersionListResult(IList<ManufacturingDataServiceApplicationVersion> versions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManufacturingDataServiceAvailableVersionListResult(IList<ManufacturingDataServiceApplicationVersion> versions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Versions = versions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
