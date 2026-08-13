@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.8 (Unreleased)
+## 1.0.0-beta.8 (2026-08-12)
 
 ### Features Added
 - Resilient responses. Resilient background responses (`ResponsesServerOptions.ResilientBackground`)
@@ -44,8 +44,6 @@
   provider, matching the Python implementation. The local default event-stream backing is
   in-memory replay, upgraded automatically to durable file-backed replay when resilient
   background is enabled outside a hosted environment.
-
-### Bugs Fixed
 
 ### Other Changes
 - Retired the interim .NET ↔ Python resilience parity reports now that the port has
