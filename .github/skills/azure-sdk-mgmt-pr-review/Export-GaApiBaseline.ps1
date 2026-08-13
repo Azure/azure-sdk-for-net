@@ -40,6 +40,7 @@ if ($TargetFramework -and $TargetFramework -notmatch '^[A-Za-z0-9.-]+$') {
 
 $tempDirectory = Join-Path ([System.IO.Path]::GetTempPath()) ("ga-api-" + [guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $tempDirectory | Out-Null
+$azureSdkFeed = 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json'
 
 try {
     $packageId = $PackageName.ToLowerInvariant()
@@ -97,7 +98,8 @@ try {
   <ItemGroup><PackageReference Include="Microsoft.DotNet.GenAPI" Version="$GenApiVersion" /></ItemGroup>
 </Project>
 "@ | Set-Content -Path $restoreProject
-        & dotnet restore $restoreProject --source 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json'
+        # This repository's approved feed has NuGet.org configured as an upstream source.
+        & dotnet restore $restoreProject --source $azureSdkFeed
         if ($LASTEXITCODE -ne 0) {
             throw "Failed to restore Microsoft.DotNet.GenAPI $GenApiVersion."
         }
@@ -118,7 +120,7 @@ try {
   <ItemGroup><PackageReference Include="$PackageName" Version="$Version" /></ItemGroup>
 </Project>
 "@ | Set-Content -Path $dependencyProject
-    & dotnet restore $dependencyProject --source 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json'
+    & dotnet restore $dependencyProject --source $azureSdkFeed
     if ($LASTEXITCODE -ne 0) {
         throw "Failed to restore the dependency closure for $PackageName $Version."
     }
@@ -175,8 +177,16 @@ try {
     } else {
         Split-Path $dotnetExecutable -Parent
     }
-    foreach ($referenceDirectory in (Get-ChildItem -Path (Join-Path $dotnetRoot 'packs') -Recurse -Directory -Filter $TargetFramework -ErrorAction SilentlyContinue)) {
-        $libraryDirectories.Add($referenceDirectory.FullName) | Out-Null
+    $packsDirectory = Join-Path $dotnetRoot 'packs'
+    foreach ($packDirectory in (Get-ChildItem -Path $packsDirectory -Directory -ErrorAction SilentlyContinue)) {
+        $referenceDirectory = Get-ChildItem -Path $packDirectory.FullName -Directory |
+            Sort-Object { [version]$_.Name } -Descending |
+            ForEach-Object { Join-Path $_.FullName "ref/$TargetFramework" } |
+            Where-Object { Test-Path $_ } |
+            Select-Object -First 1
+        if ($referenceDirectory) {
+            $libraryDirectories.Add($referenceDirectory) | Out-Null
+        }
     }
     $libraryDirectories.Add($PSHOME) | Out-Null
 
