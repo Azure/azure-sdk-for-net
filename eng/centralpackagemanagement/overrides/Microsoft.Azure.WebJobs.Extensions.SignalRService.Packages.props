@@ -7,7 +7,7 @@
     Tracked in https://github.com/Azure/azure-sdk-for-net/issues/62029
   -->
   <ItemGroup>
-    <PackageVersion Update="Microsoft.Extensions.Azure" Version="1.12.0" />
+    <PackageVersion Update="Microsoft.Extensions.Azure" Version="1.13.1" />
   </ItemGroup>
   <!--
     xunit is only approved for legacy use. Azure SDK test projects should use NUnit.
