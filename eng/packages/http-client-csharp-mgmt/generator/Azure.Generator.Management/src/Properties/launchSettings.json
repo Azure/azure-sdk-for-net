@@ -10,6 +10,11 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
+    "http-azure-resource-manager-multi-service": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/multi-service -g AzureStubGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
     "http-azure-resource-manager-non-resource": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/non-resource -g AzureStubGenerator",
       "commandName": "Executable",

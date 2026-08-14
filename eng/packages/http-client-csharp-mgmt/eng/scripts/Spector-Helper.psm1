@@ -7,6 +7,8 @@ $failingSpecs = @(
     "http/azure/resource-manager/management-group"
     # method-subscription-id: Skipped due to "Some file paths are too long" error in CI
     "http/azure/resource-manager/method-subscription-id"
+    # multi-service-shared-models: Skipped due to "Some file paths are too long" error in CI
+    "http/azure/resource-manager/multi-service-shared-models"
 )
 
 function Capitalize-FirstLetter {
@@ -41,7 +43,7 @@ function IsValidSpecDir {
     param (
         [string]$fullPath
     )
-    if (-not(Test-Path "$fullPath/main.tsp")){
+    if (-not ((Test-Path (Join-Path $fullPath "main.tsp")) -or (Test-Path (Join-Path $fullPath "client.tsp")))) {
         return $false;
     }
 
