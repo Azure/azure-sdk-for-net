@@ -12,23 +12,23 @@ using Azure.ResourceManager.DatabaseFleetManager;
 namespace Azure.ResourceManager.DatabaseFleetManager.Models
 {
     /// <summary> Database Identity. </summary>
-    public partial class IdentityProperties
+    public partial class FleetDatabaseIdentityProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IdentityProperties"/>. </summary>
-        public IdentityProperties()
+        /// <summary> Initializes a new instance of <see cref="FleetDatabaseIdentityProperties"/>. </summary>
+        public FleetDatabaseIdentityProperties()
         {
             UserAssignedIdentities = new ChangeTrackingList<DatabaseIdentity>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IdentityProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FleetDatabaseIdentityProperties"/>. </summary>
         /// <param name="identityType"> Identity type of the main principal. </param>
         /// <param name="userAssignedIdentities"> User identity ids. </param>
         /// <param name="federatedClientId"> The federated client id for the SQL Database. It is used for cross tenant CMK scenario. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IdentityProperties(DatabaseFleetManagerIdentityType? identityType, IList<DatabaseIdentity> userAssignedIdentities, Guid? federatedClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FleetDatabaseIdentityProperties(DatabaseFleetManagerIdentityType? identityType, IList<DatabaseIdentity> userAssignedIdentities, Guid? federatedClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdentityType = identityType;
             UserAssignedIdentities = userAssignedIdentities;

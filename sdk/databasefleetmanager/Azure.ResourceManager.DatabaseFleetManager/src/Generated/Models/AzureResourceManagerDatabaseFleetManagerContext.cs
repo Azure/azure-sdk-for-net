@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
     [ModelReaderWriterBuildable(typeof(FirewallRuleResource))]
     [ModelReaderWriterBuildable(typeof(FleetAdministrator))]
     [ModelReaderWriterBuildable(typeof(FleetDatabaseData))]
+    [ModelReaderWriterBuildable(typeof(FleetDatabaseIdentityProperties))]
     [ModelReaderWriterBuildable(typeof(FleetDatabaseListResult))]
     [ModelReaderWriterBuildable(typeof(FleetDatabaseProperties))]
     [ModelReaderWriterBuildable(typeof(FleetDatabaseResource))]
@@ -42,7 +43,6 @@ namespace Azure.ResourceManager.DatabaseFleetManager
     [ModelReaderWriterBuildable(typeof(FleetTierListResult))]
     [ModelReaderWriterBuildable(typeof(FleetTierProperties))]
     [ModelReaderWriterBuildable(typeof(FleetTierResource))]
-    [ModelReaderWriterBuildable(typeof(IdentityProperties))]
     [ModelReaderWriterBuildable(typeof(RegisterServerContent))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerDatabaseFleetManagerContext : ModelReaderWriterContext

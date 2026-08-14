@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="transparentDataEncryption"> Transparent Data Encryption properties. </param>
         /// <param name="collation"> Database collation. </param>
         /// <returns> A new <see cref="Models.FleetDatabaseProperties"/> instance for mocking. </returns>
-        public static FleetDatabaseProperties FleetDatabaseProperties(string originalDatabaseId = default, AzureProvisioningState? provisioningState = default, DatabaseCreateMode? createMode = default, string tierName = default, string connectionString = default, bool? isRecoverable = default, DateTimeOffset? restoreFromOn = default, DateTimeOffset? earliestRestoreOn = default, DateTimeOffset? latestRestoreOn = default, int? backupRetentionDays = default, int? databaseSizeGbMax = default, string sourceDatabaseName = default, IDictionary<string, string> resourceTags = default, IdentityProperties identity = default, DatabaseFleetManagerTransparentDataEncryption transparentDataEncryption = default, string collation = default)
+        public static FleetDatabaseProperties FleetDatabaseProperties(string originalDatabaseId = default, AzureProvisioningState? provisioningState = default, DatabaseCreateMode? createMode = default, string tierName = default, string connectionString = default, bool? isRecoverable = default, DateTimeOffset? restoreFromOn = default, DateTimeOffset? earliestRestoreOn = default, DateTimeOffset? latestRestoreOn = default, int? backupRetentionDays = default, int? databaseSizeGbMax = default, string sourceDatabaseName = default, IDictionary<string, string> resourceTags = default, FleetDatabaseIdentityProperties identity = default, DatabaseFleetManagerTransparentDataEncryption transparentDataEncryption = default, string collation = default)
         {
             resourceTags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="identityType"> Identity type of the main principal. </param>
         /// <param name="userAssignedIdentities"> User identity ids. </param>
         /// <param name="federatedClientId"> The federated client id for the SQL Database. It is used for cross tenant CMK scenario. </param>
-        /// <returns> A new <see cref="Models.IdentityProperties"/> instance for mocking. </returns>
-        public static IdentityProperties IdentityProperties(DatabaseFleetManagerIdentityType? identityType = default, IEnumerable<DatabaseIdentity> userAssignedIdentities = default, Guid? federatedClientId = default)
+        /// <returns> A new <see cref="Models.FleetDatabaseIdentityProperties"/> instance for mocking. </returns>
+        public static FleetDatabaseIdentityProperties FleetDatabaseIdentityProperties(DatabaseFleetManagerIdentityType? identityType = default, IEnumerable<DatabaseIdentity> userAssignedIdentities = default, Guid? federatedClientId = default)
         {
             userAssignedIdentities ??= new ChangeTrackingList<DatabaseIdentity>();
 
-            return new IdentityProperties(identityType, (userAssignedIdentities ?? new ChangeTrackingList<DatabaseIdentity>()).ToList(), federatedClientId, default);
+            return new FleetDatabaseIdentityProperties(identityType, (userAssignedIdentities ?? new ChangeTrackingList<DatabaseIdentity>()).ToList(), federatedClientId, default);
         }
 
         /// <param name="resourceId"> Resource Id of the database identity. </param>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                 default);
         }
 
-        /// <param name="disabled"> If true, tier is disabled. </param>
+        /// <param name="isDisabled"> If true, tier is disabled. </param>
         /// <param name="isServerless"> If true, serverless resources are provisioned in the tier. </param>
         /// <param name="isPooled"> If true, databases are pooled. </param>
         /// <param name="serviceTier"> Service tier of provisioned resources. Supported values: GeneralPurpose, Hyperscale. </param>
@@ -290,10 +290,10 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="databaseSizeGbMax"> Maximum database size in Gb. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <returns> A new <see cref="Models.FleetTierProperties"/> instance for mocking. </returns>
-        public static FleetTierProperties FleetTierProperties(bool? disabled = default, bool? isServerless = default, bool? isPooled = default, string serviceTier = default, string family = default, int? capacity = default, int? poolNumOfDatabasesMax = default, int? highAvailabilityReplicaCount = default, DatabaseFleetManagerZoneRedundancy? zoneRedundancy = default, double? databaseCapacityMin = default, double? databaseCapacityMax = default, int? databaseSizeGbMax = default, AzureProvisioningState? provisioningState = default)
+        public static FleetTierProperties FleetTierProperties(bool? isDisabled = default, bool? isServerless = default, bool? isPooled = default, string serviceTier = default, string family = default, int? capacity = default, int? poolNumOfDatabasesMax = default, int? highAvailabilityReplicaCount = default, DatabaseFleetManagerZoneRedundancy? zoneRedundancy = default, double? databaseCapacityMin = default, double? databaseCapacityMax = default, int? databaseSizeGbMax = default, AzureProvisioningState? provisioningState = default)
         {
             return new FleetTierProperties(
-                disabled,
+                isDisabled,
                 isServerless,
                 isPooled,
                 serviceTier,

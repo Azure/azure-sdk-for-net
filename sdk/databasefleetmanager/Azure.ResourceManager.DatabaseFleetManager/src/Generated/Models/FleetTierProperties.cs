@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FleetTierProperties"/>. </summary>
-        /// <param name="disabled"> If true, tier is disabled. </param>
+        /// <param name="isDisabled"> If true, tier is disabled. </param>
         /// <param name="isServerless"> If true, serverless resources are provisioned in the tier. </param>
         /// <param name="isPooled"> If true, databases are pooled. </param>
         /// <param name="serviceTier"> Service tier of provisioned resources. Supported values: GeneralPurpose, Hyperscale. </param>
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="databaseSizeGbMax"> Maximum database size in Gb. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FleetTierProperties(bool? disabled, bool? isServerless, bool? isPooled, string serviceTier, string family, int? capacity, int? poolNumOfDatabasesMax, int? highAvailabilityReplicaCount, DatabaseFleetManagerZoneRedundancy? zoneRedundancy, double? databaseCapacityMin, double? databaseCapacityMax, int? databaseSizeGbMax, AzureProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FleetTierProperties(bool? isDisabled, bool? isServerless, bool? isPooled, string serviceTier, string family, int? capacity, int? poolNumOfDatabasesMax, int? highAvailabilityReplicaCount, DatabaseFleetManagerZoneRedundancy? zoneRedundancy, double? databaseCapacityMin, double? databaseCapacityMax, int? databaseSizeGbMax, AzureProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Disabled = disabled;
+            IsDisabled = isDisabled;
             IsServerless = isServerless;
             IsPooled = isPooled;
             ServiceTier = serviceTier;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         }
 
         /// <summary> If true, tier is disabled. </summary>
-        public bool? Disabled { get; }
+        public bool? IsDisabled { get; }
 
         /// <summary> If true, serverless resources are provisioned in the tier. </summary>
         public bool? IsServerless { get; set; }

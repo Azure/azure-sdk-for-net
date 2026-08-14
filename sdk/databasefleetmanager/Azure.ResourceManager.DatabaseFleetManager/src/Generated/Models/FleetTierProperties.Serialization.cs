@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             {
                 throw new FormatException($"The model {nameof(FleetTierProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Disabled))
+            if (options.Format != "W" && Optional.IsDefined(IsDisabled))
             {
                 writer.WritePropertyName("disabled"u8);
-                writer.WriteBooleanValue(Disabled.Value);
+                writer.WriteBooleanValue(IsDisabled.Value);
             }
             if (Optional.IsDefined(IsServerless))
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             {
                 return null;
             }
-            bool? disabled = default;
+            bool? isDisabled = default;
             bool? isServerless = default;
             bool? isPooled = default;
             string serviceTier = default;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                     {
                         continue;
                     }
-                    disabled = prop.Value.GetBoolean();
+                    isDisabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("serverless"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                 }
             }
             return new FleetTierProperties(
-                disabled,
+                isDisabled,
                 isServerless,
                 isPooled,
                 serviceTier,

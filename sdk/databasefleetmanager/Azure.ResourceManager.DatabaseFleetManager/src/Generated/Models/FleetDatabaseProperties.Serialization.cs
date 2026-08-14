@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             int? databaseSizeGbMax = default;
             string sourceDatabaseName = default;
             IDictionary<string, string> resourceTags = default;
-            IdentityProperties identity = default;
+            FleetDatabaseIdentityProperties identity = default;
             DatabaseFleetManagerTransparentDataEncryption transparentDataEncryption = default;
             string collation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                     {
                         continue;
                     }
-                    identity = IdentityProperties.DeserializeIdentityProperties(prop.Value, options);
+                    identity = FleetDatabaseIdentityProperties.DeserializeFleetDatabaseIdentityProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("transparentDataEncryption"u8))

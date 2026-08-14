@@ -1,4 +1,4 @@
 directory: specification/databasefleetmanager/resource-manager/Microsoft.DatabaseFleetManager/DatabaseFleetManager
-commit: 8278cff46369559910a7d810b12de144829a26d6
+commit: 4f0e4a1e63c05a56c0afa16252d28f41111001bd
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

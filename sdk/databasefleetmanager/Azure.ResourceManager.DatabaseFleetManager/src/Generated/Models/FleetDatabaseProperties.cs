@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="transparentDataEncryption"> Transparent Data Encryption properties. </param>
         /// <param name="collation"> Database collation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FleetDatabaseProperties(string originalDatabaseId, AzureProvisioningState? provisioningState, DatabaseCreateMode? createMode, string tierName, string connectionString, bool? isRecoverable, DateTimeOffset? restoreFromOn, DateTimeOffset? earliestRestoreOn, DateTimeOffset? latestRestoreOn, int? backupRetentionDays, int? databaseSizeGbMax, string sourceDatabaseName, IDictionary<string, string> resourceTags, IdentityProperties identity, DatabaseFleetManagerTransparentDataEncryption transparentDataEncryption, string collation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FleetDatabaseProperties(string originalDatabaseId, AzureProvisioningState? provisioningState, DatabaseCreateMode? createMode, string tierName, string connectionString, bool? isRecoverable, DateTimeOffset? restoreFromOn, DateTimeOffset? earliestRestoreOn, DateTimeOffset? latestRestoreOn, int? backupRetentionDays, int? databaseSizeGbMax, string sourceDatabaseName, IDictionary<string, string> resourceTags, FleetDatabaseIdentityProperties identity, DatabaseFleetManagerTransparentDataEncryption transparentDataEncryption, string collation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OriginalDatabaseId = originalDatabaseId;
             ProvisioningState = provisioningState;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         public IDictionary<string, string> ResourceTags { get; }
 
         /// <summary> Identity property. </summary>
-        public IdentityProperties Identity { get; set; }
+        public FleetDatabaseIdentityProperties Identity { get; set; }
 
         /// <summary> Transparent Data Encryption properties. </summary>
         public DatabaseFleetManagerTransparentDataEncryption TransparentDataEncryption { get; set; }
