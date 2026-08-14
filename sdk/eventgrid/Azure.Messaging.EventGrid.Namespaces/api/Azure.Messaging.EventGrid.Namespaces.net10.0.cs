@@ -7,7 +7,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public System.Collections.Generic.IReadOnlyList<string> SucceededLockTokens { get { throw null; } }
         protected virtual Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult (Azure.Response response) { throw null; }
+        public static explicit operator Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult (Azure.Response result) { throw null; }
         public static implicit operator Azure.Core.RequestContent (Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult acknowledgeResult) { throw null; }
         protected virtual Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -194,7 +194,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.Namespaces.ReceiveDetails> Details { get { throw null; } }
         protected virtual Azure.Messaging.EventGrid.Namespaces.ReceiveResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Messaging.EventGrid.Namespaces.ReceiveResult (Azure.Response response) { throw null; }
+        public static explicit operator Azure.Messaging.EventGrid.Namespaces.ReceiveResult (Azure.Response result) { throw null; }
         public static implicit operator Azure.Core.RequestContent (Azure.Messaging.EventGrid.Namespaces.ReceiveResult receiveResult) { throw null; }
         protected virtual Azure.Messaging.EventGrid.Namespaces.ReceiveResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -211,7 +211,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public System.Collections.Generic.IReadOnlyList<string> SucceededLockTokens { get { throw null; } }
         protected virtual Azure.Messaging.EventGrid.Namespaces.RejectResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Messaging.EventGrid.Namespaces.RejectResult (Azure.Response response) { throw null; }
+        public static explicit operator Azure.Messaging.EventGrid.Namespaces.RejectResult (Azure.Response result) { throw null; }
         public static implicit operator Azure.Core.RequestContent (Azure.Messaging.EventGrid.Namespaces.RejectResult rejectResult) { throw null; }
         protected virtual Azure.Messaging.EventGrid.Namespaces.RejectResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -248,7 +248,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public System.Collections.Generic.IReadOnlyList<string> SucceededLockTokens { get { throw null; } }
         protected virtual Azure.Messaging.EventGrid.Namespaces.ReleaseResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Messaging.EventGrid.Namespaces.ReleaseResult (Azure.Response response) { throw null; }
+        public static explicit operator Azure.Messaging.EventGrid.Namespaces.ReleaseResult (Azure.Response result) { throw null; }
         public static implicit operator Azure.Core.RequestContent (Azure.Messaging.EventGrid.Namespaces.ReleaseResult releaseResult) { throw null; }
         protected virtual Azure.Messaging.EventGrid.Namespaces.ReleaseResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -265,7 +265,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public System.Collections.Generic.IReadOnlyList<string> SucceededLockTokens { get { throw null; } }
         protected virtual Azure.Messaging.EventGrid.Namespaces.RenewLocksResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Messaging.EventGrid.Namespaces.RenewLocksResult (Azure.Response response) { throw null; }
+        public static explicit operator Azure.Messaging.EventGrid.Namespaces.RenewLocksResult (Azure.Response result) { throw null; }
         public static implicit operator Azure.Core.RequestContent (Azure.Messaging.EventGrid.Namespaces.RenewLocksResult renewLocksResult) { throw null; }
         protected virtual Azure.Messaging.EventGrid.Namespaces.RenewLocksResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

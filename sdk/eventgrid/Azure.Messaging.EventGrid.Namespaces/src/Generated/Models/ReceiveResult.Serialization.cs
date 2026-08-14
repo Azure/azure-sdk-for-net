@@ -56,13 +56,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ReceiveResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ReceiveResult"/> from. </param>
-        public static explicit operator ReceiveResult(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeReceiveResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ReceiveResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
