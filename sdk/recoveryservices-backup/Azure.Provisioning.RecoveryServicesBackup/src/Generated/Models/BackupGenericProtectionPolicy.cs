@@ -12,7 +12,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
 {
     /// <summary>
     /// Base class for backup policy. Workload-specific backup policies are derived from this class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VmWorkloadProtectionPolicy"/>, <see cref="FileShareProtectionPolicy"/>, <see cref="IaasVmProtectionPolicy"/>, <see cref="SqlProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/>, and <see cref="MabProtectionPolicy"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="VmWorkloadProtectionPolicy"/>, <see cref="FileShareProtectionPolicy"/>, <see cref="IaasVmProtectionPolicy"/>, <see cref="SqlProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/>, and <see cref="MabProtectionPolicy"/>.
     /// </summary>
     public partial class BackupGenericProtectionPolicy : ProvisionableConstruct
     {

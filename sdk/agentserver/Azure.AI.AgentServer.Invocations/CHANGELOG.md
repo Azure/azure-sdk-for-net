@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.6 (2026-08-12)
 
 ### Features Added
 
@@ -12,10 +12,6 @@
   streaming/bidirectional surfaces (e.g. the `invocations_ws` WebSocket protocol)
   that OpenAPI cannot express. The path extension is authoritative for the
   returned content type — no `Accept` negotiation and no format conversion.
-
-### Breaking Changes
-
-### Bugs Fixed
 
 ### Other Changes
 
