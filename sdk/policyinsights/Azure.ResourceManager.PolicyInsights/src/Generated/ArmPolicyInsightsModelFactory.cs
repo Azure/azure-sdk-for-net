@@ -840,8 +840,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="failureThresholdPercentage"> The remediation failure threshold settings. </param>
         /// <returns> A new <see cref="PolicyInsights.PolicyRemediationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PolicyRemediationData PolicyRemediationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier policyAssignmentId = default, string policyDefinitionReferenceId = default, ResourceDiscoveryMode? resourceDiscoveryMode = default, string provisioningState = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastUpdatedOn = default, IEnumerable<AzureLocation> filterLocations = default, RemediationDeploymentSummary deploymentStatus = default, string statusMessage = default, string correlationId = default, int? resourceCount = default, int? parallelDeployments = default, float? failureThresholdPercentage = default)
+        public static PolicyRemediationData PolicyRemediationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier policyAssignmentId, string policyDefinitionReferenceId, ResourceDiscoveryMode? resourceDiscoveryMode, string provisioningState, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, IEnumerable<AzureLocation> filterLocations, RemediationDeploymentSummary deploymentStatus, string statusMessage, string correlationId, int? resourceCount, int? parallelDeployments, float? failureThresholdPercentage)
         {
+            filterLocations ??= new ChangeTrackingList<AzureLocation>();
+
             return new PolicyRemediationData(
                 id,
                 name,
@@ -871,7 +873,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="evaluationDetails"> The detailed results of the policy expressions and values that were evaluated. </param>
         /// <returns> A new <see cref="Models.PolicyEvaluationResult"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PolicyEvaluationResult PolicyEvaluationResult(PolicyReference policyInfo = default, string evaluationResult = default, PolicyEvaluationDetails evaluationDetails = default)
+        public static PolicyEvaluationResult PolicyEvaluationResult(PolicyReference policyInfo, string evaluationResult, PolicyEvaluationDetails evaluationDetails)
         {
             return new PolicyEvaluationResult(policyInfo, evaluationResult, default, default, default);
         }
@@ -883,7 +885,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CheckPolicyRestrictionsContent CheckPolicyRestrictionsContent(CheckRestrictionsResourceDetails resourceDetails, IEnumerable<PendingField> pendingFields)
         {
-            return new CheckPolicyRestrictionsContent(resourceDetails, (pendingFields ?? new ChangeTrackingList<PendingField>()).ToList(), default, default);
+            return CheckPolicyRestrictionsContent(resourceDetails: resourceDetails, pendingFields: pendingFields, includeAuditEffect: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FieldRestriction"/>. </summary>
@@ -895,14 +897,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FieldRestriction FieldRestriction(FieldRestrictionResult? result, string defaultValue, IEnumerable<string> values, PolicyReference policy)
         {
-            return new FieldRestriction(
-                result,
-                defaultValue,
-                (values ?? new ChangeTrackingList<string>()).ToList(),
-                policy,
-                default,
-                default,
-                default);
+            return FieldRestriction(result: result, defaultValue: defaultValue, values: values, policy: policy, policyEffect: default, reason: default);
         }
     }
 }

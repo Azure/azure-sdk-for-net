@@ -187,18 +187,9 @@ namespace Azure.ResourceManager.Playwright.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Playwright.PlaywrightWorkspaceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PlaywrightWorkspaceData PlaywrightWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PlaywrightWorkspaceProperties properties = default)
+        public static PlaywrightWorkspaceData PlaywrightWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PlaywrightWorkspaceProperties properties)
         {
-            return new PlaywrightWorkspaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default,
-                default);
+            return PlaywrightWorkspaceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, properties: properties, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PlaywrightWorkspaceProperties"/>. </summary>
@@ -209,17 +200,9 @@ namespace Azure.ResourceManager.Playwright.Models
         /// <param name="workspaceId"> The workspace ID in GUID format. </param>
         /// <returns> A new <see cref="Models.PlaywrightWorkspaceProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PlaywrightWorkspaceProperties PlaywrightWorkspaceProperties(PlaywrightProvisioningState? provisioningState = default, Uri dataplaneUri = default, PlaywrightEnablementStatus? regionalAffinity = default, PlaywrightEnablementStatus? localAuth = default, string workspaceId = default)
+        public static PlaywrightWorkspaceProperties PlaywrightWorkspaceProperties(PlaywrightProvisioningState? provisioningState, Uri dataplaneUri, PlaywrightEnablementStatus? regionalAffinity, PlaywrightEnablementStatus? localAuth, string workspaceId)
         {
-            return new PlaywrightWorkspaceProperties(
-                provisioningState,
-                dataplaneUri,
-                regionalAffinity,
-                localAuth,
-                workspaceId,
-                default,
-                default,
-                default);
+            return PlaywrightWorkspaceProperties(provisioningState: provisioningState, dataplaneUri: dataplaneUri, regionalAffinity: regionalAffinity, localAuth: localAuth, workspaceId: workspaceId, reporting: default, storageUri: default);
         }
     }
 }
