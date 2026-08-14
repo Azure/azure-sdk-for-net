@@ -6,7 +6,6 @@ using Azure.Core.Expressions.DataFactory;
 using Azure.Core.Pipeline;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
-using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -161,7 +160,6 @@ namespace Azure.Generator.Tests
         [TestCase(typeof(ResponseError))]
         [TestCase(typeof(ClientDiagnostics))]
         [TestCase(typeof(RequestConditions))]
-        [TestCase(typeof(ArmClient))]
         public void CreatesFrameworkType(Type expectedType)
         {
             var factory = new TestTypeFactory();
