@@ -6,44 +6,69 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableConfluentArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableConfluentArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableConfluentArmClient for mocking. </summary>
         protected MockableConfluentArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableConfluentArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableConfluentArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableConfluentArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableConfluentArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ConfluentOrganizationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfluentOrganizationResource.CreateResourceIdentifier" /> to create a <see cref="ConfluentOrganizationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ConfluentOrganizationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ConfluentOrganizationResource"/> object. </returns>
         public virtual ConfluentOrganizationResource GetConfluentOrganizationResource(ResourceIdentifier id)
         {
             ConfluentOrganizationResource.ValidateResourceId(id);
             return new ConfluentOrganizationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SCEnvironmentRecordResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SCEnvironmentRecordResource"/> object. </returns>
+        public virtual SCEnvironmentRecordResource GetSCEnvironmentRecordResource(ResourceIdentifier id)
+        {
+            SCEnvironmentRecordResource.ValidateResourceId(id);
+            return new SCEnvironmentRecordResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SCClusterRecordResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SCClusterRecordResource"/> object. </returns>
+        public virtual SCClusterRecordResource GetSCClusterRecordResource(ResourceIdentifier id)
+        {
+            SCClusterRecordResource.ValidateResourceId(id);
+            return new SCClusterRecordResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ConfluentConnectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ConfluentConnectorResource"/> object. </returns>
+        public virtual ConfluentConnectorResource GetConfluentConnectorResource(ResourceIdentifier id)
+        {
+            ConfluentConnectorResource.ValidateResourceId(id);
+            return new ConfluentConnectorResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="TopicRecordResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TopicRecordResource"/> object. </returns>
+        public virtual TopicRecordResource GetTopicRecordResource(ResourceIdentifier id)
+        {
+            TopicRecordResource.ValidateResourceId(id);
+            return new TopicRecordResource(Client, id);
         }
     }
 }

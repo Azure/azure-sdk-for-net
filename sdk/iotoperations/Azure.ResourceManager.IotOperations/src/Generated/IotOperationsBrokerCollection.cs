@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             TryGetApiVersion(IotOperationsBrokerResource.ResourceType, out string iotOperationsBrokerApiVersion);
             _brokerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", IotOperationsBrokerResource.ResourceType.Namespace, Diagnostics);
-            _brokerRestClient = new Broker(_brokerClientDiagnostics, Pipeline, Endpoint, iotOperationsBrokerApiVersion ?? "2025-10-01");
+            _brokerRestClient = new Broker(_brokerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotOperationsBrokerApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             if (id.ResourceType != IotOperationsInstanceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsInstanceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsInstanceResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _brokerRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, brokerName, IotOperationsBrokerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsBrokerResource> operation = new IotOperationsArmOperation<IotOperationsBrokerResource>(
-                    new IotOperationsBrokerOperationSource(Client),
+                    new IotOperationsBrokerResourceOperationSource(Client),
                     _brokerClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _brokerRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, brokerName, IotOperationsBrokerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsBrokerResource> operation = new IotOperationsArmOperation<IotOperationsBrokerResource>(
-                    new IotOperationsBrokerOperationSource(Client),
+                    new IotOperationsBrokerResourceOperationSource(Client),
                     _brokerClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotOperationsBrokerData, IotOperationsBrokerResource>(new BrokerGetByResourceGroupAsyncCollectionResultOfT(_brokerRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new IotOperationsBrokerResource(Client, data));
+            return new AsyncPageableWrapper<IotOperationsBrokerData, IotOperationsBrokerResource>(new BrokerGetByResourceGroupAsyncCollectionResultOfT(
+                _brokerRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "IotOperationsBrokerCollection.GetAll"), data => new IotOperationsBrokerResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IotOperationsBrokerData, IotOperationsBrokerResource>(new BrokerGetByResourceGroupCollectionResultOfT(_brokerRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new IotOperationsBrokerResource(Client, data));
+            return new PageableWrapper<IotOperationsBrokerData, IotOperationsBrokerResource>(new BrokerGetByResourceGroupCollectionResultOfT(
+                _brokerRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "IotOperationsBrokerCollection.GetAll"), data => new IotOperationsBrokerResource(Client, data));
         }
 
         /// <summary>

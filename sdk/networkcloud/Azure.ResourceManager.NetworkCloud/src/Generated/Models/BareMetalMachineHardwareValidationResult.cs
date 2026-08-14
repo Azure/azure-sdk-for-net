@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct BareMetalMachineHardwareValidationResult : IEquatable<BareMetalMachineHardwareValidationResult>
     {
         private readonly string _value;
+        /// <summary> The hardware validation passed. </summary>
+        private const string PassValue = "Pass";
+        /// <summary> The hardware validation failed. </summary>
+        private const string FailValue = "Fail";
 
         /// <summary> Initializes a new instance of <see cref="BareMetalMachineHardwareValidationResult"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BareMetalMachineHardwareValidationResult(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string PassValue = "Pass";
-        private const string FailValue = "Fail";
-
-        /// <summary> Pass. </summary>
+        /// <summary> The hardware validation passed. </summary>
         public static BareMetalMachineHardwareValidationResult Pass { get; } = new BareMetalMachineHardwareValidationResult(PassValue);
-        /// <summary> Fail. </summary>
+
+        /// <summary> The hardware validation failed. </summary>
         public static BareMetalMachineHardwareValidationResult Fail { get; } = new BareMetalMachineHardwareValidationResult(FailValue);
+
         /// <summary> Determines if two <see cref="BareMetalMachineHardwareValidationResult"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BareMetalMachineHardwareValidationResult left, BareMetalMachineHardwareValidationResult right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BareMetalMachineHardwareValidationResult"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BareMetalMachineHardwareValidationResult left, BareMetalMachineHardwareValidationResult right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BareMetalMachineHardwareValidationResult"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BareMetalMachineHardwareValidationResult"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BareMetalMachineHardwareValidationResult(string value) => new BareMetalMachineHardwareValidationResult(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BareMetalMachineHardwareValidationResult"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BareMetalMachineHardwareValidationResult?(string value) => value == null ? null : new BareMetalMachineHardwareValidationResult(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BareMetalMachineHardwareValidationResult other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BareMetalMachineHardwareValidationResult other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

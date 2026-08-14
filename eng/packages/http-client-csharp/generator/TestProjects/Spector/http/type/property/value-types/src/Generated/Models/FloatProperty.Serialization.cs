@@ -17,21 +17,13 @@ namespace _Type.Property.ValueTypes
     {
         internal FloatProperty() => throw null;
 
-        void IJsonModel<FloatProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        FloatProperty IJsonModel<FloatProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual FloatProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<FloatProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        protected virtual FloatProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        FloatProperty IPersistableModel<FloatProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<FloatProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual FloatProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        FloatProperty IPersistableModel<FloatProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<FloatProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
@@ -39,5 +31,13 @@ namespace _Type.Property.ValueTypes
         public static implicit operator RequestContent(FloatProperty floatProperty) => throw null;
 
         public static explicit operator FloatProperty(Response response) => throw null;
+
+        void IJsonModel<FloatProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        FloatProperty IJsonModel<FloatProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual FloatProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }
 }

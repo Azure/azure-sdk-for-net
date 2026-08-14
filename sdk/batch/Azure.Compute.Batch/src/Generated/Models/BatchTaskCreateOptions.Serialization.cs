@@ -21,6 +21,56 @@ namespace Azure.Compute.Batch
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchTaskCreateOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchTaskCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBatchTaskCreateOptions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchTaskCreateOptions)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchTaskCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BatchTaskCreateOptions)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchTaskCreateOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchTaskCreateOptions IPersistableModel<BatchTaskCreateOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BatchTaskCreateOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="batchTaskCreateOptions"> The <see cref="BatchTaskCreateOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(BatchTaskCreateOptions batchTaskCreateOptions)
+        {
+            if (batchTaskCreateOptions == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(batchTaskCreateOptions, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchTaskCreateOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -128,11 +178,6 @@ namespace Azure.Compute.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AuthenticationTokenSettings))
-            {
-                writer.WritePropertyName("authenticationTokenSettings"u8);
-                writer.WriteObjectValue(AuthenticationTokenSettings, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -190,7 +235,6 @@ namespace Azure.Compute.Batch
             MultiInstanceSettings multiInstanceSettings = default;
             BatchTaskDependencies dependsOn = default;
             IList<BatchApplicationPackageReference> applicationPackageReferences = default;
-            AuthenticationTokenSettings authenticationTokenSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -337,15 +381,6 @@ namespace Azure.Compute.Batch
                     applicationPackageReferences = array;
                     continue;
                 }
-                if (prop.NameEquals("authenticationTokenSettings"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    authenticationTokenSettings = AuthenticationTokenSettings.DeserializeAuthenticationTokenSettings(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -367,60 +402,7 @@ namespace Azure.Compute.Batch
                 multiInstanceSettings,
                 dependsOn,
                 applicationPackageReferences ?? new ChangeTrackingList<BatchApplicationPackageReference>(),
-                authenticationTokenSettings,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchTaskCreateOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchTaskCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BatchTaskCreateOptions)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BatchTaskCreateOptions IPersistableModel<BatchTaskCreateOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BatchTaskCreateOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchTaskCreateOptions>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBatchTaskCreateOptions(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BatchTaskCreateOptions)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchTaskCreateOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="batchTaskCreateOptions"> The <see cref="BatchTaskCreateOptions"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(BatchTaskCreateOptions batchTaskCreateOptions)
-        {
-            if (batchTaskCreateOptions == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batchTaskCreateOptions, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         {
             TryGetApiVersion(ResourceType, out string informaticaServerlessRuntimeApiVersion);
             _serverlessRuntimesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.InformaticaDataManagement", ResourceType.Namespace, Diagnostics);
-            _serverlessRuntimesRestClient = new ServerlessRuntimes(_serverlessRuntimesClientDiagnostics, Pipeline, Endpoint, informaticaServerlessRuntimeApiVersion ?? "2024-05-08");
+            _serverlessRuntimesRestClient = new ServerlessRuntimes(_serverlessRuntimesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, informaticaServerlessRuntimeApiVersion ?? "2024-05-08");
             ValidateResourceId(id);
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Communication.Models
     public readonly partial struct DomainRecordVerificationStatus : IEquatable<DomainRecordVerificationStatus>
     {
         private readonly string _value;
+        /// <summary> NotStarted. </summary>
+        private const string NotStartedValue = "NotStarted";
+        /// <summary> VerificationRequested. </summary>
+        private const string VerificationRequestedValue = "VerificationRequested";
+        /// <summary> VerificationInProgress. </summary>
+        private const string VerificationInProgressValue = "VerificationInProgress";
+        /// <summary> VerificationFailed. </summary>
+        private const string VerificationFailedValue = "VerificationFailed";
+        /// <summary> Verified. </summary>
+        private const string VerifiedValue = "Verified";
+        /// <summary> CancellationRequested. </summary>
+        private const string CancellationRequestedValue = "CancellationRequested";
 
         /// <summary> Initializes a new instance of <see cref="DomainRecordVerificationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DomainRecordVerificationStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotStartedValue = "NotStarted";
-        private const string VerificationRequestedValue = "VerificationRequested";
-        private const string VerificationInProgressValue = "VerificationInProgress";
-        private const string VerificationFailedValue = "VerificationFailed";
-        private const string VerifiedValue = "Verified";
-        private const string CancellationRequestedValue = "CancellationRequested";
+            _value = value;
+        }
 
         /// <summary> NotStarted. </summary>
         public static DomainRecordVerificationStatus NotStarted { get; } = new DomainRecordVerificationStatus(NotStartedValue);
+
         /// <summary> VerificationRequested. </summary>
         public static DomainRecordVerificationStatus VerificationRequested { get; } = new DomainRecordVerificationStatus(VerificationRequestedValue);
+
         /// <summary> VerificationInProgress. </summary>
         public static DomainRecordVerificationStatus VerificationInProgress { get; } = new DomainRecordVerificationStatus(VerificationInProgressValue);
+
         /// <summary> VerificationFailed. </summary>
         public static DomainRecordVerificationStatus VerificationFailed { get; } = new DomainRecordVerificationStatus(VerificationFailedValue);
+
         /// <summary> Verified. </summary>
         public static DomainRecordVerificationStatus Verified { get; } = new DomainRecordVerificationStatus(VerifiedValue);
+
         /// <summary> CancellationRequested. </summary>
         public static DomainRecordVerificationStatus CancellationRequested { get; } = new DomainRecordVerificationStatus(CancellationRequestedValue);
+
         /// <summary> Determines if two <see cref="DomainRecordVerificationStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DomainRecordVerificationStatus left, DomainRecordVerificationStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DomainRecordVerificationStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DomainRecordVerificationStatus left, DomainRecordVerificationStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DomainRecordVerificationStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DomainRecordVerificationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DomainRecordVerificationStatus(string value) => new DomainRecordVerificationStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DomainRecordVerificationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DomainRecordVerificationStatus?(string value) => value == null ? null : new DomainRecordVerificationStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DomainRecordVerificationStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DomainRecordVerificationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

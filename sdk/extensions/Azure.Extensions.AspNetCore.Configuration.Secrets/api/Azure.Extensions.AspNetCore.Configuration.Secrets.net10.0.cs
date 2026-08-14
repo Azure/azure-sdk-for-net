@@ -35,5 +35,9 @@ namespace Microsoft.Extensions.Configuration
         public static Microsoft.Extensions.Configuration.IConfigurationBuilder AddAzureKeyVault(this Microsoft.Extensions.Configuration.IConfigurationBuilder configurationBuilder, System.Uri vaultUri, Azure.Core.TokenCredential credential) { throw null; }
         public static Microsoft.Extensions.Configuration.IConfigurationBuilder AddAzureKeyVault(this Microsoft.Extensions.Configuration.IConfigurationBuilder configurationBuilder, System.Uri vaultUri, Azure.Core.TokenCredential credential, Azure.Extensions.AspNetCore.Configuration.Secrets.AzureKeyVaultConfigurationOptions options) { throw null; }
         public static Microsoft.Extensions.Configuration.IConfigurationBuilder AddAzureKeyVault(this Microsoft.Extensions.Configuration.IConfigurationBuilder configurationBuilder, System.Uri vaultUri, Azure.Core.TokenCredential credential, Azure.Extensions.AspNetCore.Configuration.Secrets.KeyVaultSecretManager manager) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public static Microsoft.Extensions.Configuration.IConfigurationBuilder AddKeyVaultSecrets(this Microsoft.Extensions.Configuration.IConfigurationBuilder configurationBuilder, string sectionName) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public static Microsoft.Extensions.Configuration.IConfigurationBuilder AddKeyVaultSecrets(this Microsoft.Extensions.Configuration.IConfigurationBuilder configurationBuilder, string sectionName, System.Action<Azure.Security.KeyVault.Secrets.SecretClientSettings> configureSettings) { throw null; }
     }
 }

@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2024-09-18"
+  "apiVersions": {
+    "Microsoft.WeightsAndBiases": "2024-09-18"
+  }
 }

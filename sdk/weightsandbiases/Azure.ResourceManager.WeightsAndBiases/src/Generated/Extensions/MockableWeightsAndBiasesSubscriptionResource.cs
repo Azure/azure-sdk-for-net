@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Mocking
 
         private ClientDiagnostics InstancesClientDiagnostics => _instancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WeightsAndBiases.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Instances InstancesRestClient => _instancesRestClient ??= new Instances(InstancesClientDiagnostics, Pipeline, Endpoint, "2024-09-18");
+        private Instances InstancesRestClient => _instancesRestClient ??= new Instances(InstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-09-18");
 
         /// <summary>
         /// List InstanceResource resources by subscription ID
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetBySubscriptionAsyncCollectionResultOfT(InstancesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new WeightsAndBiasesInstanceResource(Client, data));
+            return new AsyncPageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetBySubscriptionAsyncCollectionResultOfT(InstancesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWeightsAndBiasesSubscriptionResource.GetWeightsAndBiasesInstances"), data => new WeightsAndBiasesInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetBySubscriptionCollectionResultOfT(InstancesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new WeightsAndBiasesInstanceResource(Client, data));
+            return new PageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetBySubscriptionCollectionResultOfT(InstancesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWeightsAndBiasesSubscriptionResource.GetWeightsAndBiasesInstances"), data => new WeightsAndBiasesInstanceResource(Client, data));
         }
     }
 }

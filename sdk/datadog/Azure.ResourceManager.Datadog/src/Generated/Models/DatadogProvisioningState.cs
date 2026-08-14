@@ -7,21 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    /// <summary> The DatadogProvisioningState. </summary>
+    /// <summary></summary>
     public readonly partial struct DatadogProvisioningState : IEquatable<DatadogProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DatadogProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DatadogProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AcceptedValue = "Accepted";
         private const string CreatingValue = "Creating";
         private const string UpdatingValue = "Updating";
@@ -32,41 +25,73 @@ namespace Azure.ResourceManager.Datadog.Models
         private const string DeletedValue = "Deleted";
         private const string NotSpecifiedValue = "NotSpecified";
 
-        /// <summary> Accepted. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DatadogProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Accepted. </summary>
         public static DatadogProvisioningState Accepted { get; } = new DatadogProvisioningState(AcceptedValue);
-        /// <summary> Creating. </summary>
+
+        /// <summary> Gets the Creating. </summary>
         public static DatadogProvisioningState Creating { get; } = new DatadogProvisioningState(CreatingValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> Gets the Updating. </summary>
         public static DatadogProvisioningState Updating { get; } = new DatadogProvisioningState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static DatadogProvisioningState Deleting { get; } = new DatadogProvisioningState(DeletingValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static DatadogProvisioningState Succeeded { get; } = new DatadogProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static DatadogProvisioningState Failed { get; } = new DatadogProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static DatadogProvisioningState Canceled { get; } = new DatadogProvisioningState(CanceledValue);
-        /// <summary> Deleted. </summary>
+
+        /// <summary> Gets the Deleted. </summary>
         public static DatadogProvisioningState Deleted { get; } = new DatadogProvisioningState(DeletedValue);
-        /// <summary> NotSpecified. </summary>
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static DatadogProvisioningState NotSpecified { get; } = new DatadogProvisioningState(NotSpecifiedValue);
+
         /// <summary> Determines if two <see cref="DatadogProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DatadogProvisioningState left, DatadogProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DatadogProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DatadogProvisioningState left, DatadogProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DatadogProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DatadogProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DatadogProvisioningState(string value) => new DatadogProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DatadogProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DatadogProvisioningState?(string value) => value == null ? null : new DatadogProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DatadogProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DatadogProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

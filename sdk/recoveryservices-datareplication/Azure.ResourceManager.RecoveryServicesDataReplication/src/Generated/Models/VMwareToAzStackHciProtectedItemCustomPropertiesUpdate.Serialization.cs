@@ -16,6 +16,46 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> VMware to AzStackHCI Protected item model custom properties. </summary>
     public partial class VMwareToAzStackHciProtectedItemCustomPropertiesUpdate : DataReplicationProtectedItemCustomPropertiesUpdate, IJsonModel<VMwareToAzStackHciProtectedItemCustomPropertiesUpdate>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataReplicationProtectedItemCustomPropertiesUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciProtectedItemCustomPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVMwareToAzStackHciProtectedItemCustomPropertiesUpdate(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedItemCustomPropertiesUpdate)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciProtectedItemCustomPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedItemCustomPropertiesUpdate)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VMwareToAzStackHciProtectedItemCustomPropertiesUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VMwareToAzStackHciProtectedItemCustomPropertiesUpdate IPersistableModel<VMwareToAzStackHciProtectedItemCustomPropertiesUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => (VMwareToAzStackHciProtectedItemCustomPropertiesUpdate)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VMwareToAzStackHciProtectedItemCustomPropertiesUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VMwareToAzStackHciProtectedItemCustomPropertiesUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -182,45 +222,5 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 targetMemoryInMegaBytes,
                 osType);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VMwareToAzStackHciProtectedItemCustomPropertiesUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciProtectedItemCustomPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedItemCustomPropertiesUpdate)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        VMwareToAzStackHciProtectedItemCustomPropertiesUpdate IPersistableModel<VMwareToAzStackHciProtectedItemCustomPropertiesUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => (VMwareToAzStackHciProtectedItemCustomPropertiesUpdate)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataReplicationProtectedItemCustomPropertiesUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciProtectedItemCustomPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeVMwareToAzStackHciProtectedItemCustomPropertiesUpdate(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedItemCustomPropertiesUpdate)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VMwareToAzStackHciProtectedItemCustomPropertiesUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             TryGetApiVersion(ResourceType, out string cloudHsmClusterApiVersion);
             _cloudHsmClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ResourceType.Namespace, Diagnostics);
-            _cloudHsmClustersRestClient = new CloudHsmClusters(_cloudHsmClustersClientDiagnostics, Pipeline, Endpoint, cloudHsmClusterApiVersion ?? "2025-03-31");
+            _cloudHsmClustersRestClient = new CloudHsmClusters(_cloudHsmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudHsmClusterApiVersion ?? "2025-03-31");
             _cloudHsmClusterBackupStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ResourceType.Namespace, Diagnostics);
-            _cloudHsmClusterBackupStatusRestClient = new CloudHsmClusterBackupStatus(_cloudHsmClusterBackupStatusClientDiagnostics, Pipeline, Endpoint, cloudHsmClusterApiVersion ?? "2025-03-31");
+            _cloudHsmClusterBackupStatusRestClient = new CloudHsmClusterBackupStatus(_cloudHsmClusterBackupStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudHsmClusterApiVersion ?? "2025-03-31");
             _cloudHsmClusterRestoreStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ResourceType.Namespace, Diagnostics);
-            _cloudHsmClusterRestoreStatusRestClient = new CloudHsmClusterRestoreStatus(_cloudHsmClusterRestoreStatusClientDiagnostics, Pipeline, Endpoint, cloudHsmClusterApiVersion ?? "2025-03-31");
+            _cloudHsmClusterRestoreStatusRestClient = new CloudHsmClusterRestoreStatus(_cloudHsmClusterRestoreStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudHsmClusterApiVersion ?? "2025-03-31");
             _cloudHsmClusterPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ResourceType.Namespace, Diagnostics);
-            _cloudHsmClusterPrivateLinkResourcesRestClient = new CloudHsmClusterPrivateLinkResources(_cloudHsmClusterPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, cloudHsmClusterApiVersion ?? "2025-03-31");
+            _cloudHsmClusterPrivateLinkResourcesRestClient = new CloudHsmClusterPrivateLinkResources(_cloudHsmClusterPrivateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudHsmClusterApiVersion ?? "2025-03-31");
             ValidateResourceId(id);
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 HttpMessage message = _cloudHsmClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudHsmClusterPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HardwareSecurityModulesArmOperation<CloudHsmClusterResource> operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterResource>(
-                    new CloudHsmClusterOperationSource(Client),
+                    new CloudHsmClusterResourceOperationSource(Client),
                     _cloudHsmClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 HttpMessage message = _cloudHsmClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudHsmClusterPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HardwareSecurityModulesArmOperation<CloudHsmClusterResource> operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterResource>(
-                    new CloudHsmClusterOperationSource(Client),
+                    new CloudHsmClusterResourceOperationSource(Client),
                     _cloudHsmClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -770,7 +770,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new CloudHsmClusterPrivateLinkResourcesGetCloudHsmClusterPrivateLinkResourcesAsyncCollectionResultOfT(_cloudHsmClusterPrivateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new CloudHsmClusterPrivateLinkResourcesGetCloudHsmClusterPrivateLinkResourcesAsyncCollectionResultOfT(
+                _cloudHsmClusterPrivateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CloudHsmClusterResource.GetCloudHsmClusterPrivateLinkResources");
         }
 
         /// <summary>
@@ -802,7 +808,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new CloudHsmClusterPrivateLinkResourcesGetCloudHsmClusterPrivateLinkResourcesCollectionResultOfT(_cloudHsmClusterPrivateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new CloudHsmClusterPrivateLinkResourcesGetCloudHsmClusterPrivateLinkResourcesCollectionResultOfT(
+                _cloudHsmClusterPrivateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CloudHsmClusterResource.GetCloudHsmClusterPrivateLinkResources");
         }
 
         /// <summary>

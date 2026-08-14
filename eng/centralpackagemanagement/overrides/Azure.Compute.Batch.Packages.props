@@ -1,0 +1,9 @@
+<Project>
+  <!--
+    xunit and BouncyCastle are only approved for legacy use. Azure SDK test projects should use NUnit.
+  -->
+  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+    <PackageVersion Include="xunit" Version="$(XunitVersion)" />
+    <PackageVersion Include="Portable.BouncyCastle" Version="$(PortableBouncyCastleVersion)" />
+  </ItemGroup>
+</Project>

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     public readonly partial struct MySqlFlexibleServerAdministratorType : IEquatable<MySqlFlexibleServerAdministratorType>
     {
         private readonly string _value;
+        private const string ActiveDirectoryValue = "ActiveDirectory";
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerAdministratorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MySqlFlexibleServerAdministratorType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ActiveDirectoryValue = "ActiveDirectory";
-
-        /// <summary> ActiveDirectory. </summary>
+        /// <summary> Gets the ActiveDirectory. </summary>
         public static MySqlFlexibleServerAdministratorType ActiveDirectory { get; } = new MySqlFlexibleServerAdministratorType(ActiveDirectoryValue);
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerAdministratorType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MySqlFlexibleServerAdministratorType left, MySqlFlexibleServerAdministratorType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerAdministratorType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MySqlFlexibleServerAdministratorType left, MySqlFlexibleServerAdministratorType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlFlexibleServerAdministratorType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerAdministratorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MySqlFlexibleServerAdministratorType(string value) => new MySqlFlexibleServerAdministratorType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerAdministratorType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MySqlFlexibleServerAdministratorType?(string value) => value == null ? null : new MySqlFlexibleServerAdministratorType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MySqlFlexibleServerAdministratorType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MySqlFlexibleServerAdministratorType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

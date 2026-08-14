@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
     public readonly partial struct ServiceBusPrivateEndpointConnectionProvisioningState : IEquatable<ServiceBusPrivateEndpointConnectionProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ServiceBusPrivateEndpointConnectionProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ServiceBusPrivateEndpointConnectionProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CreatingValue = "Creating";
         private const string UpdatingValue = "Updating";
         private const string DeletingValue = "Deleting";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.ServiceBus.Models
         private const string CanceledValue = "Canceled";
         private const string FailedValue = "Failed";
 
-        /// <summary> Creating. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ServiceBusPrivateEndpointConnectionProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Creating. </summary>
         public static ServiceBusPrivateEndpointConnectionProvisioningState Creating { get; } = new ServiceBusPrivateEndpointConnectionProvisioningState(CreatingValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> Gets the Updating. </summary>
         public static ServiceBusPrivateEndpointConnectionProvisioningState Updating { get; } = new ServiceBusPrivateEndpointConnectionProvisioningState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static ServiceBusPrivateEndpointConnectionProvisioningState Deleting { get; } = new ServiceBusPrivateEndpointConnectionProvisioningState(DeletingValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static ServiceBusPrivateEndpointConnectionProvisioningState Succeeded { get; } = new ServiceBusPrivateEndpointConnectionProvisioningState(SucceededValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static ServiceBusPrivateEndpointConnectionProvisioningState Canceled { get; } = new ServiceBusPrivateEndpointConnectionProvisioningState(CanceledValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static ServiceBusPrivateEndpointConnectionProvisioningState Failed { get; } = new ServiceBusPrivateEndpointConnectionProvisioningState(FailedValue);
+
         /// <summary> Determines if two <see cref="ServiceBusPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceBusPrivateEndpointConnectionProvisioningState left, ServiceBusPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceBusPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceBusPrivateEndpointConnectionProvisioningState left, ServiceBusPrivateEndpointConnectionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceBusPrivateEndpointConnectionProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceBusPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceBusPrivateEndpointConnectionProvisioningState(string value) => new ServiceBusPrivateEndpointConnectionProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceBusPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceBusPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new ServiceBusPrivateEndpointConnectionProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceBusPrivateEndpointConnectionProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceBusPrivateEndpointConnectionProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

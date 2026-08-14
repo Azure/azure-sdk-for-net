@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountEncryptionServices : IUtf8JsonSerializable, IJsonModel<StorageAccountEncryptionServices>
+    /// <summary> A list of services that support encryption. </summary>
+    public partial class StorageAccountEncryptionServices : IJsonModel<StorageAccountEncryptionServices>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageAccountEncryptionServices>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StorageAccountEncryptionServices PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageAccountEncryptionServices>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStorageAccountEncryptionServices(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageAccountEncryptionServices)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageAccountEncryptionServices>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(StorageAccountEncryptionServices)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StorageAccountEncryptionServices>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageAccountEncryptionServices IPersistableModel<StorageAccountEncryptionServices>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StorageAccountEncryptionServices>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageAccountEncryptionServices>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountEncryptionServices>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageAccountEncryptionServices>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageAccountEncryptionServices)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Blob))
             {
                 writer.WritePropertyName("blob"u8);
@@ -55,15 +94,15 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("queue"u8);
                 writer.WriteObjectValue(Queue, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -72,185 +111,80 @@ namespace Azure.ResourceManager.Storage.Models
             }
         }
 
-        StorageAccountEncryptionServices IJsonModel<StorageAccountEncryptionServices>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageAccountEncryptionServices IJsonModel<StorageAccountEncryptionServices>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StorageAccountEncryptionServices JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountEncryptionServices>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageAccountEncryptionServices>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageAccountEncryptionServices)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeStorageAccountEncryptionServices(document.RootElement, options);
         }
 
-        internal static StorageAccountEncryptionServices DeserializeStorageAccountEncryptionServices(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static StorageAccountEncryptionServices DeserializeStorageAccountEncryptionServices(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             StorageEncryptionService blob = default;
-            StorageEncryptionService file = default;
+            StorageEncryptionService @file = default;
             StorageEncryptionService table = default;
             StorageEncryptionService queue = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("blob"u8))
+                if (prop.NameEquals("blob"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    blob = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value, options);
+                    blob = StorageEncryptionService.DeserializeStorageEncryptionService(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("file"u8))
+                if (prop.NameEquals("file"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    file = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value, options);
+                    @file = StorageEncryptionService.DeserializeStorageEncryptionService(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("table"u8))
+                if (prop.NameEquals("table"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    table = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value, options);
+                    table = StorageEncryptionService.DeserializeStorageEncryptionService(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("queue"u8))
+                if (prop.NameEquals("queue"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    queue = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value, options);
+                    queue = StorageEncryptionService.DeserializeStorageEncryptionService(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new StorageAccountEncryptionServices(blob, file, table, queue, serializedAdditionalRawData);
+            return new StorageAccountEncryptionServices(blob, @file, table, queue, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Blob), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  blob: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Blob))
-                {
-                    builder.Append("  blob: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Blob, options, 2, false, "  blob: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(File), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  file: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(File))
-                {
-                    builder.Append("  file: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, File, options, 2, false, "  file: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Table), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  table: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Table))
-                {
-                    builder.Append("  table: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Table, options, 2, false, "  table: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Queue), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  queue: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Queue))
-                {
-                    builder.Append("  queue: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Queue, options, 2, false, "  queue: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<StorageAccountEncryptionServices>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountEncryptionServices>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(StorageAccountEncryptionServices)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        StorageAccountEncryptionServices IPersistableModel<StorageAccountEncryptionServices>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountEncryptionServices>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeStorageAccountEncryptionServices(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StorageAccountEncryptionServices)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<StorageAccountEncryptionServices>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

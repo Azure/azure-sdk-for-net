@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         {
             TryGetApiVersion(DatabaseWatcherHealthValidationResource.ResourceType, out string databaseWatcherHealthValidationApiVersion);
             _healthValidationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher", DatabaseWatcherHealthValidationResource.ResourceType.Namespace, Diagnostics);
-            _healthValidationsRestClient = new HealthValidations(_healthValidationsClientDiagnostics, Pipeline, Endpoint, databaseWatcherHealthValidationApiVersion ?? "2025-01-02");
+            _healthValidationsRestClient = new HealthValidations(_healthValidationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databaseWatcherHealthValidationApiVersion ?? "2025-01-02");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         {
             if (id.ResourceType != DatabaseWatcherResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DatabaseWatcherResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DatabaseWatcherResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabaseWatcherHealthValidationData, DatabaseWatcherHealthValidationResource>(new HealthValidationsGetByParentAsyncCollectionResultOfT(_healthValidationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DatabaseWatcherHealthValidationResource(Client, data));
+            return new AsyncPageableWrapper<DatabaseWatcherHealthValidationData, DatabaseWatcherHealthValidationResource>(new HealthValidationsGetByParentAsyncCollectionResultOfT(
+                _healthValidationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DatabaseWatcherHealthValidationCollection.GetAll"), data => new DatabaseWatcherHealthValidationResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabaseWatcherHealthValidationData, DatabaseWatcherHealthValidationResource>(new HealthValidationsGetByParentCollectionResultOfT(_healthValidationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DatabaseWatcherHealthValidationResource(Client, data));
+            return new PageableWrapper<DatabaseWatcherHealthValidationData, DatabaseWatcherHealthValidationResource>(new HealthValidationsGetByParentCollectionResultOfT(
+                _healthValidationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DatabaseWatcherHealthValidationCollection.GetAll"), data => new DatabaseWatcherHealthValidationResource(Client, data));
         }
 
         /// <summary>

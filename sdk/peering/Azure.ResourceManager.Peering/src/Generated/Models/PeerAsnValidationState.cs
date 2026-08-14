@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.Peering.Models
     public readonly partial struct PeerAsnValidationState : IEquatable<PeerAsnValidationState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PeerAsnValidationState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PeerAsnValidationState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string PendingValue = "Pending";
         private const string ApprovedValue = "Approved";
         private const string FailedValue = "Failed";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeerAsnValidationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PeerAsnValidationState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static PeerAsnValidationState None { get; } = new PeerAsnValidationState(NoneValue);
-        /// <summary> Pending. </summary>
+
+        /// <summary> Gets the Pending. </summary>
         public static PeerAsnValidationState Pending { get; } = new PeerAsnValidationState(PendingValue);
-        /// <summary> Approved. </summary>
+
+        /// <summary> Gets the Approved. </summary>
         public static PeerAsnValidationState Approved { get; } = new PeerAsnValidationState(ApprovedValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static PeerAsnValidationState Failed { get; } = new PeerAsnValidationState(FailedValue);
+
         /// <summary> Determines if two <see cref="PeerAsnValidationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PeerAsnValidationState left, PeerAsnValidationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PeerAsnValidationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PeerAsnValidationState left, PeerAsnValidationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PeerAsnValidationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PeerAsnValidationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PeerAsnValidationState(string value) => new PeerAsnValidationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PeerAsnValidationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PeerAsnValidationState?(string value) => value == null ? null : new PeerAsnValidationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PeerAsnValidationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PeerAsnValidationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

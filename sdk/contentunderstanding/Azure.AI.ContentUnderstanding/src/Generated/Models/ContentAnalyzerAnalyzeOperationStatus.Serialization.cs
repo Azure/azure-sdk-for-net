@@ -22,6 +22,53 @@ namespace Azure.AI.ContentUnderstanding
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ContentAnalyzerAnalyzeOperationStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContentAnalyzerAnalyzeOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeContentAnalyzerAnalyzeOperationStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContentAnalyzerAnalyzeOperationStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContentAnalyzerAnalyzeOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ContentAnalyzerAnalyzeOperationStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContentAnalyzerAnalyzeOperationStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContentAnalyzerAnalyzeOperationStatus IPersistableModel<ContentAnalyzerAnalyzeOperationStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContentAnalyzerAnalyzeOperationStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ContentAnalyzerAnalyzeOperationStatus"/> from. </param>
+        public static explicit operator ContentAnalyzerAnalyzeOperationStatus(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeContentAnalyzerAnalyzeOperationStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContentAnalyzerAnalyzeOperationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -104,7 +151,7 @@ namespace Azure.AI.ContentUnderstanding
             string id = default;
             OperationState status = default;
             ResponseError error = default;
-            AnalyzeResult result = default;
+            AnalysisResult result = default;
             UsageDetails usage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -134,7 +181,7 @@ namespace Azure.AI.ContentUnderstanding
                     {
                         continue;
                     }
-                    result = AnalyzeResult.DeserializeAnalyzeResult(prop.Value, options);
+                    result = AnalysisResult.DeserializeAnalysisResult(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("usage"u8))
@@ -158,53 +205,6 @@ namespace Azure.AI.ContentUnderstanding
                 result,
                 usage,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContentAnalyzerAnalyzeOperationStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentAnalyzerAnalyzeOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ContentAnalyzerAnalyzeOperationStatus)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContentAnalyzerAnalyzeOperationStatus IPersistableModel<ContentAnalyzerAnalyzeOperationStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ContentAnalyzerAnalyzeOperationStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentAnalyzerAnalyzeOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeContentAnalyzerAnalyzeOperationStatus(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ContentAnalyzerAnalyzeOperationStatus)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContentAnalyzerAnalyzeOperationStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ContentAnalyzerAnalyzeOperationStatus"/> from. </param>
-        public static explicit operator ContentAnalyzerAnalyzeOperationStatus(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeContentAnalyzerAnalyzeOperationStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

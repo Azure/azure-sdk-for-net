@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     public readonly partial struct ContainerServiceFleetManagedClusterUpgradeType : IEquatable<ContainerServiceFleetManagedClusterUpgradeType>
     {
         private readonly string _value;
+        /// <summary> Full upgrades the control plane and all agent pools of the target ManagedClusters. Requires the ManagedClusterUpgradeSpec.KubernetesVersion property to be set. </summary>
+        private const string FullValue = "Full";
+        /// <summary> NodeImageOnly upgrades only the node images of the target ManagedClusters. Requires the ManagedClusterUpgradeSpec.KubernetesVersion property to NOT be set. </summary>
+        private const string NodeImageOnlyValue = "NodeImageOnly";
+        /// <summary> ControlPlaneOnly upgrades only targets the KubernetesVersion of the ManagedClusters and will not be applied to the AgentPool. Requires the ManagedClusterUpgradeSpec.KubernetesVersion property to be set. </summary>
+        private const string ControlPlaneOnlyValue = "ControlPlaneOnly";
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerServiceFleetManagedClusterUpgradeType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FullValue = "Full";
-        private const string NodeImageOnlyValue = "NodeImageOnly";
-        private const string ControlPlaneOnlyValue = "ControlPlaneOnly";
+            _value = value;
+        }
 
         /// <summary> Full upgrades the control plane and all agent pools of the target ManagedClusters. Requires the ManagedClusterUpgradeSpec.KubernetesVersion property to be set. </summary>
         public static ContainerServiceFleetManagedClusterUpgradeType Full { get; } = new ContainerServiceFleetManagedClusterUpgradeType(FullValue);
+
         /// <summary> NodeImageOnly upgrades only the node images of the target ManagedClusters. Requires the ManagedClusterUpgradeSpec.KubernetesVersion property to NOT be set. </summary>
         public static ContainerServiceFleetManagedClusterUpgradeType NodeImageOnly { get; } = new ContainerServiceFleetManagedClusterUpgradeType(NodeImageOnlyValue);
+
         /// <summary> ControlPlaneOnly upgrades only targets the KubernetesVersion of the ManagedClusters and will not be applied to the AgentPool. Requires the ManagedClusterUpgradeSpec.KubernetesVersion property to be set. </summary>
         public static ContainerServiceFleetManagedClusterUpgradeType ControlPlaneOnly { get; } = new ContainerServiceFleetManagedClusterUpgradeType(ControlPlaneOnlyValue);
+
         /// <summary> Determines if two <see cref="ContainerServiceFleetManagedClusterUpgradeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerServiceFleetManagedClusterUpgradeType left, ContainerServiceFleetManagedClusterUpgradeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerServiceFleetManagedClusterUpgradeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerServiceFleetManagedClusterUpgradeType left, ContainerServiceFleetManagedClusterUpgradeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceFleetManagedClusterUpgradeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerServiceFleetManagedClusterUpgradeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerServiceFleetManagedClusterUpgradeType(string value) => new ContainerServiceFleetManagedClusterUpgradeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerServiceFleetManagedClusterUpgradeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerServiceFleetManagedClusterUpgradeType?(string value) => value == null ? null : new ContainerServiceFleetManagedClusterUpgradeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerServiceFleetManagedClusterUpgradeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerServiceFleetManagedClusterUpgradeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

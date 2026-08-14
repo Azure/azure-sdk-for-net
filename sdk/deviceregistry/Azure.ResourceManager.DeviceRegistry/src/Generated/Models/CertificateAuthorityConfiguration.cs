@@ -28,13 +28,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="subject"> Certificate subject. </param>
         /// <param name="validityNotBefore"> Certificate is valid not before this date. Format ISO8601. Generated based on on validity period. </param>
         /// <param name="validityNotAfter"> Certificate is valid not after this date. Format ISO8601. Generated based on validity period. </param>
+        /// <param name="bringYourOwnRoot"> Configuration for Bring Your Own Root. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateAuthorityConfiguration(SupportedKeyType keyType, string subject, DateTimeOffset? validityNotBefore, DateTimeOffset? validityNotAfter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CertificateAuthorityConfiguration(SupportedKeyType keyType, string subject, DateTimeOffset? validityNotBefore, DateTimeOffset? validityNotAfter, BringYourOwnRoot bringYourOwnRoot, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyType = keyType;
             Subject = subject;
             ValidityNotBefore = validityNotBefore;
             ValidityNotAfter = validityNotAfter;
+            BringYourOwnRoot = bringYourOwnRoot;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -49,5 +51,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Certificate is valid not after this date. Format ISO8601. Generated based on validity period. </summary>
         public DateTimeOffset? ValidityNotAfter { get; }
+
+        /// <summary> Configuration for Bring Your Own Root. </summary>
+        public BringYourOwnRoot BringYourOwnRoot { get; set; }
     }
 }

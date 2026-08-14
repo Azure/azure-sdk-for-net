@@ -3,13 +3,13 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.ServiceBus;
-using Azure.ResourceManager.ServiceBus.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.ServiceBus;
+using Azure.ResourceManager.ServiceBus.Models;
 using NUnit.Framework;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Tests.Samples
 {

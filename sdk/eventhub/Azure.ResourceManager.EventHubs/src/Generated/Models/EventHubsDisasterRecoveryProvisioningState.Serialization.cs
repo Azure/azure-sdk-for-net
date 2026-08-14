@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 {
     internal static partial class EventHubsDisasterRecoveryProvisioningStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this EventHubsDisasterRecoveryProvisioningState value) => value switch
         {
             EventHubsDisasterRecoveryProvisioningState.Accepted => "Accepted",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.EventHubs.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EventHubsDisasterRecoveryProvisioningState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static EventHubsDisasterRecoveryProvisioningState ToEventHubsDisasterRecoveryProvisioningState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Accepted")) return EventHubsDisasterRecoveryProvisioningState.Accepted;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return EventHubsDisasterRecoveryProvisioningState.Succeeded;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return EventHubsDisasterRecoveryProvisioningState.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Accepted"))
+            {
+                return EventHubsDisasterRecoveryProvisioningState.Accepted;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded"))
+            {
+                return EventHubsDisasterRecoveryProvisioningState.Succeeded;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed"))
+            {
+                return EventHubsDisasterRecoveryProvisioningState.Failed;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EventHubsDisasterRecoveryProvisioningState value.");
         }
     }

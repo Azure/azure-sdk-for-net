@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary>
     /// Describes the policy to be used for placement of a Service Fabric service where two replicas
     /// from the same partition should never be placed in the same fault or upgrade domain.
-    /// 
     /// While this is not common it can expose the service to an increased risk of concurrent failures
     /// due to unplanned outages or other cases of subsequent/concurrent failures. As an example, consider
     /// a case where replicas are deployed across different data center, with one replica per location.
@@ -30,6 +29,46 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         internal ServicePlacementRequireDomainDistributionPolicy()
         {
         }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ManagedServicePlacementPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServicePlacementRequireDomainDistributionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeServicePlacementRequireDomainDistributionPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServicePlacementRequireDomainDistributionPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServicePlacementRequireDomainDistributionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ServicePlacementRequireDomainDistributionPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ServicePlacementRequireDomainDistributionPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServicePlacementRequireDomainDistributionPolicy IPersistableModel<ServicePlacementRequireDomainDistributionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServicePlacementRequireDomainDistributionPolicy)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ServicePlacementRequireDomainDistributionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -101,45 +140,5 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             return new ServicePlacementRequireDomainDistributionPolicy(@type, additionalBinaryDataProperties, domainName);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ServicePlacementRequireDomainDistributionPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ServicePlacementRequireDomainDistributionPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ServicePlacementRequireDomainDistributionPolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ServicePlacementRequireDomainDistributionPolicy IPersistableModel<ServicePlacementRequireDomainDistributionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServicePlacementRequireDomainDistributionPolicy)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ManagedServicePlacementPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ServicePlacementRequireDomainDistributionPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeServicePlacementRequireDomainDistributionPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ServicePlacementRequireDomainDistributionPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ServicePlacementRequireDomainDistributionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

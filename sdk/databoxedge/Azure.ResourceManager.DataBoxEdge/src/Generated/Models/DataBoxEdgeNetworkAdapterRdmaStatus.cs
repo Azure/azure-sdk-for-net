@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct DataBoxEdgeNetworkAdapterRdmaStatus : IEquatable<DataBoxEdgeNetworkAdapterRdmaStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeNetworkAdapterRdmaStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataBoxEdgeNetworkAdapterRdmaStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string IncapableValue = "Incapable";
         private const string CapableValue = "Capable";
 
-        /// <summary> Incapable. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeNetworkAdapterRdmaStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataBoxEdgeNetworkAdapterRdmaStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Incapable. </summary>
         public static DataBoxEdgeNetworkAdapterRdmaStatus Incapable { get; } = new DataBoxEdgeNetworkAdapterRdmaStatus(IncapableValue);
-        /// <summary> Capable. </summary>
+
+        /// <summary> Gets the Capable. </summary>
         public static DataBoxEdgeNetworkAdapterRdmaStatus Capable { get; } = new DataBoxEdgeNetworkAdapterRdmaStatus(CapableValue);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeNetworkAdapterRdmaStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeNetworkAdapterRdmaStatus left, DataBoxEdgeNetworkAdapterRdmaStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeNetworkAdapterRdmaStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeNetworkAdapterRdmaStatus left, DataBoxEdgeNetworkAdapterRdmaStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeNetworkAdapterRdmaStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeNetworkAdapterRdmaStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataBoxEdgeNetworkAdapterRdmaStatus(string value) => new DataBoxEdgeNetworkAdapterRdmaStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeNetworkAdapterRdmaStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataBoxEdgeNetworkAdapterRdmaStatus?(string value) => value == null ? null : new DataBoxEdgeNetworkAdapterRdmaStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeNetworkAdapterRdmaStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataBoxEdgeNetworkAdapterRdmaStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

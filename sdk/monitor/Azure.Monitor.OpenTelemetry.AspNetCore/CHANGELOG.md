@@ -1,8 +1,32 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.6.0 (2026-07-27)
+
+### Bugs Fixed
+
+- Hardened Azure Monitor ingestion and Live Metrics redirect handling to prevent credentials and telemetry from being forwarded to untrusted destinations.
+  ([#61244](https://github.com/Azure/azure-sdk-for-net/pull/61244))
+
+### Other Changes
+
+- Updated `Azure.Monitor.OpenTelemetry.Exporter` dependency to `1.8.3`, which brings: customer SDK stats enabled by default (opt out with `APPLICATIONINSIGHTS_SDKSTATS_DISABLED=true`), internal Network SDK statistics signals, GenAI agent attribution processors for spans and logs, and `CategoryName` added to custom event custom dimensions.
+
+## 1.5.0 (2026-04-30)
+
+### Features Added
+
+* Add ability to specify EnableStandardMetrics and EnablePerformanceCounters
+  ([#56438](https://github.com/Azure/azure-sdk-for-net/pull/56438))
 
 ### Breaking Changes
 
@@ -15,7 +39,7 @@
   traces exported by default.
   **Migration**: To maintain the previous behavior (100% sampling), explicitly
   configure the sampler:
-  
+
   ```csharp
   // Option 1: Set SamplingRatio and clear TracesPerSecond
   builder.Services.AddOpenTelemetry()
@@ -33,8 +57,6 @@
 * Fixed an issue where Azure Container Apps instances were showing VM instance GUIDs
   instead of replica names in the Role Instance field.
   ([#54586](https://github.com/Azure/azure-sdk-for-net/pull/54586))
-
-### Other Changes
 
 ## 1.4.0 (2025-11-14)
 
@@ -78,7 +100,7 @@
   - `preview.item.dropped.count`
   - `preview.item.retry.count`
   ([#53010](https://github.com/Azure/azure-sdk-for-net/pull/53010))
-* Add `enduser.pseudo.id` as ai.user.id 
+* Add `enduser.pseudo.id` as ai.user.id
 ([#52722](https://github.com/Azure/azure-sdk-for-net/pull/52722))
 * Add `ai.location.ip` mapping for all telemetry types ([#52211](https://github.com/Azure/azure-sdk-for-net/pull/52211))
 

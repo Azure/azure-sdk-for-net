@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
@@ -7,6 +7,12 @@ namespace Azure.AI.Agents.Persistent
 {
     public partial class AzureAISearchToolResource
     {
+        /// <summary> Initializes a new instance of the <see cref="AzureAISearchToolResource"/> class. </summary>
+        /// <param name="indexConnectionId"> The connection identifier for the AI Search index. </param>
+        /// <param name="indexName"> The name of the AI Search index. </param>
+        /// <param name="topK"> The maximum number of results to return. </param>
+        /// <param name="filter"> A filter string for the search resource. </param>
+        /// <param name="queryType"> The query type to use for the search. </param>
         public AzureAISearchToolResource(
             string indexConnectionId,
             string indexName,
@@ -25,7 +31,7 @@ namespace Azure.AI.Agents.Persistent
                 filter: filter,
                 queryType: queryType,
                 indexAssetId: null,
-                serializedAdditionalRawData: null
+                additionalBinaryDataProperties: null
             );
 
             // Additional initialization logic if needed

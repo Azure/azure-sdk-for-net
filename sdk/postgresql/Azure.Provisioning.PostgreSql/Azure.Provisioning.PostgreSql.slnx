@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.Provisioning.PostgreSql.csproj" />
+  <Project Path="tests/Azure.Provisioning.PostgreSql.Tests.csproj" />
+</Solution>

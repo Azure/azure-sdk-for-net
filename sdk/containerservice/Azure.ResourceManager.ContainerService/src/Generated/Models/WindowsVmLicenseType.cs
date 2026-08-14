@@ -7,54 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The license type to use for Windows VMs. See [Azure Hybrid User Benefits](https://azure.microsoft.com/pricing/hybrid-benefit/faq/) for more details.
-    /// Serialized Name: LicenseType
-    /// </summary>
+    /// <summary> The license type to use for Windows VMs. See [Azure Hybrid User Benefits](https://azure.microsoft.com/pricing/hybrid-benefit/faq/) for more details. </summary>
     public readonly partial struct WindowsVmLicenseType : IEquatable<WindowsVmLicenseType>
     {
         private readonly string _value;
+        /// <summary> No additional licensing is applied. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Enables Azure Hybrid User Benefits for Windows VMs. </summary>
+        private const string WindowsServerValue = "Windows_Server";
 
         /// <summary> Initializes a new instance of <see cref="WindowsVmLicenseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WindowsVmLicenseType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string NoneValue = "None";
-        private const string WindowsServerValue = "Windows_Server";
-
-        /// <summary>
-        /// No additional licensing is applied.
-        /// Serialized Name: LicenseType.None
-        /// </summary>
+        /// <summary> No additional licensing is applied. </summary>
         public static WindowsVmLicenseType None { get; } = new WindowsVmLicenseType(NoneValue);
-        /// <summary>
-        /// Enables Azure Hybrid User Benefits for Windows VMs.
-        /// Serialized Name: LicenseType.Windows_Server
-        /// </summary>
+
+        /// <summary> Enables Azure Hybrid User Benefits for Windows VMs. </summary>
         public static WindowsVmLicenseType WindowsServer { get; } = new WindowsVmLicenseType(WindowsServerValue);
+
         /// <summary> Determines if two <see cref="WindowsVmLicenseType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WindowsVmLicenseType left, WindowsVmLicenseType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WindowsVmLicenseType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WindowsVmLicenseType left, WindowsVmLicenseType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WindowsVmLicenseType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WindowsVmLicenseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WindowsVmLicenseType(string value) => new WindowsVmLicenseType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WindowsVmLicenseType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WindowsVmLicenseType?(string value) => value == null ? null : new WindowsVmLicenseType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WindowsVmLicenseType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WindowsVmLicenseType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -17,21 +17,13 @@ namespace Versioning.Removed
     {
         internal ModelV3() => throw null;
 
-        void IJsonModel<ModelV3>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        ModelV3 IJsonModel<ModelV3>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual ModelV3 JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<ModelV3>.Write(ModelReaderWriterOptions options) => throw null;
+        protected virtual ModelV3 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        ModelV3 IPersistableModel<ModelV3>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<ModelV3>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual ModelV3 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ModelV3 IPersistableModel<ModelV3>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<ModelV3>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
@@ -39,5 +31,13 @@ namespace Versioning.Removed
         public static implicit operator RequestContent(ModelV3 modelV3) => throw null;
 
         public static explicit operator ModelV3(Response response) => throw null;
+
+        void IJsonModel<ModelV3>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        ModelV3 IJsonModel<ModelV3>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual ModelV3 JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }
 }

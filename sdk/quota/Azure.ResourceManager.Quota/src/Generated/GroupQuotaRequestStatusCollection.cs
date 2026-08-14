@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Quota
         {
             TryGetApiVersion(GroupQuotaRequestStatusResource.ResourceType, out string groupQuotaRequestStatusApiVersion);
             _submittedResourceRequestStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", GroupQuotaRequestStatusResource.ResourceType.Namespace, Diagnostics);
-            _submittedResourceRequestStatusesRestClient = new SubmittedResourceRequestStatuses(_submittedResourceRequestStatusesClientDiagnostics, Pipeline, Endpoint, groupQuotaRequestStatusApiVersion ?? "2025-09-01");
+            _submittedResourceRequestStatusesRestClient = new SubmittedResourceRequestStatuses(_submittedResourceRequestStatusesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaRequestStatusApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Quota
         {
             if (id.ResourceType != GroupQuotaEntityResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GroupQuotaEntityResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GroupQuotaEntityResource.ResourceType), nameof(id));
             }
         }
 

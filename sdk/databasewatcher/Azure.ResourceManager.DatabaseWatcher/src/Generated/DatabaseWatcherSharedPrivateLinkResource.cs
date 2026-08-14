@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         {
             TryGetApiVersion(ResourceType, out string databaseWatcherSharedPrivateLinkResourceApiVersion);
             _sharedPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher", ResourceType.Namespace, Diagnostics);
-            _sharedPrivateLinkResourcesRestClient = new SharedPrivateLinkResources(_sharedPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, databaseWatcherSharedPrivateLinkResourceApiVersion ?? "2025-01-02");
+            _sharedPrivateLinkResourcesRestClient = new SharedPrivateLinkResources(_sharedPrivateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databaseWatcherSharedPrivateLinkResourceApiVersion ?? "2025-01-02");
             ValidateResourceId(id);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

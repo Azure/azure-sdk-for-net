@@ -59,7 +59,7 @@ namespace Azure.Communication.Rooms.Tests
         /// <returns>The instrumented <see cref="RoomsClient" />.</returns>
         protected RoomsClient CreateClientWithConnectionString(bool isInstrumented = true, ServiceVersion apiVersion = ServiceVersion.V2024_04_15)
         {
-            var client =new RoomsClient(
+            var client = new RoomsClient(
                     TestEnvironment.CommunicationConnectionStringRooms,
                     CreateRoomsClientOptionsWithCorrelationVectorLogs(apiVersion));
 

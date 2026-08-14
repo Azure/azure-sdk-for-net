@@ -7,36 +7,30 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
-    /// <summary> The KnowledgeRetrievalSemanticIntent. </summary>
+    /// <summary> A semantic query intent. </summary>
     public partial class KnowledgeRetrievalSemanticIntent : KnowledgeRetrievalIntent
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalSemanticIntent"/>. </summary>
         /// <param name="search"> The semantic query to execute. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="search"/> is null. </exception>
-        public KnowledgeRetrievalSemanticIntent(string search)
+        public KnowledgeRetrievalSemanticIntent(string search) : base(KnowledgeRetrievalIntentType.Semantic)
         {
             Argument.AssertNotNull(search, nameof(search));
 
             Search = search;
-            Type = KnowledgeRetrievalIntentType.Semantic;
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalSemanticIntent"/>. </summary>
         /// <param name="type"> The type of the intent. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="search"> The semantic query to execute. </param>
-        internal KnowledgeRetrievalSemanticIntent(KnowledgeRetrievalIntentType type, IDictionary<string, BinaryData> serializedAdditionalRawData, string search) : base(type, serializedAdditionalRawData)
+        internal KnowledgeRetrievalSemanticIntent(KnowledgeRetrievalIntentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string search) : base(@type, additionalBinaryDataProperties)
         {
             Search = search;
-            Type = type;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalSemanticIntent"/> for deserialization. </summary>
-        internal KnowledgeRetrievalSemanticIntent()
-        {
         }
 
         /// <summary> The semantic query to execute. </summary>

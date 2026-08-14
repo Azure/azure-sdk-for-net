@@ -1,0 +1,4 @@
+directory: specification/communication/Communication.Management
+commit: 2811ae424ccd5192253388a7844c4927f3d60e1c
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
@@ -18,7 +16,6 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmResourcesModelFactory
     {
-        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -36,31 +33,28 @@ namespace Azure.ResourceManager.Resources.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Top Level Arm Resource Properties. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="description"> The description of the resource. </param>
         /// <returns> A new <see cref="Models.TopLevelTrackedResourceProperties"/> instance for mocking. </returns>
         public static TopLevelTrackedResourceProperties TopLevelTrackedResourceProperties(ProvisioningState? provisioningState = default, string description = default)
         {
-            return new TopLevelTrackedResourceProperties(provisioningState, description, additionalBinaryDataProperties: null);
+            return new TopLevelTrackedResourceProperties(provisioningState, description, default);
         }
 
-        /// <summary> The details of a user notification. </summary>
         /// <param name="message"> The notification message. </param>
         /// <param name="urgent"> If true, the notification is urgent. </param>
         /// <returns> A new <see cref="Models.NotificationDetails"/> instance for mocking. </returns>
         public static NotificationDetails NotificationDetails(string message = default, bool urgent = default)
         {
-            return new NotificationDetails(message, urgent, additionalBinaryDataProperties: null);
+            return new NotificationDetails(message, urgent, default);
         }
 
-        /// <summary> Nested child of Top Level Tracked Resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -74,20 +68,18 @@ namespace Azure.ResourceManager.Resources.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Nested Proxy Resource Properties. </summary>
         /// <param name="provisioningState"> Provisioning State of the nested child Resource. </param>
         /// <param name="description"> Nested resource description. </param>
         /// <returns> A new <see cref="Models.NestedProxyResourceProperties"/> instance for mocking. </returns>
         public static NestedProxyResourceProperties NestedProxyResourceProperties(ProvisioningState? provisioningState = default, string description = default)
         {
-            return new NestedProxyResourceProperties(provisioningState, description, additionalBinaryDataProperties: null);
+            return new NestedProxyResourceProperties(provisioningState, description, default);
         }
 
-        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -105,22 +97,20 @@ namespace Azure.ResourceManager.Resources.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Singleton Arm Resource Properties. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="description"> The description of the resource. </param>
         /// <returns> A new <see cref="Models.SingletonTrackedResourceProperties"/> instance for mocking. </returns>
         public static SingletonTrackedResourceProperties SingletonTrackedResourceProperties(ProvisioningState? provisioningState = default, string description = default)
         {
-            return new SingletonTrackedResourceProperties(provisioningState, description, additionalBinaryDataProperties: null);
+            return new SingletonTrackedResourceProperties(provisioningState, description, default);
         }
 
-        /// <summary> Concrete extension resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -134,20 +124,18 @@ namespace Azure.ResourceManager.Resources.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> ExtensionsResource properties. </summary>
         /// <param name="description"> The description of the resource. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.ExtensionsResourceProperties"/> instance for mocking. </returns>
         public static ExtensionsResourceProperties ExtensionsResourceProperties(string description = default, ProvisioningState? provisioningState = default)
         {
-            return new ExtensionsResourceProperties(description, provisioningState, additionalBinaryDataProperties: null);
+            return new ExtensionsResourceProperties(description, provisioningState, default);
         }
 
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -161,17 +149,16 @@ namespace Azure.ResourceManager.Resources.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Location resource properties. </summary>
         /// <param name="description"> The description of the resource. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.LocationResourceProperties"/> instance for mocking. </returns>
         public static LocationResourceProperties LocationResourceProperties(string description = default, ProvisioningState? provisioningState = default)
         {
-            return new LocationResourceProperties(description, provisioningState, additionalBinaryDataProperties: null);
+            return new LocationResourceProperties(description, provisioningState, default);
         }
     }
 }

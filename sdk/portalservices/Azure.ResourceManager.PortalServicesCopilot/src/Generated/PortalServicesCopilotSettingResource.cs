@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         {
             TryGetApiVersion(ResourceType, out string portalServicesCopilotSettingApiVersion);
             _copilotSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PortalServicesCopilot", ResourceType.Namespace, Diagnostics);
-            _copilotSettingsRestClient = new CopilotSettings(_copilotSettingsClientDiagnostics, Pipeline, Endpoint, portalServicesCopilotSettingApiVersion ?? "2024-04-01-preview");
+            _copilotSettingsRestClient = new CopilotSettings(_copilotSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, portalServicesCopilotSettingApiVersion ?? "2024-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

@@ -1,0 +1,30 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+// Backward-compat: Adds public constructor matching prior GA signature.
+// The old API had StorageTaskAssignmentData(StorageTaskAssignmentProperties),
+// the new ProxyResource-based code generates only a parameterless constructor.
+
+#nullable disable
+
+using System;
+using System.ComponentModel;
+using Azure.Core;
+using Azure.ResourceManager.Storage.Models;
+
+namespace Azure.ResourceManager.Storage
+{
+    public partial class StorageTaskAssignmentData
+    {
+        // Backward-compatible constructor.
+        /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentData"/>. </summary>
+        /// <param name="properties"> Properties of the storage task assignment. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public StorageTaskAssignmentData(StorageTaskAssignmentProperties properties)
+        {
+            Argument.AssertNotNull(properties, nameof(properties));
+            Properties = properties;
+        }
+    }
+}

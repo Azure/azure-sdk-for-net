@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> Unknown version of ItemLevelRestoreCriteria. </summary>
     internal partial class UnknownItemLevelRestoreCriteria : ItemLevelRestoreCriteria
     {
         /// <summary> Initializes a new instance of <see cref="UnknownItemLevelRestoreCriteria"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownItemLevelRestoreCriteria(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(objectType, serializedAdditionalRawData)
-        {
-            ObjectType = objectType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownItemLevelRestoreCriteria"/> for deserialization. </summary>
-        internal UnknownItemLevelRestoreCriteria()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownItemLevelRestoreCriteria(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(objectType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

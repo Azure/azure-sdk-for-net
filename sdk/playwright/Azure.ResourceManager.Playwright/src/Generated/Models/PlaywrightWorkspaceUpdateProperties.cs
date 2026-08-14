@@ -24,11 +24,15 @@ namespace Azure.ResourceManager.Playwright.Models
         /// <summary> Initializes a new instance of <see cref="PlaywrightWorkspaceUpdateProperties"/>. </summary>
         /// <param name="regionalAffinity"> Controls the connection region for client workers to cloud-hosted browsers. When enabled, workers connect to browsers in the closest Azure region for lower latency. When disabled, workers connect to browsers in the Azure region where the workspace was created. </param>
         /// <param name="localAuth"> Enables the workspace to use local authentication through service access tokens for operations. </param>
+        /// <param name="reporting"> Indicates whether reporting is enabled for the workspace. When set to true, reports will be generated and available for the workspace. </param>
+        /// <param name="storageUri"> The URI of the Azure storage account used to store workspace artifacts, test results, and reports. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PlaywrightWorkspaceUpdateProperties(PlaywrightEnablementStatus? regionalAffinity, PlaywrightEnablementStatus? localAuth, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PlaywrightWorkspaceUpdateProperties(PlaywrightEnablementStatus? regionalAffinity, PlaywrightEnablementStatus? localAuth, PlaywrightEnablementStatus? reporting, Uri storageUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RegionalAffinity = regionalAffinity;
             LocalAuth = localAuth;
+            Reporting = reporting;
+            StorageUri = storageUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,5 +41,11 @@ namespace Azure.ResourceManager.Playwright.Models
 
         /// <summary> Enables the workspace to use local authentication through service access tokens for operations. </summary>
         public PlaywrightEnablementStatus? LocalAuth { get; set; }
+
+        /// <summary> Indicates whether reporting is enabled for the workspace. When set to true, reports will be generated and available for the workspace. </summary>
+        public PlaywrightEnablementStatus? Reporting { get; set; }
+
+        /// <summary> The URI of the Azure storage account used to store workspace artifacts, test results, and reports. </summary>
+        public Uri StorageUri { get; set; }
     }
 }

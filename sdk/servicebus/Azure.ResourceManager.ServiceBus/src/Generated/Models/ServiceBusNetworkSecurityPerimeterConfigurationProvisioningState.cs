@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
     public readonly partial struct ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState : IEquatable<ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string CreatingValue = "Creating";
         private const string UpdatingValue = "Updating";
@@ -34,45 +27,79 @@ namespace Azure.ResourceManager.ServiceBus.Models
         private const string DeletedValue = "Deleted";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState Unknown { get; } = new ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState(UnknownValue);
-        /// <summary> Creating. </summary>
+
+        /// <summary> Gets the Creating. </summary>
         public static ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState Creating { get; } = new ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState(CreatingValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> Gets the Updating. </summary>
         public static ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState Updating { get; } = new ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState(UpdatingValue);
-        /// <summary> Accepted. </summary>
+
+        /// <summary> Gets the Accepted. </summary>
         public static ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState Accepted { get; } = new ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState(AcceptedValue);
-        /// <summary> InvalidResponse. </summary>
+
+        /// <summary> Gets the InvalidResponse. </summary>
         public static ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState InvalidResponse { get; } = new ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState(InvalidResponseValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState Succeeded { get; } = new ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState(SucceededValue);
-        /// <summary> SucceededWithIssues. </summary>
+
+        /// <summary> Gets the SucceededWithIssues. </summary>
         public static ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState SucceededWithIssues { get; } = new ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState(SucceededWithIssuesValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState Failed { get; } = new ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState(FailedValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState Deleting { get; } = new ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState(DeletingValue);
-        /// <summary> Deleted. </summary>
+
+        /// <summary> Gets the Deleted. </summary>
         public static ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState Deleted { get; } = new ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState(DeletedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState Canceled { get; } = new ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState left, ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState left, ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState(string value) => new ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState?(string value) => value == null ? null : new ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

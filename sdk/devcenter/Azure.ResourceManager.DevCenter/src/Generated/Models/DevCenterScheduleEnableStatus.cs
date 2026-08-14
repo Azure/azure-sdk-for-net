@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DevCenter.Models
     public readonly partial struct DevCenterScheduleEnableStatus : IEquatable<DevCenterScheduleEnableStatus>
     {
         private readonly string _value;
+        /// <summary> Schedule is enabled. </summary>
+        private const string IsEnabledValue = "Enabled";
+        /// <summary> Schedule is disabled. </summary>
+        private const string IsDisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="DevCenterScheduleEnableStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DevCenterScheduleEnableStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string IsEnabledValue = "Enabled";
-        private const string IsDisabledValue = "Disabled";
-
-        /// <summary> Enabled. </summary>
+        /// <summary> Schedule is enabled. </summary>
         public static DevCenterScheduleEnableStatus IsEnabled { get; } = new DevCenterScheduleEnableStatus(IsEnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Schedule is disabled. </summary>
         public static DevCenterScheduleEnableStatus IsDisabled { get; } = new DevCenterScheduleEnableStatus(IsDisabledValue);
+
         /// <summary> Determines if two <see cref="DevCenterScheduleEnableStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevCenterScheduleEnableStatus left, DevCenterScheduleEnableStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevCenterScheduleEnableStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevCenterScheduleEnableStatus left, DevCenterScheduleEnableStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevCenterScheduleEnableStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevCenterScheduleEnableStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevCenterScheduleEnableStatus(string value) => new DevCenterScheduleEnableStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevCenterScheduleEnableStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevCenterScheduleEnableStatus?(string value) => value == null ? null : new DevCenterScheduleEnableStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevCenterScheduleEnableStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevCenterScheduleEnableStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

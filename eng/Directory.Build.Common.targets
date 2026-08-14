@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <Import Project="Versioning.targets" />
 
@@ -18,6 +18,81 @@
            Text="Api Compat cannot be disabled."/>
   </Target>
 
+  <!--
+    ApiCompat is entirely gated on a non-empty ApiCompatVersion (see the '$(ApiCompatVersion)' != '' conditions below),
+    so simply deleting the auto-managed <ApiCompatVersion> element from a project's .csproj would silently disable all
+    ApiCompat enforcement without touching the CODEOWNERS-protected eng/apicompatbaselines files. This target requires
+    the version to be present for shipping client libraries with a prior stable release so that removal fails the build,
+    including while preparing a new preview release.
+
+    A first stable release has no prior stable release to compare against, so ApiCompatVersion is legitimately absent there.
+    In the rare case the core team approves running without ApiCompat for an already-GA'd package, add the project name
+    to eng/apicompatbaselines/ApiCompatVersionOptOut.txt, which is CODEOWNERS-protected and therefore requires core team review.
+  -->
+  <Target Name="ValidateApiCompatVersionPresent" BeforeTargets="Build"
+          Condition="'$(ValidateRunApiCompat)' == 'true' and '$(ApiCompatVersion)' == '' and '$(IsShippingClientLibrary)' == 'true' and '$(IncludeBuildOutput)' != 'false'">
+    <ReadLinesFromFile File="$(MSBuildThisFileDirectory)apicompatbaselines\ApiCompatVersionOptOut.txt"
+                       Condition="Exists('$(MSBuildThisFileDirectory)apicompatbaselines\ApiCompatVersionOptOut.txt')">
+      <Output TaskParameter="Lines" ItemName="_ApiCompatVersionOptOutLine" />
+    </ReadLinesFromFile>
+    <ItemGroup>
+      <_ApiCompatVersionOptOutMatch Include="@(_ApiCompatVersionOptOutLine)"
+                                    Condition="'%(Identity)' == '$(MSBuildProjectName)'" />
+    </ItemGroup>
+    <PropertyGroup>
+      <_ApiCompatChangelogPath>$(PackageRootDirectory)/CHANGELOG.md</_ApiCompatChangelogPath>
+      <_ApiCompatChangelogPath Condition="!$(MSBuildProjectDirectory.EndsWith('\src')) and !$(MSBuildProjectDirectory.EndsWith('/src'))">$(MSBuildProjectDirectory)/CHANGELOG.md</_ApiCompatChangelogPath>
+    </PropertyGroup>
+    <Error Condition="'@(_ApiCompatVersionOptOutMatch)' == '' and !Exists('$(_ApiCompatChangelogPath)')"
+           Text="ApiCompat validation cannot determine release history for $(MSBuildProjectName): CHANGELOG.md was not found at $(_ApiCompatChangelogPath)." />
+    <CheckApiCompatStableRelease ChangelogPath="$(_ApiCompatChangelogPath)"
+                                 CurrentVersion="$(_VersionInProject)"
+                                 Condition="'@(_ApiCompatVersionOptOutMatch)' == '' and Exists('$(_ApiCompatChangelogPath)')">
+      <Output TaskParameter="HasStableRelease" PropertyName="_ApiCompatHasStableRelease" />
+      <Output TaskParameter="ReadError" PropertyName="_ApiCompatChangelogReadError" />
+    </CheckApiCompatStableRelease>
+    <Error Condition="'@(_ApiCompatVersionOptOutMatch)' == '' and '$(_ApiCompatChangelogReadError)' != ''"
+           Text="ApiCompat validation could not read $(_ApiCompatChangelogPath): $(_ApiCompatChangelogReadError)" />
+    <Error Condition="'@(_ApiCompatVersionOptOutMatch)' == '' and '$(_ApiCompatHasStableRelease)' == 'true'"
+           Text="ApiCompatVersion is missing from $(MSBuildProjectName). It is required for libraries with a prior stable release and is managed automatically by eng/scripts/Update-PkgVersion.ps1 - do not delete it. If the core team has approved shipping this package without ApiCompat, add '$(MSBuildProjectName)' to eng/apicompatbaselines/ApiCompatVersionOptOut.txt (CODEOWNERS-protected)." />
+  </Target>
+
+  <UsingTask
+    TaskName="CheckApiCompatStableRelease"
+    TaskFactory="RoslynCodeTaskFactory"
+    AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <ChangelogPath ParameterType="System.String" Required="true" />
+      <CurrentVersion ParameterType="System.String" Required="true" />
+      <HasStableRelease ParameterType="System.Boolean" Output="true" />
+      <ReadError ParameterType="System.String" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Code Type="Fragment" Language="cs"><![CDATA[
+        try
+        {
+          var releaseHeading = new System.Text.RegularExpressions.Regex(
+              @"^#+\s+(?<version>\d+\.\d+\.\d+)\s+\(\d{4}-\d{2}-\d{2}\)",
+              System.Text.RegularExpressions.RegexOptions.CultureInvariant);
+
+          foreach (string line in System.IO.File.ReadLines(ChangelogPath))
+          {
+            System.Text.RegularExpressions.Match match = releaseHeading.Match(line);
+            if (match.Success && match.Groups["version"].Value != CurrentVersion)
+            {
+              HasStableRelease = true;
+              break;
+            }
+          }
+        }
+        catch (System.Exception ex)
+        {
+          ReadError = ex.Message;
+        }
+      ]]></Code>
+    </Task>
+  </UsingTask>
+
   <PropertyGroup>
     <PackageRootDirectory>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../).TrimEnd("/").TrimEnd("\\"))</PackageRootDirectory>
 
@@ -30,7 +105,7 @@
     <ApiCompatBaselineTargetFramework Condition="'$(ApiCompatBaselineTargetFramework)' == '' AND '$(SupportsNetStandard20)' != 'true'">$(ApiCompatRunnableTargetFramework)</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(IsShippingLibrary)' == 'true' and '$(AotCompatOptOut)' == 'false'">
+  <PropertyGroup Condition="'$(AotCompatOptOut)' == 'false' and '$(AotAnalyzersOptOut)' == 'false'">
     <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
 
@@ -66,6 +141,33 @@
     <Exec ConsoleToMSBuild="true" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(CodeChecksScriptPath) -ProjectDirectory $(MSBuildProjectDirectory)"/>
   </Target>
 
+  <!--
+    ==============================================================
+      Central Package Management Metadata Propagation
+      CPM does not propagate metadata such as PrivateAssets from 
+      PackageVersion to PackageReference. This bridges that gap 
+      so the intent can be declared centrally in Directory.Packages.props.
+      This must operate at evaluation time (not inside a Target) for
+      NuGet restore to observe the metadata. MSBuild evaluation does
+      not support dynamic metadata inspection, so each known NuGet
+      metadata type is handled explicitly.
+    ==============================================================
+  -->
+  <ItemGroup>
+    <_CpmPrivateAssets Include="@(PackageVersion->HasMetadata('PrivateAssets'))" />
+    <_CpmIncludeAssets Include="@(PackageVersion->HasMetadata('IncludeAssets'))" />
+    <_CpmExcludeAssets Include="@(PackageVersion->HasMetadata('ExcludeAssets'))" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="@(_CpmPrivateAssets)" PrivateAssets="%(_CpmPrivateAssets.PrivateAssets)" />
+    <PackageReference Update="@(_CpmIncludeAssets)" IncludeAssets="%(_CpmIncludeAssets.IncludeAssets)" />
+    <PackageReference Update="@(_CpmExcludeAssets)" ExcludeAssets="%(_CpmExcludeAssets.ExcludeAssets)" />
+  </ItemGroup>
+
+  <!--
+    Configure the README for build and packaging
+  -->
   <PropertyGroup>
     <OriginalReadmeMdPath>$(PackageRootDirectory)/README.md</OriginalReadmeMdPath>
     <ProcessedReadmeMdPath>$(IntermediateOutputPath)README.md</ProcessedReadmeMdPath>
@@ -96,7 +198,7 @@
     TODO: Move the NETFramework reference assemblies to a feed other then the roslyn feed.
   -->
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true' and '$(OS)' != 'Windows_NT'">
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" PrivateAssets="all" IsImplicitlyDefined="true" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" IsImplicitlyDefined="true" />
   </ItemGroup>
 
   <!-- Add Client SDK Tools -->
@@ -104,6 +206,8 @@
     <PackageReference Condition="'$(IncludeAutorestDependency)' == 'true'" Include="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
     <PackageReference Condition="'$(GenerateAPIListing)' == 'true'" Include="Microsoft.DotNet.GenAPI" PrivateAssets="All" />
     <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" PrivateAssets="All" />
+    <ProjectReference Condition="'$(EnableClientSdkAnalyzers)' == 'true' and '$(MSBuildProjectName)' != 'Azure.SdkAnalyzers'" Include="$(RepoRoot)\sdk\tools\Azure.SdkAnalyzers\src\Azure.SdkAnalyzers.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="All" />
+    <ProjectReference Condition="'$(EnableClientSdkAnalyzers)' == 'true' and '$(MSBuildProjectName)' != 'Azure.SdkAnalyzers' and '$(MSBuildProjectName)' != 'Azure.SdkAnalyzers.CodeFixes'" Include="$(RepoRoot)\sdk\tools\Azure.SdkAnalyzers.CodeFixes\src\Azure.SdkAnalyzers.CodeFixes.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="All" />
     <PackageReference Condition="'$(EnableMicrosoftCodeAnalysisNetAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.NetAnalyzers" PrivateAssets="All" />
     <PackageReference Condition="'$(EnableBannedApiAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="All" />
   </ItemGroup>
@@ -113,6 +217,38 @@
     <None Include="$(PackageIconPath)" Pack="true" PackagePath=""/>
     <None Condition="Exists('$(PackageRootDirectory)/CHANGELOG.md')" Include="$(PackageRootDirectory)/CHANGELOG.md" Pack="true" PackagePath=""/>
   </ItemGroup>
+
+  <!--
+    ConfigurationSchema.json auto-pack
+    Any shippable client library with a schema/ConfigurationSchema.json gets the schema
+    packed at the NuGet package root and a static .targets file packed into
+    buildTransitive/{tfm}/ that registers the JsonSchemaSegment for appsettings.*.json.
+    Individual packages only need to add the JSON file — no extra MSBuild configuration.
+    The schema can live at either:
+      1. $(PackageRootDirectory)/schema/ConfigurationSchema.json  (custom/hand-authored)
+      2. $(PackageRootDirectory)/src/Generated/schema/ConfigurationSchema.json  (code-generated)
+    Only one location should exist per library; the custom location takes precedence.
+  -->
+  <PropertyGroup>
+    <ConfigurationSchemaPath Condition="Exists('$(PackageRootDirectory)/schema/ConfigurationSchema.json')">$(PackageRootDirectory)/schema/ConfigurationSchema.json</ConfigurationSchemaPath>
+    <ConfigurationSchemaPath Condition="'$(ConfigurationSchemaPath)' == '' and Exists('$(PackageRootDirectory)/src/Generated/schema/ConfigurationSchema.json')">$(PackageRootDirectory)/src/Generated/schema/ConfigurationSchema.json</ConfigurationSchemaPath>
+    <HasConfigurationSchema Condition="'$(IsShippingClientLibrary)' == 'true' and '$(ConfigurationSchemaPath)' != ''">true</HasConfigurationSchema>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(HasConfigurationSchema)' == 'true'">
+    <None Include="$(ConfigurationSchemaPath)" Pack="true" PackagePath="ConfigurationSchema.json" Link="schema/ConfigurationSchema.json" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(HasConfigurationSchema)' == 'true'">
+    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);_PackConfigurationSchemaTargets</TargetsForTfmSpecificContentInPackage>
+  </PropertyGroup>
+
+  <Target Name="_PackConfigurationSchemaTargets">
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="$(RepoEngPath)/ConfigurationSchema.targets"
+                              PackagePath="buildTransitive/$(TargetFramework)/$(PackageId).targets" />
+    </ItemGroup>
+  </Target>
 
   <!-- Add App.config to enable server GC in net462 perf and stress projects -->
   <ItemGroup Condition="('$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true') and '$(TargetFramework)' == 'net462'">
@@ -146,30 +282,35 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
   </ItemGroup>
 
-  <!-- Remove packages built into the .NET 6+ runtime -->
-  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
+  <!-- 
+    Remove packages built into the .NET runtime 
+
+    NOTE:
+      This is only safe for packages in the same line as the target framework.  Because of edge cases with
+      dependencies and versions, it should not be applied for other runtimes.   For example:
+
+      - Safe: removing BCL packages in the 10.x line for the `net10.0` target.  
+      - Unsafe: removing BCL packages in the 10.x line for the `net8.0` target, even though an earlier version is built-in.
+  -->
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net10.0'))">
+    <PackageReference Remove="Microsoft.CSharp" />
     <PackageReference Remove="System.Buffers" />
     <PackageReference Remove="System.Diagnostics.DiagnosticSource" />
+    <PackageReference Remove="System.Formats.Asn1" />
+    <PackageReference Remove="System.IO.Compression" />
+    <PackageReference Remove="System.Linq.Async" />
+    <PackageReference Remove="System.Linq.AsyncEnumerable" />
     <PackageReference Remove="System.Memory" />
     <PackageReference Remove="System.Net.Http" />
+    <PackageReference Remove="System.Net.WebSockets.Client" />
     <PackageReference Remove="System.Numerics.Vectors" />
+    <PackageReference Remove="System.Reflection.Emit" />
+    <PackageReference Remove="System.Runtime.InteropServices" />
+    <PackageReference Remove="System.Security.Cryptography.X509Certificates" />
     <PackageReference Remove="System.Text.Encodings.Web" />
     <PackageReference Remove="System.Text.Json" />
     <PackageReference Remove="System.Threading.Channels" />
     <PackageReference Remove="System.Threading.Tasks.Extensions" />
-  </ItemGroup>
-
-  <!-- Remove packages built into the .NET 10+ runtime -->
-  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net10.0'))">
-    <PackageReference Remove="Microsoft.CSharp" />
-    <PackageReference Remove="System.Formats.Asn1" />
-    <PackageReference Remove="System.Linq.Async" />
-    <PackageReference Remove="System.Linq.AsyncEnumerable" />
-    <PackageReference Remove="System.IO.Compression" />
-    <PackageReference Remove="System.Net.WebSockets.Client" />
-    <PackageReference Remove="System.Reflection.Emit" />
-    <PackageReference Remove="System.Runtime.InteropServices" />
-    <PackageReference Remove="System.Security.Cryptography.X509Certificates" />
     <PackageReference Remove="System.ValueTuple" />
   </ItemGroup>
 
@@ -189,10 +330,7 @@
   <Import Project="Azure.Management.Test.targets" Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' == 'true'" />
   <Import Project="CodeGeneration.targets" Condition="'$(IncludeAutorestDependency)' != 'true'" />
 
-  <!-- CentralPackageVersions properties -->
   <PropertyGroup>
-    <CentralPackagesFile>$(MSBuildThisFileDirectory)Packages.Data.props</CentralPackagesFile>
-    <CentralPackageVersionPackagePath>$(MSBuildThisFileDirectory)Microsoft.Build.CentralPackageVersions\2.0.46\Sdk</CentralPackageVersionPackagePath>
     <UseProjectReferenceToAzureClients Condition="'$(UseProjectReferenceToAzureClients)' == ''">false</UseProjectReferenceToAzureClients>
   </PropertyGroup>
 
@@ -234,6 +372,14 @@
   </ItemGroup>
 
   <!--TODO: end-->
+
+  <!-- *********** Files needed for System.ClientModel shared client features ************* -->
+  <ItemGroup Condition="'$(IncludeSystemClientModelSharedSourceForTracing)' == 'true'">
+    <Compile Include="$(SystemClientModelSharedSource)ClientDiagnostics.cs" LinkBase="Shared/SystemClientModel" />
+    <Compile Include="$(SystemClientModelSharedSource)DiagnosticScope.cs" LinkBase="Shared/SystemClientModel" />
+    <Compile Include="$(SystemClientModelSharedSource)DiagnosticScopeFactory.cs" LinkBase="Shared/SystemClientModel" />
+    <Compile Include="$(SystemClientModelSharedSource)OperationResultHelpers.cs" LinkBase="Shared/SystemClientModel" />
+  </ItemGroup>
 
   <!-- *********** Files needed for LRO ************* -->
   <ItemGroup Condition="'$(IncludeOperationsSharedSource)' == 'true'">
@@ -333,7 +479,7 @@
 
     <ItemGroup>
       <_AllReferencesWithVersions Include="@(_ProjectReferencesWithoutDevVersions)" Version="%(ProjectVersion)" />
-      <_AllReferencesWithVersions Include="@(PackageReference)" Condition="!$([System.String]::Copy('%(PackageReference.PrivateAssets)').ToLower().Equals('all'))"/>
+      <_AllReferencesWithVersions Include="@(PackageReference)" Version="%(PackageReference.Version)" Condition="!$([System.String]::Copy('%(PackageReference.PrivateAssets)').ToLower().Equals('all'))"/>
 
       <PreviewPackageReferences Include="@(_AllReferencesWithVersions)" Condition="$([System.String]::Copy('%(Version)').Contains('-'))" />
     </ItemGroup>
@@ -348,30 +494,114 @@
 
   <!-- Fixup netstandard2.malformed docs issue https://github.com/saucecontrol/InheritDoc#bad-netstandard-docs -->
   <ItemGroup Condition="'$(InheritDocEnabled)' != 'false' and '$(TargetFramework)' == 'netstandard2.0'">
-    <PackageDownload Include="NETStandard.Library.Ref" />
+    <PackageDownload Include="NETStandard.Library.Ref" Version="[2.1.0]" />
     <InheritDocReference Include="$(NugetPackageRoot)\netstandard.library.ref\2.1.0\ref\netstandard2.1\netstandard.xml" />
   </ItemGroup>
 
 <!-- Additional PackageReferences should be placed above this PropertyGroup -->
-  <PropertyGroup>
-    <ApiCompatExcludeAttributeList>$(MSBuildThisFileDirectory)ApiListing.exclude-attributes.txt</ApiCompatExcludeAttributeList>
+  <PropertyGroup Condition="'$(ApiCompatVersion)' != ''">
+    <!-- Use the ApiCompat task shipped in the .NET SDK, but keep validation on build instead of pack. -->
+    <RunApiCompat Condition="'$(RunApiCompat)' == '' and '$(DesignTimeBuild)' != 'true'">true</RunApiCompat>
+    <RunApiCompatForSrc Condition="'$(RunApiCompatForSrc)' == ''">$(RunApiCompat)</RunApiCompatForSrc>
+    <ApiCompatEnableRuleAttributesMustMatch Condition="'$(ApiCompatEnableRuleAttributesMustMatch)' == ''">true</ApiCompatEnableRuleAttributesMustMatch>
+    <ApiCompatEnableRuleCannotChangeParameterName Condition="'$(ApiCompatEnableRuleCannotChangeParameterName)' == ''">true</ApiCompatEnableRuleCannotChangeParameterName>
+    <ApiCompatPermitUnnecessarySuppressions Condition="'$(ApiCompatPermitUnnecessarySuppressions)' == ''">true</ApiCompatPermitUnnecessarySuppressions>
+    <ApiCompatSuppressionOutputFile>$(MSBuildThisFileDirectory)apicompatbaselines\$(MSBuildProjectName).xml</ApiCompatSuppressionOutputFile>
+    <_ApiCompatValidateAssembliesSemaphoreFile>$(IntermediateOutputPath)ValidateApiCompatForSrc.semaphore</_ApiCompatValidateAssembliesSemaphoreFile>
+    <_ApiCompatIncrementalStateFile>$(IntermediateOutputPath)ValidateApiCompatForSrc.state</_ApiCompatIncrementalStateFile>
   </PropertyGroup>
+
   <ItemGroup Condition="'$(ApiCompatVersion)' != ''">
     <PackageDownload Include="$(PackageId)" Version="[$(ApiCompatVersion)]" />
-    <PackageReference Include="Microsoft.DotNet.ApiCompat" PrivateAssets="all" />
+    <ApiCompatExcludeAttributesFile Include="$(MSBuildThisFileDirectory)ApiListing.exclude-attributes.txt" />
+    <ApiCompatSuppressionFile Include="$(ApiCompatSuppressionOutputFile)" Condition="Exists('$(ApiCompatSuppressionOutputFile)')" />
+    <ApiCompatLeftAssembliesTransformationPattern Include="^.%2A$">
+      <ReplacementString>lib/$(ApiCompatBaselineTargetFramework)/$(TargetFileName)</ReplacementString>
+    </ApiCompatLeftAssembliesTransformationPattern>
+    <ApiCompatRightAssembliesTransformationPattern Include="^.%2A$">
+      <ReplacementString>lib/$(ApiCompatBaselineTargetFramework)/$(TargetFileName)</ReplacementString>
+    </ApiCompatRightAssembliesTransformationPattern>
   </ItemGroup>
 
   <Target Name="_ResolveResolvedMatchingContract" BeforeTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
     <ItemGroup>
-      <_ReferencePathDirectories Include="@(ReferencePath -> '%(RootDir)%(Directory)')"  />
-      <ResolvedMatchingContract Include="$(NuGetPackageRoot)\$(PackageId.ToLower())\$(ApiCompatVersion)\lib\$([MSBuild]::ValueOrDefault('$(ApiCompatBaselineTargetFramework)', '$(TargetFramework)'))\$(TargetFileName)">
-        <DependencyPaths>@(_ReferencePathDirectories->Distinct(), ',')</DependencyPaths>
-      </ResolvedMatchingContract>
+      <ResolvedMatchingContract Include="$(NuGetPackageRoot)\$(PackageId.ToLower())\$(ApiCompatVersion)\lib\$([MSBuild]::ValueOrDefault('$(ApiCompatBaselineTargetFramework)', '$(TargetFramework)'))\$(TargetFileName)" />
     </ItemGroup>
   </Target>
 
-  <Target Name="ApiCompatFinishedMessage" AfterTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
-     <Message Text="Ran ApiCompat against %(ResolvedMatchingContract.Identity) using assemblies from $(IntermediateOutputPath)" Importance="High" />
+  <Target Name="ValidateNoLocalApiCompatBaseline" BeforeTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
+    <Error Condition="Exists('$(MSBuildProjectDirectory)\ApiCompatBaseline.txt')"
+           Text="Local ApiCompatBaseline.txt files are no longer supported. Move suppressions to eng\apicompatbaselines\$(MSBuildProjectName).xml instead. See https://github.com/Azure/azure-sdk-for-net/issues/55311" />
+    <Error Condition="Exists('$(MSBuildProjectDirectory)\ApiCompatBaseline.$(TargetFramework).txt')"
+           Text="Local ApiCompatBaseline.$(TargetFramework).txt files are no longer supported. Move suppressions to eng\apicompatbaselines\$(MSBuildProjectName).xml instead. See https://github.com/Azure/azure-sdk-for-net/issues/55311" />
+    <Error Condition="Exists('$(MSBuildProjectDirectory)\CompatibilitySuppressions.xml')"
+           Text="Local CompatibilitySuppressions.xml files are not supported. Move suppressions to eng\apicompatbaselines\$(MSBuildProjectName).xml instead." />
+  </Target>
+
+  <Target Name="PrepareApiCompatIncrementalState"
+          BeforeTargets="ValidateApiCompatForSrc"
+          Condition="'$(ApiCompatVersion)' != ''">
+    <WriteLinesToFile File="$(_ApiCompatIncrementalStateFile)"
+                      Lines="GenerateSuppressionFile=$(ApiCompatGenerateSuppressionFile)|SuppressionFileExists=$([System.IO.File]::Exists('$(ApiCompatSuppressionOutputFile)'))"
+                      Overwrite="true"
+                      WriteOnlyWhenDifferent="true" />
+  </Target>
+
+  <Target Name="NormalizeApiCompatSuppressionFile"
+          AfterTargets="ValidateApiCompatForSrc"
+          Condition="'$(ApiCompatGenerateSuppressionFile)' == 'true' and Exists('$(ApiCompatSuppressionOutputFile)')">
+    <PropertyGroup>
+      <_ApiCompatSuppressionContents>$([System.IO.File]::ReadAllText('$(ApiCompatSuppressionOutputFile)'))</_ApiCompatSuppressionContents>
+      <_ApiCompatSuppressionContents><![CDATA[$([System.Text.RegularExpressions.Regex]::Replace('$(_ApiCompatSuppressionContents)', '[ \t]*<(?:Left|Right)>.*?</(?:Left|Right)>\r?\n', ''))]]></_ApiCompatSuppressionContents>
+    </PropertyGroup>
+    <WriteLinesToFile File="$(ApiCompatSuppressionOutputFile)"
+                      Lines="$(_ApiCompatSuppressionContents)"
+                      Overwrite="true"
+                      WriteOnlyWhenDifferent="true" />
+  </Target>
+
+  <!-- Run even when compilation is up to date so a prior ApiCompat failure cannot be skipped. -->
+  <Target Name="ValidateApiCompatForSrc"
+          AfterTargets="CoreCompile"
+          Condition="'$(ApiCompatVersion)' != '' and '$(RunApiCompatForSrc)' == 'true' and '$(RunApiCompat)' == 'true' and '$(DesignTimeBuild)' != 'true'"
+          DependsOnTargets="CollectApiCompatInputs;_ResolveResolvedMatchingContract;FindReferenceAssembliesForReferences"
+          Inputs="@(ResolvedMatchingContract);@(IntermediateAssembly);@(ApiCompatSuppressionFile);$(_ApiCompatIncrementalStateFile)"
+          Outputs="$(_ApiCompatValidateAssembliesSemaphoreFile)">
+    <Error Condition="'@(ResolvedMatchingContract)' == ''"
+           Text="ResolvedMatchingContract item must be specified to run API compat." />
+    <Error Condition="!Exists('%(ResolvedMatchingContract.FullPath)')"
+           Text="ResolvedMatchingContract '%(ResolvedMatchingContract.FullPath)' did not exist." />
+
+    <ItemGroup>
+      <_ApiCompatAssemblyReferences Include="@(ReferencePathWithRefAssemblies, ',')" />
+    </ItemGroup>
+
+    <Microsoft.DotNet.ApiCompat.Task.ValidateAssembliesTask
+      RoslynAssembliesPath="$(RoslynAssembliesPath)"
+      LeftAssemblies="@(ResolvedMatchingContract)"
+      RightAssemblies="@(IntermediateAssembly)"
+      GenerateSuppressionFile="$(ApiCompatGenerateSuppressionFile)"
+      PreserveUnnecessarySuppressions="$(ApiCompatPreserveUnnecessarySuppressions)"
+      PermitUnnecessarySuppressions="$(ApiCompatPermitUnnecessarySuppressions)"
+      SuppressionFiles="@(ApiCompatSuppressionFile)"
+      SuppressionOutputFile="$(ApiCompatSuppressionOutputFile)"
+      NoWarn="$(NoWarn)"
+      RespectInternals="$(ApiCompatRespectInternals)"
+      EnableRuleAttributesMustMatch="$(ApiCompatEnableRuleAttributesMustMatch)"
+      ExcludeAttributesFiles="@(ApiCompatExcludeAttributesFile)"
+      EnableRuleCannotChangeParameterName="$(ApiCompatEnableRuleCannotChangeParameterName)"
+      EnableStrictMode="$(ApiCompatStrictMode)"
+      LeftAssembliesReferences="@(_ApiCompatAssemblyReferences)"
+      RightAssembliesReferences="@(_ApiCompatAssemblyReferences)"
+      CreateWorkItemPerAssembly="true"
+      LeftAssembliesTransformationPattern="@(ApiCompatLeftAssembliesTransformationPattern)"
+      RightAssembliesTransformationPattern="@(ApiCompatRightAssembliesTransformationPattern)"
+      SemaphoreFile="$(_ApiCompatValidateAssembliesSemaphoreFile)" />
+    <Message Text="Ran ApiCompat against %(ResolvedMatchingContract.Identity) using assemblies from $(IntermediateOutputPath)" Importance="High" />
+    <WriteLinesToFile File="$(_ApiCompatIncrementalStateFile)"
+                      Lines="GenerateSuppressionFile=$(ApiCompatGenerateSuppressionFile)|SuppressionFileExists=$([System.IO.File]::Exists('$(ApiCompatSuppressionOutputFile)'))"
+                      Overwrite="true"
+                      WriteOnlyWhenDifferent="true" />
   </Target>
 
   <Target Name="RunApiCompat" DependsOnTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
@@ -395,7 +625,7 @@
       <ServiceDirectory><![CDATA[$([System.Text.RegularExpressions.Regex]::Replace($(PackageRootDirectory), '^.*[\\/]+sdk[\\/]+([^\\/]+).*$', '$1'))]]></ServiceDirectory>
 
       <!-- Format package info line for output -->
-      <PackageInfoText Condition="'$(IsShippingLibrary)' == 'true'">'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)' '$(AotCompatOptOut)'</PackageInfoText>
+      <PackageInfoText Condition="'$(IsShippingLibrary)' == 'true'">'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)' </PackageInfoText>
     </PropertyGroup>
 
     <ItemGroup Condition="'$(IsShippingLibrary)' == 'true'">
@@ -438,10 +668,36 @@
       <_ProjectName Condition="'$(TestDependsIncludePackageRootDirectoryOnly)' == 'true'">$(PackageRootDirectory)</_ProjectName>
     </PropertyGroup>
 
-    <ItemGroup Condition="'@(_DependsOnGiven)' != '@(_TestDependsOnDendencies)' and '$(IsClientLibrary)' == 'true'" >
+    <ItemGroup Condition="'@(_DependsOnGiven)' != '@(_TestDependsOnDendencies)' and '$(IsClientLibrary)' == 'true' and '$(IsGeneratorLibrary)' != 'true'" >
       <ProjectsToInclude Include="$(_ProjectName)" />
     </ItemGroup>
   </Target>
 
-  <Import Project="$(CentralPackageVersionPackagePath)\Sdk.targets" />
+  <!--
+    Central Package Management Enforcement
+
+    These targets prevent projects from bypassing central package version
+    management by re-enabling VersionOverride or disabling CPM in their
+    local Directory.Build.props / .csproj files.
+
+    If you have a legitimate need to override a package version, add a scoped
+    entry to eng/centralpackagemanagement/Directory.Packages.props with
+    appropriate conditions. See eng/centralpackagemanagement/README.md.
+  -->
+  <Import Project="AnalyzerAllowList.targets" />
+  <Import Project="NoWarnValidation.targets" />
+
+  <Target Name="EnforceCentralPackageManagement" BeforeTargets="Restore;Build;CollectPackageReferences">
+    <!-- Block re-enabling VersionOverride -->
+    <Error
+      Condition="'$(CentralPackageVersionOverrideEnabled)' == 'true'"
+      Text="AZSDK0001: Package version overrides are disabled in this repository. Do not set CentralPackageVersionOverrideEnabled='true'. See eng/centralpackagemanagement/README.md for guidance."
+      Code="AZSDK0001" />
+
+    <!-- Block disabling central package management entirely -->
+    <Error
+      Condition="'$(ManagePackageVersionsCentrally)' == 'false'"
+      Text="AZSDK0001: Central Package Management is required in this repository. Do not set ManagePackageVersionsCentrally='false'. See eng/centralpackagemanagement/README.md for guidance."
+      Code="AZSDK0001" />
+  </Target>
 </Project>

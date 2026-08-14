@@ -7,54 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Mode of the service mesh.
-    /// Serialized Name: ServiceMeshMode
-    /// </summary>
+    /// <summary> Mode of the service mesh. </summary>
     public readonly partial struct ServiceMeshMode : IEquatable<ServiceMeshMode>
     {
         private readonly string _value;
+        /// <summary> Istio deployed as an AKS addon. </summary>
+        private const string IstioValue = "Istio";
+        /// <summary> Mesh is disabled. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="ServiceMeshMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceMeshMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string IstioValue = "Istio";
-        private const string DisabledValue = "Disabled";
-
-        /// <summary>
-        /// Istio deployed as an AKS addon.
-        /// Serialized Name: ServiceMeshMode.Istio
-        /// </summary>
+        /// <summary> Istio deployed as an AKS addon. </summary>
         public static ServiceMeshMode Istio { get; } = new ServiceMeshMode(IstioValue);
-        /// <summary>
-        /// Mesh is disabled.
-        /// Serialized Name: ServiceMeshMode.Disabled
-        /// </summary>
+
+        /// <summary> Mesh is disabled. </summary>
         public static ServiceMeshMode Disabled { get; } = new ServiceMeshMode(DisabledValue);
+
         /// <summary> Determines if two <see cref="ServiceMeshMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceMeshMode left, ServiceMeshMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceMeshMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceMeshMode left, ServiceMeshMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceMeshMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceMeshMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceMeshMode(string value) => new ServiceMeshMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceMeshMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceMeshMode?(string value) => value == null ? null : new ServiceMeshMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceMeshMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceMeshMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

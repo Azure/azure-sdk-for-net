@@ -14,17 +14,15 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SqlIntegratedChangeTrackingPolicy : DataChangeDetectionPolicy
     {
         /// <summary> Initializes a new instance of <see cref="SqlIntegratedChangeTrackingPolicy"/>. </summary>
-        public SqlIntegratedChangeTrackingPolicy()
+        public SqlIntegratedChangeTrackingPolicy() : base("#Microsoft.Azure.Search.SqlIntegratedChangeTrackingPolicy")
         {
-            ODataType = "#Microsoft.Azure.Search.SqlIntegratedChangeTrackingPolicy";
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlIntegratedChangeTrackingPolicy"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of data change detection policy. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlIntegratedChangeTrackingPolicy(string oDataType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(oDataType, serializedAdditionalRawData)
+        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SqlIntegratedChangeTrackingPolicy(string odataType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(odataType, additionalBinaryDataProperties)
         {
-            ODataType = oDataType ?? "#Microsoft.Azure.Search.SqlIntegratedChangeTrackingPolicy";
         }
     }
 }

@@ -42,27 +42,27 @@ namespace Azure.Communication.Chat
             /// <summary>
             /// The V1 of the Chat service.
             /// </summary>
-            #pragma warning disable CA1707 // Identifiers should not contain underscores
+#pragma warning disable CA1707 // Identifiers should not contain underscores
             V2021_03_07 = 1,
             /// <summary>
             /// The V2021_09_07 of the Chat service.
             /// </summary>
-            #pragma warning restore CA1707 // Identifiers should not contain underscores
+#pragma warning restore CA1707 // Identifiers should not contain underscores
             V2021_09_07 = 2,
             /// <summary>
             /// The V2023_11_07 of the Chat service.
             /// </summary>
-            #pragma warning restore CA1707 // Identifiers should not contain underscores
+#pragma warning restore CA1707 // Identifiers should not contain underscores
             V2023_11_07 = 3,
             /// <summary>
             /// The V2024_03_07 of the Chat service.
             /// </summary>
-            #pragma warning restore CA1707 // Identifiers should not contain underscores
+#pragma warning restore CA1707 // Identifiers should not contain underscores
             V2024_03_07 = 4,
             /// <summary>
             /// The V2025_03_15 of the Chat service.
             /// </summary>
-            #pragma warning restore CA1707 // Identifiers should not contain underscores
+#pragma warning restore CA1707 // Identifiers should not contain underscores
             V2025_03_15 = 5
         }
     }

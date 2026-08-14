@@ -7,64 +7,41 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> Collection of SmtpUsername resources. Response will include a nextLink if response contains more pages. </summary>
     internal partial class SmtpUsernameResourceCollection
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SmtpUsernameResourceCollection"/>. </summary>
-        internal SmtpUsernameResourceCollection()
+        /// <param name="value"> The SmtpUsernameResource items on this page. </param>
+        internal SmtpUsernameResourceCollection(IEnumerable<CommunicationSmtpUsernameData> value)
         {
-            Value = new ChangeTrackingList<CommunicationSmtpUsernameData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SmtpUsernameResourceCollection"/>. </summary>
-        /// <param name="value"> List of SmtpUsername resources. </param>
-        /// <param name="nextLink"> The URL the client should use to fetch the next page (per server side paging). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SmtpUsernameResourceCollection(IReadOnlyList<CommunicationSmtpUsernameData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The SmtpUsernameResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SmtpUsernameResourceCollection(IList<CommunicationSmtpUsernameData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> List of SmtpUsername resources. </summary>
-        public IReadOnlyList<CommunicationSmtpUsernameData> Value { get; }
-        /// <summary> The URL the client should use to fetch the next page (per server side paging). </summary>
-        public string NextLink { get; }
+        /// <summary> The SmtpUsernameResource items on this page. </summary>
+        [WirePath("value")]
+        public IList<CommunicationSmtpUsernameData> Value { get; }
+
+        /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
+        public Uri NextLink { get; }
     }
 }

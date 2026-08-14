@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Usage of provisioned storage, IOPS, bandwidth and number of file shares across all live shares or soft-deleted shares in the account. </summary>
     public partial class FileServiceAccountUsageElements
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FileServiceAccountUsageElements"/>. </summary>
         internal FileServiceAccountUsageElements()
@@ -55,25 +27,28 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="provisionedStorageGiB"> The total provisioned storage quota in gibibytes. </param>
         /// <param name="provisionedIops"> The total provisioned IOPS. </param>
         /// <param name="provisionedBandwidthMiBPerSec"> The total provisioned bandwidth in mebibytes per second. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileServiceAccountUsageElements(int? fileShareCount, int? provisionedStorageGiB, int? provisionedIops, int? provisionedBandwidthMiBPerSec, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FileServiceAccountUsageElements(int? fileShareCount, int? provisionedStorageGiB, int? provisionedIops, int? provisionedBandwidthMiBPerSec, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FileShareCount = fileShareCount;
             ProvisionedStorageGiB = provisionedStorageGiB;
             ProvisionedIops = provisionedIops;
             ProvisionedBandwidthMiBPerSec = provisionedBandwidthMiBPerSec;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The total number of file shares. </summary>
         [WirePath("fileShareCount")]
         public int? FileShareCount { get; }
+
         /// <summary> The total provisioned storage quota in gibibytes. </summary>
         [WirePath("provisionedStorageGiB")]
         public int? ProvisionedStorageGiB { get; }
+
         /// <summary> The total provisioned IOPS. </summary>
         [WirePath("provisionedIOPS")]
         public int? ProvisionedIops { get; }
+
         /// <summary> The total provisioned bandwidth in mebibytes per second. </summary>
         [WirePath("provisionedBandwidthMiBPerSec")]
         public int? ProvisionedBandwidthMiBPerSec { get; }

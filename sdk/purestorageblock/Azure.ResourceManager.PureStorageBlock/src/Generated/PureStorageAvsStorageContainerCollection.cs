@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             TryGetApiVersion(PureStorageAvsStorageContainerResource.ResourceType, out string pureStorageAvsStorageContainerApiVersion);
             _avsStorageContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", PureStorageAvsStorageContainerResource.ResourceType.Namespace, Diagnostics);
-            _avsStorageContainersRestClient = new AvsStorageContainers(_avsStorageContainersClientDiagnostics, Pipeline, Endpoint, pureStorageAvsStorageContainerApiVersion ?? "2024-11-01");
+            _avsStorageContainersRestClient = new AvsStorageContainers(_avsStorageContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, pureStorageAvsStorageContainerApiVersion ?? "2024-11-01");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             if (id.ResourceType != PureStoragePoolResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PureStoragePoolResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PureStoragePoolResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PureStorageAvsStorageContainerData, PureStorageAvsStorageContainerResource>(new AvsStorageContainersGetByStoragePoolAsyncCollectionResultOfT(_avsStorageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PureStorageAvsStorageContainerResource(Client, data));
+            return new AsyncPageableWrapper<PureStorageAvsStorageContainerData, PureStorageAvsStorageContainerResource>(new AvsStorageContainersGetByStoragePoolAsyncCollectionResultOfT(
+                _avsStorageContainersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PureStorageAvsStorageContainerCollection.GetAll"), data => new PureStorageAvsStorageContainerResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PureStorageAvsStorageContainerData, PureStorageAvsStorageContainerResource>(new AvsStorageContainersGetByStoragePoolCollectionResultOfT(_avsStorageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PureStorageAvsStorageContainerResource(Client, data));
+            return new PageableWrapper<PureStorageAvsStorageContainerData, PureStorageAvsStorageContainerResource>(new AvsStorageContainersGetByStoragePoolCollectionResultOfT(
+                _avsStorageContainersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PureStorageAvsStorageContainerCollection.GetAll"), data => new PureStorageAvsStorageContainerResource(Client, data));
         }
 
         /// <summary>

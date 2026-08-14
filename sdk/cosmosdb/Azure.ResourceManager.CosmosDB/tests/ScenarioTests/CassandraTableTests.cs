@@ -68,7 +68,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        [Test]
         [RecordedTest]
         public async Task CassandraTableCreateAndUpdate()
         {
@@ -103,7 +102,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyCassandraTables(table, table2);
         }
 
-        [Test]
         [RecordedTest]
         public async Task CassandraTableList()
         {
@@ -116,7 +114,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyCassandraTables(tables[0], table);
         }
 
-        [Test]
         [RecordedTest]
         public async Task CassandraTableThroughput()
         {
@@ -134,9 +131,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
         }
 
-        [Test]
         [RecordedTest]
-        [Ignore("Need to diagnose The operation has not completed yet.")]
+
+        [Ignore("MPG migration WIP: ResourceIdentifier strict-validation rejects action segment in LRO response id.")]
         public async Task CassandraTableMigrateToAutoscale()
         {
             var table = await CreateCassandraTable(null);
@@ -148,9 +145,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             AssertAutoscale(throughputData);
         }
 
-        [Test]
         [RecordedTest]
-        [Ignore("Need to diagnose The operation has not completed yet.")]
+
+        [Ignore("MPG migration WIP: ResourceIdentifier strict-validation rejects action segment in LRO response id.")]
         public async Task CassandraTableMigrateToManual()
         {
             var parameters = BuildCreateUpdateOptions(new AutoscaleSettings()
@@ -166,7 +163,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             AssertManualThroughput(throughputData);
         }
 
-        [Test]
         [RecordedTest]
         public async Task CassandraTableDelete()
         {
@@ -192,7 +188,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             _tableName = Recording.GenerateAssetName("cassandra-table-");
             return new CassandraTableCreateOrUpdateContent(AzureLocation.WestUS,
-                new Models.CassandraTableResourceInfo(_tableName, default, new CassandraSchema {
+                new Models.CassandraTableResourceInfo(_tableName, default, new CassandraSchema
+                {
                     Columns = { new CassandraColumn { Name = "columnA", CassandraColumnType = "int" }, new CassandraColumn { Name = "columnB", CassandraColumnType = "ascii" } },
                     PartitionKeys = { new CassandraPartitionKey { Name = "columnA" } },
                     ClusterKeys = { new CassandraClusterKey { Name = "columnB", OrderBy = "Asc" } },

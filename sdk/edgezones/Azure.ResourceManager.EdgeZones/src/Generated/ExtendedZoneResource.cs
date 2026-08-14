@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EdgeZones
         {
             TryGetApiVersion(ResourceType, out string extendedZoneApiVersion);
             _extendedZonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeZones", ResourceType.Namespace, Diagnostics);
-            _extendedZonesRestClient = new ExtendedZones(_extendedZonesClientDiagnostics, Pipeline, Endpoint, extendedZoneApiVersion ?? "2024-04-01-preview");
+            _extendedZonesRestClient = new ExtendedZones(_extendedZonesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, extendedZoneApiVersion ?? "2024-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EdgeZones
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

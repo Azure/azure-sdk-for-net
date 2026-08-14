@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             TryGetApiVersion(ResourceType, out string dataReplicationJobApiVersion);
             _jobClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", ResourceType.Namespace, Diagnostics);
-            _jobRestClient = new Job(_jobClientDiagnostics, Pipeline, Endpoint, dataReplicationJobApiVersion ?? "2024-09-01");
+            _jobRestClient = new Job(_jobClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationJobApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

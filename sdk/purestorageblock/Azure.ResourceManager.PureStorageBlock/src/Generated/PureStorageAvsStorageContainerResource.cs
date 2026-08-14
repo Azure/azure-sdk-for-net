@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             TryGetApiVersion(ResourceType, out string pureStorageAvsStorageContainerApiVersion);
             _avsStorageContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", ResourceType.Namespace, Diagnostics);
-            _avsStorageContainersRestClient = new AvsStorageContainers(_avsStorageContainersClientDiagnostics, Pipeline, Endpoint, pureStorageAvsStorageContainerApiVersion ?? "2024-11-01");
+            _avsStorageContainersRestClient = new AvsStorageContainers(_avsStorageContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, pureStorageAvsStorageContainerApiVersion ?? "2024-11-01");
             ValidateResourceId(id);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

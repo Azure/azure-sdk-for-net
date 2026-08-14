@@ -5,16 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Client.Structure.Service;
 
 namespace Client.Structure.ClientOperationGroup
 {
     public partial class Group3
     {
         protected Group3() => throw null;
+
+        internal Group3(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, ClientType client) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     public readonly partial struct DataPlaneProxyAuthenticationMode : IEquatable<DataPlaneProxyAuthenticationMode>
     {
         private readonly string _value;
+        /// <summary> The local authentication mode. Users are not required to have data plane permissions if local authentication is not disabled. </summary>
+        private const string LocalValue = "Local";
+        /// <summary> The pass-through authentication mode. User identity will be passed through from ARM, requiring user to have data plane action permissions (Available via App Configuration Data Owner/ App Configuration Data Reader). </summary>
+        private const string PassThroughValue = "Pass-through";
 
         /// <summary> Initializes a new instance of <see cref="DataPlaneProxyAuthenticationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataPlaneProxyAuthenticationMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LocalValue = "Local";
-        private const string PassThroughValue = "Pass-through";
+            _value = value;
+        }
 
         /// <summary> The local authentication mode. Users are not required to have data plane permissions if local authentication is not disabled. </summary>
         public static DataPlaneProxyAuthenticationMode Local { get; } = new DataPlaneProxyAuthenticationMode(LocalValue);
-        /// <summary> The pass-through authentication mode. User identity will be passed through from Azure Resource Manager (ARM), requiring user to have data plane action permissions (Available via App Configuration Data Owner/ App Configuration Data Reader). </summary>
+
+        /// <summary> The pass-through authentication mode. User identity will be passed through from ARM, requiring user to have data plane action permissions (Available via App Configuration Data Owner/ App Configuration Data Reader). </summary>
         public static DataPlaneProxyAuthenticationMode PassThrough { get; } = new DataPlaneProxyAuthenticationMode(PassThroughValue);
+
         /// <summary> Determines if two <see cref="DataPlaneProxyAuthenticationMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataPlaneProxyAuthenticationMode left, DataPlaneProxyAuthenticationMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataPlaneProxyAuthenticationMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataPlaneProxyAuthenticationMode left, DataPlaneProxyAuthenticationMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataPlaneProxyAuthenticationMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataPlaneProxyAuthenticationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataPlaneProxyAuthenticationMode(string value) => new DataPlaneProxyAuthenticationMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataPlaneProxyAuthenticationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataPlaneProxyAuthenticationMode?(string value) => value == null ? null : new DataPlaneProxyAuthenticationMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataPlaneProxyAuthenticationMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataPlaneProxyAuthenticationMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

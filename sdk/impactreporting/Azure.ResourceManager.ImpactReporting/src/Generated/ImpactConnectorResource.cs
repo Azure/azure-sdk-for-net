@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ImpactReporting
         {
             TryGetApiVersion(ResourceType, out string impactConnectorApiVersion);
             _connectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImpactReporting", ResourceType.Namespace, Diagnostics);
-            _connectorsRestClient = new Connectors(_connectorsClientDiagnostics, Pipeline, Endpoint, impactConnectorApiVersion ?? "2024-05-01-preview");
+            _connectorsRestClient = new Connectors(_connectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, impactConnectorApiVersion ?? "2024-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ImpactReporting
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

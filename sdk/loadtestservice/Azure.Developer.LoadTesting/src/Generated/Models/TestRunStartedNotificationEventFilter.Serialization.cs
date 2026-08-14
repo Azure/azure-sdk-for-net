@@ -15,6 +15,46 @@ namespace Azure.Developer.LoadTesting
     /// <summary> The notification event filter when the event type is TestRunStarted and scope is Tests. </summary>
     public partial class TestRunStartedNotificationEventFilter : TestsNotificationEventFilter, IJsonModel<TestRunStartedNotificationEventFilter>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TestsNotificationEventFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TestRunStartedNotificationEventFilter>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTestRunStartedNotificationEventFilter(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TestRunStartedNotificationEventFilter)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TestRunStartedNotificationEventFilter>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureDeveloperLoadTestingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TestRunStartedNotificationEventFilter)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TestRunStartedNotificationEventFilter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TestRunStartedNotificationEventFilter IPersistableModel<TestRunStartedNotificationEventFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => (TestRunStartedNotificationEventFilter)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TestRunStartedNotificationEventFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TestRunStartedNotificationEventFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -77,45 +117,5 @@ namespace Azure.Developer.LoadTesting
             }
             return new TestRunStartedNotificationEventFilter(kind, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TestRunStartedNotificationEventFilter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TestRunStartedNotificationEventFilter>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureDeveloperLoadTestingContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TestRunStartedNotificationEventFilter)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TestRunStartedNotificationEventFilter IPersistableModel<TestRunStartedNotificationEventFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => (TestRunStartedNotificationEventFilter)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TestsNotificationEventFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TestRunStartedNotificationEventFilter>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTestRunStartedNotificationEventFilter(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TestRunStartedNotificationEventFilter)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TestRunStartedNotificationEventFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

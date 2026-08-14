@@ -9,121 +9,35 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    internal partial class ProtectableContainerResourceList : IUtf8JsonSerializable, IJsonModel<ProtectableContainerResourceList>
+    /// <summary> List of ProtectableContainer resources. </summary>
+    internal partial class ProtectableContainerResourceList : ResourceList, IJsonModel<ProtectableContainerResourceList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProtectableContainerResourceList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<ProtectableContainerResourceList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override ResourceList PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProtectableContainerResourceList>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectableContainerResourceList>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
             {
-                throw new FormatException($"The model {nameof(ProtectableContainerResourceList)} does not support writing '{format}' format.");
-            }
-
-            if (Optional.IsCollectionDefined(Value))
-            {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(NextLink))
-            {
-                writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        return DeserializeProtectableContainerResourceList(document.RootElement, options);
                     }
-#endif
-                }
+                default:
+                    throw new FormatException($"The model {nameof(ProtectableContainerResourceList)} does not support reading '{options.Format}' format.");
             }
         }
 
-        ProtectableContainerResourceList IJsonModel<ProtectableContainerResourceList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProtectableContainerResourceList>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ProtectableContainerResourceList)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProtectableContainerResourceList(document.RootElement, options);
-        }
-
-        internal static ProtectableContainerResourceList DeserializeProtectableContainerResourceList(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            IReadOnlyList<ProtectableContainerResource> value = default;
-            string nextLink = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("value"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ProtectableContainerResource> array = new List<ProtectableContainerResource>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ProtectableContainerResource.DeserializeProtectableContainerResource(item, options));
-                    }
-                    value = array;
-                    continue;
-                }
-                if (property.NameEquals("nextLink"u8))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ProtectableContainerResourceList(value ?? new ChangeTrackingList<ProtectableContainerResource>(), nextLink, serializedAdditionalRawData);
-        }
-
-        BinaryData IPersistableModel<ProtectableContainerResourceList>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ProtectableContainerResourceList>)this).GetFormatFromOptions(options) : options.Format;
-
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectableContainerResourceList>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -133,22 +47,109 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
         }
 
-        ProtectableContainerResourceList IPersistableModel<ProtectableContainerResourceList>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ProtectableContainerResourceList>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ProtectableContainerResourceList>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-            switch (format)
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ProtectableContainerResourceList IPersistableModel<ProtectableContainerResourceList>.Create(BinaryData data, ModelReaderWriterOptions options) => (ProtectableContainerResourceList)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ProtectableContainerResourceList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ProtectableContainerResourceList"/> from. </param>
+        internal static ProtectableContainerResourceList FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeProtectableContainerResourceList(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<ProtectableContainerResourceList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectableContainerResourceList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeProtectableContainerResourceList(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ProtectableContainerResourceList)} does not support reading '{options.Format}' format.");
+                throw new FormatException($"The model {nameof(ProtectableContainerResourceList)} does not support writing '{format}' format.");
+            }
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (ProtectableContainerResource item in Value)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
         }
 
-        string IPersistableModel<ProtectableContainerResourceList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ProtectableContainerResourceList IJsonModel<ProtectableContainerResourceList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ProtectableContainerResourceList)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ResourceList JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectableContainerResourceList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProtectableContainerResourceList)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProtectableContainerResourceList(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ProtectableContainerResourceList DeserializeProtectableContainerResourceList(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string nextLink = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<ProtectableContainerResource> value = default;
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("nextLink"u8))
+                {
+                    nextLink = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("value"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ProtectableContainerResource> array = new List<ProtectableContainerResource>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ProtectableContainerResource.DeserializeProtectableContainerResource(item, options));
+                    }
+                    value = array;
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new ProtectableContainerResourceList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<ProtectableContainerResource>());
+        }
     }
 }

@@ -40,9 +40,7 @@ namespace Azure.Health.Deidentification
         /// <param name="error"> Error when job fails in it's entirety. </param>
         /// <param name="lastUpdatedAt">
         /// Date and time when the job was completed.
-        /// 
         /// If the job is canceled, this is the time when the job was canceled.
-        /// 
         /// If the job failed, this is the time when the job failed.
         /// </param>
         /// <param name="createdAt"> Date and time when the job was created. </param>
@@ -88,9 +86,7 @@ namespace Azure.Health.Deidentification
 
         /// <summary>
         /// Date and time when the job was completed.
-        /// 
         /// If the job is canceled, this is the time when the job was canceled.
-        /// 
         /// If the job failed, this is the time when the job failed.
         /// </summary>
         public DateTimeOffset LastUpdatedAt { get; }

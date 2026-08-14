@@ -9,7 +9,7 @@ using Generator.Model;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class StorageSpecification() :
-    Specification("Storage", typeof(StorageExtensions))
+    Specification("Storage", typeof(StorageExtensions), serviceDirectory: "storage")
 {
     protected override void Customize()
     {
@@ -17,7 +17,6 @@ public class StorageSpecification() :
         RemoveProperty<FileShareResource>("Expand");
         RemoveProperty<ImmutabilityPolicyResource>("IfMatch");
         RemoveProperty<ObjectReplicationPolicyResource>("ObjectReplicationPolicyId");
-        RemoveProperty<StoragePrivateEndpointConnectionData>("ResourceType");
         RemoveProperty<StorageTableAccessPolicy>("ExpiresOn");
 
         // Patch models
@@ -26,6 +25,12 @@ public class StorageSpecification() :
         CustomizeProperty<LocalUserKeys>("SharedKey", p => p.IsSecure = true);
         CustomizeProperty<StorageSshPublicKey>("Key", p => p.IsSecure = true);
         CustomizeProperty<StorageTaskAssignmentProperties>("ProvisioningState", p => p.HideLevel = PropertyHideLevel.HideProperty);
+
+        // Backward compatibility: rename properties and enable partial property definitions
+        CustomizeProperty<StorageAccountResource>("PrivateEndpointConnections", p => { p.Name = "PrivateEndpointConnectionResources"; });
+        CustomizeResource<StorageAccountResource>(r => { r.GeneratePartialPropertyDefinition = true; });
+        CustomizeSimpleModel<StorageActiveDirectoryProperties>(m => { m.GeneratePartialPropertyDefinition = true; });
+        CustomizeSimpleModel<ExecutionTrigger>(m => { m.GeneratePartialPropertyDefinition = true; });
 
         // Naming requirements
         AddNameRequirements<StorageAccountResource>(min: 3, max: 24, lower: true, digits: true);

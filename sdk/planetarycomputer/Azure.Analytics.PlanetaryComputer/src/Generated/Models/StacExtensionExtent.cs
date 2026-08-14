@@ -12,7 +12,6 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#extent-object
-    /// 
     /// Represents the spatial and temporal extent of a STAC collection.
     /// </summary>
     public partial class StacExtensionExtent
@@ -23,12 +22,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="StacExtensionExtent"/>. </summary>
         /// <param name="spatial">
         /// Spatial extent defined by bounding boxes.
-        /// 
         /// See the [STAC Collection Spec](https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object).
         /// </param>
         /// <param name="temporal">
         /// Temporal extent defined by time intervals.
-        /// 
         /// See the [STAC Collection Spec](https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object).
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="spatial"/> or <paramref name="temporal"/> is null. </exception>
@@ -44,12 +41,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="StacExtensionExtent"/>. </summary>
         /// <param name="spatial">
         /// Spatial extent defined by bounding boxes.
-        /// 
         /// See the [STAC Collection Spec](https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object).
         /// </param>
         /// <param name="temporal">
         /// Temporal extent defined by time intervals.
-        /// 
         /// See the [STAC Collection Spec](https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object).
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -62,14 +57,12 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Spatial extent defined by bounding boxes.
-        /// 
         /// See the [STAC Collection Spec](https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object).
         /// </summary>
         public StacExtensionSpatialExtent Spatial { get; set; }
 
         /// <summary>
         /// Temporal extent defined by time intervals.
-        /// 
         /// See the [STAC Collection Spec](https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object).
         /// </summary>
         public StacCollectionTemporalExtent Temporal { get; set; }

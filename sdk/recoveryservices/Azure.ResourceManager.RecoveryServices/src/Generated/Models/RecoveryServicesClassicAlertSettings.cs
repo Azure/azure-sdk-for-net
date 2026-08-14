@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Settings for classic alerts. </summary>
     public partial class RecoveryServicesClassicAlertSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesClassicAlertSettings"/>. </summary>
         public RecoveryServicesClassicAlertSettings()
@@ -53,17 +24,18 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesClassicAlertSettings"/>. </summary>
         /// <param name="alertsForCriticalOperations"></param>
         /// <param name="emailNotificationsForSiteRecovery"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryServicesClassicAlertSettings(RecoveryServicesAlertsState? alertsForCriticalOperations, RecoveryServicesAlertsState? emailNotificationsForSiteRecovery, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryServicesClassicAlertSettings(RecoveryServicesAlertsState? alertsForCriticalOperations, RecoveryServicesAlertsState? emailNotificationsForSiteRecovery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AlertsForCriticalOperations = alertsForCriticalOperations;
             EmailNotificationsForSiteRecovery = emailNotificationsForSiteRecovery;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the alerts for critical operations. </summary>
+        /// <summary> Gets or sets the AlertsForCriticalOperations. </summary>
         public RecoveryServicesAlertsState? AlertsForCriticalOperations { get; set; }
-        /// <summary> Gets or sets the email notifications for site recovery. </summary>
+
+        /// <summary> Gets or sets the EmailNotificationsForSiteRecovery. </summary>
         public RecoveryServicesAlertsState? EmailNotificationsForSiteRecovery { get; set; }
     }
 }

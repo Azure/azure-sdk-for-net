@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Avs
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal ScriptExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ScriptExecutionProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ScriptExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ScriptExecutionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
@@ -62,7 +62,11 @@ namespace Azure.ResourceManager.Avs
         {
             get
             {
-                return Properties is null ? default : Properties.Parameters;
+                if (Properties is null)
+                {
+                    Properties = new ScriptExecutionProperties();
+                }
+                return Properties.Parameters;
             }
         }
 
@@ -74,7 +78,11 @@ namespace Azure.ResourceManager.Avs
         {
             get
             {
-                return Properties is null ? default : Properties.HiddenParameters;
+                if (Properties is null)
+                {
+                    Properties = new ScriptExecutionProperties();
+                }
+                return Properties.HiddenParameters;
             }
         }
 
@@ -173,7 +181,11 @@ namespace Azure.ResourceManager.Avs
         {
             get
             {
-                return Properties is null ? default : Properties.Output;
+                if (Properties is null)
+                {
+                    Properties = new ScriptExecutionProperties();
+                }
+                return Properties.Output;
             }
         }
 
@@ -199,7 +211,11 @@ namespace Azure.ResourceManager.Avs
         {
             get
             {
-                return Properties is null ? default : Properties.Information;
+                if (Properties is null)
+                {
+                    Properties = new ScriptExecutionProperties();
+                }
+                return Properties.Information;
             }
         }
 
@@ -208,7 +224,11 @@ namespace Azure.ResourceManager.Avs
         {
             get
             {
-                return Properties is null ? default : Properties.Warnings;
+                if (Properties is null)
+                {
+                    Properties = new ScriptExecutionProperties();
+                }
+                return Properties.Warnings;
             }
         }
 
@@ -217,7 +237,11 @@ namespace Azure.ResourceManager.Avs
         {
             get
             {
-                return Properties is null ? default : Properties.Errors;
+                if (Properties is null)
+                {
+                    Properties = new ScriptExecutionProperties();
+                }
+                return Properties.Errors;
             }
         }
     }

@@ -39,31 +39,36 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="ids"> List of specific item IDs to return. </param>
         /// <param name="boundingBox"> Bounding box for spatial filtering in format [west, south, east, north]. </param>
         /// <param name="intersects"> GeoJSON geometry for spatial filtering. </param>
-        /// <param name="datetime"> Temporal filter in RFC 3339 format, can be a single time or range. </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
         /// <param name="limit"> Maximum number of results to return. </param>
         /// <param name="conformanceClass">
         /// Conf
-        /// 
         /// Overrides datetime validation from the base request model.
         /// </param>
         /// <param name="query">
         /// STAC Query
-        /// 
         /// See the [STAC Query Extension](https://github.com/stac-api-extensions/query).
         /// </param>
         /// <param name="sortBy">
         /// Sort criteria for the search results.
-        /// 
         /// See the [STAC Sort Extension](https://github.com/stac-api-extensions/sort).
         /// </param>
         /// <param name="fields">
         /// Specifies which fields to include or exclude in the STAC search results.
-        /// 
         /// See the [STAC Fields Extension](https://github.com/stac-api-extensions/fields).
         /// </param>
         /// <param name="filter">
         /// CQL2 Filter
-        /// 
         /// See the [STAC Filter Extension](https://github.com/stac-api-extensions/filter).
         /// </param>
         /// <param name="filterCoordinateReferenceSystem"> Coordinate reference system for the filter. </param>
@@ -101,7 +106,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> GeoJSON geometry for spatial filtering. </summary>
         public GeoJsonGeometry Intersects { get; set; }
 
-        /// <summary> Temporal filter in RFC 3339 format, can be a single time or range. </summary>
+        /// <summary>
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </summary>
         public string Datetime { get; set; }
 
         /// <summary> Maximum number of results to return. </summary>
@@ -109,7 +124,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Conf
-        /// 
         /// Overrides datetime validation from the base request model.
         /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
@@ -139,7 +153,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// STAC Query
-        /// 
         /// See the [STAC Query Extension](https://github.com/stac-api-extensions/query).
         /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
@@ -169,21 +182,18 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Sort criteria for the search results.
-        /// 
         /// See the [STAC Sort Extension](https://github.com/stac-api-extensions/sort).
         /// </summary>
         public IList<StacSortExtension> SortBy { get; }
 
         /// <summary>
         /// Specifies which fields to include or exclude in the STAC search results.
-        /// 
         /// See the [STAC Fields Extension](https://github.com/stac-api-extensions/fields).
         /// </summary>
         public IList<SearchOptionsFields> Fields { get; }
 
         /// <summary>
         /// CQL2 Filter
-        /// 
         /// See the [STAC Filter Extension](https://github.com/stac-api-extensions/filter).
         /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>

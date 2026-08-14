@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ImpactReporting
         {
             TryGetApiVersion(WorkloadImpactResource.ResourceType, out string workloadImpactApiVersion);
             _workloadImpactsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImpactReporting", WorkloadImpactResource.ResourceType.Namespace, Diagnostics);
-            _workloadImpactsRestClient = new WorkloadImpacts(_workloadImpactsClientDiagnostics, Pipeline, Endpoint, workloadImpactApiVersion ?? "2024-05-01-preview");
+            _workloadImpactsRestClient = new WorkloadImpacts(_workloadImpactsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workloadImpactApiVersion ?? "2024-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ImpactReporting
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 HttpMessage message = _workloadImpactsRestClient.CreateCreateRequest(Id.SubscriptionId, workloadImpactName, WorkloadImpactData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ImpactReportingArmOperation<WorkloadImpactResource> operation = new ImpactReportingArmOperation<WorkloadImpactResource>(
-                    new WorkloadImpactOperationSource(Client),
+                    new WorkloadImpactResourceOperationSource(Client),
                     _workloadImpactsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 HttpMessage message = _workloadImpactsRestClient.CreateCreateRequest(Id.SubscriptionId, workloadImpactName, WorkloadImpactData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ImpactReportingArmOperation<WorkloadImpactResource> operation = new ImpactReportingArmOperation<WorkloadImpactResource>(
-                    new WorkloadImpactOperationSource(Client),
+                    new WorkloadImpactResourceOperationSource(Client),
                     _workloadImpactsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ImpactReporting
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadImpactData, WorkloadImpactResource>(new WorkloadImpactsGetBySubscriptionAsyncCollectionResultOfT(_workloadImpactsRestClient, Id.SubscriptionId, context), data => new WorkloadImpactResource(Client, data));
+            return new AsyncPageableWrapper<WorkloadImpactData, WorkloadImpactResource>(new WorkloadImpactsGetBySubscriptionAsyncCollectionResultOfT(_workloadImpactsRestClient, Id.SubscriptionId, context, "WorkloadImpactCollection.GetAll"), data => new WorkloadImpactResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ImpactReporting
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadImpactData, WorkloadImpactResource>(new WorkloadImpactsGetBySubscriptionCollectionResultOfT(_workloadImpactsRestClient, Id.SubscriptionId, context), data => new WorkloadImpactResource(Client, data));
+            return new PageableWrapper<WorkloadImpactData, WorkloadImpactResource>(new WorkloadImpactsGetBySubscriptionCollectionResultOfT(_workloadImpactsRestClient, Id.SubscriptionId, context, "WorkloadImpactCollection.GetAll"), data => new WorkloadImpactResource(Client, data));
         }
 
         /// <summary>

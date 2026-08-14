@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Communication
 {
+    /// <summary></summary>
     public partial class CommunicationDomainResource : IJsonModel<CommunicationDomainResourceData>
     {
-        private static CommunicationDomainResourceData s_dataDeserializationInstance;
-        private static CommunicationDomainResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CommunicationDomainResourceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CommunicationDomainResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CommunicationDomainResourceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CommunicationDomainResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CommunicationDomainResourceData>)Data).Write(writer, options);
 
-        CommunicationDomainResourceData IJsonModel<CommunicationDomainResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CommunicationDomainResourceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CommunicationDomainResourceData IJsonModel<CommunicationDomainResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CommunicationDomainResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CommunicationDomainResourceData>(Data, options, AzureResourceManagerCommunicationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CommunicationDomainResourceData IPersistableModel<CommunicationDomainResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CommunicationDomainResourceData>(data, options, AzureResourceManagerCommunicationContext.Default);
 
-        string IPersistableModel<CommunicationDomainResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CommunicationDomainResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CommunicationDomainResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

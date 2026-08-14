@@ -11,3 +11,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Dns
       safeName: AzureResourceManagerDns
+    - name: Azure.Provisioning.Dns
+      safeName: AzureProvisioningDns

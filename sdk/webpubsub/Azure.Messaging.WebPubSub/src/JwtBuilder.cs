@@ -146,8 +146,10 @@ namespace Azure.Core
         /// <returns></returns>
         public int End()
         {
-            if (_writer == null) return _jwtLength; // writer is set to null after token is formatted.
-            if (_isDisposed) throw new ObjectDisposedException(nameof(JwtBuilder));
+            if (_writer == null)
+                return _jwtLength; // writer is set to null after token is formatted.
+            if (_isDisposed)
+                throw new ObjectDisposedException(nameof(JwtBuilder));
 
             _writer.WriteEndObject();
             _writer.Flush();
@@ -158,7 +160,8 @@ namespace Azure.Core
             int payloadIndex = headerSha256.Length;
 
             int maxBufferLength;
-            checked {
+            checked
+            {
                 maxBufferLength =
                     Base64.GetMaxEncodedToUtf8Length(headerSha256.Length + payloadLength)
                     + 1 // dot
@@ -204,7 +207,8 @@ namespace Azure.Core
         public string BuildString()
         {
             End();
-            var result = NS2Bridge.CreateString(_jwtLength, _jwt, (destination, state) => {
+            var result = NS2Bridge.CreateString(_jwtLength, _jwt, (destination, state) =>
+            {
                 NS2Bridge.Latin1ToUtf16(state.AsSpan(0, _jwtLength), destination);
             });
             return result;

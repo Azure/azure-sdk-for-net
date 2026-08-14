@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -20,22 +19,16 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Initializes a new instance of <see cref="PolicyPatch"/>. </summary>
         public PolicyPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicyPatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyPatch(IDictionary<string, string> tags, PolicyUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyPatch(PolicyUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Tags = tags;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
         internal PolicyUpdateProperties Properties { get; set; }

@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             Assert.IsFalse(falseResult);
         }
 
-       [Test]
+        [Test]
         public async Task CreateUpdateTestWithNoClusterPolicy()
         {
             await SetCollectionsAsync();

@@ -8,7 +8,7 @@ namespace Azure.Core.Expressions.DataFactory
     /// Please note <see cref="DataFactorySecret"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="DataFactoryKeyVaultSecret"/>.
     /// </summary>
-    [PropertyReferenceType(new string[0], new[]{ nameof(SecretBaseType)})]
+    [PropertyReferenceType(new string[0], new[] { nameof(SecretBaseType) })]
     public abstract partial class DataFactorySecret
     {
         /// <summary> Initializes a new instance of DataFactorySecretBaseDefinition. </summary>

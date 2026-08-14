@@ -1,0 +1,4 @@
+﻿<Solution>
+  <Project Path="src/Azure.ResourceManager.IotFirmwareDefense.csproj" />
+  <Project Path="tests/Azure.ResourceManager.IotFirmwareDefense.Tests.csproj" />
+</Solution>

@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.EdgeActions.Samples
             EdgeActionVersionResource edgeActionVersion = client.GetEdgeActionVersionResource(edgeActionVersionResourceId);
 
             // invoke the operation
-            EdgeActionVersionData data = new EdgeActionVersionData
+            EdgeActionVersionPatch data = new EdgeActionVersionPatch
             {
-                Properties = new EdgeActionVersionProperties
+                Properties = new EdgeActionVersionUpdateProperties
                 {
                     DeploymentType = EdgeActionVersionDeploymentType.Others,
                 }

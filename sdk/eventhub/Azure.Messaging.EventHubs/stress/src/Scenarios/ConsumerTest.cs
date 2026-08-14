@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Security.Cryptography;
-using System.Collections.Concurrent;
 
 namespace Azure.Messaging.EventHubs.Stress;
 
@@ -20,7 +20,7 @@ public class ConsumerTest : TestScenario
     public override string Name { get; } = "ConsumerTest";
 
     /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
-    public override Role[] Roles { get; } = {Role.PartitionPublisher, Role.Consumer};
+    public override Role[] Roles { get; } = { Role.PartitionPublisher, Role.Consumer };
 
     /// <summary>The ids of all of the partitions.</summary>
     private string[] _partitionIds;
@@ -98,7 +98,7 @@ public class ConsumerTest : TestScenario
                 return Task.Run(() => partitionPublisher.RunAsync(cancellationToken));
 
             default:
-                throw new NotSupportedException($"Running role { role.ToString() } is not supported by this test scenario.");
+                throw new NotSupportedException($"Running role {role.ToString()} is not supported by this test scenario.");
         }
     }
 }

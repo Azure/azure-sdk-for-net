@@ -1,0 +1,15 @@
+<Project>
+  <!--
+    Auto-inject a global using for Azure.AI.AgentServer.Core so that consumers
+    can write `AgentHost.Run<T>(args)` without an explicit using directive.
+    This enables a true one-liner getting-started experience:
+
+        AgentHost.Run<MyHandler>(args);
+
+    The Core namespace contains the static AgentHost entry point, AgentHostBuilder,
+    AgentHostApp, AgentHostOptions, and AgentHostTelemetry.
+  -->
+  <ItemGroup>
+    <Using Include="Azure.AI.AgentServer.Core" />
+  </ItemGroup>
+</Project>

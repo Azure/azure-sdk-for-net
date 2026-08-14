@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
 
         private ClientDiagnostics CloudHsmClustersClientDiagnostics => _cloudHsmClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CloudHsmClusters CloudHsmClustersRestClient => _cloudHsmClustersRestClient ??= new CloudHsmClusters(CloudHsmClustersClientDiagnostics, Pipeline, Endpoint, "2025-03-31");
+        private CloudHsmClusters CloudHsmClustersRestClient => _cloudHsmClustersRestClient ??= new CloudHsmClusters(CloudHsmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-31");
 
         private ClientDiagnostics DedicatedHsmsClientDiagnostics => _dedicatedHsmsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DedicatedHsms DedicatedHsmsRestClient => _dedicatedHsmsRestClient ??= new DedicatedHsms(DedicatedHsmsClientDiagnostics, Pipeline, Endpoint, "2025-03-31");
+        private DedicatedHsms DedicatedHsmsRestClient => _dedicatedHsmsRestClient ??= new DedicatedHsms(DedicatedHsmsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-31");
 
         /// <summary>
         /// The List operation gets information about the Cloud HSM Clusters associated with the subscription.
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClustersGetBySubscriptionAsyncCollectionResultOfT(CloudHsmClustersRestClient, Guid.Parse(Id.SubscriptionId), skiptoken, context), data => new CloudHsmClusterResource(Client, data));
+            return new AsyncPageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClustersGetBySubscriptionAsyncCollectionResultOfT(CloudHsmClustersRestClient, Guid.Parse(Id.SubscriptionId), skiptoken, context, "MockableHardwareSecurityModulesSubscriptionResource.GetCloudHsmClusters"), data => new CloudHsmClusterResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClustersGetBySubscriptionCollectionResultOfT(CloudHsmClustersRestClient, Guid.Parse(Id.SubscriptionId), skiptoken, context), data => new CloudHsmClusterResource(Client, data));
+            return new PageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClustersGetBySubscriptionCollectionResultOfT(CloudHsmClustersRestClient, Guid.Parse(Id.SubscriptionId), skiptoken, context, "MockableHardwareSecurityModulesSubscriptionResource.GetCloudHsmClusters"), data => new CloudHsmClusterResource(Client, data));
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmsGetBySubscriptionAsyncCollectionResultOfT(DedicatedHsmsRestClient, Guid.Parse(Id.SubscriptionId), top, context), data => new DedicatedHsmResource(Client, data));
+            return new AsyncPageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmsGetBySubscriptionAsyncCollectionResultOfT(DedicatedHsmsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableHardwareSecurityModulesSubscriptionResource.GetDedicatedHsms"), data => new DedicatedHsmResource(Client, data));
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmsGetBySubscriptionCollectionResultOfT(DedicatedHsmsRestClient, Guid.Parse(Id.SubscriptionId), top, context), data => new DedicatedHsmResource(Client, data));
+            return new PageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmsGetBySubscriptionCollectionResultOfT(DedicatedHsmsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableHardwareSecurityModulesSubscriptionResource.GetDedicatedHsms"), data => new DedicatedHsmResource(Client, data));
         }
     }
 }

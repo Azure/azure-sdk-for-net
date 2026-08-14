@@ -64,7 +64,8 @@ public static class ReflectionExtensions
         if (parameters.Length != 1 || parameters[0].ParameterType != typeof(string)) { return false; }
 
         // Has implicit conversion from string
-        MethodInfo? conv = type.GetMethod("op_Implicit", [typeof(string)]);
+        MethodInfo? conv = type.GetMethods(BindingFlags.Public | BindingFlags.Static)
+            .FirstOrDefault(m => m.Name == "op_Implicit" && m.GetParameters().Length == 1 && m.GetParameters()[0].ParameterType == typeof(string));
         if (conv is null) { return false; }
 
         // Has static readonly properties of its own type
@@ -96,8 +97,7 @@ public static class ReflectionExtensions
         type.IsClass &&
         (type.GetInterfaces().Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IPersistableModel<>)).Any() ||
             type == typeof(Azure.ResourceManager.AppContainers.Models.ContainerAppManagedEnvironmentOutboundSettings) ||
-            type == typeof(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookCreateOrUpdateContent) ||
-            type == typeof(Azure.ResourceManager.Search.Models.SearchManagementRequestOptions)
+            type == typeof(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookCreateOrUpdateContent)
 #pragma warning disable CS0618 // Type or member is obsolete
         // || type == typeof(Azure.ResourceManager.Network.Models.ProtocolCustomSettings)
 #pragma warning restore CS0618 // Type or member is obsolete

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,11 +19,7 @@ namespace Azure.AI.ContentUnderstanding
     public partial class ContentUnderstandingClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly AzureKeyCredential _keyCredential;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
         private readonly string _apiVersion;
 
@@ -48,20 +45,24 @@ namespace Azure.AI.ContentUnderstanding
         }
 
         /// <summary> Initializes a new instance of ContentUnderstandingClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ContentUnderstandingClient(Uri endpoint, AzureKeyCredential credential, ContentUnderstandingClientOptions options)
+        internal ContentUnderstandingClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ContentUnderstandingClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new ContentUnderstandingClientOptions();
 
             _endpoint = endpoint;
-            _keyCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) });
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
@@ -71,18 +72,24 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ContentUnderstandingClient(Uri endpoint, TokenCredential credential, ContentUnderstandingClientOptions options)
+        public ContentUnderstandingClient(Uri endpoint, AzureKeyCredential credential, ContentUnderstandingClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+        }
 
-            options ??= new ContentUnderstandingClientOptions();
+        /// <summary> Initializes a new instance of ContentUnderstandingClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ContentUnderstandingClient(Uri endpoint, TokenCredential credential, ContentUnderstandingClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        {
+        }
 
-            _endpoint = endpoint;
-            _tokenCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
-            _apiVersion = options.Version;
-            ClientDiagnostics = new ClientDiagnostics(options, true);
+        /// <summary> Initializes a new instance of ContentUnderstandingClient from a <see cref="ContentUnderstandingClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for ContentUnderstandingClient. </param>
+        [Experimental("SCME0002")]
+        public ContentUnderstandingClient(ContentUnderstandingClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        {
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -90,6 +97,88 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary>
+        /// [Protocol Method] Extract content and fields from input. The analysis result is embedded inline in the JSON response body (HTTP 200) without creating a long-running operation — no polling or separate result retrieval is needed. Intended for lightweight analysis scenarios (e.g., document analyzers without field extraction, small page counts). The result is not persisted on the server. See service documentation for current constraints.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="stringEncoding">
+        ///   The string encoding format for content spans in the response.
+        ///   Possible values are 'codePoint', 'utf16', and `utf8`.  Default is `codePoint`.")
+        /// </param>
+        /// <param name="processingLocation"> The location where the data may be processed.  Defaults to global. </param>
+        /// <param name="allowInputTruncation"> Overrides the analyzer's allowInputTruncation setting for this request. When omitted, the analyzer's configured value applies. </param>
+        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response AnalyzeInline(string analyzerId, RequestContent content, string stringEncoding = default, string processingLocation = default, bool? allowInputTruncation = default, Guid? clientRequestId = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContentUnderstandingClient.AnalyzeInline");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateAnalyzeInlineRequest(analyzerId, content, stringEncoding, processingLocation, allowInputTruncation, clientRequestId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Extract content and fields from input. The analysis result is embedded inline in the JSON response body (HTTP 200) without creating a long-running operation — no polling or separate result retrieval is needed. Intended for lightweight analysis scenarios (e.g., document analyzers without field extraction, small page counts). The result is not persisted on the server. See service documentation for current constraints.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="stringEncoding">
+        ///   The string encoding format for content spans in the response.
+        ///   Possible values are 'codePoint', 'utf16', and `utf8`.  Default is `codePoint`.")
+        /// </param>
+        /// <param name="processingLocation"> The location where the data may be processed.  Defaults to global. </param>
+        /// <param name="allowInputTruncation"> Overrides the analyzer's allowInputTruncation setting for this request. When omitted, the analyzer's configured value applies. </param>
+        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> AnalyzeInlineAsync(string analyzerId, RequestContent content, string stringEncoding = default, string processingLocation = default, bool? allowInputTruncation = default, Guid? clientRequestId = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContentUnderstandingClient.AnalyzeInline");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateAnalyzeInlineRequest(analyzerId, content, stringEncoding, processingLocation, allowInputTruncation, clientRequestId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// <summary> Create a copy of the source analyzer to the current location. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -138,7 +227,7 @@ namespace Azure.AI.ContentUnderstanding
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateCopyAnalyzerRequest(analyzerId, content, allowReplace, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ContentUnderstandingClient.CopyAnalyzerAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ContentUnderstandingClient.CopyAnalyzer", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -184,7 +273,7 @@ namespace Azure.AI.ContentUnderstanding
 
             CopyAnalyzerRequest spreadModel = new CopyAnalyzerRequest(sourceAzureResourceId, sourceRegion, sourceAnalyzerId, default);
             Operation<BinaryData> result = await CopyAnalyzerAsync(waitUntil, analyzerId, spreadModel, allowReplace, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => ContentAnalyzer.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.CopyAnalyzerAsync");
+            return ProtocolOperationHelpers.Convert(result, response => ContentAnalyzer.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.CopyAnalyzer");
         }
 
         /// <summary> Create a new analyzer asynchronously. </summary>
@@ -234,7 +323,7 @@ namespace Azure.AI.ContentUnderstanding
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateCreateAnalyzerRequest(analyzerId, content, allowReplace, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ContentUnderstandingClient.CreateAnalyzerAsync", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ContentUnderstandingClient.CreateAnalyzer", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -274,7 +363,7 @@ namespace Azure.AI.ContentUnderstanding
             Argument.AssertNotNull(resource, nameof(resource));
 
             Operation<BinaryData> result = await CreateAnalyzerAsync(waitUntil, analyzerId, resource, allowReplace, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (ContentAnalyzer)response, ClientDiagnostics, "ContentUnderstandingClient.CreateAnalyzerAsync");
+            return ProtocolOperationHelpers.Convert(result, response => (ContentAnalyzer)response, ClientDiagnostics, "ContentUnderstandingClient.CreateAnalyzer");
         }
 
         /// <summary>
@@ -958,7 +1047,7 @@ namespace Azure.AI.ContentUnderstanding
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNullOrEmpty(targetAzureResourceId, nameof(targetAzureResourceId));
 
-            GrantCopyAuthorizationRequest1 spreadModel = new GrantCopyAuthorizationRequest1(targetAzureResourceId, targetRegion, default);
+            GrantCopyAuthorizationRequest spreadModel = new GrantCopyAuthorizationRequest(targetAzureResourceId, targetRegion, default);
             Response result = GrantCopyAuthorization(analyzerId, spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((CopyAuthorization)result, result);
         }
@@ -976,7 +1065,7 @@ namespace Azure.AI.ContentUnderstanding
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNullOrEmpty(targetAzureResourceId, nameof(targetAzureResourceId));
 
-            GrantCopyAuthorizationRequest1 spreadModel = new GrantCopyAuthorizationRequest1(targetAzureResourceId, targetRegion, default);
+            GrantCopyAuthorizationRequest spreadModel = new GrantCopyAuthorizationRequest(targetAzureResourceId, targetRegion, default);
             Response result = await GrantCopyAuthorizationAsync(analyzerId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((CopyAuthorization)result, result);
         }
@@ -994,7 +1083,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetAnalyzers(RequestContext context)
         {
-            return new ContentUnderstandingClientGetAnalyzersCollectionResult(this, context);
+            return new ContentUnderstandingClientGetAnalyzersCollectionResult(this, context, "ContentUnderstandingClient.GetAnalyzers");
         }
 
         /// <summary>
@@ -1010,7 +1099,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetAnalyzersAsync(RequestContext context)
         {
-            return new ContentUnderstandingClientGetAnalyzersAsyncCollectionResult(this, context);
+            return new ContentUnderstandingClientGetAnalyzersAsyncCollectionResult(this, context, "ContentUnderstandingClient.GetAnalyzers");
         }
 
         /// <summary> List analyzers. </summary>
@@ -1018,7 +1107,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ContentAnalyzer> GetAnalyzers(CancellationToken cancellationToken = default)
         {
-            return new ContentUnderstandingClientGetAnalyzersCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new ContentUnderstandingClientGetAnalyzersCollectionResultOfT(this, cancellationToken.ToRequestContext(), "ContentUnderstandingClient.GetAnalyzers");
         }
 
         /// <summary> List analyzers. </summary>
@@ -1026,7 +1115,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ContentAnalyzer> GetAnalyzersAsync(CancellationToken cancellationToken = default)
         {
-            return new ContentUnderstandingClientGetAnalyzersAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new ContentUnderstandingClientGetAnalyzersAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "ContentUnderstandingClient.GetAnalyzers");
         }
 
         /// <summary>
@@ -1098,7 +1187,7 @@ namespace Azure.AI.ContentUnderstanding
         }
 
         /// <summary>
-        /// [Protocol Method] Return default settings for this Content Understanding resource.
+        /// [Protocol Method] Update default settings for this Content Understanding resource.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -1129,7 +1218,7 @@ namespace Azure.AI.ContentUnderstanding
         }
 
         /// <summary>
-        /// [Protocol Method] Return default settings for this Content Understanding resource.
+        /// [Protocol Method] Update default settings for this Content Understanding resource.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>

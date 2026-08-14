@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Parameters for remote SharePoint knowledge source. </summary>
     public partial class RemoteSharePointKnowledgeSourceParameters
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RemoteSharePointKnowledgeSourceParameters"/>. </summary>
         public RemoteSharePointKnowledgeSourceParameters()
@@ -52,22 +24,24 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RemoteSharePointKnowledgeSourceParameters"/>. </summary>
-        /// <param name="filterExpression"> Keyword Query Language (KQL) expression with queryable SharePoint properties and attributes to scope the retrieval before the query runs. See documentation: https://learn.microsoft.com/en-us/sharepoint/dev/general-development/keyword-query-language-kql-syntax-reference. </param>
-        /// <param name="resourceMetadata"> A list of metadata fields to be returned for each item in the response. Only retrievable metadata properties can be included in this list. By default, no metadata is returned. Optional. </param>
+        /// <param name="filterExpression"> Keyword Query Language (KQL) expression with queryable SharePoint properties and attributes to scope the retrieval before the query runs. </param>
+        /// <param name="resourceMetadata"> A list of metadata fields to be returned for each item in the response. Only retrievable metadata properties can be included in this list. By default, no metadata is returned. </param>
         /// <param name="containerTypeId"> Container ID for SharePoint Embedded connection. When this is null, it will use SharePoint Online. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RemoteSharePointKnowledgeSourceParameters(string filterExpression, IList<string> resourceMetadata, string containerTypeId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RemoteSharePointKnowledgeSourceParameters(string filterExpression, IList<string> resourceMetadata, string containerTypeId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FilterExpression = filterExpression;
             ResourceMetadata = resourceMetadata;
             ContainerTypeId = containerTypeId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Keyword Query Language (KQL) expression with queryable SharePoint properties and attributes to scope the retrieval before the query runs. See documentation: https://learn.microsoft.com/en-us/sharepoint/dev/general-development/keyword-query-language-kql-syntax-reference. </summary>
+        /// <summary> Keyword Query Language (KQL) expression with queryable SharePoint properties and attributes to scope the retrieval before the query runs. </summary>
         public string FilterExpression { get; set; }
-        /// <summary> A list of metadata fields to be returned for each item in the response. Only retrievable metadata properties can be included in this list. By default, no metadata is returned. Optional. </summary>
+
+        /// <summary> A list of metadata fields to be returned for each item in the response. Only retrievable metadata properties can be included in this list. By default, no metadata is returned. </summary>
         public IList<string> ResourceMetadata { get; }
+
         /// <summary> Container ID for SharePoint Embedded connection. When this is null, it will use SharePoint Online. </summary>
         public string ContainerTypeId { get; set; }
     }

@@ -21,6 +21,46 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual WeightsAndBiasesPartnerProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesPartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeWeightsAndBiasesPartnerProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WeightsAndBiasesPartnerProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesPartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWeightsAndBiasesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(WeightsAndBiasesPartnerProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<WeightsAndBiasesPartnerProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WeightsAndBiasesPartnerProperties IPersistableModel<WeightsAndBiasesPartnerProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WeightsAndBiasesPartnerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WeightsAndBiasesPartnerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -107,45 +147,5 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
             }
             return new WeightsAndBiasesPartnerProperties(region, subdomain, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WeightsAndBiasesPartnerProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesPartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWeightsAndBiasesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WeightsAndBiasesPartnerProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WeightsAndBiasesPartnerProperties IPersistableModel<WeightsAndBiasesPartnerProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WeightsAndBiasesPartnerProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesPartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeWeightsAndBiasesPartnerProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WeightsAndBiasesPartnerProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WeightsAndBiasesPartnerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     public readonly partial struct EdgeOrderActionStatus : IEquatable<EdgeOrderActionStatus>
     {
         private readonly string _value;
+        /// <summary> Allowed flag. </summary>
+        private const string AllowedValue = "Allowed";
+        /// <summary> Not Allowed flag. </summary>
+        private const string NotAllowedValue = "NotAllowed";
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderActionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EdgeOrderActionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AllowedValue = "Allowed";
-        private const string NotAllowedValue = "NotAllowed";
+            _value = value;
+        }
 
         /// <summary> Allowed flag. </summary>
         public static EdgeOrderActionStatus Allowed { get; } = new EdgeOrderActionStatus(AllowedValue);
+
         /// <summary> Not Allowed flag. </summary>
         public static EdgeOrderActionStatus NotAllowed { get; } = new EdgeOrderActionStatus(NotAllowedValue);
+
         /// <summary> Determines if two <see cref="EdgeOrderActionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EdgeOrderActionStatus left, EdgeOrderActionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EdgeOrderActionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EdgeOrderActionStatus left, EdgeOrderActionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeOrderActionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EdgeOrderActionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EdgeOrderActionStatus(string value) => new EdgeOrderActionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EdgeOrderActionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EdgeOrderActionStatus?(string value) => value == null ? null : new EdgeOrderActionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EdgeOrderActionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EdgeOrderActionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

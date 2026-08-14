@@ -7,11 +7,11 @@ Namespaces for this example:
 ```C# Snippet:Managing_StorageAccounts_NameSpaces
 using System;
 using System.Threading.Tasks;
-using Azure.Identity;
-using Azure.ResourceManager.Storage.Models;
-using Azure.ResourceManager.Resources;
-using NUnit.Framework;
 using Azure.Core;
+using Azure.Identity;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage.Models;
+using NUnit.Framework;
 ```
 
 When you first create your ARM client, choose the subscription you're going to work in. There's a convenient `DefaultSubscription` property that returns the default subscription configured for your user:
@@ -62,7 +62,7 @@ FileShareCollection fileShareCollection = fileService.GetFileShares();
 string fileShareName = "myFileShare";
 FileShareData fileShareData = new FileShareData();
 ArmOperation<FileShareResource> fileShareCreateOperation = await fileShareCollection.CreateOrUpdateAsync(WaitUntil.Started, fileShareName, fileShareData);
-FileShareResource fileShare =await fileShareCreateOperation.WaitForCompletionAsync();
+FileShareResource fileShare = await fileShareCreateOperation.WaitForCompletionAsync();
 ```
 
 ***List all file shares***

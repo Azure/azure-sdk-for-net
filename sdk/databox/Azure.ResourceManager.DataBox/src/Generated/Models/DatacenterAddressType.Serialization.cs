@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal static partial class DatacenterAddressTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DatacenterAddressType value) => value switch
         {
             DatacenterAddressType.DatacenterAddressLocation => "DatacenterAddressLocation",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.DataBox.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DatacenterAddressType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DatacenterAddressType ToDatacenterAddressType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DatacenterAddressLocation")) return DatacenterAddressType.DatacenterAddressLocation;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DatacenterAddressInstruction")) return DatacenterAddressType.DatacenterAddressInstruction;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DatacenterAddressLocation"))
+            {
+                return DatacenterAddressType.DatacenterAddressLocation;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DatacenterAddressInstruction"))
+            {
+                return DatacenterAddressType.DatacenterAddressInstruction;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DatacenterAddressType value.");
         }
     }

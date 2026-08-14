@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Translation.Document
 {
-    [CodeGenModel("Glossary")]
+    [CodeGenType("Glossary")]
     public partial class TranslationGlossary
     {
         /// <summary>
@@ -26,15 +26,15 @@ namespace Azure.AI.Translation.Document
 
         /// <summary>
         /// Optional file format version. If not specified, the service will
-        /// use the <see cref="DocumentTranslationFileFormat.DefaultFormatVersion"/> for the file format returned from the
-        /// <see cref="DocumentTranslationClient.GetSupportedFormatsAsync(FileFormatType?, System.Threading.CancellationToken)"/> client method.
+        /// use the <see cref="DocumentTranslationFileFormat.DefaultFormatVersion"/> for the file format returned from
+        /// <see cref="DocumentTranslationClient"/>'s <c>GetSupportedFormatsAsync</c> client method.
         /// </summary>
         [CodeGenMember("Version")]
         public string FormatVersion { get; set; }
 
         /// <summary>
         /// Format of the glossary file. To see supported formats,
-        /// use the <see cref="DocumentTranslationClient.GetSupportedFormatsAsync(FileFormatType?, System.Threading.CancellationToken)"/> client method.
+        /// use <see cref="DocumentTranslationClient"/>'s <c>GetSupportedFormatsAsync</c> client method.
         /// </summary>
         public string Format { get; }
     }

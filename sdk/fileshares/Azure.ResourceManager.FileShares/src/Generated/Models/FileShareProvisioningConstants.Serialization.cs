@@ -21,6 +21,46 @@ namespace Azure.ResourceManager.FileShares.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FileShareProvisioningConstants PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FileShareProvisioningConstants>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFileShareProvisioningConstants(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FileShareProvisioningConstants)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FileShareProvisioningConstants>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFileSharesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FileShareProvisioningConstants)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FileShareProvisioningConstants>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FileShareProvisioningConstants IPersistableModel<FileShareProvisioningConstants>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FileShareProvisioningConstants>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FileShareProvisioningConstants>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -47,6 +87,10 @@ namespace Azure.ResourceManager.FileShares.Models
             writer.WriteNumberValue(BaseThroughputMiBPerSec);
             writer.WritePropertyName("scalarThroughputMiBPerSec"u8);
             writer.WriteNumberValue(ScalarThroughputMiBPerSec);
+            writer.WritePropertyName("guardrailIOPerSecScalar"u8);
+            writer.WriteNumberValue(GuardrailIOPerSecScalar);
+            writer.WritePropertyName("guardrailThroughputScalar"u8);
+            writer.WriteNumberValue(GuardrailThroughputScalar);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -93,6 +137,8 @@ namespace Azure.ResourceManager.FileShares.Models
             double scalarIOPerSec = default;
             int baseThroughputMiBPerSec = default;
             double scalarThroughputMiBPerSec = default;
+            double guardrailIOPerSecScalar = default;
+            double guardrailThroughputScalar = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -116,52 +162,29 @@ namespace Azure.ResourceManager.FileShares.Models
                     scalarThroughputMiBPerSec = prop.Value.GetDouble();
                     continue;
                 }
+                if (prop.NameEquals("guardrailIOPerSecScalar"u8))
+                {
+                    guardrailIOPerSecScalar = prop.Value.GetDouble();
+                    continue;
+                }
+                if (prop.NameEquals("guardrailThroughputScalar"u8))
+                {
+                    guardrailThroughputScalar = prop.Value.GetDouble();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FileShareProvisioningConstants(baseIOPerSec, scalarIOPerSec, baseThroughputMiBPerSec, scalarThroughputMiBPerSec, additionalBinaryDataProperties);
+            return new FileShareProvisioningConstants(
+                baseIOPerSec,
+                scalarIOPerSec,
+                baseThroughputMiBPerSec,
+                scalarThroughputMiBPerSec,
+                guardrailIOPerSecScalar,
+                guardrailThroughputScalar,
+                additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FileShareProvisioningConstants>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FileShareProvisioningConstants>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFileSharesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(FileShareProvisioningConstants)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        FileShareProvisioningConstants IPersistableModel<FileShareProvisioningConstants>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FileShareProvisioningConstants PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FileShareProvisioningConstants>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeFileShareProvisioningConstants(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FileShareProvisioningConstants)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FileShareProvisioningConstants>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

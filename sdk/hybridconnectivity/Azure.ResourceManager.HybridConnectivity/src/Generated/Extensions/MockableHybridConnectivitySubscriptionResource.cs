@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
 
         private ClientDiagnostics PublicCloudConnectorsClientDiagnostics => _publicCloudConnectorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PublicCloudConnectors PublicCloudConnectorsRestClient => _publicCloudConnectorsRestClient ??= new PublicCloudConnectors(PublicCloudConnectorsClientDiagnostics, Pipeline, Endpoint, "2024-12-01");
+        private PublicCloudConnectors PublicCloudConnectorsRestClient => _publicCloudConnectorsRestClient ??= new PublicCloudConnectors(PublicCloudConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-01");
 
         private ClientDiagnostics SolutionTypesClientDiagnostics => _solutionTypesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SolutionTypes SolutionTypesRestClient => _solutionTypesRestClient ??= new SolutionTypes(SolutionTypesClientDiagnostics, Pipeline, Endpoint, "2024-12-01");
+        private SolutionTypes SolutionTypesRestClient => _solutionTypesRestClient ??= new SolutionTypes(SolutionTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-01");
 
         private ClientDiagnostics GenerateAwsTemplateClientDiagnostics => _generateAwsTemplateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GenerateAwsTemplate GenerateAwsTemplateRestClient => _generateAwsTemplateRestClient ??= new GenerateAwsTemplate(GenerateAwsTemplateClientDiagnostics, Pipeline, Endpoint, "2024-12-01");
+        private GenerateAwsTemplate GenerateAwsTemplateRestClient => _generateAwsTemplateRestClient ??= new GenerateAwsTemplate(GenerateAwsTemplateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-01");
 
         /// <summary>
         /// List PublicCloudConnector resources by subscription ID
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PublicCloudConnectorData, PublicCloudConnectorResource>(new PublicCloudConnectorsGetBySubscriptionAsyncCollectionResultOfT(PublicCloudConnectorsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PublicCloudConnectorResource(Client, data));
+            return new AsyncPageableWrapper<PublicCloudConnectorData, PublicCloudConnectorResource>(new PublicCloudConnectorsGetBySubscriptionAsyncCollectionResultOfT(PublicCloudConnectorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridConnectivitySubscriptionResource.GetPublicCloudConnectors"), data => new PublicCloudConnectorResource(Client, data));
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PublicCloudConnectorData, PublicCloudConnectorResource>(new PublicCloudConnectorsGetBySubscriptionCollectionResultOfT(PublicCloudConnectorsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PublicCloudConnectorResource(Client, data));
+            return new PageableWrapper<PublicCloudConnectorData, PublicCloudConnectorResource>(new PublicCloudConnectorsGetBySubscriptionCollectionResultOfT(PublicCloudConnectorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridConnectivitySubscriptionResource.GetPublicCloudConnectors"), data => new PublicCloudConnectorResource(Client, data));
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PublicCloudConnectorSolutionTypeData, PublicCloudConnectorSolutionTypeResource>(new SolutionTypesGetBySubscriptionAsyncCollectionResultOfT(SolutionTypesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PublicCloudConnectorSolutionTypeResource(Client, data));
+            return new AsyncPageableWrapper<PublicCloudConnectorSolutionTypeData, PublicCloudConnectorSolutionTypeResource>(new SolutionTypesGetBySubscriptionAsyncCollectionResultOfT(SolutionTypesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridConnectivitySubscriptionResource.GetPublicCloudConnectorSolutionTypes"), data => new PublicCloudConnectorSolutionTypeResource(Client, data));
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PublicCloudConnectorSolutionTypeData, PublicCloudConnectorSolutionTypeResource>(new SolutionTypesGetBySubscriptionCollectionResultOfT(SolutionTypesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PublicCloudConnectorSolutionTypeResource(Client, data));
+            return new PageableWrapper<PublicCloudConnectorSolutionTypeData, PublicCloudConnectorSolutionTypeResource>(new SolutionTypesGetBySubscriptionCollectionResultOfT(SolutionTypesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridConnectivitySubscriptionResource.GetPublicCloudConnectorSolutionTypes"), data => new PublicCloudConnectorSolutionTypeResource(Client, data));
         }
 
         /// <summary>

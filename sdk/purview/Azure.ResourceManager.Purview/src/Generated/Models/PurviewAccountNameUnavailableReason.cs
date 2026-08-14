@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Purview.Models
     public readonly partial struct PurviewAccountNameUnavailableReason : IEquatable<PurviewAccountNameUnavailableReason>
     {
         private readonly string _value;
+        /// <summary> Invalid. </summary>
+        private const string InvalidValue = "Invalid";
+        /// <summary> AlreadyExists. </summary>
+        private const string AlreadyExistsValue = "AlreadyExists";
 
         /// <summary> Initializes a new instance of <see cref="PurviewAccountNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PurviewAccountNameUnavailableReason(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InvalidValue = "Invalid";
-        private const string AlreadyExistsValue = "AlreadyExists";
+            _value = value;
+        }
 
         /// <summary> Invalid. </summary>
         public static PurviewAccountNameUnavailableReason Invalid { get; } = new PurviewAccountNameUnavailableReason(InvalidValue);
+
         /// <summary> AlreadyExists. </summary>
         public static PurviewAccountNameUnavailableReason AlreadyExists { get; } = new PurviewAccountNameUnavailableReason(AlreadyExistsValue);
+
         /// <summary> Determines if two <see cref="PurviewAccountNameUnavailableReason"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PurviewAccountNameUnavailableReason left, PurviewAccountNameUnavailableReason right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PurviewAccountNameUnavailableReason"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PurviewAccountNameUnavailableReason left, PurviewAccountNameUnavailableReason right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PurviewAccountNameUnavailableReason"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PurviewAccountNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PurviewAccountNameUnavailableReason(string value) => new PurviewAccountNameUnavailableReason(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PurviewAccountNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PurviewAccountNameUnavailableReason?(string value) => value == null ? null : new PurviewAccountNameUnavailableReason(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PurviewAccountNameUnavailableReason other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PurviewAccountNameUnavailableReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

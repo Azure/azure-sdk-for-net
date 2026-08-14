@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct WorkloadImpact : IEquatable<WorkloadImpact>
     {
         private readonly string _value;
+        /// <summary> The workload will be impacted during the upgrade. </summary>
+        private const string TrueValue = "True";
+        /// <summary> The workload will not be impacted during the upgrade. </summary>
+        private const string FalseValue = "False";
 
         /// <summary> Initializes a new instance of <see cref="WorkloadImpact"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WorkloadImpact(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TrueValue = "True";
-        private const string FalseValue = "False";
-
-        /// <summary> True. </summary>
+        /// <summary> The workload will be impacted during the upgrade. </summary>
         public static WorkloadImpact True { get; } = new WorkloadImpact(TrueValue);
-        /// <summary> False. </summary>
+
+        /// <summary> The workload will not be impacted during the upgrade. </summary>
         public static WorkloadImpact False { get; } = new WorkloadImpact(FalseValue);
+
         /// <summary> Determines if two <see cref="WorkloadImpact"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WorkloadImpact left, WorkloadImpact right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WorkloadImpact"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WorkloadImpact left, WorkloadImpact right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkloadImpact"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WorkloadImpact"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WorkloadImpact(string value) => new WorkloadImpact(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WorkloadImpact"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WorkloadImpact?(string value) => value == null ? null : new WorkloadImpact(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WorkloadImpact other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WorkloadImpact other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

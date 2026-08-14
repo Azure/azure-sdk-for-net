@@ -10,7 +10,7 @@ To create a `ConversationAnalysisAuthoringClient`, you will need the service end
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
-ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
+ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential, options);
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application. The method returns a ProjectMetadata object that contains detailed information about the project, such as its creation date, last modification date, description, and more.
@@ -23,10 +23,10 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To retrieve metadata of a project, call GetProject on the `ConversationAuthoringProject` client.
 
 ```C# Snippet:Sample4_ConversationsAuthoring_GetProject
-string projectName = "{projectName}";
-ConversationAuthoringProject projectClient = client.GetProject(projectName);
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
 
-Response<ConversationAuthoringProjectMetadata> response = projectClient.GetProject();
+string projectName = "{projectName}";
+Response<ConversationAuthoringProjectMetadata> response = projectClient.GetProject(projectName);
 ConversationAuthoringProjectMetadata projectMetadata = response.Value;
 
 Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");
@@ -45,10 +45,10 @@ Console.WriteLine($"Language: {projectMetadata.Language}");
 To retrieve metadata of a project, call GetProjectAsync on the `ConversationAuthoringProject` client. The method returns a ProjectMetadata object that contains detailed information about the project, such as its creation date, last modification date, description, and more.
 
 ```C# Snippet:Sample4_ConversationsAuthoring_GetProjectAsync
-string projectName = "{projectName}";
-ConversationAuthoringProject projectClient = client.GetProject(projectName);
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
 
-Response<ConversationAuthoringProjectMetadata> response = await projectClient.GetProjectAsync();
+string projectName = "{projectName}";
+Response<ConversationAuthoringProjectMetadata> response = await projectClient.GetProjectAsync(projectName);
 ConversationAuthoringProjectMetadata projectMetadata = response.Value;
 
 Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");

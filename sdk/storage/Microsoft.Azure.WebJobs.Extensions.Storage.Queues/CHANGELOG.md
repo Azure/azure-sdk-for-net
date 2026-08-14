@@ -8,7 +8,16 @@
 
 ### Bugs Fixed
 
+- Fixed queue scale metrics reporting `QueueLength=0` when messages were present but could not be decoded with the configured `MessageEncoding`, which prevented affected functions from scaling out. Scale metrics now read the queue using `QueueMessageEncoding.None`, so peek results are never filtered by decode failures. Message processing is unaffected and continues to use the configured encoding.
+
 ### Other Changes
+
+- Replaced scaling warning/error log calls with standardized `LogFunctionScaleWarning` extension method to enable Scale Controller App Insights diagnostics.
+
+## 5.3.8 (2026-03-19)
+
+### Bugs Fixed
+- Fixed a bug where `MaxDequeueCount` was being applied to messages in the poison queue itself, leading to poison messages being silently skipped and unprocessed indefinitely.
 
 ## 5.3.7 (2025-10-29)
 

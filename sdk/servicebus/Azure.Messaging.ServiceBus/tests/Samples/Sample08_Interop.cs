@@ -33,7 +33,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 XmlDictionaryWriter writer = XmlDictionaryWriter.CreateBinaryWriter(stream);
 
                 // serialize an instance of our type into a JSON string
-                string json = JsonSerializer.Serialize(new TestModel {A = "Hello world", B = 5, C = true});
+                string json = JsonSerializer.Serialize(new TestModel { A = "Hello world", B = 5, C = true });
 
                 // serialize our JSON string into the XML envelope using the DataContractSerializer
                 serializer.WriteObject(writer, json);
@@ -57,7 +57,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     XmlDictionaryReader.CreateBinaryReader(received.Body.ToStream(), XmlDictionaryReaderQuotas.Max);
 
                 // deserialize the XML envelope into a string
-                string receivedJson = (string) deserializer.ReadObject(reader);
+                string receivedJson = (string)deserializer.ReadObject(reader);
 
                 // deserialize the JSON string into TestModel
                 TestModel output = JsonSerializer.Deserialize<TestModel>(receivedJson);

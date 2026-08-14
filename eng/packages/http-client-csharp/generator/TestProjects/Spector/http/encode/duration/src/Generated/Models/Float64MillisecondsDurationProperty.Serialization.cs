@@ -17,21 +17,13 @@ namespace Encode.Duration._Property
     {
         internal Float64MillisecondsDurationProperty() => throw null;
 
-        void IJsonModel<Float64MillisecondsDurationProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        Float64MillisecondsDurationProperty IJsonModel<Float64MillisecondsDurationProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual Float64MillisecondsDurationProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<Float64MillisecondsDurationProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        protected virtual Float64MillisecondsDurationProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        Float64MillisecondsDurationProperty IPersistableModel<Float64MillisecondsDurationProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<Float64MillisecondsDurationProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual Float64MillisecondsDurationProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Float64MillisecondsDurationProperty IPersistableModel<Float64MillisecondsDurationProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Float64MillisecondsDurationProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
@@ -39,5 +31,13 @@ namespace Encode.Duration._Property
         public static implicit operator RequestContent(Float64MillisecondsDurationProperty float64MillisecondsDurationProperty) => throw null;
 
         public static explicit operator Float64MillisecondsDurationProperty(Response response) => throw null;
+
+        void IJsonModel<Float64MillisecondsDurationProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        Float64MillisecondsDurationProperty IJsonModel<Float64MillisecondsDurationProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual Float64MillisecondsDurationProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }
 }

@@ -8,15 +8,59 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
+    /// <summary>
+    /// Base class for backup item. Workload-specific backup items are derived from this class.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VmWorkloadItem"/>, <see cref="VmWorkloadSapAseDatabaseWorkloadItem"/>, <see cref="VmWorkloadSapAseSystemWorkloadItem"/>, <see cref="VmWorkloadSapHanaDatabaseWorkloadItem"/>, <see cref="VmWorkloadSapHanaSystemWorkloadItem"/>, <see cref="VmWorkloadSqlDatabaseWorkloadItem"/>, and <see cref="VmWorkloadSqlInstanceWorkloadItem"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownWorkloadItem))]
-    public partial class WorkloadItem : IUtf8JsonSerializable, IJsonModel<WorkloadItem>
+    public abstract partial class WorkloadItem : IJsonModel<WorkloadItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual WorkloadItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeWorkloadItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadItem)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<WorkloadItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WorkloadItem IPersistableModel<WorkloadItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WorkloadItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WorkloadItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +72,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkloadItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WorkloadItem)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
@@ -56,15 +99,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -73,71 +116,52 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
         }
 
-        WorkloadItem IJsonModel<WorkloadItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WorkloadItem IJsonModel<WorkloadItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual WorkloadItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkloadItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WorkloadItem)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWorkloadItem(document.RootElement, options);
         }
 
-        internal static WorkloadItem DeserializeWorkloadItem(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static WorkloadItem DeserializeWorkloadItem(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("workloadItemType", out JsonElement discriminator))
+            if (element.TryGetProperty("workloadItemType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureVmWorkloadItem": return VmWorkloadItem.DeserializeVmWorkloadItem(element, options);
-                    case "SAPAseDatabase": return VmWorkloadSapAseDatabaseWorkloadItem.DeserializeVmWorkloadSapAseDatabaseWorkloadItem(element, options);
-                    case "SAPAseSystem": return VmWorkloadSapAseSystemWorkloadItem.DeserializeVmWorkloadSapAseSystemWorkloadItem(element, options);
-                    case "SAPHanaDatabase": return VmWorkloadSapHanaDatabaseWorkloadItem.DeserializeVmWorkloadSapHanaDatabaseWorkloadItem(element, options);
-                    case "SAPHanaSystem": return VmWorkloadSapHanaSystemWorkloadItem.DeserializeVmWorkloadSapHanaSystemWorkloadItem(element, options);
-                    case "SQLDataBase": return VmWorkloadSqlDatabaseWorkloadItem.DeserializeVmWorkloadSqlDatabaseWorkloadItem(element, options);
-                    case "SQLInstance": return VmWorkloadSqlInstanceWorkloadItem.DeserializeVmWorkloadSqlInstanceWorkloadItem(element, options);
+                    case "AzureVmWorkloadItem":
+                        return VmWorkloadItem.DeserializeVmWorkloadItem(element, options);
+                    case "SAPAseDatabase":
+                        return VmWorkloadSapAseDatabaseWorkloadItem.DeserializeVmWorkloadSapAseDatabaseWorkloadItem(element, options);
+                    case "SAPAseSystem":
+                        return VmWorkloadSapAseSystemWorkloadItem.DeserializeVmWorkloadSapAseSystemWorkloadItem(element, options);
+                    case "SAPHanaDatabase":
+                        return VmWorkloadSapHanaDatabaseWorkloadItem.DeserializeVmWorkloadSapHanaDatabaseWorkloadItem(element, options);
+                    case "SAPHanaSystem":
+                        return VmWorkloadSapHanaSystemWorkloadItem.DeserializeVmWorkloadSapHanaSystemWorkloadItem(element, options);
+                    case "SQLDataBase":
+                        return VmWorkloadSqlDatabaseWorkloadItem.DeserializeVmWorkloadSqlDatabaseWorkloadItem(element, options);
+                    case "SQLInstance":
+                        return VmWorkloadSqlInstanceWorkloadItem.DeserializeVmWorkloadSqlInstanceWorkloadItem(element, options);
                 }
             }
             return UnknownWorkloadItem.DeserializeUnknownWorkloadItem(element, options);
         }
-
-        BinaryData IPersistableModel<WorkloadItem>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkloadItem>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WorkloadItem)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        WorkloadItem IPersistableModel<WorkloadItem>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkloadItem>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeWorkloadItem(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WorkloadItem)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<WorkloadItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

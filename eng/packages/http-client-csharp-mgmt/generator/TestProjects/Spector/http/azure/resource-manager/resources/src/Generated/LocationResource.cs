@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources
         {
             TryGetApiVersion(ResourceType, out string locationResourceApiVersion);
             _locationResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
-            _locationResourcesRestClient = new LocationResources(_locationResourcesClientDiagnostics, Pipeline, Endpoint, locationResourceApiVersion ?? "2023-12-01-preview");
+            _locationResourcesRestClient = new LocationResources(_locationResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, locationResourceApiVersion ?? "2023-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Resources
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

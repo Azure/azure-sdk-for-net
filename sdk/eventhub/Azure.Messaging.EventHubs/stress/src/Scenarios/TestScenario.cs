@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Collections.Concurrent;
 
 namespace Azure.Messaging.EventHubs.Stress;
 
@@ -78,7 +78,7 @@ public abstract class TestScenario
     ///
     internal virtual Task RunRoleAsync(Role role, CancellationToken cancellationToken)
     {
-       switch (role)
+        switch (role)
         {
             case Role.BufferedPublisher:
                 var bufferedPublisherConfiguration = new BufferedPublisherConfiguration();
@@ -91,7 +91,7 @@ public abstract class TestScenario
                 return Task.Run(() => publisher.RunAsync(cancellationToken));
 
             default:
-                throw new NotSupportedException($"Running role { role.ToString() } is not supported by this test scenario.");
+                throw new NotSupportedException($"Running role {role.ToString()} is not supported by this test scenario.");
         }
     }
 }

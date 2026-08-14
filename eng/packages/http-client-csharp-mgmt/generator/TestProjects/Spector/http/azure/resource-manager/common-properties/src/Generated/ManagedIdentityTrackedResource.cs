@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CommonProperties
         {
             TryGetApiVersion(ResourceType, out string managedIdentityTrackedResourceApiVersion);
             _managedIdentityClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CommonProperties", ResourceType.Namespace, Diagnostics);
-            _managedIdentityRestClient = new ManagedIdentity(_managedIdentityClientDiagnostics, Pipeline, Endpoint, managedIdentityTrackedResourceApiVersion ?? "2023-12-01-preview");
+            _managedIdentityRestClient = new ManagedIdentity(_managedIdentityClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedIdentityTrackedResourceApiVersion ?? "2023-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CommonProperties
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.CommonProperties
                 else
                 {
                     ManagedIdentityTrackedResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ManagedIdentityTrackedResourceData patch = new ManagedIdentityTrackedResourceData();
+                    ManagedIdentityTrackedResourceData patch = new ManagedIdentityTrackedResourceData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.CommonProperties
                 else
                 {
                     ManagedIdentityTrackedResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ManagedIdentityTrackedResourceData patch = new ManagedIdentityTrackedResourceData();
+                    ManagedIdentityTrackedResourceData patch = new ManagedIdentityTrackedResourceData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.CommonProperties
                 else
                 {
                     ManagedIdentityTrackedResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ManagedIdentityTrackedResourceData patch = new ManagedIdentityTrackedResourceData();
+                    ManagedIdentityTrackedResourceData patch = new ManagedIdentityTrackedResourceData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<ManagedIdentityTrackedResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.CommonProperties
                 else
                 {
                     ManagedIdentityTrackedResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ManagedIdentityTrackedResourceData patch = new ManagedIdentityTrackedResourceData();
+                    ManagedIdentityTrackedResourceData patch = new ManagedIdentityTrackedResourceData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<ManagedIdentityTrackedResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.CommonProperties
                 else
                 {
                     ManagedIdentityTrackedResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ManagedIdentityTrackedResourceData patch = new ManagedIdentityTrackedResourceData();
+                    ManagedIdentityTrackedResourceData patch = new ManagedIdentityTrackedResourceData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.CommonProperties
                 else
                 {
                     ManagedIdentityTrackedResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ManagedIdentityTrackedResourceData patch = new ManagedIdentityTrackedResourceData();
+                    ManagedIdentityTrackedResourceData patch = new ManagedIdentityTrackedResourceData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

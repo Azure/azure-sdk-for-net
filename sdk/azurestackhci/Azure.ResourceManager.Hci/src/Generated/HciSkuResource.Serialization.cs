@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Hci
 {
+    /// <summary></summary>
     public partial class HciSkuResource : IJsonModel<HciSkuData>
     {
-        private static HciSkuData s_dataDeserializationInstance;
-        private static HciSkuData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HciSkuData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HciSkuData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HciSkuData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciSkuData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HciSkuData>)Data).Write(writer, options);
 
-        HciSkuData IJsonModel<HciSkuData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HciSkuData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciSkuData IJsonModel<HciSkuData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HciSkuData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HciSkuData>(Data, options, AzureResourceManagerHciContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HciSkuData IPersistableModel<HciSkuData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciSkuData>(data, options, AzureResourceManagerHciContext.Default);
 
-        string IPersistableModel<HciSkuData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HciSkuData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HciSkuData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

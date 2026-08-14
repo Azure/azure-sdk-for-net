@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NonResource
         /// Create
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNonResourceSubscriptionResource.CreateAsync(string, string, NonResource, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNonResourceSubscriptionResource.CreateAsync(string, string, Models.NonResource, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.NonResource
         /// Create
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNonResourceSubscriptionResource.Create(string, string, NonResource, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNonResourceSubscriptionResource.Create(string, string, Models.NonResource, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>

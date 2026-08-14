@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Meta data about operation used for display in portal. </summary>
     public partial class CsmOperationDisplay
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CsmOperationDisplay"/>. </summary>
         internal CsmOperationDisplay()
@@ -55,26 +27,29 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="resource"></param>
         /// <param name="operation"></param>
         /// <param name="description"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CsmOperationDisplay(string provider, string resource, string operation, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CsmOperationDisplay(string provider, string resource, string operation, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Provider = provider;
             Resource = resource;
             Operation = operation;
             Description = description;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the provider. </summary>
+        /// <summary> Gets the Provider. </summary>
         [WirePath("provider")]
         public string Provider { get; }
-        /// <summary> Gets the resource. </summary>
+
+        /// <summary> Gets the Resource. </summary>
         [WirePath("resource")]
         public string Resource { get; }
-        /// <summary> Gets the operation. </summary>
+
+        /// <summary> Gets the Operation. </summary>
         [WirePath("operation")]
         public string Operation { get; }
-        /// <summary> Gets the description. </summary>
+
+        /// <summary> Gets the Description. </summary>
         [WirePath("description")]
         public string Description { get; }
     }

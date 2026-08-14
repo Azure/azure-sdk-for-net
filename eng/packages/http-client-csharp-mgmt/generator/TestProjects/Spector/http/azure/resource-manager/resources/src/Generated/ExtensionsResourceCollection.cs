@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources
         {
             TryGetApiVersion(ExtensionsResource.ResourceType, out string extensionsResourceApiVersion);
             _extensionsResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ExtensionsResource.ResourceType.Namespace, Diagnostics);
-            _extensionsResourcesRestClient = new ExtensionsResources(_extensionsResourcesClientDiagnostics, Pipeline, Endpoint, extensionsResourceApiVersion ?? "2023-12-01-preview");
+            _extensionsResourcesRestClient = new ExtensionsResources(_extensionsResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, extensionsResourceApiVersion ?? "2023-12-01-preview");
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsResourcesRestClient.CreateCreateOrUpdateRequest(Id, extensionsResourceName, ExtensionsResourceData.ToRequestContent(data), context);
+                HttpMessage message = _extensionsResourcesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), extensionsResourceName, ExtensionsResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResourcesArmOperation<ExtensionsResource> operation = new ResourcesArmOperation<ExtensionsResource>(
                     new ExtensionsResourceOperationSource(Client),
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsResourcesRestClient.CreateCreateOrUpdateRequest(Id, extensionsResourceName, ExtensionsResourceData.ToRequestContent(data), context);
+                HttpMessage message = _extensionsResourcesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), extensionsResourceName, ExtensionsResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResourcesArmOperation<ExtensionsResource> operation = new ResourcesArmOperation<ExtensionsResource>(
                     new ExtensionsResourceOperationSource(Client),
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsResourcesRestClient.CreateGetRequest(Id, extensionsResourceName, context);
+                HttpMessage message = _extensionsResourcesRestClient.CreateGetRequest(Id.ToString(), extensionsResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExtensionsResourceData> response = Response.FromValue(ExtensionsResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsResourcesRestClient.CreateGetRequest(Id, extensionsResourceName, context);
+                HttpMessage message = _extensionsResourcesRestClient.CreateGetRequest(Id.ToString(), extensionsResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExtensionsResourceData> response = Response.FromValue(ExtensionsResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Resources
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExtensionsResourceData, ExtensionsResource>(new ExtensionsResourcesGetByScopeAsyncCollectionResultOfT(_extensionsResourcesRestClient, Id, context), data => new ExtensionsResource(Client, data));
+            return new AsyncPageableWrapper<ExtensionsResourceData, ExtensionsResource>(new ExtensionsResourcesGetByScopeAsyncCollectionResultOfT(_extensionsResourcesRestClient, Id.ToString(), context, "ExtensionsResourceCollection.GetAll"), data => new ExtensionsResource(Client, data));
         }
 
         /// <summary>
@@ -309,11 +309,11 @@ namespace Azure.ResourceManager.Resources
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExtensionsResourceData, ExtensionsResource>(new ExtensionsResourcesGetByScopeCollectionResultOfT(_extensionsResourcesRestClient, Id, context), data => new ExtensionsResource(Client, data));
+            return new PageableWrapper<ExtensionsResourceData, ExtensionsResource>(new ExtensionsResourcesGetByScopeCollectionResultOfT(_extensionsResourcesRestClient, Id.ToString(), context, "ExtensionsResourceCollection.GetAll"), data => new ExtensionsResource(Client, data));
         }
 
         /// <summary>
-        /// Get a ExtensionsResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsResourcesRestClient.CreateGetRequest(Id, extensionsResourceName, context);
+                HttpMessage message = _extensionsResourcesRestClient.CreateGetRequest(Id.ToString(), extensionsResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExtensionsResourceData> response = default;
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Get a ExtensionsResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsResourcesRestClient.CreateGetRequest(Id, extensionsResourceName, context);
+                HttpMessage message = _extensionsResourcesRestClient.CreateGetRequest(Id.ToString(), extensionsResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExtensionsResourceData> response = default;
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Get a ExtensionsResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsResourcesRestClient.CreateGetRequest(Id, extensionsResourceName, context);
+                HttpMessage message = _extensionsResourcesRestClient.CreateGetRequest(Id.ToString(), extensionsResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExtensionsResourceData> response = default;
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Get a ExtensionsResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsResourcesRestClient.CreateGetRequest(Id, extensionsResourceName, context);
+                HttpMessage message = _extensionsResourcesRestClient.CreateGetRequest(Id.ToString(), extensionsResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExtensionsResourceData> response = default;

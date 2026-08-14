@@ -123,7 +123,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorAllowsMultipleEventHubNamesFromTheConnectionStringIfEqual()
         {
             var eventHubName = "myHub";
-            var connectionString = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath={ eventHubName }";
+            var connectionString = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath={eventHubName}";
 
             Assert.That(() => new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString, eventHubName), Throws.Nothing);
         }
@@ -515,7 +515,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var credential = Mock.Of<TokenCredential>();
             var host = "mynamespace.servicebus.windows.net";
-            var namespaceUri = $"sb://{ host }";
+            var namespaceUri = $"sb://{host}";
             var consumer = new EventHubConsumerClient("cg", namespaceUri, "eventHub", credential);
 
             Assert.That(consumer.FullyQualifiedNamespace, Is.EqualTo(host), "The constructor should parse the namespace from the URI");
@@ -530,7 +530,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var credential = new AzureNamedKeyCredential("key", "value");
             var host = "mynamespace.servicebus.windows.net";
-            var namespaceUri = $"sb://{ host }";
+            var namespaceUri = $"sb://{host}";
             var consumer = new EventHubConsumerClient("cg", namespaceUri, "eventHub", credential);
 
             Assert.That(consumer.FullyQualifiedNamespace, Is.EqualTo(host), "The constructor should parse the namespace from the URI");
@@ -545,7 +545,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var credential = new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value);
             var host = "mynamespace.servicebus.windows.net";
-            var namespaceUri = $"sb://{ host }";
+            var namespaceUri = $"sb://{host}";
             var consumer = new EventHubConsumerClient("cg", namespaceUri, "eventHub", credential);
 
             Assert.That(consumer.FullyQualifiedNamespace, Is.EqualTo(host), "The constructor should parse the namespace from the URI");
@@ -969,7 +969,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var events = Enumerable
                 .Range(0, 1500)
-                .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event: { index }")))
+                .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event: {index}")))
                 .ToList();
 
             var transportConsumer = new PublishingTransportConsumerMock(events);
@@ -1010,7 +1010,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var events = Enumerable
                 .Range(0, 1500)
-                .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event: { index }")))
+                .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event: {index}")))
                 .ToList();
 
             var transportConsumer = new PublishingTransportConsumerMock(events);
@@ -1218,7 +1218,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             events.AddRange(
                 Enumerable.Range(0, (batchSize * 3))
-                    .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event Number { index }")))
+                    .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event Number {index}")))
             );
 
             using var cancellation = new CancellationTokenSource();
@@ -1260,7 +1260,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             events.AddRange(
                 Enumerable.Range(0, (batchSize * 3))
-                    .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event Number { index }")))
+                    .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event Number {index}")))
             );
 
             using var cancellation = new CancellationTokenSource();
@@ -1447,10 +1447,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(expectedPartition, EventPosition.FromOffset("12"), cancellation.Token))
             {
-                Assert.That(partitionEvent.Partition.PartitionId, Is.EqualTo(expectedPartition), $"The event in position: { actualCount } was not associated with the expected partition.");
-                Assert.That(partitionEvent.Partition.FullyQualifiedNamespace, Is.EqualTo(mockConnection.FullyQualifiedNamespace), $"The event in position: { actualCount } was not associated with the expected namespace.");
-                Assert.That(partitionEvent.Partition.EventHubName, Is.EqualTo(mockConnection.EventHubName), $"The event in position: { actualCount } was not associated with the expected Event Hub name.");
-                Assert.That(partitionEvent.Partition.ConsumerGroup, Is.EqualTo(consumer.ConsumerGroup), $"The event in position: { actualCount } was not associated with the expected consumer group.");
+                Assert.That(partitionEvent.Partition.PartitionId, Is.EqualTo(expectedPartition), $"The event in position: {actualCount} was not associated with the expected partition.");
+                Assert.That(partitionEvent.Partition.FullyQualifiedNamespace, Is.EqualTo(mockConnection.FullyQualifiedNamespace), $"The event in position: {actualCount} was not associated with the expected namespace.");
+                Assert.That(partitionEvent.Partition.EventHubName, Is.EqualTo(mockConnection.EventHubName), $"The event in position: {actualCount} was not associated with the expected Event Hub name.");
+                Assert.That(partitionEvent.Partition.ConsumerGroup, Is.EqualTo(consumer.ConsumerGroup), $"The event in position: {actualCount} was not associated with the expected consumer group.");
 
                 if (++actualCount >= events.Count)
                 {
@@ -1763,7 +1763,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var events = Enumerable
                 .Range(0, 1500)
-                .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event: { index }")))
+                .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event: {index}")))
                 .ToList();
 
             var transportConsumer = new PublishingTransportConsumerMock(events);
@@ -1813,7 +1813,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var events = Enumerable
                 .Range(0, 1500)
-                .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event: { index }")))
+                .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event: {index}")))
                 .ToList();
 
             var transportConsumer = new PublishingTransportConsumerMock(events);
@@ -1917,7 +1917,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var events = Enumerable
                 .Range(0, 150)
-                .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event: { index }")))
+                .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event: {index}")))
                 .ToList();
 
             var mockConnection = new MockConnection(() => new PublishingTransportConsumerMock(events));
@@ -1968,7 +1968,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var events = Enumerable
                 .Range(0, 150)
-                .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event: { index }")))
+                .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event: {index}")))
                 .ToList();
 
             var mockConnection = new MockConnection(() => new PublishingTransportConsumerMock(events));
@@ -2063,7 +2063,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var events = Enumerable
                 .Range(0, 150)
-                .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event: { index }")))
+                .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event: {index}")))
                 .ToList();
 
             var maxWaitTime = TimeSpan.FromMilliseconds(50);
@@ -2110,7 +2110,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var sourceMessage in events.Select(item => Encoding.UTF8.GetString(item.EventBody.ToArray())))
             {
-                Assert.That(receivedEventMessages.Contains(sourceMessage), $"The message: { sourceMessage } was not received.");
+                Assert.That(receivedEventMessages.Contains(sourceMessage), $"The message: {sourceMessage} was not received.");
             }
         }
 
@@ -2124,7 +2124,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var events = Enumerable
                 .Range(0, 500)
-                .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event: { index }")))
+                .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event: {index}")))
                 .ToList();
 
             var mockConnection = new MockConnection(() => new PublishingTransportConsumerMock(events));
@@ -2159,7 +2159,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var partition in partitions)
             {
-                Assert.That(receivedEvents[partition], Is.EqualTo(events.Count), $"The received event count for partition: { partition } should match the published events.");
+                Assert.That(receivedEvents[partition], Is.EqualTo(events.Count), $"The received event count for partition: {partition} should match the published events.");
             }
         }
 
@@ -2173,7 +2173,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var events = Enumerable
                 .Range(0, 500)
-                .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event: { index }")))
+                .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event: {index}")))
                 .ToList();
 
             var mockConnection = new MockConnection(() => new PublishingTransportConsumerMock(events));
@@ -2188,10 +2188,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await foreach (PartitionEvent partitionEvent in consumer.ReadEventsAsync(cancellation.Token))
             {
-                Assert.That(partitions, Contains.Item(partitionEvent.Partition.PartitionId), $"The event in position: { actualCount } was read from an unexpected partition: { partitionEvent.Partition.PartitionId }");
-                Assert.That(partitionEvent.Partition.FullyQualifiedNamespace, Is.EqualTo(mockConnection.FullyQualifiedNamespace), $"The event in position: { actualCount } was not associated with the expected namespace.");
-                Assert.That(partitionEvent.Partition.EventHubName, Is.EqualTo(mockConnection.EventHubName), $"The event in position: { actualCount } was not associated with the expected Event Hub name.");
-                Assert.That(partitionEvent.Partition.ConsumerGroup, Is.EqualTo(consumer.ConsumerGroup), $"The event in position: { actualCount } was not associated with the expected consumer group.");
+                Assert.That(partitions, Contains.Item(partitionEvent.Partition.PartitionId), $"The event in position: {actualCount} was read from an unexpected partition: {partitionEvent.Partition.PartitionId}");
+                Assert.That(partitionEvent.Partition.FullyQualifiedNamespace, Is.EqualTo(mockConnection.FullyQualifiedNamespace), $"The event in position: {actualCount} was not associated with the expected namespace.");
+                Assert.That(partitionEvent.Partition.EventHubName, Is.EqualTo(mockConnection.EventHubName), $"The event in position: {actualCount} was not associated with the expected Event Hub name.");
+                Assert.That(partitionEvent.Partition.ConsumerGroup, Is.EqualTo(consumer.ConsumerGroup), $"The event in position: {actualCount} was not associated with the expected consumer group.");
 
                 if (++actualCount >= expectedCount)
                 {
@@ -2497,7 +2497,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < events.Count; ++index)
             {
-                Assert.That(events[index].EventBody.ToArray().Single(), Is.EqualTo(publishedEvents[index].EventBody.ToArray().Single()), $"The payload for index: { index } should match the event source.");
+                Assert.That(events[index].EventBody.ToArray().Single(), Is.EqualTo(publishedEvents[index].EventBody.ToArray().Single()), $"The payload for index: {index} should match the event source.");
             }
         }
 
@@ -2577,7 +2577,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < forceErrorAt; ++index)
             {
-                Assert.That(events[index].EventBody.ToArray().Single(), Is.EqualTo(publishedEvents[index].EventBody.ToArray().Single()), $"The payload for index: { index } should match the event source.");
+                Assert.That(events[index].EventBody.ToArray().Single(), Is.EqualTo(publishedEvents[index].EventBody.ToArray().Single()), $"The payload for index: {index} should match the event source.");
             }
         }
 
@@ -2814,7 +2814,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 client
                     .Setup(client => client.ServiceEndpoint)
-                    .Returns(new Uri($"amgp://{ fullyQualifiedNamespace}.com/{eventHubName}"));
+                    .Returns(new Uri($"amgp://{fullyQualifiedNamespace}.com/{eventHubName}"));
 
                 return client.Object;
             }

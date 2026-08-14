@@ -15,6 +15,46 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
     /// <summary> Represents fields for Prebuilt query matching. Prebuilt weights will be used for giving preference to question and answer columns when quering AI search. </summary>
     public partial class PrebuiltQueryMatchingPolicy : MatchingPolicy, IJsonModel<PrebuiltQueryMatchingPolicy>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MatchingPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PrebuiltQueryMatchingPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePrebuiltQueryMatchingPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PrebuiltQueryMatchingPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PrebuiltQueryMatchingPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageQuestionAnsweringInferenceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PrebuiltQueryMatchingPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PrebuiltQueryMatchingPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PrebuiltQueryMatchingPolicy IPersistableModel<PrebuiltQueryMatchingPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => (PrebuiltQueryMatchingPolicy)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PrebuiltQueryMatchingPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PrebuiltQueryMatchingPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -117,45 +157,5 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             }
             return new PrebuiltQueryMatchingPolicy(kind, additionalBinaryDataProperties, fields ?? new ChangeTrackingList<MatchingPolicyFieldsType>(), disableFullMatch);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PrebuiltQueryMatchingPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PrebuiltQueryMatchingPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageQuestionAnsweringInferenceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PrebuiltQueryMatchingPolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PrebuiltQueryMatchingPolicy IPersistableModel<PrebuiltQueryMatchingPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => (PrebuiltQueryMatchingPolicy)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MatchingPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PrebuiltQueryMatchingPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePrebuiltQueryMatchingPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PrebuiltQueryMatchingPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PrebuiltQueryMatchingPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

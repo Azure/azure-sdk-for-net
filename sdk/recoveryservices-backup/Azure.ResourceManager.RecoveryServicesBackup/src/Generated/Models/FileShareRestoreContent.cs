@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -15,23 +16,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class FileShareRestoreContent : RestoreContent
     {
         /// <summary> Initializes a new instance of <see cref="FileShareRestoreContent"/>. </summary>
-        public FileShareRestoreContent()
+        public FileShareRestoreContent() : base("AzureFileShareRestoreRequest")
         {
             RestoreFileSpecs = new ChangeTrackingList<RestoreFileSpecs>();
-            ObjectType = "AzureFileShareRestoreRequest";
         }
 
         /// <summary> Initializes a new instance of <see cref="FileShareRestoreContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryType"> Type of this recovery. </param>
         /// <param name="sourceResourceId"> Source storage account ARM Id. </param>
         /// <param name="copyOptions"> Options to resolve copy conflicts. </param>
         /// <param name="restoreRequestType"> Restore Type (FullShareRestore or ItemLevelRestore). </param>
         /// <param name="restoreFileSpecs"> List of Source Files/Folders(which need to recover) and TargetFolderPath details. </param>
         /// <param name="targetDetails"> Target File Share Details. </param>
-        internal FileShareRestoreContent(string objectType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> serializedAdditionalRawData, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, FileShareCopyOption? copyOptions, FileShareRestoreType? restoreRequestType, IList<RestoreFileSpecs> restoreFileSpecs, TargetAfsRestoreInfo targetDetails) : base(objectType, resourceGuardOperationRequests, serializedAdditionalRawData)
+        internal FileShareRestoreContent(string objectType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, FileShareCopyOption? copyOptions, FileShareRestoreType? restoreRequestType, IList<RestoreFileSpecs> restoreFileSpecs, TargetAfsRestoreInfo targetDetails) : base(objectType, resourceGuardOperationRequests, additionalBinaryDataProperties)
         {
             RecoveryType = recoveryType;
             SourceResourceId = sourceResourceId;
@@ -39,19 +39,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             RestoreRequestType = restoreRequestType;
             RestoreFileSpecs = restoreFileSpecs;
             TargetDetails = targetDetails;
-            ObjectType = objectType ?? "AzureFileShareRestoreRequest";
         }
 
         /// <summary> Type of this recovery. </summary>
         public FileShareRecoveryType? RecoveryType { get; set; }
+
         /// <summary> Source storage account ARM Id. </summary>
         public ResourceIdentifier SourceResourceId { get; set; }
+
         /// <summary> Options to resolve copy conflicts. </summary>
         public FileShareCopyOption? CopyOptions { get; set; }
+
         /// <summary> Restore Type (FullShareRestore or ItemLevelRestore). </summary>
         public FileShareRestoreType? RestoreRequestType { get; set; }
+
         /// <summary> List of Source Files/Folders(which need to recover) and TargetFolderPath details. </summary>
         public IList<RestoreFileSpecs> RestoreFileSpecs { get; }
+
         /// <summary> Target File Share Details. </summary>
         public TargetAfsRestoreInfo TargetDetails { get; set; }
     }

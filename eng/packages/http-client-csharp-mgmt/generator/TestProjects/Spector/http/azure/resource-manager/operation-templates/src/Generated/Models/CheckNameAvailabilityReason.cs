@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.ResourceManager.OperationTemplates;
 
-namespace Azure.ResourceManager.OperationTemplates.Models
+namespace Azure.ResourceManager.CommonTypes.Models
 {
     /// <summary> Possible reasons for a name not being available. </summary>
     public readonly partial struct CheckNameAvailabilityReason : IEquatable<CheckNameAvailabilityReason>

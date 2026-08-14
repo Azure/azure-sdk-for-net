@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.OperationalInsights
       safeName: AzureResourceManagerOperationalInsights
+    - name: Azure.Provisioning.OperationalInsights
+      safeName: AzureProvisioningOperationalInsights

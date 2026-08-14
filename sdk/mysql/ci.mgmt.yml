@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.MySql
       safeName: AzureResourceManagerMySql
+    - name: Azure.Provisioning.MySql
+      safeName: AzureProvisioningMySql

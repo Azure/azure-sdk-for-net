@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> BackupStatus request. </summary>
     public partial class BackupStatusContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BackupStatusContent"/>. </summary>
         public BackupStatusContent()
@@ -55,19 +26,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="resourceType"> Container Type - VM, SQLPaaS, DPM, AzureFileShare... </param>
         /// <param name="resourceId"> Entire ARM resource id of the resource. </param>
         /// <param name="poLogicalName"> Protectable Item Logical Name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupStatusContent(BackupDataSourceType? resourceType, ResourceIdentifier resourceId, string poLogicalName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BackupStatusContent(BackupDataSourceType? resourceType, ResourceIdentifier resourceId, string poLogicalName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
             ResourceId = resourceId;
             PoLogicalName = poLogicalName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Container Type - VM, SQLPaaS, DPM, AzureFileShare... </summary>
         public BackupDataSourceType? ResourceType { get; set; }
+
         /// <summary> Entire ARM resource id of the resource. </summary>
         public ResourceIdentifier ResourceId { get; set; }
+
         /// <summary> Protectable Item Logical Name. </summary>
         public string PoLogicalName { get; set; }
     }

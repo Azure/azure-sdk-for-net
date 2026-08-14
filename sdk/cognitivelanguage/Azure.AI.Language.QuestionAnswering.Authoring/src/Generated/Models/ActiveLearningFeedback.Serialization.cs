@@ -16,6 +16,56 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     /// <summary> Feedback for Active Learning. </summary>
     public partial class ActiveLearningFeedback : IJsonModel<ActiveLearningFeedback>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ActiveLearningFeedback PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ActiveLearningFeedback>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeActiveLearningFeedback(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ActiveLearningFeedback)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ActiveLearningFeedback>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageQuestionAnsweringAuthoringContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ActiveLearningFeedback)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ActiveLearningFeedback>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ActiveLearningFeedback IPersistableModel<ActiveLearningFeedback>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ActiveLearningFeedback>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="activeLearningFeedback"> The <see cref="ActiveLearningFeedback"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ActiveLearningFeedback activeLearningFeedback)
+        {
+            if (activeLearningFeedback == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(activeLearningFeedback, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ActiveLearningFeedback>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -110,58 +160,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 }
             }
             return new ActiveLearningFeedback(records ?? new ChangeTrackingList<FeedbackRecord>(), additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ActiveLearningFeedback>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ActiveLearningFeedback>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageQuestionAnsweringAuthoringContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ActiveLearningFeedback)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ActiveLearningFeedback IPersistableModel<ActiveLearningFeedback>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ActiveLearningFeedback PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ActiveLearningFeedback>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeActiveLearningFeedback(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ActiveLearningFeedback)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ActiveLearningFeedback>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="activeLearningFeedback"> The <see cref="ActiveLearningFeedback"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ActiveLearningFeedback activeLearningFeedback)
-        {
-            if (activeLearningFeedback == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(activeLearningFeedback, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.3.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,17 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0-beta.2 (2026-06-03)
+
+### Features Added
+
+- Make `Azure.ResourceManager.DeviceProvisioningServices` AOT-compatible.
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.57.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.3.0-beta.1 (2025-10-13)
 
@@ -99,5 +110,4 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
 > NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
-
 

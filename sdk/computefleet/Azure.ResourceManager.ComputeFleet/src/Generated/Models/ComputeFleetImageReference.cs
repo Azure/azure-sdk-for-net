@@ -20,37 +20,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// </summary>
     public partial class ComputeFleetImageReference
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetImageReference"/>. </summary>
         public ComputeFleetImageReference()
@@ -90,8 +61,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Specified the community gallery image unique id for vm deployment. This can be
         /// fetched from community gallery image GET call.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetImageReference(ResourceIdentifier id, string publisher, string offer, string sku, string version, string exactVersion, string sharedGalleryImageId, string communityGalleryImageId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetImageReference(ResourceIdentifier id, string publisher, string offer, string sku, string version, string exactVersion, string sharedGalleryImageId, string communityGalleryImageId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Publisher = publisher;
@@ -101,20 +72,24 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             ExactVersion = exactVersion;
             SharedGalleryImageId = sharedGalleryImageId;
             CommunityGalleryImageId = communityGalleryImageId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource Id. </summary>
         public ResourceIdentifier Id { get; set; }
+
         /// <summary> The image publisher. </summary>
         public string Publisher { get; set; }
+
         /// <summary>
         /// Specifies the offer of the platform image or marketplace image used to create
         /// the virtual machine.
         /// </summary>
         public string Offer { get; set; }
+
         /// <summary> The image SKU. </summary>
         public string Sku { get; set; }
+
         /// <summary>
         /// Specifies the version of the platform image or marketplace image used to create
         /// the virtual machine. The allowed formats are Major.Minor.Build or 'latest'.
@@ -128,17 +103,20 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// in the 'id' field without version input.
         /// </summary>
         public string Version { get; set; }
+
         /// <summary>
         /// Specifies in decimal numbers, the version of platform image or marketplace
         /// image used to create the virtual machine. This readonly field differs from 'version',
         /// only if the value specified in 'version' field is 'latest'.
         /// </summary>
         public string ExactVersion { get; }
+
         /// <summary>
         /// Specified the shared gallery image unique id for vm deployment. This can be
         /// fetched from shared gallery image GET call.
         /// </summary>
         public string SharedGalleryImageId { get; set; }
+
         /// <summary>
         /// Specified the community gallery image unique id for vm deployment. This can be
         /// fetched from community gallery image GET call.

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         {
             TryGetApiVersion(InformaticaServerlessRuntimeResource.ResourceType, out string informaticaServerlessRuntimeApiVersion);
             _serverlessRuntimesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.InformaticaDataManagement", InformaticaServerlessRuntimeResource.ResourceType.Namespace, Diagnostics);
-            _serverlessRuntimesRestClient = new ServerlessRuntimes(_serverlessRuntimesClientDiagnostics, Pipeline, Endpoint, informaticaServerlessRuntimeApiVersion ?? "2024-05-08");
+            _serverlessRuntimesRestClient = new ServerlessRuntimes(_serverlessRuntimesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, informaticaServerlessRuntimeApiVersion ?? "2024-05-08");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         {
             if (id.ResourceType != InformaticaOrganizationResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, InformaticaOrganizationResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, InformaticaOrganizationResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 HttpMessage message = _serverlessRuntimesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, InformaticaServerlessRuntimeData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 InformaticaDataManagementArmOperation<InformaticaServerlessRuntimeResource> operation = new InformaticaDataManagementArmOperation<InformaticaServerlessRuntimeResource>(
-                    new InformaticaServerlessRuntimeOperationSource(Client),
+                    new InformaticaServerlessRuntimeResourceOperationSource(Client),
                     _serverlessRuntimesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 HttpMessage message = _serverlessRuntimesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, InformaticaServerlessRuntimeData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 InformaticaDataManagementArmOperation<InformaticaServerlessRuntimeResource> operation = new InformaticaDataManagementArmOperation<InformaticaServerlessRuntimeResource>(
-                    new InformaticaServerlessRuntimeOperationSource(Client),
+                    new InformaticaServerlessRuntimeResourceOperationSource(Client),
                     _serverlessRuntimesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<InformaticaServerlessRuntimeData, InformaticaServerlessRuntimeResource>(new ServerlessRuntimesGetByInformaticaOrganizationResourceAsyncCollectionResultOfT(_serverlessRuntimesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new InformaticaServerlessRuntimeResource(Client, data));
+            return new AsyncPageableWrapper<InformaticaServerlessRuntimeData, InformaticaServerlessRuntimeResource>(new ServerlessRuntimesGetByInformaticaOrganizationResourceAsyncCollectionResultOfT(
+                _serverlessRuntimesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "InformaticaServerlessRuntimeCollection.GetAll"), data => new InformaticaServerlessRuntimeResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<InformaticaServerlessRuntimeData, InformaticaServerlessRuntimeResource>(new ServerlessRuntimesGetByInformaticaOrganizationResourceCollectionResultOfT(_serverlessRuntimesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new InformaticaServerlessRuntimeResource(Client, data));
+            return new PageableWrapper<InformaticaServerlessRuntimeData, InformaticaServerlessRuntimeResource>(new ServerlessRuntimesGetByInformaticaOrganizationResourceCollectionResultOfT(
+                _serverlessRuntimesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "InformaticaServerlessRuntimeCollection.GetAll"), data => new InformaticaServerlessRuntimeResource(Client, data));
         }
 
         /// <summary>

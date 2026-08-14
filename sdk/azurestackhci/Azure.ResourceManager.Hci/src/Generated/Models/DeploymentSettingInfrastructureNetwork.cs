@@ -7,48 +7,21 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> The InfrastructureNetwork of a AzureStackHCI Cluster. </summary>
     public partial class DeploymentSettingInfrastructureNetwork
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeploymentSettingInfrastructureNetwork"/>. </summary>
         public DeploymentSettingInfrastructureNetwork()
         {
             IPPools = new ChangeTrackingList<DeploymentSettingIPPools>();
+            DnsZones = new ChangeTrackingList<HciDnsZones>();
             DnsServers = new ChangeTrackingList<string>();
         }
 
@@ -56,31 +29,47 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="subnetMask"> Subnet mask that matches the provided IP address space. </param>
         /// <param name="gateway"> Default gateway that should be used for the provided IP address space. </param>
         /// <param name="ipPools"> Range of IP addresses from which addresses are allocated for nodes within a subnet. </param>
+        /// <param name="dnsServerConfig"> Specifies how DNS servers are configured for the infrastructure network. Allowed values are 'UseDnsServer' to use the provided DNS servers, and 'UseForwarder' to use DNS forwarders. </param>
+        /// <param name="dnsZones"> Details of the DNS Zones to be configured. </param>
         /// <param name="dnsServers"> IPv4 address of the DNS servers in your environment. </param>
         /// <param name="useDhcp"> Allows customers to use DHCP for Hosts and Cluster IPs. If not declared, the deployment will default to static IPs. When true, GW and DNS servers are not required. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentSettingInfrastructureNetwork(string subnetMask, string gateway, IList<DeploymentSettingIPPools> ipPools, IList<string> dnsServers, bool? useDhcp, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeploymentSettingInfrastructureNetwork(string subnetMask, string gateway, IList<DeploymentSettingIPPools> ipPools, DnsServerConfig? dnsServerConfig, IList<HciDnsZones> dnsZones, IList<string> dnsServers, bool? useDhcp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubnetMask = subnetMask;
             Gateway = gateway;
             IPPools = ipPools;
+            DnsServerConfig = dnsServerConfig;
+            DnsZones = dnsZones;
             DnsServers = dnsServers;
             UseDhcp = useDhcp;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Subnet mask that matches the provided IP address space. </summary>
         [WirePath("subnetMask")]
         public string SubnetMask { get; set; }
+
         /// <summary> Default gateway that should be used for the provided IP address space. </summary>
         [WirePath("gateway")]
         public string Gateway { get; set; }
+
         /// <summary> Range of IP addresses from which addresses are allocated for nodes within a subnet. </summary>
         [WirePath("ipPools")]
         public IList<DeploymentSettingIPPools> IPPools { get; }
+
+        /// <summary> Specifies how DNS servers are configured for the infrastructure network. Allowed values are 'UseDnsServer' to use the provided DNS servers, and 'UseForwarder' to use DNS forwarders. </summary>
+        [WirePath("dnsServerConfig")]
+        public DnsServerConfig? DnsServerConfig { get; set; }
+
+        /// <summary> Details of the DNS Zones to be configured. </summary>
+        [WirePath("dnsZones")]
+        public IList<HciDnsZones> DnsZones { get; }
+
         /// <summary> IPv4 address of the DNS servers in your environment. </summary>
         [WirePath("dnsServers")]
         public IList<string> DnsServers { get; }
+
         /// <summary> Allows customers to use DHCP for Hosts and Cluster IPs. If not declared, the deployment will default to static IPs. When true, GW and DNS servers are not required. </summary>
         [WirePath("useDhcp")]
         public bool? UseDhcp { get; set; }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public readonly partial struct DevTestLabEnableStatus : IEquatable<DevTestLabEnableStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DevTestLabEnableStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DevTestLabEnableStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabEnableStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DevTestLabEnableStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Enabled. </summary>
         public static DevTestLabEnableStatus Enabled { get; } = new DevTestLabEnableStatus(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static DevTestLabEnableStatus Disabled { get; } = new DevTestLabEnableStatus(DisabledValue);
+
         /// <summary> Determines if two <see cref="DevTestLabEnableStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevTestLabEnableStatus left, DevTestLabEnableStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevTestLabEnableStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevTestLabEnableStatus left, DevTestLabEnableStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevTestLabEnableStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevTestLabEnableStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevTestLabEnableStatus(string value) => new DevTestLabEnableStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevTestLabEnableStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevTestLabEnableStatus?(string value) => value == null ? null : new DevTestLabEnableStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevTestLabEnableStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevTestLabEnableStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

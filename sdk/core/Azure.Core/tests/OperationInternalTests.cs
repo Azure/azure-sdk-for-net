@@ -207,7 +207,7 @@ namespace Azure.Core.Tests
 
             string expectedTypeName = operationTypeName ?? nameof(TestOperation);
             KeyValuePair<string, string>[] expectedAttributes = { new("key1", "value1"), new("key2", "value2") };
-            var operationInternal = new OperationInternal( TestOperation.Succeeded(), new(new TestClientOptions(), suppressNestedClientActivities), InitialResponse, operationTypeName, expectedAttributes);
+            var operationInternal = new OperationInternal(TestOperation.Succeeded(), new(new TestClientOptions(), suppressNestedClientActivities), InitialResponse, operationTypeName, expectedAttributes);
 
             _ = async
                 ? await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None)

@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
@@ -18,80 +18,149 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal partial class ApplicationInsightsRestClient
     {
-        private readonly HttpPipeline _pipeline;
-        private readonly string _host;
+        private readonly Uri _endpoint;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://monitor.azure.com/.default" };
+        private readonly string _apiVersion;
+
+        /// <summary> Initializes a new instance of ApplicationInsightsRestClient for mocking. </summary>
+        protected ApplicationInsightsRestClient()
+        {
+        }
+
+        /// <summary> Initializes a new instance of ApplicationInsightsRestClient. </summary>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        public ApplicationInsightsRestClient(TokenCredential credential) : this(new Uri("https://dc.services.visualstudio.com"), credential, new ApplicationInsightsRestClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of ApplicationInsightsRestClient. </summary>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public ApplicationInsightsRestClient(TokenCredential credential, ApplicationInsightsRestClientOptions options) : this(new Uri("https://dc.services.visualstudio.com"), credential, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of ApplicationInsightsRestClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal ApplicationInsightsRestClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ApplicationInsightsRestClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new ApplicationInsightsRestClientOptions();
+
+            _endpoint = endpoint;
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
+            _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of ApplicationInsightsRestClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public ApplicationInsightsRestClient(Uri endpoint, TokenCredential credential, ApplicationInsightsRestClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        {
+        }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsRestClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="host"> Breeze endpoint: https://dc.services.visualstudio.com. The default value is "https://dc.services.visualstudio.com". </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="host"/> is null. </exception>
-        public ApplicationInsightsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string host)
+        /// <summary>
+        /// [Protocol Method] This operation sends a sequence of telemetry events that will be monitored by
+        /// Azure Monitor.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response Track(RequestContent content, RequestContext context = null)
         {
-            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _host = host ?? throw new ArgumentNullException(nameof(host));
-        }
-
-        /// <summary> Track telemetry events. </summary>
-        /// <param name="body"> The list of telemetry events to track. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <remarks> This operation sends a sequence of telemetry events that will be monitored by Azure Monitor. </remarks>
-        public async Task<Response<TrackResponse>> TrackAsync(IEnumerable<TelemetryItem> body, CancellationToken cancellationToken = default)
-        {
-            if (body == null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ApplicationInsightsRestClient.Track");
+            scope.Start();
+            try
             {
-                throw new ArgumentNullException(nameof(body));
+                using HttpMessage message = CreateTrackRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
             }
-
-            using var message = CreateTrackRequest(body);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            catch (Exception e)
             {
-                case 200:
-                case 206:
-                    {
-                        TrackResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = TrackResponse.DeserializeTrackResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Track telemetry events. </summary>
-        /// <param name="body"> The list of telemetry events to track. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <remarks> This operation sends a sequence of telemetry events that will be monitored by Azure Monitor. </remarks>
-        public Response<TrackResponse> Track(IEnumerable<TelemetryItem> body, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// [Protocol Method] This operation sends a sequence of telemetry events that will be monitored by
+        /// Azure Monitor.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> TrackAsync(RequestContent content, RequestContext context = null)
         {
-            if (body == null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ApplicationInsightsRestClient.Track");
+            scope.Start();
+            try
             {
-                throw new ArgumentNullException(nameof(body));
+                using HttpMessage message = CreateTrackRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-            using var message = CreateTrackRequest(body);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 206:
-                    {
-                        TrackResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = TrackResponse.DeserializeTrackResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+        /// <summary>
+        /// This operation sends a sequence of telemetry events that will be monitored by
+        /// Azure Monitor.
+        /// </summary>
+        /// <param name="body"> The list of telemetry events to track. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<TrackResponse> Track(IEnumerable<TelemetryItem> body, CancellationToken cancellationToken = default)
+        {
+            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
+            Response result = Track(content, cancellationToken.ToRequestContext());
+            return Response.FromValue((TrackResponse)result, result);
+        }
+
+        /// <summary>
+        /// This operation sends a sequence of telemetry events that will be monitored by
+        /// Azure Monitor.
+        /// </summary>
+        /// <param name="body"> The list of telemetry events to track. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<TrackResponse>> TrackAsync(IEnumerable<TelemetryItem> body, CancellationToken cancellationToken = default)
+        {
+            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
+            Response result = await TrackAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TrackResponse)result, result);
         }
     }
 }

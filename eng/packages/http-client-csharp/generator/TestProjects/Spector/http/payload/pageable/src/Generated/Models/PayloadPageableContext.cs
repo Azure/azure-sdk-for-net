@@ -6,13 +6,13 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Payload.Pageable._PageSize;
-using Payload.Pageable._ServerDrivenPagination;
-using Payload.Pageable._ServerDrivenPagination.ContinuationToken;
+using Payload.Pageable._ServerDrivenPagination.AlternateInitialVerb;
 
 namespace Payload.Pageable
 {
+    [ModelReaderWriterBuildable(typeof(Filter))]
     [ModelReaderWriterBuildable(typeof(Pet))]
+    [ModelReaderWriterBuildable(typeof(XmlPet))]
     public partial class PayloadPageableContext : ModelReaderWriterContext
     {
     }

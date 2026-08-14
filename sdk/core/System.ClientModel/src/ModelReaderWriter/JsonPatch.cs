@@ -1400,4 +1400,32 @@ public partial struct JsonPatch
                 return ThrowFormatNotSupportedException(format);
         }
     }
+
+    /// <summary>
+    /// Returns the binary UTF-8 JSON representation using the default "JP" (JSON Patch) format.
+    /// </summary>
+    /// <returns>A <see cref="BinaryData"/> containing the UTF-8 JSON representation.</returns>
+    public BinaryData ToBinaryData()
+        => ToBinaryData("JP");
+
+    /// <summary>
+    /// Returns the binary UTF-8 JSON representation using the specified format.
+    /// </summary>
+    /// <param name="format">The format to return: "J" for application/json or "JP" for application/json-patch+json.</param>
+    /// <returns>A <see cref="BinaryData"/> containing the UTF-8 JSON representation.</returns>
+    public BinaryData ToBinaryData(string format)
+    {
+        ThrowIfNull(format, nameof(format));
+
+        switch (format)
+        {
+            case "J":
+                return SerializeToBinaryDataJson();
+            case "JP":
+                return SerializeToBinaryDataJsonPatch();
+            default:
+                ThrowFormatNotSupportedException(format);
+                return default!; // unreachable
+        }
+    }
 }

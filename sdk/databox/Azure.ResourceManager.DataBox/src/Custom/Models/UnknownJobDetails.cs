@@ -7,7 +7,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    [CodeGenModel("UnknownDataBoxBasicJobDetails")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("UnknownDataBoxBasicJobDetails")]
     internal partial class UnknownJobDetails : DataBoxBasicJobDetails
     {
     }

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Search.Models
 {
     internal static partial class SearchServicePrivateLinkServiceConnectionStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SearchServicePrivateLinkServiceConnectionStatus value) => value switch
         {
             SearchServicePrivateLinkServiceConnectionStatus.Pending => "Pending",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.Search.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchServicePrivateLinkServiceConnectionStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SearchServicePrivateLinkServiceConnectionStatus ToSearchServicePrivateLinkServiceConnectionStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pending")) return SearchServicePrivateLinkServiceConnectionStatus.Pending;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Approved")) return SearchServicePrivateLinkServiceConnectionStatus.Approved;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Rejected")) return SearchServicePrivateLinkServiceConnectionStatus.Rejected;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disconnected")) return SearchServicePrivateLinkServiceConnectionStatus.Disconnected;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pending"))
+            {
+                return SearchServicePrivateLinkServiceConnectionStatus.Pending;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Approved"))
+            {
+                return SearchServicePrivateLinkServiceConnectionStatus.Approved;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Rejected"))
+            {
+                return SearchServicePrivateLinkServiceConnectionStatus.Rejected;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disconnected"))
+            {
+                return SearchServicePrivateLinkServiceConnectionStatus.Disconnected;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchServicePrivateLinkServiceConnectionStatus value.");
         }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Batch.Models
     public readonly partial struct BatchVmContainerType : IEquatable<BatchVmContainerType>
     {
         private readonly string _value;
+        /// <summary> A Docker compatible container technology will be used to launch the containers. </summary>
+        private const string DockerCompatibleValue = "DockerCompatible";
+        /// <summary> A CRI based technology will be used to launch the containers. </summary>
+        private const string CriCompatibleValue = "CriCompatible";
 
         /// <summary> Initializes a new instance of <see cref="BatchVmContainerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchVmContainerType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DockerCompatibleValue = "DockerCompatible";
-        private const string CriCompatibleValue = "CriCompatible";
+            _value = value;
+        }
 
         /// <summary> A Docker compatible container technology will be used to launch the containers. </summary>
         public static BatchVmContainerType DockerCompatible { get; } = new BatchVmContainerType(DockerCompatibleValue);
+
         /// <summary> A CRI based technology will be used to launch the containers. </summary>
         public static BatchVmContainerType CriCompatible { get; } = new BatchVmContainerType(CriCompatibleValue);
+
         /// <summary> Determines if two <see cref="BatchVmContainerType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchVmContainerType left, BatchVmContainerType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchVmContainerType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchVmContainerType left, BatchVmContainerType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchVmContainerType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchVmContainerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchVmContainerType(string value) => new BatchVmContainerType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BatchVmContainerType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BatchVmContainerType?(string value) => value == null ? null : new BatchVmContainerType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchVmContainerType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchVmContainerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

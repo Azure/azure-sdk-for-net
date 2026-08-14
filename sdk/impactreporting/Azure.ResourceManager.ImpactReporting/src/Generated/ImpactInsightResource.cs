@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ImpactReporting
         {
             TryGetApiVersion(ResourceType, out string impactInsightApiVersion);
             _insightsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImpactReporting", ResourceType.Namespace, Diagnostics);
-            _insightsRestClient = new Insights(_insightsClientDiagnostics, Pipeline, Endpoint, impactInsightApiVersion ?? "2024-05-01-preview");
+            _insightsRestClient = new Insights(_insightsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, impactInsightApiVersion ?? "2024-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ImpactReporting
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

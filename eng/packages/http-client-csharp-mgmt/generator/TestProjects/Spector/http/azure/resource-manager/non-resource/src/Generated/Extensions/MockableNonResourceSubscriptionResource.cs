@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NonResource.Mocking
 
         private ClientDiagnostics NonResourceOperationsClientDiagnostics => _nonResourceOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NonResource.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NonResourceOperations NonResourceOperationsRestClient => _nonResourceOperationsRestClient ??= new NonResourceOperations(NonResourceOperationsClientDiagnostics, Pipeline, Endpoint, "2023-12-01-preview");
+        private NonResourceOperations NonResourceOperationsRestClient => _nonResourceOperationsRestClient ??= new NonResourceOperations(NonResourceOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-12-01-preview");
 
         /// <summary>
         /// Get

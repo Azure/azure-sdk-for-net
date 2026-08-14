@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct LastBackupStatus : IEquatable<LastBackupStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="LastBackupStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LastBackupStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string HealthyValue = "Healthy";
         private const string UnhealthyValue = "Unhealthy";
         private const string IRPendingValue = "IRPending";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="LastBackupStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public LastBackupStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static LastBackupStatus Invalid { get; } = new LastBackupStatus(InvalidValue);
-        /// <summary> Healthy. </summary>
+
+        /// <summary> Gets the Healthy. </summary>
         public static LastBackupStatus Healthy { get; } = new LastBackupStatus(HealthyValue);
-        /// <summary> Unhealthy. </summary>
+
+        /// <summary> Gets the Unhealthy. </summary>
         public static LastBackupStatus Unhealthy { get; } = new LastBackupStatus(UnhealthyValue);
-        /// <summary> IRPending. </summary>
+
+        /// <summary> Gets the IRPending. </summary>
         public static LastBackupStatus IRPending { get; } = new LastBackupStatus(IRPendingValue);
+
         /// <summary> Determines if two <see cref="LastBackupStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LastBackupStatus left, LastBackupStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LastBackupStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LastBackupStatus left, LastBackupStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LastBackupStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LastBackupStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LastBackupStatus(string value) => new LastBackupStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LastBackupStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LastBackupStatus?(string value) => value == null ? null : new LastBackupStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LastBackupStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LastBackupStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

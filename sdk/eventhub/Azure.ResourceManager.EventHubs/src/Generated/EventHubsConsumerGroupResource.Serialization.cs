@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.EventHubs
 {
+    /// <summary></summary>
     public partial class EventHubsConsumerGroupResource : IJsonModel<EventHubsConsumerGroupData>
     {
-        private static EventHubsConsumerGroupData s_dataDeserializationInstance;
-        private static EventHubsConsumerGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<EventHubsConsumerGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<EventHubsConsumerGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new EventHubsConsumerGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EventHubsConsumerGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsConsumerGroupData>)Data).Write(writer, options);
 
-        EventHubsConsumerGroupData IJsonModel<EventHubsConsumerGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsConsumerGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EventHubsConsumerGroupData IJsonModel<EventHubsConsumerGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<EventHubsConsumerGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventHubsConsumerGroupData>(Data, options, AzureResourceManagerEventHubsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         EventHubsConsumerGroupData IPersistableModel<EventHubsConsumerGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventHubsConsumerGroupData>(data, options, AzureResourceManagerEventHubsContext.Default);
 
-        string IPersistableModel<EventHubsConsumerGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventHubsConsumerGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EventHubsConsumerGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

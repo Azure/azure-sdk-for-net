@@ -213,6 +213,7 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class OnlineExperimentationClient
     {
         protected OnlineExperimentationClient() { }
+        public OnlineExperimentationClient(Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientSettings settings) { }
         public OnlineExperimentationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public OnlineExperimentationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -234,16 +235,23 @@ namespace Azure.Analytics.OnlineExperimentation
         public virtual Azure.Response<Azure.Analytics.OnlineExperimentation.ExperimentMetric> GetMetric(string experimentMetricId, Azure.RequestConditions requestConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetMetricAsync(string experimentMetricId, Azure.RequestConditions requestConditions, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.OnlineExperimentation.ExperimentMetric>> GetMetricAsync(string experimentMetricId, Azure.RequestConditions requestConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetMetrics(int? top, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Analytics.OnlineExperimentation.ExperimentMetric> GetMetrics(int? top = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetMetricsAsync(int? top, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Analytics.OnlineExperimentation.ExperimentMetric> GetMetricsAsync(int? top = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetMetrics(int? maxCount, int? skip, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Analytics.OnlineExperimentation.ExperimentMetric> GetMetrics(int? maxCount = default(int?), int? skip = default(int?), int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetMetricsAsync(int? maxCount, int? skip, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Analytics.OnlineExperimentation.ExperimentMetric> GetMetricsAsync(int? maxCount = default(int?), int? skip = default(int?), int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.OnlineExperimentation.ExperimentMetric> UpdateMetric(string experimentMetricId, Azure.Analytics.OnlineExperimentation.ExperimentMetricUpdate metric, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.OnlineExperimentation.ExperimentMetric>> UpdateMetricAsync(string experimentMetricId, Azure.Analytics.OnlineExperimentation.ExperimentMetricUpdate metric, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult> ValidateMetric(Azure.Analytics.OnlineExperimentation.ExperimentMetric body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ValidateMetric(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult>> ValidateMetricAsync(Azure.Analytics.OnlineExperimentation.ExperimentMetric body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ValidateMetricAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+    }
+    public static partial class OnlineExperimentationClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedOnlineExperimentationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedOnlineExperimentationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddOnlineExperimentationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddOnlineExperimentationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientSettings> configureSettings) { throw null; }
     }
     public partial class OnlineExperimentationClientOptions : Azure.Core.ClientOptions
     {
@@ -252,6 +260,13 @@ namespace Azure.Analytics.OnlineExperimentation
         {
             V2025_05_31_Preview = 1,
         }
+    }
+    public partial class OnlineExperimentationClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public OnlineExperimentationClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public static partial class OnlineExperimentationModelFactory
     {
@@ -330,13 +345,5 @@ namespace Azure.Analytics.OnlineExperimentation
         Azure.Analytics.OnlineExperimentation.UserRateMetricDefinition System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.UserRateMetricDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.UserRateMetricDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.UserRateMetricDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-}
-namespace Microsoft.Extensions.Azure
-{
-    public static partial class OnlineExperimentationClientBuilderExtensions
-    {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.OnlineExperimentation.OnlineExperimentationClient, Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientOptions> AddOnlineExperimentationClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.OnlineExperimentation.OnlineExperimentationClient, Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientOptions> AddOnlineExperimentationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

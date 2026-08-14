@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "properties": {
+    "AzureClients": {
+      "type": "object",
+      "properties": {
+        "SchemaRegistryClient": {
+          "type": "object",
+          "description": "Configuration for SchemaRegistryClient.",
+          "properties": {
+            "FullyQualifiedNamespace": {
+              "type": "string",
+              "description": "Gets or sets the FullyQualifiedNamespace."
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/schemaRegistryClientOptions"
+            }
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "description": "Configuration for a named client instance."
+      }
+    }
+  },
+  "definitions": {
+    "schemaRegistryClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        }
+      ]
+    }
+  }
+}

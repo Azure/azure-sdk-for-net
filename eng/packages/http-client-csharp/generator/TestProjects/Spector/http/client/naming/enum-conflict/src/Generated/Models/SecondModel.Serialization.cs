@@ -17,21 +17,13 @@ namespace Client.Naming.EnumConflict.SecondNamespace
     {
         internal SecondModel() => throw null;
 
-        void IJsonModel<SecondModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        SecondModel IJsonModel<SecondModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual SecondModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<SecondModel>.Write(ModelReaderWriterOptions options) => throw null;
+        protected virtual SecondModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        SecondModel IPersistableModel<SecondModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<SecondModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual SecondModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        SecondModel IPersistableModel<SecondModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<SecondModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
@@ -39,5 +31,13 @@ namespace Client.Naming.EnumConflict.SecondNamespace
         public static implicit operator RequestContent(SecondModel secondModel) => throw null;
 
         public static explicit operator SecondModel(Response response) => throw null;
+
+        void IJsonModel<SecondModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        SecondModel IJsonModel<SecondModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual SecondModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }
 }

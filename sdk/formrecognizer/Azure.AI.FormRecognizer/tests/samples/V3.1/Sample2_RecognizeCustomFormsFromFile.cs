@@ -72,7 +72,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 {
                     for (int i = 0; i < page.Tables.Count; i++)
                     {
-                        Console.WriteLine($"Table {i+1} on page {page.Tables[i].PageNumber}");
+                        Console.WriteLine($"Table {i + 1} on page {page.Tables[i].PageNumber}");
                         foreach (var cell in page.Tables[i].Cells)
                         {
                             Console.WriteLine($"  Cell[{cell.RowIndex}][{cell.ColumnIndex}] has text '{cell.Text}' with confidence {cell.Confidence}");

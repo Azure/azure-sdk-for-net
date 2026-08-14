@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_UpdateVirtualNetworkGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-03-01/examples/VirtualNetworkGatewayUpdate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayUpdate.json
             // this example is just showing the usage of "VirtualNetworkGateways_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +56,6 @@ namespace Azure.ResourceManager.Network.Samples
 PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
 SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/GatewaySubnet"),
 PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/gwpip"),
-Name = "gwipconfig1",
 }},
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
@@ -66,7 +65,6 @@ Name = "gwipconfig1",
                 DisableIPSecReplayProtection = false,
                 Sku = new VirtualNetworkGatewaySku
                 {
-                    Name = VirtualNetworkGatewaySkuName.VpnGw1,
                     Tier = VirtualNetworkGatewaySkuTier.VpnGw1,
                 },
                 VpnClientConfiguration = new VpnClientConfiguration
@@ -105,7 +103,6 @@ AddressSpace = "50.0.0.0/24",
 }},
 IPConfigurationId = "",
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/vpngw/natRules/natRule1"),
-Name = "natRule1",
 }, new VirtualNetworkGatewayNatRuleData
 {
 VpnNatRuleType = VpnNatRuleType.Static,
@@ -120,14 +117,13 @@ AddressSpace = "30.0.0.0/24",
 }},
 IPConfigurationId = "",
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/vpngw/natRules/natRule2"),
-Name = "natRule2",
 }},
                 EnableBgpRouteTranslationForNat = false,
                 AllowVirtualWanTraffic = false,
                 AllowRemoteVnetTraffic = false,
                 Location = new AzureLocation("centralus"),
             };
-            ArmOperation<VirtualNetworkGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, data);
+            ArmOperation<VirtualNetworkGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkGatewayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -141,7 +137,7 @@ Name = "natRule2",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_UpdateVirtualNetworkScalableGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-03-01/examples/VirtualNetworkScalableGatewayUpdate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkScalableGatewayUpdate.json
             // this example is just showing the usage of "VirtualNetworkGateways_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -173,7 +169,6 @@ Name = "natRule2",
 PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
 SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/GatewaySubnet"),
 PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/gwpip"),
-Name = "gwipconfig1",
 }},
                 GatewayType = VirtualNetworkGatewayType.ExpressRoute,
                 VpnType = VpnType.PolicyBased,
@@ -182,7 +177,6 @@ Name = "gwipconfig1",
                 DisableIPSecReplayProtection = false,
                 Sku = new VirtualNetworkGatewaySku
                 {
-                    Name = VirtualNetworkGatewaySkuName.ErGwScale,
                     Tier = VirtualNetworkGatewaySkuTier.ErGwScale,
                 },
                 VpnClientConfiguration = default,
@@ -195,7 +189,7 @@ Name = "gwipconfig1",
                 AdminState = ExpressRouteGatewayAdminState.Enabled,
                 Location = new AzureLocation("centralus"),
             };
-            ArmOperation<VirtualNetworkGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, data);
+            ArmOperation<VirtualNetworkGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkGatewayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -209,7 +203,7 @@ Name = "gwipconfig1",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualNetworkGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-03-01/examples/VirtualNetworkGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayGet.json
             // this example is just showing the usage of "VirtualNetworkGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -242,7 +236,7 @@ Name = "gwipconfig1",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualNetworkScalableGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-03-01/examples/VirtualNetworkScalableGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkScalableGatewayGet.json
             // this example is just showing the usage of "VirtualNetworkGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -275,7 +269,7 @@ Name = "gwipconfig1",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListVirtualNetworkGatewaysinResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-03-01/examples/VirtualNetworkGatewayList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayList.json
             // this example is just showing the usage of "VirtualNetworkGateways_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -310,7 +304,7 @@ Name = "gwipconfig1",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetVirtualNetworkGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-03-01/examples/VirtualNetworkGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayGet.json
             // this example is just showing the usage of "VirtualNetworkGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -339,7 +333,7 @@ Name = "gwipconfig1",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetVirtualNetworkScalableGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-03-01/examples/VirtualNetworkScalableGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkScalableGatewayGet.json
             // this example is just showing the usage of "VirtualNetworkGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -368,7 +362,7 @@ Name = "gwipconfig1",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetVirtualNetworkGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-03-01/examples/VirtualNetworkGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayGet.json
             // this example is just showing the usage of "VirtualNetworkGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -409,7 +403,7 @@ Name = "gwipconfig1",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetVirtualNetworkScalableGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-03-01/examples/VirtualNetworkScalableGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkScalableGatewayGet.json
             // this example is just showing the usage of "VirtualNetworkGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct TemplateDeploymentPreflightNotification : IEquatable<TemplateDeploymentPreflightNotification>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="TemplateDeploymentPreflightNotification"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TemplateDeploymentPreflightNotification(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string UnregisteredSubscriptionsValue = "UnregisteredSubscriptions";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateDeploymentPreflightNotification"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public TemplateDeploymentPreflightNotification(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static TemplateDeploymentPreflightNotification None { get; } = new TemplateDeploymentPreflightNotification(NoneValue);
-        /// <summary> UnregisteredSubscriptions. </summary>
+
+        /// <summary> Gets the UnregisteredSubscriptions. </summary>
         public static TemplateDeploymentPreflightNotification UnregisteredSubscriptions { get; } = new TemplateDeploymentPreflightNotification(UnregisteredSubscriptionsValue);
+
         /// <summary> Determines if two <see cref="TemplateDeploymentPreflightNotification"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TemplateDeploymentPreflightNotification left, TemplateDeploymentPreflightNotification right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TemplateDeploymentPreflightNotification"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TemplateDeploymentPreflightNotification left, TemplateDeploymentPreflightNotification right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TemplateDeploymentPreflightNotification"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TemplateDeploymentPreflightNotification"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TemplateDeploymentPreflightNotification(string value) => new TemplateDeploymentPreflightNotification(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TemplateDeploymentPreflightNotification"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TemplateDeploymentPreflightNotification?(string value) => value == null ? null : new TemplateDeploymentPreflightNotification(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TemplateDeploymentPreflightNotification other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TemplateDeploymentPreflightNotification other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

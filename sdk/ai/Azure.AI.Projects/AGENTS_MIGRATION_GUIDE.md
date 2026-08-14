@@ -1,5 +1,5 @@
 # Agents migration guide from Hub-based projects to Endpoint-based projects.
-This guide describes migration from hub-based to Endpoint-based projects. To create an Endpoint-based project, please use one of the deployment scripts on [foundry samples repository](https://github.com/azure-ai-foundry/foundry-samples/tree/main/samples/microsoft/infrastructure-setup) appropriate for your scenario, also you can use Azure AI Foundry UI. The support of hub-based projects was dropped in `Azure.AI.Projects` version `1.0.0-beta.9`. In this document, we show the operation implementation of before `1.0.0-beta.9` in **Hub-based** section, followed by code for `azure-ai-projects` version `1.0.0-beta.9` or later in **Endpoint-based**.
+This guide describes migration from hub-based to Endpoint-based projects. To create an Endpoint-based project, please use one of the deployment scripts on [foundry samples repository](https://github.com/microsoft-foundry/foundry-samples/tree/main/infrastructure/infrastructure-setup-bicep) appropriate for your scenario, also you can use Azure AI Foundry UI. The support of hub-based projects was dropped in `Azure.AI.Projects` version `1.0.0-beta.9`. In this document, we show the operation implementation of before `1.0.0-beta.9` in **Hub-based** section, followed by code for `azure-ai-projects` version `1.0.0-beta.9` or later in **Endpoint-based**.
 
 ## Installation
 Starting from version `1.0.0-beta.9`, the operations, related to agents were moved to a separate package `Azure.AI.Agents.Persistent`. To use agents please add both `Azure.AI.Projects` and `Azure.AI.Agents.Persistent` packages into the project.
@@ -55,7 +55,7 @@ Messages Operations
 |-|-|
 | `agentClient.CreateMessage` | `agentClient.Messages.CreateMessage` |
 | `agentClient.GetMessages` | `agentClient.Messages.GetMessages` |
-| `agentClient.GetMessage` | `pagentClient.Messages.GetMessage` |
+| `agentClient.GetMessage` | `agentClient.Messages.GetMessage` |
 | `agentClient.UpdateMessage` | `agentClient.Messages.UpdateMessage` |
 
 Runs Operations
@@ -143,7 +143,7 @@ Files Operations
     PersistentAgentsClient agentClient = projectClient.GetPersistentAgentsClient();
     ```
 
-    We can create the agentClient using consructor and provide the additional options.
+    We can create the agentClient using constructor and provide the additional options.
     ```C#
     PersistentAgentsClient agentClient = new(
         endpoint: projectEndpoint,
@@ -503,7 +503,7 @@ Files Operations
     bool isDeleted = agentClient.Files.DeleteFile(fileId: oneFile.Id);
     Console.WriteLine(isDeleted)
     ```
-15. Create, list vector store files list and delete vector stores. In `Azure.AI.Agents.Persistent`, the operation of file in the vector store or vector store deletion retuens boolean value instead of `VectorStoreFileDeletionStatus` and `VectorStoreDeletionStatus` respectively. In `Azure.AI.Agents.Persistent` the vector stores are managed by `VectorStores` client.
+15. Create, list vector store files list and delete vector stores. In `Azure.AI.Agents.Persistent`, the operation of file in the vector store or vector store deletion returns boolean value instead of `VectorStoreFileDeletionStatus` and `VectorStoreDeletionStatus` respectively. In `Azure.AI.Agents.Persistent` the vector stores are managed by `VectorStores` client.
 
     **Hub-based**
     ```python

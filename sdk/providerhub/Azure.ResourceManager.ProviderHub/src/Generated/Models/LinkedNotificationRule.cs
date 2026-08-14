@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The LinkedNotificationRule. </summary>
     public partial class LinkedNotificationRule
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LinkedNotificationRule"/>. </summary>
         public LinkedNotificationRule()
@@ -60,25 +32,29 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="fastPathActions"> The fast path actions. </param>
         /// <param name="fastPathActionsOnFailedOperation"> The fast path action on failed operation. </param>
         /// <param name="linkedNotificationTimeout"> This is a TimeSpan property. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LinkedNotificationRule(IList<string> actions, IList<string> actionsOnFailedOperation, IList<string> fastPathActions, IList<string> fastPathActionsOnFailedOperation, TimeSpan? linkedNotificationTimeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LinkedNotificationRule(IList<string> actions, IList<string> actionsOnFailedOperation, IList<string> fastPathActions, IList<string> fastPathActionsOnFailedOperation, TimeSpan? linkedNotificationTimeout, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Actions = actions;
             ActionsOnFailedOperation = actionsOnFailedOperation;
             FastPathActions = fastPathActions;
             FastPathActionsOnFailedOperation = fastPathActionsOnFailedOperation;
             LinkedNotificationTimeout = linkedNotificationTimeout;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The actions. </summary>
         public IList<string> Actions { get; }
+
         /// <summary> The actions on failed operation. </summary>
         public IList<string> ActionsOnFailedOperation { get; }
+
         /// <summary> The fast path actions. </summary>
         public IList<string> FastPathActions { get; }
+
         /// <summary> The fast path action on failed operation. </summary>
         public IList<string> FastPathActionsOnFailedOperation { get; }
+
         /// <summary> This is a TimeSpan property. </summary>
         public TimeSpan? LinkedNotificationTimeout { get; set; }
     }

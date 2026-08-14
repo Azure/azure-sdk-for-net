@@ -11,13 +11,14 @@ using Azure.Core;
 namespace Azure.Security.CodeTransparency
 {
     /// <summary>
-    /// Tracks the status of a call to <see cref="CodeTransparencyClient.CreateEntry"/>
-    /// or <see cref="CodeTransparencyClient.CreateEntryAsync"/> until completion.
+    /// Tracks the status of a call to <see cref="CodeTransparencyClient.CreateEntry(WaitUntil, BinaryData, CancellationToken)"/>
+    /// or <see cref="CodeTransparencyClient.CreateEntryAsync(WaitUntil, BinaryData, CancellationToken)"/> until completion.
     /// </summary>
     internal class CreateEntryOperation : Operation<BinaryData>, IOperation
     {
         private readonly CodeTransparencyClient _client;
         private readonly OperationInternal _operationInternal;
+        private readonly BinaryData _value;
 
         /// <summary>
         /// A constructor for mocking.
@@ -26,7 +27,7 @@ namespace Azure.Security.CodeTransparency
         { }
 
         /// <summary>
-        /// Initializes a previously run operation with the given <paramref name="operationId"/> <see cref="CodeTransparencyClient.CreateEntry"/>.
+        /// Initializes a previously run operation with the given <paramref name="operationId"/> <see cref="CodeTransparencyClient.CreateEntry(WaitUntil, BinaryData, CancellationToken)"/>.
         /// </summary>
         /// <param name="client"> The <see cref="CodeTransparencyClient"/>. </param>
         /// <param name="operationId"> The operation id from a previous call to create the entry. </param>
@@ -35,6 +36,20 @@ namespace Azure.Security.CodeTransparency
             _client = client;
             Id = operationId;
             _operationInternal = new(this, _client.ClientDiagnostics, rawResponse: null, nameof(CreateEntryOperation));
+        }
+
+        /// <summary>
+        /// Initializes a completed operation for an entry that has already been committed by the service
+        /// (for example, when the entry was created with waitForCommit set to true).
+        /// </summary>
+        /// <param name="entryId"> The id of the committed entry. </param>
+        /// <param name="rawResponse"> The final response returned by the create entry call. </param>
+        /// <param name="value"> The value exposed by the completed operation. </param>
+        public CreateEntryOperation(string entryId, Response rawResponse, BinaryData value)
+        {
+            Id = entryId;
+            _value = value;
+            _operationInternal = OperationInternal.Succeeded(rawResponse);
         }
 
         /// <summary>
@@ -60,17 +75,17 @@ namespace Azure.Security.CodeTransparency
         public override bool HasValue => _operationInternal.HasCompleted && _operationInternal.RawResponse != null;
 
         /// <inheritdoc />
-        public override BinaryData Value => _operationInternal.RawResponse.Content;
+        public override BinaryData Value => _value ?? _operationInternal.RawResponse.Content;
 
         // Part of IOperation which is used in _operationInternal
         async ValueTask<OperationState> IOperation.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response response = async
-                ? await _client.GetOperationAsync(
+                ? await _client.GetOperationV09Async(
                         Id,
                         new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow })
                     .ConfigureAwait(false)
-                : _client.GetOperation(Id, new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow });
+                : _client.GetOperationV09(Id, new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow });
 
             if (response.Status != (int)HttpStatusCode.OK &&
                 response.Status != (int)HttpStatusCode.Created &&

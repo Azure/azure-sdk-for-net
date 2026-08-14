@@ -2,14 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
-using Azure.ResourceManager.Resources;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
-using Azure.ResourceManager.Models;
-using Azure.Core;
-using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
+using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
 {

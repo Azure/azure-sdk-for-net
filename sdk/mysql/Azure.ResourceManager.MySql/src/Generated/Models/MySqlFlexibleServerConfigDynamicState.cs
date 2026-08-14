@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     public readonly partial struct MySqlFlexibleServerConfigDynamicState : IEquatable<MySqlFlexibleServerConfigDynamicState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerConfigDynamicState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MySqlFlexibleServerConfigDynamicState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string TrueValue = "True";
         private const string FalseValue = "False";
 
-        /// <summary> True. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerConfigDynamicState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MySqlFlexibleServerConfigDynamicState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the True. </summary>
         public static MySqlFlexibleServerConfigDynamicState True { get; } = new MySqlFlexibleServerConfigDynamicState(TrueValue);
-        /// <summary> False. </summary>
+
+        /// <summary> Gets the False. </summary>
         public static MySqlFlexibleServerConfigDynamicState False { get; } = new MySqlFlexibleServerConfigDynamicState(FalseValue);
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerConfigDynamicState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MySqlFlexibleServerConfigDynamicState left, MySqlFlexibleServerConfigDynamicState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerConfigDynamicState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MySqlFlexibleServerConfigDynamicState left, MySqlFlexibleServerConfigDynamicState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlFlexibleServerConfigDynamicState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerConfigDynamicState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MySqlFlexibleServerConfigDynamicState(string value) => new MySqlFlexibleServerConfigDynamicState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerConfigDynamicState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MySqlFlexibleServerConfigDynamicState?(string value) => value == null ? null : new MySqlFlexibleServerConfigDynamicState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MySqlFlexibleServerConfigDynamicState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MySqlFlexibleServerConfigDynamicState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

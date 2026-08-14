@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Quota
         {
             TryGetApiVersion(CurrentUsagesBaseResource.ResourceType, out string currentUsagesBaseApiVersion);
             _currentUsagesBasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", CurrentUsagesBaseResource.ResourceType.Namespace, Diagnostics);
-            _currentUsagesBasesRestClient = new CurrentUsagesBases(_currentUsagesBasesClientDiagnostics, Pipeline, Endpoint, currentUsagesBaseApiVersion ?? "2025-09-01");
+            _currentUsagesBasesRestClient = new CurrentUsagesBases(_currentUsagesBasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, currentUsagesBaseApiVersion ?? "2025-09-01");
         }
 
         /// <summary>
@@ -61,8 +61,7 @@ namespace Azure.ResourceManager.Quota
         /// </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CurrentUsagesBaseData> response = Response.FromValue(CurrentUsagesBaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -115,8 +114,7 @@ namespace Azure.ResourceManager.Quota
         /// </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,7 +132,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CurrentUsagesBaseData> response = Response.FromValue(CurrentUsagesBaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -175,7 +173,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CurrentUsagesBaseData, CurrentUsagesBaseResource>(new CurrentUsagesBasesGetAllAsyncCollectionResultOfT(_currentUsagesBasesRestClient, Id, context), data => new CurrentUsagesBaseResource(Client, data));
+            return new AsyncPageableWrapper<CurrentUsagesBaseData, CurrentUsagesBaseResource>(new CurrentUsagesBasesGetAllAsyncCollectionResultOfT(_currentUsagesBasesRestClient, Id.ToString(), context, "CurrentUsagesBaseCollection.GetAll"), data => new CurrentUsagesBaseResource(Client, data));
         }
 
         /// <summary>
@@ -203,7 +201,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CurrentUsagesBaseData, CurrentUsagesBaseResource>(new CurrentUsagesBasesGetAllCollectionResultOfT(_currentUsagesBasesRestClient, Id, context), data => new CurrentUsagesBaseResource(Client, data));
+            return new PageableWrapper<CurrentUsagesBaseData, CurrentUsagesBaseResource>(new CurrentUsagesBasesGetAllCollectionResultOfT(_currentUsagesBasesRestClient, Id.ToString(), context, "CurrentUsagesBaseCollection.GetAll"), data => new CurrentUsagesBaseResource(Client, data));
         }
 
         /// <summary>
@@ -225,8 +223,7 @@ namespace Azure.ResourceManager.Quota
         /// </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -244,7 +241,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CurrentUsagesBaseData> response = default;
@@ -287,8 +284,7 @@ namespace Azure.ResourceManager.Quota
         /// </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -306,7 +302,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CurrentUsagesBaseData> response = default;
@@ -349,8 +345,7 @@ namespace Azure.ResourceManager.Quota
         /// </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -368,7 +363,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CurrentUsagesBaseData> response = default;
@@ -415,8 +410,7 @@ namespace Azure.ResourceManager.Quota
         /// </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -434,7 +428,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CurrentUsagesBaseData> response = default;

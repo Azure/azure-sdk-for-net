@@ -6,25 +6,30 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.DevTestLabs.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ApplicableScheduleProperties))]
     [ModelReaderWriterBuildable(typeof(ArmTemplateList))]
+    [ModelReaderWriterBuildable(typeof(ArmTemplateProperties))]
     [ModelReaderWriterBuildable(typeof(ArtifactList))]
+    [ModelReaderWriterBuildable(typeof(ArtifactProperties))]
     [ModelReaderWriterBuildable(typeof(ArtifactSourceList))]
+    [ModelReaderWriterBuildable(typeof(ArtifactSourceProperties))]
     [ModelReaderWriterBuildable(typeof(AttachNewDataDiskDetails))]
     [ModelReaderWriterBuildable(typeof(BulkCreationParameters))]
     [ModelReaderWriterBuildable(typeof(ComputeDataDisk))]
     [ModelReaderWriterBuildable(typeof(ComputeVmInstanceViewStatus))]
     [ModelReaderWriterBuildable(typeof(ComputeVmProperties))]
     [ModelReaderWriterBuildable(typeof(CustomImageList))]
+    [ModelReaderWriterBuildable(typeof(CustomImageProperties))]
     [ModelReaderWriterBuildable(typeof(DayDetails))]
     [ModelReaderWriterBuildable(typeof(DevTestLabAnnouncement))]
     [ModelReaderWriterBuildable(typeof(DevTestLabApplicableSchedule))]
@@ -79,6 +84,8 @@ namespace Azure.ResourceManager.DevTestLabs
     [ModelReaderWriterBuildable(typeof(DevTestLabGlobalScheduleRetargetContent))]
     [ModelReaderWriterBuildable(typeof(DevTestLabImportVmContent))]
     [ModelReaderWriterBuildable(typeof(DevTestLabInboundNatRule))]
+    [ModelReaderWriterBuildable(typeof(DevTestLabLinuxOSInfo))]
+    [ModelReaderWriterBuildable(typeof(DevTestLabManagedIdentity))]
     [ModelReaderWriterBuildable(typeof(DevTestLabNetworkInterface))]
     [ModelReaderWriterBuildable(typeof(DevTestLabNotificationChannelData))]
     [ModelReaderWriterBuildable(typeof(DevTestLabNotificationChannelEvent))]
@@ -121,6 +128,7 @@ namespace Azure.ResourceManager.DevTestLabs
     [ModelReaderWriterBuildable(typeof(DevTestLabUserPatch))]
     [ModelReaderWriterBuildable(typeof(DevTestLabUserResource))]
     [ModelReaderWriterBuildable(typeof(DevTestLabUserSecretStore))]
+    [ModelReaderWriterBuildable(typeof(DevTestLabVhd))]
     [ModelReaderWriterBuildable(typeof(DevTestLabVirtualNetworkData))]
     [ModelReaderWriterBuildable(typeof(DevTestLabVirtualNetworkPatch))]
     [ModelReaderWriterBuildable(typeof(DevTestLabVirtualNetworkResource))]
@@ -133,31 +141,45 @@ namespace Azure.ResourceManager.DevTestLabs
     [ModelReaderWriterBuildable(typeof(DevTestLabVmResource))]
     [ModelReaderWriterBuildable(typeof(DevTestLabVmScheduleResource))]
     [ModelReaderWriterBuildable(typeof(DevTestLabWeekDetails))]
+    [ModelReaderWriterBuildable(typeof(DevTestLabWindowsOSInfo))]
     [ModelReaderWriterBuildable(typeof(DiskList))]
+    [ModelReaderWriterBuildable(typeof(DiskProperties))]
     [ModelReaderWriterBuildable(typeof(DtlEnvironmentList))]
+    [ModelReaderWriterBuildable(typeof(EnvironmentProperties))]
     [ModelReaderWriterBuildable(typeof(FormulaList))]
+    [ModelReaderWriterBuildable(typeof(FormulaProperties))]
     [ModelReaderWriterBuildable(typeof(FormulaPropertiesFromVm))]
     [ModelReaderWriterBuildable(typeof(GalleryImageList))]
+    [ModelReaderWriterBuildable(typeof(GalleryImageProperties))]
     [ModelReaderWriterBuildable(typeof(HourDetails))]
+    [ModelReaderWriterBuildable(typeof(LabCostProperties))]
     [ModelReaderWriterBuildable(typeof(LabCostSummaryProperties))]
     [ModelReaderWriterBuildable(typeof(LabList))]
+    [ModelReaderWriterBuildable(typeof(LabProperties))]
     [ModelReaderWriterBuildable(typeof(LabVhdList))]
-    [ModelReaderWriterBuildable(typeof(LabVmList))]
-    [ModelReaderWriterBuildable(typeof(LinuxOSInfo))]
+    [ModelReaderWriterBuildable(typeof(LabVirtualMachineCreationParameterProperties))]
+    [ModelReaderWriterBuildable(typeof(LabVirtualMachineList))]
+    [ModelReaderWriterBuildable(typeof(LabVirtualMachineProperties))]
     [ModelReaderWriterBuildable(typeof(NotificationChannelList))]
+    [ModelReaderWriterBuildable(typeof(NotificationChannelProperties))]
     [ModelReaderWriterBuildable(typeof(PercentageCostThresholdProperties))]
     [ModelReaderWriterBuildable(typeof(PolicyList))]
+    [ModelReaderWriterBuildable(typeof(PolicyProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(ScheduleCreationParameterProperties))]
     [ModelReaderWriterBuildable(typeof(ScheduleList))]
+    [ModelReaderWriterBuildable(typeof(ScheduleProperties))]
     [ModelReaderWriterBuildable(typeof(SecretList))]
+    [ModelReaderWriterBuildable(typeof(SecretProperties))]
     [ModelReaderWriterBuildable(typeof(ServiceFabricList))]
-    [ModelReaderWriterBuildable(typeof(SharedPublicIPAddressConfiguration))]
+    [ModelReaderWriterBuildable(typeof(ServiceFabricProperties))]
+    [ModelReaderWriterBuildable(typeof(SharedPublicIpAddressConfiguration))]
     [ModelReaderWriterBuildable(typeof(SubnetSharedPublicIPAddressConfiguration))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserList))]
+    [ModelReaderWriterBuildable(typeof(UserProperties))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkList))]
-    [ModelReaderWriterBuildable(typeof(WindowsOSInfo))]
+    [ModelReaderWriterBuildable(typeof(VirtualNetworkProperties))]
     public partial class AzureResourceManagerDevTestLabsContext : ModelReaderWriterContext
     {
     }

@@ -25,6 +25,63 @@ namespace Azure.AI.DocumentIntelligence
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ClassifierCopyAuthorization PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClassifierCopyAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeClassifierCopyAuthorization(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ClassifierCopyAuthorization)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClassifierCopyAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIDocumentIntelligenceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ClassifierCopyAuthorization)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ClassifierCopyAuthorization>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClassifierCopyAuthorization IPersistableModel<ClassifierCopyAuthorization>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ClassifierCopyAuthorization>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="classifierCopyAuthorization"> The <see cref="ClassifierCopyAuthorization"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ClassifierCopyAuthorization classifierCopyAuthorization)
+        {
+            if (classifierCopyAuthorization == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(classifierCopyAuthorization, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ClassifierCopyAuthorization"/> from. </param>
+        public static explicit operator ClassifierCopyAuthorization(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeClassifierCopyAuthorization(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ClassifierCopyAuthorization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -123,7 +180,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (prop.NameEquals("targetClassifierLocation"u8))
                 {
-                    targetClassifierLocation = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    targetClassifierLocation = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("accessToken"u8))
@@ -149,65 +206,6 @@ namespace Azure.AI.DocumentIntelligence
                 accessToken,
                 expiresOn,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClassifierCopyAuthorization>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ClassifierCopyAuthorization>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIDocumentIntelligenceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ClassifierCopyAuthorization)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ClassifierCopyAuthorization IPersistableModel<ClassifierCopyAuthorization>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClassifierCopyAuthorization PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ClassifierCopyAuthorization>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeClassifierCopyAuthorization(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ClassifierCopyAuthorization)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClassifierCopyAuthorization>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="classifierCopyAuthorization"> The <see cref="ClassifierCopyAuthorization"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ClassifierCopyAuthorization classifierCopyAuthorization)
-        {
-            if (classifierCopyAuthorization == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(classifierCopyAuthorization, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ClassifierCopyAuthorization"/> from. </param>
-        public static explicit operator ClassifierCopyAuthorization(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeClassifierCopyAuthorization(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

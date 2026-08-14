@@ -37,10 +37,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// A longer description of the render option that can be used to explain its
         /// content.
         /// </param>
-        /// <param name="type"> The type of rendering to apply (raster or vector). </param>
+        /// <param name="kind"> The type of rendering to apply (raster or vector). </param>
         /// <param name="options">
         /// A URL query-string encoded string of TiTiler rendering options. Valid only for `raster-tile` types.
-        /// 
         /// See [Query Parameters](https://developmentseed.org/titiler/endpoints/cog/#description).
         /// </param>
         /// <param name="vectorOptions">
@@ -54,12 +53,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// this render option to be enabled
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RenderConfiguration(string id, string name, string description, RenderOptionType? @type, string options, RenderOptionVectorOptions vectorOptions, int? minZoom, RenderOptionLegend legend, IList<RenderOptionCondition> conditions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RenderConfiguration(string id, string name, string description, RenderOptionKind? kind, string options, RenderOptionVectorOptions vectorOptions, int? minZoom, RenderOptionLegend legend, IList<RenderOptionCondition> conditions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
             Description = description;
-            Type = @type;
+            Kind = kind;
             Options = options;
             VectorOptions = vectorOptions;
             MinZoom = minZoom;
@@ -81,11 +80,10 @@ namespace Azure.Analytics.PlanetaryComputer
         public string Description { get; set; }
 
         /// <summary> The type of rendering to apply (raster or vector). </summary>
-        public RenderOptionType? Type { get; set; }
+        public RenderOptionKind? Kind { get; set; }
 
         /// <summary>
         /// A URL query-string encoded string of TiTiler rendering options. Valid only for `raster-tile` types.
-        /// 
         /// See [Query Parameters](https://developmentseed.org/titiler/endpoints/cog/#description).
         /// </summary>
         public string Options { get; set; }

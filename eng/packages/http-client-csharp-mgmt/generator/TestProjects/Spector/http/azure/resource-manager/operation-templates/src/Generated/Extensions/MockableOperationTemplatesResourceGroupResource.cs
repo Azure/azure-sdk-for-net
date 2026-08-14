@@ -10,8 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.OperationTemplates;
+using Azure.ResourceManager.OperationTemplates.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OperationTemplates.Mocking
@@ -19,6 +21,11 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableOperationTemplatesResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _lroClientDiagnostics;
+        private Lro _lroRestClient;
+        private ClientDiagnostics _lroPagingClientDiagnostics;
+        private LroPaging _lroPagingRestClient;
+
         /// <summary> Initializes a new instance of MockableOperationTemplatesResourceGroupResource for mocking. </summary>
         protected MockableOperationTemplatesResourceGroupResource()
         {
@@ -31,12 +38,13 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
         {
         }
 
-        /// <summary> Gets a collection of Orders in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Orders and their operations over a OrderResource. </returns>
-        public virtual OrderCollection GetOrders()
-        {
-            return GetCachedClient(client => new OrderCollection(client, Id));
-        }
+        private ClientDiagnostics LroClientDiagnostics => _lroClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationTemplates.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Lro LroRestClient => _lroRestClient ??= new Lro(LroClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-12-01-preview");
+
+        private ClientDiagnostics LroPagingClientDiagnostics => _lroPagingClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationTemplates.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private LroPaging LroPagingRestClient => _lroPagingRestClient ??= new LroPaging(LroPagingClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-12-01-preview");
 
         /// <summary> Gets a collection of Widgets in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of Widgets and their operations over a WidgetResource. </returns>
@@ -101,6 +109,442 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
             Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
 
             return GetWidgets().Get(widgetName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create a Order
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.OperationTemplates/orders/{orderName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Lro_CreateOrReplace. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="orderName"> The name of the Order. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="orderName"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<Order>> CreateOrReplaceAsync(WaitUntil waitUntil, string orderName, Order resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(orderName, nameof(orderName));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using DiagnosticScope scope = LroClientDiagnostics.CreateScope("MockableOperationTemplatesResourceGroupResource.CreateOrReplace");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LroRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderName, Order.ToRequestContent(resource), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                OperationTemplatesArmOperation<Order> operation = new OperationTemplatesArmOperation<Order>(
+                    new OrderOperationSource(),
+                    LroClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create a Order
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.OperationTemplates/orders/{orderName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Lro_CreateOrReplace. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="orderName"> The name of the Order. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="orderName"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<Order> CreateOrReplace(WaitUntil waitUntil, string orderName, Order resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(orderName, nameof(orderName));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using DiagnosticScope scope = LroClientDiagnostics.CreateScope("MockableOperationTemplatesResourceGroupResource.CreateOrReplace");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LroRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderName, Order.ToRequestContent(resource), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                OperationTemplatesArmOperation<Order> operation = new OperationTemplatesArmOperation<Order>(
+                    new OrderOperationSource(),
+                    LroClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Export
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.OperationTemplates/orders/{orderName}/export. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Lro_Export. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="orderName"> The name of the Order. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="orderName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<ExportResult>> ExportAsync(WaitUntil waitUntil, string orderName, ExportRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(orderName, nameof(orderName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = LroClientDiagnostics.CreateScope("MockableOperationTemplatesResourceGroupResource.Export");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LroRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderName, ExportRequest.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                OperationTemplatesArmOperation<ExportResult> operation = new OperationTemplatesArmOperation<ExportResult>(
+                    new ExportResultOperationSource(),
+                    LroClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Export
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.OperationTemplates/orders/{orderName}/export. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Lro_Export. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="orderName"> The name of the Order. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="orderName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<ExportResult> Export(WaitUntil waitUntil, string orderName, ExportRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(orderName, nameof(orderName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = LroClientDiagnostics.CreateScope("MockableOperationTemplatesResourceGroupResource.Export");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LroRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderName, ExportRequest.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                OperationTemplatesArmOperation<ExportResult> operation = new OperationTemplatesArmOperation<ExportResult>(
+                    new ExportResultOperationSource(),
+                    LroClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a Order
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.OperationTemplates/orders/{orderName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Lro_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="orderName"> The name of the Order. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="orderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string orderName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(orderName, nameof(orderName));
+
+            using DiagnosticScope scope = LroClientDiagnostics.CreateScope("MockableOperationTemplatesResourceGroupResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LroRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                OperationTemplatesArmOperation operation = new OperationTemplatesArmOperation(LroClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a Order
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.OperationTemplates/orders/{orderName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Lro_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="orderName"> The name of the Order. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="orderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, string orderName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(orderName, nameof(orderName));
+
+            using DiagnosticScope scope = LroClientDiagnostics.CreateScope("MockableOperationTemplatesResourceGroupResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LroRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                OperationTemplatesArmOperation operation = new OperationTemplatesArmOperation(LroClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// PostPagingLro
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.OperationTemplates/products/{productName}/postPagingLro. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LroPaging_PostPagingLro. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="productName"> The name of the Product. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal async Task<ArmOperation<ProductListResult>> PostPagingLroAsync(WaitUntil waitUntil, string productName, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = LroPagingClientDiagnostics.CreateScope("MockableOperationTemplatesResourceGroupResource.PostPagingLro");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LroPagingRestClient.CreatePostPagingLroRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, productName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                OperationTemplatesArmOperation<ProductListResult> operation = new OperationTemplatesArmOperation<ProductListResult>(
+                    new ProductListResultOperationSource(),
+                    LroPagingClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// PostPagingLro
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.OperationTemplates/products/{productName}/postPagingLro. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LroPaging_PostPagingLro. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="productName"> The name of the Product. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal ArmOperation<ProductListResult> PostPagingLro(WaitUntil waitUntil, string productName, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = LroPagingClientDiagnostics.CreateScope("MockableOperationTemplatesResourceGroupResource.PostPagingLro");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LroPagingRestClient.CreatePostPagingLroRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, productName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                OperationTemplatesArmOperation<ProductListResult> operation = new OperationTemplatesArmOperation<ProductListResult>(
+                    new ProductListResultOperationSource(),
+                    LroPagingClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Batch.Models
     public readonly partial struct BatchIssueType : IEquatable<BatchIssueType>
     {
         private readonly string _value;
+        /// <summary> Unknown issue type. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> An error occurred while applying the network security perimeter (NSP) configuration. </summary>
+        private const string ConfigurationPropagationFailureValue = "ConfigurationPropagationFailure";
+        /// <summary> A network connectivity issue is happening on the resource which could be addressed either by adding new resources to the network security perimeter (NSP) or by modifying access rules. </summary>
+        private const string MissingPerimeterConfigurationValue = "MissingPerimeterConfiguration";
+        /// <summary> An managed identity hasn't been associated with the resource. The resource will still be able to validate inbound traffic from the network security perimeter (NSP) or matching inbound access rules, but it won't be able to perform outbound access as a member of the NSP. </summary>
+        private const string MissingIdentityConfigurationValue = "MissingIdentityConfiguration";
 
         /// <summary> Initializes a new instance of <see cref="BatchIssueType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchIssueType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string ConfigurationPropagationFailureValue = "ConfigurationPropagationFailure";
-        private const string MissingPerimeterConfigurationValue = "MissingPerimeterConfiguration";
-        private const string MissingIdentityConfigurationValue = "MissingIdentityConfiguration";
+            _value = value;
+        }
 
         /// <summary> Unknown issue type. </summary>
         public static BatchIssueType Unknown { get; } = new BatchIssueType(UnknownValue);
+
         /// <summary> An error occurred while applying the network security perimeter (NSP) configuration. </summary>
         public static BatchIssueType ConfigurationPropagationFailure { get; } = new BatchIssueType(ConfigurationPropagationFailureValue);
+
         /// <summary> A network connectivity issue is happening on the resource which could be addressed either by adding new resources to the network security perimeter (NSP) or by modifying access rules. </summary>
         public static BatchIssueType MissingPerimeterConfiguration { get; } = new BatchIssueType(MissingPerimeterConfigurationValue);
+
         /// <summary> An managed identity hasn't been associated with the resource. The resource will still be able to validate inbound traffic from the network security perimeter (NSP) or matching inbound access rules, but it won't be able to perform outbound access as a member of the NSP. </summary>
         public static BatchIssueType MissingIdentityConfiguration { get; } = new BatchIssueType(MissingIdentityConfigurationValue);
+
         /// <summary> Determines if two <see cref="BatchIssueType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchIssueType left, BatchIssueType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchIssueType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchIssueType left, BatchIssueType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchIssueType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchIssueType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchIssueType(string value) => new BatchIssueType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BatchIssueType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BatchIssueType?(string value) => value == null ? null : new BatchIssueType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchIssueType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchIssueType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

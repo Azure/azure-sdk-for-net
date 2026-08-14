@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             TryGetApiVersion(ResourceType, out string publicCloudConnectorApiVersion);
             _publicCloudConnectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", ResourceType.Namespace, Diagnostics);
-            _publicCloudConnectorsRestClient = new PublicCloudConnectors(_publicCloudConnectorsClientDiagnostics, Pipeline, Endpoint, publicCloudConnectorApiVersion ?? "2024-12-01");
+            _publicCloudConnectorsRestClient = new PublicCloudConnectors(_publicCloudConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, publicCloudConnectorApiVersion ?? "2024-12-01");
             ValidateResourceId(id);
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

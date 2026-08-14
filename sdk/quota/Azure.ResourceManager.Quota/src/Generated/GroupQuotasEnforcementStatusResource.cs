@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Quota
         {
             TryGetApiVersion(ResourceType, out string groupQuotasEnforcementStatusApiVersion);
             _groupQuotasEnforcementStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
-            _groupQuotasEnforcementStatusesRestClient = new GroupQuotasEnforcementStatuses(_groupQuotasEnforcementStatusesClientDiagnostics, Pipeline, Endpoint, groupQuotasEnforcementStatusApiVersion ?? "2025-09-01");
+            _groupQuotasEnforcementStatusesRestClient = new GroupQuotasEnforcementStatuses(_groupQuotasEnforcementStatusesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotasEnforcementStatusApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Quota
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -191,8 +191,7 @@ namespace Azure.ResourceManager.Quota
         /// Enables the GroupQuotas enforcement for the resource provider and the location specified. The resource provider will start using the group quotas as the overall quota for the subscriptions included in the GroupQuota.  The subscriptions cannot request quota at subscription level since it is now part of an enforced group.
         /// The subscriptions share the GroupQuotaLimits assigned to the GroupQuota. If the GroupQuotaLimits is used, then submit a groupQuotaLimit request for the specific resource - provider/location/resource.
         /// Once the GroupQuota Enforcement is enabled then, it cannot be deleted or reverted back. To disable GroupQuota Enforcement -
-        /// 1. Remove all the subscriptions from the groupQuota using the delete API for Subscriptions (Check the example - GroupQuotaSubscriptions_Delete).
-        /// 2. Ten delete the GroupQuota (Check the example - GroupQuotas_Delete).
+        /// <list type="number"><item><description>Remove all the subscriptions from the groupQuota using the delete API for Subscriptions (Check the example - GroupQuotaSubscriptions_Delete).</description></item><item><description>Ten delete the GroupQuota (Check the example - GroupQuotas_Delete).</description></item></list>
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -215,7 +214,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The GroupQuota body details for creation or update of a GroupQuota entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<GroupQuotasEnforcementStatusResource>> UpdateAsync(WaitUntil waitUntil, GroupQuotasEnforcementStatusData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GroupQuotasEnforcementStatusResource>> UpdateAsync(WaitUntil waitUntil, GroupQuotasEnforcementStatusData data, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _groupQuotasEnforcementStatusesClientDiagnostics.CreateScope("GroupQuotasEnforcementStatusResource.Update");
             scope.Start();
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.Quota
                 HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, GroupQuotasEnforcementStatusData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation<GroupQuotasEnforcementStatusResource> operation = new QuotaArmOperation<GroupQuotasEnforcementStatusResource>(
-                    new GroupQuotasEnforcementStatusOperationSource(Client),
+                    new GroupQuotasEnforcementStatusResourceOperationSource(Client),
                     _groupQuotasEnforcementStatusesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -251,8 +250,7 @@ namespace Azure.ResourceManager.Quota
         /// Enables the GroupQuotas enforcement for the resource provider and the location specified. The resource provider will start using the group quotas as the overall quota for the subscriptions included in the GroupQuota.  The subscriptions cannot request quota at subscription level since it is now part of an enforced group.
         /// The subscriptions share the GroupQuotaLimits assigned to the GroupQuota. If the GroupQuotaLimits is used, then submit a groupQuotaLimit request for the specific resource - provider/location/resource.
         /// Once the GroupQuota Enforcement is enabled then, it cannot be deleted or reverted back. To disable GroupQuota Enforcement -
-        /// 1. Remove all the subscriptions from the groupQuota using the delete API for Subscriptions (Check the example - GroupQuotaSubscriptions_Delete).
-        /// 2. Ten delete the GroupQuota (Check the example - GroupQuotas_Delete).
+        /// <list type="number"><item><description>Remove all the subscriptions from the groupQuota using the delete API for Subscriptions (Check the example - GroupQuotaSubscriptions_Delete).</description></item><item><description>Ten delete the GroupQuota (Check the example - GroupQuotas_Delete).</description></item></list>
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -275,7 +273,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The GroupQuota body details for creation or update of a GroupQuota entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<GroupQuotasEnforcementStatusResource> Update(WaitUntil waitUntil, GroupQuotasEnforcementStatusData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GroupQuotasEnforcementStatusResource> Update(WaitUntil waitUntil, GroupQuotasEnforcementStatusData data, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _groupQuotasEnforcementStatusesClientDiagnostics.CreateScope("GroupQuotasEnforcementStatusResource.Update");
             scope.Start();
@@ -288,7 +286,7 @@ namespace Azure.ResourceManager.Quota
                 HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, GroupQuotasEnforcementStatusData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation<GroupQuotasEnforcementStatusResource> operation = new QuotaArmOperation<GroupQuotasEnforcementStatusResource>(
-                    new GroupQuotasEnforcementStatusOperationSource(Client),
+                    new GroupQuotasEnforcementStatusResourceOperationSource(Client),
                     _groupQuotasEnforcementStatusesClientDiagnostics,
                     Pipeline,
                     message.Request,

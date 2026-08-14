@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.LargeInstance
         {
             TryGetApiVersion(ResourceType, out string largeStorageInstanceApiVersion);
             _azureLargeStorageInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LargeInstance", ResourceType.Namespace, Diagnostics);
-            _azureLargeStorageInstanceRestClient = new AzureLargeStorageInstance(_azureLargeStorageInstanceClientDiagnostics, Pipeline, Endpoint, largeStorageInstanceApiVersion ?? "2024-08-01-preview");
+            _azureLargeStorageInstanceRestClient = new AzureLargeStorageInstance(_azureLargeStorageInstanceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, largeStorageInstanceApiVersion ?? "2024-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.LargeInstance
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

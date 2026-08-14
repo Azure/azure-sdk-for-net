@@ -13,12 +13,52 @@ using System.Text.Json;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Document content.  Ex. text/plain, application/pdf, image/jpeg. </summary>
-    public partial class DocumentContent : MediaContent, IJsonModel<DocumentContent>
+    public partial class DocumentContent : AnalysisContent, IJsonModel<DocumentContent>
     {
         /// <summary> Initializes a new instance of <see cref="DocumentContent"/> for deserialization. </summary>
         internal DocumentContent()
         {
         }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AnalysisContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDocumentContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DocumentContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DocumentContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DocumentContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DocumentContent IPersistableModel<DocumentContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (DocumentContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DocumentContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -108,6 +148,16 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(Signatures))
+            {
+                writer.WritePropertyName("signatures"u8);
+                writer.WriteStartArray();
+                foreach (DocumentSignature item in Signatures)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(Hyperlinks))
             {
                 writer.WritePropertyName("hyperlinks"u8);
@@ -128,6 +178,16 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(Chunks))
+            {
+                writer.WritePropertyName("chunks"u8);
+                writer.WriteStartArray();
+                foreach (DocumentChunk item in Chunks)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -136,7 +196,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MediaContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AnalysisContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DocumentContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -155,13 +215,14 @@ namespace Azure.AI.ContentUnderstanding
             {
                 return null;
             }
-            MediaContentKind kind = default;
+            AnalysisContentKind kind = default;
             string mimeType = default;
             string analyzerId = default;
             string category = default;
             string path = default;
             string markdown = default;
             IDictionary<string, ContentField> fields = default;
+            IDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int startPageNumber = default;
             int endPageNumber = default;
@@ -172,13 +233,15 @@ namespace Azure.AI.ContentUnderstanding
             IList<DocumentTable> tables = default;
             IList<DocumentFigure> figures = default;
             IList<DocumentAnnotation> annotations = default;
+            IList<DocumentSignature> signatures = default;
             IList<DocumentHyperlink> hyperlinks = default;
             IList<DocumentContentSegment> segments = default;
+            IList<DocumentChunk> chunks = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
                 {
-                    kind = new MediaContentKind(prop.Value.GetString());
+                    kind = new AnalysisContentKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("mimeType"u8))
@@ -218,6 +281,27 @@ namespace Azure.AI.ContentUnderstanding
                         dictionary.Add(prop0.Name, ContentField.DeserializeContentField(prop0.Value, options));
                     }
                     fields = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("metadata"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    metadata = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("startPageNumber"u8))
@@ -323,6 +407,20 @@ namespace Azure.AI.ContentUnderstanding
                     annotations = array;
                     continue;
                 }
+                if (prop.NameEquals("signatures"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DocumentSignature> array = new List<DocumentSignature>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(DocumentSignature.DeserializeDocumentSignature(item, options));
+                    }
+                    signatures = array;
+                    continue;
+                }
                 if (prop.NameEquals("hyperlinks"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -351,6 +449,20 @@ namespace Azure.AI.ContentUnderstanding
                     segments = array;
                     continue;
                 }
+                if (prop.NameEquals("chunks"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DocumentChunk> array = new List<DocumentChunk>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(DocumentChunk.DeserializeDocumentChunk(item, options));
+                    }
+                    chunks = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -364,6 +476,7 @@ namespace Azure.AI.ContentUnderstanding
                 path,
                 markdown,
                 fields ?? new ChangeTrackingDictionary<string, ContentField>(),
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties,
                 startPageNumber,
                 endPageNumber,
@@ -374,48 +487,10 @@ namespace Azure.AI.ContentUnderstanding
                 tables ?? new ChangeTrackingList<DocumentTable>(),
                 figures ?? new ChangeTrackingList<DocumentFigure>(),
                 annotations ?? new ChangeTrackingList<DocumentAnnotation>(),
+                signatures ?? new ChangeTrackingList<DocumentSignature>(),
                 hyperlinks ?? new ChangeTrackingList<DocumentHyperlink>(),
-                segments ?? new ChangeTrackingList<DocumentContentSegment>());
+                segments ?? new ChangeTrackingList<DocumentContentSegment>(),
+                chunks ?? new ChangeTrackingList<DocumentChunk>());
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DocumentContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentContent IPersistableModel<DocumentContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (DocumentContent)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MediaContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDocumentContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DocumentContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

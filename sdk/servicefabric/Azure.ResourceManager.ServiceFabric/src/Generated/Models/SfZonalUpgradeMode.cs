@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     public readonly partial struct SfZonalUpgradeMode : IEquatable<SfZonalUpgradeMode>
     {
         private readonly string _value;
+        /// <summary> VMs under the node type are grouped into UDs and ignore the zone info in five UDs. This setting causes UDs across all zones to be upgraded at the same time. This deployment mode is faster for upgrades, we don't recommend it because it goes against the SDP guidelines, which state that the updates should be applied to one zone at a time. </summary>
+        private const string ParallelValue = "Parallel";
+        /// <summary> If this value is omitted or set to Hierarchical, VMs are grouped to reflect the zonal distribution in up to 15 UDs. Each of the three zones has five UDs. This ensures that the zones are updated one at a time, moving to next zone only after completing five UDs within the first zone. This update process is safer for the cluster and the user application. </summary>
+        private const string HierarchicalValue = "Hierarchical";
 
         /// <summary> Initializes a new instance of <see cref="SfZonalUpgradeMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SfZonalUpgradeMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ParallelValue = "Parallel";
-        private const string HierarchicalValue = "Hierarchical";
+            _value = value;
+        }
 
         /// <summary> VMs under the node type are grouped into UDs and ignore the zone info in five UDs. This setting causes UDs across all zones to be upgraded at the same time. This deployment mode is faster for upgrades, we don't recommend it because it goes against the SDP guidelines, which state that the updates should be applied to one zone at a time. </summary>
         public static SfZonalUpgradeMode Parallel { get; } = new SfZonalUpgradeMode(ParallelValue);
+
         /// <summary> If this value is omitted or set to Hierarchical, VMs are grouped to reflect the zonal distribution in up to 15 UDs. Each of the three zones has five UDs. This ensures that the zones are updated one at a time, moving to next zone only after completing five UDs within the first zone. This update process is safer for the cluster and the user application. </summary>
         public static SfZonalUpgradeMode Hierarchical { get; } = new SfZonalUpgradeMode(HierarchicalValue);
+
         /// <summary> Determines if two <see cref="SfZonalUpgradeMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SfZonalUpgradeMode left, SfZonalUpgradeMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SfZonalUpgradeMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SfZonalUpgradeMode left, SfZonalUpgradeMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SfZonalUpgradeMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SfZonalUpgradeMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SfZonalUpgradeMode(string value) => new SfZonalUpgradeMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SfZonalUpgradeMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SfZonalUpgradeMode?(string value) => value == null ? null : new SfZonalUpgradeMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SfZonalUpgradeMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SfZonalUpgradeMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

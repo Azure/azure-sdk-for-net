@@ -5,14 +5,12 @@
 
 using System.ComponentModel;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Private Link Service Connection State. </summary>
     public partial class RecoveryServicesBackupPrivateLinkServiceConnectionState
     {
-        /// <summary>
-        /// ActionRequired
-        /// </summary>
+        /// <summary> ActionRequired </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string ActionRequired
         {

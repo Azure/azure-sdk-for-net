@@ -7,7 +7,7 @@ After the discovery run is finished, your workspace will be populated with asset
 To create an EasmClient, you need your subscription ID, region, and some sort of credential.
 
 ```C# Snippet:Sample1_AssetResources_Create_Client
-            string endpoint = "https://<region>.easm.defender.microsoft.com/subscriptions/<Your_Subscription_Id>/resourceGroups/<Your_Resource_Group_Name>/workspaces/<Your_Workspace_Name>";
+string endpoint = "https://<region>.easm.defender.microsoft.com/subscriptions/<Your_Subscription_Id>/resourceGroups/<Your_Resource_Group_Name>/workspaces/<Your_Workspace_Name>";
 EasmClient client = new EasmClient(new System.Uri(endpoint),
                 new DefaultAzureCredential());
 ```

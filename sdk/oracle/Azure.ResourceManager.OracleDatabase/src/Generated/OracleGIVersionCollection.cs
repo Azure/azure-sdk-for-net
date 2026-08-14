@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.OracleDatabase
             TryGetApiVersion(OracleGIVersionResource.ResourceType, out string oracleGIVersionApiVersion);
             _location = location;
             _giVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleGIVersionResource.ResourceType.Namespace, Diagnostics);
-            _giVersionsRestClient = new GiVersions(_giVersionsClientDiagnostics, Pipeline, Endpoint, oracleGIVersionApiVersion ?? "2025-09-01");
+            _giVersionsRestClient = new GiVersions(_giVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleGIVersionApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -190,10 +190,11 @@ namespace Azure.ResourceManager.OracleDatabase
                 _giVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,
-                shape.ToString(),
+                shape?.ToString(),
                 zone,
                 shapeAttribute,
-                context), data => new OracleGIVersionResource(Client, data));
+                context,
+                "OracleGIVersionCollection.GetAll"), data => new OracleGIVersionResource(Client, data));
         }
 
         /// <summary>
@@ -228,10 +229,11 @@ namespace Azure.ResourceManager.OracleDatabase
                 _giVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,
-                shape.ToString(),
+                shape?.ToString(),
                 zone,
                 shapeAttribute,
-                context), data => new OracleGIVersionResource(Client, data));
+                context,
+                "OracleGIVersionCollection.GetAll"), data => new OracleGIVersionResource(Client, data));
         }
 
         /// <summary>

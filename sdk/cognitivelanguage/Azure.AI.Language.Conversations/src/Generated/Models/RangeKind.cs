@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -14,62 +15,97 @@ namespace Azure.AI.Language.Conversations.Models
     public readonly partial struct RangeKind : IEquatable<RangeKind>
     {
         private readonly string _value;
+        /// <summary> Number range. </summary>
+        private const string NumberValue = "Number";
+        /// <summary> Speed range. </summary>
+        private const string SpeedValue = "Speed";
+        /// <summary> Weight range. </summary>
+        private const string WeightValue = "Weight";
+        /// <summary> Length range. </summary>
+        private const string LengthValue = "Length";
+        /// <summary> Volume range. </summary>
+        private const string VolumeValue = "Volume";
+        /// <summary> Area range. </summary>
+        private const string AreaValue = "Area";
+        /// <summary> Age range. </summary>
+        private const string AgeValue = "Age";
+        /// <summary> Information range. </summary>
+        private const string InformationValue = "Information";
+        /// <summary> Temperature range. </summary>
+        private const string TemperatureValue = "Temperature";
+        /// <summary> Currency range. </summary>
+        private const string CurrencyValue = "Currency";
 
         /// <summary> Initializes a new instance of <see cref="RangeKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RangeKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NumberValue = "Number";
-        private const string SpeedValue = "Speed";
-        private const string WeightValue = "Weight";
-        private const string LengthValue = "Length";
-        private const string VolumeValue = "Volume";
-        private const string AreaValue = "Area";
-        private const string AgeValue = "Age";
-        private const string InformationValue = "Information";
-        private const string TemperatureValue = "Temperature";
-        private const string CurrencyValue = "Currency";
+            _value = value;
+        }
 
         /// <summary> Number range. </summary>
         public static RangeKind Number { get; } = new RangeKind(NumberValue);
+
         /// <summary> Speed range. </summary>
         public static RangeKind Speed { get; } = new RangeKind(SpeedValue);
+
         /// <summary> Weight range. </summary>
         public static RangeKind Weight { get; } = new RangeKind(WeightValue);
+
         /// <summary> Length range. </summary>
         public static RangeKind Length { get; } = new RangeKind(LengthValue);
+
         /// <summary> Volume range. </summary>
         public static RangeKind Volume { get; } = new RangeKind(VolumeValue);
+
         /// <summary> Area range. </summary>
         public static RangeKind Area { get; } = new RangeKind(AreaValue);
+
         /// <summary> Age range. </summary>
         public static RangeKind Age { get; } = new RangeKind(AgeValue);
+
         /// <summary> Information range. </summary>
         public static RangeKind Information { get; } = new RangeKind(InformationValue);
+
         /// <summary> Temperature range. </summary>
         public static RangeKind Temperature { get; } = new RangeKind(TemperatureValue);
+
         /// <summary> Currency range. </summary>
         public static RangeKind Currency { get; } = new RangeKind(CurrencyValue);
+
         /// <summary> Determines if two <see cref="RangeKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RangeKind left, RangeKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RangeKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RangeKind left, RangeKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RangeKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RangeKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RangeKind(string value) => new RangeKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RangeKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RangeKind?(string value) => value == null ? null : new RangeKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RangeKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RangeKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

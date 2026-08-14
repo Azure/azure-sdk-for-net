@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ApiCenter;
 
 namespace Azure.ResourceManager.ApiCenter.Models
 {
-    internal partial class ApiCenterDeploymentServer : IUtf8JsonSerializable, IJsonModel<ApiCenterDeploymentServer>
+    /// <summary> Server. </summary>
+    internal partial class ApiCenterDeploymentServer : IJsonModel<ApiCenterDeploymentServer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiCenterDeploymentServer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApiCenterDeploymentServer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterDeploymentServer>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeApiCenterDeploymentServer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApiCenterDeploymentServer)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterDeploymentServer>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiCenterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ApiCenterDeploymentServer)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ApiCenterDeploymentServer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiCenterDeploymentServer IPersistableModel<ApiCenterDeploymentServer>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApiCenterDeploymentServer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApiCenterDeploymentServer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +69,16 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiCenterDeploymentServer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterDeploymentServer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApiCenterDeploymentServer)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(RuntimeUri))
             {
                 writer.WritePropertyName("runtimeUri"u8);
                 writer.WriteStartArray();
-                foreach (var item in RuntimeUri)
+                foreach (Uri item in RuntimeUri)
                 {
                     if (item == null)
                     {
@@ -49,15 +89,15 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -66,39 +106,43 @@ namespace Azure.ResourceManager.ApiCenter.Models
             }
         }
 
-        ApiCenterDeploymentServer IJsonModel<ApiCenterDeploymentServer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiCenterDeploymentServer IJsonModel<ApiCenterDeploymentServer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApiCenterDeploymentServer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiCenterDeploymentServer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterDeploymentServer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApiCenterDeploymentServer)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeApiCenterDeploymentServer(document.RootElement, options);
         }
 
-        internal static ApiCenterDeploymentServer DeserializeApiCenterDeploymentServer(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ApiCenterDeploymentServer DeserializeApiCenterDeploymentServer(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<Uri> runtimeUri = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("runtimeUri"u8))
+                if (prop.NameEquals("runtimeUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<Uri> array = new List<Uri>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -106,7 +150,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                         }
                         else
                         {
-                            array.Add(new Uri(item.GetString()));
+                            array.Add(string.IsNullOrEmpty(item.GetString()) ? null : new Uri(item.GetString(), UriKind.RelativeOrAbsolute));
                         }
                     }
                     runtimeUri = array;
@@ -114,42 +158,10 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ApiCenterDeploymentServer(runtimeUri ?? new ChangeTrackingList<Uri>(), serializedAdditionalRawData);
+            return new ApiCenterDeploymentServer(runtimeUri ?? new ChangeTrackingList<Uri>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ApiCenterDeploymentServer>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiCenterDeploymentServer>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiCenterContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ApiCenterDeploymentServer)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ApiCenterDeploymentServer IPersistableModel<ApiCenterDeploymentServer>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiCenterDeploymentServer>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeApiCenterDeploymentServer(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ApiCenterDeploymentServer)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ApiCenterDeploymentServer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

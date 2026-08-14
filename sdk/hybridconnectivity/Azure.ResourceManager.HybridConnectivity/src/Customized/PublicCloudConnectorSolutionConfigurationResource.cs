@@ -13,11 +13,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.HybridConnectivity
 {
-    /// <summary>
-    /// A class representing a PublicCloudConnectorSolutionConfiguration along with the instance operations that can be performed on it.
-    /// </summary>
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SyncNow", typeof(WaitUntil), typeof(CancellationToken))]
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SyncNowAsync", typeof(WaitUntil), typeof(CancellationToken))]
+    // TODO -- this customization code is added because in the new generator, the generated return type of the below two methods changed to OperationStatusResult,
+    // instead of HybridConnectivityOperationStatus, which causes breaking changes.
     public partial class PublicCloudConnectorSolutionConfigurationResource
     {
         /// <summary>

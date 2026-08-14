@@ -16,7 +16,7 @@ namespace Azure.Developer.LoadTesting
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ArtifactsContainerInfo))]
     [ModelReaderWriterBuildable(typeof(AutoStopCriteria))]
-    [ModelReaderWriterBuildable(typeof(CloneTestRequest1))]
+    [ModelReaderWriterBuildable(typeof(CloneTestRequest))]
     [ModelReaderWriterBuildable(typeof(DailyRecurrence))]
     [ModelReaderWriterBuildable(typeof(DimensionFilter))]
     [ModelReaderWriterBuildable(typeof(DimensionValue))]
@@ -68,6 +68,7 @@ namespace Azure.Developer.LoadTesting
     [ModelReaderWriterBuildable(typeof(TestCertificate))]
     [ModelReaderWriterBuildable(typeof(TestFileInfo))]
     [ModelReaderWriterBuildable(typeof(TestInputArtifacts))]
+    [ModelReaderWriterBuildable(typeof(TestPreferences))]
     [ModelReaderWriterBuildable(typeof(TestProfile))]
     [ModelReaderWriterBuildable(typeof(TestProfileRun))]
     [ModelReaderWriterBuildable(typeof(TestProfileRunRecommendation))]

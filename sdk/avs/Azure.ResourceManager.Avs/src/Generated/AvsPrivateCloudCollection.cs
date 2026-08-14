@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(AvsPrivateCloudResource.ResourceType, out string avsPrivateCloudApiVersion);
             _privateCloudsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", AvsPrivateCloudResource.ResourceType.Namespace, Diagnostics);
-            _privateCloudsRestClient = new PrivateClouds(_privateCloudsClientDiagnostics, Pipeline, Endpoint, avsPrivateCloudApiVersion ?? "2025-09-01");
+            _privateCloudsRestClient = new PrivateClouds(_privateCloudsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, avsPrivateCloudApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _privateCloudsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateCloudName, AvsPrivateCloudData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<AvsPrivateCloudResource> operation = new AvsArmOperation<AvsPrivateCloudResource>(
-                    new AvsPrivateCloudOperationSource(Client),
+                    new AvsPrivateCloudResourceOperationSource(Client),
                     _privateCloudsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _privateCloudsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateCloudName, AvsPrivateCloudData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<AvsPrivateCloudResource> operation = new AvsArmOperation<AvsPrivateCloudResource>(
-                    new AvsPrivateCloudOperationSource(Client),
+                    new AvsPrivateCloudResourceOperationSource(Client),
                     _privateCloudsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvsPrivateCloudData, AvsPrivateCloudResource>(new PrivateCloudsGetAllAsyncCollectionResultOfT(_privateCloudsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new AvsPrivateCloudResource(Client, data));
+            return new AsyncPageableWrapper<AvsPrivateCloudData, AvsPrivateCloudResource>(new PrivateCloudsGetAllAsyncCollectionResultOfT(_privateCloudsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AvsPrivateCloudCollection.GetAll"), data => new AvsPrivateCloudResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvsPrivateCloudData, AvsPrivateCloudResource>(new PrivateCloudsGetAllCollectionResultOfT(_privateCloudsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new AvsPrivateCloudResource(Client, data));
+            return new PageableWrapper<AvsPrivateCloudData, AvsPrivateCloudResource>(new PrivateCloudsGetAllCollectionResultOfT(_privateCloudsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AvsPrivateCloudCollection.GetAll"), data => new AvsPrivateCloudResource(Client, data));
         }
 
         /// <summary>

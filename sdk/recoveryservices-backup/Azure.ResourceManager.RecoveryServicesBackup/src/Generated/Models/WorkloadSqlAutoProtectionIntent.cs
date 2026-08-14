@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of <see cref="WorkloadSqlAutoProtectionIntent"/>. </summary>
         public WorkloadSqlAutoProtectionIntent()
         {
-            ProtectionIntentItemType = ProtectionIntentItemType.AzureWorkloadSqlAutoProtectionIntent;
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadSqlAutoProtectionIntent"/>. </summary>
@@ -27,12 +26,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="itemId"> ID of the item which is getting protected, In case of Azure Vm , it is ProtectedItemId. </param>
         /// <param name="policyId"> ID of the backup policy with which this item is backed up. </param>
         /// <param name="protectionState"> Backup state of this backup item. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workloadItemType"> Workload item type of the item for which intent is to be set. </param>
-        internal WorkloadSqlAutoProtectionIntent(ProtectionIntentItemType protectionIntentItemType, BackupManagementType? backupManagementType, ResourceIdentifier sourceResourceId, ResourceIdentifier itemId, ResourceIdentifier policyId, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> serializedAdditionalRawData, WorkloadItemType? workloadItemType) : base(protectionIntentItemType, backupManagementType, sourceResourceId, itemId, policyId, protectionState, serializedAdditionalRawData)
+        internal WorkloadSqlAutoProtectionIntent(ProtectionIntentItemType protectionIntentItemType, BackupManagementType? backupManagementType, ResourceIdentifier sourceResourceId, ResourceIdentifier itemId, ResourceIdentifier policyId, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties, WorkloadItemType? workloadItemType) : base(protectionIntentItemType, backupManagementType, sourceResourceId, itemId, policyId, protectionState, additionalBinaryDataProperties)
         {
             WorkloadItemType = workloadItemType;
-            ProtectionIntentItemType = protectionIntentItemType;
         }
 
         /// <summary> Workload item type of the item for which intent is to be set. </summary>

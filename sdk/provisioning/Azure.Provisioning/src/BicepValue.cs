@@ -57,7 +57,9 @@ public abstract class BicepValue : IBicepValue
     // Optional format defining how values should be serialized
     internal string? Format { get; set; } = null;
 
-    // Indicate whether this value is empty or should be included in output
+    /// <summary>
+    /// Gets a value indicating whether this Bicep value is unset.
+    /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual bool IsEmpty => _kind == BicepValueKind.Unset;
 
@@ -126,7 +128,8 @@ public abstract class BicepValue : IBicepValue
     {
         // TODO: Do we want to add a more explicit notion of readonly
         // (especially for expr ref resources)?
-        if (_isOutput) { throw new InvalidOperationException($"Cannot assign to output value {_self?.PropertyName}"); }
+        if (_isOutput)
+        { throw new InvalidOperationException($"Cannot assign to output value {_self?.PropertyName}"); }
 
         // Track the source so we can correctly link references across modules
         _source = source?.Self;

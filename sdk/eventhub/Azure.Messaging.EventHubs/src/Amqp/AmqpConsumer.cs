@@ -330,9 +330,9 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         if (ex.IsConsumerPartitionStolenException())
                         {
-                             // If the consumer should be invalidated, capture the exception
-                             // and force-close the link.  This will ensure that the next operation
-                             // will surface it.
+                            // If the consumer should be invalidated, capture the exception
+                            // and force-close the link.  This will ensure that the next operation
+                            // will surface it.
 
                             if (InvalidateConsumerWhenPartitionStolen)
                             {

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.IotHub.Models
     public readonly partial struct IotHubTestResultStatus : IEquatable<IotHubTestResultStatus>
     {
         private readonly string _value;
+        /// <summary> undefined. </summary>
+        private const string UndefinedValue = "undefined";
+        /// <summary> false. </summary>
+        private const string FalseValue = "false";
+        /// <summary> true. </summary>
+        private const string TrueValue = "true";
 
         /// <summary> Initializes a new instance of <see cref="IotHubTestResultStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IotHubTestResultStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UndefinedValue = "undefined";
-        private const string FalseValue = "false";
-        private const string TrueValue = "true";
+            _value = value;
+        }
 
         /// <summary> undefined. </summary>
         public static IotHubTestResultStatus Undefined { get; } = new IotHubTestResultStatus(UndefinedValue);
+
         /// <summary> false. </summary>
         public static IotHubTestResultStatus False { get; } = new IotHubTestResultStatus(FalseValue);
+
         /// <summary> true. </summary>
         public static IotHubTestResultStatus True { get; } = new IotHubTestResultStatus(TrueValue);
+
         /// <summary> Determines if two <see cref="IotHubTestResultStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IotHubTestResultStatus left, IotHubTestResultStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IotHubTestResultStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IotHubTestResultStatus left, IotHubTestResultStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IotHubTestResultStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IotHubTestResultStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IotHubTestResultStatus(string value) => new IotHubTestResultStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IotHubTestResultStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IotHubTestResultStatus?(string value) => value == null ? null : new IotHubTestResultStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IotHubTestResultStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IotHubTestResultStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

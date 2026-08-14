@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CommonProperties
         {
             TryGetApiVersion(ResourceType, out string confidentialResourceApiVersion);
             _errorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CommonProperties", ResourceType.Namespace, Diagnostics);
-            _errorRestClient = new Error(_errorClientDiagnostics, Pipeline, Endpoint, confidentialResourceApiVersion ?? "2023-12-01-preview");
+            _errorRestClient = new Error(_errorClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, confidentialResourceApiVersion ?? "2023-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CommonProperties
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.CommonProperties
         }
 
         /// <summary>
-        /// Create a ConfidentialResource
+        /// Update a ConfidentialResource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CommonProperties
         }
 
         /// <summary>
-        /// Create a ConfidentialResource
+        /// Update a ConfidentialResource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

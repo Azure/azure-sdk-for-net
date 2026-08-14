@@ -10,27 +10,21 @@ using System.Collections.Generic;
 
 namespace Azure.AI.ContentUnderstanding
 {
-    /// <summary> default settings for this Content Understanding resource. </summary>
+    /// <summary> Default settings for this Content Understanding resource. </summary>
     public partial class ContentUnderstandingDefaults
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContentUnderstandingDefaults"/>. </summary>
-        /// <param name="modelDeployments">
-        /// Mapping of model names to deployments.
-        /// Ex. { "gpt-4.1": "myGpt41Deployment", "text-embedding-3-large": "myTextEmbedding3LargeDeployment" }.
-        /// </param>
+        /// <param name="modelDeployments"> Specify the default mapping of model names to LLM/embedding deployments in Microsoft Foundry. For details and current semantics, see https://aka.ms/cudoc-quickstart-rest. </param>
         internal ContentUnderstandingDefaults(IDictionary<string, string> modelDeployments)
         {
             ModelDeployments = modelDeployments;
         }
 
         /// <summary> Initializes a new instance of <see cref="ContentUnderstandingDefaults"/>. </summary>
-        /// <param name="modelDeployments">
-        /// Mapping of model names to deployments.
-        /// Ex. { "gpt-4.1": "myGpt41Deployment", "text-embedding-3-large": "myTextEmbedding3LargeDeployment" }.
-        /// </param>
+        /// <param name="modelDeployments"> Specify the default mapping of model names to LLM/embedding deployments in Microsoft Foundry. For details and current semantics, see https://aka.ms/cudoc-quickstart-rest. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ContentUnderstandingDefaults(IDictionary<string, string> modelDeployments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -38,10 +32,7 @@ namespace Azure.AI.ContentUnderstanding
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Mapping of model names to deployments.
-        /// Ex. { "gpt-4.1": "myGpt41Deployment", "text-embedding-3-large": "myTextEmbedding3LargeDeployment" }.
-        /// </summary>
+        /// <summary> Specify the default mapping of model names to LLM/embedding deployments in Microsoft Foundry. For details and current semantics, see https://aka.ms/cudoc-quickstart-rest. </summary>
         public IDictionary<string, string> ModelDeployments { get; }
     }
 }

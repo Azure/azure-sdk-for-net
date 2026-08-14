@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     public readonly partial struct RedisEnterpriseDatabaseLinkState : IEquatable<RedisEnterpriseDatabaseLinkState>
     {
         private readonly string _value;
+        /// <summary> Linked. </summary>
+        private const string LinkedValue = "Linked";
+        /// <summary> Linking. </summary>
+        private const string LinkingValue = "Linking";
+        /// <summary> Unlinking. </summary>
+        private const string UnlinkingValue = "Unlinking";
+        /// <summary> LinkFailed. </summary>
+        private const string LinkFailedValue = "LinkFailed";
+        /// <summary> UnlinkFailed. </summary>
+        private const string UnlinkFailedValue = "UnlinkFailed";
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseDatabaseLinkState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RedisEnterpriseDatabaseLinkState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LinkedValue = "Linked";
-        private const string LinkingValue = "Linking";
-        private const string UnlinkingValue = "Unlinking";
-        private const string LinkFailedValue = "LinkFailed";
-        private const string UnlinkFailedValue = "UnlinkFailed";
+            _value = value;
+        }
 
         /// <summary> Linked. </summary>
         public static RedisEnterpriseDatabaseLinkState Linked { get; } = new RedisEnterpriseDatabaseLinkState(LinkedValue);
+
         /// <summary> Linking. </summary>
         public static RedisEnterpriseDatabaseLinkState Linking { get; } = new RedisEnterpriseDatabaseLinkState(LinkingValue);
+
         /// <summary> Unlinking. </summary>
         public static RedisEnterpriseDatabaseLinkState Unlinking { get; } = new RedisEnterpriseDatabaseLinkState(UnlinkingValue);
+
         /// <summary> LinkFailed. </summary>
         public static RedisEnterpriseDatabaseLinkState LinkFailed { get; } = new RedisEnterpriseDatabaseLinkState(LinkFailedValue);
+
         /// <summary> UnlinkFailed. </summary>
         public static RedisEnterpriseDatabaseLinkState UnlinkFailed { get; } = new RedisEnterpriseDatabaseLinkState(UnlinkFailedValue);
+
         /// <summary> Determines if two <see cref="RedisEnterpriseDatabaseLinkState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RedisEnterpriseDatabaseLinkState left, RedisEnterpriseDatabaseLinkState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RedisEnterpriseDatabaseLinkState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RedisEnterpriseDatabaseLinkState left, RedisEnterpriseDatabaseLinkState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisEnterpriseDatabaseLinkState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RedisEnterpriseDatabaseLinkState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RedisEnterpriseDatabaseLinkState(string value) => new RedisEnterpriseDatabaseLinkState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RedisEnterpriseDatabaseLinkState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RedisEnterpriseDatabaseLinkState?(string value) => value == null ? null : new RedisEnterpriseDatabaseLinkState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RedisEnterpriseDatabaseLinkState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RedisEnterpriseDatabaseLinkState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -14,122 +15,197 @@ namespace Azure.AI.Language.Conversations.Models
     public readonly partial struct ConversationPiiCategories : IEquatable<ConversationPiiCategories>
     {
         private readonly string _value;
+        /// <summary> Address category. </summary>
+        private const string AddressValue = "Address";
+        /// <summary> Credit card category. </summary>
+        private const string CreditCardValue = "CreditCard";
+        /// <summary> Email category. </summary>
+        private const string EmailValue = "Email";
+        /// <summary> Person category. </summary>
+        private const string PersonValue = "Person";
+        /// <summary> Numeric identifier category. </summary>
+        private const string NumericIdentifierValue = "NumericIdentifier";
+        /// <summary> Phone category. </summary>
+        private const string PhoneValue = "Phone";
+        /// <summary> US social security number category. </summary>
+        private const string UsSocialSecurityNumberValue = "USSocialSecurityNumber";
+        /// <summary> Driver's license number category. </summary>
+        private const string DriversLicenseNumberValue = "DriversLicenseNumber";
+        /// <summary> Passport number category. </summary>
+        private const string PassportNumberValue = "PassportNumber";
+        /// <summary> Person type category. </summary>
+        private const string PersonTypeValue = "PersonType";
+        /// <summary> Organization category. </summary>
+        private const string OrganizationValue = "Organization";
+        /// <summary> ABA routing number category. </summary>
+        private const string ABARoutingNumberValue = "ABARoutingNumber";
+        /// <summary> Bank account number category. </summary>
+        private const string BankAccountNumberValue = "BankAccountNumber";
+        /// <summary> Date of birth category. </summary>
+        private const string DateOfBirthValue = "DateOfBirth";
+        /// <summary> International Bank Account Number category. </summary>
+        private const string InternationalBankingAccountNumberValue = "InternationalBankingAccountNumber";
+        /// <summary> SWIFT code category. </summary>
+        private const string SWIFTCodeValue = "SWIFTCode";
+        /// <summary> Vehicle identification number category. </summary>
+        private const string VehicleIdentificationNumberValue = "VehicleIdentificationNumber";
+        /// <summary> Age category. </summary>
+        private const string AgeValue = "Age";
+        /// <summary> Date category. </summary>
+        private const string DateValue = "Date";
+        /// <summary> Zip code category. </summary>
+        private const string ZipCodeValue = "ZipCode";
+        /// <summary> Government issued ID category. </summary>
+        private const string GovernmentIssuedIdValue = "GovernmentIssuedId";
+        /// <summary> Card verification value category. </summary>
+        private const string CVVValue = "CVV";
+        /// <summary> Health card number category. </summary>
+        private const string HealthCardNumberValue = "HealthCardNumber";
+        /// <summary> CA Social insurance number category. </summary>
+        private const string CASocialInsuranceNumberValue = "CASocialInsuranceNumber";
+        /// <summary> US Medicare beneficiary ID category. </summary>
+        private const string USMedicareBeneficiaryIdValue = "USMedicareBeneficiaryId";
+        /// <summary> Github account category. </summary>
+        private const string GithubAccountValue = "GithubAccount";
+        /// <summary> Location category. </summary>
+        private const string LocationValue = "Location";
+        /// <summary> GPE category. </summary>
+        private const string GPEValue = "GPE";
+        /// <summary> All categories. </summary>
+        private const string AllValue = "All";
+        /// <summary> Default categories. </summary>
+        private const string DefaultValue = "Default";
 
         /// <summary> Initializes a new instance of <see cref="ConversationPiiCategories"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConversationPiiCategories(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AddressValue = "Address";
-        private const string CreditCardValue = "CreditCard";
-        private const string EmailValue = "Email";
-        private const string PersonValue = "Person";
-        private const string NumericIdentifierValue = "NumericIdentifier";
-        private const string PhoneValue = "Phone";
-        private const string UsSocialSecurityNumberValue = "USSocialSecurityNumber";
-        private const string DriversLicenseNumberValue = "DriversLicenseNumber";
-        private const string PassportNumberValue = "PassportNumber";
-        private const string PersonTypeValue = "PersonType";
-        private const string OrganizationValue = "Organization";
-        private const string ABARoutingNumberValue = "ABARoutingNumber";
-        private const string BankAccountNumberValue = "BankAccountNumber";
-        private const string DateOfBirthValue = "DateOfBirth";
-        private const string InternationalBankingAccountNumberValue = "InternationalBankingAccountNumber";
-        private const string SWIFTCodeValue = "SWIFTCode";
-        private const string VehicleIdentificationNumberValue = "VehicleIdentificationNumber";
-        private const string AgeValue = "Age";
-        private const string DateValue = "Date";
-        private const string ZipCodeValue = "ZipCode";
-        private const string GovernmentIssuedIdValue = "GovernmentIssuedId";
-        private const string CVVValue = "CVV";
-        private const string HealthCardNumberValue = "HealthCardNumber";
-        private const string CASocialInsuranceNumberValue = "CASocialInsuranceNumber";
-        private const string USMedicareBeneficiaryIdValue = "USMedicareBeneficiaryId";
-        private const string GithubAccountValue = "GithubAccount";
-        private const string LocationValue = "Location";
-        private const string GPEValue = "GPE";
-        private const string AllValue = "All";
-        private const string DefaultValue = "Default";
+            _value = value;
+        }
 
         /// <summary> Address category. </summary>
         public static ConversationPiiCategories Address { get; } = new ConversationPiiCategories(AddressValue);
+
         /// <summary> Credit card category. </summary>
         public static ConversationPiiCategories CreditCard { get; } = new ConversationPiiCategories(CreditCardValue);
+
         /// <summary> Email category. </summary>
         public static ConversationPiiCategories Email { get; } = new ConversationPiiCategories(EmailValue);
+
         /// <summary> Person category. </summary>
         public static ConversationPiiCategories Person { get; } = new ConversationPiiCategories(PersonValue);
+
         /// <summary> Numeric identifier category. </summary>
         public static ConversationPiiCategories NumericIdentifier { get; } = new ConversationPiiCategories(NumericIdentifierValue);
+
         /// <summary> Phone category. </summary>
         public static ConversationPiiCategories Phone { get; } = new ConversationPiiCategories(PhoneValue);
+
         /// <summary> US social security number category. </summary>
         public static ConversationPiiCategories UsSocialSecurityNumber { get; } = new ConversationPiiCategories(UsSocialSecurityNumberValue);
+
         /// <summary> Driver's license number category. </summary>
         public static ConversationPiiCategories DriversLicenseNumber { get; } = new ConversationPiiCategories(DriversLicenseNumberValue);
+
         /// <summary> Passport number category. </summary>
         public static ConversationPiiCategories PassportNumber { get; } = new ConversationPiiCategories(PassportNumberValue);
+
         /// <summary> Person type category. </summary>
         public static ConversationPiiCategories PersonType { get; } = new ConversationPiiCategories(PersonTypeValue);
+
         /// <summary> Organization category. </summary>
         public static ConversationPiiCategories Organization { get; } = new ConversationPiiCategories(OrganizationValue);
+
         /// <summary> ABA routing number category. </summary>
         public static ConversationPiiCategories ABARoutingNumber { get; } = new ConversationPiiCategories(ABARoutingNumberValue);
+
         /// <summary> Bank account number category. </summary>
         public static ConversationPiiCategories BankAccountNumber { get; } = new ConversationPiiCategories(BankAccountNumberValue);
+
         /// <summary> Date of birth category. </summary>
         public static ConversationPiiCategories DateOfBirth { get; } = new ConversationPiiCategories(DateOfBirthValue);
+
         /// <summary> International Bank Account Number category. </summary>
         public static ConversationPiiCategories InternationalBankingAccountNumber { get; } = new ConversationPiiCategories(InternationalBankingAccountNumberValue);
+
         /// <summary> SWIFT code category. </summary>
         public static ConversationPiiCategories SWIFTCode { get; } = new ConversationPiiCategories(SWIFTCodeValue);
+
         /// <summary> Vehicle identification number category. </summary>
         public static ConversationPiiCategories VehicleIdentificationNumber { get; } = new ConversationPiiCategories(VehicleIdentificationNumberValue);
+
         /// <summary> Age category. </summary>
         public static ConversationPiiCategories Age { get; } = new ConversationPiiCategories(AgeValue);
+
         /// <summary> Date category. </summary>
         public static ConversationPiiCategories Date { get; } = new ConversationPiiCategories(DateValue);
+
         /// <summary> Zip code category. </summary>
         public static ConversationPiiCategories ZipCode { get; } = new ConversationPiiCategories(ZipCodeValue);
+
         /// <summary> Government issued ID category. </summary>
         public static ConversationPiiCategories GovernmentIssuedId { get; } = new ConversationPiiCategories(GovernmentIssuedIdValue);
+
         /// <summary> Card verification value category. </summary>
         public static ConversationPiiCategories CVV { get; } = new ConversationPiiCategories(CVVValue);
+
         /// <summary> Health card number category. </summary>
         public static ConversationPiiCategories HealthCardNumber { get; } = new ConversationPiiCategories(HealthCardNumberValue);
+
         /// <summary> CA Social insurance number category. </summary>
         public static ConversationPiiCategories CASocialInsuranceNumber { get; } = new ConversationPiiCategories(CASocialInsuranceNumberValue);
+
         /// <summary> US Medicare beneficiary ID category. </summary>
         public static ConversationPiiCategories USMedicareBeneficiaryId { get; } = new ConversationPiiCategories(USMedicareBeneficiaryIdValue);
+
         /// <summary> Github account category. </summary>
         public static ConversationPiiCategories GithubAccount { get; } = new ConversationPiiCategories(GithubAccountValue);
+
         /// <summary> Location category. </summary>
         public static ConversationPiiCategories Location { get; } = new ConversationPiiCategories(LocationValue);
+
         /// <summary> GPE category. </summary>
         public static ConversationPiiCategories GPE { get; } = new ConversationPiiCategories(GPEValue);
+
         /// <summary> All categories. </summary>
         public static ConversationPiiCategories All { get; } = new ConversationPiiCategories(AllValue);
+
         /// <summary> Default categories. </summary>
         public static ConversationPiiCategories Default { get; } = new ConversationPiiCategories(DefaultValue);
+
         /// <summary> Determines if two <see cref="ConversationPiiCategories"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConversationPiiCategories left, ConversationPiiCategories right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConversationPiiCategories"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConversationPiiCategories left, ConversationPiiCategories right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConversationPiiCategories"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConversationPiiCategories"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConversationPiiCategories(string value) => new ConversationPiiCategories(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConversationPiiCategories"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConversationPiiCategories?(string value) => value == null ? null : new ConversationPiiCategories(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConversationPiiCategories other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConversationPiiCategories other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -1,14 +1,14 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.WebJobs.ServiceBus.Listeners;
-using Microsoft.Azure.WebJobs.ServiceBus;
 using System;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Administration;
-using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
+using Microsoft.Azure.WebJobs.Host.Scale;
+using Microsoft.Azure.WebJobs.ServiceBus;
+using Microsoft.Azure.WebJobs.ServiceBus.Listeners;
+using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
 {
@@ -17,6 +17,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
         internal const string DeadLetterQueuePath = @"/$DeadLetterQueue";
 
         private readonly ILogger _logger;
+        private readonly string _functionId;
         private readonly string _entityPath;
         private readonly ServiceBusEntityType _serviceBusEntityType;
         private readonly Lazy<ServiceBusReceiver> _receiver;
@@ -30,12 +31,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
         private DateTime _nextWarningTime;
 
         public ServiceBusMetricsProvider(
+            string functionId,
             string entityPath,
             ServiceBusEntityType serviceBusEntityType,
             Lazy<ServiceBusReceiver> receiver,
             Lazy<ServiceBusAdministrationClient> administrationClient,
             ILoggerFactory loggerFactory)
         {
+            _functionId = functionId;
             _serviceBusEntityType = serviceBusEntityType;
             _receiver = receiver;
             _entityPath = entityPath;
@@ -90,19 +93,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
             catch (ServiceBusException ex)
             when (ex.Reason == ServiceBusFailureReason.MessagingEntityNotFound)
             {
-                _logger.LogWarning($"ServiceBus {entityName} '{_entityPath}' was not found.");
+                _logger.LogFunctionScaleWarning($"ServiceBus {entityName} '{_entityPath}' was not found.", _functionId, ex);
             }
             catch (UnauthorizedAccessException ex)
             {
                 if (TimeToLogWarning())
                 {
-                    _logger.LogWarning(ex, $"Connection string does not have 'Manage Claim' for {entityName} '{_entityPath}'. Unable to determine active message count.");
+                    _logger.LogFunctionScaleWarning($"Connection string does not have 'Manage Claim' for {entityName} '{_entityPath}'. Unable to determine active message count.",
+                        _functionId, ex);
                 }
                 throw;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                _logger.LogWarning(e, $"Error querying for Service Bus {entityName} scale");
+                _logger.LogFunctionScaleWarning($"Error querying for Service Bus {entityName} scale", _functionId, ex);
             }
 
             long totalNewMessageCount = 0;
@@ -147,7 +151,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
                     // Batch contains messages but none are active in the peeked batch
                     if (peekedMessages.Count > 0 && activeMessage == null)
                     {
-                        _logger.LogDebug("{_serviceBusEntityType} {_entityPath} contains multiple messages but none are active in the peeked batch.");
+                        _logger.LogDebug($"{_serviceBusEntityType} {_entityPath} contains multiple messages but none are active in the peeked batch.");
                     }
                 }
 
@@ -163,23 +167,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
             catch (ServiceBusException ex)
             when (ex.Reason == ServiceBusFailureReason.MessagingEntityNotFound)
             {
-                _logger.LogWarning($"ServiceBus {entityName} '{_entityPath}' was not found.");
+                _logger.LogFunctionScaleWarning($"ServiceBus {entityName} '{_entityPath}' was not found.", _functionId, ex);
             }
-            catch (UnauthorizedAccessException) // When manage claim is not used on Service Bus connection string
+            catch (UnauthorizedAccessException ex) // When manage claim is not used on Service Bus connection string
             {
                 if (TimeToLogWarning())
                 {
-                    _logger.LogWarning($"Connection string does not have Manage claim for {entityName} '{_entityPath}'. Failed to get {entityName} description to " +
-                        $"derive {entityName} length metrics. Falling back to using first message enqueued time.");
+                    _logger.LogFunctionScaleWarning($"Connection string does not have Manage claim for {entityName} '{_entityPath}'. Failed to get {entityName} description to " +
+                        $"derive {entityName} length metrics. Falling back to using first message enqueued time.",
+                        _functionId, ex);
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                _logger.LogWarning($"Error querying for Service Bus {entityName} scale status: {e.Message}");
+                _logger.LogFunctionScaleWarning($"Error querying for Service Bus {entityName} scale status", _functionId, ex);
             }
 
             // Path for connection strings with no manage claim
-            return CreateTriggerMetrics(activeMessage, 0, 0, 0, _isListeningOnDeadLetterQueue);
+            var fallbackMetrics = CreateTriggerMetrics(activeMessage, 0, 0, 0, _isListeningOnDeadLetterQueue);
+            _logger.LogDebug($"Fallback metrics for '{_entityPath}': MessageCount={fallbackMetrics.MessageCount}, QueueTime={fallbackMetrics.QueueTime.TotalSeconds:F1}s, PartitionCount={fallbackMetrics.PartitionCount}");
+            return fallbackMetrics;
         }
 
         private async Task<ServiceBusTriggerMetrics> GetQueueMetricsAsync(ServiceBusReceivedMessage message)
@@ -199,7 +206,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
             queueProperties = await _administrationClient.Value.GetQueueAsync(_mainQueueName).ConfigureAwait(false);
             partitionCount = queueProperties.EnablePartitioning ? 16 : 0;
 
-            return CreateTriggerMetrics(message, activeMessageCount, deadLetterCount, partitionCount, _isListeningOnDeadLetterQueue);
+            var metrics = CreateTriggerMetrics(message, activeMessageCount, deadLetterCount, partitionCount, _isListeningOnDeadLetterQueue);
+            _logger.LogInformation($"Metrics for '{_entityPath}': MessageCount={metrics.MessageCount}, QueueTime={metrics.QueueTime.TotalSeconds:F1}s, PartitionCount={metrics.PartitionCount}");
+            return metrics;
         }
 
         private async Task<ServiceBusTriggerMetrics> GetTopicMetricsAsync(ServiceBusReceivedMessage message)
@@ -219,7 +228,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
             topicProperties = await _administrationClient.Value.GetTopicAsync(_topicName).ConfigureAwait(false);
             partitionCount = topicProperties.EnablePartitioning ? 16 : 0;
 
-            return CreateTriggerMetrics(message, activeMessageCount, deadLetterCount, partitionCount, _isListeningOnDeadLetterQueue);
+            var metrics = CreateTriggerMetrics(message, activeMessageCount, deadLetterCount, partitionCount, _isListeningOnDeadLetterQueue);
+            _logger.LogInformation($"Metrics for '{_entityPath}': MessageCount={metrics.MessageCount}, QueueTime={metrics.QueueTime.TotalSeconds:F1}s, PartitionCount={metrics.PartitionCount}");
+            return metrics;
         }
 
         private bool TimeToLogWarning()

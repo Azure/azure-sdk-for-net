@@ -30,14 +30,16 @@ To create a new Question Answering project, you will need to set your project na
 // Set project name and request content parameters
 string newProjectName = "{ProjectName}";
 RequestContent creationRequestContent = RequestContent.Create(
-    new {
+    new
+    {
         description = "This is the description for a test project",
         language = "en",
         multilingualResource = false,
-        settings = new {
+        settings = new
+        {
             defaultAnswer = "No answer found for your question."
-            }
         }
+    }
     );
 
 Response creationResponse = client.CreateProject(newProjectName, creationRequestContent);

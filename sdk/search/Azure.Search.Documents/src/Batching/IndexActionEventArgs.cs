@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="isRunningSynchronously">
         /// A value indicating whether the event handler was invoked
         /// synchronously or asynchronously.  Please see
-        /// <see cref="Azure.Core.SyncAsyncEventHandler{T}"/> for more details.
+        /// <see cref="SyncAsyncEventHandler{T}"/> for more details.
         /// </param>
         /// <param name="cancellationToken">
         /// A cancellation token related to the original operation that raised

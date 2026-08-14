@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.OperationTemplates
         {
             TryGetApiVersion(ResourceType, out string widgetApiVersion);
             _optionalBodyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationTemplates", ResourceType.Namespace, Diagnostics);
-            _optionalBodyRestClient = new OptionalBody(_optionalBodyClientDiagnostics, Pipeline, Endpoint, widgetApiVersion ?? "2023-12-01-preview");
+            _optionalBodyRestClient = new OptionalBody(_optionalBodyClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, widgetApiVersion ?? "2023-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.OperationTemplates
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.OperationTemplates
         /// </summary>
         /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<WidgetResource>> UpdateAsync(WidgetData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WidgetResource>> UpdateAsync(WidgetData data, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _optionalBodyClientDiagnostics.CreateScope("WidgetResource.Update");
             scope.Start();
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.OperationTemplates
         /// </summary>
         /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<WidgetResource> Update(WidgetData data = default, CancellationToken cancellationToken = default)
+        public virtual Response<WidgetResource> Update(WidgetData data, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _optionalBodyClientDiagnostics.CreateScope("WidgetResource.Update");
             scope.Start();
@@ -308,9 +308,9 @@ namespace Azure.ResourceManager.OperationTemplates
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ActionResult>> PostAsync(ActionRequest body = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ActionResult>> PostAsync(ActionRequest content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _optionalBodyClientDiagnostics.CreateScope("WidgetResource.Post");
             scope.Start();
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _optionalBodyRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ActionRequest.ToRequestContent(body), context);
+                HttpMessage message = _optionalBodyRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ActionRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ActionResult> response = Response.FromValue(ActionResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,9 +357,9 @@ namespace Azure.ResourceManager.OperationTemplates
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ActionResult> Post(ActionRequest body = default, CancellationToken cancellationToken = default)
+        public virtual Response<ActionResult> Post(ActionRequest content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _optionalBodyClientDiagnostics.CreateScope("WidgetResource.Post");
             scope.Start();
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _optionalBodyRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ActionRequest.ToRequestContent(body), context);
+                HttpMessage message = _optionalBodyRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ActionRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ActionResult> response = Response.FromValue(ActionResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 else
                 {
                     WidgetData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    WidgetData patch = new WidgetData();
+                    WidgetData patch = new WidgetData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 else
                 {
                     WidgetData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    WidgetData patch = new WidgetData();
+                    WidgetData patch = new WidgetData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 else
                 {
                     WidgetData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    WidgetData patch = new WidgetData();
+                    WidgetData patch = new WidgetData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<WidgetResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 else
                 {
                     WidgetData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    WidgetData patch = new WidgetData();
+                    WidgetData patch = new WidgetData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<WidgetResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 else
                 {
                     WidgetData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    WidgetData patch = new WidgetData();
+                    WidgetData patch = new WidgetData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 else
                 {
                     WidgetData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    WidgetData patch = new WidgetData();
+                    WidgetData patch = new WidgetData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

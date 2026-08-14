@@ -18,26 +18,29 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     {
         private readonly QuestionAnsweringAuthoringClient _client;
         private readonly string _projectName;
-        private readonly int? _top;
+        private readonly int? _maxCount;
         private readonly int? _skip;
         private readonly int? _maxpagesize;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of QuestionAnsweringAuthoringClientGetSynonymsCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The QuestionAnsweringAuthoringClient client used to send requests. </param>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public QuestionAnsweringAuthoringClientGetSynonymsCollectionResult(QuestionAnsweringAuthoringClient client, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public QuestionAnsweringAuthoringClientGetSynonymsCollectionResult(QuestionAnsweringAuthoringClient client, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _projectName = projectName;
-            _top = top;
+            _maxCount = maxCount;
             _skip = skip;
             _maxpagesize = maxpagesize;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of QuestionAnsweringAuthoringClientGetSynonymsCollectionResult as an enumerable collection. </summary>
@@ -55,13 +58,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     yield break;
                 }
                 PagedWordAlterations result = (PagedWordAlterations)response;
+                nextPage = result.NextLink;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)
                 {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureAILanguageQuestionAnsweringAuthoringContext.Default));
+                    items.Add(ModelReaderWriter.Write(item, ModelReaderWriterOptions.Json, AzureAILanguageQuestionAnsweringAuthoringContext.Default));
                 }
-                yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
-                nextPage = result.NextLink;
+                yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -74,8 +77,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetSynonymsRequest(nextLink, _projectName, _top, _skip, _maxpagesize, _context) : _client.CreateGetSynonymsRequest(_projectName, _top, _skip, _maxpagesize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetSynonyms");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetSynonymsRequest(nextLink, _projectName, _maxCount, _skip, _maxpagesize, _context) : _client.CreateGetSynonymsRequest(_projectName, _maxCount, _skip, _maxpagesize, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

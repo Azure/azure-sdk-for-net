@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Threading;
 using Azure.ResourceManager.Resources;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudBareMetalMachineCollection : ArmCollection, IEnumerable<NetworkCloudBareMetalMachineResource>, IAsyncEnumerable<NetworkCloudBareMetalMachineResource>
     {
-		/// <summary>
+        /// <summary>
         /// Get a list of bare metal machines in the provided resource group.
         /// <list type="bullet">
         /// <item>
@@ -29,10 +30,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>BareMetalMachines_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
         /// </item>
@@ -42,7 +39,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudBareMetalMachineResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<NetworkCloudBareMetalMachineResource> GetAllAsync(CancellationToken cancellationToken)
-			=> GetAllAsync(null, null, cancellationToken);
+            => GetAllAsync(null, null, cancellationToken);
 
         /// <summary>
         /// Get a list of bare metal machines in the provided resource group.
@@ -56,10 +53,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>BareMetalMachines_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
         /// </item>
@@ -69,6 +62,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudBareMetalMachineResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NetworkCloudBareMetalMachineResource> GetAll(CancellationToken cancellationToken)
-			=> GetAll(null, null, cancellationToken);
+            => GetAll(null, null, cancellationToken);
     }
 }

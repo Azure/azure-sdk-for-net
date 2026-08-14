@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Custom container configuration. </summary>
     public partial class CustomContainerTemplate
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CustomContainerTemplate"/>. </summary>
         public CustomContainerTemplate()
@@ -55,32 +27,41 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="registryCredentials"> Private container registry credentials for containers used by the sessions of the session pool. </param>
         /// <param name="containers"> List of container definitions for the sessions of the session pool. </param>
         /// <param name="ingress"> Session pool ingress configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomContainerTemplate(SessionRegistryCredentials registryCredentials, IList<SessionContainer> containers, SessionIngress ingress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CustomContainerTemplate(SessionRegistryCredentials registryCredentials, IList<SessionContainer> containers, SessionIngress ingress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RegistryCredentials = registryCredentials;
             Containers = containers;
             Ingress = ingress;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Private container registry credentials for containers used by the sessions of the session pool. </summary>
         [WirePath("registryCredentials")]
         public SessionRegistryCredentials RegistryCredentials { get; set; }
+
         /// <summary> List of container definitions for the sessions of the session pool. </summary>
         [WirePath("containers")]
         public IList<SessionContainer> Containers { get; }
+
         /// <summary> Session pool ingress configuration. </summary>
+        [WirePath("ingress")]
         internal SessionIngress Ingress { get; set; }
+
         /// <summary> Target port in containers for traffic from ingress. </summary>
         [WirePath("ingress.targetPort")]
         public int? IngressTargetPort
         {
-            get => Ingress is null ? default : Ingress.TargetPort;
+            get
+            {
+                return Ingress is null ? default : Ingress.TargetPort;
+            }
             set
             {
                 if (Ingress is null)
+                {
                     Ingress = new SessionIngress();
+                }
                 Ingress.TargetPort = value;
             }
         }

@@ -18,8 +18,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         public static NotificationHubNamespaceType ToNotificationHubNamespaceType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Messaging")) return NotificationHubNamespaceType.Messaging;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotificationHub")) return NotificationHubNamespaceType.NotificationHub;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Messaging"))
+                return NotificationHubNamespaceType.Messaging;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotificationHub"))
+                return NotificationHubNamespaceType.NotificationHub;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown NotificationHubNamespaceType value.");
         }
     }

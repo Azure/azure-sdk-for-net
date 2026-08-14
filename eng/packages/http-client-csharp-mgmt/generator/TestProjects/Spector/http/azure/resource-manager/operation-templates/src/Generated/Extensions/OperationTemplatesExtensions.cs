@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -39,24 +40,6 @@ namespace Azure.ResourceManager.OperationTemplates
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="OrderResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesArmClient.GetOrderResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="OrderResource"/> object. </returns>
-        public static OrderResource GetOrderResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableOperationTemplatesArmClient(client).GetOrderResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="WidgetResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -72,23 +55,6 @@ namespace Azure.ResourceManager.OperationTemplates
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableOperationTemplatesArmClient(client).GetWidgetResource(id);
-        }
-
-        /// <summary>
-        /// Gets a collection of Orders in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesResourceGroupResource.GetOrders()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of Orders and their operations over a OrderResource. </returns>
-        public static OrderCollection GetOrders(this ResourceGroupResource resourceGroupResource)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableOperationTemplatesResourceGroupResource(resourceGroupResource).GetOrders();
         }
 
         /// <summary>
@@ -144,6 +110,156 @@ namespace Azure.ResourceManager.OperationTemplates
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableOperationTemplatesResourceGroupResource(resourceGroupResource).GetWidget(widgetName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create a Order
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesResourceGroupResource.CreateOrReplaceAsync(WaitUntil, string, Order, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="orderName"> The name of the Order. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<Order>> CreateOrReplaceAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string orderName, Order resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableOperationTemplatesResourceGroupResource(resourceGroupResource).CreateOrReplaceAsync(waitUntil, orderName, resource, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create a Order
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesResourceGroupResource.CreateOrReplace(WaitUntil, string, Order, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="orderName"> The name of the Order. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<Order> CreateOrReplace(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string orderName, Order resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableOperationTemplatesResourceGroupResource(resourceGroupResource).CreateOrReplace(waitUntil, orderName, resource, cancellationToken);
+        }
+
+        /// <summary>
+        /// Export
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesResourceGroupResource.ExportAsync(WaitUntil, string, ExportRequest, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="orderName"> The name of the Order. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<ExportResult>> ExportAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string orderName, ExportRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableOperationTemplatesResourceGroupResource(resourceGroupResource).ExportAsync(waitUntil, orderName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Export
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesResourceGroupResource.Export(WaitUntil, string, ExportRequest, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="orderName"> The name of the Order. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<ExportResult> Export(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string orderName, ExportRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableOperationTemplatesResourceGroupResource(resourceGroupResource).Export(waitUntil, orderName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Delete a Order
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesResourceGroupResource.DeleteAsync(WaitUntil, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="orderName"> The name of the Order. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string orderName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableOperationTemplatesResourceGroupResource(resourceGroupResource).DeleteAsync(waitUntil, orderName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Delete a Order
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesResourceGroupResource.Delete(WaitUntil, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="orderName"> The name of the Order. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation Delete(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string orderName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableOperationTemplatesResourceGroupResource(resourceGroupResource).Delete(waitUntil, orderName, cancellationToken);
+        }
+
+        /// <summary>
+        /// PostPagingLro
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesResourceGroupResource.PostPagingLroAsync(WaitUntil, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="productName"> The name of the Product. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal static async Task<ArmOperation<ProductListResult>> PostPagingLroAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string productName, CancellationToken cancellationToken = default)
+        {
+            return await GetMockableOperationTemplatesResourceGroupResource(resourceGroupResource).PostPagingLroAsync(waitUntil, productName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// PostPagingLro
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesResourceGroupResource.PostPagingLro(WaitUntil, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="productName"> The name of the Product. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal static ArmOperation<ProductListResult> PostPagingLro(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string productName, CancellationToken cancellationToken = default)
+        {
+            return GetMockableOperationTemplatesResourceGroupResource(resourceGroupResource).PostPagingLro(waitUntil, productName, cancellationToken);
         }
 
         /// <summary>
@@ -221,6 +337,44 @@ namespace Azure.ResourceManager.OperationTemplates
         }
 
         /// <summary>
+        /// ExportArray
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesSubscriptionResource.ExportArrayAsync(WaitUntil, ExportRequest, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<ArmOperation<IList<ExportResult>>> ExportArrayAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, ExportRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableOperationTemplatesSubscriptionResource(subscriptionResource).ExportArrayAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// ExportArray
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesSubscriptionResource.ExportArray(WaitUntil, ExportRequest, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static ArmOperation<IList<ExportResult>> ExportArray(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, ExportRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableOperationTemplatesSubscriptionResource(subscriptionResource).ExportArray(waitUntil, content, cancellationToken);
+        }
+
+        /// <summary>
         /// ProviderPost
         /// <item>
         /// <term> Mocking. </term>
@@ -228,14 +382,14 @@ namespace Azure.ResourceManager.OperationTemplates
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="body"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<ChangeAllowanceResult>> ProviderPostAsync(this SubscriptionResource subscriptionResource, ChangeAllowanceRequest body = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<ChangeAllowanceResult>> ProviderPostAsync(this SubscriptionResource subscriptionResource, ChangeAllowanceRequest content = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableOperationTemplatesSubscriptionResource(subscriptionResource).ProviderPostAsync(body, cancellationToken).ConfigureAwait(false);
+            return await GetMockableOperationTemplatesSubscriptionResource(subscriptionResource).ProviderPostAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -246,14 +400,14 @@ namespace Azure.ResourceManager.OperationTemplates
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="body"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<ChangeAllowanceResult> ProviderPost(this SubscriptionResource subscriptionResource, ChangeAllowanceRequest body = default, CancellationToken cancellationToken = default)
+        public static Response<ChangeAllowanceResult> ProviderPost(this SubscriptionResource subscriptionResource, ChangeAllowanceRequest content = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableOperationTemplatesSubscriptionResource(subscriptionResource).ProviderPost(body, cancellationToken);
+            return GetMockableOperationTemplatesSubscriptionResource(subscriptionResource).ProviderPost(content, cancellationToken);
         }
     }
 }

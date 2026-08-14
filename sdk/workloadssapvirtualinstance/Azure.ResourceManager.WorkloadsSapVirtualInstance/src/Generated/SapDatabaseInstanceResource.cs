@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         {
             TryGetApiVersion(ResourceType, out string sapDatabaseInstanceApiVersion);
             _sapDatabaseInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadsSapVirtualInstance", ResourceType.Namespace, Diagnostics);
-            _sapDatabaseInstancesRestClient = new SapDatabaseInstances(_sapDatabaseInstancesClientDiagnostics, Pipeline, Endpoint, sapDatabaseInstanceApiVersion ?? "2024-09-01");
+            _sapDatabaseInstancesRestClient = new SapDatabaseInstances(_sapDatabaseInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sapDatabaseInstanceApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

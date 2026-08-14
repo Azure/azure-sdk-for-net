@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     public readonly partial struct WebhookDeliveryStatus : IEquatable<WebhookDeliveryStatus>
     {
         private readonly string _value;
+        /// <summary> The webhook is delivered successfully. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The webhook is failed to deliver. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The webhook is not delivered. </summary>
+        private const string NotStartedValue = "NotStarted";
 
         /// <summary> Initializes a new instance of <see cref="WebhookDeliveryStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WebhookDeliveryStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string NotStartedValue = "NotStarted";
+            _value = value;
+        }
 
         /// <summary> The webhook is delivered successfully. </summary>
         public static WebhookDeliveryStatus Succeeded { get; } = new WebhookDeliveryStatus(SucceededValue);
+
         /// <summary> The webhook is failed to deliver. </summary>
         public static WebhookDeliveryStatus Failed { get; } = new WebhookDeliveryStatus(FailedValue);
+
         /// <summary> The webhook is not delivered. </summary>
         public static WebhookDeliveryStatus NotStarted { get; } = new WebhookDeliveryStatus(NotStartedValue);
+
         /// <summary> Determines if two <see cref="WebhookDeliveryStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WebhookDeliveryStatus left, WebhookDeliveryStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WebhookDeliveryStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WebhookDeliveryStatus left, WebhookDeliveryStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WebhookDeliveryStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WebhookDeliveryStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WebhookDeliveryStatus(string value) => new WebhookDeliveryStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WebhookDeliveryStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WebhookDeliveryStatus?(string value) => value == null ? null : new WebhookDeliveryStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WebhookDeliveryStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WebhookDeliveryStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

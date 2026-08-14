@@ -21,6 +21,46 @@ namespace Azure.ResourceManager.CloudHealth.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HealthModelRelationshipProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HealthModelRelationshipProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHealthModelRelationshipProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HealthModelRelationshipProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HealthModelRelationshipProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCloudHealthContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HealthModelRelationshipProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HealthModelRelationshipProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HealthModelRelationshipProperties IPersistableModel<HealthModelRelationshipProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HealthModelRelationshipProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HealthModelRelationshipProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -53,11 +93,11 @@ namespace Azure.ResourceManager.CloudHealth.Models
             writer.WriteStringValue(ParentEntityName);
             writer.WritePropertyName("childEntityName"u8);
             writer.WriteStringValue(ChildEntityName);
-            if (Optional.IsCollectionDefined(Labels))
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("labels"u8);
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
-                foreach (var item in Labels)
+                foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
                     if (item.Value == null)
@@ -73,11 +113,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
             {
                 writer.WritePropertyName("discoveredBy"u8);
                 writer.WriteStringValue(DiscoveredBy);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
-            {
-                writer.WritePropertyName("deletionDate"u8);
-                writer.WriteStringValue(DeletedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -125,9 +160,8 @@ namespace Azure.ResourceManager.CloudHealth.Models
             string displayName = default;
             string parentEntityName = default;
             string childEntityName = default;
-            IDictionary<string, string> labels = default;
+            IDictionary<string, string> tags = default;
             string discoveredBy = default;
-            DateTimeOffset? deletedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,7 +189,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     childEntityName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("labels"u8))
+                if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -173,21 +207,12 @@ namespace Azure.ResourceManager.CloudHealth.Models
                             dictionary.Add(prop0.Name, prop0.Value.GetString());
                         }
                     }
-                    labels = dictionary;
+                    tags = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("discoveredBy"u8))
                 {
                     discoveredBy = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("deletionDate"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deletedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -200,50 +225,9 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 displayName,
                 parentEntityName,
                 childEntityName,
-                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 discoveredBy,
-                deletedOn,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HealthModelRelationshipProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthModelRelationshipProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCloudHealthContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HealthModelRelationshipProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HealthModelRelationshipProperties IPersistableModel<HealthModelRelationshipProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HealthModelRelationshipProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthModelRelationshipProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHealthModelRelationshipProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HealthModelRelationshipProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HealthModelRelationshipProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

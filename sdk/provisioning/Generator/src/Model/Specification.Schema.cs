@@ -69,7 +69,13 @@ public abstract partial class Specification
                     }
                     else
                     {
-                        throw new InvalidOperationException($"Conflict detected in schema generation. Path segment '{segment}' in property '{property.Name}' (Path: {string.Join(".", path)}) is already defined as a leaf property.");
+                        // A leaf property exists at this path segment, but we need
+                        // to traverse deeper. Replace the leaf with a container so
+                        // both the nested properties and any remaining leaf can
+                        // coexist in the schema tree.
+                        var replacement = new SchemaObject();
+                        current.Properties[segment] = replacement;
+                        current = replacement;
                     }
                 }
             }

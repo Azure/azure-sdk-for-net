@@ -37,7 +37,6 @@ namespace Azure.AI.Translation.Text
         /// Specifies the language of the input text. Find which languages are available to translate by 
         /// looking up supported languages using the translation scope. If the language parameter isn't 
         /// specified, automatic language detection is applied to determine the source language.
-        /// 
         /// You must use the language parameter rather than autodetection when using the dynamic dictionary feature. 
         /// Note: the dynamic dictionary feature is case-sensitive.
         /// </param>
@@ -67,7 +66,6 @@ namespace Azure.AI.Translation.Text
         /// Specifies the language of the input text. Find which languages are available to translate by 
         /// looking up supported languages using the translation scope. If the language parameter isn't 
         /// specified, automatic language detection is applied to determine the source language.
-        /// 
         /// You must use the language parameter rather than autodetection when using the dynamic dictionary feature. 
         /// Note: the dynamic dictionary feature is case-sensitive.
         /// </summary>

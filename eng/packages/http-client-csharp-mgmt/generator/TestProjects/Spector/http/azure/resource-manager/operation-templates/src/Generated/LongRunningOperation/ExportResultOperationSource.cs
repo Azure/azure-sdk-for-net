@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.OperationTemplates
         ExportResult IOperationSource<ExportResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ExportResult result = ExportResult.DeserializeExportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return ExportResult.DeserializeExportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.OperationTemplates
         async ValueTask<ExportResult> IOperationSource<ExportResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ExportResult result = ExportResult.DeserializeExportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return ExportResult.DeserializeExportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

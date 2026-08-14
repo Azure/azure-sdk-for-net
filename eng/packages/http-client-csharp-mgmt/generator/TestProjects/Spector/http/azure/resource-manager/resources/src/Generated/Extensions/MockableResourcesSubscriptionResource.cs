@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources.Mocking
 
         private ClientDiagnostics TopLevelClientDiagnostics => _topLevelClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private TopLevel TopLevelRestClient => _topLevelRestClient ??= new TopLevel(TopLevelClientDiagnostics, Pipeline, Endpoint, "2023-12-01-preview");
+        private TopLevel TopLevelRestClient => _topLevelRestClient ??= new TopLevel(TopLevelClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-12-01-preview");
 
         /// <summary> Gets a collection of LocationResources in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Resources.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TopLevelTrackedResourceData, TopLevelTrackedResource>(new TopLevelGetBySubscriptionAsyncCollectionResultOfT(TopLevelRestClient, Guid.Parse(Id.SubscriptionId), context), data => new TopLevelTrackedResource(Client, data));
+            return new AsyncPageableWrapper<TopLevelTrackedResourceData, TopLevelTrackedResource>(new TopLevelGetBySubscriptionAsyncCollectionResultOfT(TopLevelRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableResourcesSubscriptionResource.GetTopLevelTrackedResources"), data => new TopLevelTrackedResource(Client, data));
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Resources.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TopLevelTrackedResourceData, TopLevelTrackedResource>(new TopLevelGetBySubscriptionCollectionResultOfT(TopLevelRestClient, Guid.Parse(Id.SubscriptionId), context), data => new TopLevelTrackedResource(Client, data));
+            return new PageableWrapper<TopLevelTrackedResourceData, TopLevelTrackedResource>(new TopLevelGetBySubscriptionCollectionResultOfT(TopLevelRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableResourcesSubscriptionResource.GetTopLevelTrackedResources"), data => new TopLevelTrackedResource(Client, data));
         }
     }
 }

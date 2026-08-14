@@ -291,7 +291,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
         }
     }
 
-      /// <summary>
+    /// <summary>
     /// Creates a TestRunUpdateClient with configured retry policy
     /// </summary>
     /// <param name="endpoint">API endpoint URI</param>
@@ -347,7 +347,8 @@ public class PlaywrightServiceBrowserClient : IDisposable
                 testRunId: testRunId,
                 content: content,
                 authorization: $"Bearer {authToken}",
-                xCorrelationId: Guid.NewGuid().ToString()
+                xCorrelationId: Guid.NewGuid().ToString(),
+                context: new RequestContext { CancellationToken = cancellationToken }
             ).ConfigureAwait(false);
             _logger?.LogInformation("Test run created successfully.");
         }

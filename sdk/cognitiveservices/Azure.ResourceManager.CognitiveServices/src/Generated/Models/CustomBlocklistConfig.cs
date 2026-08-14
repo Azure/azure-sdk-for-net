@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -20,10 +21,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Initializes a new instance of <see cref="CustomBlocklistConfig"/>. </summary>
         /// <param name="blocklistName"> Name of ContentFilter. </param>
-        /// <param name="blocking"> If blocking would occur. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="isBlocking"> If blocking would occur. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="source"> Content source to apply the Content Filters. </param>
-        internal CustomBlocklistConfig(string blocklistName, bool? blocking, IDictionary<string, BinaryData> serializedAdditionalRawData, RaiPolicyContentSource? source) : base(blocklistName, blocking, serializedAdditionalRawData)
+        internal CustomBlocklistConfig(string blocklistName, bool? isBlocking, IDictionary<string, BinaryData> additionalBinaryDataProperties, RaiPolicyContentSource? source) : base(blocklistName, isBlocking, additionalBinaryDataProperties)
         {
             Source = source;
         }

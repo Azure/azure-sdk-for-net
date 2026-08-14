@@ -77,16 +77,16 @@ namespace Azure.Core.Pipeline
                         }
                         break;
 #if NETCOREAPP
-                case SocketsHttpHandler socketsHttpHandler:
-                    if (socketsHttpHandler.MaxConnectionsPerServer == RuntimeDefaultConnectionLimit)
-                    {
-                        socketsHttpHandler.MaxConnectionsPerServer = IncreasedConnectionLimit;
-                    }
-                    if (socketsHttpHandler.PooledConnectionLifetime == DefaultConnectionLeaseTimeoutTimeSpan)
-                    {
-                        socketsHttpHandler.PooledConnectionLifetime = IncreasedConnectionLeaseTimeoutTimeSpan;
-                    }
-                    break;
+                    case SocketsHttpHandler socketsHttpHandler:
+                        if (socketsHttpHandler.MaxConnectionsPerServer == RuntimeDefaultConnectionLimit)
+                        {
+                            socketsHttpHandler.MaxConnectionsPerServer = IncreasedConnectionLimit;
+                        }
+                        if (socketsHttpHandler.PooledConnectionLifetime == DefaultConnectionLeaseTimeoutTimeSpan)
+                        {
+                            socketsHttpHandler.PooledConnectionLifetime = IncreasedConnectionLeaseTimeoutTimeSpan;
+                        }
+                        break;
 #endif
                     default:
                         Debug.Assert(false, "Unknown handler type");

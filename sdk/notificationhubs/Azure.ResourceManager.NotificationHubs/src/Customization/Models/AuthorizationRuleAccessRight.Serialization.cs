@@ -19,9 +19,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         public static AuthorizationRuleAccessRight ToAuthorizationRuleAccessRight(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Manage")) return AuthorizationRuleAccessRight.Manage;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Send")) return AuthorizationRuleAccessRight.Send;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Listen")) return AuthorizationRuleAccessRight.Listen;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Manage"))
+                return AuthorizationRuleAccessRight.Manage;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Send"))
+                return AuthorizationRuleAccessRight.Send;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Listen"))
+                return AuthorizationRuleAccessRight.Listen;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AuthorizationRuleAccessRight value.");
         }
     }

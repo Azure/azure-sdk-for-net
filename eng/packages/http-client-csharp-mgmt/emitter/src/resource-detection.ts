@@ -1,86 +1,88 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-import {
+import type {
   CodeModel,
   CSharpEmitterContext,
   InputClient,
   InputModelType
-} from "@typespec/http-client-csharp";
+} from "./code-model-types.js";
 import {
-  calculateResourceTypeFromPath,
   NonResourceMethod,
   ResourceMetadata,
   ResourceMethod,
   ResourceOperationKind,
-  ResourceScope,
+  ResourceScopeKind,
+  ArmScopeInfo,
   ArmProviderSchema,
   ArmResourceSchema,
+  ValidArmResourceSchema,
   convertArmProviderSchemaToArguments,
-  sortResourceMethods
+  expandArmResources,
+  ParentResourceLookupContext,
+  resolveResourceApiVersions,
+  extractRbacRoles,
+  findLongestPrefixMatch,
+  isResourceInstancePath,
+  sortResourceMethods,
+  RequestPath,
+  extractNameConstraintOverrides,
+  extractResourceNameOverride,
+  detectDynamicTypeSegments,
+  resolveFixedEnumNameSegments,
+  isVariableSegment
 } from "./resource-metadata.js";
 import {
-  DecoratorInfo,
-  getClientType,
-  SdkClientType,
-  SdkContext,
   SdkHttpOperation,
   SdkMethod,
-  SdkModelType,
-  SdkServiceOperation
+  SdkModelType
 } from "@azure-tools/typespec-client-generator-core";
 import pluralize from "pluralize";
 import {
   armProviderSchema,
-  armResourceActionName,
-  armResourceCreateOrUpdateName,
-  armResourceDeleteName,
   armResourceInternal,
-  armResourceListName,
-  armResourceReadName,
-  armResourceUpdateName,
   armResourceWithParameter,
-  extensionResourceOperationName,
-  legacyExtensionResourceOperationName,
-  legacyResourceOperationName,
   builtInResourceOperationName,
-  parentResourceName,
-  readsResourceName,
-  resourceGroupResource,
-  singleton,
-  subscriptionResource,
-  tenantResource
+  customAzureResource,
+  extensionResourceOperationName,
+  isResourceCollectionAction,
+  legacyExtensionResourceOperationName,
+  legacyResourceOperationName
 } from "./sdk-context-options.js";
-import { DecoratorApplication, Model, NoTarget } from "@typespec/compiler";
-import { AzureEmitterOptions } from "@azure-typespec/http-client-csharp";
 import {
-  resolveArmResources,
-  getOperationScopeFromPath
-} from "./resolve-arm-resources-converter.js";
+  DecoratorApplication,
+  Model,
+  NoTarget,
+  getPattern,
+  getMinLength,
+  getMaxLength
+} from "@typespec/compiler";
+import { resolveArmResources } from "./resolve-arm-resources-converter.js";
 import { AzureMgmtEmitterOptions } from "./options.js";
-import { isPrefix } from "./utils.js";
+import { getAllSdkClients, traverseClient } from "./sdk-client-utils.js";
+import { $lib } from "./lib/lib.js";
 
-export async function updateClients(
+export function updateClients(
   codeModel: CodeModel,
   sdkContext: CSharpEmitterContext,
   options: AzureMgmtEmitterOptions
-) {
-  // Check if the use-legacy-resource-detection flag is disabled (i.e., use new resolveArmResources API)
-  const armProviderSchema =
-    options?.["use-legacy-resource-detection"] === false
-      ? resolveArmResources(sdkContext.program, sdkContext)
-      : buildArmProviderSchema(sdkContext, codeModel);
+): ArmProviderSchema {
+  let armProviderSchema: ArmProviderSchema;
+
+  if (options?.["use-legacy-resource-detection"] === false) {
+    armProviderSchema = resolveArmResources(sdkContext.program, sdkContext);
+  } else {
+    armProviderSchema = buildArmProviderSchema(sdkContext, codeModel);
+  }
 
   applyArmProviderSchemaDecorator(codeModel, armProviderSchema);
+  return armProviderSchema;
 }
 
 /**
- * Builds the ARM provider schema by detecting all resources and non-resource methods.
- * This is the main function that gathers all ARM-related information from the code model
- * and consolidates it into a unified ArmProviderSchema structure.
- *
- * This function is exported for testing purposes and can be called directly from tests
- * to validate the schema structure using the legacy custom resource detection logic.
+ * Builds the path-driven ARM provider schema described in
+ * `docs/resource-detection.md` from TypeSpec resource model annotations,
+ * resource instance paths, and HTTP verbs.
  *
  * @param sdkContext - The emitter context
  * @param codeModel - The code model to analyze
@@ -90,7 +92,6 @@ export function buildArmProviderSchema(
   sdkContext: CSharpEmitterContext,
   codeModel: CodeModel
 ): ArmProviderSchema {
-  // Use the existing custom resource detection logic
   const serviceMethods = new Map<string, SdkMethod<SdkHttpOperation>>(
     getAllSdkClients(sdkContext)
       .flatMap((c) => c.methods)
@@ -99,686 +100,631 @@ export function buildArmProviderSchema(
   const models = new Map<string, SdkModelType>(
     sdkContext.sdkPackage.models.map((m) => [m.crossLanguageDefinitionId, m])
   );
+
+  // Step 1: candidate resource models.
   const resourceModels = getAllResourceModels(codeModel);
   const resourceModelMap = new Map<string, InputModelType>(
     resourceModels.map((m) => [m.crossLanguageDefinitionId, m])
   );
-
-  // Map to track resource metadata by unique key (modelId + resourcePath)
-  // This allows multiple resources to share the same model but have different paths
-  const resourcePathToMetadataMap = new Map<string, ResourceMetadata>();
-
-  // Map to track which resource models are used (for backward compatibility)
   const resourceModelIds = new Set<string>(
     resourceModels.map((m) => m.crossLanguageDefinitionId)
   );
 
-  // Track client names associated with each resource path for name derivation
-  const resourcePathToClientName = new Map<string, string>();
-
-  // Track explicit resource names from TypeSpec (e.g., from LegacyOperations ResourceName parameter)
-  const resourcePathToExplicitName = new Map<string, string>();
-
-  const nonResourceMethods: Map<string, NonResourceMethod> = new Map();
-
-  // first we flatten all possible clients in the code model
+  // Flatten every (client, method) pair we will visit, in client order.
   const clients = getAllClients(codeModel);
-
-  // Process methods in two passes to ensure CRUD operations establish resource paths first
-  // This allows non-CRUD operations (like List) to find existing resource paths regardless of operation order
-
-  // Helper function to process a method and add it to the resource metadata
-  // the method type uses any here because its real type `InputServiceMethod` is not exported by MTG's emitter
-  const processMethod = (client: InputClient, method: any) => {
-    const serviceMethod = serviceMethods.get(method.crossLanguageDefinitionId);
-    const { kind, modelId, explicitResourceName } = parseResourceOperation(
-      serviceMethod,
-      sdkContext
-    );
-
-    if (modelId && kind && resourceModelIds.has(modelId)) {
-      // Determine the resource path from the CRUD operation
-      let resourcePath = "";
-      if (isCRUDKind(kind)) {
-        resourcePath = method.operation.path;
-      } else {
-        // For non-CRUD operations like List, try to match with existing resource paths for the same model
-        const operationPath = method.operation.path;
-        for (const [existingKey] of resourcePathToMetadataMap) {
-          const [existingModelId, existingPath] = existingKey.split("|");
-          // Check if this is for the same model
-          if (existingModelId === modelId && existingPath) {
-            // Try to match based on resource type segments
-            // Extract the resource type part (after "/providers/")
-            const existingResourceType =
-              calculateResourceTypeFromPath(existingPath);
-            let operationResourceType = "";
-            try {
-              operationResourceType =
-                calculateResourceTypeFromPath(operationPath);
-            } catch {
-              // If we can't calculate resource type, try string matching
-            }
-
-            // If resource types match exactly, this list operation belongs to this resource
-            if (
-              existingResourceType &&
-              operationResourceType === existingResourceType
-            ) {
-              resourcePath = existingPath;
-              break;
-            }
-
-            // Fallback: check if the operation path ends with a segment that matches the existing path
-            // But only if we haven't found a better match yet
-            if (!resourcePath) {
-              const existingParentPath = existingPath.substring(
-                0,
-                existingPath.lastIndexOf("/")
-              );
-              if (isPrefix(existingParentPath, operationPath)) {
-                // Store this as a potential match, but continue looking for exact matches
-                resourcePath = existingPath;
-              }
-            }
-          }
-        }
-        // If no match found, use the operation path
-        if (!resourcePath) {
-          resourcePath = operationPath;
-        }
-      }
-
-      // Create a unique key combining model ID and resource path
-      const metadataKey = `${modelId}|${resourcePath}`;
-
-      // Store explicit resource name if provided (from LegacyOperations ResourceName parameter)
-      if (
-        explicitResourceName &&
-        !resourcePathToExplicitName.has(metadataKey)
-      ) {
-        resourcePathToExplicitName.set(metadataKey, explicitResourceName);
-      }
-
-      // Get or create metadata entry for this resource path
-      let entry = resourcePathToMetadataMap.get(metadataKey);
-      if (!entry) {
-        const model = resourceModelMap.get(modelId);
-        // Store the client name for this resource path for later use (fallback if no explicit name)
-        if (!resourcePathToClientName.has(metadataKey)) {
-          resourcePathToClientName.set(metadataKey, client.name);
-        }
-
-        entry = {
-          resourceIdPattern: "", // this will be populated later
-          resourceType: "", // this will be populated later
-          singletonResourceName: getSingletonResource(
-            model?.decorators?.find((d) => d.name == singleton)
-          ),
-          resourceScope: ResourceScope.Tenant, // temporary default to Tenant, will be properly set later after methods are populated
-          methods: [],
-          parentResourceId: undefined, // this will be populated later
-          parentResourceModelId: undefined,
-          // Use model name as default; will be updated later if multiple paths exist
-          resourceName: model?.name ?? "Unknown"
-        } as ResourceMetadata;
-        resourcePathToMetadataMap.set(metadataKey, entry);
-      }
-
-      entry.methods.push({
-        methodId: method.crossLanguageDefinitionId,
-        kind,
-        operationPath: method.operation.path,
-        operationScope: getOperationScopeFromPath(method.operation.path)
-      });
-      if (!entry.resourceType) {
-        entry.resourceType = calculateResourceTypeFromPath(
-          method.operation.path
-        );
-      }
-      if (!entry.resourceIdPattern && isCRUDKind(kind)) {
-        entry.resourceIdPattern = method.operation.path;
-      }
-    } else {
-      // we treat this method as a non-resource method when it does not have a kind or an associated resource model
-      nonResourceMethods.set(method.crossLanguageDefinitionId, {
-        methodId: method.crossLanguageDefinitionId,
-        operationPath: method.operation.path,
-        operationScope: getOperationScopeFromPath(method.operation.path)
-      });
-    }
-  };
-
-  // First pass: Process CRUD operations to establish resource paths
+  const allEntries: Array<{ client: InputClient; method: any }> = [];
   for (const client of clients) {
     for (const method of client.methods) {
-      const serviceMethod = serviceMethods.get(
-        method.crossLanguageDefinitionId
-      );
-      const { kind } = parseResourceOperation(serviceMethod, sdkContext);
-
-      // Only process CRUD operations in the first pass
-      if (kind && isCRUDKind(kind)) {
-        processMethod(client, method);
-      }
+      allEntries.push({ client, method });
     }
   }
 
-  // Second pass: Process non-CRUD operations (like List) which can now find existing resource paths
-  for (const client of clients) {
-    for (const method of client.methods) {
-      const serviceMethod = serviceMethods.get(
-        method.crossLanguageDefinitionId
-      );
-      const { kind } = parseResourceOperation(serviceMethod, sdkContext);
-
-      // Only process non-CRUD operations in the second pass
-      if (kind && !isCRUDKind(kind)) {
-        processMethod(client, method);
-      } else if (!kind) {
-        // Process methods without a kind in the second pass
-        processMethod(client, method);
-      }
-    }
-  }
-
-  // after the resourceIdPattern has been populated, we can set the parentResourceId and the resource scope of each resource method
-  for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
-    // Extract model ID from the key (format: "modelId|resourcePath")
-    const modelId = metadataKey.split("|")[0];
-
-    // get parent resource model id
-    const parentResourceModelId = getParentResourceModelId(
-      sdkContext,
-      models.get(modelId)
-    );
-    if (parentResourceModelId) {
-      // Find parent metadata entry - there might be multiple, so we need to find the right one
-      for (const [parentKey, parentMetadata] of resourcePathToMetadataMap) {
-        const parentModelId = parentKey.split("|")[0];
-        if (
-          parentModelId === parentResourceModelId &&
-          parentMetadata.resourceIdPattern
-        ) {
-          metadata.parentResourceId = parentMetadata.resourceIdPattern;
-          metadata.parentResourceModelId = parentResourceModelId;
-          break;
-        }
-      }
-    }
-
-    // For multiple-path resources (same model at different paths), detect parent-child relationships through path matching
-    // This is needed when both parent and child use the same model (e.g., legacy-operations pattern)
-    if (!metadata.parentResourceId && metadata.resourceIdPattern) {
-      // Check if this resource's path is a child of another resource's path
-      for (const [otherKey, otherMetadata] of resourcePathToMetadataMap) {
-        if (otherKey !== metadataKey && otherMetadata.resourceIdPattern) {
-          // Check if this resource's path starts with the other resource's path
-          // e.g., "/providers/MgmtTypeSpec/bestPractices/{name}/versions/{versionName}"
-          // is a child of "/providers/MgmtTypeSpec/bestPractices/{name}"
-          const thisPath = metadata.resourceIdPattern;
-          const potentialParentPath = otherMetadata.resourceIdPattern;
-
-          // The child path should start with the parent path followed by a "/"
-          if (
-            isPrefix(potentialParentPath, thisPath) &&
-            !isPrefix(thisPath, potentialParentPath)
-          ) {
-            metadata.parentResourceId = potentialParentPath;
-            // Note: we don't set parentResourceModelId here since they share the same model
-            break;
-          }
-        }
-      }
-    }
-
-    // figure out the resourceScope of all resource methods
-    for (const method of metadata.methods) {
-      method.resourceScope = getResourceScopeOfMethod(
-        method.operationPath,
-        resourcePathToMetadataMap.values()
-      );
-    }
-
-    // update the model's resourceScope based on resource scope decorator if it exists or based on the Read method's scope. If neither exist, it will be set to ResourceGroup by default
-    const model = resourceModelMap.get(modelId);
-    if (model) {
-      metadata.resourceScope = getResourceScope(model, metadata.methods);
-    }
-  }
-
-  // after the parentResourceId and resource scopes are populated, we can reorganize the metadata that is missing resourceIdPattern
-  const metadataKeysToDelete: string[] = [];
-  for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
-    const modelId = metadataKey.split("|")[0];
-
-    // If this entry has no resourceIdPattern, try to merge it with another entry for the same model that does
-    if (metadata.resourceIdPattern === "") {
-      let merged = false;
-
-      // First try to merge with parent if it exists
-      if (metadata.parentResourceModelId) {
-        for (const [parentKey, parentMetadata] of resourcePathToMetadataMap) {
-          const parentModelId = parentKey.split("|")[0];
-          if (
-            parentModelId === metadata.parentResourceModelId &&
-            parentMetadata.resourceIdPattern
-          ) {
-            parentMetadata.methods.push(...metadata.methods);
-            metadataKeysToDelete.push(metadataKey);
-            merged = true;
-            break;
-          }
-        }
-      } else {
-        // No parent - try to find another entry for the same model with a resourceIdPattern
-        for (const [otherKey, otherMetadata] of resourcePathToMetadataMap) {
-          const otherModelId = otherKey.split("|")[0];
-          if (
-            otherKey !== metadataKey &&
-            otherModelId === modelId &&
-            otherMetadata.resourceIdPattern
-          ) {
-            // Merge this metadata into the other one
-            otherMetadata.methods.push(...metadata.methods);
-            metadataKeysToDelete.push(metadataKey);
-            merged = true;
-            break;
-          }
-        }
-
-        // If there's no parent and no other entry to merge with, treat all methods as non-resource methods
-        if (!merged) {
-          for (const method of metadata.methods) {
-            nonResourceMethods.set(method.methodId, {
-              methodId: method.methodId,
-              operationPath: method.operationPath,
-              operationScope: method.operationScope
-            });
-          }
-          metadataKeysToDelete.push(metadataKey);
-        }
-      }
-    }
-  }
-
-  // Remove entries that were merged or converted to non-resource methods
-  for (const key of metadataKeysToDelete) {
-    resourcePathToMetadataMap.delete(key);
-  }
-
-  // the last step, add the decorator to the resource model
-  // Group metadata by model ID to add all metadata entries to their respective models
-  const modelIdToMetadataList = new Map<string, ResourceMetadata[]>();
-  for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
-    const modelId = metadataKey.split("|")[0];
-    if (!modelIdToMetadataList.has(modelId)) {
-      modelIdToMetadataList.set(modelId, []);
-    }
-    modelIdToMetadataList.get(modelId)!.push(metadata);
-  }
-
-  // Update resource names: prioritize explicit ResourceName from TypeSpec, fallback to deriving from client names
-  // This handles the scenario where the same model is used by multiple resource interfaces with different paths.
-  // TypeSpec authors should specify explicit ResourceName parameters in LegacyOperations templates.
-  for (const [modelId, metadataList] of modelIdToMetadataList) {
-    if (metadataList.length > 1) {
-      // Multiple resource paths for the same model - use explicit names or derive from client names
-      for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
-        const keyModelId = metadataKey.split("|")[0];
-        if (keyModelId === modelId) {
-          // Prioritize explicit resource name from TypeSpec (e.g., LegacyOperations ResourceName parameter)
-          const explicitName = resourcePathToExplicitName.get(metadataKey);
-          if (explicitName) {
-            metadata.resourceName = explicitName;
-          } else {
-            // Fallback: derive from client name using pluralize.singular
-            const clientName = resourcePathToClientName.get(metadataKey);
-            if (clientName) {
-              metadata.resourceName = pluralize.singular(clientName);
-            }
-          }
-        }
-      }
-    }
-    // If there's only one metadata entry for this model, keep using the model name (already set)
-  }
-
-  return buildArmProviderSchemaFromDetectedResources(
-    sdkContext,
-    resourceModels,
-    resourcePathToMetadataMap,
-    nonResourceMethods
-  );
-}
-
-function isCRUDKind(kind: ResourceOperationKind): boolean {
-  return [
-    ResourceOperationKind.Read,
-    ResourceOperationKind.Create,
-    ResourceOperationKind.Update,
-    ResourceOperationKind.Delete
-  ].includes(kind);
-}
-
-function parseResourceOperation(
-  serviceMethod: SdkMethod<SdkHttpOperation> | undefined,
-  sdkContext: CSharpEmitterContext
-): {
-  kind?: ResourceOperationKind;
-  modelId?: string;
-  explicitResourceName?: string;
-} {
-  const decorators = serviceMethod?.__raw?.decorators;
-  for (const decorator of decorators ?? []) {
-    switch (decorator.definition?.name) {
-      case readsResourceName:
-      case armResourceReadName:
-        return {
-          kind: ResourceOperationKind.Read,
-          modelId: getResourceModelId(sdkContext, decorator),
-          explicitResourceName: undefined // No explicit resource name for ARM operations
-        };
-      case armResourceCreateOrUpdateName:
-        return {
-          kind: ResourceOperationKind.Create,
-          modelId: getResourceModelId(sdkContext, decorator),
-          explicitResourceName: undefined
-        };
-      case armResourceUpdateName:
-        return {
-          kind: ResourceOperationKind.Update,
-          modelId: getResourceModelId(sdkContext, decorator),
-          explicitResourceName: undefined
-        };
-      case armResourceDeleteName:
-        return {
-          kind: ResourceOperationKind.Delete,
-          modelId: getResourceModelId(sdkContext, decorator),
-          explicitResourceName: undefined
-        };
-      case armResourceListName:
-        return {
-          kind: ResourceOperationKind.List,
-          modelId: getResourceModelId(sdkContext, decorator),
-          explicitResourceName: undefined
-        };
-      case armResourceActionName:
-        return {
-          kind: ResourceOperationKind.Action,
-          modelId: getResourceModelId(sdkContext, decorator),
-          explicitResourceName: undefined
-        };
-      case extensionResourceOperationName:
-        switch (decorator.args[2].jsValue) {
-          case "read":
-            return {
-              kind: ResourceOperationKind.Read,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[1].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName: undefined
-            };
-          case "createOrUpdate":
-            return {
-              kind: ResourceOperationKind.Create,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[1].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName: undefined
-            };
-          case "update":
-            return {
-              kind: ResourceOperationKind.Update,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[1].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName: undefined
-            };
-          case "delete":
-            return {
-              kind: ResourceOperationKind.Delete,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[1].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName: undefined
-            };
-          case "list":
-            return {
-              kind: ResourceOperationKind.List,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[1].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName: undefined
-            };
-          case "action":
-            return {
-              kind: ResourceOperationKind.Action,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[1].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName: undefined
-            };
-        }
-        break;
-      case legacyExtensionResourceOperationName:
-      case legacyResourceOperationName:
-        switch (decorator.args[1].jsValue) {
-          case "read":
-            return {
-              kind: ResourceOperationKind.Read,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[0].value as Model,
-                decorator.definition?.name
-              ),
-              // Extract the explicit resource name if available (4th parameter in LegacyOperations)
-              explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
-                  : undefined
-            };
-          case "createOrUpdate":
-            return {
-              kind: ResourceOperationKind.Create,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[0].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
-                  : undefined
-            };
-          case "update":
-            return {
-              kind: ResourceOperationKind.Update,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[0].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
-                  : undefined
-            };
-          case "delete":
-            return {
-              kind: ResourceOperationKind.Delete,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[0].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
-                  : undefined
-            };
-          case "list":
-            return {
-              kind: ResourceOperationKind.List,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[0].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
-                  : undefined
-            };
-          case "action":
-            return {
-              kind: ResourceOperationKind.Action,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[0].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
-                  : undefined
-            };
-        }
-        return {};
-      case builtInResourceOperationName:
-        switch (decorator.args[2].jsValue) {
-          case "read":
-            return {
-              kind: ResourceOperationKind.Read,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[1].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName: undefined
-            };
-          case "createOrUpdate":
-            return {
-              kind: ResourceOperationKind.Create,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[1].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName: undefined
-            };
-          case "update":
-            return {
-              kind: ResourceOperationKind.Update,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[1].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName: undefined
-            };
-          case "delete":
-            return {
-              kind: ResourceOperationKind.Delete,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[1].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName: undefined
-            };
-          case "list":
-            return {
-              kind: ResourceOperationKind.List,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[1].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName: undefined
-            };
-          case "action":
-            return {
-              kind: ResourceOperationKind.Action,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[1].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName: undefined
-            };
-        }
-        return {};
-    }
-  }
-  return {};
-}
-
-function getParentResourceModelId(
-  sdkContext: CSharpEmitterContext,
-  model: SdkModelType | undefined
-): string | undefined {
-  const decorators = (model?.__raw as Model)?.decorators;
-  const parentResourceDecorator = decorators?.find(
-    (d) => d.definition?.name == parentResourceName
-  );
-  return getResourceModelId(sdkContext, parentResourceDecorator);
-}
-
-function getResourceModelId(
-  sdkContext: CSharpEmitterContext,
-  decorator?: DecoratorApplication
-): string | undefined {
-  if (!decorator) return undefined;
-  return getResourceModelIdCore(
-    sdkContext,
-    decorator.args[0].value as Model,
-    decorator.definition?.name
-  );
-}
-
-function getResourceModelIdCore(
-  sdkContext: CSharpEmitterContext,
-  decoratorModel: Model,
-  decoratorName?: string
-): string | undefined {
-  const model = getClientType(sdkContext, decoratorModel) as SdkModelType;
-  if (model) {
-    return model.crossLanguageDefinitionId;
-  } else {
-    sdkContext.logger.reportDiagnostic({
-      code: "general-error",
-      messageId: "default",
-      format: {
-        message: `Resource model not found for decorator ${decoratorName}`
-      },
+  const reportWarning = (message: string) =>
+    sdkContext.program.reportDiagnostic({
+      code: "general-warning",
+      severity: "warning",
+      message,
       target: NoTarget
     });
-    return undefined;
+
+  // Step 2a: locate GETs whose direct response is a candidate model. Each
+  // such GET path becomes an instance path. Multiple GETs returning the same
+  // model produce multiple instance paths (multi-path resource).
+  type ResourceEntry = {
+    modelId: string;
+    instancePath: RequestPath;
+    client: InputClient;
+    methods: Array<{
+      methodId: string;
+      kind: ResourceOperationKind;
+      operationPath: RequestPath;
+    }>;
+    explicitResourceName?: string;
+    singletonResourceName?: string;
+    /**
+     * Per-enum-value resource-name override map for an expandable
+     * `{parentType}` Read op (from `@@clientOption(op, "resource-name",
+     * #{...}, "csharp")`). Plumbed through expansion via
+     * `resourceNameOverrides`. `undefined` for non-expandable Read ops.
+     */
+    resourceNameOverrideMap?: Map<string, string>;
+  };
+  const resourceEntries: ResourceEntry[] = [];
+  const consumedMethodIds = new Set<string>();
+
+  for (const { client, method } of allEntries) {
+    const sdkMethod = serviceMethods.get(method.crossLanguageDefinitionId);
+    if (!sdkMethod) continue;
+    if (sdkMethod.operation?.verb !== "get") continue;
+    const respModelId = getDirectResponseModelId(sdkMethod);
+    if (!respModelId || !resourceModelIds.has(respModelId)) continue;
+
+    const rawPath = new RequestPath(method.operation.path);
+    if (!isResourceInstancePath(sdkMethod, rawPath)) continue;
+    // Canonicalizing fixed enum names changes resourceIdPattern from a parameter
+    // to a literal
+    const path = resolveFixedEnumNameSegments(sdkMethod, rawPath);
+
+    let explicitResourceName = getExplicitResourceName(sdkMethod);
+    let resourceNameOverrideMap: Map<string, string> | undefined;
+    const clientOptionOverride = extractResourceNameOverride(
+      sdkMethod,
+      sdkContext.program
+    );
+    if (clientOptionOverride !== undefined) {
+      const isExpandable = detectDynamicTypeSegments(path).length > 0;
+      if (typeof clientOptionOverride === "string") {
+        if (isExpandable) {
+          $lib.reportDiagnostic(sdkContext.program, {
+            code: "resource-name-string-on-expandable",
+            format: { value: clientOptionOverride, path: path.path },
+            target: NoTarget
+          });
+        } else {
+          // Plain string override on an ordinary Read op. Folds into the
+          // existing explicit-name mechanism so it's applied uniformly with
+          // legacy decorators in step 3.
+          explicitResourceName = clientOptionOverride;
+        }
+      } else {
+        if (!isExpandable) {
+          $lib.reportDiagnostic(sdkContext.program, {
+            code: "resource-name-map-on-non-expandable",
+            format: { path: path.path },
+            target: NoTarget
+          });
+        } else {
+          resourceNameOverrideMap = clientOptionOverride;
+        }
+      }
+    }
+
+    const entry: ResourceEntry = {
+      modelId: respModelId,
+      instancePath: path,
+      client,
+      methods: [],
+      explicitResourceName,
+      singletonResourceName: path.singletonName,
+      resourceNameOverrideMap
+    };
+    resourceEntries.push(entry);
+    entry.methods.push({
+      methodId: method.crossLanguageDefinitionId,
+      kind: ResourceOperationKind.Read,
+      operationPath: path
+    });
+    consumedMethodIds.add(method.crossLanguageDefinitionId);
+  }
+
+  const identifiedResourceModelIds = new Set(
+    resourceEntries.map((entry) => entry.modelId)
+  );
+  const unassociatedResourceModelIds = new Set(resourceModelIds);
+  for (const modelId of unassociatedResourceModelIds) {
+    if (identifiedResourceModelIds.has(modelId)) {
+      continue;
+    }
+    const modelName =
+      resourceModelMap.get(modelId)?.name ??
+      models.get(modelId)?.name ??
+      modelId;
+    $lib.reportDiagnostic(sdkContext.program, {
+      code: "resource-model-not-associated-with-arm-resource",
+      format: { modelName },
+      target: NoTarget
+    });
+  }
+
+  // Step 2b: classify lifecycle methods (PUT/PATCH/DELETE/HEAD) whose path
+  // equals an instance path. Verb-based, no decorator consultation.
+  for (const { method } of allEntries) {
+    if (consumedMethodIds.has(method.crossLanguageDefinitionId)) continue;
+    const sdkMethod = serviceMethods.get(method.crossLanguageDefinitionId);
+    if (!sdkMethod) continue;
+    const verb = sdkMethod.operation?.verb;
+    let kind: ResourceOperationKind | undefined;
+    switch (verb) {
+      case "put":
+        kind = ResourceOperationKind.Create;
+        break;
+      case "patch":
+        kind = ResourceOperationKind.Update;
+        break;
+      case "delete":
+        kind = ResourceOperationKind.Delete;
+        break;
+      case "head":
+        kind = ResourceOperationKind.CheckExistence;
+        break;
+      default:
+        continue;
+    }
+    const rawOpPath = new RequestPath(method.operation.path);
+    if (!isResourceInstancePath(sdkMethod, rawOpPath)) continue;
+    const opPath = resolveFixedEnumNameSegments(sdkMethod, rawOpPath);
+    const matched = resourceEntries.find((entry) =>
+      entry.instancePath.equals(opPath)
+    );
+    if (!matched) continue;
+    matched.explicitResourceName ??= getExplicitResourceName(sdkMethod);
+    matched.methods.push({
+      methodId: method.crossLanguageDefinitionId,
+      kind,
+      operationPath: opPath
+    });
+    consumedMethodIds.add(method.crossLanguageDefinitionId);
+  }
+
+  // Build the ArmResourceSchema list from collected entries.
+  const resources: ArmResourceSchema[] = [];
+  const resourcePathToClientName = new Map<string, string>();
+  const resourcePathToExplicitName = new Map<string, string>();
+  for (const entry of resourceEntries) {
+    const model = resourceModelMap.get(entry.modelId);
+    resourcePathToClientName.set(entry.instancePath.path, entry.client.name);
+    if (entry.explicitResourceName) {
+      resourcePathToExplicitName.set(
+        entry.instancePath.path,
+        entry.explicitResourceName
+      );
+    }
+
+    const methods: ResourceMethod[] = entry.methods.map((m) => ({
+      methodId: m.methodId,
+      kind: m.kind,
+      operationPath: m.operationPath,
+      scope: buildResourceMethodScope(m.operationPath)
+    }));
+
+    const metadata: ResourceMetadata = {
+      resourceIdPattern: entry.instancePath,
+      resourceType: entry.instancePath.resourceType ?? "",
+      singletonResourceName: entry.singletonResourceName,
+      scope: {
+        kind: ResourceScopeKind.Tenant,
+        scopeIdPattern: RequestPath.empty
+      },
+      methods,
+      parentResourceId: undefined,
+      parentResourceModelId: undefined,
+      resourceName: model?.name ?? "Unknown",
+      nameConstraints: {},
+      apiVersions: [],
+      rbacRoles: []
+    };
+    // Derive resource scope from its instance path so the post-process step
+    // sees the correct scope kind (ResourceGroup / Subscription / ...).
+    metadata.scope = buildScopeInfoFromPath(entry.instancePath);
+    resources.push({ resourceModelId: entry.modelId, metadata });
+  }
+
+  const nonResourceMethodsArray: NonResourceMethod[] = [];
+
+  // Build the per-template-path override map for expansion (only entries with
+  // a map-form `@@clientOption(..., "resource-name", #{...}, ...)`).
+  const resourceNameOverrides = new Map<string, Map<string, string>>();
+  for (const entry of resourceEntries) {
+    if (entry.resourceNameOverrideMap) {
+      resourceNameOverrides.set(
+        entry.instancePath.path,
+        entry.resourceNameOverrideMap
+      );
+    }
+  }
+
+  // Step 2c: expand resources with dynamic parent type segments before any
+  // path-based parent inference runs, so the inference sees concrete paths.
+  const { expandedResources } = expandArmResources(resources, {
+    serviceMethods,
+    diagnosticReporter: reportWarning,
+    resourceNameOverrides:
+      resourceNameOverrides.size > 0 ? resourceNameOverrides : undefined
+  });
+
+  // Step 3: resolve parent relationships by walking up each resource's
+  // instance path one `/type/{name}` pair at a time and looking for a detected
+  // resource at that path. Top-level resources are represented by their scope
+  // rather than by parentResourceId.
+  const detectedResources = expandedResources.filter(
+    (resource): resource is ValidArmResourceSchema =>
+      resource.metadata.resourceIdPattern !== undefined
+  );
+  const parentLookup = buildPathBasedParentLookup(detectedResources);
+  resolveParentRelationships(detectedResources, parentLookup);
+
+  // Multi-path same-model resource name derivation. For a model with multiple
+  // detected instance paths, derive each entry's name from its originating
+  // client name (singularized).
+  const modelIdToResources = new Map<string, ArmResourceSchema[]>();
+  for (const r of detectedResources) {
+    if (!modelIdToResources.has(r.resourceModelId)) {
+      modelIdToResources.set(r.resourceModelId, []);
+    }
+    modelIdToResources.get(r.resourceModelId)!.push(r);
+  }
+  for (const [, list] of modelIdToResources) {
+    for (const resource of list) {
+      const resourcePath = resource.metadata.resourceIdPattern!.path;
+      const explicitName = resourcePathToExplicitName.get(resourcePath);
+      if (explicitName) {
+        resource.metadata.resourceName = explicitName;
+        continue;
+      }
+      if (list.length > 1) {
+        const clientName = resourcePathToClientName.get(resourcePath);
+        if (clientName) {
+          resource.metadata.resourceName = pluralize.singular(clientName);
+        }
+      }
+    }
+  }
+
+  // Step 4: assign all operations not consumed by Step 2 as List, Action, or
+  // non-resource methods.
+  assignRemainingOperations(
+    detectedResources,
+    nonResourceMethodsArray,
+    allEntries,
+    consumedMethodIds,
+    serviceMethods,
+    identifiedResourceModelIds
+  );
+
+  // Fill metadata that depends on the resource model or final method set.
+  for (const resource of detectedResources) {
+    const sdkModel = models.get(resource.resourceModelId);
+    const typespecModel = sdkModel?.__raw as Model | undefined;
+    const nameProperty = typespecModel?.properties.get("name");
+    const rawPattern = nameProperty
+      ? getPattern(sdkContext.program, nameProperty)
+      : undefined;
+    resource.metadata.nameConstraints = {
+      pattern: rawPattern || undefined,
+      minLength: nameProperty
+        ? getMinLength(sdkContext.program, nameProperty)
+        : undefined,
+      maxLength: nameProperty
+        ? getMaxLength(sdkContext.program, nameProperty)
+        : undefined
+    };
+    const overrides = extractNameConstraintOverrides(sdkModel);
+    if (overrides) {
+      resource.metadata.nameConstraints = {
+        pattern: overrides.pattern ?? resource.metadata.nameConstraints.pattern,
+        minLength:
+          overrides.minLength ?? resource.metadata.nameConstraints.minLength,
+        maxLength:
+          overrides.maxLength ?? resource.metadata.nameConstraints.maxLength
+      };
+    }
+    resource.metadata.rbacRoles = extractRbacRoles(sdkModel);
+    resource.metadata.apiVersions = resolveResourceApiVersions(
+      resource.metadata.methods,
+      serviceMethods
+    );
+  }
+
+  return {
+    resources: detectedResources,
+    nonResourceMethods: nonResourceMethodsArray
+  };
+}
+
+/**
+ * Returns the response model id for a non-paging method, or undefined when the
+ * method is pageable or returns a non-model type. Lro single-response methods
+ * count: their `response.type` is the final model, not an array.
+ */
+function getDirectResponseModelId(
+  method: SdkMethod<SdkHttpOperation>
+): string | undefined {
+  if (method.kind === "paging" || method.kind === "lropaging") return undefined;
+  const t = method.response?.type;
+  if (t?.kind === "model") {
+    return (t as SdkModelType).crossLanguageDefinitionId;
+  }
+  return undefined;
+}
+
+/**
+ * Returns the item model id for a method that returns a resource collection.
+ * This covers paging/lropaging methods and basic GET methods that return T[]
+ * directly.
+ */
+function getCollectionItemModelIdLocal(
+  method: SdkMethod<SdkHttpOperation>
+): string | undefined {
+  const r = method.response?.type;
+  if (r?.kind === "array" && r.valueType.kind === "model") {
+    return (r.valueType as SdkModelType).crossLanguageDefinitionId;
+  }
+  return undefined;
+}
+
+function buildResourceMethodScope(operationPath: RequestPath): ArmScopeInfo {
+  const scope = buildScopeInfoFromPath(operationPath);
+  return {
+    ...scope,
+    scopeIdPattern: operationPath
+  };
+}
+
+function resolveParentRelationships(
+  resources: ValidArmResourceSchema[],
+  parentLookup: ParentResourceLookupContext
+): void {
+  for (const resource of resources) {
+    const parent = parentLookup.getParentResource(resource);
+    if (!parent?.metadata.resourceIdPattern) continue;
+
+    resource.metadata.parentResourceId = parent.metadata.resourceIdPattern;
+    resource.metadata.parentResourceModelId = parent.resourceModelId;
   }
 }
 
-export function getAllSdkClients(
-  sdkContext: SdkContext<AzureEmitterOptions, SdkHttpOperation>
-): SdkClientType<SdkServiceOperation>[] {
-  const clients: SdkClientType<SdkServiceOperation>[] = [];
-  for (const client of sdkContext.sdkPackage.clients) {
-    traverseClient(client, clients);
+function assignRemainingOperations(
+  resources: ValidArmResourceSchema[],
+  nonResourceMethods: NonResourceMethod[],
+  allEntries: Array<{ method: any }>,
+  consumedMethodIds: Set<string>,
+  serviceMethods: Map<string, SdkMethod<SdkHttpOperation>>,
+  identifiedResourceModelIds: ReadonlySet<string>
+): void {
+  for (const { method } of allEntries) {
+    const methodId = method.crossLanguageDefinitionId;
+    if (consumedMethodIds.has(methodId)) continue;
+
+    const sdkMethod = serviceMethods.get(methodId);
+    const rawOperationPath = new RequestPath(method.operation.path);
+    const operationPath = sdkMethod
+      ? resolveFixedEnumNameSegments(sdkMethod, rawOperationPath)
+      : rawOperationPath;
+    const itemModelId =
+      sdkMethod?.operation?.verb === "get"
+        ? getCollectionItemModelIdLocal(sdkMethod)
+        : undefined;
+    const listTarget =
+      itemModelId && identifiedResourceModelIds.has(itemModelId)
+        ? findListTargetResource(resources, operationPath, itemModelId)
+        : undefined;
+    const actionTarget = listTarget
+      ? undefined
+      : findLongestPrefixMatch(
+          operationPath,
+          resources,
+          (resource) => resource.metadata.resourceIdPattern
+        );
+
+    if (listTarget) {
+      listTarget.metadata.methods.push({
+        methodId,
+        kind: ResourceOperationKind.List,
+        operationPath,
+        scope: buildListOperationScope(resources, operationPath)
+      });
+    } else if (actionTarget) {
+      const scope = buildScopeInfoFromPath(operationPath);
+      const isCollectionAction = isResourceCollectionAction(sdkMethod);
+      const target = isCollectionAction
+        ? findCollectionActionTargetResource(
+            resources,
+            operationPath,
+            actionTarget
+          ) ?? actionTarget
+        : actionTarget;
+      target.metadata.methods.push({
+        methodId,
+        kind: isCollectionAction
+          ? ResourceOperationKind.CollectionAction
+          : ResourceOperationKind.Action,
+        operationPath,
+        scope: {
+          ...scope,
+          scopeIdPattern:
+            target !== actionTarget
+              ? getCollectionContextPath(target)
+              : actionTarget.metadata.resourceIdPattern
+        }
+      });
+    } else {
+      nonResourceMethods.push({
+        methodId,
+        operationPath,
+        scope: buildScopeInfoFromPath(operationPath)
+      });
+    }
+    consumedMethodIds.add(methodId);
   }
 
-  return clients;
+  for (const resource of resources) {
+    sortResourceMethods(resource.metadata.methods);
+  }
+}
+
+function findCollectionActionTargetResource(
+  resources: ValidArmResourceSchema[],
+  operationPath: RequestPath,
+  actionTarget: ValidArmResourceSchema
+): ValidArmResourceSchema | undefined {
+  return findLongestPrefixMatch(operationPath, resources, (resource) => {
+    if (
+      resource === actionTarget ||
+      !getCollectionContextPath(resource).equals(
+        actionTarget.metadata.resourceIdPattern
+      )
+    ) {
+      return undefined;
+    }
+
+    return getResourceCollectionPath(resource.metadata.resourceIdPattern);
+  });
+}
+
+function getResourceCollectionPath(
+  resourcePath: RequestPath
+): RequestPath | undefined {
+  const lastSegment = resourcePath.segments.at(-1);
+  if (!lastSegment || !isVariableSegment(lastSegment)) {
+    return undefined;
+  }
+
+  return RequestPath.fromSegments(resourcePath.segments.slice(0, -1));
+}
+
+function getCollectionContextPath(
+  resource: ValidArmResourceSchema
+): RequestPath {
+  return (
+    resource.metadata.parentResourceId ?? resource.metadata.scope.scopeIdPattern
+  );
+}
+
+function findListTargetResource(
+  resources: ValidArmResourceSchema[],
+  operationPath: RequestPath,
+  itemModelId: string
+): ValidArmResourceSchema | undefined {
+  const candidates = resources.filter(
+    (resource) => resource.resourceModelId === itemModelId
+  );
+
+  const collectionMatches = candidates.filter((resource) =>
+    operationPath.isPrefixOf(resource.metadata.resourceIdPattern)
+  );
+  if (collectionMatches.length > 0) {
+    return shortestResourcePath(collectionMatches);
+  }
+
+  const operationType = operationPath.resourceType;
+  if (operationType === undefined) return undefined;
+
+  const scopeCollectionMatches = candidates.filter(
+    (resource) =>
+      resource.metadata.resourceType === operationType &&
+      operationPath.hasSameScopeNesting(resource.metadata.resourceIdPattern) &&
+      operationPathEndsWithResourceType(operationPath, operationType)
+  );
+  return shortestResourcePath(scopeCollectionMatches);
+}
+
+function shortestResourcePath(
+  resources: ValidArmResourceSchema[]
+): ValidArmResourceSchema | undefined {
+  return resources
+    .slice()
+    .sort(
+      (a, b) =>
+        a.metadata.resourceIdPattern.length -
+        b.metadata.resourceIdPattern.length
+    )[0];
+}
+
+function buildListOperationScope(
+  resources: ValidArmResourceSchema[],
+  operationPath: RequestPath
+): ArmScopeInfo {
+  const scope = buildScopeInfoFromPath(operationPath);
+  const parentResourcePath = resources
+    .map((resource) => resource.metadata.resourceIdPattern)
+    .filter((resourcePath) => resourcePath.isPrefixOf(operationPath))
+    .sort((a, b) => b.length - a.length)[0];
+
+  return parentResourcePath
+    ? {
+        ...scope,
+        scopeIdPattern: parentResourcePath
+      }
+    : scope;
+}
+
+function operationPathEndsWithResourceType(
+  operationPath: RequestPath,
+  resourceType: string
+): boolean {
+  const lastTypeSegment = resourceType.split("/").at(-1);
+  return (
+    lastTypeSegment !== undefined &&
+    operationPath.segments[operationPath.length - 1] === lastTypeSegment
+  );
+}
+
+// Only legacy/built-in operation decorators carry an explicit resource name.
+function getExplicitResourceName(
+  method: SdkMethod<SdkHttpOperation> | undefined
+): string | undefined {
+  for (const decorator of method?.__raw?.decorators ?? []) {
+    switch (decorator.definition?.name) {
+      case extensionResourceOperationName:
+        return getStringLiteralArg(decorator, 3);
+      case legacyExtensionResourceOperationName:
+      case legacyResourceOperationName:
+        return getStringLiteralArg(decorator, 2);
+      case builtInResourceOperationName:
+        return getStringLiteralArg(decorator, 3);
+    }
+  }
+  return undefined;
+}
+
+function getStringLiteralArg(
+  decorator: DecoratorApplication,
+  index: number
+): string | undefined {
+  const value = decorator.args[index]?.jsValue;
+  return typeof value === "string" && value.length > 0 ? value : undefined;
+}
+
+/**
+ * Path-based parent lookup. Walks the resource's instance path up one
+ * `/type/{name}` pair at a time, returning the first detected resource whose
+ * instance path equals the walked-up candidate.
+ */
+function buildPathBasedParentLookup(
+  expanded: ArmResourceSchema[]
+): ParentResourceLookupContext {
+  return {
+    getParentResource(
+      resource: ArmResourceSchema
+    ): ArmResourceSchema | undefined {
+      const path = resource.metadata.resourceIdPattern;
+      if (!path || path.length < 2) return undefined;
+      let segments = path.segments.slice(0, -2);
+      while (segments.length >= 2) {
+        const candidate = RequestPath.fromSegments(segments);
+        for (const r of expanded) {
+          if (r === resource) continue;
+          const rp = r.metadata.resourceIdPattern;
+          if (rp && rp.equals(candidate)) {
+            return r;
+          }
+        }
+        // Step up another `/type/{name}` pair (tuple-style ancestor walk).
+        segments = segments.slice(0, -2);
+      }
+      return undefined;
+    }
+  };
 }
 
 export function getAllClients(codeModel: CodeModel): InputClient[] {
@@ -790,18 +736,55 @@ export function getAllClients(codeModel: CodeModel): InputClient[] {
   return clients;
 }
 
-function traverseClient<T extends { children?: T[] }>(client: T, clients: T[]) {
-  clients.push(client);
-  if (client.children) {
-    for (const child of client.children) {
-      traverseClient(child, clients);
+/**
+ * Checks if a model or any of its base models has the @customAzureResource decorator.
+ *
+ * The @customAzureResource decorator (Azure.ResourceManager.Legacy.@customAzureResource) is used
+ * for ARM resources that don't follow standard ARM resource templates. This is commonly used for:
+ * - Legacy services that were converted from Swagger to TypeSpec (e.g., TrafficManager)
+ * - Services with custom resource hierarchies that don't fit standard ARM patterns
+ *
+ * Unlike standard ARM resources that use TrackedResource<T> or ProxyResource<T> templates
+ * (which automatically get @armResourceInternal decorator), custom resources define their own
+ * base Resource model with this decorator.
+ *
+ * @see https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#customazureresource
+ *
+ * @param model - The model to check for @customAzureResource decorator
+ * @returns true if the model or any ancestor has @customAzureResource decorator
+ */
+function hasCustomAzureResourceInHierarchy(model: InputModelType): boolean {
+  let current: InputModelType | undefined = model;
+  while (current) {
+    if (current.decorators?.some((d) => d.name === customAzureResource)) {
+      return true;
     }
+    current = current.baseModel;
   }
+  return false;
 }
 
+/**
+ * Collects all models that represent ARM resources from the code model.
+ *
+ * ARM resources are detected in two ways:
+ *
+ * 1. **Standard ARM resources**: Models that use standard ARM templates like TrackedResource<T>
+ *    or ProxyResource<T>. These models have @armResourceInternal or @armResourceWithParameter
+ *    decorators applied automatically by the typespec-azure-resource-manager library.
+ *
+ * 2. **Custom Azure resources**: Models that inherit from a custom base Resource model decorated
+ *    with @customAzureResource. This pattern is used by legacy services (e.g., TrafficManager)
+ *    that were converted from Swagger to TypeSpec and don't fit standard ARM templates.
+ *
+ * @param codeModel - The code model containing all models
+ * @returns Array of resource models
+ */
 function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
   const resourceModels: InputModelType[] = [];
+
   for (const model of codeModel.models) {
+    // Check for armResource decorators
     if (
       model.decorators?.some(
         (d) =>
@@ -810,66 +793,43 @@ function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
     ) {
       resourceModels.push(model);
     }
+    // 2. Custom Azure resources: Models inheriting from a @customAzureResource base model
+    //    Used by legacy services like TrafficManager that don't use standard ARM templates
+    else if (hasCustomAzureResourceInHierarchy(model)) {
+      resourceModels.push(model);
+    }
   }
   return resourceModels;
 }
 
-function getSingletonResource(
-  decorator: DecoratorInfo | undefined
-): string | undefined {
-  if (!decorator) return undefined;
-  const singletonResource = decorator.arguments["keyValue"] as
-    | string
-    | undefined;
-  return singletonResource ?? "default";
-}
-function getResourceScope(
-  model: InputModelType,
-  methods?: ResourceMethod[]
-): ResourceScope {
-  // First, check for explicit scope decorators
-  const decorators = model.decorators;
-  if (decorators?.some((d) => d.name == tenantResource)) {
-    return ResourceScope.Tenant;
-  } else if (decorators?.some((d) => d.name == subscriptionResource)) {
-    return ResourceScope.Subscription;
-  } else if (decorators?.some((d) => d.name == resourceGroupResource)) {
-    return ResourceScope.ResourceGroup;
-  }
-
-  // Fall back to Read method's scope only if no scope decorators are found
-  if (methods) {
-    const getMethod = methods.find(
-      (m) => m.kind === ResourceOperationKind.Read
-    );
-    if (getMethod) {
-      return getMethod.operationScope;
-    }
-  }
-
-  // Final fallback to ResourceGroup
-  return ResourceScope.ResourceGroup; // all the templates work as if there is a resource group decorator when there is no such decorator
+/**
+ * Builds an ArmScopeInfo from an operation path.
+ * Extracts the scope ID pattern and resource type from the path's scope portion.
+ */
+export function buildScopeInfoFromPath(
+  operationPath: RequestPath
+): ArmScopeInfo {
+  return buildScopeInfo(operationPath.operationScope, operationPath.scopePath);
 }
 
-function getResourceScopeOfMethod(
-  path: string,
-  resources: MapIterator<ResourceMetadata>
-): string | undefined {
-  // loop all possible resource metadata and see if some of them match the operation path of this method as a prefix
-  const candidates: string[] = [];
-  for (const otherMetadata of resources) {
-    if (
-      otherMetadata.resourceIdPattern &&
-      isPrefix(otherMetadata.resourceIdPattern, path)
-    ) {
-      candidates.push(otherMetadata.resourceIdPattern);
-    }
-  }
-  // finds the longest resource path id in candidates as the resource scope
-  if (candidates.length > 0) {
-    return candidates.reduce((a, b) => (a.length > b.length ? a : b));
-  }
-  return undefined;
+/**
+ * Builds an ArmScopeInfo from a scope kind and scope path.
+ * Computes scopeResourceType from the scope path when it's concrete (no variable segments).
+ */
+export function buildScopeInfo(
+  kind: ResourceScopeKind,
+  scopePath: RequestPath
+): ArmScopeInfo {
+  const resourceType = scopePath.resourceType;
+  return {
+    kind,
+    scopeIdPattern: scopePath,
+    // Only include scopeResourceType when it's concrete (no variable segments)
+    scopeResourceType:
+      resourceType !== undefined && !resourceType.includes("{")
+        ? resourceType
+        : undefined
+  };
 }
 
 /**
@@ -891,95 +851,4 @@ function applyArmProviderSchemaDecorator(
     name: armProviderSchema,
     arguments: convertArmProviderSchemaToArguments(schema)
   });
-}
-
-/**
- * Builds the ARM provider schema from detected resources and non-resource methods.
- * This consolidates all ARM resource information into a single unified structure.
- * This is a helper function called by buildArmProviderSchema.
- *
- * @param sdkContext - The emitter context
- * @param resourceModels - All resource models detected in the code model
- * @param resourcePathToMetadataMap - Map of resource paths to their metadata
- * @param nonResourceMethods - Map of non-resource methods
- * @returns The unified ARM provider schema
- */
-function buildArmProviderSchemaFromDetectedResources(
-  sdkContext: CSharpEmitterContext,
-  resourceModels: InputModelType[],
-  resourcePathToMetadataMap: Map<string, ResourceMetadata>,
-  nonResourceMethods: Map<string, NonResourceMethod>
-): ArmProviderSchema {
-  const resources: ArmResourceSchema[] = [];
-
-  // Build resource schemas from the metadata map
-  // Group by model ID since multiple paths can share the same model
-  const modelIdToMetadataList = new Map<string, ResourceMetadata[]>();
-  for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
-    const modelId = metadataKey.split("|")[0];
-    if (!modelIdToMetadataList.has(modelId)) {
-      modelIdToMetadataList.set(modelId, []);
-    }
-    modelIdToMetadataList.get(modelId)!.push(metadata);
-  }
-
-  // Create resource schemas
-  for (const model of resourceModels) {
-    const metadataList = modelIdToMetadataList.get(
-      model.crossLanguageDefinitionId
-    );
-    if (metadataList) {
-      for (const metadata of metadataList) {
-        if (metadata.resourceIdPattern === "") {
-          sdkContext.logger.reportDiagnostic({
-            code: "general-warning",
-            messageId: "default",
-            format: {
-              message: `Cannot figure out resourceIdPattern from model ${model.name}.`
-            },
-            target: NoTarget
-          });
-          continue;
-        }
-
-        // Filter out resources without Get/Read operations (non-singleton resources only)
-        // Singleton resources can exist without Get operations
-        const hasReadOperation = metadata.methods.some(
-          (m) => m.kind === ResourceOperationKind.Read
-        );
-        if (!hasReadOperation && !metadata.singletonResourceName) {
-          // Move all methods to non-resource methods since there's no Get operation
-          for (const method of metadata.methods) {
-            nonResourceMethods.set(method.methodId, {
-              methodId: method.methodId,
-              operationPath: method.operationPath,
-              operationScope: method.operationScope
-            });
-          }
-          sdkContext.logger.reportDiagnostic({
-            code: "general-warning",
-            messageId: "default",
-            format: {
-              message: `Resource ${model.name} does not have a Get/Read operation and is not a singleton. All operations will be treated as non-resource methods.`
-            },
-            target: NoTarget
-          });
-          continue;
-        }
-
-        // Sort methods by kind (CRUD, List, Action) and then by methodId for deterministic ordering
-        sortResourceMethods(metadata.methods);
-
-        resources.push({
-          resourceModelId: model.crossLanguageDefinitionId,
-          metadata: metadata
-        });
-      }
-    }
-  }
-
-  return {
-    resources: resources,
-    nonResourceMethods: Array.from(nonResourceMethods.values())
-  };
 }

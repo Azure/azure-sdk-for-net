@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Sku capability. </summary>
     public partial class MySqlFlexibleServerSkuCapability
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerSkuCapability"/>. </summary>
         internal MySqlFlexibleServerSkuCapability()
@@ -55,22 +26,25 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="vCores"> supported vCores. </param>
         /// <param name="supportedIops"> supported IOPS. </param>
         /// <param name="supportedMemoryPerVCoreInMB"> supported memory per vCore in MB. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerSkuCapability(string name, long? vCores, long? supportedIops, long? supportedMemoryPerVCoreInMB, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerSkuCapability(string name, long? vCores, long? supportedIops, long? supportedMemoryPerVCoreInMB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             VCores = vCores;
             SupportedIops = supportedIops;
             SupportedMemoryPerVCoreInMB = supportedMemoryPerVCoreInMB;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> vCore name. </summary>
         public string Name { get; }
+
         /// <summary> supported vCores. </summary>
         public long? VCores { get; }
+
         /// <summary> supported IOPS. </summary>
         public long? SupportedIops { get; }
+
         /// <summary> supported memory per vCore in MB. </summary>
         public long? SupportedMemoryPerVCoreInMB { get; }
     }

@@ -22,6 +22,46 @@ namespace Azure.ResourceManager.StorageMover.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual JobDefinitionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<JobDefinitionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeJobDefinitionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(JobDefinitionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<JobDefinitionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(JobDefinitionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<JobDefinitionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        JobDefinitionProperties IPersistableModel<JobDefinitionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<JobDefinitionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<JobDefinitionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -126,10 +166,20 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Schedule))
+            {
+                writer.WritePropertyName("schedule"u8);
+                writer.WriteObjectValue(Schedule, options);
+            }
             if (Optional.IsDefined(DataIntegrityValidation))
             {
                 writer.WritePropertyName("dataIntegrityValidation"u8);
                 writer.WriteStringValue(DataIntegrityValidation.Value.ToString());
+            }
+            if (Optional.IsDefined(IsPermissionsPreserved))
+            {
+                writer.WritePropertyName("preservePermissions"u8);
+                writer.WriteBooleanValue(IsPermissionsPreserved.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -190,7 +240,9 @@ namespace Azure.ResourceManager.StorageMover.Models
             JobDefinitionPropertiesSourceTargetMap sourceTargetMap = default;
             StorageMoverProvisioningState? provisioningState = default;
             IList<ResourceIdentifier> connections = default;
-            DataIntegrityValidation? dataIntegrityValidation = default;
+            StorageMoverScheduleInfo schedule = default;
+            StorageMoverDataIntegrityValidation? dataIntegrityValidation = default;
+            bool? isPermissionsPreserved = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -327,13 +379,31 @@ namespace Azure.ResourceManager.StorageMover.Models
                     connections = array;
                     continue;
                 }
+                if (prop.NameEquals("schedule"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    schedule = StorageMoverScheduleInfo.DeserializeStorageMoverScheduleInfo(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("dataIntegrityValidation"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataIntegrityValidation = new DataIntegrityValidation(prop.Value.GetString());
+                    dataIntegrityValidation = new StorageMoverDataIntegrityValidation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("preservePermissions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isPermissionsPreserved = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -359,48 +429,10 @@ namespace Azure.ResourceManager.StorageMover.Models
                 sourceTargetMap,
                 provisioningState,
                 connections ?? new ChangeTrackingList<ResourceIdentifier>(),
+                schedule,
                 dataIntegrityValidation,
+                isPermissionsPreserved,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<JobDefinitionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<JobDefinitionProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(JobDefinitionProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        JobDefinitionProperties IPersistableModel<JobDefinitionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual JobDefinitionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<JobDefinitionProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeJobDefinitionProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(JobDefinitionProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<JobDefinitionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

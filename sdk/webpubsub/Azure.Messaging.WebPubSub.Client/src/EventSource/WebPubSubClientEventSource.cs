@@ -10,7 +10,7 @@ using Azure.Core.Diagnostics;
 namespace Azure.Messaging.WebPubSub.Clients
 {
     [EventSource(Name = EventSourceName)]
-    internal class WebPubSubClientEventSource: AzureEventSource
+    internal class WebPubSubClientEventSource : AzureEventSource
     {
         private const string EventSourceName = "Azure-Messaging-WebPubSub-Client";
 

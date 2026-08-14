@@ -42,7 +42,7 @@ public partial class Sample_PersistentAgents_Bing_Custom_Search : SamplesBase<AI
            model: modelDeploymentName,
            name: "my-agent",
            instructions: "You are a helpful agent.",
-           tools: [ bingCustomSearchTool ]);
+           tools: [bingCustomSearchTool]);
         #endregion
         // Create thread for communication
         #region Snippet:AgentsBingCustomSearchAsync_CreateThreadMessage

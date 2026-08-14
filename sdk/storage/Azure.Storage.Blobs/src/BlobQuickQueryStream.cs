@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using Azure.Storage.Internal.Avro;
 using Azure.Storage.Blobs.Models;
-using System.Buffers;
+using Azure.Storage.Internal.Avro;
 
 namespace Azure.Storage.Blobs
 {

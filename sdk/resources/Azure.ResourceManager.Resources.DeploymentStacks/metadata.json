@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Microsoft.Resources.DeploymentStacks": "2025-07-01"
+  }
+}

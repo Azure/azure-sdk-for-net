@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CommonProperties
         {
             TryGetApiVersion(ConfidentialResource.ResourceType, out string confidentialResourceApiVersion);
             _errorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CommonProperties", ConfidentialResource.ResourceType.Namespace, Diagnostics);
-            _errorRestClient = new Error(_errorClientDiagnostics, Pipeline, Endpoint, confidentialResourceApiVersion ?? "2023-12-01-preview");
+            _errorRestClient = new Error(_errorClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, confidentialResourceApiVersion ?? "2023-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CommonProperties
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -184,11 +184,11 @@ namespace Azure.ResourceManager.CommonProperties
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="confidentialResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="confidentialResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ConfidentialResource>> GetForPredefinedErrorAsync(string confidentialResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfidentialResource>> GetAsync(string confidentialResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(confidentialResourceName, nameof(confidentialResourceName));
 
-            using DiagnosticScope scope = _errorClientDiagnostics.CreateScope("ConfidentialResourceCollection.GetForPredefinedError");
+            using DiagnosticScope scope = _errorClientDiagnostics.CreateScope("ConfidentialResourceCollection.Get");
             scope.Start();
             try
             {
@@ -233,11 +233,11 @@ namespace Azure.ResourceManager.CommonProperties
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="confidentialResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="confidentialResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ConfidentialResource> GetForPredefinedError(string confidentialResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<ConfidentialResource> Get(string confidentialResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(confidentialResourceName, nameof(confidentialResourceName));
 
-            using DiagnosticScope scope = _errorClientDiagnostics.CreateScope("ConfidentialResourceCollection.GetForPredefinedError");
+            using DiagnosticScope scope = _errorClientDiagnostics.CreateScope("ConfidentialResourceCollection.Get");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.CommonProperties
         }
 
         /// <summary>
-        /// Get a ConfidentialResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.CommonProperties
         }
 
         /// <summary>
-        /// Get a ConfidentialResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.CommonProperties
         }
 
         /// <summary>
-        /// Get a ConfidentialResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.CommonProperties
         }
 
         /// <summary>
-        /// Get a ConfidentialResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

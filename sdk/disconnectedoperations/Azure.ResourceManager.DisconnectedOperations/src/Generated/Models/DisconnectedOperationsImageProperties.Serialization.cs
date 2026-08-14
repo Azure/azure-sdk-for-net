@@ -16,6 +16,46 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
     /// <summary> The image properties. </summary>
     public partial class DisconnectedOperationsImageProperties : IJsonModel<DisconnectedOperationsImageProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DisconnectedOperationsImageProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationsImageProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDisconnectedOperationsImageProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DisconnectedOperationsImageProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationsImageProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDisconnectedOperationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DisconnectedOperationsImageProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DisconnectedOperationsImageProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DisconnectedOperationsImageProperties IPersistableModel<DisconnectedOperationsImageProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DisconnectedOperationsImageProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DisconnectedOperationsImageProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -79,6 +119,11 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(UpdateProperties))
+            {
+                writer.WritePropertyName("updateProperties"u8);
+                writer.WriteObjectValue(UpdateProperties, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -128,6 +173,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
             DateTimeOffset releaseOn = default;
             DisconnectedOperationsReleaseType releaseType = default;
             IReadOnlyList<string> compatibleVersions = default;
+            DisconnectedOperationsImageUpdateProperties updateProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -186,6 +232,15 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                     compatibleVersions = array;
                     continue;
                 }
+                if (prop.NameEquals("updateProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    updateProperties = DisconnectedOperationsImageUpdateProperties.DeserializeDisconnectedOperationsImageUpdateProperties(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -199,47 +254,8 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 releaseOn,
                 releaseType,
                 compatibleVersions ?? new ChangeTrackingList<string>(),
+                updateProperties,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DisconnectedOperationsImageProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationsImageProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDisconnectedOperationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DisconnectedOperationsImageProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DisconnectedOperationsImageProperties IPersistableModel<DisconnectedOperationsImageProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DisconnectedOperationsImageProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DisconnectedOperationsImageProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDisconnectedOperationsImageProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DisconnectedOperationsImageProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DisconnectedOperationsImageProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

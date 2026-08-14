@@ -29,7 +29,8 @@
             "$ref": "1"
           },
           "doc": "Resource has been created.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "4",
@@ -43,7 +44,8 @@
             "$ref": "1"
           },
           "doc": "Resource creation failed.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "5",
@@ -57,7 +59,8 @@
             "$ref": "1"
           },
           "doc": "Resource creation was canceled.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Azure.ResourceManager",
@@ -65,7 +68,8 @@
       "isFixed": false,
       "isFlags": false,
       "usage": "LroPolling",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "6",
@@ -92,7 +96,8 @@
             "$ref": "6"
           },
           "doc": "Preview API version 2023-12-01-preview.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Azure.ResourceManager.LargeHeader",
@@ -100,14 +105,15 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
     {
       "$id": "9",
       "kind": "constant",
-      "name": "two6kContentType",
+      "name": "Two6kAccept",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -118,12 +124,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "11",
       "kind": "constant",
-      "name": "two6kContentType1",
+      "name": "Two6kAccept1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -134,7 +141,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -151,6 +159,12 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "CancelResult"
+        }
+      },
+      "isExactName": false,
       "properties": [
         {
           "$id": "14",
@@ -175,7 +189,8 @@
               "name": "succeeded"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -189,6 +204,12 @@
       "doc": "Common error response for all Azure Resource Manager APIs to return error details for failed operations.",
       "summary": "Error response",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ErrorResponse"
+        }
+      },
+      "isExactName": false,
       "properties": [
         {
           "$id": "17",
@@ -205,6 +226,12 @@
             "usage": "Json,Exception,LroPolling",
             "doc": "The error detail.",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "ErrorDetail"
+              }
+            },
+            "isExactName": false,
             "properties": [
               {
                 "$id": "19",
@@ -230,7 +257,8 @@
                     "name": "code"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "21",
@@ -256,7 +284,8 @@
                     "name": "message"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "23",
@@ -282,7 +311,8 @@
                     "name": "target"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "25",
@@ -311,7 +341,8 @@
                     "name": "details"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "27",
@@ -332,6 +363,12 @@
                     "usage": "Json,Exception,LroPolling",
                     "doc": "The resource management error additional info.",
                     "decorators": [],
+                    "serializationOptions": {
+                      "json": {
+                        "name": "ErrorAdditionalInfo"
+                      }
+                    },
+                    "isExactName": false,
                     "properties": [
                       {
                         "$id": "30",
@@ -357,7 +394,8 @@
                             "name": "type"
                           }
                         },
-                        "isHttpMetadata": false
+                        "isHttpMetadata": false,
+                        "isExactName": false
                       },
                       {
                         "$id": "32",
@@ -383,7 +421,8 @@
                             "name": "info"
                           }
                         },
-                        "isHttpMetadata": false
+                        "isHttpMetadata": false,
+                        "isExactName": false
                       }
                     ]
                   },
@@ -401,7 +440,8 @@
                     "name": "additionalInfo"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -416,7 +456,8 @@
               "name": "error"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -433,13 +474,19 @@
       "namespace": "Azure.ResourceManager",
       "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus",
       "usage": "LroPolling",
-      "doc": "Standard Azure Resource Manager operation status response",
+      "doc": "Standard Azure Resource Manager operation status response, used as the response\nbody for `GetResourceOperationStatus`.",
       "decorators": [
         {
           "name": "Azure.ResourceManager.@armProviderNamespace",
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "ArmOperationStatus"
+        }
+      },
+      "isExactName": false,
       "properties": [
         {
           "$id": "35",
@@ -461,7 +508,8 @@
               "name": "status"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "36",
@@ -487,14 +535,15 @@
               "name": "id"
             }
           },
-          "isHttpMetadata": true
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "38",
           "kind": "property",
           "name": "name",
           "serializedName": "name",
-          "doc": "The name of the  operationStatus resource",
+          "doc": "The name of the operationStatus resource",
           "type": {
             "$id": "39",
             "kind": "string",
@@ -513,7 +562,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "40",
@@ -547,7 +597,8 @@
               "name": "startTime"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "43",
@@ -581,7 +632,8 @@
               "name": "endTime"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "46",
@@ -607,7 +659,8 @@
               "name": "percentComplete"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "48",
@@ -629,7 +682,8 @@
               "name": "error"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -639,6 +693,7 @@
       "$id": "49",
       "kind": "client",
       "name": "LargeHeaderClient",
+      "isExactName": false,
       "namespace": "Azure.ResourceManager.LargeHeader",
       "doc": "Arm Resource Provider management API.",
       "methods": [],
@@ -671,7 +726,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.endpoint"
+          "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.endpoint",
+          "isExactName": false
         },
         {
           "$id": "53",
@@ -697,41 +753,22 @@
             },
             "value": "2023-12-01-preview"
           },
-          "optional": false,
+          "optional": true,
           "scope": "Method",
           "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeaders.two6k.apiVersion",
           "readOnly": false,
           "access": "public",
-          "decorators": []
-        },
-        {
-          "$id": "56",
-          "kind": "method",
-          "name": "subscriptionId",
-          "serializedName": "subscriptionId",
-          "doc": "The ID of the target subscription. The value must be an UUID.",
-          "type": {
-            "$id": "57",
-            "kind": "string",
-            "name": "uuid",
-            "crossLanguageDefinitionId": "Azure.Core.uuid",
-            "baseType": {
-              "$id": "58",
-              "kind": "string",
-              "name": "string",
-              "crossLanguageDefinitionId": "TypeSpec.string",
-              "decorators": []
-            },
-            "decorators": []
-          },
-          "location": "",
-          "isApiVersion": false,
-          "optional": false,
-          "scope": "Method",
-          "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeaders.two6k.subscriptionId",
-          "readOnly": false,
-          "access": "public",
-          "decorators": []
+          "decorators": [
+            {
+              "name": "TypeSpec.@minLength",
+              "arguments": {
+                "value": {
+                  "isInteger": true
+                }
+              }
+            }
+          ],
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -741,9 +778,21 @@
           "arguments": {}
         },
         {
-          "name": "Azure.ClientGenerator.Core.@nonResourceMethodSchema",
+          "name": "Azure.ClientGenerator.Core.@armProviderSchema",
           "arguments": {
-            "nonResourceMethods": []
+            "resources": [],
+            "nonResourceMethods": [
+              {
+                "methodId": "Azure.ResourceManager.LargeHeader.LargeHeaders.two6k",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.LargeHeader/largeHeaders/{largeHeaderName}/two6k",
+                "scope": {
+                  "$id": "56",
+                  "kind": "ResourceGroup",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                }
+              }
+            ]
           }
         }
       ],
@@ -753,35 +802,38 @@
       ],
       "children": [
         {
-          "$id": "59",
+          "$id": "57",
           "kind": "client",
           "name": "LargeHeaders",
+          "isExactName": false,
           "namespace": "Azure.ResourceManager.LargeHeader",
           "methods": [
             {
-              "$id": "60",
+              "$id": "58",
               "kind": "lro",
               "name": "two6k",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2023-12-01-preview"
               ],
-              "doc": "A long-running resource action.",
+              "doc": "",
               "operation": {
-                "$id": "61",
+                "$id": "59",
                 "name": "two6k",
+                "isExactName": false,
                 "resourceName": "LargeHeaders",
-                "doc": "A long-running resource action.",
+                "doc": "",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "62",
+                    "$id": "60",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "63",
+                      "$id": "61",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -791,7 +843,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "64",
+                        "$id": "62",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -800,23 +852,38 @@
                     },
                     "optional": false,
                     "scope": "Client",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeaders.two6k.apiVersion",
-                    "readOnly": false
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "53"
+                      }
+                    ],
+                    "isExactName": false
                   },
                   {
-                    "$id": "65",
+                    "$id": "63",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "66",
+                      "$id": "64",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "67",
+                        "$id": "65",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -830,19 +897,70 @@
                     "allowReserved": false,
                     "skipUrlEncoding": false,
                     "optional": false,
-                    "scope": "Client",
-                    "decorators": [],
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeaders.two6k.subscriptionId"
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeaders.two6k.subscriptionId",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "66",
+                        "kind": "method",
+                        "name": "subscriptionId",
+                        "serializedName": "subscriptionId",
+                        "doc": "The ID of the target subscription. The value must be an UUID.",
+                        "type": {
+                          "$id": "67",
+                          "kind": "string",
+                          "name": "uuid",
+                          "crossLanguageDefinitionId": "Azure.Core.uuid",
+                          "baseType": {
+                            "$id": "68",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
+                          "decorators": []
+                        },
+                        "location": "",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeaders.two6k.subscriptionId",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
                   },
                   {
-                    "$id": "68",
+                    "$id": "69",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "69",
+                      "$id": "70",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -855,18 +973,90 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeaders.two6k.resourceGroupName"
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeaders.two6k.resourceGroupName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "71",
+                        "kind": "method",
+                        "name": "resourceGroupName",
+                        "serializedName": "resourceGroupName",
+                        "doc": "The name of the resource group. The name is case insensitive.",
+                        "type": {
+                          "$id": "72",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeaders.two6k.resourceGroupName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
                   },
                   {
-                    "$id": "70",
+                    "$id": "73",
                     "kind": "path",
                     "name": "largeHeaderName",
                     "serializedName": "largeHeaderName",
                     "doc": "The name of the LargeHeader",
                     "type": {
-                      "$id": "71",
+                      "$id": "74",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -879,12 +1069,52 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
+                      }
+                    ],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeaders.two6k.largeHeaderName"
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeaders.two6k.largeHeaderName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "75",
+                        "kind": "method",
+                        "name": "largeHeaderName",
+                        "serializedName": "largeHeaderName",
+                        "doc": "The name of the LargeHeader",
+                        "type": {
+                          "$id": "76",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeaders.two6k.largeHeaderName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
                   },
                   {
-                    "$id": "72",
+                    "$id": "77",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -897,10 +1127,49 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeaders.two6k.accept"
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeaders.two6k.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "78",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "11"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeaders.two6k.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "13"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  },
                   {
                     "statusCodes": [
                       202
@@ -911,12 +1180,12 @@
                         "nameInResponse": "Azure-AsyncOperation",
                         "doc": "A link to the status monitor",
                         "type": {
-                          "$id": "73",
+                          "$id": "79",
                           "kind": "url",
                           "name": "ResourceLocation",
                           "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
                           "baseType": {
-                            "$id": "74",
+                            "$id": "80",
                             "kind": "url",
                             "name": "url",
                             "crossLanguageDefinitionId": "TypeSpec.url",
@@ -930,7 +1199,7 @@
                         "nameInResponse": "Location",
                         "doc": "The Location header contains the URL where the status of the long running operation can be checked.",
                         "type": {
-                          "$id": "75",
+                          "$id": "81",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -942,7 +1211,7 @@
                         "nameInResponse": "Retry-After",
                         "doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
                         "type": {
-                          "$id": "76",
+                          "$id": "82",
                           "kind": "int32",
                           "name": "int32",
                           "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -950,20 +1219,8 @@
                         }
                       }
                     ],
-                    "isErrorResponse": false
-                  },
-                  {
-                    "statusCodes": [
-                      200
-                    ],
-                    "bodyType": {
-                      "$ref": "13"
-                    },
-                    "headers": [],
                     "isErrorResponse": false,
-                    "contentTypes": [
-                      "application/json"
-                    ]
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -978,69 +1235,34 @@
                     "name": "Azure.ResourceManager.@armResourceAction",
                     "arguments": {}
                   }
-                ]
+                ],
+                "namespace": "Azure.ResourceManager.LargeHeader"
               },
               "parameters": [
                 {
-                  "$id": "77",
-                  "kind": "method",
-                  "name": "resourceGroupName",
-                  "serializedName": "resourceGroupName",
-                  "doc": "The name of the resource group. The name is case insensitive.",
-                  "type": {
-                    "$id": "78",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Path",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeaders.two6k.resourceGroupName",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "71"
                 },
                 {
-                  "$id": "79",
-                  "kind": "method",
-                  "name": "largeHeaderName",
-                  "serializedName": "largeHeaderName",
-                  "doc": "The name of the LargeHeader",
-                  "type": {
-                    "$id": "80",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Path",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeaders.two6k.largeHeaderName",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "75"
                 },
                 {
-                  "$id": "81",
+                  "$ref": "78"
+                },
+                {
+                  "$id": "83",
                   "kind": "method",
-                  "name": "accept",
-                  "serializedName": "Accept",
+                  "name": "subscriptionId",
+                  "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "11"
+                    "$ref": "64"
                   },
-                  "location": "Header",
-                  "isApiVersion": false,
                   "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeaders.two6k.accept",
                   "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "serializedName": "subscriptionId",
+                  "isApiVersion": false,
+                  "scope": "Method",
+                  "location": "Path",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeaders.two6k.subscriptionId"
                 }
               ],
               "response": {
@@ -1067,13 +1289,13 @@
           ],
           "parameters": [
             {
-              "$id": "82",
+              "$id": "84",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "83",
+                "$id": "85",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1084,7 +1306,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "84",
+                  "$id": "86",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1094,13 +1316,11 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.endpoint"
+              "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeaders.endpoint",
+              "isExactName": false
             },
             {
               "$ref": "53"
-            },
-            {
-              "$ref": "56"
             }
           ],
           "initializedBy": 0,
@@ -1116,9 +1336,11 @@
           ],
           "parent": {
             "$ref": "49"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ],
   "auth": {
@@ -1126,7 +1348,7 @@
       "flows": [
         {
           "scopes": [
-            "user_impersonation"
+            "https://management.azure.com/.default"
           ],
           "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize"
         }

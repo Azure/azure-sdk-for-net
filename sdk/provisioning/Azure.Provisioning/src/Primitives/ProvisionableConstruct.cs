@@ -9,6 +9,9 @@ using Azure.Provisioning.Expressions;
 
 namespace Azure.Provisioning.Primitives;
 
+/// <summary>
+/// Base class for all provisionable constructs that represent Azure infrastructure components.
+/// </summary>
 public abstract class ProvisionableConstruct : Provisionable, IBicepValue
 {
     /// <summary>
@@ -90,7 +93,10 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
 
     private protected BicepExpression CompileProperties()
     {
-        if (_kind == BicepValueKind.Expression) { return _expression ?? BicepSyntax.Null(); }
+        if (_kind == BicepValueKind.Expression)
+        {
+            return _expression ?? BicepSyntax.Null();
+        }
 
         // Aggregate all the properties into a single nested dictionary
         Dictionary<string, object> body = [];
@@ -219,7 +225,10 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
     {
         // TODO: Do we want to add a more explicit notion of readonly
         // (especially for expr ref resources)?
-        if (_isOutput) { throw new InvalidOperationException($"Cannot assign to output value {_self?.PropertyName}"); }
+        if (_isOutput)
+        {
+            throw new InvalidOperationException($"Cannot assign to output value {_self?.PropertyName}");
+        }
 
         // Track the source so we can correctly link references across modules
         _source = source?.Self;
@@ -240,6 +249,12 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
         }
     }
 
+    /// <summary>
+    /// Assigns a value to a property, either replacing the property instance or assigning through the existing one.
+    /// </summary>
+    /// <typeparam name="T">The property type.</typeparam>
+    /// <param name="property">A reference to the property field.</param>
+    /// <param name="value">The value to assign.</param>
     protected virtual void AssignOrReplace<T>(ref T? property, T value) where T : IBicepValue
     {
         if (value.Self is null)
@@ -254,7 +269,10 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
         }
     }
 
-    // Delete after regeneration
+    /// <summary>
+    /// Overrides this construct's value with a Bicep expression reference.
+    /// </summary>
+    /// <param name="reference">The Bicep expression to use as this construct's value.</param>
     protected internal void OverrideWithExpression(BicepExpression reference)
     {
         ((IBicepValue)this).Expression = reference;
@@ -277,6 +295,18 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
     /// </summary>
     protected virtual void DefineProvisionableProperties() { }
 
+    /// <summary>
+    /// Defines a scalar property on this construct.
+    /// </summary>
+    /// <typeparam name="T">The property value type.</typeparam>
+    /// <param name="propertyName">The property name.</param>
+    /// <param name="bicepPath">The Bicep path segments for this property.</param>
+    /// <param name="isOutput">Whether the property is an output.</param>
+    /// <param name="isRequired">Whether the property is required.</param>
+    /// <param name="isSecure">Whether the property contains sensitive data.</param>
+    /// <param name="defaultValue">An optional default value.</param>
+    /// <param name="format">An optional serialization format.</param>
+    /// <returns>The defined <see cref="BicepValue{T}"/>.</returns>
     protected BicepValue<T> DefineProperty<T>(
         string propertyName,
         string[]? bicepPath,
@@ -302,6 +332,15 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
         return val;
     }
 
+    /// <summary>
+    /// Defines a list property on this construct.
+    /// </summary>
+    /// <typeparam name="T">The list element type.</typeparam>
+    /// <param name="propertyName">The property name.</param>
+    /// <param name="bicepPath">The Bicep path segments for this property.</param>
+    /// <param name="isOutput">Whether the property is an output.</param>
+    /// <param name="isRequired">Whether the property is required.</param>
+    /// <returns>The defined <see cref="BicepList{T}"/>.</returns>
     protected BicepList<T> DefineListProperty<T>(
         string propertyName,
         string[]? bicepPath,
@@ -318,6 +357,15 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
         return values;
     }
 
+    /// <summary>
+    /// Defines a dictionary property on this construct.
+    /// </summary>
+    /// <typeparam name="T">The dictionary value type.</typeparam>
+    /// <param name="propertyName">The property name.</param>
+    /// <param name="bicepPath">The Bicep path segments for this property.</param>
+    /// <param name="isOutput">Whether the property is an output.</param>
+    /// <param name="isRequired">Whether the property is required.</param>
+    /// <returns>The defined <see cref="BicepDictionary{T}"/>.</returns>
     protected BicepDictionary<T> DefineDictionaryProperty<T>(
         string propertyName,
         string[]? bicepPath,
@@ -334,6 +382,18 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
         return values;
     }
 
+    /// <summary>
+    /// Defines a model property on this construct using a provided instance.
+    /// </summary>
+    /// <typeparam name="T">The model type, which must derive from <see cref="ProvisionableConstruct"/>.</typeparam>
+    /// <param name="propertyName">The property name.</param>
+    /// <param name="bicepPath">The Bicep path segments for this property.</param>
+    /// <param name="value">The model instance to use.</param>
+    /// <param name="isOutput">Whether the property is an output.</param>
+    /// <param name="isRequired">Whether the property is required.</param>
+    /// <param name="isSecure">Whether the property contains sensitive data.</param>
+    /// <param name="format">An optional serialization format.</param>
+    /// <returns>The configured model instance.</returns>
     protected T DefineModelProperty<T>(
         string propertyName,
         string[]? bicepPath,
@@ -353,6 +413,17 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
         return value;
     }
 
+    /// <summary>
+    /// Defines a model property on this construct, creating a new instance of the model type.
+    /// </summary>
+    /// <typeparam name="T">The model type, which must derive from <see cref="ProvisionableConstruct"/> and have a parameterless constructor.</typeparam>
+    /// <param name="propertyName">The property name.</param>
+    /// <param name="bicepPath">The Bicep path segments for this property.</param>
+    /// <param name="isOutput">Whether the property is an output.</param>
+    /// <param name="isRequired">Whether the property is required.</param>
+    /// <param name="isSecure">Whether the property contains sensitive data.</param>
+    /// <param name="format">An optional serialization format.</param>
+    /// <returns>The configured model instance.</returns>
     protected T DefineModelProperty<T>(
         string propertyName,
         string[]? bicepPath,

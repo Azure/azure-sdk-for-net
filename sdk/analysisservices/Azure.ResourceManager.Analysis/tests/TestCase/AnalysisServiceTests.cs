@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Analysis.Tests
 {
     public class AnalysisServiceTests : AnalysisManagementTestBase
     {
-        public AnalysisServiceTests(bool isAsync):
+        public AnalysisServiceTests(bool isAsync) :
             base(isAsync)//, RecordedTestMode.Record)
         {
         }

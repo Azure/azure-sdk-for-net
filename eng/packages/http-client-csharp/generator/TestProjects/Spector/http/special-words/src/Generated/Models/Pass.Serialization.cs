@@ -16,6 +16,19 @@ namespace SpecialWords._Models
     {
         internal Pass() => throw null;
 
+        protected virtual Pass PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<Pass>.Write(ModelReaderWriterOptions options) => throw null;
+
+        Pass IPersistableModel<Pass>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<Pass>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="pass"> The <see cref="Pass"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(Pass pass) => throw null;
+
         void IJsonModel<Pass>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -23,18 +36,5 @@ namespace SpecialWords._Models
         Pass IJsonModel<Pass>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Pass JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<Pass>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        Pass IPersistableModel<Pass>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual Pass PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<Pass>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="pass"> The <see cref="Pass"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(Pass pass) => throw null;
     }
 }

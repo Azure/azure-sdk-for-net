@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DurableTask.Tests.Scenario
             retentionPolicyProperties.RetentionPolicies.Add(
                 new DurableTaskRetentionPolicyDetails()
                 {
-                     RetentionPeriodInDays = 30,
+                    RetentionPeriodInDays = 30,
                     // without OrchestrationState, this policy applies to all states not explicitly mentioned in other policies
                 });
 

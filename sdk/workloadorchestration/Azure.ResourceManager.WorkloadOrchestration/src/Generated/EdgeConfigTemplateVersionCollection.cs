@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(EdgeConfigTemplateVersionResource.ResourceType, out string edgeConfigTemplateVersionApiVersion);
             _configTemplateVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeConfigTemplateVersionResource.ResourceType.Namespace, Diagnostics);
-            _configTemplateVersionsRestClient = new ConfigTemplateVersions(_configTemplateVersionsClientDiagnostics, Pipeline, Endpoint, edgeConfigTemplateVersionApiVersion ?? "2025-06-01");
+            _configTemplateVersionsRestClient = new ConfigTemplateVersions(_configTemplateVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeConfigTemplateVersionApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             if (id.ResourceType != EdgeConfigTemplateResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeConfigTemplateResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeConfigTemplateResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeConfigTemplateVersionData, EdgeConfigTemplateVersionResource>(new ConfigTemplateVersionsGetByConfigTemplateAsyncCollectionResultOfT(_configTemplateVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeConfigTemplateVersionResource(Client, data));
+            return new AsyncPageableWrapper<EdgeConfigTemplateVersionData, EdgeConfigTemplateVersionResource>(new ConfigTemplateVersionsGetByConfigTemplateAsyncCollectionResultOfT(
+                _configTemplateVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EdgeConfigTemplateVersionCollection.GetAll"), data => new EdgeConfigTemplateVersionResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeConfigTemplateVersionData, EdgeConfigTemplateVersionResource>(new ConfigTemplateVersionsGetByConfigTemplateCollectionResultOfT(_configTemplateVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeConfigTemplateVersionResource(Client, data));
+            return new PageableWrapper<EdgeConfigTemplateVersionData, EdgeConfigTemplateVersionResource>(new ConfigTemplateVersionsGetByConfigTemplateCollectionResultOfT(
+                _configTemplateVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EdgeConfigTemplateVersionCollection.GetAll"), data => new EdgeConfigTemplateVersionResource(Client, data));
         }
 
         /// <summary>

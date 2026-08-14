@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Relay.Tests
 {
-    public class HybridConnectionTests: RelayTestBase
+    public class HybridConnectionTests : RelayTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private RelayNamespaceResource _relayNamespace;
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.Relay.Tests
         {
             RelayHybridConnectionCollection _relayHybridConnectionCollection = _relayNamespace.GetRelayHybridConnections();
             RelayHybridConnectionResource _relayHybridConnectionResource = (await _relayHybridConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, "h1", new RelayHybridConnectionData()
-                {
-                    IsClientAuthorizationRequired = true,
-                    UserMetadata = "test metadata"
-                })).Value;
+            {
+                IsClientAuthorizationRequired = true,
+                UserMetadata = "test metadata"
+            })).Value;
             Assert.True(_relayHybridConnectionResource.Data.IsClientAuthorizationRequired);
             Assert.AreEqual("test metadata", _relayHybridConnectionResource.Data.UserMetadata);
 
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Relay.Tests
 
             //Create another relay namespace
             _relayHybridConnectionResource = (await _relayHybridConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, "h2", new RelayHybridConnectionData()
-                {
-                    IsClientAuthorizationRequired = false
-                })).Value;
+            {
+                IsClientAuthorizationRequired = false
+            })).Value;
             Assert.False(_relayHybridConnectionResource.Data.IsClientAuthorizationRequired);
             Assert.Null(_relayHybridConnectionResource.Data.UserMetadata);
 

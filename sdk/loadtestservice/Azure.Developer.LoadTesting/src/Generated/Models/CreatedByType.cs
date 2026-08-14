@@ -21,7 +21,7 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Entity was created by Azure DevOps pipelines. </summary>
         private const string AzurePipelinesValue = "AzurePipelines";
         /// <summary> Entity was created by GitHub Workflows. </summary>
-        private const string GitHubWorkflowsValue = "GitHubWorkflows";
+        private const string GithubWorkflowsValue = "GitHubWorkflows";
 
         /// <summary> Initializes a new instance of <see cref="CreatedByType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -43,7 +43,7 @@ namespace Azure.Developer.LoadTesting
         public static CreatedByType AzurePipelines { get; } = new CreatedByType(AzurePipelinesValue);
 
         /// <summary> Entity was created by GitHub Workflows. </summary>
-        public static CreatedByType GitHubWorkflows { get; } = new CreatedByType(GitHubWorkflowsValue);
+        public static CreatedByType GithubWorkflows { get; } = new CreatedByType(GithubWorkflowsValue);
 
         /// <summary> Determines if two <see cref="CreatedByType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

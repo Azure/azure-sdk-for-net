@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
-    public partial class KnowledgeBaseIndexedOneLakeActivityRecord : IUtf8JsonSerializable, IJsonModel<KnowledgeBaseIndexedOneLakeActivityRecord>
+    /// <summary> Represents a indexed OneLake retrieval activity record. </summary>
+    public partial class KnowledgeBaseIndexedOneLakeActivityRecord : KnowledgeBaseActivityRecord, IJsonModel<KnowledgeBaseIndexedOneLakeActivityRecord>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KnowledgeBaseIndexedOneLakeActivityRecord>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseIndexedOneLakeActivityRecord"/> for deserialization. </summary>
+        internal KnowledgeBaseIndexedOneLakeActivityRecord()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override KnowledgeBaseActivityRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseIndexedOneLakeActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKnowledgeBaseIndexedOneLakeActivityRecord(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KnowledgeBaseIndexedOneLakeActivityRecord)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseIndexedOneLakeActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KnowledgeBaseIndexedOneLakeActivityRecord)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KnowledgeBaseIndexedOneLakeActivityRecord>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KnowledgeBaseIndexedOneLakeActivityRecord IPersistableModel<KnowledgeBaseIndexedOneLakeActivityRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => (KnowledgeBaseIndexedOneLakeActivityRecord)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KnowledgeBaseIndexedOneLakeActivityRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KnowledgeBaseIndexedOneLakeActivityRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,13 +74,32 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseIndexedOneLakeActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseIndexedOneLakeActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KnowledgeBaseIndexedOneLakeActivityRecord)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(KnowledgeSourceName))
+            {
+                writer.WritePropertyName("knowledgeSourceName"u8);
+                writer.WriteStringValue(KnowledgeSourceName);
+            }
+            if (Optional.IsDefined(QueryTime))
+            {
+                writer.WritePropertyName("queryTime"u8);
+                writer.WriteStringValue(QueryTime.Value, "O");
+            }
+            if (Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (Optional.IsDefined(ImageServing))
+            {
+                writer.WritePropertyName("imageServing"u8);
+                writer.WriteObjectValue(ImageServing, options);
+            }
             if (Optional.IsDefined(IndexedOneLakeArguments))
             {
                 writer.WritePropertyName("indexedOneLakeArguments"u8);
@@ -42,161 +107,135 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
         }
 
-        KnowledgeBaseIndexedOneLakeActivityRecord IJsonModel<KnowledgeBaseIndexedOneLakeActivityRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KnowledgeBaseIndexedOneLakeActivityRecord IJsonModel<KnowledgeBaseIndexedOneLakeActivityRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KnowledgeBaseIndexedOneLakeActivityRecord)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override KnowledgeBaseActivityRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseIndexedOneLakeActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseIndexedOneLakeActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KnowledgeBaseIndexedOneLakeActivityRecord)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKnowledgeBaseIndexedOneLakeActivityRecord(document.RootElement, options);
         }
 
-        internal static KnowledgeBaseIndexedOneLakeActivityRecord DeserializeKnowledgeBaseIndexedOneLakeActivityRecord(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static KnowledgeBaseIndexedOneLakeActivityRecord DeserializeKnowledgeBaseIndexedOneLakeActivityRecord(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            KnowledgeBaseIndexedOneLakeActivityArguments indexedOneLakeArguments = default;
+            int id = default;
+            KnowledgeBaseActivityRecordType @type = default;
+            int? elapsedMs = default;
+            KnowledgeBaseErrorDetail error = default;
+            string warning = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string knowledgeSourceName = default;
             DateTimeOffset? queryTime = default;
             int? count = default;
-            int id = default;
-            string type = default;
-            int? elapsedMs = default;
-            KnowledgeBaseErrorDetail error = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ImageServingStatistics imageServing = default;
+            KnowledgeBaseIndexedOneLakeActivityArguments indexedOneLakeArguments = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("indexedOneLakeArguments"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    id = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = new KnowledgeBaseActivityRecordType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("elapsedMs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    indexedOneLakeArguments = KnowledgeBaseIndexedOneLakeActivityArguments.DeserializeKnowledgeBaseIndexedOneLakeActivityArguments(property.Value, options);
+                    elapsedMs = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("knowledgeSourceName"u8))
+                if (prop.NameEquals("error"u8))
                 {
-                    knowledgeSourceName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("queryTime"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    queryTime = property.Value.GetDateTimeOffset("O");
+                    error = KnowledgeBaseErrorDetail.DeserializeKnowledgeBaseErrorDetail(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("count"u8))
+                if (prop.NameEquals("warning"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    warning = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("knowledgeSourceName"u8))
+                {
+                    knowledgeSourceName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("queryTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    count = property.Value.GetInt32();
+                    queryTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("count"u8))
                 {
-                    id = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("elapsedMs"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    elapsedMs = property.Value.GetInt32();
+                    count = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("error"u8))
+                if (prop.NameEquals("imageServing"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    error = KnowledgeBaseErrorDetail.DeserializeKnowledgeBaseErrorDetail(property.Value, options);
+                    imageServing = ImageServingStatistics.DeserializeImageServingStatistics(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("indexedOneLakeArguments"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    indexedOneLakeArguments = KnowledgeBaseIndexedOneLakeActivityArguments.DeserializeKnowledgeBaseIndexedOneLakeActivityArguments(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new KnowledgeBaseIndexedOneLakeActivityRecord(
                 id,
-                type,
+                @type,
                 elapsedMs,
                 error,
-                serializedAdditionalRawData,
+                warning,
+                additionalBinaryDataProperties,
                 knowledgeSourceName,
                 queryTime,
                 count,
+                imageServing,
                 indexedOneLakeArguments);
-        }
-
-        BinaryData IPersistableModel<KnowledgeBaseIndexedOneLakeActivityRecord>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseIndexedOneLakeActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(KnowledgeBaseIndexedOneLakeActivityRecord)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        KnowledgeBaseIndexedOneLakeActivityRecord IPersistableModel<KnowledgeBaseIndexedOneLakeActivityRecord>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseIndexedOneLakeActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeKnowledgeBaseIndexedOneLakeActivityRecord(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KnowledgeBaseIndexedOneLakeActivityRecord)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<KnowledgeBaseIndexedOneLakeActivityRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new KnowledgeBaseIndexedOneLakeActivityRecord FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeKnowledgeBaseIndexedOneLakeActivityRecord(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

@@ -4,6 +4,7 @@ import "@azure-tools/typespec-azure-core";
 
 using TypeSpec.Http;
 using TypeSpec.Rest;
+using TypeSpec.Versioning;
 using Azure.ResourceManager;
 using Azure.ClientGenerator.Core;
 using Azure.Core;
@@ -97,6 +98,23 @@ model ComputeFleetVmProfile {
   capacityReservation?: CapacityReservationProfile;
 }
 
+/** Provisioning state of the Foo resource. */
+union FooProvisioningState {
+  string,
+
+  /** The resource is being provisioned. */
+  Provisioning: "Provisioning",
+
+  /** The resource has been provisioned successfully. */
+  Succeeded: "Succeeded",
+
+  /** The resource provisioning has failed. */
+  Failed: "Failed",
+
+  /** The resource provisioning has been canceled. */
+  Canceled: "Canceled",
+}
+
 @armResourceOperations
 interface Foos {
   createOrUpdate is ArmResourceCreateOrUpdateAsync<Foo>;
@@ -126,6 +144,31 @@ interface Foos {
     void,
     ArmResponse<FooDependency[]>
   >;
+
+  @action("splitDependencies")
+  splitDependencies is ArmResourceActionAsync<
+    Foo,
+    void,
+    FooDependency[]
+  >;
+
+  /** Get the provisioning state of a Foo resource. */
+  @get
+  @action("getProvisioningState")
+  getProvisioningState is ArmResourceActionSync<
+    Foo,
+    void,
+    ArmResponse<FooProvisioningState>
+  >;
+
+  /** Get raw metadata (Record<unknown>) for a Foo resource. */
+  @get
+  @action("getMetadata")
+  getMetadata is ArmResourceActionSync<
+    Foo,
+    void,
+    ArmResponse<Record<unknown>>
+  >;
 }
 
 model FooActionRequest {
@@ -142,6 +185,7 @@ model FooDependency {
   version?: string;
 }
 
+@added(Versions.v2024_05_01)
 @singleton
 model FooSettings is ProxyResource<FooSettingsProperties> {
   @doc("The default Foo settings.")
@@ -153,6 +197,7 @@ model FooSettings is ProxyResource<FooSettingsProperties> {
   name: string;
 }
 
+@added(Versions.v2024_05_01)
 @armResourceOperations
 interface FooSettingsOperations {
   get is ArmResourceRead<FooSettings>;
@@ -177,3 +222,20 @@ model FooSettingsProperties is BaseResourceProperties {
 model FooSettingsPropertiesMetaData {
   metaDatas?: string[];
 }
+
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "RBAC roles for provisioning"
+@@clientOption(Foo, "resource-rbac-roles", #{
+  FooContributor: "00000000-0000-0000-0000-000000000001",
+  FooReader: "00000000-0000-0000-0000-000000000002",
+  FooDataOperator: "00000000-0000-0000-0000-000000000003",
+}, "csharp");
+
+// Rename the FooSettings SDK class to FooConfiguration. For an ordinary
+// (non-expandable) resource, the "resource-name" value is a plain string.
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Customize resource name"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Customize resource name"
+@@clientOption(FooSettingsOperations.get,
+  "resource-name",
+  "FooConfiguration",
+  "csharp"
+);

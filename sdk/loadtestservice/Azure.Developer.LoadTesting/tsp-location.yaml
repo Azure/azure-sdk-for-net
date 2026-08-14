@@ -1,4 +1,4 @@
 directory: specification/loadtestservice/data-plane/loadtesting
-commit: ccb7c8f1a2235a27023808c7d7f4d889997e24ed
+commit: 4c7c015ab9f054ecb26bdd77ee4fd23b1e175e3d
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json

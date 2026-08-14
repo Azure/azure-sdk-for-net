@@ -4,27 +4,28 @@
 # nullable enable
 
 using System;
-using System.IO;
-using System.Threading.Tasks;
-using Azure.Storage.Blobs;
-using Azure.Core;
-using System.Text.RegularExpressions;
-using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.IO;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Storage.Blobs;
 
 namespace Azure.AI.Projects
 {
+    [CodeGenType("AIProjectDatasetsOperations")]
     public partial class AIProjectDatasetsOperations
     {
         private readonly AuthenticationTokenProvider _tokenProvider;
 
         /// <summary> Initializes a new instance of Datasets with TokenProvider. </summary>
+        /// <param name="clientDiagnostics"> The client diagnostics instance. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"> API version. </param>
         /// <param name="tokenProvider"> Token Provider for authentication. </param>
-        internal AIProjectDatasetsOperations(ClientPipeline pipeline, Uri endpoint, string apiVersion, AuthenticationTokenProvider tokenProvider)
-            : this(pipeline, endpoint, apiVersion)
+        internal AIProjectDatasetsOperations(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion, AuthenticationTokenProvider tokenProvider)
+            : this(clientDiagnostics, pipeline, endpoint, apiVersion)
         {
             _tokenProvider = tokenProvider;
         }
@@ -32,7 +33,7 @@ namespace Azure.AI.Projects
         /// <summary>
         /// Uploads a file to blob storage and creates a dataset that references this file.
         /// </summary>
-        public ClientResult<FileDataset> UploadFile(string name, string version, string filePath, string? connectionName = null)
+        public virtual ClientResult<FileDataset> UploadFile(string name, string version, string filePath, string? connectionName = null)
         {
             if (!File.Exists(filePath))
             {
@@ -63,7 +64,7 @@ namespace Azure.AI.Projects
         /// <summary>
         /// Uploads all files in a folder to blob storage and creates a dataset that references this folder.
         /// </summary>
-        public ClientResult<FolderDataset> UploadFolder(string name, string version, string folderPath, string? connectionName = null, Regex? filePattern = null)
+        public virtual ClientResult<FolderDataset> UploadFolder(string name, string version, string folderPath, string? connectionName = null, Regex? filePattern = null)
         {
             if (!Directory.Exists(folderPath))
             {
@@ -108,7 +109,7 @@ namespace Azure.AI.Projects
         /// <summary>
         /// Uploads a file to blob storage and creates a dataset that references this file.
         /// </summary>
-        public async Task<ClientResult<FileDataset>> UploadFileAsync(string name, string version, string filePath, string? connectionName = null)
+        public virtual async Task<ClientResult<FileDataset>> UploadFileAsync(string name, string version, string filePath, string? connectionName = null)
         {
             if (!File.Exists(filePath))
             {
@@ -138,7 +139,7 @@ namespace Azure.AI.Projects
         /// <summary>
         /// Uploads all files in a folder to blob storage and creates a dataset that references this folder.
         /// </summary>
-        public async Task<ClientResult<FolderDataset>> UploadFolderAsync(string name, string version, string folderPath, string? connectionName = null, Regex? filePattern = null)
+        public virtual async Task<ClientResult<FolderDataset>> UploadFolderAsync(string name, string version, string folderPath, string? connectionName = null, Regex? filePattern = null)
         {
             if (!Directory.Exists(folderPath))
             {
@@ -188,7 +189,7 @@ namespace Azure.AI.Projects
             var pendingUploadConfiguration = new PendingUploadConfiguration(
                 pendingUploadId: null,
                 connectionName: connectionName,
-                pendingUploadType: PendingUploadType.BlobReference,
+                pendingUploadType: PendingUploadType.TemporaryBlobReference,
                 additionalBinaryDataProperties: null);
 
             PendingUploadResult pendingUploadResult = PendingUpload(
@@ -254,7 +255,7 @@ namespace Azure.AI.Projects
             PendingUploadConfiguration pendingUploadRequest = new(
                 pendingUploadId: null,
                 connectionName: connectionName,
-                pendingUploadType: PendingUploadType.BlobReference,
+                pendingUploadType: PendingUploadType.TemporaryBlobReference,
                 additionalBinaryDataProperties: null);
 
             PendingUploadResult pendingUploadResult = await PendingUploadAsync(

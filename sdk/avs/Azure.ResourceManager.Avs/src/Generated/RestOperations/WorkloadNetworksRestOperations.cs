@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Avs
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of WorkloadNetworks for mocking. </summary>
         protected WorkloadNetworks()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Initializes a new instance of WorkloadNetworks. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal WorkloadNetworks(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal WorkloadNetworks(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(WorkloadNetworks).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -52,11 +55,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -72,11 +79,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -84,11 +95,23 @@ namespace Azure.ResourceManager.Avs
         internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string privateCloudName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -104,11 +127,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/dhcpConfigurations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -116,11 +143,23 @@ namespace Azure.ResourceManager.Avs
         internal HttpMessage CreateNextGetDhcpRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string privateCloudName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -137,11 +176,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/dhcpConfigurations/", false);
             uri.AppendPath(dhcpId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -158,11 +201,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/dhcpConfigurations/", false);
             uri.AppendPath(dhcpId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -181,11 +228,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/dhcpConfigurations/", false);
             uri.AppendPath(dhcpId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -204,11 +255,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/dhcpConfigurations/", false);
             uri.AppendPath(dhcpId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -223,11 +278,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/dnsServices", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -235,11 +294,23 @@ namespace Azure.ResourceManager.Avs
         internal HttpMessage CreateNextGetDnsServicesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string privateCloudName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -256,11 +327,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/dnsServices/", false);
             uri.AppendPath(dnsServiceId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -277,11 +352,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/dnsServices/", false);
             uri.AppendPath(dnsServiceId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -300,11 +379,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/dnsServices/", false);
             uri.AppendPath(dnsServiceId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -323,11 +406,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/dnsServices/", false);
             uri.AppendPath(dnsServiceId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -342,11 +429,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/dnsZones", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -354,11 +445,23 @@ namespace Azure.ResourceManager.Avs
         internal HttpMessage CreateNextGetDnsZonesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string privateCloudName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -375,11 +478,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/dnsZones/", false);
             uri.AppendPath(dnsZoneId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -396,11 +503,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/dnsZones/", false);
             uri.AppendPath(dnsZoneId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -419,11 +530,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/dnsZones/", false);
             uri.AppendPath(dnsZoneId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -442,11 +557,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/dnsZones/", false);
             uri.AppendPath(dnsZoneId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -461,11 +580,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/gateways", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -473,11 +596,23 @@ namespace Azure.ResourceManager.Avs
         internal HttpMessage CreateNextGetGatewaysRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string privateCloudName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -494,11 +629,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/gateways/", false);
             uri.AppendPath(gatewayId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -514,11 +653,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/portMirroringProfiles", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -526,11 +669,23 @@ namespace Azure.ResourceManager.Avs
         internal HttpMessage CreateNextGetPortMirroringRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string privateCloudName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -547,11 +702,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/portMirroringProfiles/", false);
             uri.AppendPath(portMirroringId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -568,11 +727,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/portMirroringProfiles/", false);
             uri.AppendPath(portMirroringId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -591,11 +754,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/portMirroringProfiles/", false);
             uri.AppendPath(portMirroringId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -614,11 +781,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/portMirroringProfiles/", false);
             uri.AppendPath(portMirroringId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -633,11 +804,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/publicIPs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -645,11 +820,23 @@ namespace Azure.ResourceManager.Avs
         internal HttpMessage CreateNextGetPublicIPsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string privateCloudName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -666,11 +853,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/publicIPs/", false);
             uri.AppendPath(publicIPId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -687,11 +878,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/publicIPs/", false);
             uri.AppendPath(publicIPId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -710,11 +905,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/publicIPs/", false);
             uri.AppendPath(publicIPId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -729,11 +928,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/segments", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -741,11 +944,23 @@ namespace Azure.ResourceManager.Avs
         internal HttpMessage CreateNextGetSegmentsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string privateCloudName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -762,11 +977,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/segments/", false);
             uri.AppendPath(segmentId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -783,11 +1002,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/segments/", false);
             uri.AppendPath(segmentId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -806,11 +1029,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/segments/", false);
             uri.AppendPath(segmentId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -829,11 +1056,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/segments/", false);
             uri.AppendPath(segmentId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -848,11 +1079,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/virtualMachines", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -860,11 +1095,23 @@ namespace Azure.ResourceManager.Avs
         internal HttpMessage CreateNextGetVirtualMachinesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string privateCloudName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -881,11 +1128,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/virtualMachines/", false);
             uri.AppendPath(virtualMachineId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -901,11 +1152,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/vmGroups", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -913,11 +1168,23 @@ namespace Azure.ResourceManager.Avs
         internal HttpMessage CreateNextGetVMGroupsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string privateCloudName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -934,11 +1201,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/vmGroups/", false);
             uri.AppendPath(vmGroupId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -955,11 +1226,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/vmGroups/", false);
             uri.AppendPath(vmGroupId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -978,11 +1253,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/vmGroups/", false);
             uri.AppendPath(vmGroupId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -1001,11 +1280,15 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/workloadNetworks/default/vmGroups/", false);
             uri.AppendPath(vmGroupId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             return message;
         }
     }

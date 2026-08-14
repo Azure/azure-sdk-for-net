@@ -16,7 +16,7 @@ namespace Azure.Projects;
 /// </summary>
 public static class AzureAIProjectsExtensions
 {
-#region AIProjects
+    #region AIProjects
     private static AIProjectClient CreateAzureAIClient(this ClientConnectionProvider workspace)
     {
         ClientConnection connection = workspace.GetConnection(typeof(AIProjectClient).FullName);
@@ -26,9 +26,9 @@ public static class AzureAIProjectsExtensions
         }
         return new AIProjectClient(uri, (TokenCredential)connection.Credential);
     }
-#endregion AIProjects
+    #endregion AIProjects
 
-#region Inference
+    #region Inference
     /// <summary>
     /// Gets the chat completion client.
     /// </summary>
@@ -64,7 +64,7 @@ public static class AzureAIProjectsExtensions
     /// <returns></returns>
     public static EmbeddingsClient GetEmbeddingsClient(this ClientConnectionProvider workspace)
     {
-        EmbeddingsClient embeddingsClient =  workspace.Subclients.GetClient<EmbeddingsClient>(null, () => CreateEmbeddingsClient(workspace));
+        EmbeddingsClient embeddingsClient = workspace.Subclients.GetClient<EmbeddingsClient>(null, () => CreateEmbeddingsClient(workspace));
         return embeddingsClient;
     }
 
@@ -84,9 +84,9 @@ public static class AzureAIProjectsExtensions
 
         return new(uri, new AzureKeyCredential(apiKey));
     }
-#endregion Inference
+    #endregion Inference
 
-#region Azure AI Search
+    #region Azure AI Search
     /// <summary>
     /// Gets the search client.
     /// </summary>
@@ -171,5 +171,5 @@ public static class AzureAIProjectsExtensions
 
         return new(uri, new AzureKeyCredential(apiKey));
     }
-#endregion Azure AI Search
+    #endregion Azure AI Search
 }

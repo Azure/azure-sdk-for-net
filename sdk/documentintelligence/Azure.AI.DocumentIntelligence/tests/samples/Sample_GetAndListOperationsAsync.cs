@@ -89,7 +89,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
                     break;
                 }
             }
-#endregion
+            #endregion
 
             // Delete the model on completion to clean the environment.
             await client.DeleteModelAsync(modelId);

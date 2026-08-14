@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 {
     internal static partial class ServiceBusSkuTierExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ServiceBusSkuTier value) => value switch
         {
             ServiceBusSkuTier.Basic => "Basic",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.ServiceBus.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceBusSkuTier value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ServiceBusSkuTier ToServiceBusSkuTier(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic")) return ServiceBusSkuTier.Basic;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return ServiceBusSkuTier.Standard;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium")) return ServiceBusSkuTier.Premium;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic"))
+            {
+                return ServiceBusSkuTier.Basic;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard"))
+            {
+                return ServiceBusSkuTier.Standard;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium"))
+            {
+                return ServiceBusSkuTier.Premium;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceBusSkuTier value.");
         }
     }

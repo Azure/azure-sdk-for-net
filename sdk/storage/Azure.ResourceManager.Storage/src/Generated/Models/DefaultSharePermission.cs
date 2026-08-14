@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct DefaultSharePermission : IEquatable<DefaultSharePermission>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DefaultSharePermission"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DefaultSharePermission(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string ReaderValue = "StorageFileDataSmbShareReader";
         private const string ContributorValue = "StorageFileDataSmbShareContributor";
         private const string ElevatedContributorValue = "StorageFileDataSmbShareElevatedContributor";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefaultSharePermission"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DefaultSharePermission(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static DefaultSharePermission None { get; } = new DefaultSharePermission(NoneValue);
-        /// <summary> StorageFileDataSmbShareReader. </summary>
+
+        /// <summary> Gets the Reader. </summary>
         public static DefaultSharePermission Reader { get; } = new DefaultSharePermission(ReaderValue);
-        /// <summary> StorageFileDataSmbShareContributor. </summary>
+
+        /// <summary> Gets the Contributor. </summary>
         public static DefaultSharePermission Contributor { get; } = new DefaultSharePermission(ContributorValue);
-        /// <summary> StorageFileDataSmbShareElevatedContributor. </summary>
+
+        /// <summary> Gets the ElevatedContributor. </summary>
         public static DefaultSharePermission ElevatedContributor { get; } = new DefaultSharePermission(ElevatedContributorValue);
+
         /// <summary> Determines if two <see cref="DefaultSharePermission"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DefaultSharePermission left, DefaultSharePermission right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DefaultSharePermission"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DefaultSharePermission left, DefaultSharePermission right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DefaultSharePermission"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DefaultSharePermission"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DefaultSharePermission(string value) => new DefaultSharePermission(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DefaultSharePermission"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DefaultSharePermission?(string value) => value == null ? null : new DefaultSharePermission(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DefaultSharePermission other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DefaultSharePermission other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

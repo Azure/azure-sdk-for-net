@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             TryGetApiVersion(DynatraceTagRuleResource.ResourceType, out string dynatraceTagRuleApiVersion);
             _tagRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dynatrace", DynatraceTagRuleResource.ResourceType.Namespace, Diagnostics);
-            _tagRulesRestClient = new TagRules(_tagRulesClientDiagnostics, Pipeline, Endpoint, dynatraceTagRuleApiVersion ?? "2024-04-24");
+            _tagRulesRestClient = new TagRules(_tagRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dynatraceTagRuleApiVersion ?? "2024-04-24");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             if (id.ResourceType != DynatraceMonitorResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DynatraceMonitorResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DynatraceMonitorResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Dynatrace
                 HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, DynatraceTagRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DynatraceArmOperation<DynatraceTagRuleResource> operation = new DynatraceArmOperation<DynatraceTagRuleResource>(
-                    new DynatraceTagRuleOperationSource(Client),
+                    new DynatraceTagRuleResourceOperationSource(Client),
                     _tagRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Dynatrace
                 HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, DynatraceTagRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DynatraceArmOperation<DynatraceTagRuleResource> operation = new DynatraceArmOperation<DynatraceTagRuleResource>(
-                    new DynatraceTagRuleOperationSource(Client),
+                    new DynatraceTagRuleResourceOperationSource(Client),
                     _tagRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DynatraceTagRuleData, DynatraceTagRuleResource>(new TagRulesGetAllAsyncCollectionResultOfT(_tagRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DynatraceTagRuleResource(Client, data));
+            return new AsyncPageableWrapper<DynatraceTagRuleData, DynatraceTagRuleResource>(new TagRulesGetAllAsyncCollectionResultOfT(
+                _tagRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DynatraceTagRuleCollection.GetAll"), data => new DynatraceTagRuleResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DynatraceTagRuleData, DynatraceTagRuleResource>(new TagRulesGetAllCollectionResultOfT(_tagRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DynatraceTagRuleResource(Client, data));
+            return new PageableWrapper<DynatraceTagRuleData, DynatraceTagRuleResource>(new TagRulesGetAllCollectionResultOfT(
+                _tagRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DynatraceTagRuleCollection.GetAll"), data => new DynatraceTagRuleResource(Client, data));
         }
 
         /// <summary>

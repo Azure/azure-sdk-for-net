@@ -11,13 +11,12 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Represents a indexed OneLake retrieval activity record. </summary>
-    public partial class KnowledgeBaseIndexedOneLakeActivityRecord : KnowledgeBaseRetrievalActivityRecord
+    public partial class KnowledgeBaseIndexedOneLakeActivityRecord : KnowledgeBaseActivityRecord
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseIndexedOneLakeActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
-        internal KnowledgeBaseIndexedOneLakeActivityRecord(int id) : base(id)
+        internal KnowledgeBaseIndexedOneLakeActivityRecord(int id) : base(id, KnowledgeBaseActivityRecordType.IndexedOneLake)
         {
-            Type = "indexedOneLake";
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseIndexedOneLakeActivityRecord"/>. </summary>
@@ -25,21 +24,33 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="type"> The type of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
         /// <param name="queryTime"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
+        /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="indexedOneLakeArguments"> The indexed OneLake arguments for the retrieval activity. </param>
-        internal KnowledgeBaseIndexedOneLakeActivityRecord(int id, string type, int? elapsedMs, KnowledgeBaseErrorDetail error, IDictionary<string, BinaryData> serializedAdditionalRawData, string knowledgeSourceName, DateTimeOffset? queryTime, int? count, KnowledgeBaseIndexedOneLakeActivityArguments indexedOneLakeArguments) : base(id, type, elapsedMs, error, serializedAdditionalRawData, knowledgeSourceName, queryTime, count)
+        internal KnowledgeBaseIndexedOneLakeActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, string knowledgeSourceName, DateTimeOffset? queryTime, int? count, ImageServingStatistics imageServing, KnowledgeBaseIndexedOneLakeActivityArguments indexedOneLakeArguments) : base(id, @type, elapsedMs, error, warning, additionalBinaryDataProperties)
         {
+            KnowledgeSourceName = knowledgeSourceName;
+            QueryTime = queryTime;
+            Count = count;
+            ImageServing = imageServing;
             IndexedOneLakeArguments = indexedOneLakeArguments;
-            Type = type ?? "indexedOneLake";
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseIndexedOneLakeActivityRecord"/> for deserialization. </summary>
-        internal KnowledgeBaseIndexedOneLakeActivityRecord()
-        {
-        }
+        /// <summary> The knowledge source for the retrieval activity. </summary>
+        public string KnowledgeSourceName { get; }
+
+        /// <summary> The query time for this retrieval activity. </summary>
+        public DateTimeOffset? QueryTime { get; }
+
+        /// <summary> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </summary>
+        public int? Count { get; }
+
+        /// <summary> Statistics about image serving for this retrieval activity. </summary>
+        public ImageServingStatistics ImageServing { get; }
 
         /// <summary> The indexed OneLake arguments for the retrieval activity. </summary>
         public KnowledgeBaseIndexedOneLakeActivityArguments IndexedOneLakeArguments { get; }

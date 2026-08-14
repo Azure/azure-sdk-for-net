@@ -37,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         {
             _functionId = functionId;
             _entityPath = entityPath;
-            _serviceBusMetricsProvider = new ServiceBusMetricsProvider(entityPath, entityType, receiver, administrationClient, loggerFactory);
+            _serviceBusMetricsProvider = new ServiceBusMetricsProvider(_functionId, entityPath, entityType, receiver, administrationClient, loggerFactory);
             _scaleMonitorDescriptor = new ScaleMonitorDescriptor($"{_functionId}-ServiceBusTrigger-{_entityPath}".ToLower(CultureInfo.InvariantCulture), functionId);
             _logger = loggerFactory.CreateLogger<ServiceBusScaleMonitor>();
         }
@@ -82,6 +82,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             // Unable to determine the correct vote with no metrics.
             if (metrics == null || metrics.Length == 0)
             {
+                _logger.LogWarning($"No metrics available for Service Bus entity '{_entityPath}'. Voting to not scale.");
                 return status;
             }
 
@@ -100,6 +101,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             // At least 5 samples are required to make a scale decision for the rest of the checks.
             if (metrics.Length < NumberOfSamplesToConsider)
             {
+                _logger.LogWarning($"Insufficient metrics samples for Service Bus entity '{_entityPath}' ({metrics.Length}/{NumberOfSamplesToConsider}). Voting to not scale.");
                 return status;
             }
 

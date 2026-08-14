@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ResourceConnector
         {
             TryGetApiVersion(ResourceType, out string resourceConnectorApplianceApiVersion);
             _appliancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceConnector", ResourceType.Namespace, Diagnostics);
-            _appliancesRestClient = new Appliances(_appliancesClientDiagnostics, Pipeline, Endpoint, resourceConnectorApplianceApiVersion ?? "2025-03-01-preview");
+            _appliancesRestClient = new Appliances(_appliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceConnectorApplianceApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ResourceConnector
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

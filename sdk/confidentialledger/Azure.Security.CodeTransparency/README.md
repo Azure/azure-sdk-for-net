@@ -15,6 +15,12 @@ Ensure you have access to the correct NuGet feed.
 Install the client library via NuGet:
 
 ```dotnetcli
+dotnet add package Azure.Security.CodeTransparency
+```
+
+To install a preview release, use the `--prerelease` flag:
+
+```dotnetcli
 dotnet add package Azure.Security.CodeTransparency --prerelease
 ```
 
@@ -116,7 +122,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [SCITT_RECEIPT_RFC]: https://www.ietf.org/archive/id/draft-ietf-cose-merkle-tree-proofs-08.txt
 [API_reference]: https://learn.microsoft.com/dotnet/api/azure.security.keyvault.keys
 [Service_source_code]: https://github.com/microsoft/scitt-ccf-ledger
-[CTS_claim_generator_script]: https://github.com/microsoft/scitt-ccf-ledger/tree/main/demo/cts_poc
+[CTS_claim_generator_script]: https://github.com/microsoft/scitt-ccf-ledger/tree/main/demo/transparency-service-poc 
 [CTS_configuration_doc]: https://github.com/microsoft/scitt-ccf-ledger/blob/main/docs/configuration.md
 [ccf]: https://github.com/Microsoft/CCF
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/

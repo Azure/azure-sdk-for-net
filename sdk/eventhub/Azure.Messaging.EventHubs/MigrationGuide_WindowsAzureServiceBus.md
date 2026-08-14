@@ -179,11 +179,11 @@ try
 
     for (var index = 0; index < 5; ++index)
     {
-        var eventData = new EventData($"Event #{ index }");
+        var eventData = new EventData($"Event #{index}");
 
         if (!eventBatch.TryAdd(eventData))
         {
-            throw new Exception($"The event at { index } could not be added.");
+            throw new Exception($"The event at {index} could not be added.");
         }
     }
 
@@ -251,11 +251,11 @@ try
 
     for (var index = 0; index < 5; ++index)
     {
-        var eventData = new EventData($"Event #{ index }");
+        var eventData = new EventData($"Event #{index}");
 
         if (!eventBatch.TryAdd(eventData))
         {
-            throw new Exception($"The event at { index } could not be added.");
+            throw new Exception($"The event at {index} could not be added.");
         }
     }
 
@@ -329,11 +329,11 @@ try
 
     for (var index = 0; index < 5; ++index)
     {
-        var eventData = new EventData($"Event #{ index }");
+        var eventData = new EventData($"Event #{index}");
 
         if (!eventBatch.TryAdd(eventData))
         {
-            throw new Exception($"The event at { index } could not be added.");
+            throw new Exception($"The event at {index} could not be added.");
         }
     }
 
@@ -467,7 +467,7 @@ async Task processEventHandler(ProcessEventArgs args)
 
         string partition = args.Partition.PartitionId;
         byte[] eventBody = args.Data.EventBody.ToArray();
-        Debug.WriteLine($"Event from partition { partition } with length { eventBody.Length }.");
+        Debug.WriteLine($"Event from partition {partition} with length {eventBody.Length}.");
 
         int eventsSinceLastCheckpoint = partitionEventCount.AddOrUpdate(
             key: partition,
@@ -497,8 +497,8 @@ Task processErrorHandler(ProcessErrorEventArgs args)
     try
     {
         Debug.WriteLine("Error in the EventProcessorClient");
-        Debug.WriteLine($"\tOperation: { args.Operation }");
-        Debug.WriteLine($"\tException: { args.Exception }");
+        Debug.WriteLine($"\tOperation: {args.Operation}");
+        Debug.WriteLine($"\tException: {args.Exception}");
         Debug.WriteLine("");
     }
     catch
@@ -554,13 +554,13 @@ catch
 }
 finally
 {
-   // It is encouraged that you unregister your handlers when you have
-   // finished using the Event Processor to ensure proper cleanup.  This
-   // is especially important when using lambda expressions or handlers
-   // in any form that may contain closure scopes or hold other references.
+    // It is encouraged that you unregister your handlers when you have
+    // finished using the Event Processor to ensure proper cleanup.  This
+    // is especially important when using lambda expressions or handlers
+    // in any form that may contain closure scopes or hold other references.
 
-   processor.ProcessEventAsync -= processEventHandler;
-   processor.ProcessErrorAsync -= processErrorHandler;
+    processor.ProcessEventAsync -= processEventHandler;
+    processor.ProcessErrorAsync -= processErrorHandler;
 }
 ```
 
@@ -627,7 +627,7 @@ try
         string readFromPartition = partitionEvent.Partition.PartitionId;
         ReadOnlyMemory<byte> eventBodyBytes = partitionEvent.Data.EventBody.ToMemory();
 
-        Debug.WriteLine($"Read event of length { eventBodyBytes.Length } from { readFromPartition }");
+        Debug.WriteLine($"Read event of length {eventBodyBytes.Length} from {readFromPartition}");
     }
 }
 catch (TaskCanceledException)
@@ -685,7 +685,7 @@ try
         foreach (EventData eventData in eventBatch)
         {
             byte[] eventBodyBytes = eventData.EventBody.ToArray();
-            Debug.WriteLine($"Read event of length { eventBodyBytes.Length } from { firstPartition }");
+            Debug.WriteLine($"Read event of length {eventBodyBytes.Length} from {firstPartition}");
         }
     }
 }

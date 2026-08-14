@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeKubernetesRoleCompute : IUtf8JsonSerializable, IJsonModel<EdgeKubernetesRoleCompute>
+    /// <summary> Kubernetes role compute resource. </summary>
+    public partial class EdgeKubernetesRoleCompute : IJsonModel<EdgeKubernetesRoleCompute>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeKubernetesRoleCompute>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRoleCompute"/> for deserialization. </summary>
+        internal EdgeKubernetesRoleCompute()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EdgeKubernetesRoleCompute PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleCompute>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEdgeKubernetesRoleCompute(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeKubernetesRoleCompute)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleCompute>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EdgeKubernetesRoleCompute)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EdgeKubernetesRoleCompute>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EdgeKubernetesRoleCompute IPersistableModel<EdgeKubernetesRoleCompute>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EdgeKubernetesRoleCompute>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeKubernetesRoleCompute>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleCompute>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleCompute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EdgeKubernetesRoleCompute)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("vmProfile"u8);
             writer.WriteStringValue(VmProfile);
             if (options.Format != "W" && Optional.IsDefined(MemoryInBytes))
@@ -46,15 +91,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("processorCount"u8);
                 writer.WriteNumberValue(ProcessorCount.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -63,22 +108,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
         }
 
-        EdgeKubernetesRoleCompute IJsonModel<EdgeKubernetesRoleCompute>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EdgeKubernetesRoleCompute IJsonModel<EdgeKubernetesRoleCompute>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EdgeKubernetesRoleCompute JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleCompute>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleCompute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EdgeKubernetesRoleCompute)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEdgeKubernetesRoleCompute(document.RootElement, options);
         }
 
-        internal static EdgeKubernetesRoleCompute DeserializeEdgeKubernetesRoleCompute(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static EdgeKubernetesRoleCompute DeserializeEdgeKubernetesRoleCompute(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -86,71 +136,38 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             string vmProfile = default;
             long? memoryInBytes = default;
             int? processorCount = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("vmProfile"u8))
+                if (prop.NameEquals("vmProfile"u8))
                 {
-                    vmProfile = property.Value.GetString();
+                    vmProfile = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("memoryInBytes"u8))
+                if (prop.NameEquals("memoryInBytes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    memoryInBytes = property.Value.GetInt64();
+                    memoryInBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("processorCount"u8))
+                if (prop.NameEquals("processorCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    processorCount = property.Value.GetInt32();
+                    processorCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new EdgeKubernetesRoleCompute(vmProfile, memoryInBytes, processorCount, serializedAdditionalRawData);
+            return new EdgeKubernetesRoleCompute(vmProfile, memoryInBytes, processorCount, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<EdgeKubernetesRoleCompute>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleCompute>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(EdgeKubernetesRoleCompute)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        EdgeKubernetesRoleCompute IPersistableModel<EdgeKubernetesRoleCompute>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleCompute>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEdgeKubernetesRoleCompute(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EdgeKubernetesRoleCompute)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<EdgeKubernetesRoleCompute>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -1,4 +1,6 @@
 directory: specification/cdn/resource-manager/Microsoft.Cdn/EdgeActions
-commit: 2a048e1436db545160d69f3499f49a942a3bef5f
+commit: 24902354a88f1ca5349ea3049edae370599c8e57
 repo: Azure/azure-rest-api-specs
-emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

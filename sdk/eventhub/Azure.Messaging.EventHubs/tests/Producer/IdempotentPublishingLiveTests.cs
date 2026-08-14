@@ -63,7 +63,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
-                 var cancellationSource = new CancellationTokenSource();
+                var cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true, ConnectionOptions = new EventHubConnectionOptions { TransportType = transportType } };
@@ -384,7 +384,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(4))
             {
-                 var cancellationSource = new CancellationTokenSource();
+                var cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
@@ -449,7 +449,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 foreach (var item in events)
                 {
-                    Assert.That(item.PublishedSequenceNumber, Is.EqualTo(++eventSequenceNumber), $"The sequence numbers should be contiguous.  Event { eventSequenceNumber } was out of order.");
+                    Assert.That(item.PublishedSequenceNumber, Is.EqualTo(++eventSequenceNumber), $"The sequence numbers should be contiguous.  Event {eventSequenceNumber} was out of order.");
                 }
             }
         }

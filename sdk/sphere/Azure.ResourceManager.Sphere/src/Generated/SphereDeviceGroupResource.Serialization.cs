@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sphere
 {
+    /// <summary></summary>
     public partial class SphereDeviceGroupResource : IJsonModel<SphereDeviceGroupData>
     {
-        private static SphereDeviceGroupData s_dataDeserializationInstance;
-        private static SphereDeviceGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SphereDeviceGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SphereDeviceGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SphereDeviceGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SphereDeviceGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SphereDeviceGroupData>)Data).Write(writer, options);
 
-        SphereDeviceGroupData IJsonModel<SphereDeviceGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SphereDeviceGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SphereDeviceGroupData IJsonModel<SphereDeviceGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SphereDeviceGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SphereDeviceGroupData>(Data, options, AzureResourceManagerSphereContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SphereDeviceGroupData IPersistableModel<SphereDeviceGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SphereDeviceGroupData>(data, options, AzureResourceManagerSphereContext.Default);
 
-        string IPersistableModel<SphereDeviceGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SphereDeviceGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SphereDeviceGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

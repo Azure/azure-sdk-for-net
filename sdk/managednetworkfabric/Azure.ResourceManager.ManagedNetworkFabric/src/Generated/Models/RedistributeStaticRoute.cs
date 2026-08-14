@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct RedistributeStaticRoute : IEquatable<RedistributeStaticRoute>
     {
         private readonly string _value;
+        /// <summary> RedistributeStaticRoutes-True. </summary>
+        private const string TrueValue = "True";
+        /// <summary> RedistributeStaticRoutes-False. </summary>
+        private const string FalseValue = "False";
 
         /// <summary> Initializes a new instance of <see cref="RedistributeStaticRoute"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RedistributeStaticRoute(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TrueValue = "True";
-        private const string FalseValue = "False";
-
-        /// <summary> True. </summary>
+        /// <summary> RedistributeStaticRoutes-True. </summary>
         public static RedistributeStaticRoute True { get; } = new RedistributeStaticRoute(TrueValue);
-        /// <summary> False. </summary>
+
+        /// <summary> RedistributeStaticRoutes-False. </summary>
         public static RedistributeStaticRoute False { get; } = new RedistributeStaticRoute(FalseValue);
+
         /// <summary> Determines if two <see cref="RedistributeStaticRoute"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RedistributeStaticRoute left, RedistributeStaticRoute right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RedistributeStaticRoute"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RedistributeStaticRoute left, RedistributeStaticRoute right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RedistributeStaticRoute"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RedistributeStaticRoute"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RedistributeStaticRoute(string value) => new RedistributeStaticRoute(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RedistributeStaticRoute"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RedistributeStaticRoute?(string value) => value == null ? null : new RedistributeStaticRoute(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RedistributeStaticRoute other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RedistributeStaticRoute other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     public readonly partial struct NewRelicObservabilityOrgCreationSource : IEquatable<NewRelicObservabilityOrgCreationSource>
     {
         private readonly string _value;
+        /// <summary> Org is created from LIFTR. </summary>
+        private const string LiftrValue = "LIFTR";
+        /// <summary> Org is created from NEWRELIC. </summary>
+        private const string NewrelicValue = "NEWRELIC";
 
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityOrgCreationSource"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NewRelicObservabilityOrgCreationSource(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LiftrValue = "LIFTR";
-        private const string NewrelicValue = "NEWRELIC";
+            _value = value;
+        }
 
         /// <summary> Org is created from LIFTR. </summary>
         public static NewRelicObservabilityOrgCreationSource Liftr { get; } = new NewRelicObservabilityOrgCreationSource(LiftrValue);
+
         /// <summary> Org is created from NEWRELIC. </summary>
         public static NewRelicObservabilityOrgCreationSource Newrelic { get; } = new NewRelicObservabilityOrgCreationSource(NewrelicValue);
+
         /// <summary> Determines if two <see cref="NewRelicObservabilityOrgCreationSource"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NewRelicObservabilityOrgCreationSource left, NewRelicObservabilityOrgCreationSource right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NewRelicObservabilityOrgCreationSource"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NewRelicObservabilityOrgCreationSource left, NewRelicObservabilityOrgCreationSource right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NewRelicObservabilityOrgCreationSource"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NewRelicObservabilityOrgCreationSource"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NewRelicObservabilityOrgCreationSource(string value) => new NewRelicObservabilityOrgCreationSource(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NewRelicObservabilityOrgCreationSource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NewRelicObservabilityOrgCreationSource?(string value) => value == null ? null : new NewRelicObservabilityOrgCreationSource(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NewRelicObservabilityOrgCreationSource other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NewRelicObservabilityOrgCreationSource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

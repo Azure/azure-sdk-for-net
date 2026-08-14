@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct SubProtectionPolicyType : IEquatable<SubProtectionPolicyType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SubProtectionPolicyType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SubProtectionPolicyType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string FullValue = "Full";
         private const string DifferentialValue = "Differential";
@@ -31,39 +24,70 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string SnapshotFullValue = "SnapshotFull";
         private const string SnapshotCopyOnlyFullValue = "SnapshotCopyOnlyFull";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubProtectionPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SubProtectionPolicyType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static SubProtectionPolicyType Invalid { get; } = new SubProtectionPolicyType(InvalidValue);
-        /// <summary> Full. </summary>
+
+        /// <summary> Gets the Full. </summary>
         public static SubProtectionPolicyType Full { get; } = new SubProtectionPolicyType(FullValue);
-        /// <summary> Differential. </summary>
+
+        /// <summary> Gets the Differential. </summary>
         public static SubProtectionPolicyType Differential { get; } = new SubProtectionPolicyType(DifferentialValue);
-        /// <summary> Log. </summary>
+
+        /// <summary> Gets the Log. </summary>
         public static SubProtectionPolicyType Log { get; } = new SubProtectionPolicyType(LogValue);
-        /// <summary> CopyOnlyFull. </summary>
+
+        /// <summary> Gets the CopyOnlyFull. </summary>
         public static SubProtectionPolicyType CopyOnlyFull { get; } = new SubProtectionPolicyType(CopyOnlyFullValue);
-        /// <summary> Incremental. </summary>
+
+        /// <summary> Gets the Incremental. </summary>
         public static SubProtectionPolicyType Incremental { get; } = new SubProtectionPolicyType(IncrementalValue);
-        /// <summary> SnapshotFull. </summary>
+
+        /// <summary> Gets the SnapshotFull. </summary>
         public static SubProtectionPolicyType SnapshotFull { get; } = new SubProtectionPolicyType(SnapshotFullValue);
-        /// <summary> SnapshotCopyOnlyFull. </summary>
+
+        /// <summary> Gets the SnapshotCopyOnlyFull. </summary>
         public static SubProtectionPolicyType SnapshotCopyOnlyFull { get; } = new SubProtectionPolicyType(SnapshotCopyOnlyFullValue);
+
         /// <summary> Determines if two <see cref="SubProtectionPolicyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SubProtectionPolicyType left, SubProtectionPolicyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SubProtectionPolicyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SubProtectionPolicyType left, SubProtectionPolicyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SubProtectionPolicyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SubProtectionPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SubProtectionPolicyType(string value) => new SubProtectionPolicyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SubProtectionPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SubProtectionPolicyType?(string value) => value == null ? null : new SubProtectionPolicyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SubProtectionPolicyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SubProtectionPolicyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

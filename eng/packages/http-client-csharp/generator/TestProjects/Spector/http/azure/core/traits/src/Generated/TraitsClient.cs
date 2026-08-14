@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,7 +19,12 @@ namespace Specs.Azure.Core.Traits
     {
         public TraitsClient() : this(new Uri("http://localhost:3000"), new TraitsClientOptions()) => throw null;
 
-        public TraitsClient(Uri endpoint, TraitsClientOptions options) => throw null;
+        internal TraitsClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, TraitsClientOptions options) => throw null;
+
+        public TraitsClient(Uri endpoint, TraitsClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public TraitsClient(TraitsClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

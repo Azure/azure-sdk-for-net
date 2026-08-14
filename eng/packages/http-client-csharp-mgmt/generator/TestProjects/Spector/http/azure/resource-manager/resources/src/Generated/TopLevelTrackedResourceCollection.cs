@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources
         {
             TryGetApiVersion(TopLevelTrackedResource.ResourceType, out string topLevelTrackedResourceApiVersion);
             _topLevelClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", TopLevelTrackedResource.ResourceType.Namespace, Diagnostics);
-            _topLevelRestClient = new TopLevel(_topLevelClientDiagnostics, Pipeline, Endpoint, topLevelTrackedResourceApiVersion ?? "2023-12-01-preview");
+            _topLevelRestClient = new TopLevel(_topLevelClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, topLevelTrackedResourceApiVersion ?? "2023-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Resources
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TopLevelTrackedResourceData, TopLevelTrackedResource>(new TopLevelGetByResourceGroupAsyncCollectionResultOfT(_topLevelRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new TopLevelTrackedResource(Client, data));
+            return new AsyncPageableWrapper<TopLevelTrackedResourceData, TopLevelTrackedResource>(new TopLevelGetByResourceGroupAsyncCollectionResultOfT(_topLevelRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "TopLevelTrackedResourceCollection.GetAll"), data => new TopLevelTrackedResource(Client, data));
         }
 
         /// <summary>
@@ -321,11 +321,11 @@ namespace Azure.ResourceManager.Resources
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TopLevelTrackedResourceData, TopLevelTrackedResource>(new TopLevelGetByResourceGroupCollectionResultOfT(_topLevelRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new TopLevelTrackedResource(Client, data));
+            return new PageableWrapper<TopLevelTrackedResourceData, TopLevelTrackedResource>(new TopLevelGetByResourceGroupCollectionResultOfT(_topLevelRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "TopLevelTrackedResourceCollection.GetAll"), data => new TopLevelTrackedResource(Client, data));
         }
 
         /// <summary>
-        /// Get a TopLevelTrackedResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Get a TopLevelTrackedResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Get a TopLevelTrackedResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Get a TopLevelTrackedResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

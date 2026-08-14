@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
+    /// <summary></summary>
     public partial class VirtualWorkspaceResource : IJsonModel<VirtualWorkspaceData>
     {
-        private static VirtualWorkspaceData s_dataDeserializationInstance;
-        private static VirtualWorkspaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<VirtualWorkspaceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<VirtualWorkspaceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new VirtualWorkspaceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualWorkspaceData>)Data).Write(writer, options);
 
-        VirtualWorkspaceData IJsonModel<VirtualWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualWorkspaceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualWorkspaceData IJsonModel<VirtualWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<VirtualWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualWorkspaceData>(Data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         VirtualWorkspaceData IPersistableModel<VirtualWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualWorkspaceData>(data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
-        string IPersistableModel<VirtualWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualWorkspaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VirtualWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

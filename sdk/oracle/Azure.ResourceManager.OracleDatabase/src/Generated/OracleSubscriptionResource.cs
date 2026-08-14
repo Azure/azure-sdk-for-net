@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(ResourceType, out string oracleSubscriptionApiVersion);
             _oracleSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
-            _oracleSubscriptionsRestClient = new OracleSubscriptions(_oracleSubscriptionsClientDiagnostics, Pipeline, Endpoint, oracleSubscriptionApiVersion ?? "2025-09-01");
+            _oracleSubscriptionsRestClient = new OracleSubscriptions(_oracleSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleSubscriptionApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _oracleSubscriptionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), OracleSubscriptionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<OracleSubscriptionResource> operation = new OracleDatabaseArmOperation<OracleSubscriptionResource>(
-                    new OracleSubscriptionOperationSource(Client),
+                    new OracleSubscriptionResourceOperationSource(Client),
                     _oracleSubscriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _oracleSubscriptionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), OracleSubscriptionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<OracleSubscriptionResource> operation = new OracleDatabaseArmOperation<OracleSubscriptionResource>(
-                    new OracleSubscriptionOperationSource(Client),
+                    new OracleSubscriptionResourceOperationSource(Client),
                     _oracleSubscriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _oracleSubscriptionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), OracleSubscriptionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<OracleSubscriptionResource> operation = new OracleDatabaseArmOperation<OracleSubscriptionResource>(
-                    new OracleSubscriptionOperationSource(Client),
+                    new OracleSubscriptionResourceOperationSource(Client),
                     _oracleSubscriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _oracleSubscriptionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), OracleSubscriptionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<OracleSubscriptionResource> operation = new OracleDatabaseArmOperation<OracleSubscriptionResource>(
-                    new OracleSubscriptionOperationSource(Client),
+                    new OracleSubscriptionResourceOperationSource(Client),
                     _oracleSubscriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabPatch"/>. </summary>
         /// <param name="tags"> The tags of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(tags, additionalBinaryDataProperties)
         {
         }
     }

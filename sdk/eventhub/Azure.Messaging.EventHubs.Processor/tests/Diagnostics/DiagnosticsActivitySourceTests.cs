@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -15,12 +16,11 @@ using Azure.Core.Tests;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Primitives;
-using Azure.Messaging.EventHubs.Processor.Diagnostics;
 using Azure.Messaging.EventHubs.Processor;
+using Azure.Messaging.EventHubs.Processor.Diagnostics;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
-using System.Diagnostics;
 using static Azure.Messaging.EventHubs.Tests.EventProcessorClientTests;
 
 namespace Azure.Messaging.EventHubs.Tests

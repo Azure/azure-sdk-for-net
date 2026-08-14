@@ -46,7 +46,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // complete the message, thereby deleting it from the service
                 await receiver.CompleteMessageAsync(receivedMessage);
                 #endregion
-                Assert.IsNull(await CreateNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync());
+                await using var noRetryClient = CreateNoRetryClient();
+                await using var receiver2 = noRetryClient.CreateReceiver(queueName);
+                Assert.IsNull(await receiver2.ReceiveMessageAsync());
             }
         }
 
@@ -78,7 +80,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // abandon the message, thereby releasing the lock and allowing it to be received again by this or other receivers
                 await receiver.AbandonMessageAsync(receivedMessage);
                 #endregion
-                Assert.IsNotNull(CreateNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync());
+                await using var noRetryClient = CreateNoRetryClient();
+                await using var receiver2 = noRetryClient.CreateReceiver(queueName);
+                Assert.IsNotNull(await receiver2.ReceiveMessageAsync());
             }
         }
 
@@ -201,7 +205,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // complete the message, thereby deleting it from the service
                 await receiver.CompleteMessageAsync(receivedMessage);
                 #endregion
-                Assert.IsNull(await CreateNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync());
+                await using var noRetryClient = CreateNoRetryClient();
+                await using var receiver2 = noRetryClient.CreateReceiver(queueName);
+                Assert.IsNull(await receiver2.ReceiveMessageAsync());
             }
         }
     }

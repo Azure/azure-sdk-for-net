@@ -10,40 +10,34 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.OperationTemplates.Models;
 
 namespace Azure.ResourceManager.OperationTemplates
 {
     /// <summary></summary>
-    internal partial class OrderOperationSource : IOperationSource<OrderResource>
+    internal partial class OrderOperationSource : IOperationSource<Order>
     {
-        private readonly ArmClient _client;
-
         /// <summary></summary>
-        /// <param name="client"></param>
-        internal OrderOperationSource(ArmClient client)
+        internal OrderOperationSource()
         {
-            _client = client;
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        OrderResource IOperationSource<OrderResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        Order IOperationSource<Order>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            OrderData data = OrderData.DeserializeOrderData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new OrderResource(_client, data);
+            return Order.DeserializeOrder(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<OrderResource> IOperationSource<OrderResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<Order> IOperationSource<Order>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            OrderData data = OrderData.DeserializeOrderData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new OrderResource(_client, data);
+            return Order.DeserializeOrder(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

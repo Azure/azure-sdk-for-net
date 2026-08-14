@@ -14,7 +14,6 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/stac-extensions/item-assets
-    /// 
     /// Represents a STAC item asset, which describes the assets available under any item in the collection.
     /// </summary>
     public partial class StacItemAsset : IJsonModel<StacItemAsset>
@@ -23,6 +22,46 @@ namespace Azure.Analytics.PlanetaryComputer
         internal StacItemAsset()
         {
         }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StacItemAsset PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StacItemAsset>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStacItemAsset(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StacItemAsset)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StacItemAsset>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(StacItemAsset)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StacItemAsset>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StacItemAsset IPersistableModel<StacItemAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StacItemAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -87,15 +126,15 @@ namespace Azure.Analytics.PlanetaryComputer
                 writer.WritePropertyName("gsd"u8);
                 writer.WriteNumberValue(Gsd.Value);
             }
-            if (Optional.IsDefined(Created))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
-                writer.WriteStringValue(Created.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(Updated))
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
-                writer.WriteStringValue(Updated.Value, "O");
+                writer.WriteStringValue(UpdatedOn.Value, "O");
             }
             writer.WritePropertyName("title"u8);
             writer.WriteStringValue(Title);
@@ -110,7 +149,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 writer.WriteStringValue(Href);
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(Kind);
             if (Optional.IsCollectionDefined(Roles))
             {
                 writer.WritePropertyName("roles"u8);
@@ -171,12 +210,12 @@ namespace Azure.Analytics.PlanetaryComputer
             string mission = default;
             IList<StacProvider> providers = default;
             float? gsd = default;
-            DateTimeOffset? created = default;
-            DateTimeOffset? updated = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? updatedOn = default;
             string title = default;
             string description = default;
             string href = default;
-            string @type = default;
+            string kind = default;
             IList<string> roles = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -246,7 +285,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    created = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("updated"u8))
@@ -255,7 +294,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    updated = prop.Value.GetDateTimeOffset("O");
+                    updatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("title"u8))
@@ -275,7 +314,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    kind = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("roles"u8))
@@ -308,54 +347,14 @@ namespace Azure.Analytics.PlanetaryComputer
                 mission,
                 providers ?? new ChangeTrackingList<StacProvider>(),
                 gsd,
-                created,
-                updated,
+                createdOn,
+                updatedOn,
                 title,
                 description,
                 href,
-                @type,
+                kind,
                 roles ?? new ChangeTrackingList<string>(),
                 additionalProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StacItemAsset>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StacItemAsset>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(StacItemAsset)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        StacItemAsset IPersistableModel<StacItemAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StacItemAsset PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StacItemAsset>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeStacItemAsset(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StacItemAsset)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StacItemAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

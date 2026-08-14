@@ -200,6 +200,46 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         }
 
         [Test]
+        public async Task DstsV2AuthorizationUriExtractsTenantId()
+        {
+            string expectedTenantId = "de763a21-49f7-4b08-a8e1-52c8fbc103b4";
+            string dstsVaultHost = "test.foo.bar.core.windows.net";
+            Uri dstsVaultUri = new Uri("https://" + dstsVaultHost);
+
+            string capturedTenantId = null;
+
+            MockTransport transport = new(new[]
+            {
+                new MockResponse(401)
+                    .WithHeader("WWW-Authenticate", @"Bearer authorization=""https://uswest2-passive-dsts.dsts.core.windows.net/dstsv2/" + expectedTenantId + @""", resource=""https://foo.bar.core.windows.net"""),
+
+                new MockResponse(200)
+                {
+                    ContentStream = new KeyVaultSecret("test-secret", "secret-value").ToStream(),
+                },
+            });
+
+            var credential = new CallbackTokenCredential((r, c) =>
+            {
+                capturedTenantId = r.TenantId;
+                return new AccessToken("test-token", DateTimeOffset.UtcNow.AddHours(1));
+            });
+
+            SecretClient client = new(
+                dstsVaultUri,
+                credential,
+                new SecretClientOptions()
+                {
+                    Transport = transport,
+                });
+
+            Response<KeyVaultSecret> response = await client.GetSecretAsync("test-secret");
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual("secret-value", response.Value.Value);
+            Assert.AreEqual(expectedTenantId, capturedTenantId);
+        }
+
+        [Test]
         public void GetClaimsFromChallengeHeaders()
         {
             MockResponse response401WithClaims = new MockResponse(401)
@@ -348,6 +388,22 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
                 return new AccessToken(accessToken, expiresOn);
             }
+        }
+
+        private class CallbackTokenCredential : TokenCredential
+        {
+            private readonly Func<TokenRequestContext, CancellationToken, AccessToken> _callback;
+
+            public CallbackTokenCredential(Func<TokenRequestContext, CancellationToken, AccessToken> callback)
+            {
+                _callback = callback;
+            }
+
+            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+                => _callback(requestContext, cancellationToken);
+
+            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+                => new ValueTask<AccessToken>(_callback(requestContext, cancellationToken));
         }
     }
 }

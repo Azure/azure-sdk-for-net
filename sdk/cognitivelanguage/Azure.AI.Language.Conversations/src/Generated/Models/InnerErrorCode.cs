@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -14,74 +15,117 @@ namespace Azure.AI.Language.Conversations.Models
     public readonly partial struct InnerErrorCode : IEquatable<InnerErrorCode>
     {
         private readonly string _value;
+        /// <summary> Invalid request error. </summary>
+        private const string InvalidRequestValue = "InvalidRequest";
+        /// <summary> Invalid parameter value error. </summary>
+        private const string InvalidParameterValueValue = "InvalidParameterValue";
+        /// <summary> Knowledge base not found error. </summary>
+        private const string KnowledgeBaseNotFoundValue = "KnowledgeBaseNotFound";
+        /// <summary> Azure Cognitive Search not found error. </summary>
+        private const string AzureCognitiveSearchNotFoundValue = "AzureCognitiveSearchNotFound";
+        /// <summary> Azure Cognitive Search throttling error. </summary>
+        private const string AzureCognitiveSearchThrottlingValue = "AzureCognitiveSearchThrottling";
+        /// <summary> Extraction failure error. </summary>
+        private const string ExtractionFailureValue = "ExtractionFailure";
+        /// <summary> Invalid request body format error. </summary>
+        private const string InvalidRequestBodyFormatValue = "InvalidRequestBodyFormat";
+        /// <summary> Empty request error. </summary>
+        private const string EmptyRequestValue = "EmptyRequest";
+        /// <summary> Missing input documents error. </summary>
+        private const string MissingInputDocumentsValue = "MissingInputDocuments";
+        /// <summary> Invalid document error. </summary>
+        private const string InvalidDocumentValue = "InvalidDocument";
+        /// <summary> Model version incorrect error. </summary>
+        private const string ModelVersionIncorrectValue = "ModelVersionIncorrect";
+        /// <summary> Invalid document batch error. </summary>
+        private const string InvalidDocumentBatchValue = "InvalidDocumentBatch";
+        /// <summary> Unsupported language code error. </summary>
+        private const string UnsupportedLanguageCodeValue = "UnsupportedLanguageCode";
+        /// <summary> Invalid country hint error. </summary>
+        private const string InvalidCountryHintValue = "InvalidCountryHint";
 
         /// <summary> Initializes a new instance of <see cref="InnerErrorCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InnerErrorCode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InvalidRequestValue = "InvalidRequest";
-        private const string InvalidParameterValueValue = "InvalidParameterValue";
-        private const string KnowledgeBaseNotFoundValue = "KnowledgeBaseNotFound";
-        private const string AzureCognitiveSearchNotFoundValue = "AzureCognitiveSearchNotFound";
-        private const string AzureCognitiveSearchThrottlingValue = "AzureCognitiveSearchThrottling";
-        private const string ExtractionFailureValue = "ExtractionFailure";
-        private const string InvalidRequestBodyFormatValue = "InvalidRequestBodyFormat";
-        private const string EmptyRequestValue = "EmptyRequest";
-        private const string MissingInputDocumentsValue = "MissingInputDocuments";
-        private const string InvalidDocumentValue = "InvalidDocument";
-        private const string ModelVersionIncorrectValue = "ModelVersionIncorrect";
-        private const string InvalidDocumentBatchValue = "InvalidDocumentBatch";
-        private const string UnsupportedLanguageCodeValue = "UnsupportedLanguageCode";
-        private const string InvalidCountryHintValue = "InvalidCountryHint";
+            _value = value;
+        }
 
         /// <summary> Invalid request error. </summary>
         public static InnerErrorCode InvalidRequest { get; } = new InnerErrorCode(InvalidRequestValue);
+
         /// <summary> Invalid parameter value error. </summary>
         public static InnerErrorCode InvalidParameterValue { get; } = new InnerErrorCode(InvalidParameterValueValue);
+
         /// <summary> Knowledge base not found error. </summary>
         public static InnerErrorCode KnowledgeBaseNotFound { get; } = new InnerErrorCode(KnowledgeBaseNotFoundValue);
+
         /// <summary> Azure Cognitive Search not found error. </summary>
         public static InnerErrorCode AzureCognitiveSearchNotFound { get; } = new InnerErrorCode(AzureCognitiveSearchNotFoundValue);
+
         /// <summary> Azure Cognitive Search throttling error. </summary>
         public static InnerErrorCode AzureCognitiveSearchThrottling { get; } = new InnerErrorCode(AzureCognitiveSearchThrottlingValue);
+
         /// <summary> Extraction failure error. </summary>
         public static InnerErrorCode ExtractionFailure { get; } = new InnerErrorCode(ExtractionFailureValue);
+
         /// <summary> Invalid request body format error. </summary>
         public static InnerErrorCode InvalidRequestBodyFormat { get; } = new InnerErrorCode(InvalidRequestBodyFormatValue);
+
         /// <summary> Empty request error. </summary>
         public static InnerErrorCode EmptyRequest { get; } = new InnerErrorCode(EmptyRequestValue);
+
         /// <summary> Missing input documents error. </summary>
         public static InnerErrorCode MissingInputDocuments { get; } = new InnerErrorCode(MissingInputDocumentsValue);
+
         /// <summary> Invalid document error. </summary>
         public static InnerErrorCode InvalidDocument { get; } = new InnerErrorCode(InvalidDocumentValue);
+
         /// <summary> Model version incorrect error. </summary>
         public static InnerErrorCode ModelVersionIncorrect { get; } = new InnerErrorCode(ModelVersionIncorrectValue);
+
         /// <summary> Invalid document batch error. </summary>
         public static InnerErrorCode InvalidDocumentBatch { get; } = new InnerErrorCode(InvalidDocumentBatchValue);
+
         /// <summary> Unsupported language code error. </summary>
         public static InnerErrorCode UnsupportedLanguageCode { get; } = new InnerErrorCode(UnsupportedLanguageCodeValue);
+
         /// <summary> Invalid country hint error. </summary>
         public static InnerErrorCode InvalidCountryHint { get; } = new InnerErrorCode(InvalidCountryHintValue);
+
         /// <summary> Determines if two <see cref="InnerErrorCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InnerErrorCode left, InnerErrorCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InnerErrorCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InnerErrorCode left, InnerErrorCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InnerErrorCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InnerErrorCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InnerErrorCode(string value) => new InnerErrorCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="InnerErrorCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InnerErrorCode?(string value) => value == null ? null : new InnerErrorCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InnerErrorCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InnerErrorCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

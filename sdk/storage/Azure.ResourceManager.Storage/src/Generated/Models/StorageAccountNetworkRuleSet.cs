@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Network rule set. </summary>
     public partial class StorageAccountNetworkRuleSet
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountNetworkRuleSet"/>. </summary>
         /// <param name="defaultAction"> Specifies the default action of allow or deny when no other rules match. </param>
@@ -61,40 +33,40 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="resourceAccessRules"> Sets the resource access rules. </param>
         /// <param name="virtualNetworkRules"> Sets the virtual network rules. </param>
         /// <param name="ipRules"> Sets the IP ACL rules. </param>
-        /// <param name="ipv6Rules"> Sets the IPv6 ACL rules. </param>
+        /// <param name="iPv6Rules"> Sets the IPv6 ACL rules. </param>
         /// <param name="defaultAction"> Specifies the default action of allow or deny when no other rules match. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountNetworkRuleSet(StorageNetworkBypass? bypass, IList<StorageAccountResourceAccessRule> resourceAccessRules, IList<StorageAccountVirtualNetworkRule> virtualNetworkRules, IList<StorageAccountIPRule> ipRules, IList<StorageAccountIPRule> ipv6Rules, StorageNetworkDefaultAction defaultAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageAccountNetworkRuleSet(StorageNetworkBypass? bypass, IList<StorageAccountResourceAccessRule> resourceAccessRules, IList<StorageAccountVirtualNetworkRule> virtualNetworkRules, IList<StorageAccountIPRule> ipRules, IList<StorageAccountIPRule> iPv6Rules, StorageNetworkDefaultAction defaultAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Bypass = bypass;
             ResourceAccessRules = resourceAccessRules;
             VirtualNetworkRules = virtualNetworkRules;
             IPRules = ipRules;
-            IPv6Rules = ipv6Rules;
+            IPv6Rules = iPv6Rules;
             DefaultAction = defaultAction;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StorageAccountNetworkRuleSet"/> for deserialization. </summary>
-        internal StorageAccountNetworkRuleSet()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies whether traffic is bypassed for Logging/Metrics/AzureServices. Possible values are any combination of Logging|Metrics|AzureServices (For example, "Logging, Metrics"), or None to bypass none of those traffics. </summary>
         [WirePath("bypass")]
         public StorageNetworkBypass? Bypass { get; set; }
+
         /// <summary> Sets the resource access rules. </summary>
         [WirePath("resourceAccessRules")]
         public IList<StorageAccountResourceAccessRule> ResourceAccessRules { get; }
+
         /// <summary> Sets the virtual network rules. </summary>
         [WirePath("virtualNetworkRules")]
         public IList<StorageAccountVirtualNetworkRule> VirtualNetworkRules { get; }
+
         /// <summary> Sets the IP ACL rules. </summary>
         [WirePath("ipRules")]
         public IList<StorageAccountIPRule> IPRules { get; }
+
         /// <summary> Sets the IPv6 ACL rules. </summary>
         [WirePath("ipv6Rules")]
         public IList<StorageAccountIPRule> IPv6Rules { get; }
+
         /// <summary> Specifies the default action of allow or deny when no other rules match. </summary>
         [WirePath("defaultAction")]
         public StorageNetworkDefaultAction DefaultAction { get; set; }

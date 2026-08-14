@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct ControlImpact : IEquatable<ControlImpact>
     {
         private readonly string _value;
+        /// <summary> The control plane will be impacted during the upgrade. </summary>
+        private const string TrueValue = "True";
+        /// <summary> The control plane will not be impacted during the upgrade. </summary>
+        private const string FalseValue = "False";
 
         /// <summary> Initializes a new instance of <see cref="ControlImpact"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ControlImpact(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TrueValue = "True";
-        private const string FalseValue = "False";
-
-        /// <summary> True. </summary>
+        /// <summary> The control plane will be impacted during the upgrade. </summary>
         public static ControlImpact True { get; } = new ControlImpact(TrueValue);
-        /// <summary> False. </summary>
+
+        /// <summary> The control plane will not be impacted during the upgrade. </summary>
         public static ControlImpact False { get; } = new ControlImpact(FalseValue);
+
         /// <summary> Determines if two <see cref="ControlImpact"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ControlImpact left, ControlImpact right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ControlImpact"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ControlImpact left, ControlImpact right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ControlImpact"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ControlImpact"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ControlImpact(string value) => new ControlImpact(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ControlImpact"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ControlImpact?(string value) => value == null ? null : new ControlImpact(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ControlImpact other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ControlImpact other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

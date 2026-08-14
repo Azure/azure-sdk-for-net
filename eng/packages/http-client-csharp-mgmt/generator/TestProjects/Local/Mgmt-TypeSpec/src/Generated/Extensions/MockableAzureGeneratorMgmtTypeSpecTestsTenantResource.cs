@@ -38,7 +38,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         private ClientDiagnostics NetworkProviderActionsClientDiagnostics => _networkProviderActionsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkProviderActions NetworkProviderActionsRestClient => _networkProviderActionsRestClient ??= new NetworkProviderActions(NetworkProviderActionsClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private NetworkProviderActions NetworkProviderActionsRestClient => _networkProviderActionsRestClient ??= new NetworkProviderActions(NetworkProviderActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-01");
 
         /// <summary> Gets a collection of BestPractices in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of BestPractices and their operations over a BestPracticeResource. </returns>
@@ -147,7 +147,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location);
+                    OperationFinalStateVia.Location,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -203,7 +204,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location);
+                    OperationFinalStateVia.Location,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

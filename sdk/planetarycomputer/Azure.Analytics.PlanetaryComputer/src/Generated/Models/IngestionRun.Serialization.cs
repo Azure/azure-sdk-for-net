@@ -21,6 +21,53 @@ namespace Azure.Analytics.PlanetaryComputer
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IngestionRun PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IngestionRun>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIngestionRun(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IngestionRun)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IngestionRun>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(IngestionRun)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IngestionRun>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IngestionRun IPersistableModel<IngestionRun>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IngestionRun>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IngestionRun"/> from. </param>
+        public static explicit operator IngestionRun(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeIngestionRun(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IngestionRun>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -49,11 +96,11 @@ namespace Azure.Analytics.PlanetaryComputer
             writer.WritePropertyName("operation"u8);
             writer.WriteObjectValue(Operation, options);
             writer.WritePropertyName("creationTime"u8);
-            writer.WriteStringValue(CreationTime, "O");
-            if (Optional.IsDefined(SourceCatalogUrl))
+            writer.WriteStringValue(CreatedOn, "O");
+            if (Optional.IsDefined(SourceCatalogUri))
             {
                 writer.WritePropertyName("sourceCatalogUrl"u8);
-                writer.WriteStringValue(SourceCatalogUrl.AbsoluteUri);
+                writer.WriteStringValue(SourceCatalogUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SkipExistingItems))
             {
@@ -110,8 +157,8 @@ namespace Azure.Analytics.PlanetaryComputer
             Guid id = default;
             Guid? parentRunId = default;
             IngestionRunInformation operation = default;
-            DateTimeOffset creationTime = default;
-            Uri sourceCatalogUrl = default;
+            DateTimeOffset createdOn = default;
+            Uri sourceCatalogUri = default;
             bool? skipExistingItems = default;
             bool? keepOriginalAssets = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -138,7 +185,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("creationTime"u8))
                 {
-                    creationTime = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("sourceCatalogUrl"u8))
@@ -147,7 +194,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    sourceCatalogUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    sourceCatalogUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("skipExistingItems"u8))
@@ -177,58 +224,11 @@ namespace Azure.Analytics.PlanetaryComputer
                 id,
                 parentRunId,
                 operation,
-                creationTime,
-                sourceCatalogUrl,
+                createdOn,
+                sourceCatalogUri,
                 skipExistingItems,
                 keepOriginalAssets,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IngestionRun>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<IngestionRun>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(IngestionRun)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        IngestionRun IPersistableModel<IngestionRun>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IngestionRun PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<IngestionRun>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeIngestionRun(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IngestionRun)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IngestionRun>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IngestionRun"/> from. </param>
-        public static explicit operator IngestionRun(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeIngestionRun(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

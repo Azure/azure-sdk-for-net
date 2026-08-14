@@ -1,18 +1,18 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 #pragma warning disable SA1402 // File may only contain a single type
 namespace Azure.Communication.Messages.Models.Channels
 {
-    [CodeGenModel("WhatsAppMessageButtonSubType")]
+    [CodeGenType("WhatsAppMessageButtonSubType")]
     public partial struct WhatsAppMessageButtonSubType { }
 
-    [CodeGenModel("WhatsAppMessageTemplateBindings")]
+    [CodeGenType("WhatsAppMessageTemplateBindings")]
     public partial class WhatsAppMessageTemplateBindings { }
 
-    [CodeGenModel("WhatsAppMessageTemplateBindingsButton")]
+    [CodeGenType("WhatsAppMessageTemplateBindingsButton")]
     public partial class WhatsAppMessageTemplateBindingsButton
     {
         /// <summary> The WhatsApp button sub type. </summary>
@@ -20,22 +20,22 @@ namespace Azure.Communication.Messages.Models.Channels
         public string SubType { get; }
     }
 
-    [CodeGenModel("WhatsAppMessageTemplateBindingsComponent")]
+    [CodeGenType("WhatsAppMessageTemplateBindingsComponent")]
     public partial class WhatsAppMessageTemplateBindingsComponent { }
 
-    [CodeGenModel("WhatsAppMessageTemplateItem")]
+    [CodeGenType("WhatsAppMessageTemplateItem")]
     public partial class WhatsAppMessageTemplateItem { }
 
-    [CodeGenModel("WhatsAppContact")]
+    [CodeGenType("WhatsAppContact")]
     public partial class WhatsAppContact { }
 
-    [CodeGenModel("WhatsAppButtonActionBindings")]
+    [CodeGenType("WhatsAppButtonActionBindings")]
     public partial class WhatsAppButtonActionBindings { }
 
-    [CodeGenModel("WhatsAppListActionBindings")]
+    [CodeGenType("WhatsAppListActionBindings")]
     public partial class WhatsAppListActionBindings { }
 
-    [CodeGenModel("WhatsAppUrlActionBindings")]
+    [CodeGenType("WhatsAppUrlActionBindings")]
     public partial class WhatsAppUrlActionBindings { }
 }
 #pragma warning restore SA1402 // File may only contain a single type

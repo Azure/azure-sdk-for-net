@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 using Specs.Azure.ClientGenerator.Core.Access._InternalOperation;
 using Specs.Azure.ClientGenerator.Core.Access._PublicOperation;
@@ -18,7 +19,12 @@ namespace Specs.Azure.ClientGenerator.Core.Access
     {
         public AccessClient() : this(new Uri("http://localhost:3000"), new AccessClientOptions()) => throw null;
 
-        public AccessClient(Uri endpoint, AccessClientOptions options) => throw null;
+        internal AccessClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, AccessClientOptions options) => throw null;
+
+        public AccessClient(Uri endpoint, AccessClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public AccessClient(AccessClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

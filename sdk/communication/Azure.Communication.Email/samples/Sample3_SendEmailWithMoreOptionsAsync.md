@@ -31,19 +31,19 @@ var emailMessage = new EmailMessage(
 
 try
 {
-    var emailSendOperation = await emailClient.SendAsync(
-        wait: WaitUntil.Completed,
-        message: emailMessage);
-    Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+var emailSendOperation = await emailClient.SendAsync(
+    wait: WaitUntil.Completed,
+    message: emailMessage);
+Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
 
-    /// Get the OperationId so that it can be used for tracking the message for troubleshooting
-    string operationId = emailSendOperation.Id;
-    Console.WriteLine($"Email operation id = {operationId}");
+/// Get the OperationId so that it can be used for tracking the message for troubleshooting
+string operationId = emailSendOperation.Id;
+Console.WriteLine($"Email operation id = {operationId}");
 }
 catch ( RequestFailedException ex )
 {
-    /// OperationID is contained in the exception message and can be used for troubleshooting purposes
-    Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+/// OperationID is contained in the exception message and can be used for troubleshooting purposes
+Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
 }
 ```
 

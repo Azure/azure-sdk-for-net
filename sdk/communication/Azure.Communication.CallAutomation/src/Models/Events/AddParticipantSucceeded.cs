@@ -8,7 +8,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The add participants succeeded event.
     /// </summary>
-    public class AddParticipantSucceeded: CallAutomationEventBase
+    public class AddParticipantSucceeded : CallAutomationEventBase
     {
         /// <summary> Initializes a new instance of AddParticipantSucceededEventInternal. </summary>
         internal AddParticipantSucceeded()
@@ -21,7 +21,7 @@ namespace Azure.Communication.CallAutomation
         {
             OperationContext = internalEvent.OperationContext;
             ResultInformation = internalEvent.ResultInformation;
-            Participant = CommunicationIdentifierSerializer_2025_06_30.Deserialize(internalEvent.Participant);
+            Participant = CommunicationIdentifierSerializer.Deserialize(internalEvent.Participant);
             CallConnectionId = internalEvent.CallConnectionId;
             ServerCallId = internalEvent.ServerCallId;
             CorrelationId = internalEvent.CorrelationId;

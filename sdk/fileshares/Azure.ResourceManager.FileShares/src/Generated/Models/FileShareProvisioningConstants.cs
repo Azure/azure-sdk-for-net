@@ -21,12 +21,16 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="scalarIOPerSec"> Scalar IO per second. </param>
         /// <param name="baseThroughputMiBPerSec"> Base throughput in MiB per second. </param>
         /// <param name="scalarThroughputMiBPerSec"> Scalar throughput in MiB per second. </param>
-        internal FileShareProvisioningConstants(int baseIOPerSec, double scalarIOPerSec, int baseThroughputMiBPerSec, double scalarThroughputMiBPerSec)
+        /// <param name="guardrailIOPerSecScalar"> Guardrail scalar IO per second. </param>
+        /// <param name="guardrailThroughputScalar"> Guardrail scalar throughput in MiB per second. </param>
+        internal FileShareProvisioningConstants(int baseIOPerSec, double scalarIOPerSec, int baseThroughputMiBPerSec, double scalarThroughputMiBPerSec, double guardrailIOPerSecScalar, double guardrailThroughputScalar)
         {
             BaseIOPerSec = baseIOPerSec;
             ScalarIOPerSec = scalarIOPerSec;
             BaseThroughputMiBPerSec = baseThroughputMiBPerSec;
             ScalarThroughputMiBPerSec = scalarThroughputMiBPerSec;
+            GuardrailIOPerSecScalar = guardrailIOPerSecScalar;
+            GuardrailThroughputScalar = guardrailThroughputScalar;
         }
 
         /// <summary> Initializes a new instance of <see cref="FileShareProvisioningConstants"/>. </summary>
@@ -34,13 +38,17 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="scalarIOPerSec"> Scalar IO per second. </param>
         /// <param name="baseThroughputMiBPerSec"> Base throughput in MiB per second. </param>
         /// <param name="scalarThroughputMiBPerSec"> Scalar throughput in MiB per second. </param>
+        /// <param name="guardrailIOPerSecScalar"> Guardrail scalar IO per second. </param>
+        /// <param name="guardrailThroughputScalar"> Guardrail scalar throughput in MiB per second. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileShareProvisioningConstants(int baseIOPerSec, double scalarIOPerSec, int baseThroughputMiBPerSec, double scalarThroughputMiBPerSec, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileShareProvisioningConstants(int baseIOPerSec, double scalarIOPerSec, int baseThroughputMiBPerSec, double scalarThroughputMiBPerSec, double guardrailIOPerSecScalar, double guardrailThroughputScalar, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BaseIOPerSec = baseIOPerSec;
             ScalarIOPerSec = scalarIOPerSec;
             BaseThroughputMiBPerSec = baseThroughputMiBPerSec;
             ScalarThroughputMiBPerSec = scalarThroughputMiBPerSec;
+            GuardrailIOPerSecScalar = guardrailIOPerSecScalar;
+            GuardrailThroughputScalar = guardrailThroughputScalar;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -55,5 +63,11 @@ namespace Azure.ResourceManager.FileShares.Models
 
         /// <summary> Scalar throughput in MiB per second. </summary>
         public double ScalarThroughputMiBPerSec { get; }
+
+        /// <summary> Guardrail scalar IO per second. </summary>
+        public double GuardrailIOPerSecScalar { get; }
+
+        /// <summary> Guardrail scalar throughput in MiB per second. </summary>
+        public double GuardrailThroughputScalar { get; }
     }
 }

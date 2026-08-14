@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct BareMetalMachineSkipShutdown : IEquatable<BareMetalMachineSkipShutdown>
     {
         private readonly string _value;
+        /// <summary> Skip the graceful OS shutdown and power off the bare metal machine immediately. </summary>
+        private const string TrueValue = "True";
+        /// <summary> Do not skip the graceful OS shutdown and power off the bare metal machine immediately. </summary>
+        private const string FalseValue = "False";
 
         /// <summary> Initializes a new instance of <see cref="BareMetalMachineSkipShutdown"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BareMetalMachineSkipShutdown(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TrueValue = "True";
-        private const string FalseValue = "False";
-
-        /// <summary> True. </summary>
+        /// <summary> Skip the graceful OS shutdown and power off the bare metal machine immediately. </summary>
         public static BareMetalMachineSkipShutdown True { get; } = new BareMetalMachineSkipShutdown(TrueValue);
-        /// <summary> False. </summary>
+
+        /// <summary> Do not skip the graceful OS shutdown and power off the bare metal machine immediately. </summary>
         public static BareMetalMachineSkipShutdown False { get; } = new BareMetalMachineSkipShutdown(FalseValue);
+
         /// <summary> Determines if two <see cref="BareMetalMachineSkipShutdown"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BareMetalMachineSkipShutdown left, BareMetalMachineSkipShutdown right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BareMetalMachineSkipShutdown"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BareMetalMachineSkipShutdown left, BareMetalMachineSkipShutdown right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BareMetalMachineSkipShutdown"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BareMetalMachineSkipShutdown"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BareMetalMachineSkipShutdown(string value) => new BareMetalMachineSkipShutdown(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BareMetalMachineSkipShutdown"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BareMetalMachineSkipShutdown?(string value) => value == null ? null : new BareMetalMachineSkipShutdown(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BareMetalMachineSkipShutdown other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BareMetalMachineSkipShutdown other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

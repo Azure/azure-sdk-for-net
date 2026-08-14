@@ -15,6 +15,46 @@ namespace Azure.Compute.Batch
     /// <summary> The status of the Job Preparation and Job Release Tasks on a Compute Node. </summary>
     public partial class BatchJobPreparationAndReleaseTaskStatus : IJsonModel<BatchJobPreparationAndReleaseTaskStatus>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchJobPreparationAndReleaseTaskStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJobPreparationAndReleaseTaskStatus>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBatchJobPreparationAndReleaseTaskStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchJobPreparationAndReleaseTaskStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJobPreparationAndReleaseTaskStatus>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BatchJobPreparationAndReleaseTaskStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchJobPreparationAndReleaseTaskStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchJobPreparationAndReleaseTaskStatus IPersistableModel<BatchJobPreparationAndReleaseTaskStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BatchJobPreparationAndReleaseTaskStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchJobPreparationAndReleaseTaskStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -124,7 +164,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    nodeUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    nodeUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("jobPreparationTaskExecutionInfo"u8))
@@ -158,45 +198,5 @@ namespace Azure.Compute.Batch
                 jobReleaseTaskExecutionInfo,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchJobPreparationAndReleaseTaskStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchJobPreparationAndReleaseTaskStatus>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BatchJobPreparationAndReleaseTaskStatus)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BatchJobPreparationAndReleaseTaskStatus IPersistableModel<BatchJobPreparationAndReleaseTaskStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BatchJobPreparationAndReleaseTaskStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchJobPreparationAndReleaseTaskStatus>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBatchJobPreparationAndReleaseTaskStatus(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BatchJobPreparationAndReleaseTaskStatus)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchJobPreparationAndReleaseTaskStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

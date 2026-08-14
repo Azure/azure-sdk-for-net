@@ -9,7 +9,7 @@ using Azure.ResourceManager.ApplicationInsights;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class ApplicationInsightsSpecification() :
-    Specification("ApplicationInsights", typeof(ApplicationInsightsExtensions))
+    Specification("ApplicationInsights", typeof(ApplicationInsightsExtensions), serviceDirectory: "applicationinsights")
 {
     protected override void Customize()
     {

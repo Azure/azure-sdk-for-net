@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PowerBIDedicated;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     public readonly partial struct VCoreSkuTier : IEquatable<VCoreSkuTier>
     {
         private readonly string _value;
+        private const string AutoScaleValue = "AutoScale";
 
         /// <summary> Initializes a new instance of <see cref="VCoreSkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VCoreSkuTier(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AutoScaleValue = "AutoScale";
-
-        /// <summary> AutoScale. </summary>
+        /// <summary> Gets the AutoScale. </summary>
         public static VCoreSkuTier AutoScale { get; } = new VCoreSkuTier(AutoScaleValue);
+
         /// <summary> Determines if two <see cref="VCoreSkuTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VCoreSkuTier left, VCoreSkuTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VCoreSkuTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VCoreSkuTier left, VCoreSkuTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VCoreSkuTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VCoreSkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VCoreSkuTier(string value) => new VCoreSkuTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VCoreSkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VCoreSkuTier?(string value) => value == null ? null : new VCoreSkuTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VCoreSkuTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VCoreSkuTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

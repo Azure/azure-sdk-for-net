@@ -18,7 +18,8 @@ namespace Azure.Core
 
         public static int GetHashCodeOrdinal(this string? s)
         {
-            if (s == null) return 0;
+            if (s == null)
+                return 0;
 
 #if NET5_0_OR_GREATER
             return s.GetHashCode(StringComparison.Ordinal);

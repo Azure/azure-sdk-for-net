@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class TieringCostRehydrationInfo : IUtf8JsonSerializable, IJsonModel<TieringCostRehydrationInfo>
+    /// <summary> Response parameters for tiering cost info for rehydration. </summary>
+    public partial class TieringCostRehydrationInfo : TieringCostInfo, IJsonModel<TieringCostRehydrationInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TieringCostRehydrationInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="TieringCostRehydrationInfo"/> for deserialization. </summary>
+        internal TieringCostRehydrationInfo()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TieringCostInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TieringCostRehydrationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTieringCostRehydrationInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TieringCostRehydrationInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TieringCostRehydrationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TieringCostRehydrationInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TieringCostRehydrationInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TieringCostRehydrationInfo IPersistableModel<TieringCostRehydrationInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => (TieringCostRehydrationInfo)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TieringCostRehydrationInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TieringCostRehydrationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TieringCostRehydrationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TieringCostRehydrationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TieringCostRehydrationInfo)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("rehydrationSizeInBytes"u8);
             writer.WriteNumberValue(RehydrationSizeInBytes);
@@ -41,86 +86,58 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteNumberValue(RetailRehydrationCostPerGBPerMonth);
         }
 
-        TieringCostRehydrationInfo IJsonModel<TieringCostRehydrationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TieringCostRehydrationInfo IJsonModel<TieringCostRehydrationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TieringCostRehydrationInfo)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TieringCostInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TieringCostRehydrationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TieringCostRehydrationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TieringCostRehydrationInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTieringCostRehydrationInfo(document.RootElement, options);
         }
 
-        internal static TieringCostRehydrationInfo DeserializeTieringCostRehydrationInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TieringCostRehydrationInfo DeserializeTieringCostRehydrationInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string objectType = "TieringCostRehydrationInfo";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             long rehydrationSizeInBytes = default;
             double retailRehydrationCostPerGBPerMonth = default;
-            string objectType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("rehydrationSizeInBytes"u8))
+                if (prop.NameEquals("objectType"u8))
                 {
-                    rehydrationSizeInBytes = property.Value.GetInt64();
+                    objectType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("retailRehydrationCostPerGBPerMonth"u8))
+                if (prop.NameEquals("rehydrationSizeInBytes"u8))
                 {
-                    retailRehydrationCostPerGBPerMonth = property.Value.GetDouble();
+                    rehydrationSizeInBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("objectType"u8))
+                if (prop.NameEquals("retailRehydrationCostPerGBPerMonth"u8))
                 {
-                    objectType = property.Value.GetString();
+                    retailRehydrationCostPerGBPerMonth = prop.Value.GetDouble();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new TieringCostRehydrationInfo(objectType, serializedAdditionalRawData, rehydrationSizeInBytes, retailRehydrationCostPerGBPerMonth);
+            return new TieringCostRehydrationInfo(objectType, additionalBinaryDataProperties, rehydrationSizeInBytes, retailRehydrationCostPerGBPerMonth);
         }
-
-        BinaryData IPersistableModel<TieringCostRehydrationInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TieringCostRehydrationInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TieringCostRehydrationInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        TieringCostRehydrationInfo IPersistableModel<TieringCostRehydrationInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TieringCostRehydrationInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTieringCostRehydrationInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TieringCostRehydrationInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<TieringCostRehydrationInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

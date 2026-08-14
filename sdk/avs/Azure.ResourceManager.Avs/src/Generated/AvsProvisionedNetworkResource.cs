@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(ResourceType, out string avsProvisionedNetworkApiVersion);
             _provisionedNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
-            _provisionedNetworksRestClient = new ProvisionedNetworks(_provisionedNetworksClientDiagnostics, Pipeline, Endpoint, avsProvisionedNetworkApiVersion ?? "2025-09-01");
+            _provisionedNetworksRestClient = new ProvisionedNetworks(_provisionedNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, avsProvisionedNetworkApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

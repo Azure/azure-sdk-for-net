@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct ComputeFleetMode : IEquatable<ComputeFleetMode>
     {
         private readonly string _value;
+        /// <summary> Default. Managed is the default mode for Compute Fleet where VMs are provisioned via virtual machine scale sets. </summary>
+        private const string ManagedValue = "Managed";
+        /// <summary> Launch mode for Compute Fleet will directly launch VM instances to be managed by the customer. </summary>
+        private const string LaunchValue = "Launch";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeFleetMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ManagedValue = "Managed";
-        private const string InstanceValue = "Instance";
-
-        /// <summary> Default. Managed is the default mode for Compute Fleet where VMs are provisioned via VMSS. </summary>
+        /// <summary> Default. Managed is the default mode for Compute Fleet where VMs are provisioned via virtual machine scale sets. </summary>
         public static ComputeFleetMode Managed { get; } = new ComputeFleetMode(ManagedValue);
-        /// <summary> Instance mode for Compute Fleet will directly provision VM instances. </summary>
-        public static ComputeFleetMode Instance { get; } = new ComputeFleetMode(InstanceValue);
+
+        /// <summary> Launch mode for Compute Fleet will directly launch VM instances to be managed by the customer. </summary>
+        public static ComputeFleetMode Launch { get; } = new ComputeFleetMode(LaunchValue);
+
         /// <summary> Determines if two <see cref="ComputeFleetMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeFleetMode left, ComputeFleetMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeFleetMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeFleetMode left, ComputeFleetMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeFleetMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeFleetMode(string value) => new ComputeFleetMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeFleetMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeFleetMode?(string value) => value == null ? null : new ComputeFleetMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeFleetMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeFleetMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

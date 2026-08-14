@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class NamespaceResourceQuota : IUtf8JsonSerializable, IJsonModel<NamespaceResourceQuota>
+    /// <summary> Resource quota for the namespace. </summary>
+    public partial class NamespaceResourceQuota : IJsonModel<NamespaceResourceQuota>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NamespaceResourceQuota>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NamespaceResourceQuota PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NamespaceResourceQuota>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNamespaceResourceQuota(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NamespaceResourceQuota)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NamespaceResourceQuota>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NamespaceResourceQuota)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NamespaceResourceQuota>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NamespaceResourceQuota IPersistableModel<NamespaceResourceQuota>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NamespaceResourceQuota>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NamespaceResourceQuota>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamespaceResourceQuota>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NamespaceResourceQuota>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NamespaceResourceQuota)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(CpuRequest))
             {
                 writer.WritePropertyName("cpuRequest"u8);
@@ -55,15 +94,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("memoryLimit"u8);
                 writer.WriteStringValue(MemoryLimit);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -72,22 +111,27 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        NamespaceResourceQuota IJsonModel<NamespaceResourceQuota>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NamespaceResourceQuota IJsonModel<NamespaceResourceQuota>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NamespaceResourceQuota JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamespaceResourceQuota>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NamespaceResourceQuota>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NamespaceResourceQuota)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNamespaceResourceQuota(document.RootElement, options);
         }
 
-        internal static NamespaceResourceQuota DeserializeNamespaceResourceQuota(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NamespaceResourceQuota DeserializeNamespaceResourceQuota(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -96,177 +140,35 @@ namespace Azure.ResourceManager.ContainerService.Models
             string cpuLimit = default;
             string memoryRequest = default;
             string memoryLimit = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("cpuRequest"u8))
+                if (prop.NameEquals("cpuRequest"u8))
                 {
-                    cpuRequest = property.Value.GetString();
+                    cpuRequest = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cpuLimit"u8))
+                if (prop.NameEquals("cpuLimit"u8))
                 {
-                    cpuLimit = property.Value.GetString();
+                    cpuLimit = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("memoryRequest"u8))
+                if (prop.NameEquals("memoryRequest"u8))
                 {
-                    memoryRequest = property.Value.GetString();
+                    memoryRequest = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("memoryLimit"u8))
+                if (prop.NameEquals("memoryLimit"u8))
                 {
-                    memoryLimit = property.Value.GetString();
+                    memoryLimit = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new NamespaceResourceQuota(cpuRequest, cpuLimit, memoryRequest, memoryLimit, serializedAdditionalRawData);
+            return new NamespaceResourceQuota(cpuRequest, cpuLimit, memoryRequest, memoryLimit, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CpuRequest), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  cpuRequest: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CpuRequest))
-                {
-                    builder.Append("  cpuRequest: ");
-                    if (CpuRequest.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CpuRequest}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CpuRequest}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CpuLimit), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  cpuLimit: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CpuLimit))
-                {
-                    builder.Append("  cpuLimit: ");
-                    if (CpuLimit.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CpuLimit}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CpuLimit}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryRequest), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  memoryRequest: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MemoryRequest))
-                {
-                    builder.Append("  memoryRequest: ");
-                    if (MemoryRequest.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{MemoryRequest}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{MemoryRequest}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryLimit), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  memoryLimit: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MemoryLimit))
-                {
-                    builder.Append("  memoryLimit: ");
-                    if (MemoryLimit.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{MemoryLimit}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{MemoryLimit}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<NamespaceResourceQuota>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NamespaceResourceQuota>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(NamespaceResourceQuota)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NamespaceResourceQuota IPersistableModel<NamespaceResourceQuota>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NamespaceResourceQuota>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNamespaceResourceQuota(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NamespaceResourceQuota)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NamespaceResourceQuota>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

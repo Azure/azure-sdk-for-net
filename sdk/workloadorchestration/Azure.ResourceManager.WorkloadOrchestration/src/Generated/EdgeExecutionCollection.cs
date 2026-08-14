@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(EdgeExecutionResource.ResourceType, out string edgeExecutionApiVersion);
             _executionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeExecutionResource.ResourceType.Namespace, Diagnostics);
-            _executionsRestClient = new Executions(_executionsClientDiagnostics, Pipeline, Endpoint, edgeExecutionApiVersion ?? "2025-06-01");
+            _executionsRestClient = new Executions(_executionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeExecutionApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             if (id.ResourceType != EdgeWorkflowVersionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeWorkflowVersionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeWorkflowVersionResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _executionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, executionName, EdgeExecutionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeExecutionResource> operation = new WorkloadOrchestrationArmOperation<EdgeExecutionResource>(
-                    new EdgeExecutionOperationSource(Client),
+                    new EdgeExecutionResourceOperationSource(Client),
                     _executionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _executionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, executionName, EdgeExecutionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeExecutionResource> operation = new WorkloadOrchestrationArmOperation<EdgeExecutionResource>(
-                    new EdgeExecutionOperationSource(Client),
+                    new EdgeExecutionResourceOperationSource(Client),
                     _executionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -300,7 +300,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EdgeExecutionResource(Client, data));
+                context,
+                "EdgeExecutionCollection.GetAll"), data => new EdgeExecutionResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +336,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EdgeExecutionResource(Client, data));
+                context,
+                "EdgeExecutionCollection.GetAll"), data => new EdgeExecutionResource(Client, data));
         }
 
         /// <summary>

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct AvailabilityLifecycle : IEquatable<AvailabilityLifecycle>
     {
         private readonly string _value;
+        /// <summary> Preview availability. </summary>
+        private const string PreviewValue = "Preview";
+        /// <summary> Generally available. </summary>
+        private const string GenerallyAvailableValue = "GenerallyAvailable";
 
         /// <summary> Initializes a new instance of <see cref="AvailabilityLifecycle"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AvailabilityLifecycle(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string PreviewValue = "Preview";
-        private const string GenerallyAvailableValue = "GenerallyAvailable";
-
-        /// <summary> Preview. </summary>
+        /// <summary> Preview availability. </summary>
         public static AvailabilityLifecycle Preview { get; } = new AvailabilityLifecycle(PreviewValue);
-        /// <summary> GenerallyAvailable. </summary>
+
+        /// <summary> Generally available. </summary>
         public static AvailabilityLifecycle GenerallyAvailable { get; } = new AvailabilityLifecycle(GenerallyAvailableValue);
+
         /// <summary> Determines if two <see cref="AvailabilityLifecycle"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AvailabilityLifecycle left, AvailabilityLifecycle right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AvailabilityLifecycle"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AvailabilityLifecycle left, AvailabilityLifecycle right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AvailabilityLifecycle"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AvailabilityLifecycle"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AvailabilityLifecycle(string value) => new AvailabilityLifecycle(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AvailabilityLifecycle"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AvailabilityLifecycle?(string value) => value == null ? null : new AvailabilityLifecycle(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AvailabilityLifecycle other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AvailabilityLifecycle other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     /// <summary>
     /// A class representing a WorkloadNetworks along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkloadNetworksResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetWorkloadNetworks method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAllWorkloadNetworks method.
     /// </summary>
     public partial class WorkloadNetworksResource : ArmResource
     {
@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string workloadNetworksApiVersion);
             _workloadNetworksOpsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _workloadNetworksOpsRestClient = new WorkloadNetworksOps(_workloadNetworksOpsClientDiagnostics, Pipeline, Endpoint, workloadNetworksApiVersion ?? "2024-05-01");
+            _workloadNetworksOpsRestClient = new WorkloadNetworksOps(_workloadNetworksOpsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workloadNetworksApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -88,7 +88,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -223,7 +223,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _workloadNetworksOpsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                TestsArmOperation operation = new TestsArmOperation(_workloadNetworksOpsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                TestsArmOperation operation = new TestsArmOperation(
+                    _workloadNetworksOpsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -272,7 +278,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _workloadNetworksOpsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                TestsArmOperation operation = new TestsArmOperation(_workloadNetworksOpsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                TestsArmOperation operation = new TestsArmOperation(
+                    _workloadNetworksOpsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -326,12 +338,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _workloadNetworksOpsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkloadNetworksData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<WorkloadNetworksResource> operation = new TestsArmOperation<WorkloadNetworksResource>(
-                    new WorkloadNetworksOperationSource(Client),
+                    new WorkloadNetworksResourceOperationSource(Client),
                     _workloadNetworksOpsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -385,12 +398,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _workloadNetworksOpsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkloadNetworksData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<WorkloadNetworksResource> operation = new TestsArmOperation<WorkloadNetworksResource>(
-                    new WorkloadNetworksOperationSource(Client),
+                    new WorkloadNetworksResourceOperationSource(Client),
                     _workloadNetworksOpsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

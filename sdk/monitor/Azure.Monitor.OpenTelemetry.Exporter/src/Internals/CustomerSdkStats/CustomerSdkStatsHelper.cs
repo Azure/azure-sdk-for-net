@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -38,14 +38,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
         /// <summary>
         /// Checks if customer SDK stats are enabled.
         /// </summary>
-        /// <returns>True if enabled, false otherwise</returns>
+        /// <returns>True unless explicitly disabled via APPLICATIONINSIGHTS_SDKSTATS_DISABLED=true.</returns>
         public static bool IsEnabled()
         {
             if (s_isEnabled == null)
             {
-                var enabledValue = DefaultPlatform.Instance.GetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_SDKSTATS_ENABLED_PREVIEW);
-                s_isEnabled = string.Equals(enabledValue, "true", StringComparison.OrdinalIgnoreCase);
+                // On-by-default per the customer-facing SDKStats spec: emit unless the user opts out.
+                var disabledValue = DefaultPlatform.Instance.GetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_SDKSTATS_DISABLED);
+                s_isEnabled = !string.Equals(disabledValue, "true", StringComparison.OrdinalIgnoreCase);
             }
+
             return s_isEnabled.Value;
         }
 
@@ -123,37 +125,37 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
             {
                 if (telemetrySchemaTypeCounter._requestCount != 0)
                 {
-                    var tags = CustomerSdkStatsDimensions.GetBaseTags("REQUEST");
+                    var tags = CustomerSdkStatsDimensions.GetBaseTags(TelemetryType.Request);
                     CustomerSdkStatsMeters.ItemSuccessCount.Add(telemetrySchemaTypeCounter._requestCount, tags);
                 }
 
                 if (telemetrySchemaTypeCounter._dependencyCount != 0)
                 {
-                    var tags = CustomerSdkStatsDimensions.GetBaseTags("DEPENDENCY");
+                    var tags = CustomerSdkStatsDimensions.GetBaseTags(TelemetryType.Dependency);
                     CustomerSdkStatsMeters.ItemSuccessCount.Add(telemetrySchemaTypeCounter._dependencyCount, tags);
                 }
 
                 if (telemetrySchemaTypeCounter._exceptionCount != 0)
                 {
-                    var tags = CustomerSdkStatsDimensions.GetBaseTags("EXCEPTION");
+                    var tags = CustomerSdkStatsDimensions.GetBaseTags(TelemetryType.Exception);
                     CustomerSdkStatsMeters.ItemSuccessCount.Add(telemetrySchemaTypeCounter._exceptionCount, tags);
                 }
 
                 if (telemetrySchemaTypeCounter._eventCount != 0)
                 {
-                    var tags = CustomerSdkStatsDimensions.GetBaseTags("EVENT");
+                    var tags = CustomerSdkStatsDimensions.GetBaseTags(TelemetryType.CustomEvent);
                     CustomerSdkStatsMeters.ItemSuccessCount.Add(telemetrySchemaTypeCounter._eventCount, tags);
                 }
 
                 if (telemetrySchemaTypeCounter._metricCount != 0)
                 {
-                    var tags = CustomerSdkStatsDimensions.GetBaseTags("METRIC");
+                    var tags = CustomerSdkStatsDimensions.GetBaseTags(TelemetryType.CustomMetric);
                     CustomerSdkStatsMeters.ItemSuccessCount.Add(telemetrySchemaTypeCounter._metricCount, tags);
                 }
 
                 if (telemetrySchemaTypeCounter._traceCount != 0)
                 {
-                    var tags = CustomerSdkStatsDimensions.GetBaseTags("TRACE");
+                    var tags = CustomerSdkStatsDimensions.GetBaseTags(TelemetryType.Trace);
                     CustomerSdkStatsMeters.ItemSuccessCount.Add(telemetrySchemaTypeCounter._traceCount, tags);
                 }
             }
@@ -194,44 +196,44 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
                 if (dropCode > 0 && dropCode < 10)
                 {
                     DropCode enumValue = (DropCode)dropCode;
-                    dropCodeString = enumValue.ToString();
+                    dropCodeString = enumValue.ToDimensionString();
                 }
 
                 dropCodeString ??= dropCode.ToString();
 
                 if (telemetrySchemaTypeCounter._requestCount != 0)
                 {
-                    var tags = CustomerSdkStatsDimensions.GetDroppedTags("REQUEST", dropCodeString, dropReason);
+                    var tags = CustomerSdkStatsDimensions.GetDroppedTags(TelemetryType.Request, dropCodeString, dropReason);
                     CustomerSdkStatsMeters.ItemDroppedCount.Add(telemetrySchemaTypeCounter._requestCount, tags);
                 }
 
                 if (telemetrySchemaTypeCounter._dependencyCount != 0)
                 {
-                    var tags = CustomerSdkStatsDimensions.GetDroppedTags("DEPENDENCY", dropCodeString, dropReason);
+                    var tags = CustomerSdkStatsDimensions.GetDroppedTags(TelemetryType.Dependency, dropCodeString, dropReason);
                     CustomerSdkStatsMeters.ItemDroppedCount.Add(telemetrySchemaTypeCounter._dependencyCount, tags);
                 }
 
                 if (telemetrySchemaTypeCounter._exceptionCount != 0)
                 {
-                    var tags = CustomerSdkStatsDimensions.GetDroppedTags("EXCEPTION", dropCodeString, dropReason);
+                    var tags = CustomerSdkStatsDimensions.GetDroppedTags(TelemetryType.Exception, dropCodeString, dropReason);
                     CustomerSdkStatsMeters.ItemDroppedCount.Add(telemetrySchemaTypeCounter._exceptionCount, tags);
                 }
 
                 if (telemetrySchemaTypeCounter._eventCount != 0)
                 {
-                    var tags = CustomerSdkStatsDimensions.GetDroppedTags("EVENT", dropCodeString, dropReason);
+                    var tags = CustomerSdkStatsDimensions.GetDroppedTags(TelemetryType.CustomEvent, dropCodeString, dropReason);
                     CustomerSdkStatsMeters.ItemDroppedCount.Add(telemetrySchemaTypeCounter._eventCount, tags);
                 }
 
                 if (telemetrySchemaTypeCounter._metricCount != 0)
                 {
-                    var tags = CustomerSdkStatsDimensions.GetDroppedTags("METRIC", dropCodeString, dropReason);
+                    var tags = CustomerSdkStatsDimensions.GetDroppedTags(TelemetryType.CustomMetric, dropCodeString, dropReason);
                     CustomerSdkStatsMeters.ItemDroppedCount.Add(telemetrySchemaTypeCounter._metricCount, tags);
                 }
 
                 if (telemetrySchemaTypeCounter._traceCount != 0)
                 {
-                    var tags = CustomerSdkStatsDimensions.GetDroppedTags("TRACE", dropCodeString, dropReason);
+                    var tags = CustomerSdkStatsDimensions.GetDroppedTags(TelemetryType.Trace, dropCodeString, dropReason);
                     CustomerSdkStatsMeters.ItemDroppedCount.Add(telemetrySchemaTypeCounter._traceCount, tags);
                 }
             }
@@ -259,44 +261,44 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
                 if (retryCode > 0 && retryCode < 10)
                 {
                     DropCode enumValue = (DropCode)retryCode;
-                    retryCodeString = enumValue.ToString();
+                    retryCodeString = enumValue.ToDimensionString();
                 }
 
                 retryCodeString ??= retryCode.ToString();
 
                 if (telemetrySchemaTypeCounter._requestCount != 0)
                 {
-                    var tags = CustomerSdkStatsDimensions.GetRetryTags("REQUEST", retryCodeString, retryReason);
+                    var tags = CustomerSdkStatsDimensions.GetRetryTags(TelemetryType.Request, retryCodeString, retryReason);
                     CustomerSdkStatsMeters.ItemRetryCount.Add(telemetrySchemaTypeCounter._requestCount, tags);
                 }
 
                 if (telemetrySchemaTypeCounter._dependencyCount != 0)
                 {
-                    var tags = CustomerSdkStatsDimensions.GetRetryTags("DEPENDENCY", retryCodeString, retryReason);
+                    var tags = CustomerSdkStatsDimensions.GetRetryTags(TelemetryType.Dependency, retryCodeString, retryReason);
                     CustomerSdkStatsMeters.ItemRetryCount.Add(telemetrySchemaTypeCounter._dependencyCount, tags);
                 }
 
                 if (telemetrySchemaTypeCounter._exceptionCount != 0)
                 {
-                    var tags = CustomerSdkStatsDimensions.GetRetryTags("EXCEPTION", retryCodeString, retryReason);
+                    var tags = CustomerSdkStatsDimensions.GetRetryTags(TelemetryType.Exception, retryCodeString, retryReason);
                     CustomerSdkStatsMeters.ItemRetryCount.Add(telemetrySchemaTypeCounter._exceptionCount, tags);
                 }
 
                 if (telemetrySchemaTypeCounter._eventCount != 0)
                 {
-                    var tags = CustomerSdkStatsDimensions.GetRetryTags("EVENT", retryCodeString, retryReason);
+                    var tags = CustomerSdkStatsDimensions.GetRetryTags(TelemetryType.CustomEvent, retryCodeString, retryReason);
                     CustomerSdkStatsMeters.ItemRetryCount.Add(telemetrySchemaTypeCounter._eventCount, tags);
                 }
 
                 if (telemetrySchemaTypeCounter._metricCount != 0)
                 {
-                    var tags = CustomerSdkStatsDimensions.GetRetryTags("METRIC", retryCodeString, retryReason);
+                    var tags = CustomerSdkStatsDimensions.GetRetryTags(TelemetryType.CustomMetric, retryCodeString, retryReason);
                     CustomerSdkStatsMeters.ItemRetryCount.Add(telemetrySchemaTypeCounter._metricCount, tags);
                 }
 
                 if (telemetrySchemaTypeCounter._traceCount != 0)
                 {
-                    var tags = CustomerSdkStatsDimensions.GetRetryTags("TRACE", retryCodeString, retryReason);
+                    var tags = CustomerSdkStatsDimensions.GetRetryTags(TelemetryType.Trace, retryCodeString, retryReason);
                     CustomerSdkStatsMeters.ItemRetryCount.Add(telemetrySchemaTypeCounter._traceCount, tags);
                 }
             }

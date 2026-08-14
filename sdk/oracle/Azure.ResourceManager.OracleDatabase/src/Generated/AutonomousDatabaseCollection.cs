@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(AutonomousDatabaseResource.ResourceType, out string autonomousDatabaseApiVersion);
             _autonomousDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", AutonomousDatabaseResource.ResourceType.Namespace, Diagnostics);
-            _autonomousDatabasesRestClient = new AutonomousDatabases(_autonomousDatabasesClientDiagnostics, Pipeline, Endpoint, autonomousDatabaseApiVersion ?? "2025-09-01");
+            _autonomousDatabasesRestClient = new AutonomousDatabases(_autonomousDatabasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, autonomousDatabaseApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _autonomousDatabasesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, autonomousdatabasename, AutonomousDatabaseData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
-                    new AutonomousDatabaseOperationSource(Client),
+                    new AutonomousDatabaseResourceOperationSource(Client),
                     _autonomousDatabasesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _autonomousDatabasesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, autonomousdatabasename, AutonomousDatabaseData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
-                    new AutonomousDatabaseOperationSource(Client),
+                    new AutonomousDatabaseResourceOperationSource(Client),
                     _autonomousDatabasesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutonomousDatabaseData, AutonomousDatabaseResource>(new AutonomousDatabasesGetByResourceGroupAsyncCollectionResultOfT(_autonomousDatabasesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new AutonomousDatabaseResource(Client, data));
+            return new AsyncPageableWrapper<AutonomousDatabaseData, AutonomousDatabaseResource>(new AutonomousDatabasesGetByResourceGroupAsyncCollectionResultOfT(_autonomousDatabasesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AutonomousDatabaseCollection.GetAll"), data => new AutonomousDatabaseResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutonomousDatabaseData, AutonomousDatabaseResource>(new AutonomousDatabasesGetByResourceGroupCollectionResultOfT(_autonomousDatabasesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new AutonomousDatabaseResource(Client, data));
+            return new PageableWrapper<AutonomousDatabaseData, AutonomousDatabaseResource>(new AutonomousDatabasesGetByResourceGroupCollectionResultOfT(_autonomousDatabasesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AutonomousDatabaseCollection.GetAll"), data => new AutonomousDatabaseResource(Client, data));
         }
 
         /// <summary>

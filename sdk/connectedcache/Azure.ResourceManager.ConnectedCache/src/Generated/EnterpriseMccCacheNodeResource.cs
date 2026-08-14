@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             TryGetApiVersion(ResourceType, out string enterpriseMccCacheNodeApiVersion);
             _enterpriseMccCacheNodesOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", ResourceType.Namespace, Diagnostics);
-            _enterpriseMccCacheNodesOperationsRestClient = new EnterpriseMccCacheNodesOperations(_enterpriseMccCacheNodesOperationsClientDiagnostics, Pipeline, Endpoint, enterpriseMccCacheNodeApiVersion ?? "2024-11-30-preview");
+            _enterpriseMccCacheNodesOperationsRestClient = new EnterpriseMccCacheNodesOperations(_enterpriseMccCacheNodesOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, enterpriseMccCacheNodeApiVersion ?? "2024-11-30-preview");
             ValidateResourceId(id);
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

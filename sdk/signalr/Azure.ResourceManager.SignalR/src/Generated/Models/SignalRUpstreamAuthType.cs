@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.SignalR.Models
     public readonly partial struct SignalRUpstreamAuthType : IEquatable<SignalRUpstreamAuthType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SignalRUpstreamAuthType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SignalRUpstreamAuthType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string ManagedIdentityValue = "ManagedIdentity";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRUpstreamAuthType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SignalRUpstreamAuthType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static SignalRUpstreamAuthType None { get; } = new SignalRUpstreamAuthType(NoneValue);
-        /// <summary> ManagedIdentity. </summary>
+
+        /// <summary> Gets the ManagedIdentity. </summary>
         public static SignalRUpstreamAuthType ManagedIdentity { get; } = new SignalRUpstreamAuthType(ManagedIdentityValue);
+
         /// <summary> Determines if two <see cref="SignalRUpstreamAuthType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SignalRUpstreamAuthType left, SignalRUpstreamAuthType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SignalRUpstreamAuthType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SignalRUpstreamAuthType left, SignalRUpstreamAuthType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SignalRUpstreamAuthType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SignalRUpstreamAuthType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SignalRUpstreamAuthType(string value) => new SignalRUpstreamAuthType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SignalRUpstreamAuthType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SignalRUpstreamAuthType?(string value) => value == null ? null : new SignalRUpstreamAuthType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SignalRUpstreamAuthType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SignalRUpstreamAuthType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

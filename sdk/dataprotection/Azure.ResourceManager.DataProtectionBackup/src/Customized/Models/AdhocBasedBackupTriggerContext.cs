@@ -4,12 +4,11 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Adhoc trigger context. </summary>
-    [CodeGenSuppress("AdhocBasedBackupTriggerContext", typeof(AdhocBasedBackupTaggingCriteria))]
     public partial class AdhocBasedBackupTriggerContext : DataProtectionBackupTriggerContext
     {
         /// <summary> Initializes a new instance of AdhocBasedBackupTriggerContext. </summary>

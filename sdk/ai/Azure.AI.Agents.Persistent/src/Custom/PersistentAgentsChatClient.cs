@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable enable
@@ -16,8 +16,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Microsoft.Extensions.AI;
-
-#pragma warning disable MEAI001 // MCP-related types are currently marked as [Experimental]
 
 namespace Azure.AI.Agents.Persistent
 {
@@ -86,7 +84,7 @@ namespace Azure.AI.Agents.Persistent
             RequestContext requestContext = CreateMeaiRequestContext(cancellationToken);
 
             // Extract necessary state from messages and options.
-            (ThreadAndRunOptions runOptions, List<FunctionResultContent>? toolResults, List<McpServerToolApprovalResponseContent>? approvalResults) =
+            (ThreadAndRunOptions runOptions, List<FunctionResultContent>? toolResults, List<ToolApprovalResponseContent>? approvalResults) =
                 await CreateRunOptionsAsync(messages, options, cancellationToken).ConfigureAwait(false);
 
             // Get the thread ID.
@@ -128,13 +126,13 @@ namespace Azure.AI.Agents.Persistent
                 {
                     // No thread ID was provided, so create a new thread.
                     CreateThreadRequest createThreadRequest = new(
-                        messages: runOptions.ThreadOptions.Messages?.ToList() as IReadOnlyList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(),
+                        messages: runOptions.ThreadOptions.Messages?.ToList() ?? (IList<ThreadMessageOptions>)new ChangeTrackingList<ThreadMessageOptions>(),
                         toolResources: runOptions.ToolResources,
-                        metadata: runOptions.Metadata ?? new ChangeTrackingDictionary<string, string>(),
-                        serializedAdditionalRawData: null);
+                        metadata: runOptions.Metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value) ?? (IDictionary<string, string>)new ChangeTrackingDictionary<string, string>(),
+                        additionalBinaryDataProperties: null);
 
-                    Response threadResponse = await _client!.Threads.CreateThreadAsync(createThreadRequest.ToRequestContent(), requestContext).ConfigureAwait(false);
-                    PersistentAgentThread thread = PersistentAgentThread.FromResponse(threadResponse);
+                    Response threadResponse = await _client!.Threads.CreateThreadAsync(createThreadRequest, requestContext).ConfigureAwait(false);
+                    PersistentAgentThread thread = (PersistentAgentThread)threadResponse;
                     runOptions.ThreadOptions.Messages?.Clear();
                     threadId = thread.Id;
                 }
@@ -223,11 +221,11 @@ namespace Azure.AI.Agents.Persistent
                                 break;
 
                             case SubmitToolApprovalUpdate stau:
-                                ruUpdate.Contents.Add(new McpServerToolApprovalRequestContent(
+                                ruUpdate.Contents.Add(new ToolApprovalRequestContent(
                                     JsonSerializer.Serialize([stau.Value.Id, stau.ToolCallId], AgentsChatClientJsonContext.Default.StringArray),
                                     new McpServerToolCallContent(stau.ToolCallId, stau.Name, stau.ServerLabel)
                                     {
-                                        Arguments = JsonSerializer.Deserialize(stau.Arguments, AgentsChatClientJsonContext.Default.IReadOnlyDictionaryStringObject)!,
+                                        Arguments = JsonSerializer.Deserialize(stau.Arguments, AgentsChatClientJsonContext.Default.IDictionaryStringObject)!,
                                     }));
                                 break;
                         }
@@ -235,12 +233,12 @@ namespace Azure.AI.Agents.Persistent
                         yield return ruUpdate;
                         break;
 
+#pragma warning disable MEAI001 // code interpreter types are currently experimental
                     case RunStepDetailsUpdate details:
                         if (!string.IsNullOrEmpty(details.CodeInterpreterInput))
                         {
-                            CodeInterpreterToolCallContent citcc = new()
+                            CodeInterpreterToolCallContent citcc = new(details.ToolCallId)
                             {
-                                CallId = details.ToolCallId,
                                 Inputs = [new DataContent(Encoding.UTF8.GetBytes(details.CodeInterpreterInput), "text/x-python")],
                                 RawRepresentation = details,
                             };
@@ -257,9 +255,8 @@ namespace Azure.AI.Agents.Persistent
 
                         if (details.CodeInterpreterOutputs is { Count: > 0 })
                         {
-                            CodeInterpreterToolResultContent citrc = new()
+                            CodeInterpreterToolResultContent citrc = new(details.ToolCallId)
                             {
-                                CallId = details.ToolCallId,
                                 RawRepresentation = details,
                             };
 
@@ -287,6 +284,7 @@ namespace Azure.AI.Agents.Persistent
                             };
                         }
                         break;
+#pragma warning restore MEAI001
 
                     case MessageContentUpdate mcu:
                         ChatResponseUpdate textUpdate = new(mcu.Role == MessageRole.User ? ChatRole.User : ChatRole.Assistant, mcu.Text)
@@ -356,7 +354,7 @@ namespace Azure.AI.Agents.Persistent
         /// Creates the <see cref="ThreadAndRunOptions"/> to use for the request and extracts any function result contents
         /// that need to be submitted as tool results.
         /// </summary>
-        private async ValueTask<(ThreadAndRunOptions RunOptions, List<FunctionResultContent>? ToolResults, List<McpServerToolApprovalResponseContent>? ApprovalResults)> CreateRunOptionsAsync(
+        private async ValueTask<(ThreadAndRunOptions RunOptions, List<FunctionResultContent>? ToolResults, List<ToolApprovalResponseContent>? ApprovalResults)> CreateRunOptionsAsync(
             IEnumerable<ChatMessage> messages, ChatOptions? options, CancellationToken cancellationToken)
         {
             // Create the options instance to populate, either a fresh or using one the caller provides.
@@ -371,9 +369,9 @@ namespace Azure.AI.Agents.Persistent
 
                 RequestContext context = CreateMeaiRequestContext(cancellationToken);
                 Response response = await _client!.Administration.GetAgentAsync(_agentId, context).ConfigureAwait(false);
-                var agent = Response.FromValue(PersistentAgent.FromResponse(response), response);
+                PersistentAgent agentValue = (PersistentAgent)response;
 
-                Interlocked.CompareExchange(ref _agent, agent, null);
+                Interlocked.CompareExchange(ref _agent, agentValue, null);
             }
 
             // Populate the run options from the ChatOptions, if provided.
@@ -443,7 +441,7 @@ namespace Azure.AI.Agents.Persistent
                             case HostedFileSearchTool fileSearchTool:
                                 toolDefinitions.Add(new FileSearchToolDefinition(
                                     type: "file_search",
-                                    serializedAdditionalRawData: null,
+                                    additionalBinaryDataProperties: null,
                                     fileSearch: new() { MaxNumResults = fileSearchTool.MaximumResultCount }));
 
                                 if (fileSearchTool.Inputs is { Count: > 0 })
@@ -475,9 +473,7 @@ namespace Azure.AI.Agents.Persistent
                                     }
                                 }
 
-                                MCPToolResource mcpResource = !string.IsNullOrEmpty(mcpTool.AuthorizationToken) ?
-                                    new(mcpTool.ServerName, new Dictionary<string, string>() { ["Authorization"] = $"Bearer {mcpTool.AuthorizationToken}" }) :
-                                    new(mcpTool.ServerName);
+                                MCPToolResource mcpResource = new(mcpTool.ServerName, mcpTool.Headers ?? new Dictionary<string, string>());
 
                                 switch (mcpTool.ApprovalMode)
                                 {
@@ -582,7 +578,7 @@ namespace Azure.AI.Agents.Persistent
             // and everything else as user messages.
             StringBuilder? instructions = null;
             List<FunctionResultContent>? functionResults = null;
-            List<McpServerToolApprovalResponseContent>? approvalResults = null;
+            List<ToolApprovalResponseContent>? approvalResults = null;
 
             runOptions.ThreadOptions ??= new();
 
@@ -634,7 +630,7 @@ namespace Azure.AI.Agents.Persistent
                             (functionResults ??= []).Add(result);
                             break;
 
-                        case McpServerToolApprovalResponseContent mcpApproval:
+                        case ToolApprovalResponseContent mcpApproval when mcpApproval.ToolCall is McpServerToolCallContent:
                             (approvalResults ??= []).Add(mcpApproval);
                             break;
 
@@ -691,7 +687,7 @@ namespace Azure.AI.Agents.Persistent
         /// <returns>The run ID associated with the corresponding function call requests.</returns>
         private static string? ConvertFunctionResultsToToolOutput(
             List<FunctionResultContent>? functionResults,
-            List<McpServerToolApprovalResponseContent>? approvalResults,
+            List<ToolApprovalResponseContent>? approvalResults,
             out List<ToolOutput> toolOutputs,
             out List<ToolApproval> toolApprovals)
         {
@@ -714,9 +710,9 @@ namespace Azure.AI.Agents.Persistent
 
             if (approvalResults?.Count > 0)
             {
-                foreach (McpServerToolApprovalResponseContent trc in approvalResults)
+                foreach (ToolApprovalResponseContent trc in approvalResults)
                 {
-                    if (TryParseRunAndCallIds(trc.Id, out string? parsedRunId, out string? callId) &&
+                    if (TryParseRunAndCallIds(trc.RequestId, out string? parsedRunId, out string? callId) &&
                         (runId is null || runId == parsedRunId))
                     {
                         runId = parsedRunId;
@@ -729,7 +725,7 @@ namespace Azure.AI.Agents.Persistent
 
             static bool TryParseRunAndCallIds(string id, out string? runId, out string? callId)
             {
-                // When creating the AIContent instances, we created it with a CallId == [runId, callId].
+                // When creating the ToolApprovalRequestContent instances, we created them with a RequestId == [runId, callId].
                 // We need to extract the run ID and ensure that the ToolOutput we send back to Azure
                 // is only the call ID.
                 runId = null;

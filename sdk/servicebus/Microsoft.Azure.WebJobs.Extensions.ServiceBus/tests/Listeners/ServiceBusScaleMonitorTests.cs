@@ -471,7 +471,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
             var warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == LogLevel.Warning);
-            Assert.AreEqual($"ServiceBus {_entityTypeName} '{_entityPath}' was not found.", warning.FormattedMessage);
+            Assert.AreEqual($"Function '{_functionId}' warning: ServiceBus {_entityTypeName} '{_entityPath}' was not found.", warning.FormattedMessage);
             _loggerProvider.ClearAllLogMessages();
 
             // UnauthorizedAccessException
@@ -488,7 +488,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
             warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == LogLevel.Warning);
-            Assert.AreEqual($"Connection string does not have Manage claim for {_entityTypeName} '{_entityPath}'. Failed to get {_entityTypeName} description to derive {_entityTypeName} length metrics. " +
+            Assert.AreEqual($"Function '{_functionId}' warning: Connection string does not have Manage claim for {_entityTypeName} '{_entityPath}'. Failed to get {_entityTypeName} description to derive {_entityTypeName} length metrics. " +
                         $"Falling back to using first message enqueued time.",
                         warning.FormattedMessage);
             _loggerProvider.ClearAllLogMessages();
@@ -507,7 +507,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
             warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == LogLevel.Warning);
-            Assert.AreEqual($"Error querying for Service Bus {_entityTypeName} scale status: Uh oh", warning.FormattedMessage);
+            Assert.AreEqual($"Function '{_functionId}' warning: Error querying for Service Bus {_entityTypeName} scale status", warning.FormattedMessage);
         }
 
         private ServiceBusListener CreateListener(bool useDeadletterQueue = false)
@@ -557,9 +557,19 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             var status = _scaleMonitor.GetScaleStatus(context);
             Assert.AreEqual(ScaleVote.None, status.Vote);
 
+            var logs = _loggerProvider.GetAllLogMessages().ToArray();
+            var log = logs.Single(l => l.Level == LogLevel.Warning);
+            Assert.AreEqual($"No metrics available for Service Bus entity '{_entityPath}'. Voting to not scale.", log.FormattedMessage);
+
+            _loggerProvider.ClearAllLogMessages();
+
             // verify the non-generic implementation works properly
             status = ((IScaleMonitor)_scaleMonitor).GetScaleStatus(context);
             Assert.AreEqual(ScaleVote.None, status.Vote);
+
+            logs = _loggerProvider.GetAllLogMessages().ToArray();
+            log = logs.Single(l => l.Level == LogLevel.Warning);
+            Assert.AreEqual($"No metrics available for Service Bus entity '{_entityPath}'. Voting to not scale.", log.FormattedMessage);
         }
 
         [Test]
@@ -848,6 +858,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             var status = _scaleMonitor.GetScaleStatus(context);
             Assert.AreEqual(ScaleVote.None, status.Vote);
+
+            var logs = _loggerProvider.GetAllLogMessages().ToArray();
+            var log = logs.Single(l => l.Level == LogLevel.Warning);
+            Assert.AreEqual($"Insufficient metrics samples for Service Bus entity '{_entityPath}' (2/5). Voting to not scale.", log.FormattedMessage);
         }
     }
 }

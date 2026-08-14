@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
 
         private ClientDiagnostics AppliancesClientDiagnostics => _appliancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceConnector.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Appliances AppliancesRestClient => _appliancesRestClient ??= new Appliances(AppliancesClientDiagnostics, Pipeline, Endpoint, "2025-03-01-preview");
+        private Appliances AppliancesRestClient => _appliancesRestClient ??= new Appliances(AppliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01-preview");
 
         /// <summary>
         /// Gets a list of Appliances in the specified subscription. The operation returns properties of each Appliance
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceConnectorApplianceData, ResourceConnectorApplianceResource>(new AppliancesGetBySubscriptionAsyncCollectionResultOfT(AppliancesRestClient, Id.SubscriptionId, context), data => new ResourceConnectorApplianceResource(Client, data));
+            return new AsyncPageableWrapper<ResourceConnectorApplianceData, ResourceConnectorApplianceResource>(new AppliancesGetBySubscriptionAsyncCollectionResultOfT(AppliancesRestClient, Id.SubscriptionId, context, "MockableResourceConnectorSubscriptionResource.GetResourceConnectorAppliances"), data => new ResourceConnectorApplianceResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceConnectorApplianceData, ResourceConnectorApplianceResource>(new AppliancesGetBySubscriptionCollectionResultOfT(AppliancesRestClient, Id.SubscriptionId, context), data => new ResourceConnectorApplianceResource(Client, data));
+            return new PageableWrapper<ResourceConnectorApplianceData, ResourceConnectorApplianceResource>(new AppliancesGetBySubscriptionCollectionResultOfT(AppliancesRestClient, Id.SubscriptionId, context, "MockableResourceConnectorSubscriptionResource.GetResourceConnectorAppliances"), data => new ResourceConnectorApplianceResource(Client, data));
         }
 
         /// <summary>

@@ -13,7 +13,6 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/radiantearth/stac-api-spec/blob/master/api-spec.md#ogc-api---features-endpoints
-    /// 
     /// Represents the STAC API landing page with links to available resources.
     /// </summary>
     public partial class StacLandingPage
@@ -46,9 +45,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="stacVersion"> Stac Version. </param>
         /// <param name="conformsTo"> List of OGC API conformance classes implemented by this API. </param>
         /// <param name="links"> Links to related resources and endpoints. </param>
-        /// <param name="type"> Type. </param>
+        /// <param name="kind"> Type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacLandingPage(string createdOn, string updatedOn, string shortDescription, IList<string> stacExtensions, string id, string description, string title, string stacVersion, IList<Uri> conformsTo, IList<StacLink> links, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacLandingPage(DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string shortDescription, IList<string> stacExtensions, string id, string description, string title, string stacVersion, IList<Uri> conformsTo, IList<StacLink> links, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
@@ -60,15 +59,15 @@ namespace Azure.Analytics.PlanetaryComputer
             StacVersion = stacVersion;
             ConformsTo = conformsTo;
             Links = links;
-            Type = @type;
+            Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> MSFT Created. </summary>
-        public string CreatedOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> MSFT Updated. </summary>
-        public string UpdatedOn { get; }
+        public DateTimeOffset? UpdatedOn { get; }
 
         /// <summary> MSFT Short Description. </summary>
         public string ShortDescription { get; }
@@ -95,6 +94,6 @@ namespace Azure.Analytics.PlanetaryComputer
         public IList<StacLink> Links { get; }
 
         /// <summary> Type. </summary>
-        public string Type { get; }
+        public string Kind { get; }
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Batch
 {
+    /// <summary></summary>
     public partial class BatchApplicationPackageResource : IJsonModel<BatchApplicationPackageData>
     {
-        private static BatchApplicationPackageData s_dataDeserializationInstance;
-        private static BatchApplicationPackageData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<BatchApplicationPackageData> s_dataDeserializationInstance;
 
+        private static IJsonModel<BatchApplicationPackageData> DataDeserializationInstance => s_dataDeserializationInstance ??= new BatchApplicationPackageData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchApplicationPackageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BatchApplicationPackageData>)Data).Write(writer, options);
 
-        BatchApplicationPackageData IJsonModel<BatchApplicationPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BatchApplicationPackageData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchApplicationPackageData IJsonModel<BatchApplicationPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<BatchApplicationPackageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BatchApplicationPackageData>(Data, options, AzureResourceManagerBatchContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         BatchApplicationPackageData IPersistableModel<BatchApplicationPackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BatchApplicationPackageData>(data, options, AzureResourceManagerBatchContext.Default);
 
-        string IPersistableModel<BatchApplicationPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BatchApplicationPackageData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BatchApplicationPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

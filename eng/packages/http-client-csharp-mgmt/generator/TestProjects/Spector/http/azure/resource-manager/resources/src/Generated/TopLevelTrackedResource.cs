@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources
         {
             TryGetApiVersion(ResourceType, out string topLevelTrackedResourceApiVersion);
             _topLevelClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
-            _topLevelRestClient = new TopLevel(_topLevelClientDiagnostics, Pipeline, Endpoint, topLevelTrackedResourceApiVersion ?? "2023-12-01-preview");
+            _topLevelRestClient = new TopLevel(_topLevelClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, topLevelTrackedResourceApiVersion ?? "2023-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Resources
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.Resources
                 else
                 {
                     TopLevelTrackedResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    TopLevelTrackedResourceData patch = new TopLevelTrackedResourceData();
+                    TopLevelTrackedResourceData patch = new TopLevelTrackedResourceData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.Resources
                 else
                 {
                     TopLevelTrackedResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    TopLevelTrackedResourceData patch = new TopLevelTrackedResourceData();
+                    TopLevelTrackedResourceData patch = new TopLevelTrackedResourceData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.Resources
                 else
                 {
                     TopLevelTrackedResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    TopLevelTrackedResourceData patch = new TopLevelTrackedResourceData();
+                    TopLevelTrackedResourceData patch = new TopLevelTrackedResourceData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<TopLevelTrackedResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.Resources
                 else
                 {
                     TopLevelTrackedResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    TopLevelTrackedResourceData patch = new TopLevelTrackedResourceData();
+                    TopLevelTrackedResourceData patch = new TopLevelTrackedResourceData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<TopLevelTrackedResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.Resources
                 else
                 {
                     TopLevelTrackedResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    TopLevelTrackedResourceData patch = new TopLevelTrackedResourceData();
+                    TopLevelTrackedResourceData patch = new TopLevelTrackedResourceData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.Resources
                 else
                 {
                     TopLevelTrackedResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    TopLevelTrackedResourceData patch = new TopLevelTrackedResourceData();
+                    TopLevelTrackedResourceData patch = new TopLevelTrackedResourceData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

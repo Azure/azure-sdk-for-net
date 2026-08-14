@@ -20,7 +20,7 @@ namespace Azure.Core
             _nextLinkOperation = nextLinkOperation;
             _operation = operationState.HasCompleted
                     ? new OperationInternal<T>(operationState)
-                    :  new OperationInternal<T>(operation, new ClientDiagnostics(options ?? ClientOptions.Default), operationState.RawResponse);
+                    : new OperationInternal<T>(operation, new ClientDiagnostics(options ?? ClientOptions.Default), operationState.RawResponse);
         }
 
         public override T Value => _operation.Value;

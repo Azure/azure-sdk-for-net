@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NotificationHubs
 {
+    /// <summary></summary>
     public partial class NotificationHubPrivateEndpointConnectionResource : IJsonModel<NotificationHubPrivateEndpointConnectionData>
     {
-        private static NotificationHubPrivateEndpointConnectionData s_dataDeserializationInstance;
-        private static NotificationHubPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NotificationHubPrivateEndpointConnectionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NotificationHubPrivateEndpointConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NotificationHubPrivateEndpointConnectionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NotificationHubPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NotificationHubPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        NotificationHubPrivateEndpointConnectionData IJsonModel<NotificationHubPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NotificationHubPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NotificationHubPrivateEndpointConnectionData IJsonModel<NotificationHubPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NotificationHubPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NotificationHubPrivateEndpointConnectionData>(Data, options, AzureResourceManagerNotificationHubsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NotificationHubPrivateEndpointConnectionData IPersistableModel<NotificationHubPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NotificationHubPrivateEndpointConnectionData>(data, options, AzureResourceManagerNotificationHubsContext.Default);
 
-        string IPersistableModel<NotificationHubPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NotificationHubPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NotificationHubPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

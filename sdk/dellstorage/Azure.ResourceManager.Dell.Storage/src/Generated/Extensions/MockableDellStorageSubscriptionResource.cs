@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
 
         private ClientDiagnostics FileSystemsClientDiagnostics => _fileSystemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Dell.Storage.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FileSystems FileSystemsRestClient => _fileSystemsRestClient ??= new FileSystems(FileSystemsClientDiagnostics, Pipeline, Endpoint, "2025-03-21");
+        private FileSystems FileSystemsRestClient => _fileSystemsRestClient ??= new FileSystems(FileSystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-21");
 
         /// <summary>
         /// List FileSystemResource resources by subscription ID
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DellFileSystemData, DellFileSystemResource>(new FileSystemsGetBySubscriptionAsyncCollectionResultOfT(FileSystemsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DellFileSystemResource(Client, data));
+            return new AsyncPageableWrapper<DellFileSystemData, DellFileSystemResource>(new FileSystemsGetBySubscriptionAsyncCollectionResultOfT(FileSystemsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDellStorageSubscriptionResource.GetDellFileSystems"), data => new DellFileSystemResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DellFileSystemData, DellFileSystemResource>(new FileSystemsGetBySubscriptionCollectionResultOfT(FileSystemsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DellFileSystemResource(Client, data));
+            return new PageableWrapper<DellFileSystemData, DellFileSystemResource>(new FileSystemsGetBySubscriptionCollectionResultOfT(FileSystemsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDellStorageSubscriptionResource.GetDellFileSystems"), data => new DellFileSystemResource(Client, data));
         }
     }
 }

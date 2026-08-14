@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CommonTypes.Models;
 
 namespace Azure.ResourceManager.OperationTemplates.Models
 {

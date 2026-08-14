@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiCenter
 {
+    /// <summary></summary>
     public partial class ApiCenterDeploymentResource : IJsonModel<ApiCenterDeploymentData>
     {
-        private static ApiCenterDeploymentData s_dataDeserializationInstance;
-        private static ApiCenterDeploymentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ApiCenterDeploymentData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ApiCenterDeploymentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ApiCenterDeploymentData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApiCenterDeploymentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiCenterDeploymentData>)Data).Write(writer, options);
 
-        ApiCenterDeploymentData IJsonModel<ApiCenterDeploymentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiCenterDeploymentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiCenterDeploymentData IJsonModel<ApiCenterDeploymentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ApiCenterDeploymentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiCenterDeploymentData>(Data, options, AzureResourceManagerApiCenterContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ApiCenterDeploymentData IPersistableModel<ApiCenterDeploymentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiCenterDeploymentData>(data, options, AzureResourceManagerApiCenterContext.Default);
 
-        string IPersistableModel<ApiCenterDeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiCenterDeploymentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApiCenterDeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

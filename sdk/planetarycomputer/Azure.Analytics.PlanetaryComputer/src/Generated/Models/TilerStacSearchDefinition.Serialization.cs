@@ -14,7 +14,6 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// Stored search query
-    /// 
     /// See:
     /// https://github.com/stac-utils/pgstac/blob/3499daa2bfa700ae7bb07503795c169bf2ebafc7/sql/004_search.sql#L907-L915
     /// </summary>
@@ -24,6 +23,46 @@ namespace Azure.Analytics.PlanetaryComputer
         internal TilerStacSearchDefinition()
         {
         }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TilerStacSearchDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TilerStacSearchDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTilerStacSearchDefinition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TilerStacSearchDefinition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TilerStacSearchDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TilerStacSearchDefinition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TilerStacSearchDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TilerStacSearchDefinition IPersistableModel<TilerStacSearchDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TilerStacSearchDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -65,12 +104,8 @@ namespace Azure.Analytics.PlanetaryComputer
 #endif
             }
             writer.WriteEndObject();
-            writer.WritePropertyName("_where"u8);
-            writer.WriteStringValue(Where);
-            writer.WritePropertyName("orderby"u8);
-            writer.WriteStringValue(OrderBy);
             writer.WritePropertyName("lastused"u8);
-            writer.WriteStringValue(LastUsed, "O");
+            writer.WriteStringValue(LastUsedOn, "O");
             writer.WritePropertyName("usecount"u8);
             writer.WriteNumberValue(UseCount);
             writer.WritePropertyName("metadata"u8);
@@ -119,9 +154,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             string hash = default;
             IDictionary<string, BinaryData> search = default;
-            string @where = default;
-            string orderBy = default;
-            DateTimeOffset lastUsed = default;
+            DateTimeOffset lastUsedOn = default;
             int useCount = default;
             MosaicMetadata metadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -149,19 +182,9 @@ namespace Azure.Analytics.PlanetaryComputer
                     search = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("_where"u8))
-                {
-                    @where = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("orderby"u8))
-                {
-                    orderBy = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("lastused"u8))
                 {
-                    lastUsed = prop.Value.GetDateTimeOffset("O");
+                    lastUsedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("usecount"u8))
@@ -182,52 +205,10 @@ namespace Azure.Analytics.PlanetaryComputer
             return new TilerStacSearchDefinition(
                 hash,
                 search,
-                @where,
-                orderBy,
-                lastUsed,
+                lastUsedOn,
                 useCount,
                 metadata,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TilerStacSearchDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TilerStacSearchDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TilerStacSearchDefinition)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TilerStacSearchDefinition IPersistableModel<TilerStacSearchDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TilerStacSearchDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TilerStacSearchDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTilerStacSearchDefinition(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TilerStacSearchDefinition)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TilerStacSearchDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

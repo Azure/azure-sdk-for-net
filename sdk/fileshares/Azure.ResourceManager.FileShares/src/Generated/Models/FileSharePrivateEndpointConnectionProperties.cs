@@ -20,8 +20,11 @@ namespace Azure.ResourceManager.FileShares.Models
 
         /// <summary> Initializes a new instance of <see cref="FileSharePrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        internal FileSharePrivateEndpointConnectionProperties(FileSharePrivateLinkServiceConnectionState privateLinkServiceConnectionState)
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkServiceConnectionState"/> is null. </exception>
+        public FileSharePrivateEndpointConnectionProperties(FileSharePrivateLinkServiceConnectionState privateLinkServiceConnectionState)
         {
+            Argument.AssertNotNull(privateLinkServiceConnectionState, nameof(privateLinkServiceConnectionState));
+
             GroupIds = new ChangeTrackingList<string>();
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
         }
@@ -45,10 +48,10 @@ namespace Azure.ResourceManager.FileShares.Models
         public IReadOnlyList<string> GroupIds { get; }
 
         /// <summary> The private endpoint resource. </summary>
-        internal PrivateEndpoint PrivateEndpoint { get; }
+        internal PrivateEndpoint PrivateEndpoint { get; set; }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public FileSharePrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
+        public FileSharePrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
 
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
         public FileSharePrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
@@ -58,7 +61,7 @@ namespace Azure.ResourceManager.FileShares.Models
         {
             get
             {
-                return PrivateEndpoint.Id;
+                return PrivateEndpoint is null ? default : PrivateEndpoint.Id;
             }
         }
     }

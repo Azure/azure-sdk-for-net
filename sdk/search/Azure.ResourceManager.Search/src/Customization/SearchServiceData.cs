@@ -8,6 +8,7 @@ using System.ComponentModel;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Search.Models;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.Search
 {
     /// <summary>

@@ -8,7 +8,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The remove participant succeeded event.
     /// </summary>
-    public class RemoveParticipantSucceeded: CallAutomationEventBase
+    public class RemoveParticipantSucceeded : CallAutomationEventBase
     {
         /// <summary> Initializes a new instance of RemoveParticipantSucceededInternal. </summary>
         internal RemoveParticipantSucceeded()
@@ -21,7 +21,7 @@ namespace Azure.Communication.CallAutomation
         {
             OperationContext = internalEvent.OperationContext;
             ResultInformation = internalEvent.ResultInformation;
-            Participant = CommunicationIdentifierSerializer_2025_06_30.Deserialize(internalEvent.Participant);
+            Participant = CommunicationIdentifierSerializer.Deserialize(internalEvent.Participant);
             CallConnectionId = internalEvent.CallConnectionId;
             ServerCallId = internalEvent.ServerCallId;
             CorrelationId = internalEvent.CorrelationId;

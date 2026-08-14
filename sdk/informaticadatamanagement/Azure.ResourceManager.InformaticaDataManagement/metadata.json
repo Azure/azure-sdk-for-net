@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2024-05-08"
+  "apiVersions": {
+    "Informatica.DataManagement": "2024-05-08"
+  }
 }

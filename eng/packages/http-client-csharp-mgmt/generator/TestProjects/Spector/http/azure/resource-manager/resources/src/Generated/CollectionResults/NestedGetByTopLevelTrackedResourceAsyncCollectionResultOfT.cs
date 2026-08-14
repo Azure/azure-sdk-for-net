@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Resources
         private readonly string _resourceGroupName;
         private readonly string _topLevelTrackedResourceName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of NestedGetByTopLevelTrackedResourceAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Nested client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="topLevelTrackedResourceName"> arm resource name for path. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public NestedGetByTopLevelTrackedResourceAsyncCollectionResultOfT(Nested client, Guid subscriptionId, string resourceGroupName, string topLevelTrackedResourceName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public NestedGetByTopLevelTrackedResourceAsyncCollectionResultOfT(Nested client, Guid subscriptionId, string resourceGroupName, string topLevelTrackedResourceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _topLevelTrackedResourceName = topLevelTrackedResourceName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of NestedGetByTopLevelTrackedResourceAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -53,8 +56,8 @@ namespace Azure.ResourceManager.Resources
                     yield break;
                 }
                 NestedProxyResourceListResult result = NestedProxyResourceListResult.FromResponse(response);
-                yield return Page<NestedProxyResourceData>.FromValues((IReadOnlyList<NestedProxyResourceData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
+                yield return Page<NestedProxyResourceData>.FromValues((IReadOnlyList<NestedProxyResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.Resources
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByTopLevelTrackedResourceRequest(nextLink, _subscriptionId, _resourceGroupName, _topLevelTrackedResourceName, _context) : _client.CreateGetByTopLevelTrackedResourceRequest(_subscriptionId, _resourceGroupName, _topLevelTrackedResourceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("NestedProxyResourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

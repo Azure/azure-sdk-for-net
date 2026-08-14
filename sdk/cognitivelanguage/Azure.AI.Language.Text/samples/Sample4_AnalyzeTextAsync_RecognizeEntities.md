@@ -213,7 +213,7 @@ foreach (DocumentError analyzeTextDocumentError in entitiesTaskResult.Results.Er
 ```
 
 ```C# Snippet:Sample4_AnalyzeTextAsync_RecognizeEntities_PrintDateValue
-public void PrintDateValue(IReadOnlyList<DateValue> dateValues)
+public void PrintDateValue(IEnumerable<DateValue> dateValues)
 {
     foreach (DateValue date in dateValues)
     {

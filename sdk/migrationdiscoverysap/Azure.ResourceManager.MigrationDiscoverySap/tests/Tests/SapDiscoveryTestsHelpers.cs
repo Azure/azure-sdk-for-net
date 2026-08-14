@@ -16,6 +16,7 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Tests.Tests;
+
 public static class SapDiscoveryTestsHelpers
 {
     public const string MigrateProjectIdFormat =

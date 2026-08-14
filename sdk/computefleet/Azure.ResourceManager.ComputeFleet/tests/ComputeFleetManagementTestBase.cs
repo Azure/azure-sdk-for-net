@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.ComputeFleet.Tests
 {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ComputeFleet.Tests
         {
             var networkSecurityGroups = Recording.GenerateAssetName("testVNetSecurityGroups-");
             ResourceIdentifier networkSecurityGroupsId = new ResourceIdentifier($"{_resourceGroup.Id}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroups}");
-            var input = new GenericResourceData(DefaultLocation){};
+            var input = new GenericResourceData(DefaultLocation) { };
             var operation = await _genericResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupsId, input);
             return operation.Value;
         }
@@ -112,7 +112,8 @@ namespace Azure.ResourceManager.ComputeFleet.Tests
         {
             var publicIPAddressName = Recording.GenerateAssetName("testPublicIP-");
             ResourceIdentifier publicIPAddress = new ResourceIdentifier($"{_resourceGroup.Id}/providers/Microsoft.Network/publicIPAddresses/{publicIPAddressName}");
-            var input = new GenericResourceData(DefaultLocation) {
+            var input = new GenericResourceData(DefaultLocation)
+            {
                 Sku = new() { Name = "Standard" },
                 Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {

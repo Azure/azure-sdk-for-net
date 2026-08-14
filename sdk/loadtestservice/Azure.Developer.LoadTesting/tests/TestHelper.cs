@@ -80,70 +80,148 @@ namespace Azure.Developer.LoadTesting.Tests.Helper
                 );
         }
 
-        public void SetupTestProfile(LoadTestAdministrationClient loadTestAdministrationClient, string testProfileId, string testId, string targetResourceId)
+        public async Task SetupTriggerAsync(LoadTestAdministrationClient client, string testId, string triggerId)
         {
-            loadTestAdministrationClient.CreateOrUpdateTestProfile(
-                testProfileId,
+            // Pre-cleanup in case a previous run left this trigger behind
+            try
+            {
+                await client.DeleteTriggerAsync(triggerId);
+            }
+            catch (RequestFailedException)
+            {
+                // Trigger doesn't exist, that's fine
+            }
+
+            await client.CreateOrUpdateTriggerAsync(
+                triggerId,
                 RequestContent.Create(
-                        new
+                    new
+                    {
+                        displayName = "Test Trigger from SDK",
+                        kind = "ScheduleTestsTrigger",
+                        testIds = new[] { testId },
+                        startDateTime = "2030-01-15T00:00:00.000Z",
+                        recurrence = new
                         {
-                            displayName = "Dotnet Testing Framework TestProfile",
-                            description = "This test profile was created through loadtesting C# SDK",
-                            testId = testId,
-                            targetResourceId = targetResourceId,
-                            targetResourceConfigurations = new
-                            {
-                                kind = "FunctionsFlexConsumption",
-                                configurations = new
-                                {
-                                    config1 = new
-                                    {
-                                        instanceMemoryMB = 2048,
-                                        httpConcurrency = 20
-                                    },
-                                    config2 = new
-                                    {
-                                        instanceMemoryMB = 4096,
-                                        httpConcurrency = 20
-                                    }
-                                }
-                            }
+                            frequency = "Daily",
+                            interval = 1,
                         }
-                    )
-                );
+                    }
+                )
+            );
         }
 
-        public async Task SetupTestProfileAsync(LoadTestAdministrationClient loadTestAdministrationClient, string testProfileId, string testId, string targetResourceId)
+        public void SetupTrigger(LoadTestAdministrationClient client, string testId, string triggerId)
         {
-            await loadTestAdministrationClient.CreateOrUpdateTestProfileAsync(
-                testProfileId,
+            // Pre-cleanup in case a previous run left this trigger behind
+            try
+            {
+                client.DeleteTrigger(triggerId);
+            }
+            catch (RequestFailedException)
+            {
+                // Trigger doesn't exist, that's fine
+            }
+
+            client.CreateOrUpdateTrigger(
+                triggerId,
                 RequestContent.Create(
-                        new
+                   new
+                    {
+                        displayName = "Test Trigger from SDK",
+                        kind = "ScheduleTestsTrigger",
+                        testIds = new[] { testId },
+                        startDateTime = "2030-01-15T00:00:00.000Z",
+                        recurrence = new
                         {
-                            displayName = "Dotnet Testing Framework TestProfile",
-                            description = "This test profile was created through loadtesting C# SDK",
-                            testId = testId,
-                            targetResourceId = targetResourceId,
-                            targetResourceConfigurations = new
+                            frequency = "Daily",
+                            interval = 1,
+                        }
+                    }
+                )
+            );
+        }
+
+        public async Task SetupNotificationRuleAsync(LoadTestAdministrationClient client, string notificationRuleId, string actionGroupId)
+        {
+            // Pre-cleanup in case a previous run left this notification rule behind
+            try
+            {
+                await client.DeleteNotificationRuleAsync(notificationRuleId);
+            }
+            catch (RequestFailedException)
+            {
+                // Notification rule doesn't exist, that's fine
+            }
+
+            await client.CreateOrUpdateNotificationRuleAsync(
+                notificationRuleId,
+                RequestContent.Create(
+                    new
+                    {
+                        displayName = "Test Notification Rule from SDK",
+                        scope = "Tests",
+                        actionGroupIds = new[] { actionGroupId },
+                        events = new object[]
+                        {
+                            new
                             {
-                                kind = "FunctionsFlexConsumption",
-                                configurations = new
+                                eventType = "TestRunEnded",
+                                condition = new
                                 {
-                                    config1 = new
-                                    {
-                                        instanceMemoryMB = 2048,
-                                        httpConcurrency = 20
-                                    },
-                                    config2 = new
-                                    {
-                                        instanceMemoryMB = 4096,
-                                        httpConcurrency = 20
-                                    }
+                                    testRunStatuses = new[] { "DONE", "CANCELLED", "FAILED" },
+                                    testRunResults = new[] { "PASSED", "NOT_APPLICABLE" }
                                 }
+                            },
+                            new
+                            {
+                                eventType = "TestRunStarted"
                             }
                         }
-                    )
-                );
+                    }
+                )
+            );
+        }
+
+        public void SetupNotificationRule(LoadTestAdministrationClient client, string notificationRuleId, string actionGroupId)
+        {
+            // Pre-cleanup in case a previous run left this notification rule behind
+            try
+            {
+                client.DeleteNotificationRule(notificationRuleId);
+            }
+            catch (RequestFailedException)
+            {
+                // Notification rule doesn't exist, that's fine
+            }
+
+            client.CreateOrUpdateNotificationRule(
+                notificationRuleId,
+                RequestContent.Create(
+                    new
+                    {
+                        displayName = "Test Notification Rule from SDK",
+                        scope = "Tests",
+                        actionGroupIds = new[] { actionGroupId },
+                        events = new object[]
+                        {
+                            new
+                            {
+                                eventType = "TestRunEnded",
+                                condition = new
+                                {
+                                    testRunStatuses = new[] { "DONE", "CANCELLED", "FAILED" },
+                                    testRunResults = new[] { "PASSED", "NOT_APPLICABLE" }
+                                }
+                            },
+                            new
+                            {
+                                eventType = "TestRunStarted"
+                            }
+                        }
+                    }
+                )
+            );
         }
 
         public async Task SetupLoadTestResourceAndTestScriptAsync(LoadTestAdministrationClient loadTestAdministrationClient, string testId, string filename)

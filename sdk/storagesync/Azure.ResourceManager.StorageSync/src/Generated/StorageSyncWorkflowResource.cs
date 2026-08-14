@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             TryGetApiVersion(ResourceType, out string storageSyncWorkflowApiVersion);
             _workflowsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", ResourceType.Namespace, Diagnostics);
-            _workflowsRestClient = new Workflows(_workflowsClientDiagnostics, Pipeline, Endpoint, storageSyncWorkflowApiVersion ?? "2022-09-01");
+            _workflowsRestClient = new Workflows(_workflowsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageSyncWorkflowApiVersion ?? "2022-09-01");
             ValidateResourceId(id);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

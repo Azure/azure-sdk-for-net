@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct BareMetalMachineReadyState : IEquatable<BareMetalMachineReadyState>
     {
         private readonly string _value;
+        /// <summary> The bare metal machine is ready to receive workloads. </summary>
+        private const string TrueValue = "True";
+        /// <summary> The bare metal machine is not ready to receive workloads. </summary>
+        private const string FalseValue = "False";
 
         /// <summary> Initializes a new instance of <see cref="BareMetalMachineReadyState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BareMetalMachineReadyState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TrueValue = "True";
-        private const string FalseValue = "False";
-
-        /// <summary> True. </summary>
+        /// <summary> The bare metal machine is ready to receive workloads. </summary>
         public static BareMetalMachineReadyState True { get; } = new BareMetalMachineReadyState(TrueValue);
-        /// <summary> False. </summary>
+
+        /// <summary> The bare metal machine is not ready to receive workloads. </summary>
         public static BareMetalMachineReadyState False { get; } = new BareMetalMachineReadyState(FalseValue);
+
         /// <summary> Determines if two <see cref="BareMetalMachineReadyState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BareMetalMachineReadyState left, BareMetalMachineReadyState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BareMetalMachineReadyState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BareMetalMachineReadyState left, BareMetalMachineReadyState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BareMetalMachineReadyState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BareMetalMachineReadyState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BareMetalMachineReadyState(string value) => new BareMetalMachineReadyState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BareMetalMachineReadyState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BareMetalMachineReadyState?(string value) => value == null ? null : new BareMetalMachineReadyState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BareMetalMachineReadyState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BareMetalMachineReadyState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

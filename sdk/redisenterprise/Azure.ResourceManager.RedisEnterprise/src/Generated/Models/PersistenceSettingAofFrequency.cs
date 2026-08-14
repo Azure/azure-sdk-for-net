@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     public readonly partial struct PersistenceSettingAofFrequency : IEquatable<PersistenceSettingAofFrequency>
     {
         private readonly string _value;
+        /// <summary> 1s. </summary>
+        private const string OneSecondValue = "1s";
+        /// <summary> always. </summary>
+        private const string AlwaysValue = "always";
 
         /// <summary> Initializes a new instance of <see cref="PersistenceSettingAofFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PersistenceSettingAofFrequency(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OneSecondValue = "1s";
-        private const string AlwaysValue = "always";
+            _value = value;
+        }
 
         /// <summary> 1s. </summary>
         public static PersistenceSettingAofFrequency OneSecond { get; } = new PersistenceSettingAofFrequency(OneSecondValue);
+
         /// <summary> always. </summary>
         public static PersistenceSettingAofFrequency Always { get; } = new PersistenceSettingAofFrequency(AlwaysValue);
+
         /// <summary> Determines if two <see cref="PersistenceSettingAofFrequency"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PersistenceSettingAofFrequency left, PersistenceSettingAofFrequency right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PersistenceSettingAofFrequency"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PersistenceSettingAofFrequency left, PersistenceSettingAofFrequency right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PersistenceSettingAofFrequency"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PersistenceSettingAofFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PersistenceSettingAofFrequency(string value) => new PersistenceSettingAofFrequency(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PersistenceSettingAofFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PersistenceSettingAofFrequency?(string value) => value == null ? null : new PersistenceSettingAofFrequency(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PersistenceSettingAofFrequency other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PersistenceSettingAofFrequency other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

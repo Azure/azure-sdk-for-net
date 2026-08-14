@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     public readonly partial struct EdgeOrderStageStatus : IEquatable<EdgeOrderStageStatus>
     {
         private readonly string _value;
+        /// <summary> No status available yet. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Stage is in progress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Stage has succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Stage has failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Stage has been cancelled. </summary>
+        private const string CancelledValue = "Cancelled";
+        /// <summary> Stage is cancelling. </summary>
+        private const string CancellingValue = "Cancelling";
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderStageStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EdgeOrderStageStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string InProgressValue = "InProgress";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CancelledValue = "Cancelled";
-        private const string CancellingValue = "Cancelling";
+            _value = value;
+        }
 
         /// <summary> No status available yet. </summary>
         public static EdgeOrderStageStatus None { get; } = new EdgeOrderStageStatus(NoneValue);
+
         /// <summary> Stage is in progress. </summary>
         public static EdgeOrderStageStatus InProgress { get; } = new EdgeOrderStageStatus(InProgressValue);
+
         /// <summary> Stage has succeeded. </summary>
         public static EdgeOrderStageStatus Succeeded { get; } = new EdgeOrderStageStatus(SucceededValue);
+
         /// <summary> Stage has failed. </summary>
         public static EdgeOrderStageStatus Failed { get; } = new EdgeOrderStageStatus(FailedValue);
+
         /// <summary> Stage has been cancelled. </summary>
         public static EdgeOrderStageStatus Cancelled { get; } = new EdgeOrderStageStatus(CancelledValue);
+
         /// <summary> Stage is cancelling. </summary>
         public static EdgeOrderStageStatus Cancelling { get; } = new EdgeOrderStageStatus(CancellingValue);
+
         /// <summary> Determines if two <see cref="EdgeOrderStageStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EdgeOrderStageStatus left, EdgeOrderStageStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EdgeOrderStageStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EdgeOrderStageStatus left, EdgeOrderStageStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeOrderStageStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EdgeOrderStageStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EdgeOrderStageStatus(string value) => new EdgeOrderStageStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EdgeOrderStageStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EdgeOrderStageStatus?(string value) => value == null ? null : new EdgeOrderStageStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EdgeOrderStageStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EdgeOrderStageStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

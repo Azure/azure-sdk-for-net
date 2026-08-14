@@ -16,6 +16,19 @@ namespace SpecialWords._Models
     {
         internal Or() => throw null;
 
+        protected virtual Or PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<Or>.Write(ModelReaderWriterOptions options) => throw null;
+
+        Or IPersistableModel<Or>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<Or>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="or"> The <see cref="Or"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(Or @or) => throw null;
+
         void IJsonModel<Or>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -23,18 +36,5 @@ namespace SpecialWords._Models
         Or IJsonModel<Or>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Or JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<Or>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        Or IPersistableModel<Or>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual Or PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<Or>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="or"> The <see cref="Or"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(Or @or) => throw null;
     }
 }

@@ -14,6 +14,9 @@ Install the Azure Identity client library for .NET with NuGet:
 dotnet add package Azure.Identity
 ```
 
+> [!NOTE]
+> Starting with `Azure.Core` 1.53.0, all credential types (including `DefaultAzureCredential`) are bundled directly in `Azure.Core`. If your project already targets `Azure.Core` 1.53.0+ or does so through a transitive dependency, you should omit the `Azure.Identity` package reference entirely. See the [Migration Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/MigrationGuide.md) for upgrade and compatibility details.
+
 ### Prerequisites
 
 * An [Azure subscription][azure_sub].
@@ -32,6 +35,8 @@ A credential is a class that contains or can obtain the data needed for a servic
 The Azure Identity library focuses on OAuth authentication with Microsoft Entra ID. It offers numerous credentials capable of acquiring a Microsoft Entra token to authenticate service requests. Each credential in this library is an implementation of the `TokenCredential` abstract class in [Azure.Core][azure_core_library], and any of them can be used to construct service clients capable of authenticating with a `TokenCredential`.
 
 See [Credential classes](#credential-classes) for a complete listing of available credential types.
+
+For details on the assembly consolidation introduced in version 1.53.0 and how to handle [`CS0433`](https://learn.microsoft.com/dotnet/csharp/language-reference/compiler-messages/cs0433) conflicts when mixing package versions, see the [Migration Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/MigrationGuide.md).
 
 ### DefaultAzureCredential
 
@@ -231,7 +236,7 @@ Not all credentials require this configuration. Credentials that authenticate th
 |-|-
 |`AZURE_CLIENT_ID`|ID of a Microsoft Entra application
 |`AZURE_TENANT_ID`|ID of the application's Microsoft Entra tenant
-|`AZURE_CLIENT_CERTIFICATE_PATH`|path to a PFX or PEM-encoded certificate file including private key
+|`AZURE_CLIENT_CERTIFICATE_PATH`|Path to the client certificate, including the private key. The path must be to either a "pfx"- or "pem"-encoded certificate on disk, or a certificate in the platform certificate store by thumbprint.<br>For example:<ul><li>`c:\data\certificate.pfx`</li><li>`/etc/app/cert.pem`</li><li>`cert:/CurrentUser/My/E661583E8FABEF4C0BEF694CBC41C28FB81CD870`</li></ul>
 |`AZURE_CLIENT_CERTIFICATE_PASSWORD`|(optional) the password protecting the certificate file (currently only supported for PFX (PKCS12) certificates)
 |`AZURE_CLIENT_SEND_CERTIFICATE_CHAIN`|(optional) send certificate chain in x5c header to support subject name / issuer based authentication
 

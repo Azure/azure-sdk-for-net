@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.StorageSync.Mocking
 
         private ClientDiagnostics StorageSyncServicesClientDiagnostics => _storageSyncServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageSync.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StorageSyncServices StorageSyncServicesRestClient => _storageSyncServicesRestClient ??= new StorageSyncServices(StorageSyncServicesClientDiagnostics, Pipeline, Endpoint, "2022-09-01");
+        private StorageSyncServices StorageSyncServicesRestClient => _storageSyncServicesRestClient ??= new StorageSyncServices(StorageSyncServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-09-01");
 
         private ClientDiagnostics StorageSyncServicesOperationGroupClientDiagnostics => _storageSyncServicesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageSync.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StorageSyncServicesOperationGroup StorageSyncServicesOperationGroupRestClient => _storageSyncServicesOperationGroupRestClient ??= new StorageSyncServicesOperationGroup(StorageSyncServicesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2022-09-01");
+        private StorageSyncServicesOperationGroup StorageSyncServicesOperationGroupRestClient => _storageSyncServicesOperationGroupRestClient ??= new StorageSyncServicesOperationGroup(StorageSyncServicesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-09-01");
 
         /// <summary>
         /// Get a StorageSyncService list by subscription.
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.StorageSync.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageSyncServiceData, StorageSyncServiceResource>(new StorageSyncServicesGetBySubscriptionAsyncCollectionResultOfT(StorageSyncServicesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new StorageSyncServiceResource(Client, data));
+            return new AsyncPageableWrapper<StorageSyncServiceData, StorageSyncServiceResource>(new StorageSyncServicesGetBySubscriptionAsyncCollectionResultOfT(StorageSyncServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStorageSyncSubscriptionResource.GetStorageSyncServices"), data => new StorageSyncServiceResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StorageSync.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageSyncServiceData, StorageSyncServiceResource>(new StorageSyncServicesGetBySubscriptionCollectionResultOfT(StorageSyncServicesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new StorageSyncServiceResource(Client, data));
+            return new PageableWrapper<StorageSyncServiceData, StorageSyncServiceResource>(new StorageSyncServicesGetBySubscriptionCollectionResultOfT(StorageSyncServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStorageSyncSubscriptionResource.GetStorageSyncServices"), data => new StorageSyncServiceResource(Client, data));
         }
 
         /// <summary>

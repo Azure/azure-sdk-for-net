@@ -88,6 +88,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteObjectValue<object>(Tenant);
             writer.WritePropertyName("clusterResourceGroup"u8);
             writer.WriteObjectValue<object>(ClusterResourceGroup);
+            if (Optional.IsDefined(ClusterResourceGroupAuthType))
+            {
+                writer.WritePropertyName("clusterResourceGroupAuthType"u8);
+                writer.WriteStringValue(ClusterResourceGroupAuthType.Value.ToString());
+            }
             if (Optional.IsDefined(ClusterNamePrefix))
             {
                 writer.WritePropertyName("clusterNamePrefix"u8);
@@ -253,6 +258,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             SecretBase servicePrincipalKey = default;
             object tenant = default;
             object clusterResourceGroup = default;
+            HDInsightOndemandClusterResourceGroupAuthenticationType? clusterResourceGroupAuthType = default;
             object clusterNamePrefix = default;
             object clusterUserName = default;
             SecretBase clusterPassword = default;
@@ -401,6 +407,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         if (property0.NameEquals("clusterResourceGroup"u8))
                         {
                             clusterResourceGroup = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("clusterResourceGroupAuthType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            clusterResourceGroupAuthType = new HDInsightOndemandClusterResourceGroupAuthenticationType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("clusterNamePrefix"u8))
@@ -661,6 +676,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 servicePrincipalKey,
                 tenant,
                 clusterResourceGroup,
+                clusterResourceGroupAuthType,
                 clusterNamePrefix,
                 clusterUserName,
                 clusterPassword,

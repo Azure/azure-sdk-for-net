@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CommonProperties;
 using Azure.ResourceManager.Models;
@@ -36,14 +34,13 @@ namespace Azure.ResourceManager.CommonProperties.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                managedIdentityTrackedResourceProvisioningState is null ? default : new ManagedIdentityTrackedResourceProperties(managedIdentityTrackedResourceProvisioningState, null),
-                identity);
+                managedIdentityTrackedResourceProvisioningState is null ? default : new ManagedIdentityTrackedResourceProperties(managedIdentityTrackedResourceProvisioningState, default),
+                identity,
+                default);
         }
 
-        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -61,19 +58,58 @@ namespace Azure.ResourceManager.CommonProperties.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Confidential Resource Properties. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="username"></param>
         /// <returns> A new <see cref="Models.ConfidentialResourceProperties"/> instance for mocking. </returns>
         public static ConfidentialResourceProperties ConfidentialResourceProperties(string provisioningState = default, string username = default)
         {
-            return new ConfidentialResourceProperties(provisioningState, username, additionalBinaryDataProperties: null);
+            return new ConfidentialResourceProperties(provisioningState, username, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="CommonProperties.ArmResourceIdentifierResourceData"/> instance for mocking. </returns>
+        public static ArmResourceIdentifierResourceData ArmResourceIdentifierResourceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ArmResourceIdentifierResourceProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ArmResourceIdentifierResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="simpleArmId"> A basic ARM resource identifier without type or scopes. </param>
+        /// <param name="armIdWithType"> An ARM resource identifier with type only. </param>
+        /// <param name="armIdWithTypeAndScope"> An ARM resource identifier with type and scopes. </param>
+        /// <param name="armIdWithAllScopes"> An ARM resource identifier with all scopes. </param>
+        /// <returns> A new <see cref="Models.ArmResourceIdentifierResourceProperties"/> instance for mocking. </returns>
+        public static ArmResourceIdentifierResourceProperties ArmResourceIdentifierResourceProperties(ResourceProvisioningState provisioningState = default, ResourceIdentifier simpleArmId = default, ResourceIdentifier armIdWithType = default, ResourceIdentifier armIdWithTypeAndScope = default, ResourceIdentifier armIdWithAllScopes = default)
+        {
+            return new ArmResourceIdentifierResourceProperties(
+                provisioningState,
+                simpleArmId,
+                armIdWithType,
+                armIdWithTypeAndScope,
+                armIdWithAllScopes,
+                default);
         }
     }
 }

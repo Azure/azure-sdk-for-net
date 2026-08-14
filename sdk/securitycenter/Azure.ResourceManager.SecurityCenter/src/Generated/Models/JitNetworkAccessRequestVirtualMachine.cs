@@ -9,43 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The JitNetworkAccessRequestVirtualMachine. </summary>
     public partial class JitNetworkAccessRequestVirtualMachine
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessRequestVirtualMachine"/>. </summary>
         /// <param name="id"> Resource ID of the virtual machine that is linked to this policy. </param>
@@ -63,21 +35,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessRequestVirtualMachine"/>. </summary>
         /// <param name="id"> Resource ID of the virtual machine that is linked to this policy. </param>
         /// <param name="ports"> The ports that were opened for the virtual machine. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal JitNetworkAccessRequestVirtualMachine(ResourceIdentifier id, IList<JitNetworkAccessRequestPort> ports, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal JitNetworkAccessRequestVirtualMachine(ResourceIdentifier id, IList<JitNetworkAccessRequestPort> ports, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Ports = ports;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessRequestVirtualMachine"/> for deserialization. </summary>
-        internal JitNetworkAccessRequestVirtualMachine()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource ID of the virtual machine that is linked to this policy. </summary>
         public ResourceIdentifier Id { get; set; }
+
         /// <summary> The ports that were opened for the virtual machine. </summary>
         public IList<JitNetworkAccessRequestPort> Ports { get; }
     }

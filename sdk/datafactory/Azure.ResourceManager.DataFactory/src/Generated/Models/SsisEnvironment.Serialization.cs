@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SsisEnvironment : IUtf8JsonSerializable, IJsonModel<SsisEnvironment>
+    /// <summary> Ssis environment. </summary>
+    public partial class SsisEnvironment : SsisObjectMetadata, IJsonModel<SsisEnvironment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SsisEnvironment>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SsisObjectMetadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SsisEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSsisEnvironment(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SsisEnvironment)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SsisEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SsisEnvironment)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SsisEnvironment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SsisEnvironment IPersistableModel<SsisEnvironment>.Create(BinaryData data, ModelReaderWriterOptions options) => (SsisEnvironment)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SsisEnvironment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SsisEnvironment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SsisEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SsisEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SsisEnvironment)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(FolderId))
             {
@@ -44,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("variables"u8);
                 writer.WriteStartArray();
-                foreach (var item in Variables)
+                foreach (SsisVariable item in Variables)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -52,128 +92,100 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        SsisEnvironment IJsonModel<SsisEnvironment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SsisEnvironment IJsonModel<SsisEnvironment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SsisEnvironment)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SsisObjectMetadata JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SsisEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SsisEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SsisEnvironment)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSsisEnvironment(document.RootElement, options);
         }
 
-        internal static SsisEnvironment DeserializeSsisEnvironment(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SsisEnvironment DeserializeSsisEnvironment(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            long? folderId = default;
-            IReadOnlyList<SsisVariable> variables = default;
-            SsisObjectMetadataType type = default;
+            SsisObjectMetadataType metadataType = default;
             long? id = default;
             string name = default;
             string description = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            long? folderId = default;
+            IReadOnlyList<SsisVariable> variables = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("folderId"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    metadataType = new SsisObjectMetadataType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("id"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    folderId = property.Value.GetInt64();
+                    id = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("variables"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("folderId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    folderId = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("variables"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SsisVariable> array = new List<SsisVariable>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SsisVariable.DeserializeSsisVariable(item, options));
                     }
                     variables = array;
                     continue;
                 }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new SsisObjectMetadataType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SsisEnvironment(
-                type,
+                metadataType,
                 id,
                 name,
                 description,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 folderId,
                 variables ?? new ChangeTrackingList<SsisVariable>());
         }
-
-        BinaryData IPersistableModel<SsisEnvironment>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SsisEnvironment>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SsisEnvironment)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SsisEnvironment IPersistableModel<SsisEnvironment>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SsisEnvironment>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSsisEnvironment(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SsisEnvironment)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SsisEnvironment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

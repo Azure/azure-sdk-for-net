@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Analytics.Synapse.Artifacts;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Analytics.Synapse.Tests;
@@ -39,8 +39,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         public async Task ListPools()
         {
             BigDataPoolsClient client = CreateClient();
-            BigDataPoolResourceInfoListResult pools = await client.ListAsync ();
-            Assert.GreaterOrEqual(1, pools.Value.Count);
+            BigDataPoolResourceInfoListResult pools = await client.ListAsync();
+            Assert.That(pools.Value.Count, Is.GreaterThanOrEqualTo(1));
         }
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18080 - This test case cannot be automated due to the inability to configure infrastructure to test against.")]
@@ -49,8 +49,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             const string PoolName = "sparkchhamosyna";
             BigDataPoolsClient client = CreateClient();
-            BigDataPoolResourceInfo pool = await client.GetAsync (PoolName);
-            Assert.AreEqual(PoolName, pool.Name);
+            BigDataPoolResourceInfo pool = await client.GetAsync(PoolName);
+            Assert.That(pool.Name, Is.EqualTo(PoolName));
         }
     }
 }

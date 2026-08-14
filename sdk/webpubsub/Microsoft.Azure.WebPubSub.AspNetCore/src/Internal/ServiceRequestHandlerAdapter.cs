@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Security.Authentication;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -30,13 +31,13 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public void RegisterHub<THub>() where THub : WebPubSubHub
+        public void RegisterHub<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] THub>() where THub : WebPubSubHub
         {
             var hub = Create<THub>();
             RegisterHub(hub.GetType().Name, hub);
         }
 
-        public void RegisterHub<THub>(string hubName) where THub : WebPubSubHub
+        public void RegisterHub<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] THub>(string hubName) where THub : WebPubSubHub
         {
             var hub = Create<THub>();
             RegisterHub(hubName, hub);
@@ -118,7 +119,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                             if (response != null)
                             {
                                 SetConnectionState(ref context, connectEventRequest.ConnectionContext, response.ConnectionStates);
-                                await context.Response.WriteAsync(JsonSerializer.Serialize(response, response.GetType())).ConfigureAwait(false);
+                                await context.Response.WriteAsync(SerializeConnectResponse(response)).ConfigureAwait(false);
                             }
                             break;
                         }
@@ -146,6 +147,16 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                     case DisconnectedEventRequest disconnectedEvent:
                         {
                             _ = hub.OnDisconnectedAsync(disconnectedEvent).ConfigureAwait(false);
+                            break;
+                        }
+                    case JoinedGroupEventRequest joinedGroupEvent:
+                        {
+                            _ = hub.OnGroupJoinedAsync(joinedGroupEvent).ConfigureAwait(false);
+                            break;
+                        }
+                    case LeftGroupEventRequest leftGroupEvent:
+                        {
+                            _ = hub.OnGroupLeftAsync(leftGroupEvent).ConfigureAwait(false);
                             break;
                         }
                     default:
@@ -179,7 +190,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                         // Should not reach here.
                         _ => throw new NotSupportedException($"MQTT protocol version {mqttConnect.Mqtt.ProtocolVersion} is not supported.")
                     };
-                    responseBodyString = JsonSerializer.Serialize(responseBody);
+                    responseBodyString = SerializeMqttConnectErrorResponse(responseBody);
                 }
                 else
                 {
@@ -193,7 +204,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 if (serviceRequest is MqttConnectEventRequest mqttConnect)
                 {
                     context.Response.StatusCode = (int)MqttConnectCodeToHttpStatusCodeConverter.ToHttpStatusCode(mqttException.MqttErrorResponse.Mqtt.Code);
-                    await context.Response.WriteAsync(JsonSerializer.Serialize(mqttException.MqttErrorResponse)).ConfigureAwait(false);
+                    await context.Response.WriteAsync(SerializeMqttConnectErrorResponse(mqttException.MqttErrorResponse)).ConfigureAwait(false);
                 }
                 else
                 {
@@ -216,7 +227,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                         // Should not reach here.
                         _ => throw new NotSupportedException($"MQTT protocol version {mqttConnect.Mqtt.ProtocolVersion} is not supported.")
                     };
-                    responseBodyString = JsonSerializer.Serialize(responseBody);
+                    responseBodyString = SerializeMqttConnectErrorResponse(responseBody);
                 }
                 else
                 {
@@ -243,7 +254,17 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 _ => Constants.ContentTypes.BinaryContentType
             };
 
-        private THub Create<THub>() where THub : WebPubSubHub
+        private static string SerializeConnectResponse(ConnectEventResponse response) =>
+            response switch
+            {
+                MqttConnectEventResponse mqttResponse => JsonSerializer.Serialize(mqttResponse, WebPubSubCommonJsonSerializerContext.Default.MqttConnectEventResponse),
+                _ => JsonSerializer.Serialize(response, WebPubSubCommonJsonSerializerContext.Default.ConnectEventResponse)
+            };
+
+        private static string SerializeMqttConnectErrorResponse(MqttConnectEventErrorResponse response) =>
+            JsonSerializer.Serialize(response, WebPubSubCommonJsonSerializerContext.Default.MqttConnectEventErrorResponse);
+
+        private THub Create<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] THub>() where THub : WebPubSubHub
         {
             var hub = _provider.GetService<THub>() ?? ActivatorUtilities.CreateInstance<THub>(_provider);
 

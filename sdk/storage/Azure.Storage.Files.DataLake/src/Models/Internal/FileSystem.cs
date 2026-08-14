@@ -3,5 +3,5 @@
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    internal partial class FileSystem {}
+    internal partial class FileSystem { }
 }

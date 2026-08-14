@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Subscription.Tests
         [RecordedTest]
         public async Task GetFeatures()
         {
-            var list  = await _subscription.GetFeaturesAsync().ToEnumerableAsync();
+            var list = await _subscription.GetFeaturesAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Subscription.Tests
         public async Task CancelSubscription()
         {
             var response = await _subscription.CancelSubscriptionAsync();
-            Assert.AreEqual(200,response.GetRawResponse().Status);
+            Assert.AreEqual(200, response.GetRawResponse().Status);
         }
 
         [RecordedTest]
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Subscription.Tests
                 SubscriptionNameValue = "azSubscriptionTestName"
             };
             var response = await _subscription.RenameSubscriptionAsync(data);
-            Assert.AreEqual(200,response.GetRawResponse().Status);
+            Assert.AreEqual(200, response.GetRawResponse().Status);
         }
 
         [RecordedTest]
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Subscription.Tests
         public async Task EnableSubscription()
         {
             var response = await _subscription.EnableSubscriptionAsync();
-            Assert.AreEqual(200,response.GetRawResponse().Status);
+            Assert.AreEqual(200, response.GetRawResponse().Status);
         }
     }
 }

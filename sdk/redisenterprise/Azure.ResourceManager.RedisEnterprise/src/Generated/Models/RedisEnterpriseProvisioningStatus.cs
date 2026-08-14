@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     public readonly partial struct RedisEnterpriseProvisioningStatus : IEquatable<RedisEnterpriseProvisioningStatus>
     {
         private readonly string _value;
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseProvisioningStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RedisEnterpriseProvisioningStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string CreatingValue = "Creating";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
+            _value = value;
+        }
 
         /// <summary> Succeeded. </summary>
         public static RedisEnterpriseProvisioningStatus Succeeded { get; } = new RedisEnterpriseProvisioningStatus(SucceededValue);
+
         /// <summary> Failed. </summary>
         public static RedisEnterpriseProvisioningStatus Failed { get; } = new RedisEnterpriseProvisioningStatus(FailedValue);
+
         /// <summary> Canceled. </summary>
         public static RedisEnterpriseProvisioningStatus Canceled { get; } = new RedisEnterpriseProvisioningStatus(CanceledValue);
+
         /// <summary> Creating. </summary>
         public static RedisEnterpriseProvisioningStatus Creating { get; } = new RedisEnterpriseProvisioningStatus(CreatingValue);
+
         /// <summary> Updating. </summary>
         public static RedisEnterpriseProvisioningStatus Updating { get; } = new RedisEnterpriseProvisioningStatus(UpdatingValue);
+
         /// <summary> Deleting. </summary>
         public static RedisEnterpriseProvisioningStatus Deleting { get; } = new RedisEnterpriseProvisioningStatus(DeletingValue);
+
         /// <summary> Determines if two <see cref="RedisEnterpriseProvisioningStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RedisEnterpriseProvisioningStatus left, RedisEnterpriseProvisioningStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RedisEnterpriseProvisioningStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RedisEnterpriseProvisioningStatus left, RedisEnterpriseProvisioningStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisEnterpriseProvisioningStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RedisEnterpriseProvisioningStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RedisEnterpriseProvisioningStatus(string value) => new RedisEnterpriseProvisioningStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RedisEnterpriseProvisioningStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RedisEnterpriseProvisioningStatus?(string value) => value == null ? null : new RedisEnterpriseProvisioningStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RedisEnterpriseProvisioningStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RedisEnterpriseProvisioningStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

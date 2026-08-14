@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.OperationTemplates
         {
             TryGetApiVersion(WidgetResource.ResourceType, out string widgetApiVersion);
             _optionalBodyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationTemplates", WidgetResource.ResourceType.Namespace, Diagnostics);
-            _optionalBodyRestClient = new OptionalBody(_optionalBodyClientDiagnostics, Pipeline, Endpoint, widgetApiVersion ?? "2023-12-01-preview");
+            _optionalBodyRestClient = new OptionalBody(_optionalBodyClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, widgetApiVersion ?? "2023-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.OperationTemplates
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.OperationTemplates
         }
 
         /// <summary>
-        /// Get a Widget
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.OperationTemplates
         }
 
         /// <summary>
-        /// Get a Widget
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.OperationTemplates
         }
 
         /// <summary>
-        /// Get a Widget
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.OperationTemplates
         }
 
         /// <summary>
-        /// Get a Widget
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

@@ -6,6 +6,10 @@
             "defaultValue": "eastus2",
             "type": "string"
         },
+        "useridentity_name": {
+            "defaultValue": "[concat('netsdkui', uniquestring(resourceGroup().id, deployment().name))]",
+            "type": "string"
+        },
 		"vaults_keyvalut_name": {
             "defaultValue": "[concat('netsdkkeyv', uniquestring(resourceGroup().id, deployment().name))]",
             "type": "string"
@@ -31,6 +35,12 @@
         "batchServiceObjectId": "f520d84c-3fd3-4cc8-88d4-2ed25b00d27a"
     },
     "resources": [
+        {
+            "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+            "apiVersion": "2025-01-31-preview",
+            "name": "[parameters('useridentity_name')]",
+            "location": "[parameters('location')]"
+        },
         {
             "type": "Microsoft.KeyVault/vaults",
             "apiVersion": "2023-07-01",
@@ -172,12 +182,16 @@
             "type": "Microsoft.Batch/batchAccounts",
             "apiVersion": "2024-07-01",
             "name": "[parameters('batchAccounts_poolallocation_name')]",
-            "location": "eastus2",
+            "location": "[parameters('location')]",
             "dependsOn": [
+                "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('useridentity_name'))]",
                 "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_name'))]"
             ],
             "identity": {
-                "type": "None"
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                    "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('useridentity_name'))]": {}
+                }
             },
             "properties": {
                 "autoStorage": {
@@ -351,6 +365,10 @@
     "cmk_keyvalut_keyUriWithVersion": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.KeyVault/vaults/keys', parameters('vaults_keyvalut_name'), 'cmk'), '2019-09-01', 'Full').properties.keyUriWithVersion]"
+    },
+    "useridentity_id": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('useridentity_name'))]"
     }
   }
 }

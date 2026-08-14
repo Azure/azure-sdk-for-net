@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableDatadogArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDatadogArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDatadogArmClient for mocking. </summary>
         protected MockableDatadogArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDatadogArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDatadogArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDatadogArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableDatadogArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DatadogMonitorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatadogMonitorResource.CreateResourceIdentifier" /> to create a <see cref="DatadogMonitorResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DatadogMonitorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DatadogMonitorResource"/> object. </returns>
         public virtual DatadogMonitorResource GetDatadogMonitorResource(ResourceIdentifier id)
@@ -46,10 +35,16 @@ namespace Azure.ResourceManager.Datadog.Mocking
             return new DatadogMonitorResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DatadogMonitoredSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatadogMonitoredSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="DatadogMonitoredSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DataMonitoringTagRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataMonitoringTagRuleResource"/> object. </returns>
+        public virtual DataMonitoringTagRuleResource GetDataMonitoringTagRuleResource(ResourceIdentifier id)
+        {
+            DataMonitoringTagRuleResource.ValidateResourceId(id);
+            return new DataMonitoringTagRuleResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DatadogMonitoredSubscriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DatadogMonitoredSubscriptionResource"/> object. </returns>
         public virtual DatadogMonitoredSubscriptionResource GetDatadogMonitoredSubscriptionResource(ResourceIdentifier id)
@@ -58,28 +53,13 @@ namespace Azure.ResourceManager.Datadog.Mocking
             return new DatadogMonitoredSubscriptionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DatadogSingleSignOnResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatadogSingleSignOnResource.CreateResourceIdentifier" /> to create a <see cref="DatadogSingleSignOnResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DatadogSingleSignOnResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DatadogSingleSignOnResource"/> object. </returns>
         public virtual DatadogSingleSignOnResource GetDatadogSingleSignOnResource(ResourceIdentifier id)
         {
             DatadogSingleSignOnResource.ValidateResourceId(id);
             return new DatadogSingleSignOnResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DataMonitoringTagRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataMonitoringTagRuleResource.CreateResourceIdentifier" /> to create a <see cref="DataMonitoringTagRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataMonitoringTagRuleResource"/> object. </returns>
-        public virtual DataMonitoringTagRuleResource GetDataMonitoringTagRuleResource(ResourceIdentifier id)
-        {
-            DataMonitoringTagRuleResource.ValidateResourceId(id);
-            return new DataMonitoringTagRuleResource(Client, id);
         }
     }
 }

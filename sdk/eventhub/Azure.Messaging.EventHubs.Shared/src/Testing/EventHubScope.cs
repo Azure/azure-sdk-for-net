@@ -181,14 +181,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
             caller = (caller.Length < 16) ? caller : caller.Substring(0, 15);
 
-            var eventHubName = $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
+            var eventHubName = $"{Guid.NewGuid().ToString("D").Substring(0, 13)}-{caller}";
             var groups = consumerGroups?.ToList() ?? new List<string>();
             var eventHub = await ResourceManager.CreateEventHubAsync(eventHubName, partitionCount, groups).ConfigureAwait(false);
 
             // There is a race condition in which ARM has created the new Event Hub but it is not yet visible to the Event Hubs
             // service.  Introduce a short delay to allow for the service to get access to the new resource.
 
-            await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
+            await Task.Delay(TimeSpan.FromSeconds(10)).ConfigureAwait(false);
 
             // The default consumer group is always present; include it as part of the scope.
 

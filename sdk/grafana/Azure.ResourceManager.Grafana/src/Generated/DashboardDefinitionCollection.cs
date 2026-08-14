@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Grafana
         {
             TryGetApiVersion(DashboardDefinitionResource.ResourceType, out string dashboardDefinitionApiVersion);
             _dashboardDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", DashboardDefinitionResource.ResourceType.Namespace, Diagnostics);
-            _dashboardDefinitionsRestClient = new DashboardDefinitions(_dashboardDefinitionsClientDiagnostics, Pipeline, Endpoint, dashboardDefinitionApiVersion ?? "2025-09-01-preview");
+            _dashboardDefinitionsRestClient = new DashboardDefinitions(_dashboardDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dashboardDefinitionApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Grafana
         {
             if (id.ResourceType != ManagedDashboardResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagedDashboardResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagedDashboardResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DashboardDefinitionData, DashboardDefinitionResource>(new DashboardDefinitionsGetAllAsyncCollectionResultOfT(_dashboardDefinitionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DashboardDefinitionResource(Client, data));
+            return new AsyncPageableWrapper<DashboardDefinitionData, DashboardDefinitionResource>(new DashboardDefinitionsGetAllAsyncCollectionResultOfT(
+                _dashboardDefinitionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DashboardDefinitionCollection.GetAll"), data => new DashboardDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DashboardDefinitionData, DashboardDefinitionResource>(new DashboardDefinitionsGetAllCollectionResultOfT(_dashboardDefinitionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DashboardDefinitionResource(Client, data));
+            return new PageableWrapper<DashboardDefinitionData, DashboardDefinitionResource>(new DashboardDefinitionsGetAllCollectionResultOfT(
+                _dashboardDefinitionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DashboardDefinitionCollection.GetAll"), data => new DashboardDefinitionResource(Client, data));
         }
 
         /// <summary>

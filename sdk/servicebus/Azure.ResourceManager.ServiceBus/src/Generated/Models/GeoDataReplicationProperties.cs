@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> GeoDR Replication properties. </summary>
     public partial class GeoDataReplicationProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GeoDataReplicationProperties"/>. </summary>
         public GeoDataReplicationProperties()
@@ -54,17 +26,18 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Initializes a new instance of <see cref="GeoDataReplicationProperties"/>. </summary>
         /// <param name="maxReplicationLagDurationInSeconds"> The maximum acceptable lag for data replication operations from the primary replica to a quorum of secondary replicas.  When the lag exceeds the configured amount, operations on the primary replica will be failed. The allowed values are 0 and 5 minutes to 1 day. </param>
         /// <param name="locations"> A list of regions where replicas of the namespace are maintained. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GeoDataReplicationProperties(int? maxReplicationLagDurationInSeconds, IList<ServiceBusNamespaceReplicaLocation> locations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GeoDataReplicationProperties(int? maxReplicationLagDurationInSeconds, IList<ServiceBusNamespaceReplicaLocation> locations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaxReplicationLagDurationInSeconds = maxReplicationLagDurationInSeconds;
             Locations = locations;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The maximum acceptable lag for data replication operations from the primary replica to a quorum of secondary replicas.  When the lag exceeds the configured amount, operations on the primary replica will be failed. The allowed values are 0 and 5 minutes to 1 day. </summary>
         [WirePath("maxReplicationLagDurationInSeconds")]
         public int? MaxReplicationLagDurationInSeconds { get; set; }
+
         /// <summary> A list of regions where replicas of the namespace are maintained. </summary>
         [WirePath("locations")]
         public IList<ServiceBusNamespaceReplicaLocation> Locations { get; }

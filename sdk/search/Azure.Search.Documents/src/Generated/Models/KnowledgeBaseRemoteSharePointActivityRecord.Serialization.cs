@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
-    public partial class KnowledgeBaseRemoteSharePointActivityRecord : IUtf8JsonSerializable, IJsonModel<KnowledgeBaseRemoteSharePointActivityRecord>
+    /// <summary> Represents a remote SharePoint retrieval activity record. </summary>
+    public partial class KnowledgeBaseRemoteSharePointActivityRecord : KnowledgeBaseActivityRecord, IJsonModel<KnowledgeBaseRemoteSharePointActivityRecord>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KnowledgeBaseRemoteSharePointActivityRecord>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseRemoteSharePointActivityRecord"/> for deserialization. </summary>
+        internal KnowledgeBaseRemoteSharePointActivityRecord()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override KnowledgeBaseActivityRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseRemoteSharePointActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKnowledgeBaseRemoteSharePointActivityRecord(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KnowledgeBaseRemoteSharePointActivityRecord)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseRemoteSharePointActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KnowledgeBaseRemoteSharePointActivityRecord)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KnowledgeBaseRemoteSharePointActivityRecord>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KnowledgeBaseRemoteSharePointActivityRecord IPersistableModel<KnowledgeBaseRemoteSharePointActivityRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => (KnowledgeBaseRemoteSharePointActivityRecord)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KnowledgeBaseRemoteSharePointActivityRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KnowledgeBaseRemoteSharePointActivityRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,13 +74,32 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseRemoteSharePointActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseRemoteSharePointActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KnowledgeBaseRemoteSharePointActivityRecord)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(KnowledgeSourceName))
+            {
+                writer.WritePropertyName("knowledgeSourceName"u8);
+                writer.WriteStringValue(KnowledgeSourceName);
+            }
+            if (Optional.IsDefined(QueryTime))
+            {
+                writer.WritePropertyName("queryTime"u8);
+                writer.WriteStringValue(QueryTime.Value, "O");
+            }
+            if (Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (Optional.IsDefined(ImageServing))
+            {
+                writer.WritePropertyName("imageServing"u8);
+                writer.WriteObjectValue(ImageServing, options);
+            }
             if (Optional.IsDefined(RemoteSharePointArguments))
             {
                 writer.WritePropertyName("remoteSharePointArguments"u8);
@@ -42,161 +107,135 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
         }
 
-        KnowledgeBaseRemoteSharePointActivityRecord IJsonModel<KnowledgeBaseRemoteSharePointActivityRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KnowledgeBaseRemoteSharePointActivityRecord IJsonModel<KnowledgeBaseRemoteSharePointActivityRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KnowledgeBaseRemoteSharePointActivityRecord)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override KnowledgeBaseActivityRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseRemoteSharePointActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseRemoteSharePointActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KnowledgeBaseRemoteSharePointActivityRecord)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKnowledgeBaseRemoteSharePointActivityRecord(document.RootElement, options);
         }
 
-        internal static KnowledgeBaseRemoteSharePointActivityRecord DeserializeKnowledgeBaseRemoteSharePointActivityRecord(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static KnowledgeBaseRemoteSharePointActivityRecord DeserializeKnowledgeBaseRemoteSharePointActivityRecord(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            KnowledgeBaseRemoteSharePointActivityArguments remoteSharePointArguments = default;
+            int id = default;
+            KnowledgeBaseActivityRecordType @type = default;
+            int? elapsedMs = default;
+            KnowledgeBaseErrorDetail error = default;
+            string warning = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string knowledgeSourceName = default;
             DateTimeOffset? queryTime = default;
             int? count = default;
-            int id = default;
-            string type = default;
-            int? elapsedMs = default;
-            KnowledgeBaseErrorDetail error = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ImageServingStatistics imageServing = default;
+            KnowledgeBaseRemoteSharePointActivityArguments remoteSharePointArguments = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("remoteSharePointArguments"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    id = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = new KnowledgeBaseActivityRecordType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("elapsedMs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    remoteSharePointArguments = KnowledgeBaseRemoteSharePointActivityArguments.DeserializeKnowledgeBaseRemoteSharePointActivityArguments(property.Value, options);
+                    elapsedMs = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("knowledgeSourceName"u8))
+                if (prop.NameEquals("error"u8))
                 {
-                    knowledgeSourceName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("queryTime"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    queryTime = property.Value.GetDateTimeOffset("O");
+                    error = KnowledgeBaseErrorDetail.DeserializeKnowledgeBaseErrorDetail(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("count"u8))
+                if (prop.NameEquals("warning"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    warning = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("knowledgeSourceName"u8))
+                {
+                    knowledgeSourceName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("queryTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    count = property.Value.GetInt32();
+                    queryTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("count"u8))
                 {
-                    id = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("elapsedMs"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    elapsedMs = property.Value.GetInt32();
+                    count = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("error"u8))
+                if (prop.NameEquals("imageServing"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    error = KnowledgeBaseErrorDetail.DeserializeKnowledgeBaseErrorDetail(property.Value, options);
+                    imageServing = ImageServingStatistics.DeserializeImageServingStatistics(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("remoteSharePointArguments"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    remoteSharePointArguments = KnowledgeBaseRemoteSharePointActivityArguments.DeserializeKnowledgeBaseRemoteSharePointActivityArguments(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new KnowledgeBaseRemoteSharePointActivityRecord(
                 id,
-                type,
+                @type,
                 elapsedMs,
                 error,
-                serializedAdditionalRawData,
+                warning,
+                additionalBinaryDataProperties,
                 knowledgeSourceName,
                 queryTime,
                 count,
+                imageServing,
                 remoteSharePointArguments);
-        }
-
-        BinaryData IPersistableModel<KnowledgeBaseRemoteSharePointActivityRecord>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseRemoteSharePointActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(KnowledgeBaseRemoteSharePointActivityRecord)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        KnowledgeBaseRemoteSharePointActivityRecord IPersistableModel<KnowledgeBaseRemoteSharePointActivityRecord>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseRemoteSharePointActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeKnowledgeBaseRemoteSharePointActivityRecord(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KnowledgeBaseRemoteSharePointActivityRecord)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<KnowledgeBaseRemoteSharePointActivityRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new KnowledgeBaseRemoteSharePointActivityRecord FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeKnowledgeBaseRemoteSharePointActivityRecord(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

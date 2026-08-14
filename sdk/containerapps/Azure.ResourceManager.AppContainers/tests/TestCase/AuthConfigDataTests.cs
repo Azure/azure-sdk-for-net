@@ -1,18 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Core;
-using Azure.ResourceManager.Resources;
-using NUnit.Framework;
-using Azure.ResourceManager.AppContainers.Tests.Helpers;
-using Azure.ResourceManager.AppContainers.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
-using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.AppContainers.Models;
+using Azure.ResourceManager.AppContainers.Tests.Helpers;
+using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppContainers.Tests
 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppContainers.Tests
             //1.Create
             var collection = appResource.GetContainerAppAuthConfigs();
             var data = ResourceDataHelpers.GetContainerAppAuthConfigData();
-            var resource_lro =await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
+            var resource_lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             var resource = resource_lro.Value;
             //2.Get
             var resource2 = await resource.GetAsync();

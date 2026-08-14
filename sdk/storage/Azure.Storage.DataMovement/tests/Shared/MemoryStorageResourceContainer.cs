@@ -47,7 +47,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
             StorageResourceContainer destinationContainer = default,
-            [EnumeratorCancellation]CancellationToken cancellationToken = default)
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             foreach (StorageResource storageResource in GetStorageResources(ReturnsContainersOnEnumeration))
             {

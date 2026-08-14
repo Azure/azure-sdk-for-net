@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace _Type.Model.Empty
 {
     public partial class EmptyClientOptions : ClientOptions
     {
+        public EmptyClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal EmptyClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

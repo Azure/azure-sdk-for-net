@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Settings for feature store type workspace. </summary>
+    /// <summary> The FeatureStoreSettings. </summary>
     public partial class FeatureStoreSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FeatureStoreSettings"/>. </summary>
         public FeatureStoreSettings()
@@ -51,38 +23,46 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FeatureStoreSettings"/>. </summary>
-        /// <param name="computeRuntime"> Compute runtime config for feature store type workspace. </param>
+        /// <param name="computeRuntime"></param>
         /// <param name="offlineStoreConnectionName"></param>
         /// <param name="onlineStoreConnectionName"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FeatureStoreSettings(ComputeRuntimeDto computeRuntime, string offlineStoreConnectionName, string onlineStoreConnectionName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FeatureStoreSettings(ComputeRuntimeDto computeRuntime, string offlineStoreConnectionName, string onlineStoreConnectionName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComputeRuntime = computeRuntime;
             OfflineStoreConnectionName = offlineStoreConnectionName;
             OnlineStoreConnectionName = onlineStoreConnectionName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Compute runtime config for feature store type workspace. </summary>
+        /// <summary> Gets or sets the ComputeRuntime. </summary>
+        [WirePath("computeRuntime")]
         internal ComputeRuntimeDto ComputeRuntime { get; set; }
-        /// <summary> Gets or sets the spark runtime version. </summary>
+
+        /// <summary> Gets or sets the OfflineStoreConnectionName. </summary>
+        [WirePath("offlineStoreConnectionName")]
+        public string OfflineStoreConnectionName { get; set; }
+
+        /// <summary> Gets or sets the OnlineStoreConnectionName. </summary>
+        [WirePath("onlineStoreConnectionName")]
+        public string OnlineStoreConnectionName { get; set; }
+
+        /// <summary> Gets or sets the SparkRuntimeVersion. </summary>
         [WirePath("computeRuntime.sparkRuntimeVersion")]
         public string SparkRuntimeVersion
         {
-            get => ComputeRuntime is null ? default : ComputeRuntime.SparkRuntimeVersion;
+            get
+            {
+                return ComputeRuntime is null ? default : ComputeRuntime.SparkRuntimeVersion;
+            }
             set
             {
                 if (ComputeRuntime is null)
+                {
                     ComputeRuntime = new ComputeRuntimeDto();
+                }
                 ComputeRuntime.SparkRuntimeVersion = value;
             }
         }
-
-        /// <summary> Gets or sets the offline store connection name. </summary>
-        [WirePath("offlineStoreConnectionName")]
-        public string OfflineStoreConnectionName { get; set; }
-        /// <summary> Gets or sets the online store connection name. </summary>
-        [WirePath("onlineStoreConnectionName")]
-        public string OnlineStoreConnectionName { get; set; }
     }
 }

@@ -16,6 +16,46 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
     /// <summary> User details for an organization. </summary>
     public partial class LambdaTestHyperExecuteUserDetails : IJsonModel<LambdaTestHyperExecuteUserDetails>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LambdaTestHyperExecuteUserDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteUserDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLambdaTestHyperExecuteUserDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LambdaTestHyperExecuteUserDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteUserDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLambdaTestHyperExecuteContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LambdaTestHyperExecuteUserDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LambdaTestHyperExecuteUserDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LambdaTestHyperExecuteUserDetails IPersistableModel<LambdaTestHyperExecuteUserDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LambdaTestHyperExecuteUserDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LambdaTestHyperExecuteUserDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -147,45 +187,5 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
                 phoneNumber,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LambdaTestHyperExecuteUserDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteUserDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLambdaTestHyperExecuteContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(LambdaTestHyperExecuteUserDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LambdaTestHyperExecuteUserDetails IPersistableModel<LambdaTestHyperExecuteUserDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LambdaTestHyperExecuteUserDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteUserDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLambdaTestHyperExecuteUserDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LambdaTestHyperExecuteUserDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LambdaTestHyperExecuteUserDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

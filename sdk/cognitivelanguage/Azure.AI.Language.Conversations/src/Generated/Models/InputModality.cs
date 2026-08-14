@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.AI.Language.Conversations.Models
     public readonly partial struct InputModality : IEquatable<InputModality>
     {
         private readonly string _value;
+        /// <summary> Transcript input modality. </summary>
+        private const string TranscriptValue = "transcript";
+        /// <summary> Text input modality. </summary>
+        private const string TextValue = "text";
 
         /// <summary> Initializes a new instance of <see cref="InputModality"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InputModality(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TranscriptValue = "transcript";
-        private const string TextValue = "text";
+            _value = value;
+        }
 
         /// <summary> Transcript input modality. </summary>
         public static InputModality Transcript { get; } = new InputModality(TranscriptValue);
+
         /// <summary> Text input modality. </summary>
         public static InputModality Text { get; } = new InputModality(TextValue);
+
         /// <summary> Determines if two <see cref="InputModality"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InputModality left, InputModality right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InputModality"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InputModality left, InputModality right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InputModality"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InputModality"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InputModality(string value) => new InputModality(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="InputModality"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InputModality?(string value) => value == null ? null : new InputModality(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InputModality other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InputModality other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -1,0 +1,108 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Identity;
+using Azure.ResourceManager.MySql.FlexibleServers.Models;
+using NUnit.Framework;
+
+namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
+{
+    public partial class Sample_MySqlFlexibleServerAadAdministratorResource
+    {
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetAnAzureAdAdministrator()
+        {
+            // Generated from example definition: 2024-12-30/AzureADAdministratorGet.json
+            // this example is just showing the usage of "AzureADAdministrator_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MySqlFlexibleServerAadAdministratorResource created on azure
+            // for more information of creating MySqlFlexibleServerAadAdministratorResource, please refer to the document of MySqlFlexibleServerAadAdministratorResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testrg";
+            string serverName = "mysqltestsvc4";
+            MySqlFlexibleServerAdministratorName administratorName = MySqlFlexibleServerAdministratorName.ActiveDirectory;
+            ResourceIdentifier mySqlFlexibleServerAadAdministratorResourceId = MySqlFlexibleServerAadAdministratorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, administratorName);
+            MySqlFlexibleServerAadAdministratorResource mySqlFlexibleServerAadAdministrator = client.GetMySqlFlexibleServerAadAdministratorResource(mySqlFlexibleServerAadAdministratorResourceId);
+
+            // invoke the operation
+            MySqlFlexibleServerAadAdministratorResource result = await mySqlFlexibleServerAadAdministrator.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            MySqlFlexibleServerAadAdministratorData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteAnAzureAdAdministrator()
+        {
+            // Generated from example definition: 2024-12-30/AzureADAdministratorDelete.json
+            // this example is just showing the usage of "AzureADAdministrator_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MySqlFlexibleServerAadAdministratorResource created on azure
+            // for more information of creating MySqlFlexibleServerAadAdministratorResource, please refer to the document of MySqlFlexibleServerAadAdministratorResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testrg";
+            string serverName = "mysqltestsvc4";
+            MySqlFlexibleServerAdministratorName administratorName = MySqlFlexibleServerAdministratorName.ActiveDirectory;
+            ResourceIdentifier mySqlFlexibleServerAadAdministratorResourceId = MySqlFlexibleServerAadAdministratorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, administratorName);
+            MySqlFlexibleServerAadAdministratorResource mySqlFlexibleServerAadAdministrator = client.GetMySqlFlexibleServerAadAdministratorResource(mySqlFlexibleServerAadAdministratorResourceId);
+
+            // invoke the operation
+            await mySqlFlexibleServerAadAdministrator.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_CreateAnAzureAdAdministrator()
+        {
+            // Generated from example definition: 2024-12-30/AzureADAdministratorCreate.json
+            // this example is just showing the usage of "AzureADAdministrator_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MySqlFlexibleServerAadAdministratorResource created on azure
+            // for more information of creating MySqlFlexibleServerAadAdministratorResource, please refer to the document of MySqlFlexibleServerAadAdministratorResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testrg";
+            string serverName = "mysqltestsvc4";
+            MySqlFlexibleServerAdministratorName administratorName = MySqlFlexibleServerAdministratorName.ActiveDirectory;
+            ResourceIdentifier mySqlFlexibleServerAadAdministratorResourceId = MySqlFlexibleServerAadAdministratorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, administratorName);
+            MySqlFlexibleServerAadAdministratorResource mySqlFlexibleServerAadAdministrator = client.GetMySqlFlexibleServerAadAdministratorResource(mySqlFlexibleServerAadAdministratorResourceId);
+
+            // invoke the operation
+            MySqlFlexibleServerAadAdministratorData data = new MySqlFlexibleServerAadAdministratorData();
+            ArmOperation<MySqlFlexibleServerAadAdministratorResource> lro = await mySqlFlexibleServerAadAdministrator.UpdateAsync(WaitUntil.Completed, data);
+            MySqlFlexibleServerAadAdministratorResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            MySqlFlexibleServerAadAdministratorData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+    }
+}

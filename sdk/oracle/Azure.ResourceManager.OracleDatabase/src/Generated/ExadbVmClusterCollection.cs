@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(ExadbVmClusterResource.ResourceType, out string exadbVmClusterApiVersion);
             _exadbVmClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ExadbVmClusterResource.ResourceType.Namespace, Diagnostics);
-            _exadbVmClustersRestClient = new ExadbVmClusters(_exadbVmClustersClientDiagnostics, Pipeline, Endpoint, exadbVmClusterApiVersion ?? "2025-09-01");
+            _exadbVmClustersRestClient = new ExadbVmClusters(_exadbVmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, exadbVmClusterApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _exadbVmClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exadbVmClusterName, ExadbVmClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<ExadbVmClusterResource> operation = new OracleDatabaseArmOperation<ExadbVmClusterResource>(
-                    new ExadbVmClusterOperationSource(Client),
+                    new ExadbVmClusterResourceOperationSource(Client),
                     _exadbVmClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _exadbVmClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exadbVmClusterName, ExadbVmClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<ExadbVmClusterResource> operation = new OracleDatabaseArmOperation<ExadbVmClusterResource>(
-                    new ExadbVmClusterOperationSource(Client),
+                    new ExadbVmClusterResourceOperationSource(Client),
                     _exadbVmClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExadbVmClusterData, ExadbVmClusterResource>(new ExadbVmClustersGetByResourceGroupAsyncCollectionResultOfT(_exadbVmClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ExadbVmClusterResource(Client, data));
+            return new AsyncPageableWrapper<ExadbVmClusterData, ExadbVmClusterResource>(new ExadbVmClustersGetByResourceGroupAsyncCollectionResultOfT(_exadbVmClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExadbVmClusterCollection.GetAll"), data => new ExadbVmClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExadbVmClusterData, ExadbVmClusterResource>(new ExadbVmClustersGetByResourceGroupCollectionResultOfT(_exadbVmClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ExadbVmClusterResource(Client, data));
+            return new PageableWrapper<ExadbVmClusterData, ExadbVmClusterResource>(new ExadbVmClustersGetByResourceGroupCollectionResultOfT(_exadbVmClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExadbVmClusterCollection.GetAll"), data => new ExadbVmClusterResource(Client, data));
         }
 
         /// <summary>

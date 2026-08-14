@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using OpenAI.Embeddings;
 
 namespace Azure.Projects.AI;
@@ -53,7 +53,8 @@ public abstract class EmbeddingsStore
     /// <exception cref="InvalidOperationException"></exception>
     public void Add(BinaryData data)
     {
-        if (data.MediaType != "text/plain") throw new InvalidOperationException("Only text/plain media type is supported.");
+        if (data.MediaType != "text/plain")
+            throw new InvalidOperationException("Only text/plain media type is supported.");
         Add(data.ToString());
     }
 

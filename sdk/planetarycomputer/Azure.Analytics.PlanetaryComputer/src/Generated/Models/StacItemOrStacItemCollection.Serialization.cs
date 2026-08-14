@@ -14,7 +14,7 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// Base type for STAC items and collections with discriminator.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StacItemCollectionResource"/> and <see cref="StacItemResource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StacItemCollection"/> and <see cref="StacItem"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownStacItemOrStacItemCollection))]
     public abstract partial class StacItemOrStacItemCollection : IJsonModel<StacItemOrStacItemCollection>
@@ -22,6 +22,56 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="StacItemOrStacItemCollection"/> for deserialization. </summary>
         internal StacItemOrStacItemCollection()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StacItemOrStacItemCollection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StacItemOrStacItemCollection>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStacItemOrStacItemCollection(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StacItemOrStacItemCollection)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StacItemOrStacItemCollection>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(StacItemOrStacItemCollection)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StacItemOrStacItemCollection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StacItemOrStacItemCollection IPersistableModel<StacItemOrStacItemCollection>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StacItemOrStacItemCollection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="stacItemOrStacItemCollection"> The <see cref="StacItemOrStacItemCollection"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(StacItemOrStacItemCollection stacItemOrStacItemCollection)
+        {
+            if (stacItemOrStacItemCollection == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(stacItemOrStacItemCollection, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -42,8 +92,8 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 throw new FormatException($"The model {nameof(StacItemOrStacItemCollection)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WritePropertyName("Kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(StacVersion))
             {
                 writer.WritePropertyName("stac_version"u8);
@@ -62,12 +112,12 @@ namespace Azure.Analytics.PlanetaryComputer
             if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("msft:_created"u8);
-                writer.WriteStringValue(CreatedOn);
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("msft:_updated"u8);
-                writer.WriteStringValue(UpdatedOn);
+                writer.WriteStringValue(UpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(ShortDescription))
             {
@@ -131,69 +181,17 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 return null;
             }
-            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
+            if (element.TryGetProperty("Kind"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
                     case "FeatureCollection":
-                        return StacItemCollectionResource.DeserializeStacItemCollectionResource(element, options);
+                        return StacItemCollection.DeserializeStacItemCollection(element, options);
                     case "Feature":
-                        return StacItemResource.DeserializeStacItemResource(element, options);
+                        return StacItem.DeserializeStacItem(element, options);
                 }
             }
             return UnknownStacItemOrStacItemCollection.DeserializeUnknownStacItemOrStacItemCollection(element, options);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StacItemOrStacItemCollection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StacItemOrStacItemCollection>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(StacItemOrStacItemCollection)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        StacItemOrStacItemCollection IPersistableModel<StacItemOrStacItemCollection>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StacItemOrStacItemCollection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StacItemOrStacItemCollection>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeStacItemOrStacItemCollection(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StacItemOrStacItemCollection)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StacItemOrStacItemCollection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="stacItemOrStacItemCollection"> The <see cref="StacItemOrStacItemCollection"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(StacItemOrStacItemCollection stacItemOrStacItemCollection)
-        {
-            if (stacItemOrStacItemCollection == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(stacItemOrStacItemCollection, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

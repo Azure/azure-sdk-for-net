@@ -4,8 +4,8 @@
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.DataFactory;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataFactory.Tests.Scenario
@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task DataFactory_Create_Exists_Get_List_Delete()
         {
             // Get the resource group

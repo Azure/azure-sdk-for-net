@@ -57,7 +57,7 @@ namespace Azure.Storage.Files.DataLake.Perf
         ///
         public PerfTestEnvironment()
         {
-            StorageEndpoint = new Uri($"{ Uri.UriSchemeHttps }{ Uri.SchemeDelimiter }{ StorageAccountName }.dfs.{ StorageEndpointSuffix }");
+            StorageEndpoint = new Uri($"{Uri.UriSchemeHttps}{Uri.SchemeDelimiter}{StorageAccountName}.dfs.{StorageEndpointSuffix}");
             if (StorageAccountKey != null)
             {
                 DataLakeCredential = new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);

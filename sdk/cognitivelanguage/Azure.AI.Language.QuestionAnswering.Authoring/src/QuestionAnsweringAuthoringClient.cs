@@ -43,13 +43,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var authorizationScope = $"{audience}/.default";
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
             Pipeline = HttpPipelineBuilder.Build(
                 options,
                 Array.Empty<HttpPipelinePolicy>(),
                 new HttpPipelinePolicy[]
                 {
-                    new BearerTokenAuthenticationPolicy(_tokenCredential, authorizationScope)
+                    new BearerTokenAuthenticationPolicy(credential, authorizationScope)
                 },
                 new ResponseClassifier()
             );

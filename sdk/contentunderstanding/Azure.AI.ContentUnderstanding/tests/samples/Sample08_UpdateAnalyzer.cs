@@ -22,7 +22,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
         public async Task UpdateAnalyzerAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
             // First create an analyzer to update
@@ -35,10 +35,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Description = "Initial description",
                 Config = new ContentAnalyzerConfig
                 {
-                    ReturnDetails = true
+                    ShouldReturnDetails = true
                 }
             };
-            initialAnalyzer.Models["completion"] = "gpt-4.1";
+            initialAnalyzer.Models["completion"] = ModelProfile.CompletionModel;
             initialAnalyzer.Tags["tag1"] = "tag1_initial_value";
 
             await client.CreateAnalyzerAsync(
@@ -213,10 +213,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
                         // Config properties should be preserved if not explicitly updated
                         Console.WriteLine("Config exists in updated analyzer");
 
-                        if (currentAnalyzer.Value.Config.ReturnDetails.HasValue &&
-                            updated.Value.Config.ReturnDetails.HasValue)
+                        if (currentAnalyzer.Value.Config.ShouldReturnDetails.HasValue &&
+                            updated.Value.Config.ShouldReturnDetails.HasValue)
                         {
-                            Console.WriteLine($"  ReturnDetails: {updated.Value.Config.ReturnDetails.Value}");
+                            Console.WriteLine($"  ReturnDetails: {updated.Value.Config.ShouldReturnDetails.Value}");
                         }
                     }
                     else

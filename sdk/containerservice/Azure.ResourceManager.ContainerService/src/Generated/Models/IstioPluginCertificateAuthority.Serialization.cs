@@ -8,16 +8,57 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class IstioPluginCertificateAuthority : IUtf8JsonSerializable, IJsonModel<IstioPluginCertificateAuthority>
+    /// <summary> Plugin certificates information for Service Mesh. </summary>
+    public partial class IstioPluginCertificateAuthority : IJsonModel<IstioPluginCertificateAuthority>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IstioPluginCertificateAuthority>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IstioPluginCertificateAuthority PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IstioPluginCertificateAuthority>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIstioPluginCertificateAuthority(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IstioPluginCertificateAuthority)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IstioPluginCertificateAuthority>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(IstioPluginCertificateAuthority)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IstioPluginCertificateAuthority>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IstioPluginCertificateAuthority IPersistableModel<IstioPluginCertificateAuthority>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IstioPluginCertificateAuthority>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IstioPluginCertificateAuthority>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +70,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IstioPluginCertificateAuthority>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IstioPluginCertificateAuthority>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IstioPluginCertificateAuthority)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(KeyVaultId))
             {
                 writer.WritePropertyName("keyVaultId"u8);
@@ -60,15 +100,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("certChainObjectName"u8);
                 writer.WriteStringValue(CertChainObjectName);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -77,22 +117,27 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        IstioPluginCertificateAuthority IJsonModel<IstioPluginCertificateAuthority>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IstioPluginCertificateAuthority IJsonModel<IstioPluginCertificateAuthority>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IstioPluginCertificateAuthority JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IstioPluginCertificateAuthority>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IstioPluginCertificateAuthority>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IstioPluginCertificateAuthority)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIstioPluginCertificateAuthority(document.RootElement, options);
         }
 
-        internal static IstioPluginCertificateAuthority DeserializeIstioPluginCertificateAuthority(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IstioPluginCertificateAuthority DeserializeIstioPluginCertificateAuthority(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -102,207 +147,50 @@ namespace Azure.ResourceManager.ContainerService.Models
             string keyObjectName = default;
             string rootCertObjectName = default;
             string certChainObjectName = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("keyVaultId"u8))
+                if (prop.NameEquals("keyVaultId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    keyVaultId = new ResourceIdentifier(property.Value.GetString());
+                    keyVaultId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("certObjectName"u8))
+                if (prop.NameEquals("certObjectName"u8))
                 {
-                    certObjectName = property.Value.GetString();
+                    certObjectName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyObjectName"u8))
+                if (prop.NameEquals("keyObjectName"u8))
                 {
-                    keyObjectName = property.Value.GetString();
+                    keyObjectName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rootCertObjectName"u8))
+                if (prop.NameEquals("rootCertObjectName"u8))
                 {
-                    rootCertObjectName = property.Value.GetString();
+                    rootCertObjectName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("certChainObjectName"u8))
+                if (prop.NameEquals("certChainObjectName"u8))
                 {
-                    certChainObjectName = property.Value.GetString();
+                    certChainObjectName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new IstioPluginCertificateAuthority(
                 keyVaultId,
                 certObjectName,
                 keyObjectName,
                 rootCertObjectName,
                 certChainObjectName,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  keyVaultId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(KeyVaultId))
-                {
-                    builder.Append("  keyVaultId: ");
-                    builder.AppendLine($"'{KeyVaultId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertObjectName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  certObjectName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CertObjectName))
-                {
-                    builder.Append("  certObjectName: ");
-                    if (CertObjectName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CertObjectName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CertObjectName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyObjectName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  keyObjectName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(KeyObjectName))
-                {
-                    builder.Append("  keyObjectName: ");
-                    if (KeyObjectName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{KeyObjectName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{KeyObjectName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RootCertObjectName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  rootCertObjectName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RootCertObjectName))
-                {
-                    builder.Append("  rootCertObjectName: ");
-                    if (RootCertObjectName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RootCertObjectName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RootCertObjectName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertChainObjectName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  certChainObjectName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CertChainObjectName))
-                {
-                    builder.Append("  certChainObjectName: ");
-                    if (CertChainObjectName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CertChainObjectName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CertChainObjectName}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<IstioPluginCertificateAuthority>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IstioPluginCertificateAuthority>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(IstioPluginCertificateAuthority)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        IstioPluginCertificateAuthority IPersistableModel<IstioPluginCertificateAuthority>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IstioPluginCertificateAuthority>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIstioPluginCertificateAuthority(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IstioPluginCertificateAuthority)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<IstioPluginCertificateAuthority>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

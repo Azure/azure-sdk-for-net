@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct NetworkCloudActionStateStatus : IEquatable<NetworkCloudActionStateStatus>
     {
         private readonly string _value;
+        /// <summary> The completed status. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> The in-progress status. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> The failed status. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudActionStateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkCloudActionStateStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string CompletedValue = "Completed";
-        private const string InProgressValue = "InProgress";
-        private const string FailedValue = "Failed";
-
-        /// <summary> Completed. </summary>
+        /// <summary> The completed status. </summary>
         public static NetworkCloudActionStateStatus Completed { get; } = new NetworkCloudActionStateStatus(CompletedValue);
-        /// <summary> InProgress. </summary>
+
+        /// <summary> The in-progress status. </summary>
         public static NetworkCloudActionStateStatus InProgress { get; } = new NetworkCloudActionStateStatus(InProgressValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> The failed status. </summary>
         public static NetworkCloudActionStateStatus Failed { get; } = new NetworkCloudActionStateStatus(FailedValue);
+
         /// <summary> Determines if two <see cref="NetworkCloudActionStateStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkCloudActionStateStatus left, NetworkCloudActionStateStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkCloudActionStateStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkCloudActionStateStatus left, NetworkCloudActionStateStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkCloudActionStateStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkCloudActionStateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkCloudActionStateStatus(string value) => new NetworkCloudActionStateStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkCloudActionStateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkCloudActionStateStatus?(string value) => value == null ? null : new NetworkCloudActionStateStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkCloudActionStateStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkCloudActionStateStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

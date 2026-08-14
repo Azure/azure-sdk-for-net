@@ -14,8 +14,48 @@ using Azure.ResourceManager.FileShares;
 namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> Properties specific to the NFS protocol. </summary>
-    internal partial class NfsProtocolProperties : IJsonModel<NfsProtocolProperties>
+    public partial class NfsProtocolProperties : IJsonModel<NfsProtocolProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NfsProtocolProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NfsProtocolProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNfsProtocolProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NfsProtocolProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NfsProtocolProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFileSharesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NfsProtocolProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NfsProtocolProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NfsProtocolProperties IPersistableModel<NfsProtocolProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NfsProtocolProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NfsProtocolProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -38,6 +78,11 @@ namespace Azure.ResourceManager.FileShares.Models
             {
                 writer.WritePropertyName("rootSquash"u8);
                 writer.WriteStringValue(RootSquash.Value.ToString());
+            }
+            if (Optional.IsDefined(EncryptionInTransitRequired))
+            {
+                writer.WritePropertyName("encryptionInTransitRequired"u8);
+                writer.WriteStringValue(EncryptionInTransitRequired.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -82,6 +127,7 @@ namespace Azure.ResourceManager.FileShares.Models
                 return null;
             }
             ShareRootSquash? rootSquash = default;
+            EncryptionInTransitRequired? encryptionInTransitRequired = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -94,52 +140,21 @@ namespace Azure.ResourceManager.FileShares.Models
                     rootSquash = new ShareRootSquash(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("encryptionInTransitRequired"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    encryptionInTransitRequired = new EncryptionInTransitRequired(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NfsProtocolProperties(rootSquash, additionalBinaryDataProperties);
+            return new NfsProtocolProperties(rootSquash, encryptionInTransitRequired, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NfsProtocolProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NfsProtocolProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFileSharesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NfsProtocolProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NfsProtocolProperties IPersistableModel<NfsProtocolProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NfsProtocolProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NfsProtocolProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNfsProtocolProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NfsProtocolProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NfsProtocolProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

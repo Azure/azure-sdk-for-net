@@ -60,7 +60,11 @@ namespace Azure.Security.Attestation
             {
                 foreach (string x5c in key.X5C)
                 {
+#if NET9_0_OR_GREATER
+                    certificates.Add(X509CertificateLoader.LoadCertificate(Convert.FromBase64String(x5c)));
+#else
                     certificates.Add(new X509Certificate2(Convert.FromBase64String(x5c)));
+#endif
                 }
             }
             return new AttestationSigner(certificates.ToArray(), keyId);

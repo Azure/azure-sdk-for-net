@@ -14,9 +14,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class SqlContainer : BackupGenericProtectionContainer
     {
         /// <summary> Initializes a new instance of <see cref="SqlContainer"/>. </summary>
-        public SqlContainer()
+        public SqlContainer() : base(ProtectableContainerType.AzureSqlContainer)
         {
-            ContainerType = ProtectableContainerType.AzureSqlContainer;
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlContainer"/>. </summary>
@@ -31,10 +30,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Backup is VMAppContainer
         /// </param>
         /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SqlContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, additionalBinaryDataProperties)
         {
-            ContainerType = containerType;
         }
     }
 }

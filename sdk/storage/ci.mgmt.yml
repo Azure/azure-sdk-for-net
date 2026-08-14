@@ -11,5 +11,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Storage
       safeName: AzureResourceManagerStorage
+    - name: Azure.Provisioning.Storage
+      safeName: AzureProvisioningStorage
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml

@@ -29,8 +29,10 @@ internal partial class TokenCredentialAuthenticationPolicy : PipelinePolicy
     /// <exception cref="ArgumentNullException"></exception>
     public TokenCredentialAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes, TimeSpan? refreshOffset = null)
     {
-        if (credential is null) throw new ArgumentNullException(nameof(credential));
-        if (scopes is null) throw new ArgumentNullException(nameof(scopes));
+        if (credential is null)
+            throw new ArgumentNullException(nameof(credential));
+        if (scopes is null)
+            throw new ArgumentNullException(nameof(scopes));
 
         _credential = credential;
         _scopes = scopes.ToArray();

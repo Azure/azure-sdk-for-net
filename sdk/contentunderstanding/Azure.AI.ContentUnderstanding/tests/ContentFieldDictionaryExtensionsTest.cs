@@ -20,7 +20,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public void GetFieldOrDefault_FieldExists_ReturnsField()
         {
             // Arrange
-            var field = ContentUnderstandingModelFactory.StringField(valueString: "TestValue");
+            var field = ContentUnderstandingModelFactory.ContentStringField(value: "TestValue");
             var fields = new Dictionary<string, ContentField>
             {
                 ["TestField"] = field
@@ -32,7 +32,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // Assert
             Assert.IsNotNull(result);
             Assert.AreSame(field, result);
-            Assert.IsInstanceOf<StringField>(result);
+            Assert.IsInstanceOf<ContentStringField>(result);
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // Arrange
             var fields = new Dictionary<string, ContentField>
             {
-                ["ExistingField"] = ContentUnderstandingModelFactory.StringField(valueString: "Value")
+                ["ExistingField"] = ContentUnderstandingModelFactory.ContentStringField(value: "Value")
             };
 
             // Act
@@ -83,7 +83,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // Arrange
             var fields = new Dictionary<string, ContentField>
             {
-                ["TestField"] = ContentUnderstandingModelFactory.StringField()
+                ["TestField"] = ContentUnderstandingModelFactory.ContentStringField(value: null)
             };
 
             // Act & Assert
@@ -96,7 +96,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // Arrange
             var fields = new Dictionary<string, ContentField>
             {
-                ["TestField"] = ContentUnderstandingModelFactory.StringField()
+                ["TestField"] = ContentUnderstandingModelFactory.ContentStringField(value: null)
             };
 
             // Act & Assert
@@ -112,7 +112,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // So whitespace is technically valid (though not recommended)
             var fields = new Dictionary<string, ContentField>
             {
-                ["TestField"] = ContentUnderstandingModelFactory.StringField()
+                ["TestField"] = ContentUnderstandingModelFactory.ContentStringField(value: null)
             };
 
             // Act
@@ -127,9 +127,9 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public void GetFieldOrDefault_MultipleFields_ReturnsCorrectField()
         {
             // Arrange
-            var field1 = ContentUnderstandingModelFactory.StringField(valueString: "Value1");
-            var field2 = ContentUnderstandingModelFactory.NumberField(valueNumber: 42.0);
-            var field3 = ContentUnderstandingModelFactory.StringField(valueString: "Value3");
+            var field1 = ContentUnderstandingModelFactory.ContentStringField(value: "Value1");
+            var field2 = ContentUnderstandingModelFactory.ContentNumberField(value: 42.0);
+            var field3 = ContentUnderstandingModelFactory.ContentStringField(value: "Value3");
 
             var fields = new Dictionary<string, ContentField>
             {
@@ -153,7 +153,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public void GetFieldOrDefault_CaseSensitive_RespectsCase()
         {
             // Arrange
-            var field = ContentUnderstandingModelFactory.StringField(valueString: "Value");
+            var field = ContentUnderstandingModelFactory.ContentStringField(value: "Value");
             var fields = new Dictionary<string, ContentField>
             {
                 ["TestField"] = field
@@ -177,7 +177,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // Arrange
             IDictionary<string, ContentField>? fields = new Dictionary<string, ContentField>
             {
-                ["TestField"] = ContentUnderstandingModelFactory.StringField(valueString: "Value")
+                ["TestField"] = ContentUnderstandingModelFactory.ContentStringField(value: "Value")
             };
 
             // Act
@@ -204,12 +204,12 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public void GetFieldOrDefault_WorksWithObjectField_ValueObject()
         {
             // Arrange
-            var nestedField = ContentUnderstandingModelFactory.StringField(valueString: "NestedValue");
+            var nestedField = ContentUnderstandingModelFactory.ContentStringField(value: "NestedValue");
             var valueObject = new Dictionary<string, ContentField>
             {
                 ["NestedField"] = nestedField
             };
-            var objectField = ContentUnderstandingModelFactory.ObjectField(valueObject: valueObject);
+            var objectField = ContentUnderstandingModelFactory.ContentObjectField(value: valueObject);
             var fields = new Dictionary<string, ContentField>
             {
                 ["ObjectField"] = objectField
@@ -220,9 +220,9 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.IsInstanceOf<ObjectField>(result);
-            var objField = (ObjectField)result!;
-            var nestedResult = objField.ValueObject?.GetFieldOrDefault("NestedField");
+            Assert.IsInstanceOf<ContentObjectField>(result);
+            var objField = (ContentObjectField)result!;
+            var nestedResult = objField.Value?.GetFieldOrDefault("NestedField");
             Assert.IsNotNull(nestedResult);
             Assert.AreSame(nestedField, nestedResult);
         }
@@ -235,7 +235,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // The TypeSpec defines fields as Record<ContentField> (string keys) without explicit pattern validation.
             // However, since field names are JSON property names, they should follow JSON naming conventions.
             // This test verifies the method works with valid field name patterns.
-            var field = ContentUnderstandingModelFactory.StringField(valueString: "Value");
+            var field = ContentUnderstandingModelFactory.ContentStringField(value: "Value");
             var fields = new Dictionary<string, ContentField>
             {
                 ["CustomerName"] = field,           // PascalCase (typical pattern)

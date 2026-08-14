@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public readonly partial struct RemoteApplicationType : IEquatable<RemoteApplicationType>
     {
         private readonly string _value;
+        /// <summary> Built-in applications. </summary>
+        private const string InBuiltValue = "InBuilt";
+        /// <summary> Imported MSIX application packages. </summary>
+        private const string MsixApplicationValue = "MsixApplication";
 
         /// <summary> Initializes a new instance of <see cref="RemoteApplicationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RemoteApplicationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string InBuiltValue = "InBuilt";
-        private const string MsixApplicationValue = "MsixApplication";
-
-        /// <summary> InBuilt. </summary>
+        /// <summary> Built-in applications. </summary>
         public static RemoteApplicationType InBuilt { get; } = new RemoteApplicationType(InBuiltValue);
-        /// <summary> MsixApplication. </summary>
+
+        /// <summary> Imported MSIX application packages. </summary>
         public static RemoteApplicationType MsixApplication { get; } = new RemoteApplicationType(MsixApplicationValue);
+
         /// <summary> Determines if two <see cref="RemoteApplicationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RemoteApplicationType left, RemoteApplicationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RemoteApplicationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RemoteApplicationType left, RemoteApplicationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RemoteApplicationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RemoteApplicationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RemoteApplicationType(string value) => new RemoteApplicationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RemoteApplicationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RemoteApplicationType?(string value) => value == null ? null : new RemoteApplicationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RemoteApplicationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RemoteApplicationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

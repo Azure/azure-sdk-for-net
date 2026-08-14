@@ -9,6 +9,8 @@ namespace Azure.Health.Deidentification
     public partial class DeidentificationClient
     {
         protected DeidentificationClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public DeidentificationClient(Azure.Health.Deidentification.DeidentificationClientSettings settings) { }
         public DeidentificationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public DeidentificationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Health.Deidentification.DeidentificationClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -41,6 +43,14 @@ namespace Azure.Health.Deidentification
         public virtual Azure.AsyncPageable<System.BinaryData> GetJobsAsync(int? maxpagesize, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Health.Deidentification.DeidentificationJob> GetJobsAsync(int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class DeidentificationClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddDeidentificationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddDeidentificationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Health.Deidentification.DeidentificationClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDeidentificationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDeidentificationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Health.Deidentification.DeidentificationClientSettings> configureSettings) { throw null; }
+    }
     public partial class DeidentificationClientOptions : Azure.Core.ClientOptions
     {
         public DeidentificationClientOptions(Azure.Health.Deidentification.DeidentificationClientOptions.ServiceVersion version = Azure.Health.Deidentification.DeidentificationClientOptions.ServiceVersion.V2025_07_15_Preview) { }
@@ -49,6 +59,14 @@ namespace Azure.Health.Deidentification
             V2024_11_15 = 1,
             V2025_07_15_Preview = 2,
         }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class DeidentificationClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public DeidentificationClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Health.Deidentification.DeidentificationClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class DeidentificationContent : System.ClientModel.Primitives.IJsonModel<Azure.Health.Deidentification.DeidentificationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Health.Deidentification.DeidentificationContent>
     {

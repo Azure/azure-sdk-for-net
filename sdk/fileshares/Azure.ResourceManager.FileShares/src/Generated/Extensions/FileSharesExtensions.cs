@@ -75,6 +75,42 @@ namespace Azure.ResourceManager.FileShares
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="FileSharePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableFileSharesArmClient.GetFileSharePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="FileSharePrivateEndpointConnectionResource"/> object. </returns>
+        public static FileSharePrivateEndpointConnectionResource GetFileSharePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableFileSharesArmClient(client).GetFileSharePrivateEndpointConnectionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="FileSharePrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableFileSharesArmClient.GetFileSharePrivateLinkResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="FileSharePrivateLinkResource"/> object. </returns>
+        public static FileSharePrivateLinkResource GetFileSharePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableFileSharesArmClient(client).GetFileSharePrivateLinkResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of FileShares in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>

@@ -8,16 +8,60 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ImageModelSettingsClassification : IUtf8JsonSerializable, IJsonModel<ImageModelSettingsClassification>
+    /// <summary>
+    /// Settings used for training the model.
+    /// For more information on the available settings please visit the official documentation:
+    /// https://docs.microsoft.com/en-us/azure/machine-learning/how-to-auto-train-image-models.
+    /// </summary>
+    public partial class ImageModelSettingsClassification : ImageModelSettings, IJsonModel<ImageModelSettingsClassification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageModelSettingsClassification>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ImageModelSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ImageModelSettingsClassification>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeImageModelSettingsClassification(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ImageModelSettingsClassification)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ImageModelSettingsClassification>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ImageModelSettingsClassification)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ImageModelSettingsClassification>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ImageModelSettingsClassification IPersistableModel<ImageModelSettingsClassification>.Create(BinaryData data, ModelReaderWriterOptions options) => (ImageModelSettingsClassification)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ImageModelSettingsClassification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ImageModelSettingsClassification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,101 +73,73 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageModelSettingsClassification>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImageModelSettingsClassification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ImageModelSettingsClassification)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(TrainingCropSize))
             {
-                if (TrainingCropSize != null)
-                {
-                    writer.WritePropertyName("trainingCropSize"u8);
-                    writer.WriteNumberValue(TrainingCropSize.Value);
-                }
-                else
-                {
-                    writer.WriteNull("trainingCropSize");
-                }
+                writer.WritePropertyName("trainingCropSize"u8);
+                writer.WriteNumberValue(TrainingCropSize.Value);
             }
             if (Optional.IsDefined(ValidationCropSize))
             {
-                if (ValidationCropSize != null)
-                {
-                    writer.WritePropertyName("validationCropSize"u8);
-                    writer.WriteNumberValue(ValidationCropSize.Value);
-                }
-                else
-                {
-                    writer.WriteNull("validationCropSize");
-                }
+                writer.WritePropertyName("validationCropSize"u8);
+                writer.WriteNumberValue(ValidationCropSize.Value);
             }
             if (Optional.IsDefined(ValidationResizeSize))
             {
-                if (ValidationResizeSize != null)
-                {
-                    writer.WritePropertyName("validationResizeSize"u8);
-                    writer.WriteNumberValue(ValidationResizeSize.Value);
-                }
-                else
-                {
-                    writer.WriteNull("validationResizeSize");
-                }
+                writer.WritePropertyName("validationResizeSize"u8);
+                writer.WriteNumberValue(ValidationResizeSize.Value);
             }
             if (Optional.IsDefined(WeightedLoss))
             {
-                if (WeightedLoss != null)
-                {
-                    writer.WritePropertyName("weightedLoss"u8);
-                    writer.WriteNumberValue(WeightedLoss.Value);
-                }
-                else
-                {
-                    writer.WriteNull("weightedLoss");
-                }
+                writer.WritePropertyName("weightedLoss"u8);
+                writer.WriteNumberValue(WeightedLoss.Value);
             }
         }
 
-        ImageModelSettingsClassification IJsonModel<ImageModelSettingsClassification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ImageModelSettingsClassification IJsonModel<ImageModelSettingsClassification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ImageModelSettingsClassification)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ImageModelSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageModelSettingsClassification>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImageModelSettingsClassification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ImageModelSettingsClassification)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeImageModelSettingsClassification(document.RootElement, options);
         }
 
-        internal static ImageModelSettingsClassification DeserializeImageModelSettingsClassification(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ImageModelSettingsClassification DeserializeImageModelSettingsClassification(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int? trainingCropSize = default;
-            int? validationCropSize = default;
-            int? validationResizeSize = default;
-            int? weightedLoss = default;
-            bool? amsGradient = default;
             string advancedSettings = default;
+            bool? amsGradient = default;
             string augmentations = default;
             float? beta1 = default;
             float? beta2 = default;
             int? checkpointFrequency = default;
-            string checkpointRunId = default;
             MachineLearningFlowModelJobInput checkpointModel = default;
+            string checkpointRunId = default;
             bool? distributed = default;
             bool? earlyStopping = default;
             int? earlyStoppingDelay = default;
             int? earlyStoppingPatience = default;
-            int? evaluationFrequency = default;
             bool? enableOnnxNormalization = default;
+            int? evaluationFrequency = default;
             int? gradientAccumulationStep = default;
             int? layersToFreeze = default;
             float? learningRate = default;
@@ -142,389 +158,391 @@ namespace Azure.ResourceManager.MachineLearning.Models
             float? warmupCosineLRCycles = default;
             int? warmupCosineLRWarmupEpochs = default;
             float? weightDecay = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            int? trainingCropSize = default;
+            int? validationCropSize = default;
+            int? validationResizeSize = default;
+            int? weightedLoss = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("trainingCropSize"u8))
+                if (prop.NameEquals("advancedSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        trainingCropSize = null;
-                        continue;
-                    }
-                    trainingCropSize = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("validationCropSize"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        validationCropSize = null;
-                        continue;
-                    }
-                    validationCropSize = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("validationResizeSize"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        validationResizeSize = null;
-                        continue;
-                    }
-                    validationResizeSize = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("weightedLoss"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        weightedLoss = null;
-                        continue;
-                    }
-                    weightedLoss = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("amsGradient"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        amsGradient = null;
-                        continue;
-                    }
-                    amsGradient = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("advancedSettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         advancedSettings = null;
                         continue;
                     }
-                    advancedSettings = property.Value.GetString();
+                    advancedSettings = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("augmentations"u8))
+                if (prop.NameEquals("amsGradient"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        amsGradient = null;
+                        continue;
+                    }
+                    amsGradient = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("augmentations"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         augmentations = null;
                         continue;
                     }
-                    augmentations = property.Value.GetString();
+                    augmentations = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("beta1"u8))
+                if (prop.NameEquals("beta1"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         beta1 = null;
                         continue;
                     }
-                    beta1 = property.Value.GetSingle();
+                    beta1 = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("beta2"u8))
+                if (prop.NameEquals("beta2"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         beta2 = null;
                         continue;
                     }
-                    beta2 = property.Value.GetSingle();
+                    beta2 = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("checkpointFrequency"u8))
+                if (prop.NameEquals("checkpointFrequency"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         checkpointFrequency = null;
                         continue;
                     }
-                    checkpointFrequency = property.Value.GetInt32();
+                    checkpointFrequency = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("checkpointRunId"u8))
+                if (prop.NameEquals("checkpointModel"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        checkpointRunId = null;
-                        continue;
-                    }
-                    checkpointRunId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("checkpointModel"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         checkpointModel = null;
                         continue;
                     }
-                    checkpointModel = MachineLearningFlowModelJobInput.DeserializeMachineLearningFlowModelJobInput(property.Value, options);
+                    checkpointModel = MachineLearningFlowModelJobInput.DeserializeMachineLearningFlowModelJobInput(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("distributed"u8))
+                if (prop.NameEquals("checkpointRunId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        checkpointRunId = null;
+                        continue;
+                    }
+                    checkpointRunId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("distributed"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         distributed = null;
                         continue;
                     }
-                    distributed = property.Value.GetBoolean();
+                    distributed = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("earlyStopping"u8))
+                if (prop.NameEquals("earlyStopping"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         earlyStopping = null;
                         continue;
                     }
-                    earlyStopping = property.Value.GetBoolean();
+                    earlyStopping = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("earlyStoppingDelay"u8))
+                if (prop.NameEquals("earlyStoppingDelay"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         earlyStoppingDelay = null;
                         continue;
                     }
-                    earlyStoppingDelay = property.Value.GetInt32();
+                    earlyStoppingDelay = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("earlyStoppingPatience"u8))
+                if (prop.NameEquals("earlyStoppingPatience"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         earlyStoppingPatience = null;
                         continue;
                     }
-                    earlyStoppingPatience = property.Value.GetInt32();
+                    earlyStoppingPatience = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("evaluationFrequency"u8))
+                if (prop.NameEquals("enableOnnxNormalization"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        evaluationFrequency = null;
-                        continue;
-                    }
-                    evaluationFrequency = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("enableOnnxNormalization"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         enableOnnxNormalization = null;
                         continue;
                     }
-                    enableOnnxNormalization = property.Value.GetBoolean();
+                    enableOnnxNormalization = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("gradientAccumulationStep"u8))
+                if (prop.NameEquals("evaluationFrequency"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        evaluationFrequency = null;
+                        continue;
+                    }
+                    evaluationFrequency = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("gradientAccumulationStep"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         gradientAccumulationStep = null;
                         continue;
                     }
-                    gradientAccumulationStep = property.Value.GetInt32();
+                    gradientAccumulationStep = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("layersToFreeze"u8))
+                if (prop.NameEquals("layersToFreeze"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         layersToFreeze = null;
                         continue;
                     }
-                    layersToFreeze = property.Value.GetInt32();
+                    layersToFreeze = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("learningRate"u8))
+                if (prop.NameEquals("learningRate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         learningRate = null;
                         continue;
                     }
-                    learningRate = property.Value.GetSingle();
+                    learningRate = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("learningRateScheduler"u8))
+                if (prop.NameEquals("learningRateScheduler"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    learningRateScheduler = new LearningRateScheduler(property.Value.GetString());
+                    learningRateScheduler = new LearningRateScheduler(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("modelName"u8))
+                if (prop.NameEquals("modelName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         modelName = null;
                         continue;
                     }
-                    modelName = property.Value.GetString();
+                    modelName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("momentum"u8))
+                if (prop.NameEquals("momentum"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         momentum = null;
                         continue;
                     }
-                    momentum = property.Value.GetSingle();
+                    momentum = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("nesterov"u8))
+                if (prop.NameEquals("nesterov"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         nesterov = null;
                         continue;
                     }
-                    nesterov = property.Value.GetBoolean();
+                    nesterov = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("numberOfEpochs"u8))
+                if (prop.NameEquals("numberOfEpochs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         numberOfEpochs = null;
                         continue;
                     }
-                    numberOfEpochs = property.Value.GetInt32();
+                    numberOfEpochs = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("numberOfWorkers"u8))
+                if (prop.NameEquals("numberOfWorkers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         numberOfWorkers = null;
                         continue;
                     }
-                    numberOfWorkers = property.Value.GetInt32();
+                    numberOfWorkers = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("optimizer"u8))
+                if (prop.NameEquals("optimizer"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    optimizer = new StochasticOptimizer(property.Value.GetString());
+                    optimizer = new StochasticOptimizer(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("randomSeed"u8))
+                if (prop.NameEquals("randomSeed"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         randomSeed = null;
                         continue;
                     }
-                    randomSeed = property.Value.GetInt32();
+                    randomSeed = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("stepLRGamma"u8))
+                if (prop.NameEquals("stepLRGamma"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         stepLRGamma = null;
                         continue;
                     }
-                    stepLRGamma = property.Value.GetSingle();
+                    stepLRGamma = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("stepLRStepSize"u8))
+                if (prop.NameEquals("stepLRStepSize"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         stepLRStepSize = null;
                         continue;
                     }
-                    stepLRStepSize = property.Value.GetInt32();
+                    stepLRStepSize = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("trainingBatchSize"u8))
+                if (prop.NameEquals("trainingBatchSize"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         trainingBatchSize = null;
                         continue;
                     }
-                    trainingBatchSize = property.Value.GetInt32();
+                    trainingBatchSize = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("validationBatchSize"u8))
+                if (prop.NameEquals("validationBatchSize"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         validationBatchSize = null;
                         continue;
                     }
-                    validationBatchSize = property.Value.GetInt32();
+                    validationBatchSize = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("warmupCosineLRCycles"u8))
+                if (prop.NameEquals("warmupCosineLRCycles"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         warmupCosineLRCycles = null;
                         continue;
                     }
-                    warmupCosineLRCycles = property.Value.GetSingle();
+                    warmupCosineLRCycles = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("warmupCosineLRWarmupEpochs"u8))
+                if (prop.NameEquals("warmupCosineLRWarmupEpochs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         warmupCosineLRWarmupEpochs = null;
                         continue;
                     }
-                    warmupCosineLRWarmupEpochs = property.Value.GetInt32();
+                    warmupCosineLRWarmupEpochs = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("weightDecay"u8))
+                if (prop.NameEquals("weightDecay"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         weightDecay = null;
                         continue;
                     }
-                    weightDecay = property.Value.GetSingle();
+                    weightDecay = prop.Value.GetSingle();
+                    continue;
+                }
+                if (prop.NameEquals("trainingCropSize"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        trainingCropSize = null;
+                        continue;
+                    }
+                    trainingCropSize = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("validationCropSize"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        validationCropSize = null;
+                        continue;
+                    }
+                    validationCropSize = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("validationResizeSize"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        validationResizeSize = null;
+                        continue;
+                    }
+                    validationResizeSize = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("weightedLoss"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        weightedLoss = null;
+                        continue;
+                    }
+                    weightedLoss = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ImageModelSettingsClassification(
-                amsGradient,
                 advancedSettings,
+                amsGradient,
                 augmentations,
                 beta1,
                 beta2,
                 checkpointFrequency,
-                checkpointRunId,
                 checkpointModel,
+                checkpointRunId,
                 distributed,
                 earlyStopping,
                 earlyStoppingDelay,
                 earlyStoppingPatience,
-                evaluationFrequency,
                 enableOnnxNormalization,
+                evaluationFrequency,
                 gradientAccumulationStep,
                 layersToFreeze,
                 learningRate,
@@ -543,636 +561,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 warmupCosineLRCycles,
                 warmupCosineLRWarmupEpochs,
                 weightDecay,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 trainingCropSize,
                 validationCropSize,
                 validationResizeSize,
                 weightedLoss);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrainingCropSize), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  trainingCropSize: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TrainingCropSize))
-                {
-                    builder.Append("  trainingCropSize: ");
-                    builder.AppendLine($"{TrainingCropSize.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidationCropSize), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  validationCropSize: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ValidationCropSize))
-                {
-                    builder.Append("  validationCropSize: ");
-                    builder.AppendLine($"{ValidationCropSize.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidationResizeSize), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  validationResizeSize: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ValidationResizeSize))
-                {
-                    builder.Append("  validationResizeSize: ");
-                    builder.AppendLine($"{ValidationResizeSize.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WeightedLoss), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  weightedLoss: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(WeightedLoss))
-                {
-                    builder.Append("  weightedLoss: ");
-                    builder.AppendLine($"{WeightedLoss.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AmsGradient), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  amsGradient: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AmsGradient))
-                {
-                    builder.Append("  amsGradient: ");
-                    var boolValue = AmsGradient.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdvancedSettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  advancedSettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AdvancedSettings))
-                {
-                    builder.Append("  advancedSettings: ");
-                    if (AdvancedSettings.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AdvancedSettings}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AdvancedSettings}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Augmentations), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  augmentations: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Augmentations))
-                {
-                    builder.Append("  augmentations: ");
-                    if (Augmentations.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Augmentations}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Augmentations}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Beta1), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  beta1: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Beta1))
-                {
-                    builder.Append("  beta1: ");
-                    builder.AppendLine($"'{Beta1.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Beta2), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  beta2: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Beta2))
-                {
-                    builder.Append("  beta2: ");
-                    builder.AppendLine($"'{Beta2.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CheckpointFrequency), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  checkpointFrequency: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CheckpointFrequency))
-                {
-                    builder.Append("  checkpointFrequency: ");
-                    builder.AppendLine($"{CheckpointFrequency.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CheckpointRunId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  checkpointRunId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CheckpointRunId))
-                {
-                    builder.Append("  checkpointRunId: ");
-                    if (CheckpointRunId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CheckpointRunId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CheckpointRunId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CheckpointModel), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  checkpointModel: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CheckpointModel))
-                {
-                    builder.Append("  checkpointModel: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, CheckpointModel, options, 2, false, "  checkpointModel: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Distributed), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  distributed: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Distributed))
-                {
-                    builder.Append("  distributed: ");
-                    var boolValue = Distributed.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EarlyStopping), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  earlyStopping: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EarlyStopping))
-                {
-                    builder.Append("  earlyStopping: ");
-                    var boolValue = EarlyStopping.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EarlyStoppingDelay), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  earlyStoppingDelay: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EarlyStoppingDelay))
-                {
-                    builder.Append("  earlyStoppingDelay: ");
-                    builder.AppendLine($"{EarlyStoppingDelay.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EarlyStoppingPatience), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  earlyStoppingPatience: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EarlyStoppingPatience))
-                {
-                    builder.Append("  earlyStoppingPatience: ");
-                    builder.AppendLine($"{EarlyStoppingPatience.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EvaluationFrequency), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  evaluationFrequency: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EvaluationFrequency))
-                {
-                    builder.Append("  evaluationFrequency: ");
-                    builder.AppendLine($"{EvaluationFrequency.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableOnnxNormalization), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enableOnnxNormalization: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableOnnxNormalization))
-                {
-                    builder.Append("  enableOnnxNormalization: ");
-                    var boolValue = EnableOnnxNormalization.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GradientAccumulationStep), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  gradientAccumulationStep: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(GradientAccumulationStep))
-                {
-                    builder.Append("  gradientAccumulationStep: ");
-                    builder.AppendLine($"{GradientAccumulationStep.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LayersToFreeze), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  layersToFreeze: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LayersToFreeze))
-                {
-                    builder.Append("  layersToFreeze: ");
-                    builder.AppendLine($"{LayersToFreeze.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LearningRate), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  learningRate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LearningRate))
-                {
-                    builder.Append("  learningRate: ");
-                    builder.AppendLine($"'{LearningRate.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LearningRateScheduler), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  learningRateScheduler: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LearningRateScheduler))
-                {
-                    builder.Append("  learningRateScheduler: ");
-                    builder.AppendLine($"'{LearningRateScheduler.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ModelName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  modelName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ModelName))
-                {
-                    builder.Append("  modelName: ");
-                    if (ModelName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ModelName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ModelName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Momentum), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  momentum: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Momentum))
-                {
-                    builder.Append("  momentum: ");
-                    builder.AppendLine($"'{Momentum.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Nesterov), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nesterov: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Nesterov))
-                {
-                    builder.Append("  nesterov: ");
-                    var boolValue = Nesterov.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfEpochs), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  numberOfEpochs: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NumberOfEpochs))
-                {
-                    builder.Append("  numberOfEpochs: ");
-                    builder.AppendLine($"{NumberOfEpochs.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfWorkers), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  numberOfWorkers: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NumberOfWorkers))
-                {
-                    builder.Append("  numberOfWorkers: ");
-                    builder.AppendLine($"{NumberOfWorkers.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Optimizer), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  optimizer: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Optimizer))
-                {
-                    builder.Append("  optimizer: ");
-                    builder.AppendLine($"'{Optimizer.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RandomSeed), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  randomSeed: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RandomSeed))
-                {
-                    builder.Append("  randomSeed: ");
-                    builder.AppendLine($"{RandomSeed.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StepLRGamma), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  stepLRGamma: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StepLRGamma))
-                {
-                    builder.Append("  stepLRGamma: ");
-                    builder.AppendLine($"'{StepLRGamma.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StepLRStepSize), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  stepLRStepSize: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StepLRStepSize))
-                {
-                    builder.Append("  stepLRStepSize: ");
-                    builder.AppendLine($"{StepLRStepSize.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrainingBatchSize), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  trainingBatchSize: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TrainingBatchSize))
-                {
-                    builder.Append("  trainingBatchSize: ");
-                    builder.AppendLine($"{TrainingBatchSize.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidationBatchSize), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  validationBatchSize: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ValidationBatchSize))
-                {
-                    builder.Append("  validationBatchSize: ");
-                    builder.AppendLine($"{ValidationBatchSize.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WarmupCosineLRCycles), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  warmupCosineLRCycles: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(WarmupCosineLRCycles))
-                {
-                    builder.Append("  warmupCosineLRCycles: ");
-                    builder.AppendLine($"'{WarmupCosineLRCycles.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WarmupCosineLRWarmupEpochs), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  warmupCosineLRWarmupEpochs: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(WarmupCosineLRWarmupEpochs))
-                {
-                    builder.Append("  warmupCosineLRWarmupEpochs: ");
-                    builder.AppendLine($"{WarmupCosineLRWarmupEpochs.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WeightDecay), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  weightDecay: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(WeightDecay))
-                {
-                    builder.Append("  weightDecay: ");
-                    builder.AppendLine($"'{WeightDecay.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ImageModelSettingsClassification>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageModelSettingsClassification>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ImageModelSettingsClassification)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ImageModelSettingsClassification IPersistableModel<ImageModelSettingsClassification>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageModelSettingsClassification>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeImageModelSettingsClassification(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ImageModelSettingsClassification)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ImageModelSettingsClassification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

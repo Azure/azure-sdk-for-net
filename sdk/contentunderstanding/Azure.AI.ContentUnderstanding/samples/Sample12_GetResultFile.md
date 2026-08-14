@@ -48,12 +48,12 @@ Uri videoUrl = new Uri("https://github.com/Azure-Samples/azure-ai-content-unders
 var analyzeOperation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-videoSearch",
-    inputs: new[] { new AnalyzeInput { Url = videoUrl } });
+    inputs: new[] { new AnalysisInput { Uri = videoUrl } });
 
 // Get the operation ID - this is needed to retrieve result files later
 string operationId = analyzeOperation.Id;
 Console.WriteLine($"Operation ID: {operationId}");
-AnalyzeResult result = analyzeOperation.Value;
+AnalysisResult result = analyzeOperation.Value;
 ```
 
 ## Get result file
@@ -70,12 +70,12 @@ Retrieve a result file (keyframe image) using the operation ID and file path:
 // 2. Use those timestamps to construct paths like "keyframes/1000" for the frame at 1000ms
 // 3. Call GetResultFileAsync with the operation ID and path
 
-// For video analysis, keyframes would be found in AudioVisualContent.KeyFrameTimesMs
-// Cast MediaContent to AudioVisualContent to access video-specific properties
+// For video analysis, keyframes would be found in AudioVisualContent.KeyFrameTimes
+// Cast AnalysisContent to AudioVisualContent to access video-specific properties
 AudioVisualContent videoContent = (AudioVisualContent)result.Contents!.First();
 // Print keyframe information
-int totalKeyframes = videoContent.KeyFrameTimesMs!.Count;
-long firstFrameTimeMs = videoContent.KeyFrameTimesMs[0];
+int totalKeyframes = videoContent.KeyFrameTimes!.Count;
+long firstFrameTimeMs = (long)videoContent.KeyFrameTimes[0].TotalMilliseconds;
 Console.WriteLine($"Total keyframes: {totalKeyframes}");
 Console.WriteLine($"First keyframe time: {firstFrameTimeMs} ms");
 

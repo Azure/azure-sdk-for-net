@@ -16,6 +16,8 @@ namespace Specs.Azure.Core.Page
     {
         protected TwoModelsAsPageItem() => throw null;
 
+        internal TwoModelsAsPageItem(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion) => throw null;
+
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Pageable<BinaryData> GetFirstItem(RequestContext context) => throw null;

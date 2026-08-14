@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.Datadog.Models
     public readonly partial struct DatadogOperation : IEquatable<DatadogOperation>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DatadogOperation"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DatadogOperation(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AddBeginValue = "AddBegin";
         private const string AddCompleteValue = "AddComplete";
         private const string DeleteBeginValue = "DeleteBegin";
         private const string DeleteCompleteValue = "DeleteComplete";
         private const string ActiveValue = "Active";
 
-        /// <summary> AddBegin. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DatadogOperation(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the AddBegin. </summary>
         public static DatadogOperation AddBegin { get; } = new DatadogOperation(AddBeginValue);
-        /// <summary> AddComplete. </summary>
+
+        /// <summary> Gets the AddComplete. </summary>
         public static DatadogOperation AddComplete { get; } = new DatadogOperation(AddCompleteValue);
-        /// <summary> DeleteBegin. </summary>
+
+        /// <summary> Gets the DeleteBegin. </summary>
         public static DatadogOperation DeleteBegin { get; } = new DatadogOperation(DeleteBeginValue);
-        /// <summary> DeleteComplete. </summary>
+
+        /// <summary> Gets the DeleteComplete. </summary>
         public static DatadogOperation DeleteComplete { get; } = new DatadogOperation(DeleteCompleteValue);
-        /// <summary> Active. </summary>
+
+        /// <summary> Gets the Active. </summary>
         public static DatadogOperation Active { get; } = new DatadogOperation(ActiveValue);
+
         /// <summary> Determines if two <see cref="DatadogOperation"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DatadogOperation left, DatadogOperation right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DatadogOperation"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DatadogOperation left, DatadogOperation right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DatadogOperation"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DatadogOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DatadogOperation(string value) => new DatadogOperation(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DatadogOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DatadogOperation?(string value) => value == null ? null : new DatadogOperation(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DatadogOperation other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DatadogOperation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

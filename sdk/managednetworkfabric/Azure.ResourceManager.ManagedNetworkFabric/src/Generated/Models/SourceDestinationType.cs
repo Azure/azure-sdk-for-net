@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,62 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct SourceDestinationType : IEquatable<SourceDestinationType>
     {
         private readonly string _value;
+        /// <summary> SourceDestinationType SourceIP. </summary>
+        private const string SourceIPValue = "SourceIP";
+        /// <summary> SourceDestinationType DestinationIP. </summary>
+        private const string DestinationIPValue = "DestinationIP";
+        /// <summary> SourceDestinationType Bidirectional. </summary>
+        private const string BidirectionalValue = "Bidirectional";
 
         /// <summary> Initializes a new instance of <see cref="SourceDestinationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SourceDestinationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SourceIPValue = "SourceIP";
-        private const string DestinationIPValue = "DestinationIP";
-
-        /// <summary> SourceIP. </summary>
+        /// <summary> SourceDestinationType SourceIP. </summary>
         public static SourceDestinationType SourceIP { get; } = new SourceDestinationType(SourceIPValue);
-        /// <summary> DestinationIP. </summary>
+
+        /// <summary> SourceDestinationType DestinationIP. </summary>
         public static SourceDestinationType DestinationIP { get; } = new SourceDestinationType(DestinationIPValue);
+
+        /// <summary> SourceDestinationType Bidirectional. </summary>
+        public static SourceDestinationType Bidirectional { get; } = new SourceDestinationType(BidirectionalValue);
+
         /// <summary> Determines if two <see cref="SourceDestinationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SourceDestinationType left, SourceDestinationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SourceDestinationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SourceDestinationType left, SourceDestinationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SourceDestinationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SourceDestinationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SourceDestinationType(string value) => new SourceDestinationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SourceDestinationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SourceDestinationType?(string value) => value == null ? null : new SourceDestinationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SourceDestinationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SourceDestinationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

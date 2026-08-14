@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> User Response for Troubleshooter continue request. </summary>
     public partial class TroubleshooterResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TroubleshooterResult"/>. </summary>
         public TroubleshooterResult()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="questionId"> id of the question. </param>
         /// <param name="questionType"> Type of Question. </param>
         /// <param name="response"> Response key for SingleInput. For Multi-line test/open ended question it is free form text. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TroubleshooterResult(string questionId, TroubleshooterQuestionType? questionType, string response, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TroubleshooterResult(string questionId, TroubleshooterQuestionType? questionType, string response, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             QuestionId = questionId;
             QuestionType = questionType;
             Response = response;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> id of the question. </summary>
         public string QuestionId { get; set; }
+
         /// <summary> Type of Question. </summary>
         public TroubleshooterQuestionType? QuestionType { get; set; }
+
         /// <summary> Response key for SingleInput. For Multi-line test/open ended question it is free form text. </summary>
         public string Response { get; set; }
     }

@@ -12,10 +12,7 @@ using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
 {
-    /// <summary>
-    /// A class representing the TrafficManagerGeographicHierarchy data model.
-    /// Class representing the Geographic hierarchy used with the Geographic traffic routing method.
-    /// </summary>
+    /// <summary> Class representing the Geographic hierarchy used with the Geographic traffic routing method. </summary>
     public partial class TrafficManagerGeographicHierarchyData : TrafficManagerProxyResourceData
     {
         /// <summary> Initializes a new instance of <see cref="TrafficManagerGeographicHierarchyData"/>. </summary>
@@ -27,14 +24,31 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="geographicHierarchy"> The region at the root of the hierarchy from all the regions in the hierarchy can be retrieved. </param>
-        internal TrafficManagerGeographicHierarchyData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, TrafficManagerRegion geographicHierarchy) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of the Geographic Hierarchy resource. </param>
+        internal TrafficManagerGeographicHierarchyData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, GeographicHierarchyProperties properties) : base(id, name, resourceType, additionalBinaryDataProperties)
         {
-            GeographicHierarchy = geographicHierarchy;
+            Properties = properties;
         }
 
+        /// <summary> The properties of the Geographic Hierarchy resource. </summary>
+        internal GeographicHierarchyProperties Properties { get; set; }
+
         /// <summary> The region at the root of the hierarchy from all the regions in the hierarchy can be retrieved. </summary>
-        public TrafficManagerRegion GeographicHierarchy { get; set; }
+        public TrafficManagerRegion GeographicHierarchy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GeographicHierarchy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GeographicHierarchyProperties();
+                }
+                Properties.GeographicHierarchy = value;
+            }
+        }
     }
 }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.6.0-beta.3 (Unreleased)
+## 1.9.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,7 +8,91 @@
 
 ### Bugs Fixed
 
+- Log fields are now culture-invariant. ([#61996](https://github.com/Azure/azure-sdk-for-net/pull/61996))
+
 ### Other Changes
+
+## 1.8.3 (2026-07-24)
+
+### Bugs Fixed
+
+- Hardened ingestion and Live Metrics redirect handling to reject untrusted destinations before replaying telemetry or caching the redirect. Redirect targets must now use HTTPS and match an approved Azure Monitor trust boundary, preventing credentials and telemetry from being forwarded to attacker-controlled endpoints.
+  ([#61244](https://github.com/Azure/azure-sdk-for-net/pull/61244))
+
+### Other Changes
+
+- Customer SDK stats are now on by default; opt out with `APPLICATIONINSIGHTS_SDKSTATS_DISABLED=true`. `dropCode`/`retryCode` dimension values now use the spec's SCREAMING_SNAKE_CASE (e.g. `CLIENT_EXCEPTION`).
+
+## 1.8.2 (2026-06-30)
+
+### Features Added
+
+- Added support for the Microsoft OpenTelemetry distro's SDK statistics: a new internal meter subscription and an AppContext switch (`Azure.Monitor.OpenTelemetry.Exporter.RouteSdkStatsToDistroEndpoint`) that lets the distro redirect SDK statistics to its own ingestion path. The ingestion destination and an on/off signal are resolved at startup by fetching a remote configuration; on success the configured destination is used, an explicit remote disable signal turns SDK statistics off, and any other outcome falls back to the existing region-derived ingestion endpoint so SDK statistics keep flowing. The AppContext switch has no effect on Statsbeat for callers that do not opt in.
+  ([#59811](https://github.com/Azure/azure-sdk-for-net/pull/59811))
+
+- Subscribed the Statsbeat `MeterProvider` to the Microsoft OpenTelemetry distro's Network SDKStats meter (`MicrosoftOpenTelemetryNetworkSdkStatsMeter`) so distro-emitted Network statistics flow through the existing Statsbeat cadence when the distro runs with a non-Azure-Monitor exporter.
+  ([#60209](https://github.com/Azure/azure-sdk-for-net/pull/60209))
+
+- Subscribed the Statsbeat `MeterProvider` to the Microsoft OpenTelemetry distro's Feature SDKStats meter (`MicrosoftOpenTelemetryFeatureSdkStatsMeter`) so distro-emitted Feature statistics reach the Statsbeat ingestion path. The distro uses an independent, spec-aligned bit map to avoid collisions with the classic Application Insights SDK's `FeatureStatsbeatMeter`.
+  ([#59529](https://github.com/Azure/azure-sdk-for-net/pull/59529))
+
+- Added Network SDKStats reporting, emitting the short-interval Network statistics defined in the Application Insights SDKStats spec on a 15-minute cadence: `Request_Success_Count`, `Request_Failure_Count`, `Request_Duration`, `Retry_Count`, `Throttle_Count`, and `Exception_Count`, each with the spec-defined dimensions (including `host`, `statusCode`, and `exceptionType`).
+  ([#59909](https://github.com/Azure/azure-sdk-for-net/pull/59909), [#60018](https://github.com/Azure/azure-sdk-for-net/pull/60018))
+
+### Other Changes
+
+- Updated customer SDK stats dimension key names to use camelCase (`computeType`, `telemetryType`, `dropCode`, `dropReason`, `retryCode`, `retryReason`).
+  ([#59902](https://github.com/Azure/azure-sdk-for-net/pull/59902))
+
+## 1.8.1 (2026-05-20)
+
+### Features Added
+
+- Added GenAI main agent attribution support. Automatically propagates `microsoft.gen_ai.main_agent.*` attributes from parent spans to child spans and log records, enabling end-to-end tracing of AI agent orchestration.
+  ([#59368](https://github.com/Azure/azure-sdk-for-net/pull/59368))
+
+## 1.8.0 (2026-04-29)
+
+### Other Changes
+
+- Pulled in OpenTelemetry dependency updates.
+
+## 1.7.0 (2026-03-27)
+
+### Features Added
+
+- Added `ApplicationInsightsRestClientSettings` to support creating a `ApplicationInsightsRestClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+  ([#56891](https://github.com/Azure/azure-sdk-for-net/pull/56891))
+
+### Bugs Fixed
+
+- Fixed AOT warning regression by using the source generator for `ConfigurationBinder` calls.
+  ([#56368](https://github.com/Azure/azure-sdk-for-net/pull/56368))
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  - OpenTelemetry 1.15.1
+  - OpenTelemetry.Extensions.Hosting 1.15.1
+  ([#57549](https://github.com/Azure/azure-sdk-for-net/pull/57549))
+* Made `AzureMonitorLogExporter`, `AzureMonitorMetricExporter`, and `AzureMonitorTraceExporter` public for direct use when configuring OpenTelemetry.
+   ([#56344](https://github.com/Azure/azure-sdk-for-net/pull/56344))
+* Made options `EnablePerformanceCounters` and `EnableStandardMetrics` public in `AzureMonitorExporterOptions`.
+   ([#56344](https://github.com/Azure/azure-sdk-for-net/pull/56344))
+
+## 1.6.0 (2026-01-28)
+
+### Other Changes
+
+* The customer-facing SDK stats feature
+  metric names have been updated to match the stable specification.
+  - **Metric names changed**: `preview.item.success.count` → `Item_Success_Count`,
+    `preview.item.dropped.count` → `Item_Dropped_Count`,
+    `preview.item.retry.count` → `Item_Retry_Count`.
+  - **New environment variable**: To enable, set environment variable
+    `APPLICATIONINSIGHTS_SDKSTATS_DISABLED=false`.
+  - The old environment variable `APPLICATIONINSIGHTS_SDKSTATS_ENABLED_PREVIEW`
+    is no longer recognized.
 
 ## 1.6.0-beta.2 (2026-01-12)
 
@@ -44,7 +128,7 @@
 
 ## 1.6.0-beta.1 (2025-12-03)
 
-### Bugs Fixed
+### Features Added
 * Added Microsoft override attributes to preserve exact Application Insights
   semantics when exporting telemetry data.
   ([#54023](https://github.com/Azure/azure-sdk-for-net/pull/54023))

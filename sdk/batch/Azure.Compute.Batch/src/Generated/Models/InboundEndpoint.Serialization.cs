@@ -21,6 +21,46 @@ namespace Azure.Compute.Batch
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InboundEndpoint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InboundEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInboundEndpoint(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InboundEndpoint)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InboundEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(InboundEndpoint)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InboundEndpoint>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InboundEndpoint IPersistableModel<InboundEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InboundEndpoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InboundEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -46,7 +86,7 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("publicIPAddress"u8);
             writer.WriteStringValue(PublicIpAddress.ToString());
             writer.WritePropertyName("publicFQDN"u8);
-            writer.WriteStringValue(PublicFQDN);
+            writer.WriteStringValue(PublicFqdn);
             writer.WritePropertyName("frontendPort"u8);
             writer.WriteNumberValue(FrontendPort);
             writer.WritePropertyName("backendPort"u8);
@@ -96,7 +136,7 @@ namespace Azure.Compute.Batch
             string name = default;
             InboundEndpointProtocol protocol = default;
             IPAddress publicIpAddress = default;
-            string publicFQDN = default;
+            string publicFqdn = default;
             int frontendPort = default;
             int backendPort = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -119,7 +159,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("publicFQDN"u8))
                 {
-                    publicFQDN = prop.Value.GetString();
+                    publicFqdn = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("frontendPort"u8))
@@ -141,50 +181,10 @@ namespace Azure.Compute.Batch
                 name,
                 protocol,
                 publicIpAddress,
-                publicFQDN,
+                publicFqdn,
                 frontendPort,
                 backendPort,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InboundEndpoint>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InboundEndpoint>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(InboundEndpoint)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InboundEndpoint IPersistableModel<InboundEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InboundEndpoint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InboundEndpoint>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeInboundEndpoint(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InboundEndpoint)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InboundEndpoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Search.Models
     public readonly partial struct SearchServiceSharedPrivateLinkResourceProvisioningState : IEquatable<SearchServiceSharedPrivateLinkResourceProvisioningState>
     {
         private readonly string _value;
+        /// <summary> The shared private link resource is in the process of being created along with other resources for it to be fully functional. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> The shared private link resource is in the process of being deleted. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> The shared private link resource has failed to be provisioned or deleted. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The shared private link resource has finished provisioning and is ready for approval. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Provisioning request for the shared private link resource has been accepted but the process of creation has not commenced yet. </summary>
+        private const string IncompleteValue = "Incomplete";
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceSharedPrivateLinkResourceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SearchServiceSharedPrivateLinkResourceProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string FailedValue = "Failed";
-        private const string SucceededValue = "Succeeded";
-        private const string IncompleteValue = "Incomplete";
+            _value = value;
+        }
 
         /// <summary> The shared private link resource is in the process of being created along with other resources for it to be fully functional. </summary>
         public static SearchServiceSharedPrivateLinkResourceProvisioningState Updating { get; } = new SearchServiceSharedPrivateLinkResourceProvisioningState(UpdatingValue);
+
         /// <summary> The shared private link resource is in the process of being deleted. </summary>
         public static SearchServiceSharedPrivateLinkResourceProvisioningState Deleting { get; } = new SearchServiceSharedPrivateLinkResourceProvisioningState(DeletingValue);
+
         /// <summary> The shared private link resource has failed to be provisioned or deleted. </summary>
         public static SearchServiceSharedPrivateLinkResourceProvisioningState Failed { get; } = new SearchServiceSharedPrivateLinkResourceProvisioningState(FailedValue);
+
         /// <summary> The shared private link resource has finished provisioning and is ready for approval. </summary>
         public static SearchServiceSharedPrivateLinkResourceProvisioningState Succeeded { get; } = new SearchServiceSharedPrivateLinkResourceProvisioningState(SucceededValue);
+
         /// <summary> Provisioning request for the shared private link resource has been accepted but the process of creation has not commenced yet. </summary>
         public static SearchServiceSharedPrivateLinkResourceProvisioningState Incomplete { get; } = new SearchServiceSharedPrivateLinkResourceProvisioningState(IncompleteValue);
+
         /// <summary> Determines if two <see cref="SearchServiceSharedPrivateLinkResourceProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SearchServiceSharedPrivateLinkResourceProvisioningState left, SearchServiceSharedPrivateLinkResourceProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SearchServiceSharedPrivateLinkResourceProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SearchServiceSharedPrivateLinkResourceProvisioningState left, SearchServiceSharedPrivateLinkResourceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchServiceSharedPrivateLinkResourceProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SearchServiceSharedPrivateLinkResourceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SearchServiceSharedPrivateLinkResourceProvisioningState(string value) => new SearchServiceSharedPrivateLinkResourceProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SearchServiceSharedPrivateLinkResourceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SearchServiceSharedPrivateLinkResourceProvisioningState?(string value) => value == null ? null : new SearchServiceSharedPrivateLinkResourceProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SearchServiceSharedPrivateLinkResourceProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SearchServiceSharedPrivateLinkResourceProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

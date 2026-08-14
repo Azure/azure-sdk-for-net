@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
@@ -127,13 +126,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 AzureMonitorExporterEventSource.Log.ConfigureFailed(ex);
             }
-        }
-
-        [UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "Binding options is a known source of trim warnings; this is a deliberate usage.")]
-        [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "Binding options is a known source of AOT warnings; this is a deliberate usage.")]
-        private static void BindIConfigurationOptions(IConfiguration configuration, AzureMonitorExporterOptions options)
-        {
-            configuration.GetSection(AzureMonitorExporterSectionFromConfig).Bind(options);
         }
     }
 }

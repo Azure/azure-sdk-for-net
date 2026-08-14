@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(ResourceType, out string edgeSchemaVersionApiVersion);
             _schemaVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", ResourceType.Namespace, Diagnostics);
-            _schemaVersionsRestClient = new SchemaVersions(_schemaVersionsClientDiagnostics, Pipeline, Endpoint, edgeSchemaVersionApiVersion ?? "2025-06-01");
+            _schemaVersionsRestClient = new SchemaVersions(_schemaVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeSchemaVersionApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

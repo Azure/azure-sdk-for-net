@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct RaiPolicyMode : IEquatable<RaiPolicyMode>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RaiPolicyMode"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RaiPolicyMode(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DefaultValue = "Default";
         private const string DeferredValue = "Deferred";
         private const string BlockingValue = "Blocking";
         private const string AsynchronousFilterValue = "Asynchronous_filter";
 
-        /// <summary> Default. </summary>
+        /// <summary> Initializes a new instance of <see cref="RaiPolicyMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RaiPolicyMode(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Default. </summary>
         public static RaiPolicyMode Default { get; } = new RaiPolicyMode(DefaultValue);
-        /// <summary> Deferred. </summary>
+
+        /// <summary> Gets the Deferred. </summary>
         public static RaiPolicyMode Deferred { get; } = new RaiPolicyMode(DeferredValue);
-        /// <summary> Blocking. </summary>
+
+        /// <summary> Gets the Blocking. </summary>
         public static RaiPolicyMode Blocking { get; } = new RaiPolicyMode(BlockingValue);
-        /// <summary> Asynchronous_filter. </summary>
+
+        /// <summary> Gets the AsynchronousFilter. </summary>
         public static RaiPolicyMode AsynchronousFilter { get; } = new RaiPolicyMode(AsynchronousFilterValue);
+
         /// <summary> Determines if two <see cref="RaiPolicyMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RaiPolicyMode left, RaiPolicyMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RaiPolicyMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RaiPolicyMode left, RaiPolicyMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RaiPolicyMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RaiPolicyMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RaiPolicyMode(string value) => new RaiPolicyMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RaiPolicyMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RaiPolicyMode?(string value) => value == null ? null : new RaiPolicyMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RaiPolicyMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RaiPolicyMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

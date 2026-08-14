@@ -41,6 +41,7 @@ Global
 		{EE13F5AD-B732-484A-9F03-76B67FFB5015}.Release|x64.Build.0 = Release|Any CPU
 		{EE13F5AD-B732-484A-9F03-76B67FFB5015}.Release|x86.ActiveCfg = Release|Any CPU
 		{EE13F5AD-B732-484A-9F03-76B67FFB5015}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection

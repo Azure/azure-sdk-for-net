@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Azure.Communication.Pipeline;
-using Azure.Core.Pipeline;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {

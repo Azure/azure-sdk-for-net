@@ -1,0 +1,80 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Identity;
+using NUnit.Framework;
+
+namespace Azure.ResourceManager.DevTestLabs.Samples
+{
+    public partial class Sample_DevTestLabCostResource
+    {
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_CostsGet()
+        {
+            // Generated from example definition: 2018-09-15/Costs_Get.json
+            // this example is just showing the usage of "Costs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DevTestLabCostResource created on azure
+            // for more information of creating DevTestLabCostResource, please refer to the document of DevTestLabCostResource
+            string subscriptionId = "{subscriptionId}";
+            string resourceGroupName = "resourceGroupName";
+            string labName = "{labName}";
+            string name = "targetCost";
+            ResourceIdentifier devTestLabCostResourceId = DevTestLabCostResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName, name);
+            DevTestLabCostResource devTestLabCost = client.GetDevTestLabCostResource(devTestLabCostResourceId);
+
+            // invoke the operation
+            DevTestLabCostResource result = await devTestLabCost.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DevTestLabCostData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_CostsCreateOrUpdate()
+        {
+            // Generated from example definition: 2018-09-15/Costs_CreateOrUpdate.json
+            // this example is just showing the usage of "Costs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DevTestLabCostResource created on azure
+            // for more information of creating DevTestLabCostResource, please refer to the document of DevTestLabCostResource
+            string subscriptionId = "{subscriptionId}";
+            string resourceGroupName = "resourceGroupName";
+            string labName = "{labName}";
+            string name = "targetCost";
+            ResourceIdentifier devTestLabCostResourceId = DevTestLabCostResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName, name);
+            DevTestLabCostResource devTestLabCost = client.GetDevTestLabCostResource(devTestLabCostResourceId);
+
+            // invoke the operation
+            DevTestLabCostData data = new DevTestLabCostData(default);
+            ArmOperation<DevTestLabCostResource> lro = await devTestLabCost.UpdateAsync(WaitUntil.Completed, data);
+            DevTestLabCostResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DevTestLabCostData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+    }
+}

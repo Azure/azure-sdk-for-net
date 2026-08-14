@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Configuration filters. </summary>
     public partial class ConfigurationFilters
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConfigurationFilters"/>. </summary>
         /// <param name="hierarchyInformation"> Product hierarchy information. </param>
@@ -59,22 +31,23 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of <see cref="ConfigurationFilters"/>. </summary>
         /// <param name="hierarchyInformation"> Product hierarchy information. </param>
         /// <param name="filterableProperty"> Filters specific to product. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationFilters(HierarchyInformation hierarchyInformation, IList<FilterableProperty> filterableProperty, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="childConfigurationFilter"> Filter to fetch specific child configurations that exist in the configuration. This must be passed to either fetch a list of specific child configurations, or all child configurations of specific types of child configurations. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConfigurationFilters(HierarchyInformation hierarchyInformation, IList<FilterableProperty> filterableProperty, EdgeOrderChildConfigurationFilter childConfigurationFilter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HierarchyInformation = hierarchyInformation;
             FilterableProperty = filterableProperty;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConfigurationFilters"/> for deserialization. </summary>
-        internal ConfigurationFilters()
-        {
+            ChildConfigurationFilter = childConfigurationFilter;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Product hierarchy information. </summary>
         public HierarchyInformation HierarchyInformation { get; }
+
         /// <summary> Filters specific to product. </summary>
         public IList<FilterableProperty> FilterableProperty { get; }
+
+        /// <summary> Filter to fetch specific child configurations that exist in the configuration. This must be passed to either fetch a list of specific child configurations, or all child configurations of specific types of child configurations. </summary>
+        public EdgeOrderChildConfigurationFilter ChildConfigurationFilter { get; set; }
     }
 }

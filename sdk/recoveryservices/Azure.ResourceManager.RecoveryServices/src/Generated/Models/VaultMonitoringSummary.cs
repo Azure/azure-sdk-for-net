@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Summary of the replication monitoring data for this vault. </summary>
     public partial class VaultMonitoringSummary
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VaultMonitoringSummary"/>. </summary>
         internal VaultMonitoringSummary()
@@ -57,8 +28,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="deprecatedProviderCount"> Count of all deprecated recovery service providers. </param>
         /// <param name="supportedProviderCount"> Count of all the supported recovery service providers. </param>
         /// <param name="unsupportedProviderCount"> Count of all the unsupported recovery service providers. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VaultMonitoringSummary(int? unHealthyVmCount, int? unHealthyProviderCount, int? eventsCount, int? deprecatedProviderCount, int? supportedProviderCount, int? unsupportedProviderCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VaultMonitoringSummary(int? unHealthyVmCount, int? unHealthyProviderCount, int? eventsCount, int? deprecatedProviderCount, int? supportedProviderCount, int? unsupportedProviderCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UnHealthyVmCount = unHealthyVmCount;
             UnHealthyProviderCount = unHealthyProviderCount;
@@ -66,19 +37,24 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             DeprecatedProviderCount = deprecatedProviderCount;
             SupportedProviderCount = supportedProviderCount;
             UnsupportedProviderCount = unsupportedProviderCount;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Count of unhealthy VMs. </summary>
         public int? UnHealthyVmCount { get; }
+
         /// <summary> Count of unhealthy replication providers. </summary>
         public int? UnHealthyProviderCount { get; }
+
         /// <summary> Count of all critical warnings. </summary>
         public int? EventsCount { get; }
+
         /// <summary> Count of all deprecated recovery service providers. </summary>
         public int? DeprecatedProviderCount { get; }
+
         /// <summary> Count of all the supported recovery service providers. </summary>
         public int? SupportedProviderCount { get; }
+
         /// <summary> Count of all the unsupported recovery service providers. </summary>
         public int? UnsupportedProviderCount { get; }
     }

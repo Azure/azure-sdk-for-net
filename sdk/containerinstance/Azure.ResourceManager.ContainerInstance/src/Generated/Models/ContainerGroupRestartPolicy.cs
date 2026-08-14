@@ -7,54 +7,73 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary>
     /// Restart policy for all containers within the container group.
-    /// - `Always` Always restart
-    /// - `OnFailure` Restart on failure
-    /// - `Never` Never restart
-    ///
+    /// <list type="bullet"><item><description>`Always` Always restart</description></item><item><description>`OnFailure` Restart on failure</description></item><item><description>`Never` Never restart</description></item></list>
     /// </summary>
     public readonly partial struct ContainerGroupRestartPolicy : IEquatable<ContainerGroupRestartPolicy>
     {
         private readonly string _value;
+        /// <summary> Always. </summary>
+        private const string AlwaysValue = "Always";
+        /// <summary> OnFailure. </summary>
+        private const string OnFailureValue = "OnFailure";
+        /// <summary> Never. </summary>
+        private const string NeverValue = "Never";
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupRestartPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerGroupRestartPolicy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AlwaysValue = "Always";
-        private const string OnFailureValue = "OnFailure";
-        private const string NeverValue = "Never";
+            _value = value;
+        }
 
         /// <summary> Always. </summary>
         public static ContainerGroupRestartPolicy Always { get; } = new ContainerGroupRestartPolicy(AlwaysValue);
+
         /// <summary> OnFailure. </summary>
         public static ContainerGroupRestartPolicy OnFailure { get; } = new ContainerGroupRestartPolicy(OnFailureValue);
+
         /// <summary> Never. </summary>
         public static ContainerGroupRestartPolicy Never { get; } = new ContainerGroupRestartPolicy(NeverValue);
+
         /// <summary> Determines if two <see cref="ContainerGroupRestartPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerGroupRestartPolicy left, ContainerGroupRestartPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerGroupRestartPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerGroupRestartPolicy left, ContainerGroupRestartPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerGroupRestartPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerGroupRestartPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerGroupRestartPolicy(string value) => new ContainerGroupRestartPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerGroupRestartPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerGroupRestartPolicy?(string value) => value == null ? null : new ContainerGroupRestartPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerGroupRestartPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerGroupRestartPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

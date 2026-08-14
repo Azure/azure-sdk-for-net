@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.ResourceManager.Batch.Tests.Helpers;
 using NUnit.Framework;
 

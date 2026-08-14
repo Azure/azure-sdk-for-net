@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.FileShares.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FileSharePrivateLinkServiceConnectionState"/>. </summary>
-        internal FileSharePrivateLinkServiceConnectionState()
+        public FileSharePrivateLinkServiceConnectionState()
         {
         }
 
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.FileShares.Models
         }
 
         /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </summary>
-        public FileSharesPrivateEndpointServiceConnectionStatus? Status { get; }
+        public FileSharesPrivateEndpointServiceConnectionStatus? Status { get; set; }
 
         /// <summary> The reason for approval/rejection of the connection. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary> A message indicating if changes on the service provider require any updates on the consumer. </summary>
-        public string ActionsRequired { get; }
+        public string ActionsRequired { get; set; }
     }
 }

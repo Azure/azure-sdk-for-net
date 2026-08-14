@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StorageDiscovery
         {
             TryGetApiVersion(ResourceType, out string storageDiscoveryWorkspaceApiVersion);
             _storageDiscoveryWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageDiscovery", ResourceType.Namespace, Diagnostics);
-            _storageDiscoveryWorkspacesRestClient = new StorageDiscoveryWorkspaces(_storageDiscoveryWorkspacesClientDiagnostics, Pipeline, Endpoint, storageDiscoveryWorkspaceApiVersion ?? "2025-09-01");
+            _storageDiscoveryWorkspacesRestClient = new StorageDiscoveryWorkspaces(_storageDiscoveryWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageDiscoveryWorkspaceApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StorageDiscovery
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

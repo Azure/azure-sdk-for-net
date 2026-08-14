@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterHttpProxyConfig : IUtf8JsonSerializable, IJsonModel<ManagedClusterHttpProxyConfig>
+    /// <summary> Cluster HTTP proxy configuration. </summary>
+    public partial class ManagedClusterHttpProxyConfig : IJsonModel<ManagedClusterHttpProxyConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterHttpProxyConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedClusterHttpProxyConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterHttpProxyConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeManagedClusterHttpProxyConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterHttpProxyConfig)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterHttpProxyConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterHttpProxyConfig)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ManagedClusterHttpProxyConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedClusterHttpProxyConfig IPersistableModel<ManagedClusterHttpProxyConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedClusterHttpProxyConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedClusterHttpProxyConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterHttpProxyConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterHttpProxyConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedClusterHttpProxyConfig)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(HttpProxy))
             {
                 writer.WritePropertyName("httpProxy"u8);
@@ -50,8 +88,28 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 writer.WritePropertyName("noProxy"u8);
                 writer.WriteStartArray();
-                foreach (var item in NoProxy)
+                foreach (string item in NoProxy)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(EffectiveNoProxy))
+            {
+                writer.WritePropertyName("effectiveNoProxy"u8);
+                writer.WriteStartArray();
+                foreach (string item in EffectiveNoProxy)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -61,15 +119,20 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("trustedCa"u8);
                 writer.WriteStringValue(TrustedCA);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(IsHttpProxyEnabled))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("enabled"u8);
+                writer.WriteBooleanValue(IsHttpProxyEnabled.Value);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -78,22 +141,27 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        ManagedClusterHttpProxyConfig IJsonModel<ManagedClusterHttpProxyConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedClusterHttpProxyConfig IJsonModel<ManagedClusterHttpProxyConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedClusterHttpProxyConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterHttpProxyConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterHttpProxyConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedClusterHttpProxyConfig)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeManagedClusterHttpProxyConfig(document.RootElement, options);
         }
 
-        internal static ManagedClusterHttpProxyConfig DeserializeManagedClusterHttpProxyConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ManagedClusterHttpProxyConfig DeserializeManagedClusterHttpProxyConfig(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -101,200 +169,91 @@ namespace Azure.ResourceManager.ContainerService.Models
             string httpProxy = default;
             string httpsProxy = default;
             IList<string> noProxy = default;
+            IReadOnlyList<string> effectiveNoProxy = default;
             string trustedCA = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            bool? isHttpProxyEnabled = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("httpProxy"u8))
+                if (prop.NameEquals("httpProxy"u8))
                 {
-                    httpProxy = property.Value.GetString();
+                    httpProxy = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("httpsProxy"u8))
+                if (prop.NameEquals("httpsProxy"u8))
                 {
-                    httpsProxy = property.Value.GetString();
+                    httpsProxy = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("noProxy"u8))
+                if (prop.NameEquals("noProxy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     noProxy = array;
                     continue;
                 }
-                if (property.NameEquals("trustedCa"u8))
+                if (prop.NameEquals("effectiveNoProxy"u8))
                 {
-                    trustedCA = property.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    effectiveNoProxy = array;
+                    continue;
+                }
+                if (prop.NameEquals("trustedCa"u8))
+                {
+                    trustedCA = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("enabled"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isHttpProxyEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedClusterHttpProxyConfig(httpProxy, httpsProxy, noProxy ?? new ChangeTrackingList<string>(), trustedCA, serializedAdditionalRawData);
+            return new ManagedClusterHttpProxyConfig(
+                httpProxy,
+                httpsProxy,
+                noProxy ?? new ChangeTrackingList<string>(),
+                effectiveNoProxy ?? new ChangeTrackingList<string>(),
+                trustedCA,
+                isHttpProxyEnabled,
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HttpProxy), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  httpProxy: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HttpProxy))
-                {
-                    builder.Append("  httpProxy: ");
-                    if (HttpProxy.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{HttpProxy}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{HttpProxy}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HttpsProxy), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  httpsProxy: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HttpsProxy))
-                {
-                    builder.Append("  httpsProxy: ");
-                    if (HttpsProxy.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{HttpsProxy}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{HttpsProxy}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NoProxy), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  noProxy: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(NoProxy))
-                {
-                    if (NoProxy.Any())
-                    {
-                        builder.Append("  noProxy: ");
-                        builder.AppendLine("[");
-                        foreach (var item in NoProxy)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrustedCA), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  trustedCa: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TrustedCA))
-                {
-                    builder.Append("  trustedCa: ");
-                    if (TrustedCA.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{TrustedCA}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{TrustedCA}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ManagedClusterHttpProxyConfig>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterHttpProxyConfig>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ManagedClusterHttpProxyConfig)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ManagedClusterHttpProxyConfig IPersistableModel<ManagedClusterHttpProxyConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterHttpProxyConfig>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeManagedClusterHttpProxyConfig(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ManagedClusterHttpProxyConfig)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ManagedClusterHttpProxyConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

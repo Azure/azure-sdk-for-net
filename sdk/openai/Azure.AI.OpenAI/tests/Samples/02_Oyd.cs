@@ -22,7 +22,7 @@ public partial class AzureOpenAISamples
         #region Snippet:ChatUsingYourOwnData
         // Extension methods to use data sources with options are subject to SDK surface changes. Suppress the
         // warning to acknowledge and this and use the subject-to-change AddDataSource method.
-        #pragma warning disable AOAI001
+#pragma warning disable AOAI001
 
         ChatCompletionOptions options = new();
         options.AddDataSource(new AzureSearchChatDataSource()

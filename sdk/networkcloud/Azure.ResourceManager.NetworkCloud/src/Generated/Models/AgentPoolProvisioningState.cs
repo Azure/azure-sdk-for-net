@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct AgentPoolProvisioningState : IEquatable<AgentPoolProvisioningState>
     {
         private readonly string _value;
+        /// <summary> The Accepted status. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> The Canceled status. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> The Deleting status. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> The Failed status. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The InProgress status. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> The Succeeded status. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The Updating status. </summary>
+        private const string UpdatingValue = "Updating";
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AgentPoolProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AcceptedValue = "Accepted";
-        private const string CanceledValue = "Canceled";
-        private const string DeletingValue = "Deleting";
-        private const string FailedValue = "Failed";
-        private const string InProgressValue = "InProgress";
-        private const string SucceededValue = "Succeeded";
-        private const string UpdatingValue = "Updating";
-
-        /// <summary> Accepted. </summary>
+        /// <summary> The Accepted status. </summary>
         public static AgentPoolProvisioningState Accepted { get; } = new AgentPoolProvisioningState(AcceptedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> The Canceled status. </summary>
         public static AgentPoolProvisioningState Canceled { get; } = new AgentPoolProvisioningState(CanceledValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> The Deleting status. </summary>
         public static AgentPoolProvisioningState Deleting { get; } = new AgentPoolProvisioningState(DeletingValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> The Failed status. </summary>
         public static AgentPoolProvisioningState Failed { get; } = new AgentPoolProvisioningState(FailedValue);
-        /// <summary> InProgress. </summary>
+
+        /// <summary> The InProgress status. </summary>
         public static AgentPoolProvisioningState InProgress { get; } = new AgentPoolProvisioningState(InProgressValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> The Succeeded status. </summary>
         public static AgentPoolProvisioningState Succeeded { get; } = new AgentPoolProvisioningState(SucceededValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> The Updating status. </summary>
         public static AgentPoolProvisioningState Updating { get; } = new AgentPoolProvisioningState(UpdatingValue);
+
         /// <summary> Determines if two <see cref="AgentPoolProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AgentPoolProvisioningState left, AgentPoolProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AgentPoolProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AgentPoolProvisioningState left, AgentPoolProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AgentPoolProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AgentPoolProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AgentPoolProvisioningState(string value) => new AgentPoolProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AgentPoolProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AgentPoolProvisioningState?(string value) => value == null ? null : new AgentPoolProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AgentPoolProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AgentPoolProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

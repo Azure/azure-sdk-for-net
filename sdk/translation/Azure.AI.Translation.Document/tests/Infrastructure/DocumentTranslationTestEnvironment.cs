@@ -4,7 +4,9 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.AI.Translation.Document.Tests
 {
@@ -26,6 +28,19 @@ namespace Azure.AI.Translation.Document.Tests
         public string ApiKey => GetRecordedVariable(ApiKeyEnvironmentVariableName, options => options.IsSecret());
         public string Endpoint => GetRecordedVariable(EndpointEnvironmentVariableName);
         public string StorageAccountName => GetRecordedVariable(StorageAccountNameEnvironmentVariableName);
+
+        /// <summary>
+        /// For local development, prefer the Azure CLI (`az login`) credential so live/record runs work
+        /// against the resource's own tenant. In CI, the service-principal / pipeline credential path is
+        /// used instead and this method is not invoked.
+        /// </summary>
+        protected override TokenCredential CreateDeveloperCredential()
+        {
+            return new ChainedTokenCredential(
+                new AzureCliCredential(),
+                new AzurePowerShellCredential(),
+                base.CreateDeveloperCredential());
+        }
 
         protected override async ValueTask<bool> IsEnvironmentReadyAsync()
         {

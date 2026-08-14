@@ -17,6 +17,56 @@ namespace Azure.ResourceManager.OperationTemplates.Models
     /// <summary> The ChangeAllowanceRequest. </summary>
     public partial class ChangeAllowanceRequest : IJsonModel<ChangeAllowanceRequest>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ChangeAllowanceRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ChangeAllowanceRequest>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeChangeAllowanceRequest(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ChangeAllowanceRequest)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ChangeAllowanceRequest>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationTemplatesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ChangeAllowanceRequest)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ChangeAllowanceRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ChangeAllowanceRequest IPersistableModel<ChangeAllowanceRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ChangeAllowanceRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="changeAllowanceRequest"> The <see cref="ChangeAllowanceRequest"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ChangeAllowanceRequest changeAllowanceRequest)
+        {
+            if (changeAllowanceRequest == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(changeAllowanceRequest, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ChangeAllowanceRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -112,58 +162,6 @@ namespace Azure.ResourceManager.OperationTemplates.Models
                 }
             }
             return new ChangeAllowanceRequest(totalAllowed, reason, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ChangeAllowanceRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ChangeAllowanceRequest>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationTemplatesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ChangeAllowanceRequest)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ChangeAllowanceRequest IPersistableModel<ChangeAllowanceRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ChangeAllowanceRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ChangeAllowanceRequest>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeChangeAllowanceRequest(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ChangeAllowanceRequest)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ChangeAllowanceRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="changeAllowanceRequest"> The <see cref="ChangeAllowanceRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ChangeAllowanceRequest changeAllowanceRequest)
-        {
-            if (changeAllowanceRequest == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(changeAllowanceRequest, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

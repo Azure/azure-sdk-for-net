@@ -1,0 +1,6 @@
+<Project>
+  <!-- Azure.Test.Perf needs older Azure.Core for maximum compatibility with test projects -->
+  <ItemGroup>
+    <PackageVersion Update="Azure.Core" Version="1.40.0" />
+  </ItemGroup>
+</Project>

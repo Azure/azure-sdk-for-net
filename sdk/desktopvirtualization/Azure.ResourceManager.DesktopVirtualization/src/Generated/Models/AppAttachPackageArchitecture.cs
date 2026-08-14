@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public readonly partial struct AppAttachPackageArchitecture : IEquatable<AppAttachPackageArchitecture>
     {
         private readonly string _value;
+        /// <summary> ARM 32-bit. </summary>
+        private const string ArmValue = "ARM";
+        /// <summary> ARM 64-bit. </summary>
+        private const string Arm64Value = "ARM64";
+        /// <summary> 32-bit x86. </summary>
+        private const string X86Value = "x86";
+        /// <summary> 64-bit. </summary>
+        private const string X64Value = "x64";
+        /// <summary> Any architecture can be used. </summary>
+        private const string NeutralValue = "Neutral";
+        /// <summary> X86 Compiled Hybrid Portable Executable for ARM64. </summary>
+        private const string X86A64Value = "x86a64";
+        /// <summary> Select all listed applications, no filters. </summary>
+        private const string AllValue = "ALL";
 
         /// <summary> Initializes a new instance of <see cref="AppAttachPackageArchitecture"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AppAttachPackageArchitecture(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ArmValue = "ARM";
-        private const string Arm64Value = "ARM64";
-        private const string X86Value = "x86";
-        private const string X64Value = "x64";
-        private const string NeutralValue = "Neutral";
-        private const string X86A64Value = "x86a64";
-        private const string AllValue = "ALL";
-
-        /// <summary> ARM. </summary>
+        /// <summary> ARM 32-bit. </summary>
         public static AppAttachPackageArchitecture Arm { get; } = new AppAttachPackageArchitecture(ArmValue);
-        /// <summary> ARM64. </summary>
+
+        /// <summary> ARM 64-bit. </summary>
         public static AppAttachPackageArchitecture Arm64 { get; } = new AppAttachPackageArchitecture(Arm64Value);
-        /// <summary> x86. </summary>
+
+        /// <summary> 32-bit x86. </summary>
         public static AppAttachPackageArchitecture X86 { get; } = new AppAttachPackageArchitecture(X86Value);
-        /// <summary> x64. </summary>
+
+        /// <summary> 64-bit. </summary>
         public static AppAttachPackageArchitecture X64 { get; } = new AppAttachPackageArchitecture(X64Value);
-        /// <summary> Neutral. </summary>
+
+        /// <summary> Any architecture can be used. </summary>
         public static AppAttachPackageArchitecture Neutral { get; } = new AppAttachPackageArchitecture(NeutralValue);
-        /// <summary> x86a64. </summary>
+
+        /// <summary> X86 Compiled Hybrid Portable Executable for ARM64. </summary>
         public static AppAttachPackageArchitecture X86A64 { get; } = new AppAttachPackageArchitecture(X86A64Value);
-        /// <summary> ALL. </summary>
+
+        /// <summary> Select all listed applications, no filters. </summary>
         public static AppAttachPackageArchitecture All { get; } = new AppAttachPackageArchitecture(AllValue);
+
         /// <summary> Determines if two <see cref="AppAttachPackageArchitecture"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppAttachPackageArchitecture left, AppAttachPackageArchitecture right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AppAttachPackageArchitecture"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppAttachPackageArchitecture left, AppAttachPackageArchitecture right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AppAttachPackageArchitecture"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AppAttachPackageArchitecture"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AppAttachPackageArchitecture(string value) => new AppAttachPackageArchitecture(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AppAttachPackageArchitecture"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AppAttachPackageArchitecture?(string value) => value == null ? null : new AppAttachPackageArchitecture(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AppAttachPackageArchitecture other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AppAttachPackageArchitecture other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

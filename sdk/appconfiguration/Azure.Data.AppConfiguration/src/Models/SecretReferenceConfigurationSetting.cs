@@ -65,7 +65,7 @@ namespace Azure.Data.AppConfiguration
             }
             set
             {
-               _secretId = value;
+                _secretId = value;
             }
         }
 

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Storage
 {
+    /// <summary></summary>
     public partial class QueueServiceResource : IJsonModel<QueueServiceData>
     {
-        private static QueueServiceData s_dataDeserializationInstance;
-        private static QueueServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<QueueServiceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<QueueServiceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new QueueServiceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<QueueServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<QueueServiceData>)Data).Write(writer, options);
 
-        QueueServiceData IJsonModel<QueueServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<QueueServiceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        QueueServiceData IJsonModel<QueueServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<QueueServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<QueueServiceData>(Data, options, AzureResourceManagerStorageContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         QueueServiceData IPersistableModel<QueueServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<QueueServiceData>(data, options, AzureResourceManagerStorageContext.Default);
 
-        string IPersistableModel<QueueServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<QueueServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<QueueServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

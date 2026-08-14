@@ -14,19 +14,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class CustomCopySetting : DataProtectionBackupCopySetting
     {
         /// <summary> Initializes a new instance of <see cref="CustomCopySetting"/>. </summary>
-        public CustomCopySetting()
+        public CustomCopySetting() : base("CustomCopyOption")
         {
-            ObjectType = "CustomCopyOption";
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomCopySetting"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="duration"> Data copied after given timespan. </param>
-        internal CustomCopySetting(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, TimeSpan? duration) : base(objectType, serializedAdditionalRawData)
+        internal CustomCopySetting(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, TimeSpan? duration) : base(objectType, additionalBinaryDataProperties)
         {
             Duration = duration;
-            ObjectType = objectType ?? "CustomCopyOption";
         }
 
         /// <summary> Data copied after given timespan. </summary>

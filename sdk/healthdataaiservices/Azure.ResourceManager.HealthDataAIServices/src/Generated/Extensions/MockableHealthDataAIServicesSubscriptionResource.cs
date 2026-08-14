@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Mocking
 
         private ClientDiagnostics DeidServicesClientDiagnostics => _deidServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DeidServices DeidServicesRestClient => _deidServicesRestClient ??= new DeidServices(DeidServicesClientDiagnostics, Pipeline, Endpoint, "2024-09-20");
+        private DeidServices DeidServicesRestClient => _deidServicesRestClient ??= new DeidServices(DeidServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-09-20");
 
         /// <summary>
         /// List DeidService resources by subscription ID
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetBySubscriptionAsyncCollectionResultOfT(DeidServicesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeidServiceResource(Client, data));
+            return new AsyncPageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetBySubscriptionAsyncCollectionResultOfT(DeidServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHealthDataAIServicesSubscriptionResource.GetDeidServices"), data => new DeidServiceResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetBySubscriptionCollectionResultOfT(DeidServicesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeidServiceResource(Client, data));
+            return new PageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetBySubscriptionCollectionResultOfT(DeidServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHealthDataAIServicesSubscriptionResource.GetDeidServices"), data => new DeidServiceResource(Client, data));
         }
     }
 }

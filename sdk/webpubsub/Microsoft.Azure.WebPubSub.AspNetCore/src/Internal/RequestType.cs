@@ -9,6 +9,8 @@ namespace Azure.Messaging.WebPubSub
         Connect,
         Connected,
         Disconnected,
+        JoinedGroupEvent,
+        LeftGroupEvent,
         User
     }
 }

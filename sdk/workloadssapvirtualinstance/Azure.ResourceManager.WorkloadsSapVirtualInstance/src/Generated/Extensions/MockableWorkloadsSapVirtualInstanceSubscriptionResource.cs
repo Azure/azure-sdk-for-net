@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
 
         private ClientDiagnostics SapVirtualInstancesClientDiagnostics => _sapVirtualInstancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SapVirtualInstances SapVirtualInstancesRestClient => _sapVirtualInstancesRestClient ??= new SapVirtualInstances(SapVirtualInstancesClientDiagnostics, Pipeline, Endpoint, "2024-09-01");
+        private SapVirtualInstances SapVirtualInstancesRestClient => _sapVirtualInstancesRestClient ??= new SapVirtualInstances(SapVirtualInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-09-01");
 
         /// <summary>
         /// Gets all Virtual Instances for SAP solutions resources in a Subscription.
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SapVirtualInstanceData, SapVirtualInstanceResource>(new SapVirtualInstancesGetBySubscriptionAsyncCollectionResultOfT(SapVirtualInstancesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new SapVirtualInstanceResource(Client, data));
+            return new AsyncPageableWrapper<SapVirtualInstanceData, SapVirtualInstanceResource>(new SapVirtualInstancesGetBySubscriptionAsyncCollectionResultOfT(SapVirtualInstancesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetSapVirtualInstances"), data => new SapVirtualInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SapVirtualInstanceData, SapVirtualInstanceResource>(new SapVirtualInstancesGetBySubscriptionCollectionResultOfT(SapVirtualInstancesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new SapVirtualInstanceResource(Client, data));
+            return new PageableWrapper<SapVirtualInstanceData, SapVirtualInstanceResource>(new SapVirtualInstancesGetBySubscriptionCollectionResultOfT(SapVirtualInstancesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetSapVirtualInstances"), data => new SapVirtualInstanceResource(Client, data));
         }
 
         /// <summary>

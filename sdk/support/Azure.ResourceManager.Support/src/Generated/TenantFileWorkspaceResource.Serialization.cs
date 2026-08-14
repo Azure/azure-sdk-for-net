@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Support
 {
+    /// <summary></summary>
     public partial class TenantFileWorkspaceResource : IJsonModel<FileWorkspaceDetailData>
     {
-        private static FileWorkspaceDetailData s_dataDeserializationInstance;
-        private static FileWorkspaceDetailData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<FileWorkspaceDetailData> s_dataDeserializationInstance;
 
+        private static IJsonModel<FileWorkspaceDetailData> DataDeserializationInstance => s_dataDeserializationInstance ??= new FileWorkspaceDetailData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FileWorkspaceDetailData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FileWorkspaceDetailData>)Data).Write(writer, options);
 
-        FileWorkspaceDetailData IJsonModel<FileWorkspaceDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FileWorkspaceDetailData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FileWorkspaceDetailData IJsonModel<FileWorkspaceDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<FileWorkspaceDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FileWorkspaceDetailData>(Data, options, AzureResourceManagerSupportContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         FileWorkspaceDetailData IPersistableModel<FileWorkspaceDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FileWorkspaceDetailData>(data, options, AzureResourceManagerSupportContext.Default);
 
-        string IPersistableModel<FileWorkspaceDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FileWorkspaceDetailData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FileWorkspaceDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -17,21 +17,13 @@ namespace _Type.Property.AdditionalProperties
     {
         internal ExtendsFloatAdditionalProperties() => throw null;
 
-        void IJsonModel<ExtendsFloatAdditionalProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        ExtendsFloatAdditionalProperties IJsonModel<ExtendsFloatAdditionalProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual ExtendsFloatAdditionalProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<ExtendsFloatAdditionalProperties>.Write(ModelReaderWriterOptions options) => throw null;
+        protected virtual ExtendsFloatAdditionalProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        ExtendsFloatAdditionalProperties IPersistableModel<ExtendsFloatAdditionalProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<ExtendsFloatAdditionalProperties>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual ExtendsFloatAdditionalProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        ExtendsFloatAdditionalProperties IPersistableModel<ExtendsFloatAdditionalProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<ExtendsFloatAdditionalProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
@@ -39,5 +31,13 @@ namespace _Type.Property.AdditionalProperties
         public static implicit operator RequestContent(ExtendsFloatAdditionalProperties extendsFloatAdditionalProperties) => throw null;
 
         public static explicit operator ExtendsFloatAdditionalProperties(Response response) => throw null;
+
+        void IJsonModel<ExtendsFloatAdditionalProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        ExtendsFloatAdditionalProperties IJsonModel<ExtendsFloatAdditionalProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual ExtendsFloatAdditionalProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }
 }

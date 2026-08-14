@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     public readonly partial struct MySqlFlexibleServerConfigReadOnlyState : IEquatable<MySqlFlexibleServerConfigReadOnlyState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerConfigReadOnlyState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MySqlFlexibleServerConfigReadOnlyState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string TrueValue = "True";
         private const string FalseValue = "False";
 
-        /// <summary> True. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerConfigReadOnlyState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MySqlFlexibleServerConfigReadOnlyState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the True. </summary>
         public static MySqlFlexibleServerConfigReadOnlyState True { get; } = new MySqlFlexibleServerConfigReadOnlyState(TrueValue);
-        /// <summary> False. </summary>
+
+        /// <summary> Gets the False. </summary>
         public static MySqlFlexibleServerConfigReadOnlyState False { get; } = new MySqlFlexibleServerConfigReadOnlyState(FalseValue);
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerConfigReadOnlyState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MySqlFlexibleServerConfigReadOnlyState left, MySqlFlexibleServerConfigReadOnlyState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerConfigReadOnlyState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MySqlFlexibleServerConfigReadOnlyState left, MySqlFlexibleServerConfigReadOnlyState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlFlexibleServerConfigReadOnlyState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerConfigReadOnlyState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MySqlFlexibleServerConfigReadOnlyState(string value) => new MySqlFlexibleServerConfigReadOnlyState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerConfigReadOnlyState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MySqlFlexibleServerConfigReadOnlyState?(string value) => value == null ? null : new MySqlFlexibleServerConfigReadOnlyState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MySqlFlexibleServerConfigReadOnlyState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MySqlFlexibleServerConfigReadOnlyState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

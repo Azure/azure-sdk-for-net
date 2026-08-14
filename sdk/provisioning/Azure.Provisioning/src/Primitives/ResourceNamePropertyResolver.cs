@@ -107,7 +107,8 @@ public abstract class ResourceNamePropertyResolver : InfrastructureResolver
     public override void ResolveProperties(ProvisionableConstruct construct, ProvisioningBuildOptions options)
     {
         // We only need to name resources
-        if (construct is not ProvisionableResource resource) { return; }
+        if (construct is not ProvisionableResource resource)
+        { return; }
 
         // We only need to create a name if one doesn't already exist
         if (resource.ProvisionableProperties.TryGetValue("Name", out IBicepValue? name) &&
@@ -146,7 +147,8 @@ public abstract class ResourceNamePropertyResolver : InfrastructureResolver
     /// <returns>A sanitized version of the text.</returns>
     protected static string SanitizeText(string text, ResourceNameCharacters validCharacters)
     {
-        if (string.IsNullOrEmpty(text)) { return text; }
+        if (string.IsNullOrEmpty(text))
+        { return text; }
 
         StringBuilder builder = new(capacity: text.Length);
         foreach (char ch in text)
@@ -242,6 +244,7 @@ public class StaticResourceNamePropertyResolver : ResourceNamePropertyResolver
     private static readonly char[] s_upper = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
     private static readonly char[] s_digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
+    /// <inheritdoc />
     public override BicepValue<string>? ResolveName(ProvisioningBuildOptions options, ProvisionableResource resource, ResourceNameRequirements requirements)
     {
         StringBuilder name = new(capacity: requirements.MaxLength);
@@ -254,17 +257,23 @@ public class StaticResourceNamePropertyResolver : ResourceNamePropertyResolver
         }
 
         // Try to add a separator if allowed
-        if (requirements.ValidCharacters.HasFlag(ResourceNameCharacters.Hyphen)) { name.Append('-'); }
-        else if (requirements.ValidCharacters.HasFlag(ResourceNameCharacters.Underscore)) { name.Append('_'); }
-        else if (requirements.ValidCharacters.HasFlag(ResourceNameCharacters.Period)) { name.Append('.'); }
+        if (requirements.ValidCharacters.HasFlag(ResourceNameCharacters.Hyphen))
+        { name.Append('-'); }
+        else if (requirements.ValidCharacters.HasFlag(ResourceNameCharacters.Underscore))
+        { name.Append('_'); }
+        else if (requirements.ValidCharacters.HasFlag(ResourceNameCharacters.Period))
+        { name.Append('.'); }
 
         // Fill the rest of the name with random characters (just using allowed
         // alphanumerics to avoid nuanced restrictions of non-alphanumeric
         // characters)
         List<char> chars = [];
-        if (requirements.ValidCharacters.HasFlag(ResourceNameCharacters.LowercaseLetters)) { chars.AddRange(s_lower); }
-        if (requirements.ValidCharacters.HasFlag(ResourceNameCharacters.UppercaseLetters)) { chars.AddRange(s_upper); }
-        if (requirements.ValidCharacters.HasFlag(ResourceNameCharacters.Numbers)) { chars.AddRange(s_digits); }
+        if (requirements.ValidCharacters.HasFlag(ResourceNameCharacters.LowercaseLetters))
+        { chars.AddRange(s_lower); }
+        if (requirements.ValidCharacters.HasFlag(ResourceNameCharacters.UppercaseLetters))
+        { chars.AddRange(s_upper); }
+        if (requirements.ValidCharacters.HasFlag(ResourceNameCharacters.Numbers))
+        { chars.AddRange(s_digits); }
         while (name.Length < requirements.MaxLength)
         {
             name.Append(chars[options.Random.Next(chars.Count)]);

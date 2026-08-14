@@ -7,42 +7,59 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The WafMetric. </summary>
+    /// <summary></summary>
     public readonly partial struct WafMetric : IEquatable<WafMetric>
     {
         private readonly string _value;
+        private const string ClientRequestCountValue = "clientRequestCount";
 
         /// <summary> Initializes a new instance of <see cref="WafMetric"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WafMetric(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ClientRequestCountValue = "clientRequestCount";
-
-        /// <summary> clientRequestCount. </summary>
+        /// <summary> Gets the ClientRequestCount. </summary>
         public static WafMetric ClientRequestCount { get; } = new WafMetric(ClientRequestCountValue);
+
         /// <summary> Determines if two <see cref="WafMetric"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WafMetric left, WafMetric right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WafMetric"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WafMetric left, WafMetric right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WafMetric"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WafMetric"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WafMetric(string value) => new WafMetric(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WafMetric"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WafMetric?(string value) => value == null ? null : new WafMetric(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WafMetric other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WafMetric other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

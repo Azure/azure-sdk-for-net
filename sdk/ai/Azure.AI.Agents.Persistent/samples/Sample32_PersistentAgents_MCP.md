@@ -218,7 +218,7 @@ private static void PrintActivitySteps(IReadOnlyList<RunStep> runSteps)
 
 Synchronous sample:
 ```C# Snippet:AgentsMCP_PrintRunSteps
-IReadOnlyList<RunStep> runSteps = [..agentClient.Runs.GetRunSteps(run: run)];
+IReadOnlyList<RunStep> runSteps = [.. agentClient.Runs.GetRunSteps(run: run)];
 PrintActivitySteps(runSteps);
 ```
 

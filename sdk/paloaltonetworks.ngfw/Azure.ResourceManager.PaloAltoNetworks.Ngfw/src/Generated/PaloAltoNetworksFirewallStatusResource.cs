@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             TryGetApiVersion(ResourceType, out string paloAltoNetworksFirewallStatusApiVersion);
             _firewallStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
-            _firewallStatusRestClient = new FirewallStatus(_firewallStatusClientDiagnostics, Pipeline, Endpoint, paloAltoNetworksFirewallStatusApiVersion ?? "2025-10-08");
+            _firewallStatusRestClient = new FirewallStatus(_firewallStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, paloAltoNetworksFirewallStatusApiVersion ?? "2025-10-08");
             ValidateResourceId(id);
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

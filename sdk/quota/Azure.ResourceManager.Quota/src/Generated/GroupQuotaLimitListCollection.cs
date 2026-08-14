@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Quota
         {
             TryGetApiVersion(GroupQuotaLimitListResource.ResourceType, out string groupQuotaLimitListApiVersion);
             _groupQuotaLimitListsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", GroupQuotaLimitListResource.ResourceType.Namespace, Diagnostics);
-            _groupQuotaLimitListsRestClient = new GroupQuotaLimitLists(_groupQuotaLimitListsClientDiagnostics, Pipeline, Endpoint, groupQuotaLimitListApiVersion ?? "2025-09-01");
+            _groupQuotaLimitListsRestClient = new GroupQuotaLimitLists(_groupQuotaLimitListsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaLimitListApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Quota
         {
             if (id.ResourceType != GroupQuotaEntityResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GroupQuotaEntityResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GroupQuotaEntityResource.ResourceType), nameof(id));
             }
         }
 

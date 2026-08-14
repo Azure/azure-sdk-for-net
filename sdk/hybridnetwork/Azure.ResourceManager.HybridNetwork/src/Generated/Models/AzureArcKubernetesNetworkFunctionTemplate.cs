@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -14,31 +15,21 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public partial class AzureArcKubernetesNetworkFunctionTemplate : ContainerizedNetworkFunctionTemplate
     {
         /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesNetworkFunctionTemplate"/>. </summary>
-        public AzureArcKubernetesNetworkFunctionTemplate()
+        public AzureArcKubernetesNetworkFunctionTemplate() : base(ContainerizedNetworkFunctionNfviType.AzureArcKubernetes)
         {
             NetworkFunctionApplications = new ChangeTrackingList<AzureArcKubernetesNetworkFunctionApplication>();
-            NfviType = ContainerizedNetworkFunctionNfviType.AzureArcKubernetes;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesNetworkFunctionTemplate"/>. </summary>
         /// <param name="nfviType"> The network function type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="networkFunctionApplications">
-        /// Network function applications.
-        /// Please note <see cref="AzureArcKubernetesNetworkFunctionApplication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureArcKubernetesHelmApplication"/>.
-        /// </param>
-        internal AzureArcKubernetesNetworkFunctionTemplate(ContainerizedNetworkFunctionNfviType nfviType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<AzureArcKubernetesNetworkFunctionApplication> networkFunctionApplications) : base(nfviType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="networkFunctionApplications"> Network function applications. </param>
+        internal AzureArcKubernetesNetworkFunctionTemplate(ContainerizedNetworkFunctionNfviType nfviType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<AzureArcKubernetesNetworkFunctionApplication> networkFunctionApplications) : base(nfviType, additionalBinaryDataProperties)
         {
             NetworkFunctionApplications = networkFunctionApplications;
-            NfviType = nfviType;
         }
 
-        /// <summary>
-        /// Network function applications.
-        /// Please note <see cref="AzureArcKubernetesNetworkFunctionApplication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureArcKubernetesHelmApplication"/>.
-        /// </summary>
+        /// <summary> Network function applications. </summary>
         public IList<AzureArcKubernetesNetworkFunctionApplication> NetworkFunctionApplications { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.Chaos.Models
     public readonly partial struct ChaosTargetReferenceType : IEquatable<ChaosTargetReferenceType>
     {
         private readonly string _value;
+        /// <summary> Chaos target reference type. </summary>
+        private const string ChaosTargetValue = "ChaosTarget";
 
         /// <summary> Initializes a new instance of <see cref="ChaosTargetReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ChaosTargetReferenceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ChaosTargetValue = "ChaosTarget";
+            _value = value;
+        }
 
         /// <summary> Chaos target reference type. </summary>
         public static ChaosTargetReferenceType ChaosTarget { get; } = new ChaosTargetReferenceType(ChaosTargetValue);
+
         /// <summary> Determines if two <see cref="ChaosTargetReferenceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ChaosTargetReferenceType left, ChaosTargetReferenceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ChaosTargetReferenceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ChaosTargetReferenceType left, ChaosTargetReferenceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ChaosTargetReferenceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ChaosTargetReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ChaosTargetReferenceType(string value) => new ChaosTargetReferenceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ChaosTargetReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ChaosTargetReferenceType?(string value) => value == null ? null : new ChaosTargetReferenceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ChaosTargetReferenceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ChaosTargetReferenceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

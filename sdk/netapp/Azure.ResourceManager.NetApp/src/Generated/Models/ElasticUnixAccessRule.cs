@@ -6,49 +6,17 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Specifies the Unix file access level for the volume. It encompasses both read-only and read-write permissions. Additionally, NoAccess can be set to block all access to the volume. </summary>
+    /// <summary> Unix access rule. </summary>
     public readonly partial struct ElasticUnixAccessRule : IEquatable<ElasticUnixAccessRule>
     {
-        private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ElasticUnixAccessRule"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ElasticUnixAccessRule(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string ReadOnlyValue = "ReadOnly";
-        private const string ReadWriteValue = "ReadWrite";
-        private const string NoAccessValue = "NoAccess";
-
         /// <summary> Clients connecting with this rule will only have read access to the volume. </summary>
-        public static ElasticUnixAccessRule ReadOnly { get; } = new ElasticUnixAccessRule(ReadOnlyValue);
+        private const string ReadOnlyValue = "ReadOnly";
         /// <summary> Clients connecting with this rule will have full read and write access to the volume. </summary>
-        public static ElasticUnixAccessRule ReadWrite { get; } = new ElasticUnixAccessRule(ReadWriteValue);
+        private const string ReadWriteValue = "ReadWrite";
         /// <summary> Clients connecting with this rule will have no access to the volume. </summary>
-        public static ElasticUnixAccessRule NoAccess { get; } = new ElasticUnixAccessRule(NoAccessValue);
-        /// <summary> Determines if two <see cref="ElasticUnixAccessRule"/> values are the same. </summary>
-        public static bool operator ==(ElasticUnixAccessRule left, ElasticUnixAccessRule right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ElasticUnixAccessRule"/> values are not the same. </summary>
-        public static bool operator !=(ElasticUnixAccessRule left, ElasticUnixAccessRule right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticUnixAccessRule"/>. </summary>
-        public static implicit operator ElasticUnixAccessRule(string value) => new ElasticUnixAccessRule(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ElasticUnixAccessRule other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(ElasticUnixAccessRule other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        private const string NoAccessValue = "NoAccess";
     }
 }

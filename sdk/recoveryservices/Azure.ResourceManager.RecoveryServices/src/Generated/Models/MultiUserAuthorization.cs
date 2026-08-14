@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     public readonly partial struct MultiUserAuthorization : IEquatable<MultiUserAuthorization>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MultiUserAuthorization"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MultiUserAuthorization(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultiUserAuthorization"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MultiUserAuthorization(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static MultiUserAuthorization Invalid { get; } = new MultiUserAuthorization(InvalidValue);
-        /// <summary> Enabled. </summary>
+
+        /// <summary> Gets the Enabled. </summary>
         public static MultiUserAuthorization Enabled { get; } = new MultiUserAuthorization(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static MultiUserAuthorization Disabled { get; } = new MultiUserAuthorization(DisabledValue);
+
         /// <summary> Determines if two <see cref="MultiUserAuthorization"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MultiUserAuthorization left, MultiUserAuthorization right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MultiUserAuthorization"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MultiUserAuthorization left, MultiUserAuthorization right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MultiUserAuthorization"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MultiUserAuthorization"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MultiUserAuthorization(string value) => new MultiUserAuthorization(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MultiUserAuthorization"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MultiUserAuthorization?(string value) => value == null ? null : new MultiUserAuthorization(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MultiUserAuthorization other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MultiUserAuthorization other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

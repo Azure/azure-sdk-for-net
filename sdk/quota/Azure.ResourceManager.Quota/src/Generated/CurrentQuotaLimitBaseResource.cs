@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Quota
         {
             TryGetApiVersion(ResourceType, out string currentQuotaLimitBaseApiVersion);
             _currentQuotaLimitBasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
-            _currentQuotaLimitBasesRestClient = new CurrentQuotaLimitBases(_currentQuotaLimitBasesClientDiagnostics, Pipeline, Endpoint, currentQuotaLimitBaseApiVersion ?? "2025-09-01");
+            _currentQuotaLimitBasesRestClient = new CurrentQuotaLimitBases(_currentQuotaLimitBasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, currentQuotaLimitBaseApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Quota
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CurrentQuotaLimitBaseData> response = Response.FromValue(CurrentQuotaLimitBaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CurrentQuotaLimitBaseData> response = Response.FromValue(CurrentQuotaLimitBaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -187,8 +187,7 @@ namespace Azure.ResourceManager.Quota
 
         /// <summary>
         /// Update the quota limit for a specific resource to the specified value:
-        /// 1. Use the Usages-GET and Quota-GET operations to determine the remaining quota for the specific resource and to calculate the new quota limit. These steps are detailed in [this example](https://techcommunity.microsoft.com/t5/azure-governance-and-management/using-the-new-quota-rest-api/ba-p/2183670).
-        /// 2. Use this PUT operation to update the quota limit. Please check the URI in location header for the detailed status of the request.
+        /// <list type="number"><item><description>Use the Usages-GET and Quota-GET operations to determine the remaining quota for the specific resource and to calculate the new quota limit. These steps are detailed in [this example](https://techcommunity.microsoft.com/t5/azure-governance-and-management/using-the-new-quota-rest-api/ba-p/2183670).</description></item><item><description>Use this PUT operation to update the quota limit. Please check the URI in location header for the detailed status of the request.</description></item></list>
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -224,10 +223,10 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateUpdateRequest(Id.Parent, Id.Name, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation<CurrentQuotaLimitBaseResource> operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(
-                    new CurrentQuotaLimitBaseOperationSource(Client),
+                    new CurrentQuotaLimitBaseResourceOperationSource(Client),
                     _currentQuotaLimitBasesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -248,8 +247,7 @@ namespace Azure.ResourceManager.Quota
 
         /// <summary>
         /// Update the quota limit for a specific resource to the specified value:
-        /// 1. Use the Usages-GET and Quota-GET operations to determine the remaining quota for the specific resource and to calculate the new quota limit. These steps are detailed in [this example](https://techcommunity.microsoft.com/t5/azure-governance-and-management/using-the-new-quota-rest-api/ba-p/2183670).
-        /// 2. Use this PUT operation to update the quota limit. Please check the URI in location header for the detailed status of the request.
+        /// <list type="number"><item><description>Use the Usages-GET and Quota-GET operations to determine the remaining quota for the specific resource and to calculate the new quota limit. These steps are detailed in [this example](https://techcommunity.microsoft.com/t5/azure-governance-and-management/using-the-new-quota-rest-api/ba-p/2183670).</description></item><item><description>Use this PUT operation to update the quota limit. Please check the URI in location header for the detailed status of the request.</description></item></list>
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -285,10 +283,10 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateUpdateRequest(Id.Parent, Id.Name, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation<CurrentQuotaLimitBaseResource> operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(
-                    new CurrentQuotaLimitBaseOperationSource(Client),
+                    new CurrentQuotaLimitBaseResourceOperationSource(Client),
                     _currentQuotaLimitBasesClientDiagnostics,
                     Pipeline,
                     message.Request,

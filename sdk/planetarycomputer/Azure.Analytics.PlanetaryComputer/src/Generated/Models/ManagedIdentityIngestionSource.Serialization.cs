@@ -20,6 +20,46 @@ namespace Azure.Analytics.PlanetaryComputer
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override IngestionSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityIngestionSource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeManagedIdentityIngestionSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedIdentityIngestionSource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityIngestionSource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedIdentityIngestionSource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ManagedIdentityIngestionSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedIdentityIngestionSource IPersistableModel<ManagedIdentityIngestionSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (ManagedIdentityIngestionSource)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedIdentityIngestionSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedIdentityIngestionSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -69,8 +109,8 @@ namespace Azure.Analytics.PlanetaryComputer
                 return null;
             }
             Guid id = default;
-            DateTimeOffset? created = default;
-            IngestionSourceType kind = default;
+            DateTimeOffset? createdOn = default;
+            IngestionSourceKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ManagedIdentityConnection connectionInfo = default;
             foreach (var prop in element.EnumerateObject())
@@ -86,12 +126,12 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    created = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
                 {
-                    kind = new IngestionSourceType(prop.Value.GetString());
+                    kind = new IngestionSourceKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("connectionInfo"u8))
@@ -104,47 +144,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedIdentityIngestionSource(id, created, kind, additionalBinaryDataProperties, connectionInfo);
+            return new ManagedIdentityIngestionSource(id, createdOn, kind, additionalBinaryDataProperties, connectionInfo);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedIdentityIngestionSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityIngestionSource>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ManagedIdentityIngestionSource)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedIdentityIngestionSource IPersistableModel<ManagedIdentityIngestionSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (ManagedIdentityIngestionSource)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override IngestionSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityIngestionSource>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeManagedIdentityIngestionSource(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ManagedIdentityIngestionSource)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedIdentityIngestionSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

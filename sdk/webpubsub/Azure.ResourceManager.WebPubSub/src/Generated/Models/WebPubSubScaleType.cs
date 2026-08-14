@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.WebPubSub.Models
     public readonly partial struct WebPubSubScaleType : IEquatable<WebPubSubScaleType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="WebPubSubScaleType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public WebPubSubScaleType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string ManualValue = "Manual";
         private const string AutomaticValue = "Automatic";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubScaleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public WebPubSubScaleType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static WebPubSubScaleType None { get; } = new WebPubSubScaleType(NoneValue);
-        /// <summary> Manual. </summary>
+
+        /// <summary> Gets the Manual. </summary>
         public static WebPubSubScaleType Manual { get; } = new WebPubSubScaleType(ManualValue);
-        /// <summary> Automatic. </summary>
+
+        /// <summary> Gets the Automatic. </summary>
         public static WebPubSubScaleType Automatic { get; } = new WebPubSubScaleType(AutomaticValue);
+
         /// <summary> Determines if two <see cref="WebPubSubScaleType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WebPubSubScaleType left, WebPubSubScaleType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WebPubSubScaleType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WebPubSubScaleType left, WebPubSubScaleType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WebPubSubScaleType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WebPubSubScaleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WebPubSubScaleType(string value) => new WebPubSubScaleType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WebPubSubScaleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WebPubSubScaleType?(string value) => value == null ? null : new WebPubSubScaleType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WebPubSubScaleType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WebPubSubScaleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

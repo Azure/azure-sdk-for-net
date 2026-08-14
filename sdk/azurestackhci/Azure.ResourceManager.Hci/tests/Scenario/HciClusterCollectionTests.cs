@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Hci.Tests
 {
-    public class HciClusterCollectionTests: HciManagementTestBase
+    public class HciClusterCollectionTests : HciManagementTestBase
     {
         public HciClusterCollectionTests(bool isAsync)
             : base(isAsync)

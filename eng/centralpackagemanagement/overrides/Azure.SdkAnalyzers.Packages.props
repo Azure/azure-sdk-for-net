@@ -1,0 +1,9 @@
+<Project>
+  <!-- Analyzers projects needs different versions of code analysis package -->
+  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+    <PackageVersion Update="Microsoft.CodeAnalysis.CSharp" Version="4.8.0" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(IsPerfProject)' == 'true'">
+    <PackageVersion Update="Microsoft.CodeAnalysis.CSharp" Version="4.14.0" />
+  </ItemGroup>
+</Project>

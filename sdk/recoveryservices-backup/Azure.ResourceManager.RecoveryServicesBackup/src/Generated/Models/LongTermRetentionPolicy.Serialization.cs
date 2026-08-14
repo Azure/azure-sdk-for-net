@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class LongTermRetentionPolicy : IUtf8JsonSerializable, IJsonModel<LongTermRetentionPolicy>
+    /// <summary> Long term retention policy. </summary>
+    public partial class LongTermRetentionPolicy : BackupRetentionPolicy, IJsonModel<LongTermRetentionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LongTermRetentionPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BackupRetentionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LongTermRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLongTermRetentionPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LongTermRetentionPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LongTermRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LongTermRetentionPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LongTermRetentionPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LongTermRetentionPolicy IPersistableModel<LongTermRetentionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => (LongTermRetentionPolicy)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LongTermRetentionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LongTermRetentionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LongTermRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LongTermRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LongTermRetentionPolicy)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(DailySchedule))
             {
@@ -57,120 +97,92 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
         }
 
-        LongTermRetentionPolicy IJsonModel<LongTermRetentionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LongTermRetentionPolicy IJsonModel<LongTermRetentionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LongTermRetentionPolicy)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BackupRetentionPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LongTermRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LongTermRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LongTermRetentionPolicy)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLongTermRetentionPolicy(document.RootElement, options);
         }
 
-        internal static LongTermRetentionPolicy DeserializeLongTermRetentionPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static LongTermRetentionPolicy DeserializeLongTermRetentionPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string retentionPolicyType = "LongTermRetentionPolicy";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DailyRetentionSchedule dailySchedule = default;
             WeeklyRetentionSchedule weeklySchedule = default;
             MonthlyRetentionSchedule monthlySchedule = default;
             YearlyRetentionSchedule yearlySchedule = default;
-            string retentionPolicyType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("dailySchedule"u8))
+                if (prop.NameEquals("retentionPolicyType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    retentionPolicyType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("dailySchedule"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dailySchedule = DailyRetentionSchedule.DeserializeDailyRetentionSchedule(property.Value, options);
+                    dailySchedule = DailyRetentionSchedule.DeserializeDailyRetentionSchedule(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("weeklySchedule"u8))
+                if (prop.NameEquals("weeklySchedule"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    weeklySchedule = WeeklyRetentionSchedule.DeserializeWeeklyRetentionSchedule(property.Value, options);
+                    weeklySchedule = WeeklyRetentionSchedule.DeserializeWeeklyRetentionSchedule(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("monthlySchedule"u8))
+                if (prop.NameEquals("monthlySchedule"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    monthlySchedule = MonthlyRetentionSchedule.DeserializeMonthlyRetentionSchedule(property.Value, options);
+                    monthlySchedule = MonthlyRetentionSchedule.DeserializeMonthlyRetentionSchedule(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("yearlySchedule"u8))
+                if (prop.NameEquals("yearlySchedule"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    yearlySchedule = YearlyRetentionSchedule.DeserializeYearlyRetentionSchedule(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("retentionPolicyType"u8))
-                {
-                    retentionPolicyType = property.Value.GetString();
+                    yearlySchedule = YearlyRetentionSchedule.DeserializeYearlyRetentionSchedule(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new LongTermRetentionPolicy(
                 retentionPolicyType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 dailySchedule,
                 weeklySchedule,
                 monthlySchedule,
                 yearlySchedule);
         }
-
-        BinaryData IPersistableModel<LongTermRetentionPolicy>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LongTermRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(LongTermRetentionPolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        LongTermRetentionPolicy IPersistableModel<LongTermRetentionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LongTermRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeLongTermRetentionPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LongTermRetentionPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<LongTermRetentionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -21,6 +21,46 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LambdaTestHyperExecuteSingleSignOnPropertiesV2 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteSingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLambdaTestHyperExecuteSingleSignOnPropertiesV2(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LambdaTestHyperExecuteSingleSignOnPropertiesV2)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteSingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLambdaTestHyperExecuteContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LambdaTestHyperExecuteSingleSignOnPropertiesV2)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LambdaTestHyperExecuteSingleSignOnPropertiesV2>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LambdaTestHyperExecuteSingleSignOnPropertiesV2 IPersistableModel<LambdaTestHyperExecuteSingleSignOnPropertiesV2>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LambdaTestHyperExecuteSingleSignOnPropertiesV2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LambdaTestHyperExecuteSingleSignOnPropertiesV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -179,45 +219,5 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
                 aadDomains ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LambdaTestHyperExecuteSingleSignOnPropertiesV2>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteSingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLambdaTestHyperExecuteContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(LambdaTestHyperExecuteSingleSignOnPropertiesV2)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LambdaTestHyperExecuteSingleSignOnPropertiesV2 IPersistableModel<LambdaTestHyperExecuteSingleSignOnPropertiesV2>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LambdaTestHyperExecuteSingleSignOnPropertiesV2 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteSingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLambdaTestHyperExecuteSingleSignOnPropertiesV2(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LambdaTestHyperExecuteSingleSignOnPropertiesV2)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LambdaTestHyperExecuteSingleSignOnPropertiesV2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
@@ -14,37 +15,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Represents the arguments the search index retrieval activity was run with. </summary>
     public partial class KnowledgeBaseSearchIndexActivityArguments
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseSearchIndexActivityArguments"/>. </summary>
         internal KnowledgeBaseSearchIndexActivityArguments()
@@ -59,25 +31,29 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="sourceDataFields"> What fields were selected for search. </param>
         /// <param name="searchFields"> What fields were searched against. </param>
         /// <param name="semanticConfigurationName"> What semantic configuration was used from the search index. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseSearchIndexActivityArguments(string search, string filter, IReadOnlyList<SearchIndexFieldReference> sourceDataFields, IReadOnlyList<SearchIndexFieldReference> searchFields, string semanticConfigurationName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KnowledgeBaseSearchIndexActivityArguments(string search, string filter, IList<SearchIndexFieldReference> sourceDataFields, IList<SearchIndexFieldReference> searchFields, string semanticConfigurationName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Search = search;
             Filter = filter;
             SourceDataFields = sourceDataFields;
             SearchFields = searchFields;
             SemanticConfigurationName = semanticConfigurationName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The search string used to query the search index. </summary>
         public string Search { get; }
+
         /// <summary> The filter string. </summary>
         public string Filter { get; }
+
         /// <summary> What fields were selected for search. </summary>
-        public IReadOnlyList<SearchIndexFieldReference> SourceDataFields { get; }
+        public IList<SearchIndexFieldReference> SourceDataFields { get; }
+
         /// <summary> What fields were searched against. </summary>
-        public IReadOnlyList<SearchIndexFieldReference> SearchFields { get; }
+        public IList<SearchIndexFieldReference> SearchFields { get; }
+
         /// <summary> What semantic configuration was used from the search index. </summary>
         public string SemanticConfigurationName { get; }
     }

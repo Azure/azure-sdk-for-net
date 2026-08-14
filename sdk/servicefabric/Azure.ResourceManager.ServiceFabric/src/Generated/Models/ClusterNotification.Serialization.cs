@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterNotification : IUtf8JsonSerializable, IJsonModel<ClusterNotification>
+    /// <summary> Describes the notification channel for cluster events. </summary>
+    public partial class ClusterNotification : IJsonModel<ClusterNotification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterNotification>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ClusterNotification"/> for deserialization. </summary>
+        internal ClusterNotification()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ClusterNotification PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterNotification>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeClusterNotification(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ClusterNotification)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterNotification>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ClusterNotification)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ClusterNotification>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClusterNotification IPersistableModel<ClusterNotification>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ClusterNotification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ClusterNotification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterNotification>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterNotification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClusterNotification)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("notificationCategory"u8);
@@ -42,20 +87,20 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStringValue(NotificationLevel.ToString());
             writer.WritePropertyName("notificationTargets"u8);
             writer.WriteStartArray();
-            foreach (var item in NotificationTargets)
+            foreach (ClusterNotificationTarget item in NotificationTargets)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -64,22 +109,27 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
         }
 
-        ClusterNotification IJsonModel<ClusterNotification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClusterNotification IJsonModel<ClusterNotification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ClusterNotification JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterNotification>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterNotification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClusterNotification)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeClusterNotification(document.RootElement, options);
         }
 
-        internal static ClusterNotification DeserializeClusterNotification(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ClusterNotification DeserializeClusterNotification(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -88,29 +138,28 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             ClusterNotificationCategory notificationCategory = default;
             ClusterNotificationLevel notificationLevel = default;
             IList<ClusterNotificationTarget> notificationTargets = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("isEnabled"u8))
+                if (prop.NameEquals("isEnabled"u8))
                 {
-                    isEnabled = property.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("notificationCategory"u8))
+                if (prop.NameEquals("notificationCategory"u8))
                 {
-                    notificationCategory = new ClusterNotificationCategory(property.Value.GetString());
+                    notificationCategory = new ClusterNotificationCategory(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("notificationLevel"u8))
+                if (prop.NameEquals("notificationLevel"u8))
                 {
-                    notificationLevel = new ClusterNotificationLevel(property.Value.GetString());
+                    notificationLevel = new ClusterNotificationLevel(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("notificationTargets"u8))
+                if (prop.NameEquals("notificationTargets"u8))
                 {
                     List<ClusterNotificationTarget> array = new List<ClusterNotificationTarget>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ClusterNotificationTarget.DeserializeClusterNotificationTarget(item, options));
                     }
@@ -119,42 +168,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ClusterNotification(isEnabled, notificationCategory, notificationLevel, notificationTargets, serializedAdditionalRawData);
+            return new ClusterNotification(isEnabled, notificationCategory, notificationLevel, notificationTargets, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ClusterNotification>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterNotification>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ClusterNotification)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ClusterNotification IPersistableModel<ClusterNotification>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterNotification>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeClusterNotification(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ClusterNotification)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ClusterNotification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

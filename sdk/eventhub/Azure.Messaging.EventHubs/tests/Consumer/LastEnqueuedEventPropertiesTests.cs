@@ -135,10 +135,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var properties = new LastEnqueuedEventProperties(sequence, offset, enqueued, received);
             var toStringValue = properties.ToString();
 
-            Assert.That(toStringValue, Contains.Substring($"[{ offset }]"), "The offset should be represented.");
-            Assert.That(toStringValue, Contains.Substring($"[{ sequence }]"), "The sequence number should be represented.");
-            Assert.That(toStringValue, Contains.Substring($"[{ enqueued }]"), "The enqueued time should be represented.");
-            Assert.That(toStringValue, Contains.Substring($"[{ received }]"), "The received time should be represented.");
+            Assert.That(toStringValue, Contains.Substring($"[{offset}]"), "The offset should be represented.");
+            Assert.That(toStringValue, Contains.Substring($"[{sequence}]"), "The sequence number should be represented.");
+            Assert.That(toStringValue, Contains.Substring($"[{enqueued}]"), "The enqueued time should be represented.");
+            Assert.That(toStringValue, Contains.Substring($"[{received}]"), "The received time should be represented.");
         }
     }
 }

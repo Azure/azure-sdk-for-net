@@ -26,10 +26,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 LoggerMessage.Define<string>(LogLevel.Debug, new EventId(3, nameof(ContainerDoesNotExist)),
                     "Container '{containerName}' does not exist.");
 
-            public static void InitializedScanInfo(ILogger<BlobListener> logger, string container, DateTime latestScanInfo) =>
+            public static void InitializedScanInfo(ILogger<BlobListener> logger, string container, DateTimeOffset latestScanInfo) =>
                 _initializedScanInfo(logger, container, latestScanInfo.ToString(Constants.DateTimeFormatString, CultureInfo.InvariantCulture), null);
 
-            public static void PollBlobContainer(ILogger<BlobListener> logger, string container, DateTime latestScanInfo, string clientRequestId, int blobCount, long latencyInMilliseconds, bool hasContinuationToken) =>
+            public static void PollBlobContainer(ILogger<BlobListener> logger, string container, DateTimeOffset latestScanInfo, string clientRequestId, int blobCount, long latencyInMilliseconds, bool hasContinuationToken) =>
                 _pollBlobContainer(logger, latestScanInfo.ToString(Constants.DateTimeFormatString, CultureInfo.InvariantCulture), container, clientRequestId, blobCount, latencyInMilliseconds, hasContinuationToken, null);
 
             public static void ContainerDoesNotExist(ILogger<BlobListener> logger, string container) =>

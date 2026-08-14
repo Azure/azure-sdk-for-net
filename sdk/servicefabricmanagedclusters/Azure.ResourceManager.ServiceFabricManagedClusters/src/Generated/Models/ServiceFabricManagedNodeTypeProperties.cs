@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNodeTypeProperties"/>. </summary>
         /// <param name="isPrimary"> Indicates the Service Fabric system services for the cluster will run on this node type. This setting cannot be changed once the node type is created. </param>
-        /// <param name="vmInstanceCount"> The number of nodes in the node type. **Values:** -1 - Use when auto scale rules are configured or sku.capacity is defined 0 - Not supported &gt;0 - Use for manual scale. </param>
+        /// <param name="vmInstanceCount"> The number of nodes in the node type. <b>Values:</b> -1 - Use when auto scale rules are configured or sku.capacity is defined 0 - Not supported &gt;0 - Use for manual scale. </param>
         public ServiceFabricManagedNodeTypeProperties(bool isPrimary, int vmInstanceCount)
         {
             IsPrimary = isPrimary;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNodeTypeProperties"/>. </summary>
         /// <param name="isPrimary"> Indicates the Service Fabric system services for the cluster will run on this node type. This setting cannot be changed once the node type is created. </param>
-        /// <param name="vmInstanceCount"> The number of nodes in the node type. **Values:** -1 - Use when auto scale rules are configured or sku.capacity is defined 0 - Not supported &gt;0 - Use for manual scale. </param>
+        /// <param name="vmInstanceCount"> The number of nodes in the node type. <b>Values:</b> -1 - Use when auto scale rules are configured or sku.capacity is defined 0 - Not supported &gt;0 - Use for manual scale. </param>
         /// <param name="dataDiskSizeInGB"> Disk size for the managed disk attached to the vms on the node type in GBs. </param>
         /// <param name="dataDiskType"> Managed data disk type. Specifies the storage account type for the managed disk. </param>
         /// <param name="dataDiskLetter"> Managed data disk letter. It can not use the reserved letter C or D and it can not change after created. </param>
@@ -93,8 +93,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="vmApplications"> Specifies the gallery applications that should be made available to the underlying VMSS. </param>
         /// <param name="isZoneBalanceEnabled"> Setting this to true allows stateless node types to scale out without equal distribution across zones. </param>
         /// <param name="isOutboundOnly"> Specifies the node type should be configured for only outbound traffic and not inbound traffic. </param>
+        /// <param name="enableResilientEphemeralOsDisk"> Specifies whether the node type should use a resilient ephemeral OS disk when using a supported SKU size. A resilient ephemeral OS disk provides improved reliability for ephemeral OS disks by enabling full caching. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceFabricManagedNodeTypeProperties(bool isPrimary, int vmInstanceCount, int? dataDiskSizeInGB, ServiceFabricManagedDataDiskType? dataDiskType, string dataDiskLetter, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, EndpointRangeDescription applicationPorts, EndpointRangeDescription ephemeralPorts, string vmSize, string vmImagePublisher, string vmImageOffer, string vmImageSku, string vmImageVersion, IList<NodeTypeVaultSecretGroup> vmSecrets, IList<NodeTypeVmssExtension> vmExtensions, VmManagedIdentity vmManagedIdentity, bool? isStateless, bool? hasMultiplePlacementGroups, IList<NodeTypeFrontendConfiguration> frontendConfigurations, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<NodeTypeVmssDataDisk> additionalDataDisks, bool? isEncryptionAtHostEnabled, ServiceFabricManagedResourceProvisioningState? provisioningState, bool? isAcceleratedNetworkingEnabled, bool? useDefaultPublicLoadBalancer, bool? useTempDataDisk, bool? isOverProvisioningEnabled, IList<string> zones, bool? isSpotVm, string hostGroupId, bool? useEphemeralOSDisk, string spotRestoreTimeout, SpotNodeVmEvictionPolicyType? evictionPolicy, ResourceIdentifier vmImageResourceId, ResourceIdentifier subnetId, IList<VmSetupAction> vmSetupActions, ServiceFabricManagedClusterSecurityType? securityType, NodeTypeSecurityEncryptionType? securityEncryptionType, bool? isSecureBootEnabled, bool? isNodePublicIPEnabled, bool? isNodePublicIPv6Enabled, ResourceIdentifier vmSharedGalleryImageId, ResourceIdentifier natGatewayId, IList<NodeTypeNatConfig> natConfigurations, VmImagePlan vmImagePlan, ResourceIdentifier serviceArtifactReferenceId, ResourceIdentifier dscpConfigurationId, IList<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations, string computerNamePrefix, IList<ServiceFabricManagedVmApplication> vmApplications, bool? isZoneBalanceEnabled, bool? isOutboundOnly, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceFabricManagedNodeTypeProperties(bool isPrimary, int vmInstanceCount, int? dataDiskSizeInGB, ServiceFabricManagedDataDiskType? dataDiskType, string dataDiskLetter, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, EndpointRangeDescription applicationPorts, EndpointRangeDescription ephemeralPorts, string vmSize, string vmImagePublisher, string vmImageOffer, string vmImageSku, string vmImageVersion, IList<NodeTypeVaultSecretGroup> vmSecrets, IList<NodeTypeVmssExtension> vmExtensions, VmManagedIdentity vmManagedIdentity, bool? isStateless, bool? hasMultiplePlacementGroups, IList<NodeTypeFrontendConfiguration> frontendConfigurations, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<NodeTypeVmssDataDisk> additionalDataDisks, bool? isEncryptionAtHostEnabled, ServiceFabricManagedResourceProvisioningState? provisioningState, bool? isAcceleratedNetworkingEnabled, bool? useDefaultPublicLoadBalancer, bool? useTempDataDisk, bool? isOverProvisioningEnabled, IList<string> zones, bool? isSpotVm, string hostGroupId, bool? useEphemeralOSDisk, string spotRestoreTimeout, SpotNodeVmEvictionPolicyType? evictionPolicy, ResourceIdentifier vmImageResourceId, ResourceIdentifier subnetId, IList<VmSetupAction> vmSetupActions, ServiceFabricManagedClusterSecurityType? securityType, NodeTypeSecurityEncryptionType? securityEncryptionType, bool? isSecureBootEnabled, bool? isNodePublicIPEnabled, bool? isNodePublicIPv6Enabled, ResourceIdentifier vmSharedGalleryImageId, ResourceIdentifier natGatewayId, IList<NodeTypeNatConfig> natConfigurations, VmImagePlan vmImagePlan, ResourceIdentifier serviceArtifactReferenceId, ResourceIdentifier dscpConfigurationId, IList<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations, string computerNamePrefix, IList<ServiceFabricManagedVmApplication> vmApplications, bool? isZoneBalanceEnabled, bool? isOutboundOnly, bool? enableResilientEphemeralOsDisk, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsPrimary = isPrimary;
             VmInstanceCount = vmInstanceCount;
@@ -149,13 +150,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             VmApplications = vmApplications;
             IsZoneBalanceEnabled = isZoneBalanceEnabled;
             IsOutboundOnly = isOutboundOnly;
+            EnableResilientEphemeralOsDisk = enableResilientEphemeralOsDisk;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates the Service Fabric system services for the cluster will run on this node type. This setting cannot be changed once the node type is created. </summary>
         public bool IsPrimary { get; set; }
 
-        /// <summary> The number of nodes in the node type. **Values:** -1 - Use when auto scale rules are configured or sku.capacity is defined 0 - Not supported &gt;0 - Use for manual scale. </summary>
+        /// <summary> The number of nodes in the node type. <b>Values:</b> -1 - Use when auto scale rules are configured or sku.capacity is defined 0 - Not supported &gt;0 - Use for manual scale. </summary>
         public int VmInstanceCount { get; set; }
 
         /// <summary> Disk size for the managed disk attached to the vms on the node type in GBs. </summary>
@@ -310,6 +312,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Specifies the node type should be configured for only outbound traffic and not inbound traffic. </summary>
         public bool? IsOutboundOnly { get; set; }
+
+        /// <summary> Specifies whether the node type should use a resilient ephemeral OS disk when using a supported SKU size. A resilient ephemeral OS disk provides improved reliability for ephemeral OS disks by enabling full caching. </summary>
+        public bool? EnableResilientEphemeralOsDisk { get; set; }
 
         /// <summary> The list of user identities associated with the virtual machine scale set under the node type. Each entry will be an ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </summary>
         public IList<ResourceIdentifier> VmManagedIdentityUserAssignedIdentities

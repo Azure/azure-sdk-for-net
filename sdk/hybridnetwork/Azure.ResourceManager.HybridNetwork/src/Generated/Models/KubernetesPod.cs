@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Helm Pod status properties. </summary>
     public partial class KubernetesPod
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KubernetesPod"/>. </summary>
         internal KubernetesPod()
@@ -59,8 +31,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="status"> The status of a pod. </param>
         /// <param name="createdOn"> Creation Time of Pod. </param>
         /// <param name="events"> Last 5 Pod events. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KubernetesPod(string name, string @namespace, int? desiredNumberOfContainers, int? readyNumberOfContainers, PodStatus? status, DateTimeOffset? createdOn, IReadOnlyList<PodEvent> events, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesPod(string name, string @namespace, int? desiredNumberOfContainers, int? readyNumberOfContainers, PodStatus? status, DateTimeOffset? createdOn, IList<PodEvent> events, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Namespace = @namespace;
@@ -69,22 +41,28 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Status = status;
             CreatedOn = createdOn;
             Events = events;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the Pod. </summary>
         public string Name { get; }
+
         /// <summary> The namespace of the Pod. </summary>
         public string Namespace { get; }
+
         /// <summary> Desired number of containers. </summary>
         public int? DesiredNumberOfContainers { get; }
+
         /// <summary> Number of ready containers. </summary>
         public int? ReadyNumberOfContainers { get; }
+
         /// <summary> The status of a pod. </summary>
         public PodStatus? Status { get; }
+
         /// <summary> Creation Time of Pod. </summary>
         public DateTimeOffset? CreatedOn { get; }
+
         /// <summary> Last 5 Pod events. </summary>
-        public IReadOnlyList<PodEvent> Events { get; }
+        public IList<PodEvent> Events { get; }
     }
 }

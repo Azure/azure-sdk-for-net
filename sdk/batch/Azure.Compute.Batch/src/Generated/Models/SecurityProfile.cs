@@ -22,14 +22,14 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityProfile"/>. </summary>
-        /// <param name="encryptionAtHost"> This property can be used by user in the request to enable or disable the Host Encryption for the virtual machine or virtual machine scale set. This will enable the encryption for all the disks including Resource/Temp disk at host itself. For more information on encryption at host requirements, please refer to https://learn.microsoft.com/azure/virtual-machines/disk-encryption#supported-vm-sizes. </param>
+        /// <param name="isEncryptedAtHost"> This property can be used by user in the request to enable or disable the Host Encryption for the virtual machine or virtual machine scale set. This will enable the encryption for all the disks including Resource/Temp disk at host itself. For more information on encryption at host requirements, please refer to https://learn.microsoft.com/azure/virtual-machines/disk-encryption#supported-vm-sizes. </param>
         /// <param name="proxyAgentSettings"> Specifies ProxyAgent settings while creating the virtual machine. </param>
         /// <param name="securityType"> Specifies the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings. </param>
         /// <param name="uefiSettings"> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. Specifies the security settings like secure boot and vTPM used while creating the virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityProfile(bool? encryptionAtHost, ProxyAgentSettings proxyAgentSettings, SecurityTypes? securityType, BatchUefiSettings uefiSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityProfile(bool? isEncryptedAtHost, ProxyAgentSettings proxyAgentSettings, SecurityTypes? securityType, BatchUefiSettings uefiSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EncryptionAtHost = encryptionAtHost;
+            IsEncryptedAtHost = isEncryptedAtHost;
             ProxyAgentSettings = proxyAgentSettings;
             SecurityType = securityType;
             UefiSettings = uefiSettings;
@@ -37,7 +37,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> This property can be used by user in the request to enable or disable the Host Encryption for the virtual machine or virtual machine scale set. This will enable the encryption for all the disks including Resource/Temp disk at host itself. For more information on encryption at host requirements, please refer to https://learn.microsoft.com/azure/virtual-machines/disk-encryption#supported-vm-sizes. </summary>
-        public bool? EncryptionAtHost { get; set; }
+        public bool? IsEncryptedAtHost { get; set; }
 
         /// <summary> Specifies ProxyAgent settings while creating the virtual machine. </summary>
         public ProxyAgentSettings ProxyAgentSettings { get; set; }

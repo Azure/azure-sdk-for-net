@@ -6,12 +6,12 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.ServiceBus.Administration;
 using Azure.Messaging.ServiceBus.Amqp.Framing;
 using Azure.Messaging.ServiceBus.Core;
-using Azure.Messaging.ServiceBus.Administration;
+using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
-using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
@@ -370,7 +370,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                     foreach (var property in amqpCorrelationFilter.Properties)
                     {
-                        correlationFilter.ApplicationProperties.Add(property.Key.Key.ToString(), property.Value);
+                        var innerKey = property.Key.Key;
+                        correlationFilter.ApplicationProperties.Add(innerKey is AmqpSymbol symbol ? symbol.Value : innerKey.ToString(), property.Value);
                     }
 
                     filter = correlationFilter;

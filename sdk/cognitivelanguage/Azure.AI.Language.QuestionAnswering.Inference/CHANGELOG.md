@@ -4,7 +4,11 @@
 
 ### Features Added
 
+- Added `QuestionAnsweringClientSettings` to support creating a `QuestionAnsweringClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+
 ### Breaking Changes
+
+- Renamed the `Scorer` type to `QuestionAnsweringScorer`. The `AnswersOptions.QueryPreferences.Scorer` property name is unchanged.
 
 ### Bugs Fixed
 

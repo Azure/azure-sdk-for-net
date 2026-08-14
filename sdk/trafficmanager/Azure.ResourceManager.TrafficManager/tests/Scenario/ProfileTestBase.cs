@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         protected internal const string ExpectedValue = "tagValue";
         protected internal const string EndpointName1 = "endpoint1";
         protected internal const string EndpointName2 = "endpoint2";
-        protected internal const string EndpointTypeName = "externalEndpoints";
+        protected internal const string EndpointTypeName = "ExternalEndpoints";
         protected internal const string EndpointType = "Microsoft.Network/trafficManagerProfiles/" + EndpointTypeName;
 
         protected internal SubscriptionResource _subscription;

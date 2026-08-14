@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Astro
         {
             TryGetApiVersion(AstroOrganizationResource.ResourceType, out string astroOrganizationApiVersion);
             _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Astro", AstroOrganizationResource.ResourceType.Namespace, Diagnostics);
-            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, astroOrganizationApiVersion ?? "2024-08-27");
+            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, astroOrganizationApiVersion ?? "2024-08-27");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Astro
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Astro
                 HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, AstroOrganizationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AstroArmOperation<AstroOrganizationResource> operation = new AstroArmOperation<AstroOrganizationResource>(
-                    new AstroOrganizationOperationSource(Client),
+                    new AstroOrganizationResourceOperationSource(Client),
                     _organizationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Astro
                 HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, AstroOrganizationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AstroArmOperation<AstroOrganizationResource> operation = new AstroArmOperation<AstroOrganizationResource>(
-                    new AstroOrganizationOperationSource(Client),
+                    new AstroOrganizationResourceOperationSource(Client),
                     _organizationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Astro
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AstroOrganizationData, AstroOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new AstroOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<AstroOrganizationData, AstroOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AstroOrganizationCollection.GetAll"), data => new AstroOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Astro
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AstroOrganizationData, AstroOrganizationResource>(new OrganizationsGetByResourceGroupCollectionResultOfT(_organizationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new AstroOrganizationResource(Client, data));
+            return new PageableWrapper<AstroOrganizationData, AstroOrganizationResource>(new OrganizationsGetByResourceGroupCollectionResultOfT(_organizationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AstroOrganizationCollection.GetAll"), data => new AstroOrganizationResource(Client, data));
         }
 
         /// <summary>

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct RetentionDurationType : IEquatable<RetentionDurationType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RetentionDurationType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RetentionDurationType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string DaysValue = "Days";
         private const string WeeksValue = "Weeks";
         private const string MonthsValue = "Months";
         private const string YearsValue = "Years";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="RetentionDurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RetentionDurationType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static RetentionDurationType Invalid { get; } = new RetentionDurationType(InvalidValue);
-        /// <summary> Days. </summary>
+
+        /// <summary> Gets the Days. </summary>
         public static RetentionDurationType Days { get; } = new RetentionDurationType(DaysValue);
-        /// <summary> Weeks. </summary>
+
+        /// <summary> Gets the Weeks. </summary>
         public static RetentionDurationType Weeks { get; } = new RetentionDurationType(WeeksValue);
-        /// <summary> Months. </summary>
+
+        /// <summary> Gets the Months. </summary>
         public static RetentionDurationType Months { get; } = new RetentionDurationType(MonthsValue);
-        /// <summary> Years. </summary>
+
+        /// <summary> Gets the Years. </summary>
         public static RetentionDurationType Years { get; } = new RetentionDurationType(YearsValue);
+
         /// <summary> Determines if two <see cref="RetentionDurationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RetentionDurationType left, RetentionDurationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RetentionDurationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RetentionDurationType left, RetentionDurationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RetentionDurationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RetentionDurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RetentionDurationType(string value) => new RetentionDurationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RetentionDurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RetentionDurationType?(string value) => value == null ? null : new RetentionDurationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RetentionDurationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RetentionDurationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

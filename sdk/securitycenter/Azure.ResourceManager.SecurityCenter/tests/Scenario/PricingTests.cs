@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         [SetUp]
         public void TestSetUp()
         {
-            _pricingCollection = DefaultSubscription.GetSecurityCenterPricings();
+            _pricingCollection = Client.GetSecurityCenterPricings(DefaultSubscription.Id);
         }
 
         [RecordedTest]
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             Assert.IsNotNull(pricing);
             Assert.AreEqual("VirtualMachines", pricing.Value.Data.Name);
             Assert.AreEqual("Standard", pricing.Value.Data.PricingTier.ToString());
-            Assert.AreEqual("P2",pricing.Value.Data.SubPlan);
+            Assert.AreEqual("P2", pricing.Value.Data.SubPlan);
             Assert.AreEqual("Microsoft.Security/pricings", pricing.Value.Data.ResourceType.ToString());
         }
 

@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string resourceTypeTestResourceApiVersion);
             _resourceTypeTestsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _resourceTypeTestsRestClient = new ResourceTypeTests(_resourceTypeTestsClientDiagnostics, Pipeline, Endpoint, resourceTypeTestResourceApiVersion ?? "2024-05-01");
+            _resourceTypeTestsRestClient = new ResourceTypeTests(_resourceTypeTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceTypeTestResourceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -88,7 +88,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

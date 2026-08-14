@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public readonly partial struct DesktopVirtualizationStopHostsWhen : IEquatable<DesktopVirtualizationStopHostsWhen>
     {
         private readonly string _value;
+        /// <summary> Zero Total Sessions. </summary>
+        private const string ZeroSessionsValue = "ZeroSessions";
+        /// <summary> Zero Active Sessions. </summary>
+        private const string ZeroActiveSessionsValue = "ZeroActiveSessions";
 
         /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationStopHostsWhen"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DesktopVirtualizationStopHostsWhen(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ZeroSessionsValue = "ZeroSessions";
-        private const string ZeroActiveSessionsValue = "ZeroActiveSessions";
-
-        /// <summary> ZeroSessions. </summary>
+        /// <summary> Zero Total Sessions. </summary>
         public static DesktopVirtualizationStopHostsWhen ZeroSessions { get; } = new DesktopVirtualizationStopHostsWhen(ZeroSessionsValue);
-        /// <summary> ZeroActiveSessions. </summary>
+
+        /// <summary> Zero Active Sessions. </summary>
         public static DesktopVirtualizationStopHostsWhen ZeroActiveSessions { get; } = new DesktopVirtualizationStopHostsWhen(ZeroActiveSessionsValue);
+
         /// <summary> Determines if two <see cref="DesktopVirtualizationStopHostsWhen"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DesktopVirtualizationStopHostsWhen left, DesktopVirtualizationStopHostsWhen right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DesktopVirtualizationStopHostsWhen"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DesktopVirtualizationStopHostsWhen left, DesktopVirtualizationStopHostsWhen right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DesktopVirtualizationStopHostsWhen"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DesktopVirtualizationStopHostsWhen"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DesktopVirtualizationStopHostsWhen(string value) => new DesktopVirtualizationStopHostsWhen(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DesktopVirtualizationStopHostsWhen"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DesktopVirtualizationStopHostsWhen?(string value) => value == null ? null : new DesktopVirtualizationStopHostsWhen(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DesktopVirtualizationStopHostsWhen other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DesktopVirtualizationStopHostsWhen other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

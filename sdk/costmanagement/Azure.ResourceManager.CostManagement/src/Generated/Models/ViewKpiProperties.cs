@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Each KPI must contain a 'type' and 'enabled' key. </summary>
     public partial class ViewKpiProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ViewKpiProperties"/>. </summary>
         public ViewKpiProperties()
@@ -55,19 +26,21 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="kpiType"> KPI type (Forecast, Budget). </param>
         /// <param name="id"> ID of resource related to metric (budget). </param>
         /// <param name="isEnabled"> show the KPI in the UI?. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ViewKpiProperties(ViewKpiType? kpiType, ResourceIdentifier id, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ViewKpiProperties(ViewKpiType? kpiType, ResourceIdentifier id, bool? isEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KpiType = kpiType;
             Id = id;
             IsEnabled = isEnabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> KPI type (Forecast, Budget). </summary>
         public ViewKpiType? KpiType { get; set; }
+
         /// <summary> ID of resource related to metric (budget). </summary>
         public ResourceIdentifier Id { get; set; }
+
         /// <summary> show the KPI in the UI?. </summary>
         public bool? IsEnabled { get; set; }
     }

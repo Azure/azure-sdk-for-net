@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -182,7 +182,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         EventHubName = "eventHubName",
                         ConsumerGroup = "consumerGroup",
                         OwnerIdentifier = "ownerIdentifier",
-                        PartitionId = $"partitionId { i }"
+                        PartitionId = $"partitionId {i}"
                     });
             }
 
@@ -216,7 +216,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         EventHubName = "eventHubName",
                         ConsumerGroup = "consumerGroup",
                         OwnerIdentifier = "ownerIdentifier",
-                        PartitionId = $"{ i }"
+                        PartitionId = $"{i}"
                     });
             }
 
@@ -242,7 +242,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         EventHubName = "eventHubName",
                         ConsumerGroup = "consumerGroup",
                         OwnerIdentifier = "ownerIdentifier",
-                        PartitionId = $"{ i }",
+                        PartitionId = $"{i}",
                         Version = i % 2 == 1 ? versions[i] : null
                     });
             }

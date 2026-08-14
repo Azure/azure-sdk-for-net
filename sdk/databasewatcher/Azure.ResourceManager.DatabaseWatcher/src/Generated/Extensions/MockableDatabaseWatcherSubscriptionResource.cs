@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
 
         private ClientDiagnostics WatchersClientDiagnostics => _watchersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Watchers WatchersRestClient => _watchersRestClient ??= new Watchers(WatchersClientDiagnostics, Pipeline, Endpoint, "2025-01-02");
+        private Watchers WatchersRestClient => _watchersRestClient ??= new Watchers(WatchersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-01-02");
 
         /// <summary>
         /// List Watcher resources by subscription ID
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabaseWatcherData, DatabaseWatcherResource>(new WatchersGetBySubscriptionAsyncCollectionResultOfT(WatchersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DatabaseWatcherResource(Client, data));
+            return new AsyncPageableWrapper<DatabaseWatcherData, DatabaseWatcherResource>(new WatchersGetBySubscriptionAsyncCollectionResultOfT(WatchersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabaseWatcherSubscriptionResource.GetDatabaseWatchers"), data => new DatabaseWatcherResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabaseWatcherData, DatabaseWatcherResource>(new WatchersGetBySubscriptionCollectionResultOfT(WatchersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DatabaseWatcherResource(Client, data));
+            return new PageableWrapper<DatabaseWatcherData, DatabaseWatcherResource>(new WatchersGetBySubscriptionCollectionResultOfT(WatchersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabaseWatcherSubscriptionResource.GetDatabaseWatchers"), data => new DatabaseWatcherResource(Client, data));
         }
     }
 }

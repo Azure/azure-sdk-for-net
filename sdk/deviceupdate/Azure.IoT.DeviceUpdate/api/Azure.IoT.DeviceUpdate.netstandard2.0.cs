@@ -1,8 +1,15 @@
 namespace Azure.IoT.DeviceUpdate
 {
+    public partial class AzureIoTDeviceUpdateContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureIoTDeviceUpdateContext() { }
+        public static Azure.IoT.DeviceUpdate.AzureIoTDeviceUpdateContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class DeviceManagementClient
     {
         protected DeviceManagementClient() { }
+        public DeviceManagementClient(Azure.IoT.DeviceUpdate.DeviceManagementClientSettings settings) { }
         public DeviceManagementClient(System.Uri endpoint, string instanceId, Azure.Core.TokenCredential credential) { }
         public DeviceManagementClient(System.Uri endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -85,9 +92,25 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Azure.Response UpdateDeviceClass(string deviceClassId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateDeviceClassAsync(string deviceClassId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
+    public static partial class DeviceManagementClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddDeviceManagementClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddDeviceManagementClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.IoT.DeviceUpdate.DeviceManagementClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDeviceManagementClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDeviceManagementClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.IoT.DeviceUpdate.DeviceManagementClientSettings> configureSettings) { throw null; }
+    }
+    public partial class DeviceManagementClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public DeviceManagementClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public string InstanceId { get { throw null; } set { } }
+        public Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+    }
     public partial class DeviceUpdateClient
     {
         protected DeviceUpdateClient() { }
+        public DeviceUpdateClient(Azure.IoT.DeviceUpdate.DeviceUpdateClientSettings settings) { }
         public DeviceUpdateClient(System.Uri endpoint, string instanceId, Azure.Core.TokenCredential credential) { }
         public DeviceUpdateClient(System.Uri endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -114,22 +137,28 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Azure.Operation StartImportUpdate(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> StartImportUpdateAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
+    public static partial class DeviceUpdateClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddDeviceUpdateClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddDeviceUpdateClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.IoT.DeviceUpdate.DeviceUpdateClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDeviceUpdateClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDeviceUpdateClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.IoT.DeviceUpdate.DeviceUpdateClientSettings> configureSettings) { throw null; }
+    }
     public partial class DeviceUpdateClientOptions : Azure.Core.ClientOptions
     {
-        public DeviceUpdateClientOptions(Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions.ServiceVersion version = Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions.ServiceVersion.V2022_10_01) { }
+        public DeviceUpdateClientOptions(Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions.ServiceVersion version = Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions.ServiceVersion.V2026_06_01) { }
         public enum ServiceVersion
         {
             V2022_10_01 = 1,
+            V2026_06_01 = 2,
         }
     }
-}
-namespace Microsoft.Extensions.Azure
-{
-    public static partial class IoTDeviceUpdateClientBuilderExtensions
+    public partial class DeviceUpdateClientSettings : System.ClientModel.Primitives.ClientSettings
     {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.IoT.DeviceUpdate.DeviceManagementClient, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions> AddDeviceManagementClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string instanceId) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.IoT.DeviceUpdate.DeviceManagementClient, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions> AddDeviceManagementClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.IoT.DeviceUpdate.DeviceUpdateClient, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions> AddDeviceUpdateClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string instanceId) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.IoT.DeviceUpdate.DeviceUpdateClient, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions> AddDeviceUpdateClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public DeviceUpdateClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public string InstanceId { get { throw null; } set { } }
+        public Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
 }

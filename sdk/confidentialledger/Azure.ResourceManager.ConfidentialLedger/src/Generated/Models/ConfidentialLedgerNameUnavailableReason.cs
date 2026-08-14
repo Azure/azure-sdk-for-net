@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ConfidentialLedger;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    /// <summary> The reason why the given name is not available. </summary>
+    /// <summary> Possible reasons for a name not being available. </summary>
     public readonly partial struct ConfidentialLedgerNameUnavailableReason : IEquatable<ConfidentialLedgerNameUnavailableReason>
     {
         private readonly string _value;
+        /// <summary> Name is invalid. </summary>
+        private const string InvalidValue = "Invalid";
+        /// <summary> Name already exists. </summary>
+        private const string AlreadyExistsValue = "AlreadyExists";
 
         /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConfidentialLedgerNameUnavailableReason(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string InvalidValue = "Invalid";
-        private const string AlreadyExistsValue = "AlreadyExists";
-
-        /// <summary> Invalid. </summary>
+        /// <summary> Name is invalid. </summary>
         public static ConfidentialLedgerNameUnavailableReason Invalid { get; } = new ConfidentialLedgerNameUnavailableReason(InvalidValue);
-        /// <summary> AlreadyExists. </summary>
+
+        /// <summary> Name already exists. </summary>
         public static ConfidentialLedgerNameUnavailableReason AlreadyExists { get; } = new ConfidentialLedgerNameUnavailableReason(AlreadyExistsValue);
+
         /// <summary> Determines if two <see cref="ConfidentialLedgerNameUnavailableReason"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConfidentialLedgerNameUnavailableReason left, ConfidentialLedgerNameUnavailableReason right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConfidentialLedgerNameUnavailableReason"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConfidentialLedgerNameUnavailableReason left, ConfidentialLedgerNameUnavailableReason right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConfidentialLedgerNameUnavailableReason"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConfidentialLedgerNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConfidentialLedgerNameUnavailableReason(string value) => new ConfidentialLedgerNameUnavailableReason(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConfidentialLedgerNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConfidentialLedgerNameUnavailableReason?(string value) => value == null ? null : new ConfidentialLedgerNameUnavailableReason(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConfidentialLedgerNameUnavailableReason other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConfidentialLedgerNameUnavailableReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,54 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// System-generated state of localDNS.
-    /// Serialized Name: LocalDNSState
-    /// </summary>
+    /// <summary> System-generated state of localDNS. </summary>
     public readonly partial struct LocalDnsState : IEquatable<LocalDnsState>
     {
         private readonly string _value;
+        /// <summary> localDNS is enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> localDNS is disabled. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="LocalDnsState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LocalDnsState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
-
-        /// <summary>
-        /// localDNS is enabled.
-        /// Serialized Name: LocalDNSState.Enabled
-        /// </summary>
+        /// <summary> localDNS is enabled. </summary>
         public static LocalDnsState Enabled { get; } = new LocalDnsState(EnabledValue);
-        /// <summary>
-        /// localDNS is disabled.
-        /// Serialized Name: LocalDNSState.Disabled
-        /// </summary>
+
+        /// <summary> localDNS is disabled. </summary>
         public static LocalDnsState Disabled { get; } = new LocalDnsState(DisabledValue);
+
         /// <summary> Determines if two <see cref="LocalDnsState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LocalDnsState left, LocalDnsState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LocalDnsState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LocalDnsState left, LocalDnsState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LocalDnsState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LocalDnsState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LocalDnsState(string value) => new LocalDnsState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LocalDnsState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LocalDnsState?(string value) => value == null ? null : new LocalDnsState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LocalDnsState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LocalDnsState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

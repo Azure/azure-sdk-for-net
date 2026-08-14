@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.1 (2026-04-28)
+
+### Features Added
+
+- Upgraded API version to `2025-10-01-preview`.
+- Added support for `PrivateEndpointConnection` and `PrivateLinkResource` resource types.
+- Added support for operation status and operation result queries.
+- Added `CorsRules` property on `MapsAccountProperties` and `MapsAccountPatch` as the preferred way to access CORS rules.
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.54.0.
+- Upgraded dependent `Azure.ResourceManager` to 1.14.0.
 
 ## 1.1.0 (2024-11-27)
 

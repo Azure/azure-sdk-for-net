@@ -42,7 +42,7 @@ To import a project, you could provide the data of the exported project in the s
 // Set import project name and request content
 string importedProjectName = "{ProjectNameToBeImported}";
 RequestContent importRequestContent = RequestContent.Create(new
-    {
+{
     Metadata = new
     {
         Description = "This is the description for a test project",
@@ -75,7 +75,7 @@ Console.WriteLine(projectDetails.GetRawResponse().Content);
 ### Exporting a Project
 
 ```C# Snippet:QuestionAnsweringAuthoringClient_ExportProjectAsync_Authoring
-Operation exportOperation = await client.ExportAsync(WaitUntil.Completed, exportedProjectName, format : "json");
+Operation exportOperation = await client.ExportAsync(WaitUntil.Completed, exportedProjectName, format: "json");
 
 // retrieve export operation response, and extract url of exported file
 JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.GetRawResponse().Content);

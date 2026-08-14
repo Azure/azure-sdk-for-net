@@ -15,6 +15,46 @@ namespace Azure.Compute.Batch
     /// <summary> Specifies how the Batch service should respond when the Task completes. </summary>
     public partial class ExitConditions : IJsonModel<ExitConditions>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExitConditions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExitConditions>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeExitConditions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExitConditions)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExitConditions>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExitConditions)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExitConditions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExitConditions IPersistableModel<ExitConditions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExitConditions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExitConditions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -63,10 +103,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("fileUploadError"u8);
                 writer.WriteObjectValue(FileUploadError, options);
             }
-            if (Optional.IsDefined(Default))
+            if (Optional.IsDefined(DefaultExitOptions))
             {
                 writer.WritePropertyName("default"u8);
-                writer.WriteObjectValue(Default, options);
+                writer.WriteObjectValue(DefaultExitOptions, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -114,7 +154,7 @@ namespace Azure.Compute.Batch
             IList<ExitCodeRangeMapping> exitCodeRanges = default;
             ExitOptions preProcessingError = default;
             ExitOptions fileUploadError = default;
-            ExitOptions @default = default;
+            ExitOptions defaultExitOptions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -170,7 +210,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    @default = ExitOptions.DeserializeExitOptions(prop.Value, options);
+                    defaultExitOptions = ExitOptions.DeserializeExitOptions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -183,48 +223,8 @@ namespace Azure.Compute.Batch
                 exitCodeRanges ?? new ChangeTrackingList<ExitCodeRangeMapping>(),
                 preProcessingError,
                 fileUploadError,
-                @default,
+                defaultExitOptions,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExitConditions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExitConditions>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ExitConditions)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ExitConditions IPersistableModel<ExitConditions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExitConditions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExitConditions>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeExitConditions(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExitConditions)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExitConditions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

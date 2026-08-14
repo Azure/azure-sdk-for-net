@@ -6,22 +6,32 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Authentication.Http.Custom
 {
     public partial class CustomClient
     {
+        private const string AuthorizationHeader = "Authorization";
+        private const string AuthorizationApiKeyPrefix = "SharedAccessKey";
+
         protected CustomClient() => throw null;
 
         public CustomClient(AzureKeyCredential credential) : this(new Uri("http://localhost:3000"), credential, new CustomClientOptions()) => throw null;
 
         public CustomClient(AzureKeyCredential credential, CustomClientOptions options) : this(new Uri("http://localhost:3000"), credential, options) => throw null;
 
-        public CustomClient(Uri endpoint, AzureKeyCredential credential, CustomClientOptions options) => throw null;
+        internal CustomClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, CustomClientOptions options) => throw null;
+
+        public CustomClient(Uri endpoint, AzureKeyCredential credential, CustomClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader, AuthorizationApiKeyPrefix), endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public CustomClient(CustomClientSettings settings) : this(settings?.Endpoint, string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", StringComparison.OrdinalIgnoreCase) ? new AzureKeyCredential(settings.Credential.Key) : null, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

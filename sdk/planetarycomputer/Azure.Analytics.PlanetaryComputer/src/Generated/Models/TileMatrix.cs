@@ -13,13 +13,10 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// Tile Matrix Definition
-    /// 
     /// A tile matrix, usually corresponding to a particular zoom level of a
     /// TileMatrixSet.
-    /// 
     /// ref:
     /// https://github.com/opengeospatial/2D-Tile-Matrix-Set/blob/master/schemas/tms/2.0/json/tileMatrix.json
-    /// 
     /// Definition of a tile matrix at a specific zoom level within a tile matrix set
     /// </summary>
     public partial class TileMatrix
@@ -82,7 +79,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="matrixHeight"> Number of tiles vertically at this matrix level. </param>
         /// <param name="variableMatrixWidths">
         /// Describes the rows that has variable matrix width
-        /// 
         /// ref: https://github.com/opengeospatial/2D-Tile-Matrix-Set/blob/master/schemas/tms/2.0/json/variableMatrixWidth.json
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -154,7 +150,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Describes the rows that has variable matrix width
-        /// 
         /// ref: https://github.com/opengeospatial/2D-Tile-Matrix-Set/blob/master/schemas/tms/2.0/json/variableMatrixWidth.json
         /// </summary>
         public IList<VariableMatrixWidth> VariableMatrixWidths { get; }

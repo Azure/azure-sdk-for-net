@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.AI.Language.Conversations.Models
     internal readonly partial struct AnalyzeConversationResultKind : IEquatable<AnalyzeConversationResultKind>
     {
         private readonly string _value;
+        /// <summary> Conversation result task kind. </summary>
+        private const string ConversationResultValue = "ConversationResult";
+        /// <summary> Conversation result task kind. </summary>
+        private const string ConversationalAIResultValue = "ConversationalAIResult";
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeConversationResultKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AnalyzeConversationResultKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ConversationResultValue = "ConversationResult";
-        private const string ConversationalAIResultValue = "ConversationalAIResult";
+            _value = value;
+        }
 
         /// <summary> Conversation result task kind. </summary>
         public static AnalyzeConversationResultKind ConversationResult { get; } = new AnalyzeConversationResultKind(ConversationResultValue);
+
         /// <summary> Conversation result task kind. </summary>
         public static AnalyzeConversationResultKind ConversationalAIResult { get; } = new AnalyzeConversationResultKind(ConversationalAIResultValue);
+
         /// <summary> Determines if two <see cref="AnalyzeConversationResultKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AnalyzeConversationResultKind left, AnalyzeConversationResultKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AnalyzeConversationResultKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AnalyzeConversationResultKind left, AnalyzeConversationResultKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AnalyzeConversationResultKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AnalyzeConversationResultKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AnalyzeConversationResultKind(string value) => new AnalyzeConversationResultKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AnalyzeConversationResultKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AnalyzeConversationResultKind?(string value) => value == null ? null : new AnalyzeConversationResultKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AnalyzeConversationResultKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AnalyzeConversationResultKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

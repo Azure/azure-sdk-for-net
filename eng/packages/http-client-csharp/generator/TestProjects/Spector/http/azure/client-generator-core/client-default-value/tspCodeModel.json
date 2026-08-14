@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "putModelPropertyContentType",
+      "name": "PutModelPropertyContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -17,12 +17,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
       "kind": "constant",
-      "name": "putModelPropertyContentType1",
+      "name": "PutModelPropertyContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -46,6 +48,12 @@
       "usage": "Input,Output,Json",
       "doc": "Model with client default values on properties.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ModelWithDefaultValues"
+        }
+      },
+      "isExactName": false,
       "properties": [
         {
           "$id": "6",
@@ -71,7 +79,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "8",
@@ -97,7 +106,8 @@
               "name": "timeout"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "10",
@@ -123,7 +133,8 @@
               "name": "tier"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "12",
@@ -149,7 +160,8 @@
               "name": "retry"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -159,6 +171,7 @@
       "$id": "14",
       "kind": "client",
       "name": "ClientDefaultValueClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue",
       "doc": "Test for `@clientDefaultValue` decorator.",
       "methods": [
@@ -166,11 +179,13 @@
           "$id": "15",
           "kind": "basic",
           "name": "putModelProperty",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "16",
             "name": "putModelProperty",
+            "isExactName": false,
             "resourceName": "ClientDefaultValue",
             "accessibility": "public",
             "parameters": [
@@ -189,10 +204,32 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.putModelProperty.contentType"
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.putModelProperty.contentType",
+                "methodParameterSegments": [
+                  {
+                    "$id": "18",
+                    "kind": "method",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "1"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.putModelProperty.contentType",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               },
               {
-                "$id": "18",
+                "$id": "19",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
@@ -205,10 +242,31 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.putModelProperty.accept"
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.putModelProperty.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "20",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "3"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.putModelProperty.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               },
               {
-                "$id": "19",
+                "$id": "21",
                 "kind": "body",
                 "name": "body",
                 "serializedName": "body",
@@ -224,7 +282,33 @@
                 "scope": "Method",
                 "decorators": [],
                 "readOnly": false,
-                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.putModelProperty.body"
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.putModelProperty.body",
+                "methodParameterSegments": [
+                  {
+                    "$id": "22",
+                    "kind": "method",
+                    "name": "body",
+                    "serializedName": "body",
+                    "type": {
+                      "$ref": "5"
+                    },
+                    "location": "Body",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.putModelProperty.body",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false,
+                "serializationOptions": {
+                  "json": {
+                    "name": "body"
+                  }
+                }
               }
             ],
             "responses": [
@@ -239,7 +323,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "PUT",
@@ -252,60 +341,18 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.putModelProperty",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue"
           },
           "parameters": [
             {
-              "$id": "20",
-              "kind": "method",
-              "name": "body",
-              "serializedName": "body",
-              "type": {
-                "$ref": "5"
-              },
-              "location": "Body",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.putModelProperty.body",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "22"
             },
             {
-              "$id": "21",
-              "kind": "method",
-              "name": "contentType",
-              "serializedName": "Content-Type",
-              "doc": "Body parameter's content type. Known values are application/json",
-              "type": {
-                "$ref": "1"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.putModelProperty.contentType",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "18"
             },
             {
-              "$id": "22",
-              "kind": "method",
-              "name": "accept",
-              "serializedName": "Accept",
-              "type": {
-                "$ref": "3"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.putModelProperty.accept",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "20"
             }
           ],
           "response": {
@@ -322,11 +369,13 @@
           "$id": "23",
           "kind": "basic",
           "name": "getOperationParameter",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "24",
             "name": "getOperationParameter",
+            "isExactName": false,
             "resourceName": "ClientDefaultValue",
             "accessibility": "public",
             "parameters": [
@@ -348,15 +397,40 @@
                 "scope": "Method",
                 "decorators": [],
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getOperationParameter.name",
-                "readOnly": false
+                "readOnly": false,
+                "methodParameterSegments": [
+                  {
+                    "$id": "27",
+                    "kind": "method",
+                    "name": "name",
+                    "serializedName": "name",
+                    "type": {
+                      "$id": "28",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "Query",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getOperationParameter.name",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               },
               {
-                "$id": "27",
+                "$id": "29",
                 "kind": "query",
                 "name": "pageSize",
                 "serializedName": "pageSize",
                 "type": {
-                  "$id": "28",
+                  "$id": "30",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -366,7 +440,7 @@
                 "explode": false,
                 "defaultValue": {
                   "type": {
-                    "$id": "29",
+                    "$id": "31",
                     "kind": "int32",
                     "name": "int32",
                     "crossLanguageDefinitionId": "TypeSpec.int32"
@@ -377,15 +451,49 @@
                 "scope": "Method",
                 "decorators": [],
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getOperationParameter.pageSize",
-                "readOnly": false
+                "readOnly": false,
+                "methodParameterSegments": [
+                  {
+                    "$id": "32",
+                    "kind": "method",
+                    "name": "pageSize",
+                    "serializedName": "pageSize",
+                    "type": {
+                      "$id": "33",
+                      "kind": "int32",
+                      "name": "int32",
+                      "crossLanguageDefinitionId": "TypeSpec.int32",
+                      "decorators": []
+                    },
+                    "location": "Query",
+                    "isApiVersion": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "34",
+                        "kind": "int32",
+                        "name": "int32",
+                        "crossLanguageDefinitionId": "TypeSpec.int32"
+                      },
+                      "value": 10
+                    },
+                    "optional": true,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getOperationParameter.pageSize",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               },
               {
-                "$id": "30",
+                "$id": "35",
                 "kind": "query",
                 "name": "format",
                 "serializedName": "format",
                 "type": {
-                  "$id": "31",
+                  "$id": "36",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -395,7 +503,7 @@
                 "explode": false,
                 "defaultValue": {
                   "type": {
-                    "$id": "32",
+                    "$id": "37",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
@@ -406,7 +514,41 @@
                 "scope": "Method",
                 "decorators": [],
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getOperationParameter.format",
-                "readOnly": false
+                "readOnly": false,
+                "methodParameterSegments": [
+                  {
+                    "$id": "38",
+                    "kind": "method",
+                    "name": "format",
+                    "serializedName": "format",
+                    "type": {
+                      "$id": "39",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "Query",
+                    "isApiVersion": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "40",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "json"
+                    },
+                    "optional": true,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getOperationParameter.format",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -415,7 +557,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "GET",
@@ -425,89 +568,18 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getOperationParameter",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue"
           },
           "parameters": [
             {
-              "$id": "33",
-              "kind": "method",
-              "name": "name",
-              "serializedName": "name",
-              "type": {
-                "$id": "34",
-                "kind": "string",
-                "name": "string",
-                "crossLanguageDefinitionId": "TypeSpec.string",
-                "decorators": []
-              },
-              "location": "Query",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getOperationParameter.name",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "27"
             },
             {
-              "$id": "35",
-              "kind": "method",
-              "name": "pageSize",
-              "serializedName": "pageSize",
-              "type": {
-                "$id": "36",
-                "kind": "int32",
-                "name": "int32",
-                "crossLanguageDefinitionId": "TypeSpec.int32",
-                "decorators": []
-              },
-              "location": "Query",
-              "isApiVersion": false,
-              "defaultValue": {
-                "type": {
-                  "$id": "37",
-                  "kind": "int32",
-                  "name": "int32",
-                  "crossLanguageDefinitionId": "TypeSpec.int32"
-                },
-                "value": 10
-              },
-              "optional": true,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getOperationParameter.pageSize",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "32"
             },
             {
-              "$id": "38",
-              "kind": "method",
-              "name": "format",
-              "serializedName": "format",
-              "type": {
-                "$id": "39",
-                "kind": "string",
-                "name": "string",
-                "crossLanguageDefinitionId": "TypeSpec.string",
-                "decorators": []
-              },
-              "location": "Query",
-              "isApiVersion": false,
-              "defaultValue": {
-                "type": {
-                  "$id": "40",
-                  "kind": "string",
-                  "name": "string",
-                  "crossLanguageDefinitionId": "TypeSpec.string"
-                },
-                "value": "json"
-              },
-              "optional": true,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getOperationParameter.format",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "38"
             }
           ],
           "response": {},
@@ -520,11 +592,13 @@
           "$id": "41",
           "kind": "basic",
           "name": "getPathParameter",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "42",
             "name": "getPathParameter",
+            "isExactName": false,
             "resourceName": "ClientDefaultValue",
             "accessibility": "public",
             "parameters": [
@@ -558,15 +632,49 @@
                 "scope": "Method",
                 "decorators": [],
                 "readOnly": false,
-                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getPathParameter.segment1"
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getPathParameter.segment1",
+                "methodParameterSegments": [
+                  {
+                    "$id": "46",
+                    "kind": "method",
+                    "name": "segment1",
+                    "serializedName": "segment1",
+                    "type": {
+                      "$id": "47",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "Path",
+                    "isApiVersion": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "48",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "default-segment1"
+                    },
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getPathParameter.segment1",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               },
               {
-                "$id": "46",
+                "$id": "49",
                 "kind": "path",
                 "name": "segment2",
                 "serializedName": "segment2",
                 "type": {
-                  "$id": "47",
+                  "$id": "50",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -581,7 +689,32 @@
                 "scope": "Method",
                 "decorators": [],
                 "readOnly": false,
-                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getPathParameter.segment2"
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getPathParameter.segment2",
+                "methodParameterSegments": [
+                  {
+                    "$id": "51",
+                    "kind": "method",
+                    "name": "segment2",
+                    "serializedName": "segment2",
+                    "type": {
+                      "$id": "52",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "Path",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getPathParameter.segment2",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -590,7 +723,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "GET",
@@ -600,59 +734,15 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getPathParameter",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue"
           },
           "parameters": [
             {
-              "$id": "48",
-              "kind": "method",
-              "name": "segment1",
-              "serializedName": "segment1",
-              "type": {
-                "$id": "49",
-                "kind": "string",
-                "name": "string",
-                "crossLanguageDefinitionId": "TypeSpec.string",
-                "decorators": []
-              },
-              "location": "Path",
-              "isApiVersion": false,
-              "defaultValue": {
-                "type": {
-                  "$id": "50",
-                  "kind": "string",
-                  "name": "string",
-                  "crossLanguageDefinitionId": "TypeSpec.string"
-                },
-                "value": "default-segment1"
-              },
-              "optional": false,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getPathParameter.segment1",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "46"
             },
             {
-              "$id": "51",
-              "kind": "method",
-              "name": "segment2",
-              "serializedName": "segment2",
-              "type": {
-                "$id": "52",
-                "kind": "string",
-                "name": "string",
-                "crossLanguageDefinitionId": "TypeSpec.string",
-                "decorators": []
-              },
-              "location": "Path",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getPathParameter.segment2",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "51"
             }
           ],
           "response": {},
@@ -665,11 +755,13 @@
           "$id": "53",
           "kind": "basic",
           "name": "getHeaderParameter",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "54",
             "name": "getHeaderParameter",
+            "isExactName": false,
             "resourceName": "ClientDefaultValue",
             "accessibility": "public",
             "parameters": [
@@ -700,15 +792,49 @@
                 "scope": "Method",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getHeaderParameter.accept"
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getHeaderParameter.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "58",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$id": "59",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "60",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "application/json;odata.metadata=none"
+                    },
+                    "optional": true,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getHeaderParameter.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               },
               {
-                "$id": "58",
+                "$id": "61",
                 "kind": "header",
                 "name": "customHeader",
                 "serializedName": "x-custom-header",
                 "type": {
-                  "$id": "59",
+                  "$id": "62",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -717,7 +843,7 @@
                 "isApiVersion": false,
                 "defaultValue": {
                   "type": {
-                    "$id": "60",
+                    "$id": "63",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
@@ -729,7 +855,41 @@
                 "scope": "Method",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getHeaderParameter.customHeader"
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getHeaderParameter.customHeader",
+                "methodParameterSegments": [
+                  {
+                    "$id": "64",
+                    "kind": "method",
+                    "name": "customHeader",
+                    "serializedName": "x-custom-header",
+                    "type": {
+                      "$id": "65",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "66",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "default-value"
+                    },
+                    "optional": true,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getHeaderParameter.customHeader",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -738,7 +898,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "GET",
@@ -748,68 +909,15 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getHeaderParameter",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue"
           },
           "parameters": [
             {
-              "$id": "61",
-              "kind": "method",
-              "name": "accept",
-              "serializedName": "Accept",
-              "type": {
-                "$id": "62",
-                "kind": "string",
-                "name": "string",
-                "crossLanguageDefinitionId": "TypeSpec.string",
-                "decorators": []
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "defaultValue": {
-                "type": {
-                  "$id": "63",
-                  "kind": "string",
-                  "name": "string",
-                  "crossLanguageDefinitionId": "TypeSpec.string"
-                },
-                "value": "application/json;odata.metadata=none"
-              },
-              "optional": true,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getHeaderParameter.accept",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "58"
             },
             {
-              "$id": "64",
-              "kind": "method",
-              "name": "customHeader",
-              "serializedName": "x-custom-header",
-              "type": {
-                "$id": "65",
-                "kind": "string",
-                "name": "string",
-                "crossLanguageDefinitionId": "TypeSpec.string",
-                "decorators": []
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "defaultValue": {
-                "type": {
-                  "$id": "66",
-                  "kind": "string",
-                  "name": "string",
-                  "crossLanguageDefinitionId": "TypeSpec.string"
-                },
-                "value": "default-value"
-              },
-              "optional": true,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getHeaderParameter.customHeader",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "64"
             }
           ],
           "response": {},
@@ -848,7 +956,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

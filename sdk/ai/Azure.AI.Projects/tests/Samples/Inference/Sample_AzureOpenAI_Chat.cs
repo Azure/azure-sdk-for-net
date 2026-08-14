@@ -7,13 +7,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI;
-using Azure.Core.TestFramework;
+using Azure.Identity;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Chat;
 
-namespace Azure.AI.Projects.Tests;
+namespace Azure.AI.Projects.Tests.Samples;
 
-public class Sample_AzureOpenAI_Chat : SamplesBase<AIProjectsTestEnvironment>
+public class Sample_AzureOpenAI_Chat : SamplesBase
 {
     [Test]
     [SyncOnly]
@@ -21,16 +22,16 @@ public class Sample_AzureOpenAI_Chat : SamplesBase<AIProjectsTestEnvironment>
     {
         #region Snippet:AI_Projects_AzureOpenAIChatSync
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 #else
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var connectionName = "";
         try
         {
-            connectionName = TestEnvironment.AOAICONNECTIONNAME;
+            connectionName = TestEnvironment.AOAI_CONNECTION_NAME;
         }
         catch
         {
@@ -65,16 +66,16 @@ public class Sample_AzureOpenAI_Chat : SamplesBase<AIProjectsTestEnvironment>
     {
         #region Snippet:AI_Projects_AzureOpenAIChatAsync
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 #else
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var connectionName = "";
         try
         {
-            connectionName = TestEnvironment.AOAICONNECTIONNAME;
+            connectionName = TestEnvironment.AOAI_CONNECTION_NAME;
         }
         catch
         {
@@ -101,4 +102,7 @@ public class Sample_AzureOpenAI_Chat : SamplesBase<AIProjectsTestEnvironment>
         Console.WriteLine(result.Content[0].Text);
         #endregion
     }
+
+    public Sample_AzureOpenAI_Chat(bool isAsync) : base(isAsync)
+    { }
 }

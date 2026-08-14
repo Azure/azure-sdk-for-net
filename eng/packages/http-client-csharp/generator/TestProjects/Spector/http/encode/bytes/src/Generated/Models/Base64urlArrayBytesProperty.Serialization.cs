@@ -17,21 +17,13 @@ namespace Encode.Bytes
     {
         internal Base64urlArrayBytesProperty() => throw null;
 
-        void IJsonModel<Base64urlArrayBytesProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        Base64urlArrayBytesProperty IJsonModel<Base64urlArrayBytesProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual Base64urlArrayBytesProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<Base64urlArrayBytesProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        protected virtual Base64urlArrayBytesProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        Base64urlArrayBytesProperty IPersistableModel<Base64urlArrayBytesProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<Base64urlArrayBytesProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual Base64urlArrayBytesProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Base64urlArrayBytesProperty IPersistableModel<Base64urlArrayBytesProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Base64urlArrayBytesProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
@@ -39,5 +31,13 @@ namespace Encode.Bytes
         public static implicit operator RequestContent(Base64urlArrayBytesProperty base64urlArrayBytesProperty) => throw null;
 
         public static explicit operator Base64urlArrayBytesProperty(Response response) => throw null;
+
+        void IJsonModel<Base64urlArrayBytesProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        Base64urlArrayBytesProperty IJsonModel<Base64urlArrayBytesProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual Base64urlArrayBytesProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <summary> Initializes a new instance of <see cref="QuotaProperties"/>. </summary>
         /// <param name="limit"> Resource quota limit properties. </param>
-        /// <param name="unit"> The quota units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
+        /// <param name="unit"> The quota units, such as Count and Bytes. When requesting quota, use the <b>unit</b> value returned in the GET response in the request body of your PUT operation. </param>
         /// <param name="name"> Resource name provided by the resource provider. Use this property name when requesting quota. </param>
         /// <param name="resourceTypeName"> The name of the resource type. Optional field. </param>
         /// <param name="quotaPeriod">
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Quota.Models
         [WirePath("limit")]
         public QuotaLimitJsonObject Limit { get; set; }
 
-        /// <summary> The quota units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </summary>
+        /// <summary> The quota units, such as Count and Bytes. When requesting quota, use the <b>unit</b> value returned in the GET response in the request body of your PUT operation. </summary>
         [WirePath("unit")]
         public string Unit { get; }
 

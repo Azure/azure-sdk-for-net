@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> Solution Invocation with additional params needed for invocation. </summary>
     public partial class SelfHelpDiagnosticInvocation
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SelfHelpDiagnosticInvocation"/>. </summary>
         public SelfHelpDiagnosticInvocation()
@@ -54,16 +26,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Initializes a new instance of <see cref="SelfHelpDiagnosticInvocation"/>. </summary>
         /// <param name="solutionId"> Solution Id to invoke. </param>
         /// <param name="additionalParameters"> Additional parameters required to invoke the solutionId. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SelfHelpDiagnosticInvocation(string solutionId, IDictionary<string, string> additionalParameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SelfHelpDiagnosticInvocation(string solutionId, IDictionary<string, string> additionalParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SolutionId = solutionId;
             AdditionalParameters = additionalParameters;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Solution Id to invoke. </summary>
         public string SolutionId { get; set; }
+
         /// <summary> Additional parameters required to invoke the solutionId. </summary>
         public IDictionary<string, string> AdditionalParameters { get; }
     }

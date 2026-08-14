@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct IPAllocationType : IEquatable<IPAllocationType>
     {
         private readonly string _value;
+        /// <summary> The IPV4 address allocation type. </summary>
+        private const string IPV4Value = "IPV4";
+        /// <summary> The IPV6 address allocation type. </summary>
+        private const string IPV6Value = "IPV6";
+        /// <summary> The DualStack address allocation type. </summary>
+        private const string DualStackValue = "DualStack";
 
         /// <summary> Initializes a new instance of <see cref="IPAllocationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IPAllocationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string IPV4Value = "IPV4";
-        private const string IPV6Value = "IPV6";
-        private const string DualStackValue = "DualStack";
-
-        /// <summary> IPV4. </summary>
+        /// <summary> The IPV4 address allocation type. </summary>
         public static IPAllocationType IPV4 { get; } = new IPAllocationType(IPV4Value);
-        /// <summary> IPV6. </summary>
+
+        /// <summary> The IPV6 address allocation type. </summary>
         public static IPAllocationType IPV6 { get; } = new IPAllocationType(IPV6Value);
-        /// <summary> DualStack. </summary>
+
+        /// <summary> The DualStack address allocation type. </summary>
         public static IPAllocationType DualStack { get; } = new IPAllocationType(DualStackValue);
+
         /// <summary> Determines if two <see cref="IPAllocationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IPAllocationType left, IPAllocationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IPAllocationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IPAllocationType left, IPAllocationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IPAllocationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IPAllocationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IPAllocationType(string value) => new IPAllocationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IPAllocationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IPAllocationType?(string value) => value == null ? null : new IPAllocationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IPAllocationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IPAllocationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

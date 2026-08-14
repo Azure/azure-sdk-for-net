@@ -17,6 +17,46 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> Properties under the virtual hard disk resource. </summary>
     public partial class HciVmVirtualHardDiskProperties : IJsonModel<HciVmVirtualHardDiskProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciVmVirtualHardDiskProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmVirtualHardDiskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHciVmVirtualHardDiskProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciVmVirtualHardDiskProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmVirtualHardDiskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HciVmVirtualHardDiskProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HciVmVirtualHardDiskProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciVmVirtualHardDiskProperties IPersistableModel<HciVmVirtualHardDiskProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HciVmVirtualHardDiskProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmVirtualHardDiskProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -45,10 +85,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeInGB.Value);
             }
-            if (Optional.IsDefined(Dynamic))
+            if (Optional.IsDefined(IsDynamic))
             {
                 writer.WritePropertyName("dynamic"u8);
-                writer.WriteBooleanValue(Dynamic.Value);
+                writer.WriteBooleanValue(IsDynamic.Value);
             }
             if (Optional.IsDefined(LogicalSectorInBytes))
             {
@@ -149,7 +189,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
             int? blockSizeInBytes = default;
             long? diskSizeInGB = default;
-            bool? dynamic = default;
+            bool? isDynamic = default;
             int? logicalSectorInBytes = default;
             int? physicalSectorInBytes = default;
             Uri downloadUri = default;
@@ -188,7 +228,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    dynamic = prop.Value.GetBoolean();
+                    isDynamic = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("logicalSectorBytes"u8))
@@ -215,7 +255,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    downloadUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    downloadUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("hyperVGeneration"u8))
@@ -294,7 +334,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             return new HciVmVirtualHardDiskProperties(
                 blockSizeInBytes,
                 diskSizeInGB,
-                dynamic,
+                isDynamic,
                 logicalSectorInBytes,
                 physicalSectorInBytes,
                 downloadUri,
@@ -308,45 +348,5 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 maxShares,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HciVmVirtualHardDiskProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmVirtualHardDiskProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HciVmVirtualHardDiskProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HciVmVirtualHardDiskProperties IPersistableModel<HciVmVirtualHardDiskProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciVmVirtualHardDiskProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmVirtualHardDiskProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHciVmVirtualHardDiskProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciVmVirtualHardDiskProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HciVmVirtualHardDiskProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

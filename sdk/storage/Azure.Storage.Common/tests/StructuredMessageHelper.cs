@@ -15,13 +15,13 @@ namespace Azure.Storage.Blobs.Tests
     {
         public static byte[] MakeEncodedData(ReadOnlySpan<byte> data, long segmentContentLength, Flags flags)
         {
-            int segmentCount = (int) Math.Ceiling(data.Length / (double)segmentContentLength);
+            int segmentCount = (int)Math.Ceiling(data.Length / (double)segmentContentLength);
             int segmentFooterLen = flags.HasFlag(Flags.StorageCrc64) ? 8 : 0;
             int streamFooterLen = flags.HasFlag(Flags.StorageCrc64) ? 8 : 0;
 
             byte[] encodedData = new byte[
                 V1_0.StreamHeaderLength +
-                segmentCount*(V1_0.SegmentHeaderLength + segmentFooterLen) +
+                segmentCount * (V1_0.SegmentHeaderLength + segmentFooterLen) +
                 streamFooterLen +
                 data.Length];
             V1_0.WriteStreamHeader(

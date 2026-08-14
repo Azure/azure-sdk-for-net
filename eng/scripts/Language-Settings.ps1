@@ -8,6 +8,7 @@ $GithubUri = "https://github.com/Azure/azure-sdk-for-net"
 $PackageRepositoryUri = "https://www.nuget.org/packages"
 
 . "$PSScriptRoot/docs/Docs-ToC.ps1"
+. "$PSScriptRoot/ProjectScopedEngFiles.ps1"
 function Get-AllPackageInfoFromRepo($serviceDirectory)
 {
   $allPackageProps = @()
@@ -50,7 +51,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       continue
     }
 
-    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder, $AotCompatOptOut = $projectOutput.Split("' '", [System.StringSplitOptions]::RemoveEmptyEntries).Trim("' ")
+    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder = $projectOutput.Split("' '", [System.StringSplitOptions]::RemoveEmptyEntries).Trim("' ")
     if(!(Test-Path $pkgPath)) {
       Write-Host "Parsed package path `$pkgPath` does not exist so skipping the package line '$projectOutput'."
       continue
@@ -66,49 +67,6 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     $ciProps = $pkgProp.GetCIYmlForArtifact()
 
     if ($ciProps) {
-      # First, check if this artifact has baselined warnings in AOTTestInputs
-      $aotArtifacts = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "AOTTestInputs")
-      $hasBaselinedWarnings = $false
-      if ($aotArtifacts) {
-        $matchingAotArtifact = $aotArtifacts | Where-Object { $_.ArtifactName -eq $pkgProp.ArtifactName }
-        if ($matchingAotArtifact -and $matchingAotArtifact.ExpectedWarningsFilepath) {
-          $hasBaselinedWarnings = $true
-        }
-      }
-
-      # CheckAOTCompat logic: if set in CI.yml, respect that value;
-      # if artifact has baselined warnings, run AOT checks;
-      # otherwise use AotCompatOptOut from project settings
-      $shouldAot = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "CheckAOTCompat")
-      if ($null -ne $shouldAot) {
-        $parsedBool = $null
-        if ([bool]::TryParse($shouldAot, [ref]$parsedBool)) {
-          $pkgProp.CIParameters["CheckAOTCompat"] = $parsedBool
-        }
-      }
-      elseif ($hasBaselinedWarnings) {
-        # If artifact has baselined warnings, enable AOT checks
-        $pkgProp.CIParameters["CheckAOTCompat"] = $true
-      }
-      else {
-        # If not explicitly opted out of AOT compat, run the check
-        $pkgProp.CIParameters["CheckAOTCompat"] = $AotCompatOptOut -ne 'true'
-      }
-
-      # If CheckAOTCompat is true, look for additional AOTTestInputs parameter
-      if ($pkgProp.CIParameters["CheckAOTCompat"]) {
-        if ($aotArtifacts) {
-          $aotArtifacts = $aotArtifacts | Where-Object { $_.ArtifactName -eq $pkgProp.ArtifactName }
-          $pkgProp.CIParameters["AOTTestInputs"] = $aotArtifacts
-        }
-        else {
-          $pkgProp.CIParameters["AOTTestInputs"] = @()
-        }
-      }
-      else {
-        $pkgProp.CIParameters["AOTTestInputs"] = @()
-      }
-
       # BuildSnippets is opt _out_, so we should default to true if not specified
       $shouldSnippet = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "BuildSnippets")
       if ($null -ne $shouldSnippet) {
@@ -122,11 +80,8 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       }
     }
     # if the package isn't associated with a CI.yml, we still want to set the defaults values for these parameters
-    # so that when we are checking the package set for which need to "Build Snippets" or "Check AOT" we won't crash due to the property being null
+    # so that when we are checking the package set for which need to "Build Snippets"
     else {
-      # No CI.yml found, use IsAotCompatible from csproj for CheckAOTCompat
-      $pkgProp.CIParameters["CheckAOTCompat"] = $AotCompatOptOut -eq 'false'
-      $pkgProp.CIParameters["AOTTestInputs"] = @()
       $pkgProp.CIParameters["BuildSnippets"] = $true
     }
 
@@ -140,20 +95,38 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
 {
   $additionalValidationPackages = @()
 
-  $DependencyCalculationPackages = @(
-    "Azure.Core",
-    "Azure.ResourceManager",
-    "System.ClientModel"
-  )
+  # Changes to a package's project-scoped engineering files (ApiCompat baselines,
+  # analyzer/NoWarn allow-lists, CPM overrides) live under eng/ and so are invisible to
+  # the eng/common diff-to-package detection, which only maps files under a package's
+  # sdk/<service>/<package> directory. Map those changes back to their owning package so
+  # validation rebuilds it (and re-runs ApiCompat). Without this a baseline deletion can
+  # silently ship an ApiCompat regression because the package is never rebuilt (see #60837).
+  foreach ($pkg in (Get-PackagesFromEngFileChanges -DiffObj $diffObj -AllPkgProps $AllPkgProps)) {
+    if ($LocatedPackages -notcontains $pkg -and $additionalValidationPackages -notcontains $pkg) {
+      $pkgDisplayName = if ($pkg.ArtifactName) { $pkg.ArtifactName } else { $pkg.Name }
+      Write-Host "Including '$pkgDisplayName' because one of its project-scoped engineering files changed."
+      $pkg.IncludedForValidation = $true
+      $additionalValidationPackages += $pkg
+    }
+  }
 
-  $TestDependsOnDependencySet = $LocatedPackages | Where-Object { $_.Name -in $DependencyCalculationPackages }
-  $TestDependsOnDependency = $TestDependsOnDependencySet.Name -join " "
+  # ForceDirect matrix passes discard indirect packages, so their dependency calculation is unused.
+  if ($env:AZURESDK_SKIP_DEPENDENT_PACKAGE_CALCULATION -eq 'true') {
+    Write-Host "Skipping cross-package dependency calculation; only direct packages are needed for this pass."
+    return $additionalValidationPackages
+  }
+
+  # Use all directly changed packages for dependency calculation. This ensures that
+  # when any package changes, all cross-service packages that depend on it are included
+  # as indirect packages for validation testing.
+  $TestDependsOnDependencySet = $LocatedPackages | Where-Object { $_.IncludedForValidation -eq $false }
+  $TestDependsOnDependency = ($TestDependsOnDependencySet | ForEach-Object { $_.Name }) -join " "
 
   if (!$TestDependsOnDependency) {
     return $additionalValidationPackages
   }
 
-  Write-Host "Calculating dependencies for $($pkgProp.Name)"
+  Write-Host "Calculating dependencies for: $TestDependsOnDependency"
 
   $outputFilePath = Join-Path $RepoRoot "_dependencylist.txt"
 
@@ -178,7 +151,7 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
         continue
       }
 
-      if ($pkg -and $LocatedPackages -notcontains $pkg) {
+      if ($pkg -and $LocatedPackages -notcontains $pkg -and $additionalValidationPackages -notcontains $pkg) {
         $pkg.IncludedForValidation = $true
         $additionalValidationPackages += $pkg
       }
@@ -191,33 +164,22 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
 # Returns the nuget publish status of a package id and version.
 function IsNugetPackageVersionPublished ($pkgId, $pkgVersion)
 {
-  $nugetUri = "https://api.nuget.org/v3-flatcontainer/$($pkgId.ToLowerInvariant())/index.json"
+  $existingVersions = GetExistingPackageVersions -PackageName $pkgId
 
-  try
-  {
-    $nugetVersions = Invoke-RestMethod -MaximumRetryCount 3 -RetryIntervalSec 10 -uri $nugetUri -Method "GET"
-    return $nugetVersions.versions.Contains($pkgVersion)
+  # If the feed returned nothing, the package has not been published.
+  if (!$existingVersions) {
+    return $False
   }
-  catch
-  {
-    $statusCode = $_.Exception.Response.StatusCode.value__
-    $statusDescription = $_.Exception.Response.ReasonPhrase
 
-    # if this is 404ing, then this pkg has never been published before
-    if ($statusCode -eq 404) {
-      return $False
-    }
-
-    Write-Host "Nuget Invocation failed:"
-    Write-Host "StatusCode:" $statusCode
-    Write-Host "StatusDescription:" $statusDescription
-    exit(1)
-  }
+  # Normalize to an array so a single returned version is checked as an exact item, not a substring.
+  return @($existingVersions).Contains($pkgVersion)
 }
 
 # Parse out package publishing information given a nupkg ZIP format.
 function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
 {
+  Write-Host "Parsing package file $($pkg.FullName)"
+
   $workFolder = "$workingDirectory$($pkg.Basename)"
   $zipFileLocation = "$workFolder/$($pkg.Basename).zip"
   $releaseNotes = ""
@@ -403,13 +365,15 @@ function GetExistingPackageVersions ($PackageName, $GroupId=$null)
 {
   try {
     $PackageName = $PackageName.ToLower()
-    $existingVersion = Invoke-RestMethod -Method GET -Uri "https://api.nuget.org/v3-flatcontainer/${PackageName}/index.json"
-    return $existingVersion.versions
+    $uri = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/flat2/${PackageName}/index.json"
+    $existingVersion = Invoke-RestMethod -MaximumRetryCount 3 -RetryIntervalSec 10 -Method GET -Uri $uri
+    return @($existingVersion.versions)
   }
   catch {
-    if ($_.Exception.Response.StatusCode -ne 404)
+    if ($_.Exception.Response.StatusCode -notin (401, 404))
     {
       LogError "Failed to retrieve package versions for ${PackageName}. $($_.Exception.Message)"
+      throw
     }
     return $null
   }
@@ -596,27 +560,6 @@ function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
 
     # Install autorest locally
     Invoke-LoggedCommand "npm ci --prefix $RepoRoot"
-
-    Write-Host "Running npm ci over legacy-emitter-package.json in a temp folder to prime the npm cache"
-
-    $tempFolder = New-TemporaryFile
-    $tempFolder | Remove-Item -Force
-    New-Item $tempFolder -ItemType Directory -Force | Out-Null
-
-    Push-Location $tempFolder
-    try {
-        Copy-Item "$RepoRoot/eng/legacy-emitter-package.json" "package.json"
-        if(Test-Path "$RepoRoot/eng/legacy-emitter-package-lock.json") {
-            Copy-Item "$RepoRoot/eng/legacy-emitter-package-lock.json" "package-lock.json"
-            Invoke-LoggedCommand "npm ci"
-        } else {
-          Invoke-LoggedCommand "npm install"
-        }
-    }
-    finally {
-      Pop-Location
-      $tempFolder | Remove-Item -Force -Recurse
-    }
 
     # Generate projects
     $showSummary = ($env:SYSTEM_DEBUG -eq 'true') -or ($VerbosePreference -ne 'SilentlyContinue')

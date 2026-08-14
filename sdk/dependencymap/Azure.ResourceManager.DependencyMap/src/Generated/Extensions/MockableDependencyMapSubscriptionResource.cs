@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DependencyMap.Mocking
 
         private ClientDiagnostics MapsClientDiagnostics => _mapsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DependencyMap.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Maps MapsRestClient => _mapsRestClient ??= new Maps(MapsClientDiagnostics, Pipeline, Endpoint, "2025-07-01-preview");
+        private Maps MapsRestClient => _mapsRestClient ??= new Maps(MapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01-preview");
 
         /// <summary>
         /// List MapsResource resources by subscription ID
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DependencyMap.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DependencyMapData, DependencyMapResource>(new MapsGetBySubscriptionAsyncCollectionResultOfT(MapsRestClient, Id.SubscriptionId, context), data => new DependencyMapResource(Client, data));
+            return new AsyncPageableWrapper<DependencyMapData, DependencyMapResource>(new MapsGetBySubscriptionAsyncCollectionResultOfT(MapsRestClient, Id.SubscriptionId, context, "MockableDependencyMapSubscriptionResource.GetDependencyMaps"), data => new DependencyMapResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DependencyMap.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DependencyMapData, DependencyMapResource>(new MapsGetBySubscriptionCollectionResultOfT(MapsRestClient, Id.SubscriptionId, context), data => new DependencyMapResource(Client, data));
+            return new PageableWrapper<DependencyMapData, DependencyMapResource>(new MapsGetBySubscriptionCollectionResultOfT(MapsRestClient, Id.SubscriptionId, context, "MockableDependencyMapSubscriptionResource.GetDependencyMaps"), data => new DependencyMapResource(Client, data));
         }
     }
 }

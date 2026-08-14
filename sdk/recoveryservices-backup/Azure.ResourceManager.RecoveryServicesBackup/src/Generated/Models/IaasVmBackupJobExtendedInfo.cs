@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure IaaS VM workload-specific additional information for job. </summary>
     public partial class IaasVmBackupJobExtendedInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IaasVmBackupJobExtendedInfo"/>. </summary>
         public IaasVmBackupJobExtendedInfo()
@@ -60,8 +32,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="progressPercentage"> Indicates progress of the job. Null if it has not started or completed. </param>
         /// <param name="estimatedRemainingDurationValue"> Time remaining for execution of this job. </param>
         /// <param name="dynamicErrorMessage"> Non localized error message on job execution. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IaasVmBackupJobExtendedInfo(IList<IaasVmBackupJobTaskDetails> tasksList, IDictionary<string, string> propertyBag, IDictionary<string, string> internalPropertyBag, double? progressPercentage, string estimatedRemainingDurationValue, string dynamicErrorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IaasVmBackupJobExtendedInfo(IList<IaasVmBackupJobTaskDetails> tasksList, IDictionary<string, string> propertyBag, IDictionary<string, string> internalPropertyBag, double? progressPercentage, string estimatedRemainingDurationValue, string dynamicErrorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TasksList = tasksList;
             PropertyBag = propertyBag;
@@ -69,19 +41,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ProgressPercentage = progressPercentage;
             EstimatedRemainingDurationValue = estimatedRemainingDurationValue;
             DynamicErrorMessage = dynamicErrorMessage;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of tasks associated with this job. </summary>
         public IList<IaasVmBackupJobTaskDetails> TasksList { get; }
+
         /// <summary> Job properties. </summary>
         public IDictionary<string, string> PropertyBag { get; }
+
         /// <summary> Job internal properties. </summary>
         public IDictionary<string, string> InternalPropertyBag { get; }
+
         /// <summary> Indicates progress of the job. Null if it has not started or completed. </summary>
         public double? ProgressPercentage { get; set; }
+
         /// <summary> Time remaining for execution of this job. </summary>
         public string EstimatedRemainingDurationValue { get; set; }
+
         /// <summary> Non localized error message on job execution. </summary>
         public string DynamicErrorMessage { get; set; }
     }

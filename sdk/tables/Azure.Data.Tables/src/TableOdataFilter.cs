@@ -28,7 +28,8 @@ namespace Azure.Data.Tables
         /// <returns>A valid OData filter expression.</returns>
         public static string Create(FormattableString filter)
         {
-            if (filter == null) { return null; }
+            if (filter == null)
+            { return null; }
 
             string[] args = new string[filter.ArgumentCount];
             for (int i = 0; i < filter.ArgumentCount; i++)

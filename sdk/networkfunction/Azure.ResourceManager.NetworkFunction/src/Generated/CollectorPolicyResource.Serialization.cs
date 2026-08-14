@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NetworkFunction
 {
+    /// <summary></summary>
     public partial class CollectorPolicyResource : IJsonModel<CollectorPolicyData>
     {
-        private static CollectorPolicyData s_dataDeserializationInstance;
-        private static CollectorPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CollectorPolicyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CollectorPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CollectorPolicyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CollectorPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CollectorPolicyData>)Data).Write(writer, options);
 
-        CollectorPolicyData IJsonModel<CollectorPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CollectorPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CollectorPolicyData IJsonModel<CollectorPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CollectorPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CollectorPolicyData>(Data, options, AzureResourceManagerNetworkFunctionContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CollectorPolicyData IPersistableModel<CollectorPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CollectorPolicyData>(data, options, AzureResourceManagerNetworkFunctionContext.Default);
 
-        string IPersistableModel<CollectorPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CollectorPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CollectorPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

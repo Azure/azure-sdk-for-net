@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
@@ -14,32 +15,25 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class KnowledgeBaseMessageTextContent : KnowledgeBaseMessageContent
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseMessageTextContent"/>. </summary>
-        /// <param name="text"></param>
+        /// <param name="text"> The text content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public KnowledgeBaseMessageTextContent(string text)
+        public KnowledgeBaseMessageTextContent(string text) : base(KnowledgeBaseMessageContentType.Text)
         {
             Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
-            Type = KnowledgeBaseMessageContentType.Text;
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseMessageTextContent"/>. </summary>
         /// <param name="type"> The type of the message. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="text"></param>
-        internal KnowledgeBaseMessageTextContent(KnowledgeBaseMessageContentType type, IDictionary<string, BinaryData> serializedAdditionalRawData, string text) : base(type, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="text"> The text content. </param>
+        internal KnowledgeBaseMessageTextContent(KnowledgeBaseMessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
         {
             Text = text;
-            Type = type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseMessageTextContent"/> for deserialization. </summary>
-        internal KnowledgeBaseMessageTextContent()
-        {
-        }
-
-        /// <summary> Gets or sets the text. </summary>
+        /// <summary> The text content. </summary>
         public string Text { get; set; }
     }
 }

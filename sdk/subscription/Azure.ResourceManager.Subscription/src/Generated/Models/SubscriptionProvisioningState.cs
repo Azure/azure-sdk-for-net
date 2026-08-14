@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Subscription;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Subscription.Models
     public readonly partial struct SubscriptionProvisioningState : IEquatable<SubscriptionProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Accepted. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SubscriptionProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AcceptedValue = "Accepted";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> Accepted. </summary>
         public static SubscriptionProvisioningState Accepted { get; } = new SubscriptionProvisioningState(AcceptedValue);
+
         /// <summary> Succeeded. </summary>
         public static SubscriptionProvisioningState Succeeded { get; } = new SubscriptionProvisioningState(SucceededValue);
+
         /// <summary> Failed. </summary>
         public static SubscriptionProvisioningState Failed { get; } = new SubscriptionProvisioningState(FailedValue);
+
         /// <summary> Determines if two <see cref="SubscriptionProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SubscriptionProvisioningState left, SubscriptionProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SubscriptionProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SubscriptionProvisioningState left, SubscriptionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SubscriptionProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SubscriptionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SubscriptionProvisioningState(string value) => new SubscriptionProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SubscriptionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SubscriptionProvisioningState?(string value) => value == null ? null : new SubscriptionProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SubscriptionProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SubscriptionProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

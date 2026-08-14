@@ -10,13 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ServiceFabricClusterPatch : IUtf8JsonSerializable, IJsonModel<ServiceFabricClusterPatch>
+    /// <summary> Cluster update request. </summary>
+    public partial class ServiceFabricClusterPatch : IJsonModel<ServiceFabricClusterPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricClusterPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServiceFabricClusterPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeServiceFabricClusterPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceFabricClusterPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceFabricClusterPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ServiceFabricClusterPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceFabricClusterPatch IPersistableModel<ServiceFabricClusterPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ServiceFabricClusterPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="serviceFabricClusterPatch"> The <see cref="ServiceFabricClusterPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ServiceFabricClusterPatch serviceFabricClusterPatch)
+        {
+            if (serviceFabricClusterPatch == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(serviceFabricClusterPatch, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceFabricClusterPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +80,16 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceFabricClusterPatch)} does not support writing '{format}' format.");
             }
-
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -41,167 +97,24 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AddOnFeatures))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("addOnFeatures"u8);
-                writer.WriteStartArray();
-                foreach (var item in AddOnFeatures)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Certificate))
-            {
-                writer.WritePropertyName("certificate"u8);
-                writer.WriteObjectValue(Certificate, options);
-            }
-            if (Optional.IsDefined(CertificateCommonNames))
-            {
-                writer.WritePropertyName("certificateCommonNames"u8);
-                writer.WriteObjectValue(CertificateCommonNames, options);
-            }
-            if (Optional.IsCollectionDefined(ClientCertificateCommonNames))
-            {
-                writer.WritePropertyName("clientCertificateCommonNames"u8);
-                writer.WriteStartArray();
-                foreach (var item in ClientCertificateCommonNames)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(ClientCertificateThumbprints))
-            {
-                writer.WritePropertyName("clientCertificateThumbprints"u8);
-                writer.WriteStartArray();
-                foreach (var item in ClientCertificateThumbprints)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(ClusterCodeVersion))
-            {
-                writer.WritePropertyName("clusterCodeVersion"u8);
-                writer.WriteStringValue(ClusterCodeVersion);
-            }
-            if (Optional.IsDefined(IsEventStoreServiceEnabled))
-            {
-                writer.WritePropertyName("eventStoreServiceEnabled"u8);
-                writer.WriteBooleanValue(IsEventStoreServiceEnabled.Value);
-            }
-            if (Optional.IsCollectionDefined(FabricSettings))
-            {
-                writer.WritePropertyName("fabricSettings"u8);
-                writer.WriteStartArray();
-                foreach (var item in FabricSettings)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(NodeTypes))
-            {
-                writer.WritePropertyName("nodeTypes"u8);
-                writer.WriteStartArray();
-                foreach (var item in NodeTypes)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(ReliabilityLevel))
-            {
-                writer.WritePropertyName("reliabilityLevel"u8);
-                writer.WriteStringValue(ReliabilityLevel.Value.ToString());
-            }
-            if (Optional.IsDefined(ReverseProxyCertificate))
-            {
-                writer.WritePropertyName("reverseProxyCertificate"u8);
-                writer.WriteObjectValue(ReverseProxyCertificate, options);
-            }
-            if (Optional.IsDefined(UpgradeDescription))
-            {
-                writer.WritePropertyName("upgradeDescription"u8);
-                writer.WriteObjectValue(UpgradeDescription, options);
-            }
-            if (Optional.IsDefined(ApplicationTypeVersionsCleanupPolicy))
-            {
-                writer.WritePropertyName("applicationTypeVersionsCleanupPolicy"u8);
-                writer.WriteObjectValue(ApplicationTypeVersionsCleanupPolicy, options);
-            }
-            if (Optional.IsDefined(UpgradeMode))
-            {
-                writer.WritePropertyName("upgradeMode"u8);
-                writer.WriteStringValue(UpgradeMode.Value.ToString());
-            }
-            if (Optional.IsDefined(SfZonalUpgradeMode))
-            {
-                writer.WritePropertyName("sfZonalUpgradeMode"u8);
-                writer.WriteStringValue(SfZonalUpgradeMode.Value.ToString());
-            }
-            if (Optional.IsDefined(VmssZonalUpgradeMode))
-            {
-                writer.WritePropertyName("vmssZonalUpgradeMode"u8);
-                writer.WriteStringValue(VmssZonalUpgradeMode.Value.ToString());
-            }
-            if (Optional.IsDefined(IsInfrastructureServiceManagerEnabled))
-            {
-                writer.WritePropertyName("infrastructureServiceManager"u8);
-                writer.WriteBooleanValue(IsInfrastructureServiceManagerEnabled.Value);
-            }
-            if (Optional.IsDefined(UpgradeWave))
-            {
-                writer.WritePropertyName("upgradeWave"u8);
-                writer.WriteStringValue(UpgradeWave.Value.ToString());
-            }
-            if (Optional.IsDefined(UpgradePauseStartOn))
-            {
-                writer.WritePropertyName("upgradePauseStartTimestampUtc"u8);
-                writer.WriteStringValue(UpgradePauseStartOn.Value, "O");
-            }
-            if (Optional.IsDefined(UpgradePauseEndOn))
-            {
-                writer.WritePropertyName("upgradePauseEndTimestampUtc"u8);
-                writer.WriteStringValue(UpgradePauseEndOn.Value, "O");
-            }
-            if (Optional.IsDefined(IsWaveUpgradePaused))
-            {
-                writer.WritePropertyName("waveUpgradePaused"u8);
-                writer.WriteBooleanValue(IsWaveUpgradePaused.Value);
-            }
-            if (Optional.IsCollectionDefined(Notifications))
-            {
-                writer.WritePropertyName("notifications"u8);
-                writer.WriteStartArray();
-                foreach (var item in Notifications)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IsHttpGatewayExclusiveAuthModeEnabled))
-            {
-                writer.WritePropertyName("enableHttpGatewayExclusiveAuthMode"u8);
-                writer.WriteBooleanValue(IsHttpGatewayExclusiveAuthModeEnabled.Value);
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -210,376 +123,72 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
         }
 
-        ServiceFabricClusterPatch IJsonModel<ServiceFabricClusterPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceFabricClusterPatch IJsonModel<ServiceFabricClusterPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServiceFabricClusterPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceFabricClusterPatch)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeServiceFabricClusterPatch(document.RootElement, options);
         }
 
-        internal static ServiceFabricClusterPatch DeserializeServiceFabricClusterPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ServiceFabricClusterPatch DeserializeServiceFabricClusterPatch(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            ClusterPropertiesUpdateParameters properties = default;
             IDictionary<string, string> tags = default;
-            IList<ClusterAddOnFeature> addOnFeatures = default;
-            ClusterCertificateDescription certificate = default;
-            ClusterServerCertificateCommonNames certificateCommonNames = default;
-            IList<ClusterClientCertificateCommonName> clientCertificateCommonNames = default;
-            IList<ClusterClientCertificateThumbprint> clientCertificateThumbprints = default;
-            string clusterCodeVersion = default;
-            bool? eventStoreServiceEnabled = default;
-            IList<SettingsSectionDescription> fabricSettings = default;
-            IList<ClusterNodeTypeDescription> nodeTypes = default;
-            ClusterReliabilityLevel? reliabilityLevel = default;
-            ClusterCertificateDescription reverseProxyCertificate = default;
-            ClusterUpgradePolicy upgradeDescription = default;
-            ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy = default;
-            ClusterUpgradeMode? upgradeMode = default;
-            SfZonalUpgradeMode? sfZonalUpgradeMode = default;
-            VmssZonalUpgradeMode? vmssZonalUpgradeMode = default;
-            bool? infrastructureServiceManager = default;
-            ClusterUpgradeCadence? upgradeWave = default;
-            DateTimeOffset? upgradePauseStartTimestampUtc = default;
-            DateTimeOffset? upgradePauseEndTimestampUtc = default;
-            bool? waveUpgradePaused = default;
-            IList<ClusterNotification> notifications = default;
-            bool? enableHttpGatewayExclusiveAuthMode = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ClusterPropertiesUpdateParameters.DeserializeClusterPropertiesUpdateParameters(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("addOnFeatures"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ClusterAddOnFeature> array = new List<ClusterAddOnFeature>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(new ClusterAddOnFeature(item.GetString()));
-                            }
-                            addOnFeatures = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("certificate"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            certificate = ClusterCertificateDescription.DeserializeClusterCertificateDescription(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("certificateCommonNames"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            certificateCommonNames = ClusterServerCertificateCommonNames.DeserializeClusterServerCertificateCommonNames(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("clientCertificateCommonNames"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ClusterClientCertificateCommonName> array = new List<ClusterClientCertificateCommonName>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ClusterClientCertificateCommonName.DeserializeClusterClientCertificateCommonName(item, options));
-                            }
-                            clientCertificateCommonNames = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("clientCertificateThumbprints"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ClusterClientCertificateThumbprint> array = new List<ClusterClientCertificateThumbprint>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ClusterClientCertificateThumbprint.DeserializeClusterClientCertificateThumbprint(item, options));
-                            }
-                            clientCertificateThumbprints = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("clusterCodeVersion"u8))
-                        {
-                            clusterCodeVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("eventStoreServiceEnabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            eventStoreServiceEnabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("fabricSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<SettingsSectionDescription> array = new List<SettingsSectionDescription>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(SettingsSectionDescription.DeserializeSettingsSectionDescription(item, options));
-                            }
-                            fabricSettings = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("nodeTypes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ClusterNodeTypeDescription> array = new List<ClusterNodeTypeDescription>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ClusterNodeTypeDescription.DeserializeClusterNodeTypeDescription(item, options));
-                            }
-                            nodeTypes = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("reliabilityLevel"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            reliabilityLevel = new ClusterReliabilityLevel(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("reverseProxyCertificate"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            reverseProxyCertificate = ClusterCertificateDescription.DeserializeClusterCertificateDescription(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("upgradeDescription"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            upgradeDescription = ClusterUpgradePolicy.DeserializeClusterUpgradePolicy(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("applicationTypeVersionsCleanupPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            applicationTypeVersionsCleanupPolicy = ApplicationTypeVersionsCleanupPolicy.DeserializeApplicationTypeVersionsCleanupPolicy(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("upgradeMode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            upgradeMode = new ClusterUpgradeMode(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("sfZonalUpgradeMode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sfZonalUpgradeMode = new SfZonalUpgradeMode(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("vmssZonalUpgradeMode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            vmssZonalUpgradeMode = new VmssZonalUpgradeMode(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("infrastructureServiceManager"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            infrastructureServiceManager = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("upgradeWave"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            upgradeWave = new ClusterUpgradeCadence(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("upgradePauseStartTimestampUtc"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            upgradePauseStartTimestampUtc = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("upgradePauseEndTimestampUtc"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            upgradePauseEndTimestampUtc = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("waveUpgradePaused"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            waveUpgradePaused = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("notifications"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ClusterNotification> array = new List<ClusterNotification>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ClusterNotification.DeserializeClusterNotification(item, options));
-                            }
-                            notifications = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("enableHttpGatewayExclusiveAuthMode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableHttpGatewayExclusiveAuthMode = property0.Value.GetBoolean();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ServiceFabricClusterPatch(
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                addOnFeatures ?? new ChangeTrackingList<ClusterAddOnFeature>(),
-                certificate,
-                certificateCommonNames,
-                clientCertificateCommonNames ?? new ChangeTrackingList<ClusterClientCertificateCommonName>(),
-                clientCertificateThumbprints ?? new ChangeTrackingList<ClusterClientCertificateThumbprint>(),
-                clusterCodeVersion,
-                eventStoreServiceEnabled,
-                fabricSettings ?? new ChangeTrackingList<SettingsSectionDescription>(),
-                nodeTypes ?? new ChangeTrackingList<ClusterNodeTypeDescription>(),
-                reliabilityLevel,
-                reverseProxyCertificate,
-                upgradeDescription,
-                applicationTypeVersionsCleanupPolicy,
-                upgradeMode,
-                sfZonalUpgradeMode,
-                vmssZonalUpgradeMode,
-                infrastructureServiceManager,
-                upgradeWave,
-                upgradePauseStartTimestampUtc,
-                upgradePauseEndTimestampUtc,
-                waveUpgradePaused,
-                notifications ?? new ChangeTrackingList<ClusterNotification>(),
-                enableHttpGatewayExclusiveAuthMode,
-                serializedAdditionalRawData);
+            return new ServiceFabricClusterPatch(properties, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ServiceFabricClusterPatch>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ServiceFabricClusterPatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ServiceFabricClusterPatch IPersistableModel<ServiceFabricClusterPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeServiceFabricClusterPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ServiceFabricClusterPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ServiceFabricClusterPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

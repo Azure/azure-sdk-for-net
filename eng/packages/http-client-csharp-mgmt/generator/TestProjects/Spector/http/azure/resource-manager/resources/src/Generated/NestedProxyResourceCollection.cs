@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources
         {
             TryGetApiVersion(NestedProxyResource.ResourceType, out string nestedProxyResourceApiVersion);
             _nestedClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", NestedProxyResource.ResourceType.Namespace, Diagnostics);
-            _nestedRestClient = new Nested(_nestedClientDiagnostics, Pipeline, Endpoint, nestedProxyResourceApiVersion ?? "2023-12-01-preview");
+            _nestedRestClient = new Nested(_nestedClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, nestedProxyResourceApiVersion ?? "2023-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources
         {
             if (id.ResourceType != TopLevelTrackedResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TopLevelTrackedResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TopLevelTrackedResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Resources
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NestedProxyResourceData, NestedProxyResource>(new NestedGetByTopLevelTrackedResourceAsyncCollectionResultOfT(_nestedRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new NestedProxyResource(Client, data));
+            return new AsyncPageableWrapper<NestedProxyResourceData, NestedProxyResource>(new NestedGetByTopLevelTrackedResourceAsyncCollectionResultOfT(
+                _nestedRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NestedProxyResourceCollection.GetAll"), data => new NestedProxyResource(Client, data));
         }
 
         /// <summary>
@@ -321,11 +327,17 @@ namespace Azure.ResourceManager.Resources
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NestedProxyResourceData, NestedProxyResource>(new NestedGetByTopLevelTrackedResourceCollectionResultOfT(_nestedRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new NestedProxyResource(Client, data));
+            return new PageableWrapper<NestedProxyResourceData, NestedProxyResource>(new NestedGetByTopLevelTrackedResourceCollectionResultOfT(
+                _nestedRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NestedProxyResourceCollection.GetAll"), data => new NestedProxyResource(Client, data));
         }
 
         /// <summary>
-        /// Get a NestedProxyResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -382,7 +394,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Get a NestedProxyResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -439,7 +451,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Get a NestedProxyResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -500,7 +512,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Get a NestedProxyResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

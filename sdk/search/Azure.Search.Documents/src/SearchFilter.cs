@@ -39,7 +39,8 @@ namespace Azure.Search.Documents
         /// <returns>A valid OData filter expression.</returns>
         public static string Create(FormattableString filter, IFormatProvider formatProvider)
         {
-            if (filter == null) { return null; }
+            if (filter == null)
+            { return null; }
             formatProvider ??= CultureInfo.InvariantCulture;
 
             string[] args = new string[filter.ArgumentCount];
@@ -104,7 +105,8 @@ namespace Azure.Search.Documents
         /// <returns>The quoted text.</returns>
         private static string Quote(string text)
         {
-            if (text == null) { return "null"; }
+            if (text == null)
+            { return "null"; }
 
             // Optimistically allocate an extra 5% for escapes
             StringBuilder builder = new StringBuilder(2 + (int)(text.Length * 1.05));

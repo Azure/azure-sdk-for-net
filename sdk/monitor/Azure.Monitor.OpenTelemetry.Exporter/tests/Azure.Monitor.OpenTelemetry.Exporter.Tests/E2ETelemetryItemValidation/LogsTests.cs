@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry.Logs;
@@ -203,6 +204,60 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedSpanId: null,
                 expectedTraceId: null,
                 expectedClientIp: "1.2.3.4");
+        }
+
+        [Fact]
+        public void VerifyContextTagAttributes_MappedToEnvelopeTags()
+        {
+            // SETUP
+            var uniqueTestId = Guid.NewGuid();
+            var logCategoryName = $"logCategoryName{uniqueTestId}";
+            List<TelemetryItem>? telemetryItems = null;
+
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder
+                    .AddOpenTelemetry(options =>
+                    {
+                        options.SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(testResourceAttributes));
+                        options.AddAzureMonitorLogExporterForTest(out telemetryItems);
+                    });
+            });
+
+            // ACT
+            var logger = loggerFactory.CreateLogger(logCategoryName);
+            logger.LogInformation(
+                "{user_agent.original} {microsoft.session.id} {ai.device.id} {ai.device.model} {ai.device.type} {ai.device.osVersion} {microsoft.synthetic_source} {microsoft.user.account_id}",
+                "TestAgent/1.0", "session-123", "device-456", "Surface Pro", "PC", "Microsoft Windows NT 10.0.22621.0", "test-bot", "account-789");
+
+            // CLEANUP
+            loggerFactory.Dispose();
+
+            // ASSERT
+            Assert.True(telemetryItems?.Any(), "Unit test failed to collect telemetry.");
+            this.telemetryOutput.Write(telemetryItems);
+            var telemetryItem = telemetryItems!.First(x => x.Name == "Message");
+
+            // Verify context tags are mapped to envelope tags
+            Assert.Equal("TestAgent/1.0", telemetryItem.Tags["ai.user.userAgent"]);
+            Assert.Equal("session-123", telemetryItem.Tags[ContextTagKeys.AiSessionId.ToString()]);
+            Assert.Equal("device-456", telemetryItem.Tags[ContextTagKeys.AiDeviceId.ToString()]);
+            Assert.Equal("Surface Pro", telemetryItem.Tags[ContextTagKeys.AiDeviceModel.ToString()]);
+            Assert.Equal("PC", telemetryItem.Tags[ContextTagKeys.AiDeviceType.ToString()]);
+            Assert.Equal("Microsoft Windows NT 10.0.22621.0", telemetryItem.Tags[ContextTagKeys.AiDeviceOSVersion.ToString()]);
+            Assert.Equal("test-bot", telemetryItem.Tags[ContextTagKeys.AiOperationSyntheticSource.ToString()]);
+            Assert.Equal("account-789", telemetryItem.Tags[ContextTagKeys.AiUserAccountId.ToString()]);
+
+            // Verify context tags are NOT in customDimensions
+            var messageData = (MessageData)telemetryItem.Data.BaseData;
+            Assert.False(messageData.Properties.ContainsKey("user_agent.original"));
+            Assert.False(messageData.Properties.ContainsKey("microsoft.session.id"));
+            Assert.False(messageData.Properties.ContainsKey("ai.device.id"));
+            Assert.False(messageData.Properties.ContainsKey("ai.device.model"));
+            Assert.False(messageData.Properties.ContainsKey("ai.device.type"));
+            Assert.False(messageData.Properties.ContainsKey("ai.device.osVersion"));
+            Assert.False(messageData.Properties.ContainsKey("microsoft.synthetic_source"));
+            Assert.False(messageData.Properties.ContainsKey("microsoft.user.account_id"));
         }
     }
 }

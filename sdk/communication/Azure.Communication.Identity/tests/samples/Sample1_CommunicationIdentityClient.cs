@@ -253,7 +253,8 @@ namespace Azure.Communication.Identity.Samples
         {
             #region Snippet:CreateCommunicationIdentityFromToken
             var endpoint = new Uri("https://my-resource.communication.azure.com");
-            /*@@*/ endpoint = TestEnvironment.LiveTestDynamicEndpoint;
+            /*@@*/
+            endpoint = TestEnvironment.LiveTestDynamicEndpoint;
             TokenCredential tokenCredential = TestEnvironment.Credential;
             var client = new CommunicationIdentityClient(endpoint, tokenCredential);
             #endregion Snippet:CreateCommunicationIdentityFromToken
@@ -275,8 +276,10 @@ namespace Azure.Communication.Identity.Samples
             #region Snippet:CreateCommunicationIdentityFromAccessKey
             var endpoint = new Uri("https://my-resource.communication.azure.com");
             var accessKey = "<access_key>";
-            /*@@*/ endpoint = TestEnvironment.LiveTestDynamicEndpoint;
-            /*@@*/ accessKey = TestEnvironment.LiveTestDynamicAccessKey;
+            /*@@*/
+            endpoint = TestEnvironment.LiveTestDynamicEndpoint;
+            /*@@*/
+            accessKey = TestEnvironment.LiveTestDynamicAccessKey;
             var client = new CommunicationIdentityClient(endpoint, new AzureKeyCredential(accessKey));
             #endregion Snippet:CreateCommunicationIdentityFromAccessKey
 
@@ -345,7 +348,8 @@ namespace Azure.Communication.Identity.Samples
             // Get a connection string to our Azure Communication resource.
             //@@var connectionString = "<connection_string>";
             var client = new CommunicationIdentityClient(connectionString);
-            /*@@*/ client = CreateClient();
+            /*@@*/
+            client = CreateClient();
 
             try
             {

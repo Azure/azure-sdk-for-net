@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Confluent.Models
     /// <summary> Details of schema registry cluster spec. </summary>
     public partial class SchemaRegistryClusterSpecEntity
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SchemaRegistryClusterSpecEntity"/>. </summary>
         internal SchemaRegistryClusterSpecEntity()
@@ -57,8 +28,8 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="region"> Region details of the schema registry cluster. </param>
         /// <param name="environment"> Environment details of the schema registry cluster. </param>
         /// <param name="cloud"> The cloud service provider. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SchemaRegistryClusterSpecEntity(string name, string httpEndpoint, string package, SchemaRegistryClusterEnvironmentRegionEntity region, SchemaRegistryClusterEnvironmentRegionEntity environment, string cloud, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SchemaRegistryClusterSpecEntity(string name, string httpEndpoint, string package, SchemaRegistryClusterEnvironmentRegionEntity region, SchemaRegistryClusterEnvironmentRegionEntity environment, string cloud, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             HttpEndpoint = httpEndpoint;
@@ -66,19 +37,24 @@ namespace Azure.ResourceManager.Confluent.Models
             Region = region;
             Environment = environment;
             Cloud = cloud;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the schema registry cluster. </summary>
         public string Name { get; }
+
         /// <summary> Http endpoint of the cluster. </summary>
         public string HttpEndpoint { get; }
+
         /// <summary> Type of the cluster package Advanced, essentials. </summary>
         public string Package { get; }
+
         /// <summary> Region details of the schema registry cluster. </summary>
         public SchemaRegistryClusterEnvironmentRegionEntity Region { get; }
+
         /// <summary> Environment details of the schema registry cluster. </summary>
         public SchemaRegistryClusterEnvironmentRegionEntity Environment { get; }
+
         /// <summary> The cloud service provider. </summary>
         public string Cloud { get; }
     }

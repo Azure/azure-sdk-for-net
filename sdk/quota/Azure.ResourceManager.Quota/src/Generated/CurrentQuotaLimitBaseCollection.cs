@@ -39,13 +39,12 @@ namespace Azure.ResourceManager.Quota
         {
             TryGetApiVersion(CurrentQuotaLimitBaseResource.ResourceType, out string currentQuotaLimitBaseApiVersion);
             _currentQuotaLimitBasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", CurrentQuotaLimitBaseResource.ResourceType.Namespace, Diagnostics);
-            _currentQuotaLimitBasesRestClient = new CurrentQuotaLimitBases(_currentQuotaLimitBasesClientDiagnostics, Pipeline, Endpoint, currentQuotaLimitBaseApiVersion ?? "2025-09-01");
+            _currentQuotaLimitBasesRestClient = new CurrentQuotaLimitBases(_currentQuotaLimitBasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, currentQuotaLimitBaseApiVersion ?? "2025-09-01");
         }
 
         /// <summary>
         /// Create or update the quota limit for the specified resource with the requested value. To update the quota, follow these steps:
-        /// 1. Use the GET operation for quotas and usages to determine how much quota remains for the specific resource and to calculate the new quota limit. These steps are detailed in [this example](https://techcommunity.microsoft.com/t5/azure-governance-and-management/using-the-new-quota-rest-api/ba-p/2183670).
-        /// 2. Use this PUT operation to update the quota limit. Please check the URI in location header for the detailed status of the request.
+        /// <list type="number"><item><description>Use the GET operation for quotas and usages to determine how much quota remains for the specific resource and to calculate the new quota limit. These steps are detailed in [this example](https://techcommunity.microsoft.com/t5/azure-governance-and-management/using-the-new-quota-rest-api/ba-p/2183670).</description></item><item><description>Use this PUT operation to update the quota limit. Please check the URI in location header for the detailed status of the request.</description></item></list>
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -64,8 +63,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="data"> Quota request payload. </param>
@@ -85,10 +83,10 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateCreateOrUpdateRequest(Id, resourceName, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), resourceName, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation<CurrentQuotaLimitBaseResource> operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(
-                    new CurrentQuotaLimitBaseOperationSource(Client),
+                    new CurrentQuotaLimitBaseResourceOperationSource(Client),
                     _currentQuotaLimitBasesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -109,8 +107,7 @@ namespace Azure.ResourceManager.Quota
 
         /// <summary>
         /// Create or update the quota limit for the specified resource with the requested value. To update the quota, follow these steps:
-        /// 1. Use the GET operation for quotas and usages to determine how much quota remains for the specific resource and to calculate the new quota limit. These steps are detailed in [this example](https://techcommunity.microsoft.com/t5/azure-governance-and-management/using-the-new-quota-rest-api/ba-p/2183670).
-        /// 2. Use this PUT operation to update the quota limit. Please check the URI in location header for the detailed status of the request.
+        /// <list type="number"><item><description>Use the GET operation for quotas and usages to determine how much quota remains for the specific resource and to calculate the new quota limit. These steps are detailed in [this example](https://techcommunity.microsoft.com/t5/azure-governance-and-management/using-the-new-quota-rest-api/ba-p/2183670).</description></item><item><description>Use this PUT operation to update the quota limit. Please check the URI in location header for the detailed status of the request.</description></item></list>
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -129,8 +126,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="data"> Quota request payload. </param>
@@ -150,10 +146,10 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateCreateOrUpdateRequest(Id, resourceName, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), resourceName, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation<CurrentQuotaLimitBaseResource> operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(
-                    new CurrentQuotaLimitBaseOperationSource(Client),
+                    new CurrentQuotaLimitBaseResourceOperationSource(Client),
                     _currentQuotaLimitBasesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -191,8 +187,7 @@ namespace Azure.ResourceManager.Quota
         /// </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -210,7 +205,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CurrentQuotaLimitBaseData> response = Response.FromValue(CurrentQuotaLimitBaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -245,8 +240,7 @@ namespace Azure.ResourceManager.Quota
         /// </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -264,7 +258,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CurrentQuotaLimitBaseData> response = Response.FromValue(CurrentQuotaLimitBaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -305,7 +299,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CurrentQuotaLimitBaseData, CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBasesGetAllAsyncCollectionResultOfT(_currentQuotaLimitBasesRestClient, Id, context), data => new CurrentQuotaLimitBaseResource(Client, data));
+            return new AsyncPageableWrapper<CurrentQuotaLimitBaseData, CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBasesGetAllAsyncCollectionResultOfT(_currentQuotaLimitBasesRestClient, Id.ToString(), context, "CurrentQuotaLimitBaseCollection.GetAll"), data => new CurrentQuotaLimitBaseResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +327,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CurrentQuotaLimitBaseData, CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBasesGetAllCollectionResultOfT(_currentQuotaLimitBasesRestClient, Id, context), data => new CurrentQuotaLimitBaseResource(Client, data));
+            return new PageableWrapper<CurrentQuotaLimitBaseData, CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBasesGetAllCollectionResultOfT(_currentQuotaLimitBasesRestClient, Id.ToString(), context, "CurrentQuotaLimitBaseCollection.GetAll"), data => new CurrentQuotaLimitBaseResource(Client, data));
         }
 
         /// <summary>
@@ -355,8 +349,7 @@ namespace Azure.ResourceManager.Quota
         /// </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -374,7 +367,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CurrentQuotaLimitBaseData> response = default;
@@ -417,8 +410,7 @@ namespace Azure.ResourceManager.Quota
         /// </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -436,7 +428,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CurrentQuotaLimitBaseData> response = default;
@@ -479,8 +471,7 @@ namespace Azure.ResourceManager.Quota
         /// </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -498,7 +489,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CurrentQuotaLimitBaseData> response = default;
@@ -545,8 +536,7 @@ namespace Azure.ResourceManager.Quota
         /// </summary>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -564,7 +554,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CurrentQuotaLimitBaseData> response = default;

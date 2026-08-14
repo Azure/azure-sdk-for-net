@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Advisor.Tests
         public async Task SuppressionsTest()
         {
             // get recommendations, we should get a non-empty list
-            var collection = Client.GetResourceRecommendationBases(DefaultSubscription.Id);
+            var collection = Client.GetAdvisorRecommendations(DefaultSubscription.Id);
             var recs = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.GreaterOrEqual(recs.Count, 1);
 
-            ResourceRecommendationBaseResource recommendation = null;
+            AdvisorRecommendationResource recommendation = null;
 
             // standard properties must all be populated
             foreach (var rec in recs)
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.Advisor.Tests
             Assert.AreEqual(recommendation.Data.Name, output.Data.Name);
 
             // we should be able to create a suppression with a specific TTL
-            var suppressionCollection = recommendation.GetSuppressionContracts();
+            var suppressionCollection = recommendation.GetAdvisorSuppressionContracts();
             var suppressionName = Recording.GenerateAssetName("NetSdkTest");
             var suppression = (await suppressionCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 suppressionName,
-                new SuppressionContractData() { Ttl = TimeToLive })).Value;
+                new AdvisorSuppressionContractData() { Ttl = TimeToLive })).Value;
             Assert.AreEqual(TimeToLive, suppression.Data.Ttl);
 
             // we should be able to fetch the suppression by name

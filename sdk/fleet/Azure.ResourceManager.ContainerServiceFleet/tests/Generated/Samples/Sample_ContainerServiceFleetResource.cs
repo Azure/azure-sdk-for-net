@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             ContainerServiceFleetResource containerServiceFleet = client.GetContainerServiceFleetResource(containerServiceFleetResourceId);
 
             // invoke the operation
-            await containerServiceFleet.DeleteAsync(WaitUntil.Completed);
+            await containerServiceFleet.DeleteAsync(WaitUntil.Completed, ifMatch: (ETag?)null);
 
             Console.WriteLine("Succeeded");
         }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             ContainerServiceFleetResource containerServiceFleet = client.GetContainerServiceFleetResource(containerServiceFleetResourceId);
 
             // invoke the operation
-            string ifMatch = "crsgokrdxddjsvqxpplerummnmzav";
+            ETag ifMatch = new ETag("crsgokrdxddjsvqxpplerummnmzav");
             await containerServiceFleet.DeleteAsync(WaitUntil.Completed, ifMatch: ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
 ["tier"] = "secure"
 },
             };
-            string ifMatch = "dfjkwelr7384";
+            ETag ifMatch = new ETag("dfjkwelr7384");
             ArmOperation<ContainerServiceFleetResource> lro = await containerServiceFleet.UpdateAsync(WaitUntil.Completed, patch, ifMatch: ifMatch);
             ContainerServiceFleetResource result = lro.Value;
 
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
 },
                 },
             };
-            string ifMatch = "lgoeir";
+            ETag ifMatch = new ETag("lgoeir");
             ArmOperation<ContainerServiceFleetResource> lro = await containerServiceFleet.UpdateAsync(WaitUntil.Completed, patch, ifMatch: ifMatch);
             ContainerServiceFleetResource result = lro.Value;
 

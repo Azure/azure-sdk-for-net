@@ -153,9 +153,9 @@ Once the worker is done with the job, the worker has to mark the job as `complet
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CompleteJob
 Response completeJob = routerClient.CompleteJob(new CompleteJobOptions(job.Value.Id, acceptJobOfferResult.Value.AssignmentId)
-    {
-        Note = $"Job has been completed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
-    });
+{
+    Note = $"Job has been completed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
+});
 
 Console.WriteLine($"Job has been successfully completed: {completeJob.Status == 200}");
 ```
@@ -166,9 +166,9 @@ After a job has been completed, the worker can perform wrap up actions to the jo
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJob
 Response closeJob = routerClient.CloseJob(new CloseJobOptions(job.Value.Id, acceptJobOfferResult.Value.AssignmentId)
-    {
-        Note = $"Job has been closed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
-    });
+{
+    Note = $"Job has been closed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
+});
 Console.WriteLine($"Job has been successfully closed: {closeJob.Status == 200}");
 
 updatedJob = routerClient.GetJob(job.Value.Id);
@@ -177,11 +177,11 @@ Console.WriteLine($"Updated job status: {updatedJob.Value.Status == RouterJobSta
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJobInFuture
 // Optionally, a job can also be set up to be marked as closed in the future.
-var closeJobInFuture = routerClient.CloseJob(new CloseJobOptions(job.Value.Id,acceptJobOfferResult.Value.AssignmentId)
-    {
-        CloseAt = DateTimeOffset.UtcNow.AddSeconds(2), // this will mark the job as closed after 2 seconds
-        Note = $"Job has been marked to close in the future by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
-    });
+var closeJobInFuture = routerClient.CloseJob(new CloseJobOptions(job.Value.Id, acceptJobOfferResult.Value.AssignmentId)
+{
+    CloseAt = DateTimeOffset.UtcNow.AddSeconds(2), // this will mark the job as closed after 2 seconds
+    Note = $"Job has been marked to close in the future by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
+});
 Console.WriteLine($"Job has been marked to close: {closeJob.Status == 202}"); // You'll received a 202 in that case
 
 Thread.Sleep(TimeSpan.FromSeconds(2));

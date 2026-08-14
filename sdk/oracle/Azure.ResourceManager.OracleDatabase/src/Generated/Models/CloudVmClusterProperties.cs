@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="sshPublicKeys"> The public key portion of one or more key pairs used for SSH access to the cloud VM cluster. </param>
         /// <param name="licenseModel"> The Oracle license model that applies to the cloud VM cluster. The default is LICENSE_INCLUDED. . </param>
         /// <param name="diskRedundancy"> The type of redundancy configured for the cloud Vm cluster. NORMAL is 2-way redundancy. HIGH is 3-way redundancy. . </param>
-        /// <param name="scanIPIds"> The Single Client Access Name (SCAN) IP addresses associated with the cloud VM cluster. SCAN IP addresses are typically used for load balancing and are not assigned to any interface. Oracle Clusterware directs the requests to the appropriate nodes in the cluster. **Note:** For a single-node DB system, this list is empty. </param>
-        /// <param name="vipIds"> The virtual IP (VIP) addresses associated with the cloud VM cluster. The Cluster Ready Services (CRS) creates and maintains one VIP address for each node in the Exadata Cloud Service instance to enable failover. If one node fails, the VIP is reassigned to another active node in the cluster. **Note:** For a single-node DB system, this list is empty. </param>
+        /// <param name="scanIPIds"> The Single Client Access Name (SCAN) IP addresses associated with the cloud VM cluster. SCAN IP addresses are typically used for load balancing and are not assigned to any interface. Oracle Clusterware directs the requests to the appropriate nodes in the cluster. <b>Note:</b> For a single-node DB system, this list is empty. </param>
+        /// <param name="vipIds"> The virtual IP (VIP) addresses associated with the cloud VM cluster. The Cluster Ready Services (CRS) creates and maintains one VIP address for each node in the Exadata Cloud Service instance to enable failover. If one node fails, the VIP is reassigned to another active node in the cluster. <b>Note:</b> For a single-node DB system, this list is empty. </param>
         /// <param name="scanDnsName"> The FQDN of the DNS record for the SCAN IP addresses that are associated with the cloud VM cluster. . </param>
         /// <param name="scanListenerPortTcp"> The TCP Single Client Access Name (SCAN) port. The default port is 1521. </param>
         /// <param name="scanListenerPortTcpSsl"> The TCPS Single Client Access Name (SCAN) port. The default port is 2484. </param>
@@ -241,10 +241,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The type of redundancy configured for the cloud Vm cluster. NORMAL is 2-way redundancy. HIGH is 3-way redundancy. . </summary>
         public CloudVmClusterDiskRedundancy? DiskRedundancy { get; }
 
-        /// <summary> The Single Client Access Name (SCAN) IP addresses associated with the cloud VM cluster. SCAN IP addresses are typically used for load balancing and are not assigned to any interface. Oracle Clusterware directs the requests to the appropriate nodes in the cluster. **Note:** For a single-node DB system, this list is empty. </summary>
+        /// <summary> The Single Client Access Name (SCAN) IP addresses associated with the cloud VM cluster. SCAN IP addresses are typically used for load balancing and are not assigned to any interface. Oracle Clusterware directs the requests to the appropriate nodes in the cluster. <b>Note:</b> For a single-node DB system, this list is empty. </summary>
         public IReadOnlyList<string> ScanIPIds { get; }
 
-        /// <summary> The virtual IP (VIP) addresses associated with the cloud VM cluster. The Cluster Ready Services (CRS) creates and maintains one VIP address for each node in the Exadata Cloud Service instance to enable failover. If one node fails, the VIP is reassigned to another active node in the cluster. **Note:** For a single-node DB system, this list is empty. </summary>
+        /// <summary> The virtual IP (VIP) addresses associated with the cloud VM cluster. The Cluster Ready Services (CRS) creates and maintains one VIP address for each node in the Exadata Cloud Service instance to enable failover. If one node fails, the VIP is reassigned to another active node in the cluster. <b>Note:</b> For a single-node DB system, this list is empty. </summary>
         public IReadOnlyList<string> VipIds { get; }
 
         /// <summary> The FQDN of the DNS record for the SCAN IP addresses that are associated with the cloud VM cluster. . </summary>

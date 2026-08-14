@@ -49,6 +49,34 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task ContentNotDisposedWhenResponseDisposedWithSeekableStream()
+        {
+            // Regression test for https://github.com/Azure/azure-sdk-for-net/issues/43268
+            // When a handler returns HttpContent backed by a seekable MemoryStream (e.g. StringContent),
+            // the HttpContent must not be disposed when the HttpResponseMessage is disposed.
+            var disposeTrackingContent = new DisposeTrackingStringContent("Mock response content");
+
+            var mockHandler = new MockHttpClientHandler(
+                httpRequestMessage =>
+                {
+                    return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = disposeTrackingContent
+                    });
+                });
+
+            var transport = new HttpClientTransport(mockHandler);
+            Request request = transport.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(new Uri("https://example.com:340"));
+
+            Response response = await ExecuteRequest(request, transport);
+            response.Dispose();
+
+            Assert.False(disposeTrackingContent.IsDisposed);
+        }
+
+        [Test]
         public async Task CanGetAndSetUri()
         {
             Uri requestUri = null;
@@ -153,6 +181,19 @@ namespace Azure.Core.Tests
             request.Uri.Reset(new Uri("https://example.com:340"));
             request.Content = RequestContent.Create(bytes ?? Array.Empty<byte>());
             return request;
+        }
+
+        public class DisposeTrackingStringContent : StringContent
+        {
+            public DisposeTrackingStringContent(string content) : base(content) { }
+
+            protected override void Dispose(bool disposing)
+            {
+                IsDisposed = true;
+                base.Dispose(disposing);
+            }
+
+            public bool IsDisposed { get; set; }
         }
 
         public class DisposeTrackingHttpContent : HttpContent

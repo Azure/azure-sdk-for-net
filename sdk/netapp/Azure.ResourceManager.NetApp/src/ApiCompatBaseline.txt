@@ -1,7 +1,0 @@
-# Baselining these as they are not actual compat issues.
-CannotRemoveAttribute : Attribute 'System.ComponentModel.EditorBrowsableAttribute' exists on 'Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupConfiguration..ctor()' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.ComponentModel.EditorBrowsableAttribute' exists on 'Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupConfiguration.BackupPolicyId' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.ComponentModel.EditorBrowsableAttribute' exists on 'Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupStatus' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.ComponentModel.EditorBrowsableAttribute' exists on 'Azure.ResourceManager.NetApp.Models.NetAppVolumeDataProtection.Backup' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.ComponentModel.EditorBrowsableAttribute' exists on 'Azure.ResourceManager.NetApp.Models.NetAppVolumePatchDataProtection.Backup' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.ComponentModel.EditorBrowsableAttribute' exists on 'Azure.ResourceManager.NetApp.Models.NetAppVolumePatch.DataProtection' in the contract but not the implementation.

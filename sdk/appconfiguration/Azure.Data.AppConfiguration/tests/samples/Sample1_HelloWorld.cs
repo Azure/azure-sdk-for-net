@@ -3,19 +3,20 @@
 
 using System;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Samples
 {
-    public partial class ConfigurationSamples: SamplesBase<AppConfigurationTestEnvironment>
+    public partial class ConfigurationSamples : SamplesBase<AppConfigurationTestEnvironment>
     {
         [Test]
         public void HelloWorld()
         {
-            var connectionString = TestEnvironment.ConnectionString;
+            var endpoint = TestEnvironment.Endpoint;
 
             #region Snippet:AzConfigSample1_CreateConfigurationClient
-            var client = new ConfigurationClient(connectionString);
+            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
 
             #region Snippet:AzConfigSample1_CreateConfigurationSetting

@@ -7,17 +7,17 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.NetworkCloud.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary>
-    /// A Class representing a NetworkCloudKubernetesClusterFeature along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudKubernetesClusterFeatureResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetNetworkCloudKubernetesClusterFeatureResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkCloudKubernetesClusterResource"/> using the GetNetworkCloudKubernetesClusterFeature method.
-    /// </summary>
+    [CodeGenSuppress("Delete", typeof(WaitUntil), typeof(MatchConditions), typeof(CancellationToken))]
+    [CodeGenSuppress("DeleteAsync", typeof(WaitUntil), typeof(MatchConditions), typeof(CancellationToken))]
     public partial class NetworkCloudKubernetesClusterFeatureResource : ArmResource
     {
         /// <summary>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
-            => await DeleteAsync(waitUntil, null, null, cancellationToken).ConfigureAwait(false);
+            => await DeleteAsync(waitUntil, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Delete the provided Kubernetes cluster feature.
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudOperationStatusResult> Delete(WaitUntil waitUntil, CancellationToken cancellationToken)
-            => Delete(waitUntil, null, null, cancellationToken);
+            => Delete(waitUntil, null, cancellationToken);
 
         /// <summary>
         /// Patch properties of the provided Kubernetes cluster feature.
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudKubernetesClusterFeatureResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudKubernetesClusterFeaturePatch patch, CancellationToken cancellationToken)
-            => await UpdateAsync(waitUntil, patch, null, null, cancellationToken).ConfigureAwait(false);
+            => await UpdateAsync(waitUntil, patch, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Patch properties of the provided Kubernetes cluster feature.
@@ -114,6 +114,135 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudKubernetesClusterFeatureResource> Update(WaitUntil waitUntil, NetworkCloudKubernetesClusterFeaturePatch patch, CancellationToken cancellationToken)
-            => Update(waitUntil, patch, null, null, cancellationToken);
+            => Update(waitUntil, patch, null, cancellationToken);
+
+        /// <summary> Backward compatible overload for API compatibility. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<NetworkCloudKubernetesClusterFeatureResource> Update(WaitUntil waitUntil, NetworkCloudKubernetesClusterFeaturePatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+            => Update(waitUntil, patch, new MatchConditions { IfMatch = ifMatch != null ? new Azure.ETag(ifMatch) : default(Azure.ETag?), IfNoneMatch = ifNoneMatch != null ? new Azure.ETag(ifNoneMatch) : default(Azure.ETag?) }, cancellationToken);
+
+        /// <summary> Backward compatible overload for API compatibility. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<NetworkCloudKubernetesClusterFeatureResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudKubernetesClusterFeaturePatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+            => await UpdateAsync(waitUntil, patch, new MatchConditions { IfMatch = ifMatch != null ? new Azure.ETag(ifMatch) : default(Azure.ETag?), IfNoneMatch = ifNoneMatch != null ? new Azure.ETag(ifNoneMatch) : default(Azure.ETag?) }, cancellationToken).ConfigureAwait(false);
+        /// <summary> Backward compatible overload for API compatibility. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<NetworkCloudOperationStatusResult> Delete(WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+            => Delete(waitUntil, new MatchConditions { IfMatch = ifMatch != null ? new Azure.ETag(ifMatch) : default(Azure.ETag?), IfNoneMatch = ifNoneMatch != null ? new Azure.ETag(ifNoneMatch) : default(Azure.ETag?) }, cancellationToken);
+
+        /// <summary> Backward compatible overload for API compatibility. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteAsync(WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+            => await DeleteAsync(waitUntil, new MatchConditions { IfMatch = ifMatch != null ? new Azure.ETag(ifMatch) : default(Azure.ETag?), IfNoneMatch = ifNoneMatch != null ? new Azure.ETag(ifNoneMatch) : default(Azure.ETag?) }, cancellationToken).ConfigureAwait(false);
+        /// <summary>
+        /// Delete the provided Kubernetes cluster feature.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesClusters/{kubernetesClusterName}/features/{featureName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> KubernetesClusterFeatures_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudKubernetesClusterFeatureResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteAsync(WaitUntil waitUntil, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _kubernetesClusterFeaturesClientDiagnostics.CreateScope("NetworkCloudKubernetesClusterFeatureResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _kubernetesClusterFeaturesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, matchConditions, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _kubernetesClusterFeaturesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+        /// <summary>
+        /// Delete the provided Kubernetes cluster feature.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesClusters/{kubernetesClusterName}/features/{featureName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> KubernetesClusterFeatures_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudKubernetesClusterFeatureResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<NetworkCloudOperationStatusResult> Delete(WaitUntil waitUntil, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _kubernetesClusterFeaturesClientDiagnostics.CreateScope("NetworkCloudKubernetesClusterFeatureResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _kubernetesClusterFeaturesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, matchConditions, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _kubernetesClusterFeaturesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

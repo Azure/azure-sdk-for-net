@@ -2,16 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.BotService.Models;
 using Azure.ResourceManager.BotService.Tests.Helpers;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.BotService.Tests
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.BotService.Tests
             VirtualNetworkData vnetData = new VirtualNetworkData()
             {
                 Location = "eastus",
-                Subnets = { new SubnetData() { Name = SubnetName, AddressPrefix = "10.0.0.0/24", PrivateEndpointNetworkPolicy = "Disabled" } }
+                Subnets = { new SubnetData() { Name = SubnetName, AddressPrefix = "10.0.0.0/24", PrivateEndpointNetworkPolicies = "Disabled" } }
             };
             vnetData.AddressPrefixes.Add("10.0.0.0/16");
             vnetData.DhcpOptionsDnsServers.Add("10.1.1.1");

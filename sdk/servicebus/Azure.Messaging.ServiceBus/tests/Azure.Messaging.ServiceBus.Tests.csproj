@@ -8,8 +8,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="PluginSnippets\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\samples\PluginSample\PluginSample.csproj" />
+    <ProjectReference Include="PluginSnippets\PluginSnippets.csproj" />
     <ProjectReference Include="..\src\Azure.Messaging.ServiceBus.csproj" />
   </ItemGroup>
 
@@ -27,6 +31,10 @@
     <PackageReference Include="Polly" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
     <PackageReference Include="Azure.Storage.Blobs" />
+    <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" />
+    <PackageReference Include="Microsoft.ApplicationInsights" />
+    <PackageReference Include="OpenTelemetry" />
+    <PackageReference Include="OpenTelemetry.Exporter.Console" />
   </ItemGroup>
 
   <ItemGroup>

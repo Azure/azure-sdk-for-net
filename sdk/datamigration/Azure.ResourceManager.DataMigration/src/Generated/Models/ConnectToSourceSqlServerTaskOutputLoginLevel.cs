@@ -14,38 +14,40 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class ConnectToSourceSqlServerTaskOutputLoginLevel : ConnectToSourceSqlServerTaskOutput
     {
         /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskOutputLoginLevel"/>. </summary>
-        internal ConnectToSourceSqlServerTaskOutputLoginLevel()
+        internal ConnectToSourceSqlServerTaskOutputLoginLevel() : base("LoginLevelOutput")
         {
-            ResultType = "LoginLevelOutput";
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskOutputLoginLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Type of result - database level or task level. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Login name. </param>
         /// <param name="loginType"> The type of login. </param>
         /// <param name="defaultDatabase"> The default database for the login. </param>
         /// <param name="isEnabled"> The state of the login. </param>
         /// <param name="migrationEligibility"> Information about eligibility of login for migration. </param>
-        internal ConnectToSourceSqlServerTaskOutputLoginLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, DataMigrationLoginType? loginType, string defaultDatabase, bool? isEnabled, MigrationEligibilityInfo migrationEligibility) : base(id, resultType, serializedAdditionalRawData)
+        internal ConnectToSourceSqlServerTaskOutputLoginLevel(string id, string resultType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, DataMigrationLoginType? loginType, string defaultDatabase, bool? isEnabled, MigrationEligibilityInfo migrationEligibility) : base(id, resultType, additionalBinaryDataProperties)
         {
             Name = name;
             LoginType = loginType;
             DefaultDatabase = defaultDatabase;
             IsEnabled = isEnabled;
             MigrationEligibility = migrationEligibility;
-            ResultType = resultType ?? "LoginLevelOutput";
         }
 
         /// <summary> Login name. </summary>
         public string Name { get; }
+
         /// <summary> The type of login. </summary>
         public DataMigrationLoginType? LoginType { get; }
+
         /// <summary> The default database for the login. </summary>
         public string DefaultDatabase { get; }
+
         /// <summary> The state of the login. </summary>
         public bool? IsEnabled { get; }
+
         /// <summary> Information about eligibility of login for migration. </summary>
         public MigrationEligibilityInfo MigrationEligibility { get; }
     }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.NonResource.Models;
 
 namespace Azure.ResourceManager.NonResource
@@ -16,7 +15,6 @@ namespace Azure.ResourceManager.NonResource
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(Models.NonResource))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     public partial class AzureResourceManagerNonResourceContext : ModelReaderWriterContext
     {
     }

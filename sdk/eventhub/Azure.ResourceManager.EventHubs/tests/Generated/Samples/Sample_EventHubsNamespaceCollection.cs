@@ -63,17 +63,17 @@ UserAssignedIdentity = "/subscriptions/SampleSubscription/resourceGroups/Resurce
 }},
                     KeySource = EventHubsKeySource.MicrosoftKeyVault,
                 },
-                GeoDataReplication = new NamespaceGeoDataReplicationProperties
+                GeoDataReplication = new EventHubsNamespaceGeoDataReplicationProperties
                 {
                     MaxReplicationLagDurationInSeconds = 300,
                     Locations = {new EventHubsNamespaceReplicaLocation
 {
 LocationName = "eastus",
-RoleType = EventHubsNamespaceGeoDRRoleType.Primary,
+RoleType = EventHubsNamespaceGeoDrRoleType.Primary,
 }, new EventHubsNamespaceReplicaLocation
 {
 LocationName = "southcentralus",
-RoleType = EventHubsNamespaceGeoDRRoleType.Secondary,
+RoleType = EventHubsNamespaceGeoDrRoleType.Secondary,
 }},
                 },
             };
@@ -113,21 +113,21 @@ RoleType = EventHubsNamespaceGeoDRRoleType.Secondary,
             string namespaceName = "NamespaceGeoDRCreateSample";
             EventHubsNamespaceData data = new EventHubsNamespaceData(new AzureLocation("East US"))
             {
-                GeoDataReplication = new NamespaceGeoDataReplicationProperties
+                GeoDataReplication = new EventHubsNamespaceGeoDataReplicationProperties
                 {
                     MaxReplicationLagDurationInSeconds = 60,
                     Locations = {new EventHubsNamespaceReplicaLocation
 {
 LocationName = "eastus",
-RoleType = EventHubsNamespaceGeoDRRoleType.Primary,
+RoleType = EventHubsNamespaceGeoDrRoleType.Primary,
 }, new EventHubsNamespaceReplicaLocation
 {
 LocationName = "westus",
-RoleType = EventHubsNamespaceGeoDRRoleType.Secondary,
+RoleType = EventHubsNamespaceGeoDrRoleType.Secondary,
 }, new EventHubsNamespaceReplicaLocation
 {
 LocationName = "centralus",
-RoleType = EventHubsNamespaceGeoDRRoleType.Secondary,
+RoleType = EventHubsNamespaceGeoDrRoleType.Secondary,
 }},
                 },
             };

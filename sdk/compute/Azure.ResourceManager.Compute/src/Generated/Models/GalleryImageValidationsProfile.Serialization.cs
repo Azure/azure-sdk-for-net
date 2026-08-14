@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryImageValidationsProfile : IUtf8JsonSerializable, IJsonModel<GalleryImageValidationsProfile>
+    /// <summary> This is the validations profile of a Gallery Image Version. </summary>
+    public partial class GalleryImageValidationsProfile : IJsonModel<GalleryImageValidationsProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryImageValidationsProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GalleryImageValidationsProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GalleryImageValidationsProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGalleryImageValidationsProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GalleryImageValidationsProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GalleryImageValidationsProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GalleryImageValidationsProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GalleryImageValidationsProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GalleryImageValidationsProfile IPersistableModel<GalleryImageValidationsProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GalleryImageValidationsProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GalleryImageValidationsProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GalleryImageValidationsProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GalleryImageValidationsProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GalleryImageValidationsProfile)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ValidationETag))
             {
                 writer.WritePropertyName("validationEtag"u8);
@@ -43,7 +83,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("executedValidations"u8);
                 writer.WriteStartArray();
-                foreach (var item in ExecutedValidations)
+                foreach (GalleryImageExecutedValidation item in ExecutedValidations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -53,21 +93,21 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("platformAttributes"u8);
                 writer.WriteStartArray();
-                foreach (var item in PlatformAttributes)
+                foreach (ComputeGalleryPlatformAttribute item in PlatformAttributes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,22 +116,27 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        GalleryImageValidationsProfile IJsonModel<GalleryImageValidationsProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GalleryImageValidationsProfile IJsonModel<GalleryImageValidationsProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GalleryImageValidationsProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GalleryImageValidationsProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GalleryImageValidationsProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GalleryImageValidationsProfile)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGalleryImageValidationsProfile(document.RootElement, options);
         }
 
-        internal static GalleryImageValidationsProfile DeserializeGalleryImageValidationsProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GalleryImageValidationsProfile DeserializeGalleryImageValidationsProfile(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -99,37 +144,36 @@ namespace Azure.ResourceManager.Compute.Models
             string validationETag = default;
             IReadOnlyList<GalleryImageExecutedValidation> executedValidations = default;
             IReadOnlyList<ComputeGalleryPlatformAttribute> platformAttributes = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("validationEtag"u8))
+                if (prop.NameEquals("validationEtag"u8))
                 {
-                    validationETag = property.Value.GetString();
+                    validationETag = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("executedValidations"u8))
+                if (prop.NameEquals("executedValidations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<GalleryImageExecutedValidation> array = new List<GalleryImageExecutedValidation>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(GalleryImageExecutedValidation.DeserializeGalleryImageExecutedValidation(item, options));
                     }
                     executedValidations = array;
                     continue;
                 }
-                if (property.NameEquals("platformAttributes"u8))
+                if (prop.NameEquals("platformAttributes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ComputeGalleryPlatformAttribute> array = new List<ComputeGalleryPlatformAttribute>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ComputeGalleryPlatformAttribute.DeserializeComputeGalleryPlatformAttribute(item, options));
                     }
@@ -138,42 +182,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new GalleryImageValidationsProfile(validationETag, executedValidations ?? new ChangeTrackingList<GalleryImageExecutedValidation>(), platformAttributes ?? new ChangeTrackingList<ComputeGalleryPlatformAttribute>(), serializedAdditionalRawData);
+            return new GalleryImageValidationsProfile(validationETag, executedValidations ?? new ChangeTrackingList<GalleryImageExecutedValidation>(), platformAttributes ?? new ChangeTrackingList<ComputeGalleryPlatformAttribute>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<GalleryImageValidationsProfile>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GalleryImageValidationsProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(GalleryImageValidationsProfile)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        GalleryImageValidationsProfile IPersistableModel<GalleryImageValidationsProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GalleryImageValidationsProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeGalleryImageValidationsProfile(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GalleryImageValidationsProfile)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<GalleryImageValidationsProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

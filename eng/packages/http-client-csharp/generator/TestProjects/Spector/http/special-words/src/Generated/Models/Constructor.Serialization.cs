@@ -16,6 +16,19 @@ namespace SpecialWords._Models
     {
         internal Constructor() => throw null;
 
+        protected virtual Constructor PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<Constructor>.Write(ModelReaderWriterOptions options) => throw null;
+
+        Constructor IPersistableModel<Constructor>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<Constructor>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="constructor"> The <see cref="Constructor"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(Constructor constructor) => throw null;
+
         void IJsonModel<Constructor>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -23,18 +36,5 @@ namespace SpecialWords._Models
         Constructor IJsonModel<Constructor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Constructor JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<Constructor>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        Constructor IPersistableModel<Constructor>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual Constructor PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<Constructor>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="constructor"> The <see cref="Constructor"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(Constructor constructor) => throw null;
     }
 }

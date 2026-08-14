@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     public readonly partial struct ServiceLoadMetricWeight : IEquatable<ServiceLoadMetricWeight>
     {
         private readonly string _value;
+        /// <summary> Disables resource balancing for this metric. This value is zero. </summary>
+        private const string ZeroValue = "Zero";
+        /// <summary> Specifies the metric weight of the service load as Low. The value is 1. </summary>
+        private const string LowValue = "Low";
+        /// <summary> Specifies the metric weight of the service load as Medium. The value is 2. </summary>
+        private const string MediumValue = "Medium";
+        /// <summary> Specifies the metric weight of the service load as High. The value is 3. </summary>
+        private const string HighValue = "High";
 
         /// <summary> Initializes a new instance of <see cref="ServiceLoadMetricWeight"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceLoadMetricWeight(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ZeroValue = "Zero";
-        private const string LowValue = "Low";
-        private const string MediumValue = "Medium";
-        private const string HighValue = "High";
+            _value = value;
+        }
 
         /// <summary> Disables resource balancing for this metric. This value is zero. </summary>
         public static ServiceLoadMetricWeight Zero { get; } = new ServiceLoadMetricWeight(ZeroValue);
+
         /// <summary> Specifies the metric weight of the service load as Low. The value is 1. </summary>
         public static ServiceLoadMetricWeight Low { get; } = new ServiceLoadMetricWeight(LowValue);
+
         /// <summary> Specifies the metric weight of the service load as Medium. The value is 2. </summary>
         public static ServiceLoadMetricWeight Medium { get; } = new ServiceLoadMetricWeight(MediumValue);
+
         /// <summary> Specifies the metric weight of the service load as High. The value is 3. </summary>
         public static ServiceLoadMetricWeight High { get; } = new ServiceLoadMetricWeight(HighValue);
+
         /// <summary> Determines if two <see cref="ServiceLoadMetricWeight"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceLoadMetricWeight left, ServiceLoadMetricWeight right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceLoadMetricWeight"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceLoadMetricWeight left, ServiceLoadMetricWeight right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceLoadMetricWeight"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceLoadMetricWeight"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceLoadMetricWeight(string value) => new ServiceLoadMetricWeight(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceLoadMetricWeight"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceLoadMetricWeight?(string value) => value == null ? null : new ServiceLoadMetricWeight(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceLoadMetricWeight other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceLoadMetricWeight other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

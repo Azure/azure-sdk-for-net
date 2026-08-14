@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PineconeVectorDB
         {
             TryGetApiVersion(ResourceType, out string pineconeVectorDBOrganizationApiVersion);
             _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PineconeVectorDB", ResourceType.Namespace, Diagnostics);
-            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, pineconeVectorDBOrganizationApiVersion ?? "2024-10-22-preview");
+            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, pineconeVectorDBOrganizationApiVersion ?? "2024-10-22-preview");
             ValidateResourceId(id);
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PineconeVectorDB
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

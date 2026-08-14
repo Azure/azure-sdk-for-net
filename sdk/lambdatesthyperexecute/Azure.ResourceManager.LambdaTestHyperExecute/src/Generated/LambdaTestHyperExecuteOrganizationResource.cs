@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         {
             TryGetApiVersion(ResourceType, out string lambdaTestHyperExecuteOrganizationApiVersion);
             _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LambdaTestHyperExecute", ResourceType.Namespace, Diagnostics);
-            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, lambdaTestHyperExecuteOrganizationApiVersion ?? "2024-02-01");
+            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, lambdaTestHyperExecuteOrganizationApiVersion ?? "2024-02-01");
             ValidateResourceId(id);
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct VirtualMachineProvisioningState : IEquatable<VirtualMachineProvisioningState>
     {
         private readonly string _value;
+        /// <summary> The Accepted status. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> The Canceled status. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> The Failed status. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The Provisioning status. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> The Succeeded status. </summary>
+        private const string SucceededValue = "Succeeded";
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualMachineProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string ProvisioningValue = "Provisioning";
-        private const string AcceptedValue = "Accepted";
-
-        /// <summary> Succeeded. </summary>
-        public static VirtualMachineProvisioningState Succeeded { get; } = new VirtualMachineProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
-        public static VirtualMachineProvisioningState Failed { get; } = new VirtualMachineProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
-        public static VirtualMachineProvisioningState Canceled { get; } = new VirtualMachineProvisioningState(CanceledValue);
-        /// <summary> Provisioning. </summary>
-        public static VirtualMachineProvisioningState Provisioning { get; } = new VirtualMachineProvisioningState(ProvisioningValue);
-        /// <summary> Accepted. </summary>
+        /// <summary> The Accepted status. </summary>
         public static VirtualMachineProvisioningState Accepted { get; } = new VirtualMachineProvisioningState(AcceptedValue);
+
+        /// <summary> The Canceled status. </summary>
+        public static VirtualMachineProvisioningState Canceled { get; } = new VirtualMachineProvisioningState(CanceledValue);
+
+        /// <summary> The Failed status. </summary>
+        public static VirtualMachineProvisioningState Failed { get; } = new VirtualMachineProvisioningState(FailedValue);
+
+        /// <summary> The Provisioning status. </summary>
+        public static VirtualMachineProvisioningState Provisioning { get; } = new VirtualMachineProvisioningState(ProvisioningValue);
+
+        /// <summary> The Succeeded status. </summary>
+        public static VirtualMachineProvisioningState Succeeded { get; } = new VirtualMachineProvisioningState(SucceededValue);
+
         /// <summary> Determines if two <see cref="VirtualMachineProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualMachineProvisioningState left, VirtualMachineProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualMachineProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualMachineProvisioningState left, VirtualMachineProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualMachineProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualMachineProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualMachineProvisioningState(string value) => new VirtualMachineProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualMachineProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualMachineProvisioningState?(string value) => value == null ? null : new VirtualMachineProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualMachineProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualMachineProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -4,15 +4,15 @@
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql;
 using Azure.ResourceManager.PostgreSql.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.PostgreSql.Tests
 {
-    public class PostgreSqlServerTests: PostgreSqlManagementTestBase
+    public class PostgreSqlServerTests : PostgreSqlManagementTestBase
     {
         public PostgreSqlServerTests(bool isAsync)
             : base(isAsync)
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             var content = new PostgreSqlServerCreateOrUpdateContent(
                 new PostgreSqlServerPropertiesForDefaultCreate(administratorLogin: "testUser", administratorLoginPassword: "testPassword1!"),
                 rg.Data.Location)
-                {
-                    Sku = new PostgreSqlSku("B_Gen5_1")
-                };
+            {
+                Sku = new PostgreSqlSku("B_Gen5_1")
+            };
             var lro = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, content);
             PostgreSqlServerResource server = lro.Value;
             Assert.AreEqual(serverName, server.Data.Name);
@@ -57,9 +57,9 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             var content = new PostgreSqlServerCreateOrUpdateContent(
                 new PostgreSqlServerPropertiesForDefaultCreate(administratorLogin: "testUser", administratorLoginPassword: "testPassword1!"),
                 rg.Data.Location)
-                {
-                    Sku = new PostgreSqlSku("B_Gen5_1")
-                };
+            {
+                Sku = new PostgreSqlSku("B_Gen5_1")
+            };
             var lro = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, content);
             PostgreSqlServerResource server = lro.Value;
             Assert.AreEqual(serverName, server.Data.Name);

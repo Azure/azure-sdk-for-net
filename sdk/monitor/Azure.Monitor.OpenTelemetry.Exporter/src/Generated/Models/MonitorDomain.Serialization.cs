@@ -5,32 +5,150 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Monitor.OpenTelemetry.Exporter;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class MonitorDomain : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownMonitorDomain))]
+    internal abstract partial class MonitorDomain : IJsonModel<MonitorDomain>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        /// <summary> Initializes a new instance of <see cref="MonitorDomain"/> for deserialization. </summary>
+        internal MonitorDomain()
+        {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MonitorDomain PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorDomain>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMonitorDomain(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MonitorDomain)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorDomain>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureMonitorOpenTelemetryExporterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MonitorDomain)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MonitorDomain>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MonitorDomain IPersistableModel<MonitorDomain>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MonitorDomain>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<MonitorDomain>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("ver"u8);
-            writer.WriteNumberValue(Version);
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<object>(item.Value);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorDomain>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitorDomain)} does not support writing '{format}' format.");
+            }
+            writer.WritePropertyName("ver"u8);
+            writer.WriteNumberValue(Version);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.ToString());
+            }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+        }
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MonitorDomain IJsonModel<MonitorDomain>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MonitorDomain JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorDomain>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitorDomain)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorDomain(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MonitorDomain DeserializeMonitorDomain(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("kind"u8, out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "AvailabilityData":
+                        return AvailabilityData.DeserializeAvailabilityData(element, options);
+                    case "EventData":
+                        return TelemetryEventData.DeserializeTelemetryEventData(element, options);
+                    case "ExceptionData":
+                        return TelemetryExceptionData.DeserializeTelemetryExceptionData(element, options);
+                    case "MessageData":
+                        return MessageData.DeserializeMessageData(element, options);
+                    case "MetricsData":
+                        return MetricsData.DeserializeMetricsData(element, options);
+                    case "PageViewData":
+                        return PageViewData.DeserializePageViewData(element, options);
+                    case "PageViewPerfData":
+                        return PageViewPerfData.DeserializePageViewPerfData(element, options);
+                    case "RemoteDependencyData":
+                        return RemoteDependencyData.DeserializeRemoteDependencyData(element, options);
+                    case "RequestData":
+                        return RequestData.DeserializeRequestData(element, options);
+                }
+            }
+            return UnknownMonitorDomain.DeserializeUnknownMonitorDomain(element, options);
         }
     }
 }

@@ -7,16 +7,56 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadSapAseRestoreContent : IUtf8JsonSerializable, IJsonModel<WorkloadSapAseRestoreContent>
+    /// <summary> AzureWorkload SAP Ase-specific restore. </summary>
+    public partial class WorkloadSapAseRestoreContent : WorkloadRestoreContent, IJsonModel<WorkloadSapAseRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadSapAseRestoreContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override RestoreContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadSapAseRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeWorkloadSapAseRestoreContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadSapAseRestoreContent)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadSapAseRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadSapAseRestoreContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<WorkloadSapAseRestoreContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WorkloadSapAseRestoreContent IPersistableModel<WorkloadSapAseRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (WorkloadSapAseRestoreContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WorkloadSapAseRestoreContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WorkloadSapAseRestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,208 +68,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkloadSapAseRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadSapAseRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WorkloadSapAseRestoreContent)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
         }
 
-        WorkloadSapAseRestoreContent IJsonModel<WorkloadSapAseRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WorkloadSapAseRestoreContent IJsonModel<WorkloadSapAseRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (WorkloadSapAseRestoreContent)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override RestoreContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkloadSapAseRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadSapAseRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WorkloadSapAseRestoreContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWorkloadSapAseRestoreContent(document.RootElement, options);
         }
 
-        internal static WorkloadSapAseRestoreContent DeserializeWorkloadSapAseRestoreContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static WorkloadSapAseRestoreContent DeserializeWorkloadSapAseRestoreContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("objectType", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "AzureWorkloadSAPAsePointInTimeRestoreRequest": return WorkloadSapAsePointInTimeRestoreContent.DeserializeWorkloadSapAsePointInTimeRestoreContent(element, options);
-                }
-            }
-            FileShareRecoveryType? recoveryType = default;
-            ResourceIdentifier sourceResourceId = default;
-            IDictionary<string, string> propertyBag = default;
-            TargetRestoreInfo targetInfo = default;
-            RecoveryMode? recoveryMode = default;
-            string targetResourceGroupName = default;
-            UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default;
-            SnapshotRestoreContent snapshotRestoreParameters = default;
-            ResourceIdentifier targetVirtualMachineId = default;
-            string objectType = "AzureWorkloadSAPAseRestoreRequest";
-            IList<string> resourceGuardOperationRequests = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("recoveryType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    recoveryType = new FileShareRecoveryType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("sourceResourceId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sourceResourceId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("propertyBag"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    propertyBag = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("targetInfo"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targetInfo = TargetRestoreInfo.DeserializeTargetRestoreInfo(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("recoveryMode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    recoveryMode = new RecoveryMode(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("targetResourceGroupName"u8))
-                {
-                    targetResourceGroupName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("userAssignedManagedIdentityDetails"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    userAssignedManagedIdentityDetails = UserAssignedManagedIdentityDetails.DeserializeUserAssignedManagedIdentityDetails(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("snapshotRestoreParameters"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    snapshotRestoreParameters = SnapshotRestoreContent.DeserializeSnapshotRestoreContent(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("targetVirtualMachineId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targetVirtualMachineId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("objectType"u8))
-                {
-                    objectType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resourceGuardOperationRequests"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    resourceGuardOperationRequests = array;
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new WorkloadSapAseRestoreContent(
-                objectType,
-                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
-                serializedAdditionalRawData,
-                recoveryType,
-                sourceResourceId,
-                propertyBag ?? new ChangeTrackingDictionary<string, string>(),
-                targetInfo,
-                recoveryMode,
-                targetResourceGroupName,
-                userAssignedManagedIdentityDetails,
-                snapshotRestoreParameters,
-                targetVirtualMachineId);
+            return UnknownWorkloadSapAseRestoreContent.DeserializeUnknownWorkloadSapAseRestoreContent(element, options);
         }
-
-        BinaryData IPersistableModel<WorkloadSapAseRestoreContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkloadSapAseRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WorkloadSapAseRestoreContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        WorkloadSapAseRestoreContent IPersistableModel<WorkloadSapAseRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkloadSapAseRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeWorkloadSapAseRestoreContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WorkloadSapAseRestoreContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<WorkloadSapAseRestoreContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

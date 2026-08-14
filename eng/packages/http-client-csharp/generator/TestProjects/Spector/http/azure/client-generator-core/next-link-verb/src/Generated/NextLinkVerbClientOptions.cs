@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Specs.Azure.ClientGenerator.Core.NextLinkVerb
 {
     public partial class NextLinkVerbClientOptions : ClientOptions
     {
+        public NextLinkVerbClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal NextLinkVerbClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

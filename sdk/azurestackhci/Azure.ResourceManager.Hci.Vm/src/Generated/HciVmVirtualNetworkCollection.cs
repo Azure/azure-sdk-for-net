@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(HciVmVirtualNetworkResource.ResourceType, out string hciVmVirtualNetworkApiVersion);
             _virtualNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmVirtualNetworkResource.ResourceType.Namespace, Diagnostics);
-            _virtualNetworksRestClient = new VirtualNetworks(_virtualNetworksClientDiagnostics, Pipeline, Endpoint, hciVmVirtualNetworkApiVersion ?? "2025-09-01-preview");
+            _virtualNetworksRestClient = new VirtualNetworks(_virtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmVirtualNetworkApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _virtualNetworksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualNetworkName, HciVmVirtualNetworkData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmVirtualNetworkResource> operation = new VmArmOperation<HciVmVirtualNetworkResource>(
-                    new HciVmVirtualNetworkOperationSource(Client),
+                    new HciVmVirtualNetworkResourceOperationSource(Client),
                     _virtualNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _virtualNetworksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualNetworkName, HciVmVirtualNetworkData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmVirtualNetworkResource> operation = new VmArmOperation<HciVmVirtualNetworkResource>(
-                    new HciVmVirtualNetworkOperationSource(Client),
+                    new HciVmVirtualNetworkResourceOperationSource(Client),
                     _virtualNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmVirtualNetworkData, HciVmVirtualNetworkResource>(new VirtualNetworksGetByResourceGroupAsyncCollectionResultOfT(_virtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmVirtualNetworkResource(Client, data));
+            return new AsyncPageableWrapper<HciVmVirtualNetworkData, HciVmVirtualNetworkResource>(new VirtualNetworksGetByResourceGroupAsyncCollectionResultOfT(_virtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmVirtualNetworkCollection.GetAll"), data => new HciVmVirtualNetworkResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmVirtualNetworkData, HciVmVirtualNetworkResource>(new VirtualNetworksGetByResourceGroupCollectionResultOfT(_virtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmVirtualNetworkResource(Client, data));
+            return new PageableWrapper<HciVmVirtualNetworkData, HciVmVirtualNetworkResource>(new VirtualNetworksGetByResourceGroupCollectionResultOfT(_virtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmVirtualNetworkCollection.GetAll"), data => new HciVmVirtualNetworkResource(Client, data));
         }
 
         /// <summary>

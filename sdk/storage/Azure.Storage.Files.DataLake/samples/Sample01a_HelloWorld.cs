@@ -259,7 +259,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 // Upload content to the file.  When using the Upload API, you don't need to create the file first.
                 // If the file already exists, it will be overwritten.
                 // For larger files, Upload() will upload the file in multiple sequential requests.
-                file.Upload(File.OpenRead(sampleFileContent),true);
+                file.Upload(File.OpenRead(sampleFileContent), true);
 
                 // Verify the contents of the file
                 PathProperties properties = file.GetProperties();
@@ -424,7 +424,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                     stream.Write(data, 0, data.Length);
                 }
 
-               // Verify the contents
+                // Verify the contents
                 Assert.AreEqual(SampleFileContent, File.ReadAllText(downloadPath));
             }
             finally

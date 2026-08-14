@@ -5,45 +5,28 @@
 
 using System;
 using System.ClientModel;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using Azure.Identity;
-using Azure.AI.Projects.Tests.Utils;
 
 namespace Azure.AI.Projects.Tests
 {
     public class IndexesTest : ProjectsClientTestBase
     {
-        public IndexesTest(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
+        public IndexesTest(bool isAsync) : base(isAsync)
         {
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task SearchIndexesTest()
         {
-            string indexName = TestEnvironment.INDEXNAME;
-            string indexVersion = TestEnvironment.INDEXVERSION;
-            string aiSearchConnectionName = TestEnvironment.AISEARCHCONNECTIONNAME;
-            string aiSearchIndexName = TestEnvironment.AISEARCHINDEXNAME;
+            string indexName = TestEnvironment.INDEX_NAME;
+            string indexVersion = TestEnvironment.INDEX_VERSION;
+            string aiSearchConnectionName = TestEnvironment.AI_SEARCH_CONNECTION_NAME;
+            string aiSearchIndexName = TestEnvironment.AI_SEARCH_INDEX_NAME;
 
-            AIProjectClient projectClient = GetTestClient();
+            AIProjectClient projectClient = GetTestProjectClient();
 
-            if (IsAsync)
-            {
-                await SearchIndexesTestAsync(projectClient, indexName, indexVersion, aiSearchConnectionName, aiSearchIndexName);
-            }
-            else
-            {
-                SearchIndexesTestSync(projectClient, indexName, indexVersion, aiSearchConnectionName, aiSearchIndexName);
-            }
-        }
-
-        private void SearchIndexesTestSync(AIProjectClient projectClient, string indexName, string indexVersion, string aiSearchConnectionName, string aiSearchIndexName)
-        {
             BinaryContent content = BinaryContent.Create(BinaryData.FromObjectAsJson(new
             {
                 connectionName = aiSearchConnectionName,
@@ -54,80 +37,7 @@ namespace Azure.AI.Projects.Tests
             }));
 
             Console.WriteLine($"Create an Index named `{indexName}` referencing an existing AI Search resource:");
-            AIProjectIndex index = (AIProjectIndex)projectClient.Indexes.CreateOrUpdate(
-                name: indexName,
-                version: indexVersion,
-                content: content
-            );
-            ValidateIndex(
-                index,
-                expectedIndexType: "AzureSearch",
-                expectedIndexName: indexName,
-                expectedIndexVersion: indexVersion,
-                expectedAiSearchConnectionName: aiSearchConnectionName,
-                expectedAiSearchIndexName: aiSearchIndexName
-            );
-
-            Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
-            AIProjectIndex retrievedIndex = projectClient.Indexes.GetIndex(name: indexName, version: indexVersion);
-            ValidateIndex(
-                retrievedIndex,
-                expectedIndexType: "AzureSearch",
-                expectedIndexName: indexName,
-                expectedIndexVersion: indexVersion,
-                expectedAiSearchConnectionName: aiSearchConnectionName,
-                expectedAiSearchIndexName: aiSearchIndexName
-            );
-
-            Console.WriteLine($"Listing all versions of the Index named `{indexName}`:");
-            bool isEmpty = true;
-            foreach (AIProjectIndex version in projectClient.Indexes.GetIndexVersions(name: indexName))
-            {
-                isEmpty = false;
-                ValidateIndex(version);
-            }
-            Assert.IsFalse(isEmpty, "Expected at least one version of the Index to be returned.");
-
-            Console.WriteLine($"Listing all Indices:");
-            isEmpty = true;
-            foreach (AIProjectIndex version in projectClient.Indexes.GetIndexes())
-            {
-                isEmpty = false;
-                ValidateIndex(version);
-                Console.WriteLine($"Index name: {version.Name}, index version: {version.Version}");
-            }
-            Assert.IsFalse(isEmpty, "Expected at least one Index to be returned.");
-
-            // Remove once service supports Delete
-            try
-            {
-                Console.WriteLine($"To delete: index name: {indexName}, index version: {indexVersion}");
-                Console.WriteLine("Delete the Index version created above:");
-                projectClient.Indexes.Delete(name: indexName, version: indexVersion); // TODO: delete throws 404 error
-
-                Console.WriteLine("Attempt to delete again. It does not exist and should return 204:");
-                projectClient.Indexes.Delete(name: indexName, version: indexVersion);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Delete index currently throws 404 error: {e}");
-                // throw;
-            }
-        }
-
-        private async Task SearchIndexesTestAsync(AIProjectClient projectClient, string indexName,string indexVersion, string aiSearchConnectionName, string aiSearchIndexName)
-        {
-            BinaryContent content = BinaryContent.Create(BinaryData.FromObjectAsJson(new
-            {
-                connectionName = aiSearchConnectionName,
-                indexName = aiSearchIndexName,
-                type = "AzureSearch",
-                description = "Sample Index for testing",
-                displayName = "Sample Index"
-            }));
-
-            Console.WriteLine($"Create an Index named `{indexName}` referencing an existing AI Search resource:");
-            AIProjectIndex index = (AIProjectIndex) await projectClient.Indexes.CreateOrUpdateAsync(
+            AIProjectIndex index = (AIProjectIndex)await projectClient.Indexes.CreateOrUpdateAsync(
                 name: indexName,
                 version: indexVersion,
                 content: content
@@ -159,7 +69,7 @@ namespace Azure.AI.Projects.Tests
                 isEmpty = false;
                 ValidateIndex(version);
             }
-            Assert.IsFalse(isEmpty, "Expected at least one version of the Index to be returned.");
+            Assert.That(isEmpty, Is.False, "Expected at least one version of the Index to be returned.");
 
             Console.WriteLine($"Listing all Indices:");
             isEmpty = true;
@@ -169,7 +79,7 @@ namespace Azure.AI.Projects.Tests
                 ValidateIndex(version);
                 Console.WriteLine($"Index name: {version.Name}, index version: {version.Version}");
             }
-            Assert.IsFalse(isEmpty, "Expected at least one Index to be returned.");
+            Assert.That(isEmpty, Is.False, "Expected at least one Index to be returned.");
 
             // Remove once service supports Delete
             try

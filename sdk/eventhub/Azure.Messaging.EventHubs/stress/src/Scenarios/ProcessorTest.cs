@@ -2,14 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Tests;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Collections.Concurrent;
 
 namespace Azure.Messaging.EventHubs.Stress;
 
@@ -38,7 +38,7 @@ public class ProcessorTest : TestScenario
     private ConcurrentDictionary<string, int> _lastReadPartitionSequence { get; } = new ConcurrentDictionary<string, int>();
 
     /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
-    public override Role[] Roles { get; } = {Role.PartitionPublisher, Role.Processor, Role.Processor, Role.Processor};
+    public override Role[] Roles { get; } = { Role.PartitionPublisher, Role.Processor, Role.Processor, Role.Processor };
 
     /// <summary>
     ///  Initializes a new <see cref="ProcessorTest"/> instance.
@@ -110,7 +110,7 @@ public class ProcessorTest : TestScenario
                 return Task.Run(() => partitionPublisher.RunAsync(cancellationToken));
 
             default:
-                throw new NotSupportedException($"Running role { role.ToString() } is not supported by this test scenario.");
+                throw new NotSupportedException($"Running role {role.ToString()} is not supported by this test scenario.");
         }
     }
 
@@ -139,7 +139,7 @@ public class ProcessorTest : TestScenario
                     duplicateId = "(unknown)";
                 }
 
-                MetricsCollection.Client.TrackException(new InvalidOperationException($"The handler for processing events was invoked concurrently for processor: `{ _identifier }`,  partition: `{ args.Partition.PartitionId }`, event: `{ duplicateId }`.  Count: `{ activeCalls }`"));
+                MetricsCollection.Client.TrackException(new InvalidOperationException($"The handler for processing events was invoked concurrently for processor: `{_identifier}`,  partition: `{args.Partition.PartitionId}`, event: `{duplicateId}`.  Count: `{activeCalls}`"));
             }
 
             // Increment total service operations metric

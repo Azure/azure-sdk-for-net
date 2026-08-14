@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Support.Models
     public readonly partial struct SupportTicketCommunicationType : IEquatable<SupportTicketCommunicationType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SupportTicketCommunicationType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SupportTicketCommunicationType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string WebValue = "web";
         private const string PhoneValue = "phone";
 
-        /// <summary> web. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportTicketCommunicationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SupportTicketCommunicationType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Web. </summary>
         public static SupportTicketCommunicationType Web { get; } = new SupportTicketCommunicationType(WebValue);
-        /// <summary> phone. </summary>
+
+        /// <summary> Gets the Phone. </summary>
         public static SupportTicketCommunicationType Phone { get; } = new SupportTicketCommunicationType(PhoneValue);
+
         /// <summary> Determines if two <see cref="SupportTicketCommunicationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SupportTicketCommunicationType left, SupportTicketCommunicationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SupportTicketCommunicationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SupportTicketCommunicationType left, SupportTicketCommunicationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SupportTicketCommunicationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SupportTicketCommunicationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SupportTicketCommunicationType(string value) => new SupportTicketCommunicationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SupportTicketCommunicationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SupportTicketCommunicationType?(string value) => value == null ? null : new SupportTicketCommunicationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SupportTicketCommunicationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SupportTicketCommunicationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

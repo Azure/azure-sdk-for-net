@@ -33,7 +33,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="result"> The result of the operation. </param>
         /// <param name="usage"> Usage details of the analyze operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContentAnalyzerAnalyzeOperationStatus(string id, OperationState status, ResponseError error, AnalyzeResult result, UsageDetails usage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContentAnalyzerAnalyzeOperationStatus(string id, OperationState status, ResponseError error, AnalysisResult result, UsageDetails usage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
@@ -53,7 +53,7 @@ namespace Azure.AI.ContentUnderstanding
         public ResponseError Error { get; }
 
         /// <summary> The result of the operation. </summary>
-        public AnalyzeResult Result { get; }
+        public AnalysisResult Result { get; }
 
         /// <summary> Usage details of the analyze operation. </summary>
         public UsageDetails Usage { get; }

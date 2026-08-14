@@ -20,35 +20,38 @@ namespace Azure.Compute.Batch
         private static ResponseClassifier _pipelineMessageClassifier202;
         private static ResponseClassifier _pipelineMessageClassifier204;
 
-        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        private static ResponseClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 = new StatusCodeClassifier(stackalloc ushort[] { 201 });
+        private static ResponseClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= new StatusCodeClassifier(stackalloc ushort[] { 201 });
 
-        private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 = new StatusCodeClassifier(stackalloc ushort[] { 202 });
+        private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
 
-        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = new StatusCodeClassifier(stackalloc ushort[] { 204 });
+        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
-        internal HttpMessage CreateGetApplicationsRequest(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, RequestContext context)
+        internal HttpMessage CreateGetApplicationsRequest(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/applications", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxresults != null)
+            if (timeout != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+            }
+            if (maxResults != null)
+            {
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -56,10 +59,21 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetApplicationsRequest(Uri nextPage, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, RequestContext context)
+        internal HttpMessage CreateNextGetApplicationsRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -70,24 +84,27 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetApplicationRequest(string applicationId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
+        internal HttpMessage CreateGetApplicationRequest(string applicationId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/applications/", false);
             uri.AppendPath(applicationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -95,19 +112,22 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetPoolUsageMetricsRequest(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
+        internal HttpMessage CreateGetPoolUsageMetricsRequest(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/poolusagemetrics", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxresults != null)
+            if (timeout != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+            }
+            if (maxResults != null)
+            {
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (starttime != null)
             {
@@ -125,9 +145,9 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -135,10 +155,21 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetPoolUsageMetricsRequest(Uri nextPage, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetPoolUsageMetricsRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -149,23 +180,26 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateCreatePoolRequest(RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
+        internal HttpMessage CreateCreatePoolRequest(RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/pools", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
@@ -174,19 +208,22 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetPoolsRequest(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetPoolsRequest(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/pools", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxresults != null)
+            if (timeout != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+            }
+            if (maxResults != null)
+            {
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (filter != null)
             {
@@ -204,9 +241,9 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -214,10 +251,21 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetPoolsRequest(Uri nextPage, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateNextGetPoolsRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -228,24 +276,27 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateDeletePoolInternalRequest(string poolId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateDeletePoolInternalRequest(string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             if (requestConditions != null)
             {
@@ -256,24 +307,27 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreatePoolExistsInternalRequest(string poolId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreatePoolExistsInternalRequest(string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Head;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             if (requestConditions != null)
             {
@@ -284,16 +338,19 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetPoolRequest(string poolId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetPoolRequest(string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -307,9 +364,9 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             if (requestConditions != null)
             {
@@ -321,24 +378,27 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateUpdatePoolRequest(string poolId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateUpdatePoolRequest(string poolId, RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             if (requestConditions != null)
@@ -351,50 +411,56 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateDisablePoolAutoScaleRequest(string poolId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
+        internal HttpMessage CreateDisablePoolAutoScaleRequest(string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
             uri.AppendPath("/disableautoscale", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
             return message;
         }
 
-        internal HttpMessage CreateEnablePoolAutoScaleRequest(string poolId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateEnablePoolAutoScaleRequest(string poolId, RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
             uri.AppendPath("/enableautoscale", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             if (requestConditions != null)
@@ -407,25 +473,28 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateEvaluatePoolAutoScaleRequest(string poolId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
+        internal HttpMessage CreateEvaluatePoolAutoScaleRequest(string poolId, RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
             uri.AppendPath("/evaluateautoscale", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Headers.SetValue("Accept", "application/json");
@@ -435,25 +504,28 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateResizePoolInternalRequest(string poolId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateResizePoolInternalRequest(string poolId, RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
             uri.AppendPath("/resize", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             if (requestConditions != null)
@@ -466,25 +538,28 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateStopPoolResizeInternalRequest(string poolId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateStopPoolResizeInternalRequest(string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
             uri.AppendPath("/stopresize", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             if (requestConditions != null)
             {
@@ -495,25 +570,28 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateReplacePoolPropertiesRequest(string poolId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
+        internal HttpMessage CreateReplacePoolPropertiesRequest(string poolId, RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
             uri.AppendPath("/updateproperties", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
@@ -522,25 +600,28 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateRemoveNodesInternalRequest(string poolId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateRemoveNodesInternalRequest(string poolId, RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
             uri.AppendPath("/removenodes", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             if (requestConditions != null)
@@ -553,19 +634,22 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetSupportedImagesRequest(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, RequestContext context)
+        internal HttpMessage CreateGetSupportedImagesRequest(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/supportedimages", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxresults != null)
+            if (timeout != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+            }
+            if (maxResults != null)
+            {
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (filter != null)
             {
@@ -575,9 +659,9 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -585,10 +669,21 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetSupportedImagesRequest(Uri nextPage, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetSupportedImagesRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -599,19 +694,22 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetPoolNodeCountsRequest(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, RequestContext context)
+        internal HttpMessage CreateGetPoolNodeCountsRequest(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/nodecounts", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxresults != null)
+            if (timeout != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+            }
+            if (maxResults != null)
+            {
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (filter != null)
             {
@@ -621,9 +719,9 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -631,10 +729,21 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetPoolNodeCountsRequest(Uri nextPage, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetPoolNodeCountsRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -645,16 +754,19 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateDeleteJobInternalRequest(string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, bool? force, RequestContext context)
+        internal HttpMessage CreateDeleteJobInternalRequest(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, bool? force, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             if (force != null)
             {
@@ -664,9 +776,9 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             if (requestConditions != null)
             {
@@ -677,16 +789,19 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetJobRequest(string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetJobRequest(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -700,9 +815,9 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             if (requestConditions != null)
             {
@@ -714,24 +829,27 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateUpdateJobRequest(string jobId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateUpdateJobRequest(string jobId, RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             if (requestConditions != null)
@@ -744,24 +862,27 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateReplaceJobRequest(string jobId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateReplaceJobRequest(string jobId, RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             if (requestConditions != null)
@@ -774,25 +895,28 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateDisableJobInternalRequest(string jobId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateDisableJobInternalRequest(string jobId, RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/disable", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             if (requestConditions != null)
@@ -805,25 +929,28 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateEnableJobInternalRequest(string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateEnableJobInternalRequest(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/enable", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             if (requestConditions != null)
             {
@@ -834,17 +961,20 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateTerminateJobInternalRequest(string jobId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, bool? force, RequestContext context)
+        internal HttpMessage CreateTerminateJobInternalRequest(string jobId, RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, bool? force, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/terminate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             if (force != null)
             {
@@ -854,11 +984,14 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
-            request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
+            }
             if (requestConditions != null)
             {
                 request.Headers.Add(requestConditions, "R");
@@ -869,23 +1002,26 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateCreateJobRequest(RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
+        internal HttpMessage CreateCreateJobRequest(RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
@@ -894,19 +1030,22 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetJobsRequest(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetJobsRequest(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxresults != null)
+            if (timeout != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+            }
+            if (maxResults != null)
+            {
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (filter != null)
             {
@@ -924,9 +1063,9 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -934,10 +1073,21 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetJobsRequest(Uri nextPage, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateNextGetJobsRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -948,21 +1098,24 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetJobsFromSchedulesRequest(string jobScheduleId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetJobsFromScheduleRequest(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
             uri.AppendPath("/jobs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxresults != null)
+            if (timeout != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+            }
+            if (maxResults != null)
+            {
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (filter != null)
             {
@@ -980,9 +1133,9 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -990,10 +1143,21 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetJobsFromSchedulesRequest(Uri nextPage, string jobScheduleId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateNextGetJobsFromScheduleRequest(Uri nextPage, string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -1004,21 +1168,24 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetJobPreparationAndReleaseTaskStatusesRequest(string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateGetJobPreparationAndReleaseTaskStatusesRequest(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/jobpreparationandreleasetaskstatus", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxresults != null)
+            if (timeout != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+            }
+            if (maxResults != null)
+            {
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (filter != null)
             {
@@ -1032,9 +1199,9 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -1042,10 +1209,21 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetJobPreparationAndReleaseTaskStatusesRequest(Uri nextPage, string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateNextGetJobPreparationAndReleaseTaskStatusesRequest(Uri nextPage, string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -1056,25 +1234,28 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetJobTaskCountsRequest(string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
+        internal HttpMessage CreateGetJobTaskCountsRequest(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/taskcounts", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -1082,24 +1263,27 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateJobScheduleExistsInternalRequest(string jobScheduleId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateJobScheduleExistsInternalRequest(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Head;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             if (requestConditions != null)
             {
@@ -1110,16 +1294,19 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateDeleteJobScheduleInternalRequest(string jobScheduleId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, bool? force, RequestContext context)
+        internal HttpMessage CreateDeleteJobScheduleInternalRequest(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, bool? force, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             if (force != null)
             {
@@ -1129,9 +1316,9 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             if (requestConditions != null)
             {
@@ -1142,16 +1329,19 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetJobScheduleRequest(string jobScheduleId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetJobScheduleRequest(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -1165,9 +1355,9 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             if (requestConditions != null)
             {
@@ -1179,24 +1369,27 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateUpdateJobScheduleRequest(string jobScheduleId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateUpdateJobScheduleRequest(string jobScheduleId, RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             if (requestConditions != null)
@@ -1209,24 +1402,27 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateReplaceJobScheduleRequest(string jobScheduleId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateReplaceJobScheduleRequest(string jobScheduleId, RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             if (requestConditions != null)
@@ -1239,25 +1435,28 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateDisableJobScheduleRequest(string jobScheduleId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateDisableJobScheduleRequest(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
             uri.AppendPath("/disable", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             if (requestConditions != null)
             {
@@ -1268,25 +1467,28 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateEnableJobScheduleRequest(string jobScheduleId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateEnableJobScheduleRequest(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
             uri.AppendPath("/enable", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             if (requestConditions != null)
             {
@@ -1297,17 +1499,20 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateTerminateJobScheduleInternalRequest(string jobScheduleId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, bool? force, RequestContext context)
+        internal HttpMessage CreateTerminateJobScheduleInternalRequest(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, bool? force, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules/", false);
             uri.AppendPath(jobScheduleId, true);
             uri.AppendPath("/terminate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             if (force != null)
             {
@@ -1317,9 +1522,9 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             if (requestConditions != null)
             {
@@ -1330,23 +1535,26 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateCreateJobScheduleRequest(RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
+        internal HttpMessage CreateCreateJobScheduleRequest(RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
@@ -1355,19 +1563,22 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetJobSchedulesRequest(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetJobSchedulesRequest(TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobschedules", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxresults != null)
+            if (timeout != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+            }
+            if (maxResults != null)
+            {
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (filter != null)
             {
@@ -1385,9 +1596,9 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -1395,10 +1606,21 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetJobSchedulesRequest(Uri nextPage, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateNextGetJobSchedulesRequest(Uri nextPage, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -1409,25 +1631,28 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateCreateTaskRequest(string jobId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
+        internal HttpMessage CreateCreateTaskRequest(string jobId, RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/tasks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
@@ -1436,21 +1661,24 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetTasksRequest(string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetTasksRequest(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/tasks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxresults != null)
+            if (timeout != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+            }
+            if (maxResults != null)
+            {
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (filter != null)
             {
@@ -1468,9 +1696,9 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -1478,10 +1706,21 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetTasksRequest(Uri nextPage, string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateNextGetTasksRequest(Uri nextPage, string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -1492,25 +1731,28 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateCreateTaskCollectionRequest(string jobId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
+        internal HttpMessage CreateCreateTaskCollectionRequest(string jobId, RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/addtaskcollection", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Headers.SetValue("Accept", "application/json");
@@ -1520,7 +1762,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateDeleteTaskRequest(string jobId, string taskId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateDeleteTaskRequest(string jobId, string taskId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1528,18 +1770,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath(jobId, true);
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             if (requestConditions != null)
             {
@@ -1550,7 +1795,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetTaskRequest(string jobId, string taskId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetTaskRequest(string jobId, string taskId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1558,10 +1803,13 @@ namespace Azure.Compute.Batch
             uri.AppendPath(jobId, true);
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -1575,9 +1823,9 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             if (requestConditions != null)
             {
@@ -1589,7 +1837,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateReplaceTaskRequest(string jobId, string taskId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateReplaceTaskRequest(string jobId, string taskId, RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1597,18 +1845,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath(jobId, true);
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             if (requestConditions != null)
@@ -1621,7 +1872,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetSubTasksRequest(string jobId, string taskId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateGetSubTasksRequest(string jobId, string taskId, TimeSpan? timeout, DateTimeOffset? requestDate, IEnumerable<string> @select, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1630,10 +1881,13 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
             uri.AppendPath("/subtasksinfo", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -1643,9 +1897,9 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -1653,10 +1907,21 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetSubTasksRequest(Uri nextPage, string jobId, string taskId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateNextGetSubTasksRequest(Uri nextPage, string jobId, string taskId, TimeSpan? timeout, DateTimeOffset? requestDate, IEnumerable<string> @select, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -1667,7 +1932,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateTerminateTaskRequest(string jobId, string taskId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateTerminateTaskRequest(string jobId, string taskId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1676,18 +1941,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
             uri.AppendPath("/terminate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             if (requestConditions != null)
             {
@@ -1698,7 +1966,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateReactivateTaskRequest(string jobId, string taskId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateReactivateTaskRequest(string jobId, string taskId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1707,18 +1975,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
             uri.AppendPath("/reactivate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             if (requestConditions != null)
             {
@@ -1729,7 +2000,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateDeleteTaskFileRequest(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, bool? recursive, RequestContext context)
+        internal HttpMessage CreateDeleteTaskFileRequest(string jobId, string taskId, string filePath, TimeSpan? timeout, DateTimeOffset? requestDate, bool? recursive, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1739,10 +2010,13 @@ namespace Azure.Compute.Batch
             uri.AppendPath(taskId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(filePath, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             if (recursive != null)
             {
@@ -1752,16 +2026,16 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
             return message;
         }
 
-        internal HttpMessage CreateGetTaskFileRequest(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, string ocpRange, RequestContext context)
+        internal HttpMessage CreateGetTaskFileRequest(string jobId, string taskId, string filePath, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, string ocpRange, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1771,18 +2045,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath(taskId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(filePath, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             if (requestConditions != null)
             {
@@ -1798,7 +2075,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetTaskFilePropertiesInternalRequest(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateGetTaskFilePropertiesInternalRequest(string jobId, string taskId, string filePath, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1808,18 +2085,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath(taskId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(filePath, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Head;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             if (requestConditions != null)
             {
@@ -1830,7 +2110,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetTaskFilesRequest(string jobId, string taskId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, bool? recursive, RequestContext context)
+        internal HttpMessage CreateGetTaskFilesRequest(string jobId, string taskId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, bool? recursive, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1839,14 +2119,17 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskId, true);
             uri.AppendPath("/files", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxresults != null)
+            if (timeout != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+            }
+            if (maxResults != null)
+            {
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (filter != null)
             {
@@ -1860,9 +2143,9 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -1870,10 +2153,21 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetTaskFilesRequest(Uri nextPage, string jobId, string taskId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, bool? recursive, RequestContext context)
+        internal HttpMessage CreateNextGetTaskFilesRequest(Uri nextPage, string jobId, string taskId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, bool? recursive, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -1884,7 +2178,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateCreateNodeUserRequest(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
+        internal HttpMessage CreateCreateNodeUserRequest(string poolId, string nodeId, RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1893,18 +2187,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/users", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
@@ -1913,7 +2210,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateDeleteNodeUserRequest(string poolId, string nodeId, string userName, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
+        internal HttpMessage CreateDeleteNodeUserRequest(string poolId, string nodeId, string userName, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1923,25 +2220,28 @@ namespace Azure.Compute.Batch
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
             return message;
         }
 
-        internal HttpMessage CreateReplaceNodeUserRequest(string poolId, string nodeId, string userName, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
+        internal HttpMessage CreateReplaceNodeUserRequest(string poolId, string nodeId, string userName, RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1951,18 +2251,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
@@ -1971,7 +2274,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetNodeRequest(string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateGetNodeRequest(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, IEnumerable<string> @select, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1979,10 +2282,13 @@ namespace Azure.Compute.Batch
             uri.AppendPath(poolId, true);
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -1992,9 +2298,9 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -2002,7 +2308,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateRebootNodeInternalRequest(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
+        internal HttpMessage CreateRebootNodeInternalRequest(string poolId, string nodeId, RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -2011,27 +2317,33 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/reboot", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
-            request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
+            }
             request.Content = content;
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
             return message;
         }
 
-        internal HttpMessage CreateStartNodeInternalRequest(string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
+        internal HttpMessage CreateStartNodeInternalRequest(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -2040,25 +2352,28 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/start", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
             return message;
         }
 
-        internal HttpMessage CreateReimageNodeInternalRequest(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
+        internal HttpMessage CreateReimageNodeInternalRequest(string poolId, string nodeId, RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -2067,27 +2382,33 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/reimage", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
-            request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
+            }
             request.Content = content;
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
             return message;
         }
 
-        internal HttpMessage CreateDeallocateNodeInternalRequest(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
+        internal HttpMessage CreateDeallocateNodeInternalRequest(string poolId, string nodeId, RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -2096,27 +2417,33 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/deallocate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
-            request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
+            }
             request.Content = content;
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
             return message;
         }
 
-        internal HttpMessage CreateDisableNodeSchedulingRequest(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
+        internal HttpMessage CreateDisableNodeSchedulingRequest(string poolId, string nodeId, RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -2125,27 +2452,33 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/disablescheduling", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
-            request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
+            }
             request.Content = content;
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
             return message;
         }
 
-        internal HttpMessage CreateEnableNodeSchedulingRequest(string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
+        internal HttpMessage CreateEnableNodeSchedulingRequest(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -2154,25 +2487,28 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/enablescheduling", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
             return message;
         }
 
-        internal HttpMessage CreateGetNodeRemoteLoginSettingsRequest(string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
+        internal HttpMessage CreateGetNodeRemoteLoginSettingsRequest(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -2181,18 +2517,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/remoteloginsettings", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -2200,7 +2539,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateUploadNodeLogsRequest(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestContext context)
+        internal HttpMessage CreateUploadNodeLogsRequest(string poolId, string nodeId, RequestContent content, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -2209,18 +2548,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/uploadbatchservicelogs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Headers.SetValue("Accept", "application/json");
@@ -2230,21 +2572,24 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetNodesRequest(string poolId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateGetNodesRequest(string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolId, true);
             uri.AppendPath("/nodes", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxresults != null)
+            if (timeout != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+            }
+            if (maxResults != null)
+            {
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (filter != null)
             {
@@ -2258,9 +2603,9 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -2268,10 +2613,21 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetNodesRequest(Uri nextPage, string poolId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateNextGetNodesRequest(Uri nextPage, string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, IEnumerable<string> @select, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -2282,7 +2638,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetNodeExtensionRequest(string poolId, string nodeId, string extensionName, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateGetNodeExtensionRequest(string poolId, string nodeId, string extensionName, TimeSpan? timeout, DateTimeOffset? requestDate, IEnumerable<string> @select, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -2292,10 +2648,13 @@ namespace Azure.Compute.Batch
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/extensions/", false);
             uri.AppendPath(extensionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -2305,9 +2664,9 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -2315,7 +2674,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetNodeExtensionsRequest(string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateGetNodeExtensionsRequest(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, IEnumerable<string> @select, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -2324,14 +2683,17 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/extensions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxresults != null)
+            if (timeout != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+            }
+            if (maxResults != null)
+            {
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -2341,9 +2703,9 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -2351,10 +2713,21 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetNodeExtensionsRequest(Uri nextPage, string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateNextGetNodeExtensionsRequest(Uri nextPage, string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, IEnumerable<string> @select, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -2365,7 +2738,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateDeleteNodeFileRequest(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, bool? recursive, RequestContext context)
+        internal HttpMessage CreateDeleteNodeFileRequest(string poolId, string nodeId, string filePath, TimeSpan? timeout, DateTimeOffset? requestDate, bool? recursive, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -2375,10 +2748,13 @@ namespace Azure.Compute.Batch
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(filePath, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             if (recursive != null)
             {
@@ -2388,16 +2764,16 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
             return message;
         }
 
-        internal HttpMessage CreateGetNodeFileRequest(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, string ocpRange, RequestContext context)
+        internal HttpMessage CreateGetNodeFileRequest(string poolId, string nodeId, string filePath, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, string ocpRange, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -2407,18 +2783,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(filePath, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             if (requestConditions != null)
             {
@@ -2434,7 +2813,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetNodeFilePropertiesInternalRequest(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateGetNodeFilePropertiesInternalRequest(string poolId, string nodeId, string filePath, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -2444,18 +2823,21 @@ namespace Azure.Compute.Batch
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(filePath, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Head;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             if (requestConditions != null)
             {
@@ -2466,7 +2848,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetNodeFilesRequest(string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, bool? recursive, RequestContext context)
+        internal HttpMessage CreateGetNodeFilesRequest(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, bool? recursive, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -2475,14 +2857,17 @@ namespace Azure.Compute.Batch
             uri.AppendPath("/nodes/", false);
             uri.AppendPath(nodeId, true);
             uri.AppendPath("/files", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, SerializationFormat.Duration_Seconds), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxresults != null)
+            if (timeout != null)
             {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
+            }
+            if (maxResults != null)
+            {
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxResults), true);
             }
             if (filter != null)
             {
@@ -2496,9 +2881,9 @@ namespace Azure.Compute.Batch
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            if (ocpDate != null)
+            if (requestDate != null)
             {
-                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(requestDate, SerializationFormat.DateTime_RFC7231));
             }
             request.Headers.SetValue("Accept", "application/json");
             request.Headers.SetValue("return-client-request-id", "true");
@@ -2506,10 +2891,21 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetNodeFilesRequest(Uri nextPage, string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, bool? recursive, RequestContext context)
+        internal HttpMessage CreateNextGetNodeFilesRequest(Uri nextPage, string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, bool? recursive, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;

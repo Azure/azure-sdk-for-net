@@ -11,7 +11,7 @@ In this example, we will demonstrate listing and retrieving connections using th
 
 ## Synchronous sample:
 ```C# Snippet:AI_Projects_ConnectionsExampleSync
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
@@ -47,7 +47,7 @@ Console.WriteLine(defaultConnectionCredentials);
 
 ## Asynchronous sample:
 ```C# Snippet:AI_Projects_ConnectionsExampleAsync
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 

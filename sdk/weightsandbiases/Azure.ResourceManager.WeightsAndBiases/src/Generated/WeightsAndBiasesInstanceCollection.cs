@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         {
             TryGetApiVersion(WeightsAndBiasesInstanceResource.ResourceType, out string weightsAndBiasesInstanceApiVersion);
             _instancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WeightsAndBiases", WeightsAndBiasesInstanceResource.ResourceType.Namespace, Diagnostics);
-            _instancesRestClient = new Instances(_instancesClientDiagnostics, Pipeline, Endpoint, weightsAndBiasesInstanceApiVersion ?? "2024-09-18");
+            _instancesRestClient = new Instances(_instancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, weightsAndBiasesInstanceApiVersion ?? "2024-09-18");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
                 HttpMessage message = _instancesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, instancename, WeightsAndBiasesInstanceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WeightsAndBiasesArmOperation<WeightsAndBiasesInstanceResource> operation = new WeightsAndBiasesArmOperation<WeightsAndBiasesInstanceResource>(
-                    new WeightsAndBiasesInstanceOperationSource(Client),
+                    new WeightsAndBiasesInstanceResourceOperationSource(Client),
                     _instancesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
                 HttpMessage message = _instancesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, instancename, WeightsAndBiasesInstanceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WeightsAndBiasesArmOperation<WeightsAndBiasesInstanceResource> operation = new WeightsAndBiasesArmOperation<WeightsAndBiasesInstanceResource>(
-                    new WeightsAndBiasesInstanceOperationSource(Client),
+                    new WeightsAndBiasesInstanceResourceOperationSource(Client),
                     _instancesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetByResourceGroupAsyncCollectionResultOfT(_instancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new WeightsAndBiasesInstanceResource(Client, data));
+            return new AsyncPageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetByResourceGroupAsyncCollectionResultOfT(_instancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WeightsAndBiasesInstanceCollection.GetAll"), data => new WeightsAndBiasesInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetByResourceGroupCollectionResultOfT(_instancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new WeightsAndBiasesInstanceResource(Client, data));
+            return new PageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetByResourceGroupCollectionResultOfT(_instancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WeightsAndBiasesInstanceCollection.GetAll"), data => new WeightsAndBiasesInstanceResource(Client, data));
         }
 
         /// <summary>

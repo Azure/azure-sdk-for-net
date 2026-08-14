@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct ReservationReportSchema : IEquatable<ReservationReportSchema>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ReservationReportSchema"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ReservationReportSchema(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InstanceFlexibilityGroupValue = "InstanceFlexibilityGroup";
         private const string InstanceFlexibilityRatioValue = "InstanceFlexibilityRatio";
         private const string InstanceIdValue = "InstanceId";
@@ -34,45 +27,79 @@ namespace Azure.ResourceManager.CostManagement.Models
         private const string UsageDateValue = "UsageDate";
         private const string UsedHoursValue = "UsedHours";
 
-        /// <summary> InstanceFlexibilityGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationReportSchema"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ReservationReportSchema(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the InstanceFlexibilityGroup. </summary>
         public static ReservationReportSchema InstanceFlexibilityGroup { get; } = new ReservationReportSchema(InstanceFlexibilityGroupValue);
-        /// <summary> InstanceFlexibilityRatio. </summary>
+
+        /// <summary> Gets the InstanceFlexibilityRatio. </summary>
         public static ReservationReportSchema InstanceFlexibilityRatio { get; } = new ReservationReportSchema(InstanceFlexibilityRatioValue);
-        /// <summary> InstanceId. </summary>
+
+        /// <summary> Gets the InstanceId. </summary>
         public static ReservationReportSchema InstanceId { get; } = new ReservationReportSchema(InstanceIdValue);
-        /// <summary> Kind. </summary>
+
+        /// <summary> Gets the Kind. </summary>
         public static ReservationReportSchema Kind { get; } = new ReservationReportSchema(KindValue);
-        /// <summary> ReservationId. </summary>
+
+        /// <summary> Gets the ReservationId. </summary>
         public static ReservationReportSchema ReservationId { get; } = new ReservationReportSchema(ReservationIdValue);
-        /// <summary> ReservationOrderId. </summary>
+
+        /// <summary> Gets the ReservationOrderId. </summary>
         public static ReservationReportSchema ReservationOrderId { get; } = new ReservationReportSchema(ReservationOrderIdValue);
-        /// <summary> ReservedHours. </summary>
+
+        /// <summary> Gets the ReservedHours. </summary>
         public static ReservationReportSchema ReservedHours { get; } = new ReservationReportSchema(ReservedHoursValue);
-        /// <summary> SkuName. </summary>
+
+        /// <summary> Gets the SkuName. </summary>
         public static ReservationReportSchema SkuName { get; } = new ReservationReportSchema(SkuNameValue);
-        /// <summary> TotalReservedQuantity. </summary>
+
+        /// <summary> Gets the TotalReservedQuantity. </summary>
         public static ReservationReportSchema TotalReservedQuantity { get; } = new ReservationReportSchema(TotalReservedQuantityValue);
-        /// <summary> UsageDate. </summary>
+
+        /// <summary> Gets the UsageDate. </summary>
         public static ReservationReportSchema UsageDate { get; } = new ReservationReportSchema(UsageDateValue);
-        /// <summary> UsedHours. </summary>
+
+        /// <summary> Gets the UsedHours. </summary>
         public static ReservationReportSchema UsedHours { get; } = new ReservationReportSchema(UsedHoursValue);
+
         /// <summary> Determines if two <see cref="ReservationReportSchema"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ReservationReportSchema left, ReservationReportSchema right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ReservationReportSchema"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ReservationReportSchema left, ReservationReportSchema right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReservationReportSchema"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ReservationReportSchema"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ReservationReportSchema(string value) => new ReservationReportSchema(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ReservationReportSchema"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReservationReportSchema?(string value) => value == null ? null : new ReservationReportSchema(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReservationReportSchema other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ReservationReportSchema other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

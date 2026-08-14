@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.AI.Language.Conversations.Models
     public readonly partial struct TemperatureUnit : IEquatable<TemperatureUnit>
     {
         private readonly string _value;
+        /// <summary> Unspecified temperature unit. </summary>
+        private const string UnspecifiedValue = "Unspecified";
+        /// <summary> Fahrenheit temperature unit. </summary>
+        private const string FahrenheitValue = "Fahrenheit";
+        /// <summary> Kelvin temperature unit. </summary>
+        private const string KelvinValue = "Kelvin";
+        /// <summary> Rankine temperature unit. </summary>
+        private const string RankineValue = "Rankine";
+        /// <summary> Celsius temperature unit. </summary>
+        private const string CelsiusValue = "Celsius";
 
         /// <summary> Initializes a new instance of <see cref="TemperatureUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TemperatureUnit(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnspecifiedValue = "Unspecified";
-        private const string FahrenheitValue = "Fahrenheit";
-        private const string KelvinValue = "Kelvin";
-        private const string RankineValue = "Rankine";
-        private const string CelsiusValue = "Celsius";
+            _value = value;
+        }
 
         /// <summary> Unspecified temperature unit. </summary>
         public static TemperatureUnit Unspecified { get; } = new TemperatureUnit(UnspecifiedValue);
+
         /// <summary> Fahrenheit temperature unit. </summary>
         public static TemperatureUnit Fahrenheit { get; } = new TemperatureUnit(FahrenheitValue);
+
         /// <summary> Kelvin temperature unit. </summary>
         public static TemperatureUnit Kelvin { get; } = new TemperatureUnit(KelvinValue);
+
         /// <summary> Rankine temperature unit. </summary>
         public static TemperatureUnit Rankine { get; } = new TemperatureUnit(RankineValue);
+
         /// <summary> Celsius temperature unit. </summary>
         public static TemperatureUnit Celsius { get; } = new TemperatureUnit(CelsiusValue);
+
         /// <summary> Determines if two <see cref="TemperatureUnit"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TemperatureUnit left, TemperatureUnit right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TemperatureUnit"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TemperatureUnit left, TemperatureUnit right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TemperatureUnit"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TemperatureUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TemperatureUnit(string value) => new TemperatureUnit(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TemperatureUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TemperatureUnit?(string value) => value == null ? null : new TemperatureUnit(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TemperatureUnit other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TemperatureUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

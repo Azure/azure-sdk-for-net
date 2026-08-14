@@ -30,12 +30,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Initializes a new instance of <see cref="TextAuthoringAssignedDeploymentResource"/>. </summary>
         /// <param name="resourceId"> The resource ID. </param>
         /// <param name="region"> The resource region. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringAssignedDeploymentResource(string resourceId, string region, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TextAuthoringAssignedDeploymentResource(string resourceId, string region, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = new ResourceIdentifier(resourceId);
             Region = new AzureLocation(region);
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
     }
 }

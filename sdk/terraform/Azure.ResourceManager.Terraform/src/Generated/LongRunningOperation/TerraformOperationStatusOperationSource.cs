@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.Terraform
         TerraformOperationStatus IOperationSource<TerraformOperationStatus>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            TerraformOperationStatus result = TerraformOperationStatus.DeserializeTerraformOperationStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return TerraformOperationStatus.DeserializeTerraformOperationStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.Terraform
         async ValueTask<TerraformOperationStatus> IOperationSource<TerraformOperationStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            TerraformOperationStatus result = TerraformOperationStatus.DeserializeTerraformOperationStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return TerraformOperationStatus.DeserializeTerraformOperationStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

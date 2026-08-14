@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HDInsight
 {
+    /// <summary></summary>
     public partial class HDInsightPrivateEndpointConnectionResource : IJsonModel<HDInsightPrivateEndpointConnectionData>
     {
-        private static HDInsightPrivateEndpointConnectionData s_dataDeserializationInstance;
-        private static HDInsightPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HDInsightPrivateEndpointConnectionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HDInsightPrivateEndpointConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HDInsightPrivateEndpointConnectionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HDInsightPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HDInsightPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        HDInsightPrivateEndpointConnectionData IJsonModel<HDInsightPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HDInsightPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HDInsightPrivateEndpointConnectionData IJsonModel<HDInsightPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HDInsightPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HDInsightPrivateEndpointConnectionData>(Data, options, AzureResourceManagerHDInsightContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HDInsightPrivateEndpointConnectionData IPersistableModel<HDInsightPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HDInsightPrivateEndpointConnectionData>(data, options, AzureResourceManagerHDInsightContext.Default);
 
-        string IPersistableModel<HDInsightPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HDInsightPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HDInsightPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

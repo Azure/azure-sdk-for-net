@@ -43,5 +43,14 @@ namespace Azure.ResourceManager.CommonProperties.Mocking
             ConfidentialResource.ValidateResourceId(id);
             return new ConfidentialResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="ArmResourceIdentifierResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ArmResourceIdentifierResource"/> object. </returns>
+        public virtual ArmResourceIdentifierResource GetArmResourceIdentifierResource(ResourceIdentifier id)
+        {
+            ArmResourceIdentifierResource.ValidateResourceId(id);
+            return new ArmResourceIdentifierResource(Client, id);
+        }
     }
 }

@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> VirtualMachinePatchParameters represents the body of the request to patch the virtual machine. </summary>
     public partial class NetworkCloudVirtualMachinePatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachinePatch"/>. </summary>
         public NetworkCloudVirtualMachinePatch()
@@ -54,22 +26,41 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachinePatch"/>. </summary>
         /// <param name="identity"> The identity for the resource. </param>
-        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
-        /// <param name="vmImageRepositoryCredentials"> The credentials used to login to the image repository that has access to the specified image. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudVirtualMachinePatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, ImageRepositoryCredentials vmImageRepositoryCredentials, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The list of the resource properties. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudVirtualMachinePatch(ManagedServiceIdentity identity, VirtualMachinePatchProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
+            Properties = properties;
             Tags = tags;
-            VmImageRepositoryCredentials = vmImageRepositoryCredentials;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The identity for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The Azure resource tags that will replace the existing ones. </summary>
+
+        /// <summary> The list of the resource properties. </summary>
+        internal VirtualMachinePatchProperties Properties { get; set; }
+
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> The credentials used to login to the image repository that has access to the specified image. </summary>
-        public ImageRepositoryCredentials VmImageRepositoryCredentials { get; set; }
+        public ImageRepositoryCredentials VmImageRepositoryCredentials
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VmImageRepositoryCredentials;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachinePatchProperties();
+                }
+                Properties.VmImageRepositoryCredentials = value;
+            }
+        }
     }
 }

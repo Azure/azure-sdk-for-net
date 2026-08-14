@@ -46,12 +46,14 @@ namespace Azure.Core.Tests
 
         public void OnNext(KeyValuePair<string, object> value)
         {
-            if (_collectThisStack?.Value == false) return;
+            if (_collectThisStack?.Value == false)
+                return;
 
             lock (Scopes)
             {
                 // Check for disposal
-                if (_subscriptions == null) return;
+                if (_subscriptions == null)
+                    return;
 
                 var startSuffix = ".Start";
                 var stopSuffix = ".Stop";

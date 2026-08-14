@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -16,6 +17,9 @@ namespace Authentication.Union
 {
     public partial class UnionClient
     {
+        private const string AuthorizationHeader = "x-ms-api-key";
+        private static readonly string[] AuthorizationScopes = new string[] { "https://security.microsoft.com/.default" };
+
         protected UnionClient() => throw null;
 
         public UnionClient(AzureKeyCredential credential) : this(new Uri("http://localhost:3000"), credential, new UnionClientOptions()) => throw null;
@@ -26,9 +30,14 @@ namespace Authentication.Union
 
         public UnionClient(TokenCredential credential, UnionClientOptions options) : this(new Uri("http://localhost:3000"), credential, options) => throw null;
 
-        public UnionClient(Uri endpoint, AzureKeyCredential credential, UnionClientOptions options) => throw null;
+        internal UnionClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, UnionClientOptions options) => throw null;
 
-        public UnionClient(Uri endpoint, TokenCredential credential, UnionClientOptions options) => throw null;
+        public UnionClient(Uri endpoint, AzureKeyCredential credential, UnionClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options) => throw null;
+
+        public UnionClient(Uri endpoint, TokenCredential credential, UnionClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public UnionClient(UnionClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

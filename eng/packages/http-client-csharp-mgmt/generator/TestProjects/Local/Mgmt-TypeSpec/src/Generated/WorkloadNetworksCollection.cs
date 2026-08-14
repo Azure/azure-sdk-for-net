@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(WorkloadNetworksResource.ResourceType, out string workloadNetworksApiVersion);
             _workloadNetworksOpsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", WorkloadNetworksResource.ResourceType.Namespace, Diagnostics);
-            _workloadNetworksOpsRestClient = new WorkloadNetworksOps(_workloadNetworksOpsClientDiagnostics, Pipeline, Endpoint, workloadNetworksApiVersion ?? "2024-05-01");
+            _workloadNetworksOpsRestClient = new WorkloadNetworksOps(_workloadNetworksOpsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workloadNetworksApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,12 +94,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _workloadNetworksOpsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workloadNetworkName, WorkloadNetworksData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<WorkloadNetworksResource> operation = new TestsArmOperation<WorkloadNetworksResource>(
-                    new WorkloadNetworksOperationSource(Client),
+                    new WorkloadNetworksResourceOperationSource(Client),
                     _workloadNetworksOpsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -152,12 +153,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _workloadNetworksOpsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workloadNetworkName, WorkloadNetworksData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<WorkloadNetworksResource> operation = new TestsArmOperation<WorkloadNetworksResource>(
-                    new WorkloadNetworksOperationSource(Client),
+                    new WorkloadNetworksResourceOperationSource(Client),
                     _workloadNetworksOpsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -294,7 +296,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadNetworksData, WorkloadNetworksResource>(new WorkloadNetworksOpsGetAllAsyncCollectionResultOfT(_workloadNetworksOpsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new WorkloadNetworksResource(Client, data));
+            return new AsyncPageableWrapper<WorkloadNetworksData, WorkloadNetworksResource>(new WorkloadNetworksOpsGetAllAsyncCollectionResultOfT(_workloadNetworksOpsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WorkloadNetworksCollection.GetAll"), data => new WorkloadNetworksResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +324,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadNetworksData, WorkloadNetworksResource>(new WorkloadNetworksOpsGetAllCollectionResultOfT(_workloadNetworksOpsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new WorkloadNetworksResource(Client, data));
+            return new PageableWrapper<WorkloadNetworksData, WorkloadNetworksResource>(new WorkloadNetworksOpsGetAllCollectionResultOfT(_workloadNetworksOpsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WorkloadNetworksCollection.GetAll"), data => new WorkloadNetworksResource(Client, data));
         }
 
         /// <summary>

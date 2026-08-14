@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             TryGetApiVersion(DataReplicationRecoveryPointResource.ResourceType, out string dataReplicationRecoveryPointApiVersion);
             _recoveryPointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationRecoveryPointResource.ResourceType.Namespace, Diagnostics);
-            _recoveryPointRestClient = new RecoveryPoint(_recoveryPointClientDiagnostics, Pipeline, Endpoint, dataReplicationRecoveryPointApiVersion ?? "2024-09-01");
+            _recoveryPointRestClient = new RecoveryPoint(_recoveryPointClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationRecoveryPointApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             if (id.ResourceType != DataReplicationProtectedItemResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationProtectedItemResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationProtectedItemResource.ResourceType), nameof(id));
             }
         }
 
@@ -183,7 +183,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new DataReplicationRecoveryPointResource(Client, data));
+                context,
+                "DataReplicationRecoveryPointCollection.GetAll"), data => new DataReplicationRecoveryPointResource(Client, data));
         }
 
         /// <summary>
@@ -217,7 +218,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new DataReplicationRecoveryPointResource(Client, data));
+                context,
+                "DataReplicationRecoveryPointCollection.GetAll"), data => new DataReplicationRecoveryPointResource(Client, data));
         }
 
         /// <summary>

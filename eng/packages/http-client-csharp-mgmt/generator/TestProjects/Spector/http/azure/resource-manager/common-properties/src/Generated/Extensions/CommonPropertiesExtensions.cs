@@ -68,6 +68,24 @@ namespace Azure.ResourceManager.CommonProperties
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ArmResourceIdentifierResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCommonPropertiesArmClient.GetArmResourceIdentifierResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ArmResourceIdentifierResource"/> object. </returns>
+        public static ArmResourceIdentifierResource GetArmResourceIdentifierResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCommonPropertiesArmClient(client).GetArmResourceIdentifierResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of ManagedIdentityTrackedResources in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -137,6 +155,99 @@ namespace Azure.ResourceManager.CommonProperties
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableCommonPropertiesResourceGroupResource(resourceGroupResource).GetConfidentialResources();
+        }
+
+        /// <summary>
+        /// Get a ConfidentialResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCommonPropertiesResourceGroupResource.GetConfidentialResourceAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="confidentialResourceName"> The name of the ConfidentialResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ConfidentialResource>> GetConfidentialResourceAsync(this ResourceGroupResource resourceGroupResource, string confidentialResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableCommonPropertiesResourceGroupResource(resourceGroupResource).GetConfidentialResourceAsync(confidentialResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a ConfidentialResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCommonPropertiesResourceGroupResource.GetConfidentialResource(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="confidentialResourceName"> The name of the ConfidentialResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ConfidentialResource> GetConfidentialResource(this ResourceGroupResource resourceGroupResource, string confidentialResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableCommonPropertiesResourceGroupResource(resourceGroupResource).GetConfidentialResource(confidentialResourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ArmResourceIdentifierResources in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCommonPropertiesResourceGroupResource.GetArmResourceIdentifierResources()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of ArmResourceIdentifierResources and their operations over a ArmResourceIdentifierResource. </returns>
+        public static ArmResourceIdentifierResourceCollection GetArmResourceIdentifierResources(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableCommonPropertiesResourceGroupResource(resourceGroupResource).GetArmResourceIdentifierResources();
+        }
+
+        /// <summary>
+        /// Get a ArmResourceIdentifierResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCommonPropertiesResourceGroupResource.GetArmResourceIdentifierResourceAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="armResourceIdentifierResourceName"> arm resource name for path. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ArmResourceIdentifierResource>> GetArmResourceIdentifierResourceAsync(this ResourceGroupResource resourceGroupResource, string armResourceIdentifierResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableCommonPropertiesResourceGroupResource(resourceGroupResource).GetArmResourceIdentifierResourceAsync(armResourceIdentifierResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a ArmResourceIdentifierResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCommonPropertiesResourceGroupResource.GetArmResourceIdentifierResource(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="armResourceIdentifierResourceName"> arm resource name for path. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ArmResourceIdentifierResource> GetArmResourceIdentifierResource(this ResourceGroupResource resourceGroupResource, string armResourceIdentifierResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableCommonPropertiesResourceGroupResource(resourceGroupResource).GetArmResourceIdentifierResource(armResourceIdentifierResourceName, cancellationToken);
         }
     }
 }

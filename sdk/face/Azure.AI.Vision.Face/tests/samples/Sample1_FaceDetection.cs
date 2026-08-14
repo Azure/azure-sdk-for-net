@@ -116,7 +116,8 @@ namespace Azure.AI.Vision.Face.Samples
 
             #region Snippet:DetectFacesInvalidUrl
             var invalidUri = new Uri("http://invalid.uri");
-            try {
+            try
+            {
                 var detectResponse = client.Detect(
                     invalidUri,
                     FaceDetectionModel.Detection01,

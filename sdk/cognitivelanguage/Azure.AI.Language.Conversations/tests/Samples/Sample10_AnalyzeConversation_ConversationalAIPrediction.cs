@@ -23,10 +23,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:ConversationAnalysis_AnalyzeAIConversation
             string projectName = "EmailApp";
             string deploymentName = "production";
-        #if !SNIPPET
+#if !SNIPPET
             projectName = TestEnvironment.ProjectName;
             deploymentName = TestEnvironment.DeploymentName;
-        #endif
+#endif
 
             AnalyzeConversationInput data = new ConversationalAITask(
                 new ConversationalAIAnalysisInput(

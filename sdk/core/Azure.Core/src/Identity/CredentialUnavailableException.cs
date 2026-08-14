@@ -1,0 +1,75 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
+using System.Text;
+using Azure.Core;
+
+namespace Azure.Identity
+{
+    /// <summary>
+    /// An exception indicating a <see cref="TokenCredential"/> did not attempt to authenticate and retrieve <see cref="AccessToken"/>, as its prerequisite information or state was not available.
+    /// </summary>
+    [Serializable]
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
+    [TypeForwardedFrom("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+    public class CredentialUnavailableException : AuthenticationFailedException
+    {
+        /// <summary>
+        /// Creates a new <see cref="CredentialUnavailableException"/> with the specified message.
+        /// </summary>
+        /// <param name="message">The message describing the authentication failure.</param>
+        public CredentialUnavailableException(string message)
+            : this(message, null)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="CredentialUnavailableException"/> with the specified message.
+        /// </summary>
+        /// <param name="message">The message describing the authentication failure.</param>
+        /// <param name="innerException">The exception underlying the authentication failure.</param>
+        public CredentialUnavailableException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+        }
+
+        internal static CredentialUnavailableException CreateAggregateException(string message, IList<CredentialUnavailableException> exceptions)
+        {
+            if (exceptions.Count == 1)
+            {
+                return exceptions[0];
+            }
+
+            // Build the credential unavailable message, this code is only reachable if all credentials throw AuthenticationFailedException
+            StringBuilder errorMsg = new StringBuilder(message);
+
+            foreach (var exception in exceptions)
+            {
+                errorMsg.Append(Environment.NewLine).Append("- ").Append(exception.Message);
+            }
+
+            var innerException = new AggregateException("Multiple exceptions were encountered while attempting to authenticate.", exceptions);
+            return new CredentialUnavailableException(errorMsg.ToString(), innerException);
+        }
+
+        /// <summary>
+        /// A constructor used for serialization.
+        /// </summary>
+        /// <param name="info">The <see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The <see cref="StreamingContext"/>.</param>
+        /// <returns></returns>
+#if NET8_0_OR_GREATER
+        [Obsolete(DiagnosticId = "SYSLIB0051")]
+#endif
+        protected CredentialUnavailableException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
+    }
+#pragma warning restore AZC0034
+}

@@ -104,8 +104,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 },
                 },
             };
-            ArmOperation<EventHubsNamespaceResource> lro = await eventHubsNamespace.UpdateAsync(WaitUntil.Completed, data);
-            EventHubsNamespaceResource result = lro.Value;
+            EventHubsNamespaceResource result = await eventHubsNamespace.UpdateAsync(data);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -135,13 +134,13 @@ namespace Azure.ResourceManager.EventHubs.Samples
             EventHubsNamespaceResource eventHubsNamespace = client.GetEventHubsNamespaceResource(eventHubsNamespaceResourceId);
 
             // invoke the operation
-            EventHubsNamespaceFailOver eventHubsNamespaceFailOver = new EventHubsNamespaceFailOver
+            EventHubsNamespaceFailover eventHubsNamespaceFailOver = new EventHubsNamespaceFailover
             {
                 PrimaryLocation = new AzureLocation("centralus"),
-                Force = true,
+                IsForced = true,
             };
-            ArmOperation<EventHubsNamespaceFailOver> lro = await eventHubsNamespace.FailOverAsync(WaitUntil.Completed, eventHubsNamespaceFailOver);
-            EventHubsNamespaceFailOver result = lro.Value;
+            ArmOperation<EventHubsNamespaceFailover> lro = await eventHubsNamespace.FailOverAsync(WaitUntil.Completed, eventHubsNamespaceFailOver);
+            EventHubsNamespaceFailover result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -194,7 +193,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
             EventHubsNamespaceResource eventHubsNamespace = client.GetEventHubsNamespaceResource(eventHubsNamespaceResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (EventHubsNetworkSecurityPerimeterConfiguration item in eventHubsNamespace.GetNetworkSecurityPerimeterConfigurationsAsync())
+            await foreach (EventHubsNetworkSecurityPerimeterConfigurationResource item in eventHubsNamespace.GetEventHubsNetworkSecurityPerimeterConfigurations().GetAllAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -224,7 +223,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // invoke the operation
             string resourceAssociationName = "resourceAssociation1";
-            EventHubsNetworkSecurityPerimeterConfiguration result = await eventHubsNamespace.GetNetworkSecurityPerimeterAssociationNameAsync(resourceAssociationName);
+            EventHubsNetworkSecurityPerimeterConfigurationResource result = await eventHubsNamespace.GetEventHubsNetworkSecurityPerimeterConfigurationAsync(resourceAssociationName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -251,7 +250,8 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // invoke the operation
             string resourceAssociationName = "resourceAssociation1";
-            await eventHubsNamespace.CreateOrUpdateNetworkSecurityPerimeterConfigurationAsync(WaitUntil.Completed, resourceAssociationName);
+            EventHubsNetworkSecurityPerimeterConfigurationResource eventHubsNetworkSecurityPerimeterConfiguration = client.GetEventHubsNetworkSecurityPerimeterConfigurationResource(EventHubsNetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, resourceAssociationName));
+            await eventHubsNetworkSecurityPerimeterConfiguration.CreateOrUpdateAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }

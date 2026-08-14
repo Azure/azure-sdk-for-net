@@ -1949,7 +1949,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(PartitionKeyValueOverwritten,partitionKey, sessionId, messageId);
+                WriteEvent(PartitionKeyValueOverwritten, partitionKey, sessionId, messageId);
             }
         }
         #endregion

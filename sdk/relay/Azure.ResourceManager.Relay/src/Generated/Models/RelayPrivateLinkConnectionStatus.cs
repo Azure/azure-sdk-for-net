@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Relay;
 
 namespace Azure.ResourceManager.Relay.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.Relay.Models
     public readonly partial struct RelayPrivateLinkConnectionStatus : IEquatable<RelayPrivateLinkConnectionStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RelayPrivateLinkConnectionStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RelayPrivateLinkConnectionStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PendingValue = "Pending";
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
         private const string DisconnectedValue = "Disconnected";
 
-        /// <summary> Pending. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayPrivateLinkConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RelayPrivateLinkConnectionStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Pending. </summary>
         public static RelayPrivateLinkConnectionStatus Pending { get; } = new RelayPrivateLinkConnectionStatus(PendingValue);
-        /// <summary> Approved. </summary>
+
+        /// <summary> Gets the Approved. </summary>
         public static RelayPrivateLinkConnectionStatus Approved { get; } = new RelayPrivateLinkConnectionStatus(ApprovedValue);
-        /// <summary> Rejected. </summary>
+
+        /// <summary> Gets the Rejected. </summary>
         public static RelayPrivateLinkConnectionStatus Rejected { get; } = new RelayPrivateLinkConnectionStatus(RejectedValue);
-        /// <summary> Disconnected. </summary>
+
+        /// <summary> Gets the Disconnected. </summary>
         public static RelayPrivateLinkConnectionStatus Disconnected { get; } = new RelayPrivateLinkConnectionStatus(DisconnectedValue);
+
         /// <summary> Determines if two <see cref="RelayPrivateLinkConnectionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RelayPrivateLinkConnectionStatus left, RelayPrivateLinkConnectionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RelayPrivateLinkConnectionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RelayPrivateLinkConnectionStatus left, RelayPrivateLinkConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RelayPrivateLinkConnectionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RelayPrivateLinkConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RelayPrivateLinkConnectionStatus(string value) => new RelayPrivateLinkConnectionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RelayPrivateLinkConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RelayPrivateLinkConnectionStatus?(string value) => value == null ? null : new RelayPrivateLinkConnectionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RelayPrivateLinkConnectionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RelayPrivateLinkConnectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

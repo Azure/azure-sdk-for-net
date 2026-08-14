@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PowerBIDedicated;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     public readonly partial struct VCoreProvisioningState : IEquatable<VCoreProvisioningState>
     {
         private readonly string _value;
+        private const string SucceededValue = "Succeeded";
 
         /// <summary> Initializes a new instance of <see cref="VCoreProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VCoreProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SucceededValue = "Succeeded";
-
-        /// <summary> Succeeded. </summary>
+        /// <summary> Gets the Succeeded. </summary>
         public static VCoreProvisioningState Succeeded { get; } = new VCoreProvisioningState(SucceededValue);
+
         /// <summary> Determines if two <see cref="VCoreProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VCoreProvisioningState left, VCoreProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VCoreProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VCoreProvisioningState left, VCoreProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VCoreProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VCoreProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VCoreProvisioningState(string value) => new VCoreProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VCoreProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VCoreProvisioningState?(string value) => value == null ? null : new VCoreProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VCoreProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VCoreProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

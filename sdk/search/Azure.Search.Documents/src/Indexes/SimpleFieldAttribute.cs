@@ -58,15 +58,22 @@ namespace Azure.Search.Documents.Indexes
         /// <value>String values from <see cref="LexicalNormalizerName.Values">LexicalAnalyzerName</see>.</value>
         public string NormalizerName { get; set; }
 
+        // search-preview:2026-05-01-preview {
         /// <summary> A value indicating whether the field should be used as a permission filter. </summary>
-        /// <value>String values from <see cref="PermissionFilter.Values">PermissionFilter</see>.</value>
+        /// <value>String values from <see cref="Models.PermissionFilter">PermissionFilter</see>.</value>
         public string PermissionFilter { get; set; }
 
         /// <summary>
-        /// A value indicating whether the field should be used for sensitivity label filtering.
-        /// This enables document-level filtering based on Microsoft Purview sensitivity labels.
+        /// A value indicating whether the field should be used for sensitivity label ID filtering.
+        /// This enables document-level filtering based on Microsoft Purview sensitivity label IDs.
         /// </summary>
-        public bool? SensitivityLabel { get; set; }
+        public bool? SensitivityLabelId { get; set; }
+
+        /// <summary>
+        /// A value indicating whether the field contains the name of a Microsoft Purview sensitivity label applied to the document.
+        /// </summary>
+        public bool? SensitivityLabelName { get; set; }
+        // search-preview:2026-05-01-preview }
 
         /// <inheritdoc/>
         void ISearchFieldAttribute.SetField(SearchField field) => SetField(field);
@@ -92,15 +99,22 @@ namespace Azure.Search.Documents.Indexes
                 field.NormalizerName = NormalizerName;
             }
 
+            // search-preview:2026-05-01-preview {
             if (PermissionFilter != null)
             {
                 field.PermissionFilter = PermissionFilter;
             }
 
-            if (SensitivityLabel.HasValue)
+            if (SensitivityLabelId.HasValue)
             {
-                field.SensitivityLabel = SensitivityLabel;
+                field.SensitivityLabelId = SensitivityLabelId;
             }
+
+            if (SensitivityLabelName.HasValue)
+            {
+                field.SensitivityLabelName = SensitivityLabelName;
+            }
+            // search-preview:2026-05-01-preview }
         }
     }
 }

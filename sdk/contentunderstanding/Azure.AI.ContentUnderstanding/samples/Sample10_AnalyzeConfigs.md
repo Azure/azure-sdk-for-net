@@ -1,11 +1,11 @@
 # Analyze documents with configs
 
-This sample demonstrates how to extract additional features from documents such as charts, hyperlinks, formulas, and annotations using the `prebuilt-documentSearch` analyzer, which has formulas, layout, and OCR enabled by default.
+This sample demonstrates how to extract additional features from documents such as charts, hyperlinks, formulas, annotations, and signatures using the `prebuilt-documentSearch` analyzer, which has formulas, layout, and OCR enabled by default.
 
 ## About analysis configs
 
 The `prebuilt-documentSearch` analyzer has the following configurations enabled by default:
-- **ReturnDetails**: `true` - Returns detailed information about document elements
+- **ShouldReturnDetails**: `true` - Returns detailed information about document elements
 - **EnableOcr**: `true` - Performs OCR on documents
 - **EnableLayout**: `true` - Extracts layout information (tables, figures, hyperlinks, annotations)
 - **EnableFormula**: `true` - Extracts mathematical formulas from documents
@@ -20,6 +20,7 @@ The following code snippets demonstrate extraction of features enabled by these 
 - **Hyperlinks**: Enabled by `EnableLayout` - URLs and links found in the document
 - **Formulas**: Enabled by `EnableFormula` - Mathematical formulas in LaTeX format
 - **Annotations**: Enabled by `EnableLayout` - PDF annotations, comments, and markup
+- **Signatures**: Enabled by `EnableLayout` with detailed output - Signature regions and metadata (**available only in `2026-06-01-preview`**)
 
 For custom analyzers, you can configure these options in `ContentAnalyzerConfig` when creating the analyzer.
 
@@ -56,12 +57,12 @@ BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
 // Analyze with prebuilt-documentSearch which has formulas, layout, and OCR enabled
 // These configs enable extraction of charts, annotations, hyperlinks, and formulas
-Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
+Operation<AnalysisResult> operation = await client.AnalyzeBinaryAsync(
     WaitUntil.Completed,
     "prebuilt-documentSearch",
     binaryData);
 
-AnalyzeResult result = operation.Value;
+AnalysisResult result = operation.Value;
 ```
 
 ## Extract charts
@@ -95,7 +96,7 @@ DocumentContent docContent = (DocumentContent)result.Contents!.First();
 Console.WriteLine($"Found {docContent.Hyperlinks?.Count ?? 0} hyperlink(s)");
 foreach (var hyperlink in docContent.Hyperlinks ?? Enumerable.Empty<DocumentHyperlink>())
 {
-    Console.WriteLine($"  URL: {hyperlink.Url ?? "(not available)"}");
+    Console.WriteLine($"  URL: {hyperlink.Uri ?? "(not available)"}");
     Console.WriteLine($"    Content: {hyperlink.Content ?? "(not available)"}");
 }
 ```
@@ -143,10 +144,34 @@ foreach (var annotation in document.Annotations ?? Enumerable.Empty<DocumentAnno
 }
 ```
 
+## Extract signatures
+
+> **Preview only:** Signature detection (`DocumentSignature` / `DocumentContent.Signatures`) is available only in service API version `2026-06-01-preview`. Configure the client with `new ContentUnderstandingClientOptions(ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview)`. For a dedicated example, see [Detect signatures][sample-detect-signatures].
+
+Extract signature regions from the document:
+
+```C# Snippet:ContentUnderstandingExtractSignatures
+// Extract signatures from document content (requires EnableLayout + ShouldReturnDetails)
+// Available only in 2026-06-01-preview.
+DocumentContent documentWithSignatures = (DocumentContent)result.Contents!.First();
+Console.WriteLine($"Found {documentWithSignatures.Signatures?.Count ?? 0} signature(s)");
+foreach (var signature in documentWithSignatures.Signatures ?? Enumerable.Empty<DocumentSignature>())
+{
+    Console.WriteLine($"  Signature ID: {signature.Id}");
+    Console.WriteLine($"    Role: {signature.Role?.ToString() ?? "(not available)"}");
+    Console.WriteLine($"    Source: {signature.Source ?? "(not available)"}");
+    if (signature.Span != null)
+    {
+        Console.WriteLine($"    Span: offset={signature.Span.Offset}, length={signature.Span.Length}");
+    }
+}
+```
+
 ## Next steps
 
 - [Sample 04: Create a custom analyzer][sample04] - Learn how to configure analysis options for custom analyzers
 - [Sample 01: Analyze binary][sample01] - Learn more about basic document analysis
+- [Detect signatures][sample-detect-signatures] - Dedicated signature detection sample (`2026-06-01-preview`)
 
 ## Learn more
 
@@ -156,6 +181,7 @@ foreach (var annotation in document.Annotations ?? Enumerable.Empty<DocumentAnno
 [sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md
 [sample01]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
 [sample04]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample04_CreateAnalyzer.md
+[sample-detect-signatures]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample_Advanced_DetectSignatures.md
 [cu-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
 [document-elements-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/elements
 

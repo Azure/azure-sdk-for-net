@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
@@ -15,22 +16,20 @@ namespace Azure.ResourceManager.BotService.Models
     public partial class TelephonyChannel : BotChannelProperties
     {
         /// <summary> Initializes a new instance of <see cref="TelephonyChannel"/>. </summary>
-        public TelephonyChannel()
+        public TelephonyChannel() : base("TelephonyChannel")
         {
-            ChannelName = "TelephonyChannel";
         }
 
         /// <summary> Initializes a new instance of <see cref="TelephonyChannel"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
-        /// <param name="etag"> Entity Tag of the resource. </param>
+        /// <param name="eTag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The set of properties specific to Telephony channel resource. </param>
-        internal TelephonyChannel(string channelName, ETag? etag, string provisioningState, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, TelephonyChannelProperties properties) : base(channelName, etag, provisioningState, location, serializedAdditionalRawData)
+        internal TelephonyChannel(string channelName, ETag? eTag, string provisioningState, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties, TelephonyChannelProperties properties) : base(channelName, eTag, provisioningState, location, additionalBinaryDataProperties)
         {
             Properties = properties;
-            ChannelName = channelName ?? "TelephonyChannel";
         }
 
         /// <summary> The set of properties specific to Telephony channel resource. </summary>

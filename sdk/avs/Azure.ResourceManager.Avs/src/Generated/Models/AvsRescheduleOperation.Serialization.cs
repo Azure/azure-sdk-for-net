@@ -16,6 +16,46 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> Constraints for rescheduling maintenance. </summary>
     public partial class AvsRescheduleOperation : AvsMaintenanceManagementOperation, IJsonModel<AvsRescheduleOperation>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AvsMaintenanceManagementOperation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AvsRescheduleOperation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAvsRescheduleOperation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AvsRescheduleOperation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AvsRescheduleOperation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AvsRescheduleOperation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AvsRescheduleOperation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AvsRescheduleOperation IPersistableModel<AvsRescheduleOperation>.Create(BinaryData data, ModelReaderWriterOptions options) => (AvsRescheduleOperation)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AvsRescheduleOperation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvsRescheduleOperation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -129,45 +169,5 @@ namespace Azure.ResourceManager.Avs.Models
             }
             return new AvsRescheduleOperation(kind, additionalBinaryDataProperties, isDisabled, disabledReason, constraints ?? new ChangeTrackingList<AvsRescheduleOperationConstraint>());
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AvsRescheduleOperation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AvsRescheduleOperation>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AvsRescheduleOperation)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AvsRescheduleOperation IPersistableModel<AvsRescheduleOperation>.Create(BinaryData data, ModelReaderWriterOptions options) => (AvsRescheduleOperation)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AvsMaintenanceManagementOperation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AvsRescheduleOperation>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAvsRescheduleOperation(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AvsRescheduleOperation)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AvsRescheduleOperation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

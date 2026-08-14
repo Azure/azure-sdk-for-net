@@ -107,7 +107,7 @@ namespace Azure.Storage.Blobs.Test
             clientMock.SetupGet(c => c.ClientConfiguration).CallBase();
             SetupInternalStaging(clientMock, sink);
 
-            var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions() { MaximumTransferLength = 10}, s_validationEmpty, arrayPool: testPool);
+            var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions() { MaximumTransferLength = 10 }, s_validationEmpty, arrayPool: testPool);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(2, sink.Staged.Count);
@@ -186,12 +186,12 @@ namespace Azure.Storage.Blobs.Test
             clientMock.SetupGet(c => c.ClientConfiguration).CallBase();
             SetupInternalStaging(clientMock, sink);
 
-            var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions() { MaximumTransferLength = 10}, s_validationEmpty, arrayPool: testPool);
+            var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions() { MaximumTransferLength = 10 }, s_validationEmpty, arrayPool: testPool);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(2, sink.Staged.Count);
             // First two should be merged
-            CollectionAssert.AreEqual(new byte[] {0, 0, 0, 0, 0, 1, 1, 1, 1, 1 }, sink.Staged[sink.Blocks.First()].Data);
+            CollectionAssert.AreEqual(new byte[] { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1 }, sink.Staged[sink.Blocks.First()].Data);
             Assert.AreEqual(s_response, info);
             Assert.AreEqual(2, testPool.TotalRents);
             Assert.AreEqual(0, testPool.CurrentCount);
@@ -457,7 +457,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        private class TestStream: Stream
+        private class TestStream : Stream
         {
             private readonly bool _async;
 
@@ -481,7 +481,8 @@ namespace Azure.Storage.Blobs.Test
 
             public override int Read(byte[] buffer, int offset, int count)
             {
-                if (_async) throw new InvalidOperationException();
+                if (_async)
+                    throw new InvalidOperationException();
 
                 return ReadCore(buffer, offset);
             }
@@ -503,7 +504,8 @@ namespace Azure.Storage.Blobs.Test
 
             public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
             {
-                if (!_async) throw new InvalidOperationException();
+                if (!_async)
+                    throw new InvalidOperationException();
 
                 return Task.FromResult(ReadCore(buffer, offset));
             }

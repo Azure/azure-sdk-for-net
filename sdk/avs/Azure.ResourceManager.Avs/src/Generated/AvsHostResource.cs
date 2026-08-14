@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(ResourceType, out string avsHostApiVersion);
             _hostsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
-            _hostsRestClient = new Hosts(_hostsClientDiagnostics, Pipeline, Endpoint, avsHostApiVersion ?? "2025-09-01");
+            _hostsRestClient = new Hosts(_hostsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, avsHostApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

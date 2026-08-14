@@ -24,17 +24,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample02_ListManagedIdentities
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             IngestionClient ingestionClient = client.GetIngestionClient();
 
             // List all managed identities
@@ -53,17 +53,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample02_ListIngestionSources
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             IngestionClient ingestionClient = client.GetIngestionClient();
 
             // List all ingestion sources
@@ -82,17 +82,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample02_CreateManagedIdentitySource
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             IngestionClient ingestionClient = client.GetIngestionClient();
 
             // Get a managed identity
@@ -119,17 +119,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample02_CreateSASTokenSource
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             IngestionClient ingestionClient = client.GetIngestionClient();
 
             // Create a SAS token ingestion source
@@ -153,17 +153,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample02_CreateIngestionDefinition
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             IngestionClient ingestionClient = client.GetIngestionClient();
 
             // Create an ingestion definition
@@ -173,7 +173,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             var ingestionDefinition = new IngestionInformation("StaticCatalog")
             {
                 DisplayName = "My Dataset Ingestion",
-                SourceCatalogUrl = new Uri(sourceCatalogUrl),
+                SourceCatalogUri = new Uri(sourceCatalogUrl),
                 KeepOriginalAssets = true,
                 SkipExistingItems = true
             };
@@ -190,17 +190,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample02_UpdateIngestionDefinition
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             IngestionClient ingestionClient = client.GetIngestionClient();
 
             string collectionId = "my-collection";
@@ -209,7 +209,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             // Update the ingestion display name
             var updateData = new
             {
-                ImportType = "StaticCatalog",
+                ImportKind = "StaticCatalog",
                 DisplayName = "Updated Ingestion Name"
             };
 
@@ -228,17 +228,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample02_CreateAndMonitorRun
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             IngestionClient ingestionClient = client.GetIngestionClient();
 
             string collectionId = "my-collection";
@@ -267,17 +267,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample02_ListIngestions
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             IngestionClient ingestionClient = client.GetIngestionClient();
 
             string collectionId = "my-collection";
@@ -288,7 +288,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             {
                 Console.WriteLine($"  ID: {ingestion.Id}");
                 Console.WriteLine($"  Display Name: {ingestion.DisplayName}");
-                Console.WriteLine($"  Import Type: {ingestion.ImportType}");
+                Console.WriteLine($"  Import Type: {ingestion.ImportKind}");
             }
             #endregion
         }
@@ -299,17 +299,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample02_GetIngestion
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             IngestionClient ingestionClient = client.GetIngestionClient();
 
             string collectionId = "my-collection";
@@ -321,8 +321,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
             Console.WriteLine($"Ingestion ID: {ingestion.Id}");
             Console.WriteLine($"Display Name: {ingestion.DisplayName}");
-            Console.WriteLine($"Import Type: {ingestion.ImportType}");
-            Console.WriteLine($"Source Catalog URL: {ingestion.SourceCatalogUrl}");
+            Console.WriteLine($"Import Type: {ingestion.ImportKind}");
+            Console.WriteLine($"Source Catalog URL: {ingestion.SourceCatalogUri}");
             #endregion
         }
 
@@ -332,17 +332,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample02_ListRuns
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             IngestionClient ingestionClient = client.GetIngestionClient();
 
             string collectionId = "my-collection";
@@ -365,28 +365,28 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample02_GetOperation
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             IngestionClient ingestionClient = client.GetIngestionClient();
 
             Guid operationId = Guid.Parse("00000000-0000-0000-0000-000000000000");
 
             // Get operation details
-            Response<LongRunningOperation> response = await ingestionClient.GetOperationAsync(operationId);
-            LongRunningOperation operation = response.Value;
+            Response<PlanetaryComputerOperation> response = await ingestionClient.GetOperationAsync(operationId);
+            PlanetaryComputerOperation operation = response.Value;
 
             Console.WriteLine($"Operation ID: {operation.Id}");
             Console.WriteLine($"Status: {operation.Status}");
-            Console.WriteLine($"Type: {operation.Type}");
+            Console.WriteLine($"Type: {operation.Kind}");
             #endregion
         }
 
@@ -396,17 +396,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample02_CancelOperation
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             IngestionClient ingestionClient = client.GetIngestionClient();
 
             Guid operationId = Guid.Parse("00000000-0000-0000-0000-000000000000");
@@ -430,17 +430,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample02_CancelAllOperations
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             IngestionClient ingestionClient = client.GetIngestionClient();
 
             // Cancel all running operations
@@ -462,17 +462,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample02_ManageIngestionSource
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             IngestionClient ingestionClient = client.GetIngestionClient();
 
             // Get a managed identity
@@ -513,17 +513,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample02_CompleteWorkflow
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             IngestionClient ingestionClient = client.GetIngestionClient();
 
             string collectionId = "my-collection";
@@ -533,7 +533,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             var ingestionDefinition = new IngestionInformation("StaticCatalog")
             {
                 DisplayName = "My Dataset Ingestion",
-                SourceCatalogUrl = new Uri(sourceCatalogUrl),
+                SourceCatalogUri = new Uri(sourceCatalogUrl),
                 KeepOriginalAssets = true,
                 SkipExistingItems = true
             };

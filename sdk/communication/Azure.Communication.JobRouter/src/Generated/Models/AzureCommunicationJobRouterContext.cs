@@ -11,7 +11,7 @@ namespace Azure.Communication.JobRouter
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AcceptJobOfferResult))]
     [ModelReaderWriterBuildable(typeof(BestWorkerMode))]
@@ -41,6 +41,12 @@ namespace Azure.Communication.JobRouter
     [ModelReaderWriterBuildable(typeof(LongestIdleMode))]
     [ModelReaderWriterBuildable(typeof(ManualReclassifyExceptionAction))]
     [ModelReaderWriterBuildable(typeof(OAuth2WebhookClientCredential))]
+    [ModelReaderWriterBuildable(typeof(PagedClassificationPolicy))]
+    [ModelReaderWriterBuildable(typeof(PagedDistributionPolicy))]
+    [ModelReaderWriterBuildable(typeof(PagedExceptionPolicy))]
+    [ModelReaderWriterBuildable(typeof(PagedRouterJob))]
+    [ModelReaderWriterBuildable(typeof(PagedRouterQueue))]
+    [ModelReaderWriterBuildable(typeof(PagedRouterWorker))]
     [ModelReaderWriterBuildable(typeof(PassThroughQueueSelectorAttachment))]
     [ModelReaderWriterBuildable(typeof(PassThroughWorkerSelectorAttachment))]
     [ModelReaderWriterBuildable(typeof(QueueAndMatchMode))]
@@ -50,7 +56,6 @@ namespace Azure.Communication.JobRouter
     [ModelReaderWriterBuildable(typeof(ReclassifyExceptionAction))]
     [ModelReaderWriterBuildable(typeof(ReclassifyJobOptions))]
     [ModelReaderWriterBuildable(typeof(ReclassifyJobResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RoundRobinMode))]
     [ModelReaderWriterBuildable(typeof(RouterChannel))]
     [ModelReaderWriterBuildable(typeof(RouterJob))]

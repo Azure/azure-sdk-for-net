@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.OracleDatabase
             TryGetApiVersion(OracleSystemVersionResource.ResourceType, out string oracleSystemVersionApiVersion);
             _location = location;
             _systemVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleSystemVersionResource.ResourceType.Namespace, Diagnostics);
-            _systemVersionsRestClient = new SystemVersions(_systemVersionsClientDiagnostics, Pipeline, Endpoint, oracleSystemVersionApiVersion ?? "2025-09-01");
+            _systemVersionsRestClient = new SystemVersions(_systemVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleSystemVersionApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OracleSystemVersionData, OracleSystemVersionResource>(new SystemVersionsGetByLocationAsyncCollectionResultOfT(_systemVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new OracleSystemVersionResource(Client, data));
+            return new AsyncPageableWrapper<OracleSystemVersionData, OracleSystemVersionResource>(new SystemVersionsGetByLocationAsyncCollectionResultOfT(_systemVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OracleSystemVersionCollection.GetAll"), data => new OracleSystemVersionResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OracleSystemVersionData, OracleSystemVersionResource>(new SystemVersionsGetByLocationCollectionResultOfT(_systemVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new OracleSystemVersionResource(Client, data));
+            return new PageableWrapper<OracleSystemVersionData, OracleSystemVersionResource>(new SystemVersionsGetByLocationCollectionResultOfT(_systemVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OracleSystemVersionCollection.GetAll"), data => new OracleSystemVersionResource(Client, data));
         }
 
         /// <summary>

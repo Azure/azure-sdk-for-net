@@ -8,76 +8,46 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
     /// <summary> Defines the behavior of resources that are no longer managed after the stack is updated or deleted. </summary>
     public partial class ActionOnUnmanage
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ActionOnUnmanage"/>. </summary>
-        /// <param name="resources"> Specifies an action for a newly unmanaged resource. Delete will attempt to delete the resource from Azure. Detach will leave the resource in it's current state. </param>
-        public ActionOnUnmanage(DeploymentStacksDeleteDetachEnum resources)
+        /// <param name="resources"> Specifies an action for a newly unmanaged resource. </param>
+        public ActionOnUnmanage(UnmanageActionResourceMode resources)
         {
             Resources = resources;
         }
 
         /// <summary> Initializes a new instance of <see cref="ActionOnUnmanage"/>. </summary>
-        /// <param name="resources"> Specifies an action for a newly unmanaged resource. Delete will attempt to delete the resource from Azure. Detach will leave the resource in it's current state. </param>
-        /// <param name="resourceGroups"> Specifies an action for a newly unmanaged resource. Delete will attempt to delete the resource from Azure. Detach will leave the resource in it's current state. </param>
-        /// <param name="managementGroups"> Specifies an action for a newly unmanaged resource. Delete will attempt to delete the resource from Azure. Detach will leave the resource in it's current state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ActionOnUnmanage(DeploymentStacksDeleteDetachEnum resources, DeploymentStacksDeleteDetachEnum? resourceGroups, DeploymentStacksDeleteDetachEnum? managementGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="resources"> Specifies an action for a newly unmanaged resource. </param>
+        /// <param name="resourceGroups"> Specifies an action for a newly unmanaged resource group. </param>
+        /// <param name="managementGroups"> Specifies an action for a newly unmanaged resource management group. </param>
+        /// <param name="resourcesWithoutDeleteSupport"> Some resources do not support deletion.  This flag will denote how the stack should handle those resources. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ActionOnUnmanage(UnmanageActionResourceMode resources, UnmanageActionResourceGroupMode? resourceGroups, UnmanageActionManagementGroupMode? managementGroups, ResourcesWithoutDeleteSupportAction? resourcesWithoutDeleteSupport, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Resources = resources;
             ResourceGroups = resourceGroups;
             ManagementGroups = managementGroups;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ResourcesWithoutDeleteSupport = resourcesWithoutDeleteSupport;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActionOnUnmanage"/> for deserialization. </summary>
-        internal ActionOnUnmanage()
-        {
-        }
+        /// <summary> Specifies an action for a newly unmanaged resource. </summary>
+        public UnmanageActionResourceMode Resources { get; set; }
 
-        /// <summary> Specifies an action for a newly unmanaged resource. Delete will attempt to delete the resource from Azure. Detach will leave the resource in it's current state. </summary>
-        [WirePath("resources")]
-        public DeploymentStacksDeleteDetachEnum Resources { get; set; }
-        /// <summary> Specifies an action for a newly unmanaged resource. Delete will attempt to delete the resource from Azure. Detach will leave the resource in it's current state. </summary>
-        [WirePath("resourceGroups")]
-        public DeploymentStacksDeleteDetachEnum? ResourceGroups { get; set; }
-        /// <summary> Specifies an action for a newly unmanaged resource. Delete will attempt to delete the resource from Azure. Detach will leave the resource in it's current state. </summary>
-        [WirePath("managementGroups")]
-        public DeploymentStacksDeleteDetachEnum? ManagementGroups { get; set; }
+        /// <summary> Specifies an action for a newly unmanaged resource group. </summary>
+        public UnmanageActionResourceGroupMode? ResourceGroups { get; set; }
+
+        /// <summary> Specifies an action for a newly unmanaged resource management group. </summary>
+        public UnmanageActionManagementGroupMode? ManagementGroups { get; set; }
+
+        /// <summary> Some resources do not support deletion.  This flag will denote how the stack should handle those resources. </summary>
+        public ResourcesWithoutDeleteSupportAction? ResourcesWithoutDeleteSupport { get; set; }
     }
 }

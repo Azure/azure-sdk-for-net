@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Stamp capacity information. </summary>
     public partial class StampCapacity
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StampCapacity"/>. </summary>
         internal StampCapacity()
@@ -70,8 +42,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isApplicableForAllComputeModes"> &lt;code&gt;true&lt;/code&gt; if capacity is applicable for all apps; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="siteMode"> Shared or Dedicated. </param>
         /// <param name="isLinux"> Is this a linux stamp capacity. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StampCapacity(string name, long? availableCapacity, long? totalCapacity, string unit, ComputeModeOption? computeMode, WorkerSizeOption? workerSize, int? workerSizeId, bool? excludeFromCapacityAllocation, bool? isApplicableForAllComputeModes, string siteMode, bool? isLinux, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StampCapacity(string name, long? availableCapacity, long? totalCapacity, string unit, ComputeModeOption? computeMode, WorkerSizeOption? workerSize, int? workerSizeId, bool? excludeFromCapacityAllocation, bool? isApplicableForAllComputeModes, string siteMode, bool? isLinux, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             AvailableCapacity = availableCapacity;
@@ -84,27 +56,33 @@ namespace Azure.ResourceManager.AppService.Models
             IsApplicableForAllComputeModes = isApplicableForAllComputeModes;
             SiteMode = siteMode;
             IsLinux = isLinux;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the stamp. </summary>
         [WirePath("name")]
         public string Name { get; }
+
         /// <summary> Available capacity (# of machines, bytes of storage etc...). </summary>
         [WirePath("availableCapacity")]
         public long? AvailableCapacity { get; }
+
         /// <summary> Total capacity (# of machines, bytes of storage etc...). </summary>
         [WirePath("totalCapacity")]
         public long? TotalCapacity { get; }
+
         /// <summary> Name of the unit. </summary>
         [WirePath("unit")]
         public string Unit { get; }
+
         /// <summary> Shared/dedicated workers. </summary>
         [WirePath("computeMode")]
         public ComputeModeOption? ComputeMode { get; }
+
         /// <summary> Size of the machines. </summary>
         [WirePath("workerSize")]
         public WorkerSizeOption? WorkerSize { get; }
+
         /// <summary>
         /// Size ID of machines:
         /// 0 - Small
@@ -113,18 +91,22 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         [WirePath("workerSizeId")]
         public int? WorkerSizeId { get; }
+
         /// <summary>
         /// If &lt;code&gt;true&lt;/code&gt;, it includes basic apps.
         /// Basic apps are not used for capacity allocation.
         /// </summary>
         [WirePath("excludeFromCapacityAllocation")]
         public bool? ExcludeFromCapacityAllocation { get; }
+
         /// <summary> &lt;code&gt;true&lt;/code&gt; if capacity is applicable for all apps; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("isApplicableForAllComputeModes")]
         public bool? IsApplicableForAllComputeModes { get; }
+
         /// <summary> Shared or Dedicated. </summary>
         [WirePath("siteMode")]
         public string SiteMode { get; }
+
         /// <summary> Is this a linux stamp capacity. </summary>
         [WirePath("isLinux")]
         public bool? IsLinux { get; }

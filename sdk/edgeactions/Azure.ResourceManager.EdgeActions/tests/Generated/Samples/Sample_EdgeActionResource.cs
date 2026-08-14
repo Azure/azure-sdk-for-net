@@ -93,9 +93,9 @@ namespace Azure.ResourceManager.EdgeActions.Samples
             EdgeActionResource edgeAction = client.GetEdgeActionResource(edgeActionResourceId);
 
             // invoke the operation
-            EdgeActionData data = new EdgeActionData
+            EdgeActionPatch data = new EdgeActionPatch
             {
-                Sku = new EdgeActionSkuType
+                Sku = new EdgeActionSkuTypeUpdate
                 {
                     Name = "Basic",
                     Tier = "Standard",
@@ -109,61 +109,6 @@ namespace Azure.ResourceManager.EdgeActions.Samples
             EdgeActionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task AddAttachment_AddAttachment()
-        {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/EdgeActions/preview/2025-09-01-preview/examples/EdgeActions_AddAttachment.json
-            // this example is just showing the usage of "EdgeActions_AddAttachment" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this EdgeActionResource created on azure
-            // for more information of creating EdgeActionResource, please refer to the document of EdgeActionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "testrg";
-            string edgeActionName = "edgeAction1";
-            ResourceIdentifier edgeActionResourceId = EdgeActionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, edgeActionName);
-            EdgeActionResource edgeAction = client.GetEdgeActionResource(edgeActionResourceId);
-
-            // invoke the operation
-            EdgeActionAttachment content = new EdgeActionAttachment(new ResourceIdentifier("/subscriptions/sub1/resourceGroups/rs1/providers/Microsoft.Cdn/Profiles/myProfile/afdEndpoints/ep1/routes/route1"));
-            ArmOperation<EdgeActionAttachmentResult> lro = await edgeAction.AddAttachmentAsync(WaitUntil.Completed, content);
-            EdgeActionAttachmentResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task DeleteAttachment_DeleteAttachment()
-        {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/EdgeActions/preview/2025-09-01-preview/examples/EdgeActions_DeleteAttachment.json
-            // this example is just showing the usage of "EdgeActions_DeleteAttachment" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this EdgeActionResource created on azure
-            // for more information of creating EdgeActionResource, please refer to the document of EdgeActionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "testrg";
-            string edgeActionName = "edgeAction1";
-            ResourceIdentifier edgeActionResourceId = EdgeActionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, edgeActionName);
-            EdgeActionResource edgeAction = client.GetEdgeActionResource(edgeActionResourceId);
-
-            // invoke the operation
-            EdgeActionAttachment content = new EdgeActionAttachment(new ResourceIdentifier("/subscriptions/sub1/resourceGroups/rs1/providers/Microsoft.Cdn/Profiles/myProfile/afdEndpoints/ep1/routes/route1"));
-            await edgeAction.DeleteAttachmentAsync(WaitUntil.Completed, content);
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

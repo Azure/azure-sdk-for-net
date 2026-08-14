@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         void IJsonModel<ApiManagementContentItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementContentType>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementContentItem>)this).GetFormatFromOptions(options) : options.Format;
 
             if (format != "J")
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         continue;
                     }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {

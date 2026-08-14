@@ -239,7 +239,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                     string description)
         {
             var invalid = "sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D&se=1562258488&skn=keykeykey";
-            Assert.That(() => constructor(invalid, "key"), Throws.ArgumentException, $"The { description } should fail for a malformed signature");
+            Assert.That(() => constructor(invalid, "key"), Throws.ArgumentException, $"The {description} should fail for a malformed signature");
         }
 
         /// <summary>

@@ -22,6 +22,56 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OccurrenceDelayContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceDelayContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeOccurrenceDelayContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OccurrenceDelayContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceDelayContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(OccurrenceDelayContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<OccurrenceDelayContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OccurrenceDelayContent IPersistableModel<OccurrenceDelayContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OccurrenceDelayContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="occurrenceDelayContent"> The <see cref="OccurrenceDelayContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(OccurrenceDelayContent occurrenceDelayContent)
+        {
+            if (occurrenceDelayContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(occurrenceDelayContent, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OccurrenceDelayContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -41,7 +91,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 throw new FormatException($"The model {nameof(OccurrenceDelayContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("delay"u8);
-            writer.WriteStringValue(Delay, "O");
+            writer.WriteStringValue(DelayOn, "O");
             writer.WritePropertyName("resourceIds"u8);
             writer.WriteStartArray();
             foreach (ResourceIdentifier item in ResourceIds)
@@ -96,14 +146,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            DateTimeOffset delay = default;
+            DateTimeOffset delayOn = default;
             IList<ResourceIdentifier> resourceIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("delay"u8))
                 {
-                    delay = prop.Value.GetDateTimeOffset("O");
+                    delayOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("resourceIds"u8))
@@ -128,59 +178,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OccurrenceDelayContent(delay, resourceIds, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OccurrenceDelayContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceDelayContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(OccurrenceDelayContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        OccurrenceDelayContent IPersistableModel<OccurrenceDelayContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OccurrenceDelayContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceDelayContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeOccurrenceDelayContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(OccurrenceDelayContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OccurrenceDelayContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="occurrenceDelayContent"> The <see cref="OccurrenceDelayContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(OccurrenceDelayContent occurrenceDelayContent)
-        {
-            if (occurrenceDelayContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(occurrenceDelayContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return new OccurrenceDelayContent(delayOn, resourceIds, additionalBinaryDataProperties);
         }
     }
 }

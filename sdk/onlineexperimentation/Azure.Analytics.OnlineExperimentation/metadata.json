@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Azure.Analytics.OnlineExperimentation": "2025-05-31-preview"
+  }
+}

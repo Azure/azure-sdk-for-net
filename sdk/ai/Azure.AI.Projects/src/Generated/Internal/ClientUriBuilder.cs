@@ -120,6 +120,50 @@ namespace Azure.AI.Projects
             AppendQuery(name, string.Join(delimiter, stringValues), escape);
         }
 
+        public void UpdateQuery(string name, string value)
+        {
+            if (PathAndQuery.Length == _pathLength)
+            {
+                AppendQuery(name, value, false);
+            }
+            else
+            {
+                int queryStartIndex = _pathLength + 1;
+                string searchPattern = name + "=";
+                string queryString = PathAndQuery.ToString(queryStartIndex, PathAndQuery.Length - queryStartIndex);
+                int paramStartIndex = -1;
+                if (queryString.StartsWith(searchPattern))
+                {
+                    paramStartIndex = 0;
+                }
+                if (paramStartIndex == -1)
+                {
+                    int prefixedIndex = queryString.IndexOf("&" + searchPattern);
+                    if (prefixedIndex >= 0)
+                    {
+                        paramStartIndex = prefixedIndex + 1;
+                    }
+                }
+                if (paramStartIndex >= 0)
+                {
+                    int valueStartIndex = paramStartIndex + searchPattern.Length;
+                    int valueEndIndex = queryString.IndexOf('&', valueStartIndex);
+                    if (valueEndIndex == -1)
+                    {
+                        valueEndIndex = queryString.Length;
+                    }
+                    int globalStart = queryStartIndex + valueStartIndex;
+                    int globalEnd = queryStartIndex + valueEndIndex;
+                    PathAndQuery.Remove(globalStart, globalEnd - globalStart);
+                    PathAndQuery.Insert(globalStart, value);
+                }
+                else
+                {
+                    AppendQuery(name, value, false);
+                }
+            }
+        }
+
         public Uri ToUri()
         {
             UriBuilder.Path = PathAndQuery.ToString(0, _pathLength);

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             TryGetApiVersion(ResourceType, out string storageSyncGroupApiVersion);
             _syncGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", ResourceType.Namespace, Diagnostics);
-            _syncGroupsRestClient = new SyncGroups(_syncGroupsClientDiagnostics, Pipeline, Endpoint, storageSyncGroupApiVersion ?? "2022-09-01");
+            _syncGroupsRestClient = new SyncGroups(_syncGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageSyncGroupApiVersion ?? "2022-09-01");
             ValidateResourceId(id);
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

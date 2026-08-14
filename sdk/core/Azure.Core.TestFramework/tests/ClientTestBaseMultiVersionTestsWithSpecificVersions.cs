@@ -31,7 +31,7 @@ namespace Azure.Core.TestFramework.Tests
         [Ignore("Sparse checkout issue when running resource manager pipeline")]
         public async Task HasValidVersion()
         {
-            var testClientOptions = new TestClientOptions(_version) { Transport = new MockTransport(new MockResponse(200))};
+            var testClientOptions = new TestClientOptions(_version) { Transport = new MockTransport(new MockResponse(200)) };
             var client = InstrumentClient(new TestClient(InstrumentClientOptions(testClientOptions)));
             await client.GetAsync(default);
             if (Mode == RecordedTestMode.Playback || Mode == RecordedTestMode.Record)
@@ -44,7 +44,7 @@ namespace Azure.Core.TestFramework.Tests
             }
         }
 
-        public class TestClientOptions: ClientOptions
+        public class TestClientOptions : ClientOptions
         {
             public readonly ServiceVersion Version;
 
@@ -66,7 +66,7 @@ namespace Azure.Core.TestFramework.Tests
             private readonly TestClientOptions _options;
             private HttpPipeline _pipeline;
 
-            protected TestClient(){}
+            protected TestClient() { }
             public TestClient(TestClientOptions options)
             {
                 _options = options;

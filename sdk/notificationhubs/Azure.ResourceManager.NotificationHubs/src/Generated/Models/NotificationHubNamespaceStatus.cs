@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     public readonly partial struct NotificationHubNamespaceStatus : IEquatable<NotificationHubNamespaceStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public NotificationHubNamespaceStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CreatedValue = "Created";
         private const string CreatingValue = "Creating";
         private const string SuspendedValue = "Suspended";
         private const string DeletingValue = "Deleting";
 
-        /// <summary> Created. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public NotificationHubNamespaceStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Created. </summary>
         public static NotificationHubNamespaceStatus Created { get; } = new NotificationHubNamespaceStatus(CreatedValue);
-        /// <summary> Creating. </summary>
+
+        /// <summary> Gets the Creating. </summary>
         public static NotificationHubNamespaceStatus Creating { get; } = new NotificationHubNamespaceStatus(CreatingValue);
-        /// <summary> Suspended. </summary>
+
+        /// <summary> Gets the Suspended. </summary>
         public static NotificationHubNamespaceStatus Suspended { get; } = new NotificationHubNamespaceStatus(SuspendedValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static NotificationHubNamespaceStatus Deleting { get; } = new NotificationHubNamespaceStatus(DeletingValue);
+
         /// <summary> Determines if two <see cref="NotificationHubNamespaceStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NotificationHubNamespaceStatus left, NotificationHubNamespaceStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NotificationHubNamespaceStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NotificationHubNamespaceStatus left, NotificationHubNamespaceStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NotificationHubNamespaceStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NotificationHubNamespaceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NotificationHubNamespaceStatus(string value) => new NotificationHubNamespaceStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NotificationHubNamespaceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NotificationHubNamespaceStatus?(string value) => value == null ? null : new NotificationHubNamespaceStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NotificationHubNamespaceStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NotificationHubNamespaceStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

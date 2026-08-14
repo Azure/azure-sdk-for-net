@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class InterNodeCommunicationStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this InterNodeCommunicationState value) => value switch
         {
             InterNodeCommunicationState.Enabled => "Enabled",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InterNodeCommunicationState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static InterNodeCommunicationState ToInterNodeCommunicationState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return InterNodeCommunicationState.Enabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return InterNodeCommunicationState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled"))
+            {
+                return InterNodeCommunicationState.Enabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
+            {
+                return InterNodeCommunicationState.Disabled;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InterNodeCommunicationState value.");
         }
     }

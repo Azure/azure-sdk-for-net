@@ -29,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 #region Snippet:ServiceBusSendValueBody
 
-                var client = new ServiceBusClient(fullyQualifiedNamespace, credential);
+                await using var client = new ServiceBusClient(fullyQualifiedNamespace, credential);
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 var message = new ServiceBusMessage();
@@ -81,7 +81,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #endif
 
                 #region Snippet:ServiceBusSetMiscellaneousProperties
-                var client = new ServiceBusClient(fullyQualifiedNamespace, credential);
+                await using var client = new ServiceBusClient(fullyQualifiedNamespace, credential);
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 var message = new ServiceBusMessage("message with AMQP properties set");

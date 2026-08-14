@@ -18,7 +18,7 @@ namespace Azure.Data.Tables.Tests
         public static IEnumerable<object[]> inputUris()
         {
             yield return new object[] { hasQuery, $"/{AccountName}{hasQuery.AbsolutePath}?{CompValue}" };
-            yield return new object[] { hasQueryNoComp,  $"/{AccountName}{hasQueryNoComp.AbsolutePath}"};
+            yield return new object[] { hasQueryNoComp, $"/{AccountName}{hasQueryNoComp.AbsolutePath}" };
             yield return new object[] { hasNoQuery, $"/{AccountName}{hasNoQuery.AbsolutePath}" };
         }
 

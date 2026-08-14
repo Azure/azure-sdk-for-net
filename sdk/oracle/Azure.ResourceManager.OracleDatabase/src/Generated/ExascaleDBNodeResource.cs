@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(ResourceType, out string exascaleDBNodeApiVersion);
             _exascaleDbNodesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
-            _exascaleDbNodesRestClient = new ExascaleDbNodes(_exascaleDbNodesClientDiagnostics, Pipeline, Endpoint, exascaleDBNodeApiVersion ?? "2025-09-01");
+            _exascaleDbNodesRestClient = new ExascaleDbNodes(_exascaleDbNodesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, exascaleDBNodeApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

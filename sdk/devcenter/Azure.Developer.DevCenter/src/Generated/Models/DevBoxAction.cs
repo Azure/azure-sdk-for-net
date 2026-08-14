@@ -13,46 +13,14 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> An action which will take place on a Dev Box. </summary>
     public partial class DevBoxAction
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevBoxAction"/>. </summary>
         /// <param name="actionType"> The action that will be taken. </param>
         /// <param name="sourceId"> The id of the resource which triggered this action. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceId"/> is null. </exception>
         internal DevBoxAction(DevBoxActionType actionType, string sourceId)
         {
-            Argument.AssertNotNull(sourceId, nameof(sourceId));
-
             ActionType = actionType;
             SourceId = sourceId;
         }
@@ -63,30 +31,29 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="sourceId"> The id of the resource which triggered this action. </param>
         /// <param name="suspendedUntil"> The earliest time that the action could occur (UTC), in RFC3339 format. </param>
         /// <param name="nextAction"> Details about the next run of this action. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxAction(string name, DevBoxActionType actionType, string sourceId, DateTimeOffset? suspendedUntil, DevBoxNextAction nextAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevBoxAction(string name, DevBoxActionType actionType, string sourceId, DateTimeOffset? suspendedUntil, DevBoxNextAction nextAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ActionType = actionType;
             SourceId = sourceId;
             SuspendedUntil = suspendedUntil;
             NextAction = nextAction;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DevBoxAction"/> for deserialization. </summary>
-        internal DevBoxAction()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the action. </summary>
         public string Name { get; }
+
         /// <summary> The action that will be taken. </summary>
         public DevBoxActionType ActionType { get; }
+
         /// <summary> The id of the resource which triggered this action. </summary>
         public string SourceId { get; }
+
         /// <summary> The earliest time that the action could occur (UTC), in RFC3339 format. </summary>
         public DateTimeOffset? SuspendedUntil { get; }
+
         /// <summary> Details about the next run of this action. </summary>
         public DevBoxNextAction NextAction { get; }
     }

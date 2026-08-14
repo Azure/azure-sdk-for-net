@@ -1,0 +1,6 @@
+import:
+  - ../../.vscode/cspell.json
+overrides:
+  - filename: '**/sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine/api/*.cs'
+    words:
+      - WUMU

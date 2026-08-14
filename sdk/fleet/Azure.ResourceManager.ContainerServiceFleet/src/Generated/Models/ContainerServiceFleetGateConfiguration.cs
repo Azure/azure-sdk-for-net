@@ -13,64 +13,31 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> GateConfiguration is used to define where Gates should be placed within the Update Run. </summary>
     public partial class ContainerServiceFleetGateConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetGateConfiguration"/>. </summary>
-        /// <param name="gateType"> The type of the Gate determines how it is completed. </param>
-        public ContainerServiceFleetGateConfiguration(ContainerServiceFleetGateType gateType)
+        /// <param name="type"> The type of the Gate determines how it is completed. </param>
+        public ContainerServiceFleetGateConfiguration(ContainerServiceFleetGateType @type)
         {
-            GateType = gateType;
+            Type = @type;
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetGateConfiguration"/>. </summary>
         /// <param name="displayName"> The human-readable display name of the Gate. </param>
-        /// <param name="gateType"> The type of the Gate determines how it is completed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetGateConfiguration(string displayName, ContainerServiceFleetGateType gateType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="type"> The type of the Gate determines how it is completed. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetGateConfiguration(string displayName, ContainerServiceFleetGateType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
-            GateType = gateType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetGateConfiguration"/> for deserialization. </summary>
-        internal ContainerServiceFleetGateConfiguration()
-        {
+            Type = @type;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The human-readable display name of the Gate. </summary>
         public string DisplayName { get; set; }
+
         /// <summary> The type of the Gate determines how it is completed. </summary>
-        public ContainerServiceFleetGateType GateType { get; set; }
+        public ContainerServiceFleetGateType Type { get; set; }
     }
 }

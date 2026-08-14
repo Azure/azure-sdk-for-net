@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                JsonSerializer.Serialize(writer, Subnet);
+                writer.WriteObjectValue(Subnet, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                             {
                                 continue;
                             }
-                            subnet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            subnet = ModelReaderWriter.Read<WritableSubResource>(BinaryData.FromString(property0.Value.GetRawText()), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceNetworkingContext.Default);
                             continue;
                         }
                     }

@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 
 namespace Azure.Messaging.ServiceBus
@@ -25,6 +28,9 @@ namespace Azure.Messaging.ServiceBus
     ///</remarks>
     public class ServiceBusClient : IAsyncDisposable
     {
+        /// <summary>The number of session IDs to request per management call when listing sessions.</summary>
+        private const int SessionBrowsePageSize = 100;
+
         private readonly ServiceBusClientOptions _options;
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
@@ -101,6 +107,25 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         protected ServiceBusClient()
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusClient"/> class using a
+        /// pre-built connection. This constructor is intended for unit tests that supply a
+        /// mocked <see cref="ServiceBusConnection"/> and is not meant for application use.
+        /// </summary>
+        /// <param name="connection">The connection to use for the client.</param>
+        internal ServiceBusClient(ServiceBusConnection connection)
+        {
+            Argument.AssertNotNull(connection, nameof(connection));
+
+            _options = new ServiceBusClientOptions
+            {
+                TransportType = connection.TransportType
+            };
+            Connection = connection;
+            Identifier = DiagnosticUtilities.GenerateIdentifier(connection.FullyQualifiedNamespace);
+            TransportType = _options.TransportType;
         }
 
         /// <summary>
@@ -537,6 +562,167 @@ namespace Azure.Messaging.ServiceBus
                 options: options,
                 sessionId: sessionId,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Lists the IDs of sessions that have active messages or session state in a session-enabled queue.
+        /// </summary>
+        ///
+        /// <param name="queueName">The name of the session-enabled queue.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>An <see cref="IAsyncEnumerable{T}"/> of session ID strings that can be iterated with <c>await foreach</c>.</returns>
+        public virtual async IAsyncEnumerable<string> GetMessageSessionsAsync(
+            string queueName,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        {
+            ValidateEntityName(queueName);
+            await foreach (var sessionId in GetMessageSessionsCoreAsync(
+                queueName,
+                DateTimeOffset.MaxValue,
+                cancellationToken).ConfigureAwait(false))
+            {
+                yield return sessionId;
+            }
+        }
+
+        /// <summary>
+        /// Lists the IDs of sessions whose session state was set or updated after the specified time in a session-enabled queue.
+        /// </summary>
+        ///
+        /// <param name="queueName">The name of the session-enabled queue.</param>
+        /// <param name="sessionStateUpdatedAfter">Only sessions whose session state was set or updated after this time are returned.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>An <see cref="IAsyncEnumerable{T}"/> of session ID strings that can be iterated with <c>await foreach</c>.</returns>
+        public virtual async IAsyncEnumerable<string> GetMessageSessionsAsync(
+            string queueName,
+            DateTimeOffset sessionStateUpdatedAfter,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        {
+            ValidateEntityName(queueName);
+            await foreach (var sessionId in GetMessageSessionsCoreAsync(
+                queueName, sessionStateUpdatedAfter,
+                cancellationToken).ConfigureAwait(false))
+            {
+                yield return sessionId;
+            }
+        }
+
+        /// <summary>
+        /// Lists the IDs of sessions that have active messages or session state in a session-enabled subscription.
+        /// </summary>
+        ///
+        /// <param name="topicName">The name of the topic.</param>
+        /// <param name="subscriptionName">The name of the subscription.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>An <see cref="IAsyncEnumerable{T}"/> of session ID strings that can be iterated with <c>await foreach</c>.</returns>
+        public virtual async IAsyncEnumerable<string> GetMessageSessionsAsync(
+            string topicName,
+            string subscriptionName,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        {
+            ValidateEntityName(topicName);
+            var entityPath = EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName);
+            await foreach (var sessionId in GetMessageSessionsCoreAsync(
+                entityPath,
+                DateTimeOffset.MaxValue,
+                cancellationToken).ConfigureAwait(false))
+            {
+                yield return sessionId;
+            }
+        }
+
+        /// <summary>
+        /// Lists the IDs of sessions whose session state was set or updated after the specified time in a session-enabled subscription.
+        /// </summary>
+        ///
+        /// <param name="topicName">The name of the topic.</param>
+        /// <param name="subscriptionName">The name of the subscription.</param>
+        /// <param name="sessionStateUpdatedAfter">Only sessions whose session state was set or updated after this time are returned.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>An <see cref="IAsyncEnumerable{T}"/> of session ID strings that can be iterated with <c>await foreach</c>.</returns>
+        public virtual async IAsyncEnumerable<string> GetMessageSessionsAsync(
+            string topicName,
+            string subscriptionName,
+            DateTimeOffset sessionStateUpdatedAfter,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        {
+            ValidateEntityName(topicName);
+            var entityPath = EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName);
+            await foreach (var sessionId in GetMessageSessionsCoreAsync(
+                entityPath, sessionStateUpdatedAfter,
+                cancellationToken).ConfigureAwait(false))
+            {
+                yield return sessionId;
+            }
+        }
+
+        // The public overloads expose IAsyncEnumerable<string> rather than AsyncPageable<string>.
+        // AsyncPageable is the idiomatic shape for HTTP endpoints, where each page carries an
+        // HTTP Response that callers surface via AsPages(). This operation runs over AMQP and has
+        // no Response to expose, so IAsyncEnumerable is the preferred streaming form for the AMQP
+        // libraries and matches existing prior art (for example ServiceBusRuleManager.GetRulesAsync).
+        private async IAsyncEnumerable<string> GetMessageSessionsCoreAsync(
+            string entityPath,
+            DateTimeOffset lastUpdatedTime,
+            [EnumeratorCancellation] CancellationToken cancellationToken)
+        {
+            Connection.ThrowIfClosed();
+
+            var retryPolicy = Connection.RetryOptions.ToRetryPolicy();
+            var transportReceiver = Connection.CreateTransportReceiver(
+                entityPath: entityPath,
+                retryPolicy: retryPolicy,
+                receiveMode: ServiceBusReceiveMode.PeekLock,
+                prefetchCount: 0,
+                identifier: $"SessionBrowser-{Guid.NewGuid():N}",
+                sessionId: null,
+                isSessionReceiver: false,
+                isProcessor: false,
+                cancellationToken: cancellationToken);
+
+            try
+            {
+                var skip = 0;
+
+                while (true)
+                {
+                    var page = await transportReceiver.GetMessageSessionsAsync(
+                        lastUpdatedTime, skip, SessionBrowsePageSize, cancellationToken).ConfigureAwait(false);
+
+                    if (page == null)
+                    {
+                        // The transport contract is to return a (possibly empty) list, never null.
+                        // Surface a null as a clear contract violation instead of silently treating
+                        // it as "no sessions," which would mask transport or protocol bugs.
+                        throw new InvalidOperationException(
+                            $"{nameof(TransportReceiver)}.{nameof(TransportReceiver.GetMessageSessionsAsync)} returned null.");
+                    }
+
+                    if (page.Count == 0)
+                    {
+                        break;
+                    }
+
+                    foreach (var sessionId in page)
+                    {
+                        yield return sessionId;
+                    }
+
+                    if (page.Count < SessionBrowsePageSize)
+                    {
+                        break;
+                    }
+                    skip += page.Count;
+                }
+            }
+            finally
+            {
+                await transportReceiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+            }
         }
 
         /// <summary>

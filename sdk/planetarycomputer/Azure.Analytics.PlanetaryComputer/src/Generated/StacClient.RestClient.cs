@@ -18,11 +18,11 @@ namespace Azure.Analytics.PlanetaryComputer
         private static ResponseClassifier _pipelineMessageClassifier201;
         private static ResponseClassifier _pipelineMessageClassifier202;
 
-        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        private static ResponseClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 = new StatusCodeClassifier(stackalloc ushort[] { 201 });
+        private static ResponseClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= new StatusCodeClassifier(stackalloc ushort[] { 201 });
 
-        private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 = new StatusCodeClassifier(stackalloc ushort[] { 202 });
+        private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
 
         internal HttpMessage CreateCreateCollectionAssetRequest(string collectionId, RequestContent content, string contentType, RequestContext context)
         {
@@ -31,7 +31,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/assets", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
@@ -50,7 +53,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/assets/", false);
             uri.AppendPath(assetId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -69,7 +75,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/assets/", false);
             uri.AppendPath(assetId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -85,7 +94,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -101,7 +113,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/mosaics", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
@@ -120,7 +135,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/mosaics/", false);
             uri.AppendPath(mosaicId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -139,7 +157,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/mosaics/", false);
             uri.AppendPath(mosaicId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -155,7 +176,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/mosaics/", false);
             uri.AppendPath(mosaicId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -171,7 +195,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/mosaics", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -185,7 +212,10 @@ namespace Azure.Analytics.PlanetaryComputer
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/stac/collections", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -196,13 +226,16 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateCreateOrReplaceCollectionRequest(string collectionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateReplaceCollectionRequest(string collectionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -219,7 +252,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.Reset(_endpoint);
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -234,7 +270,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.Reset(_endpoint);
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (sign != null)
             {
                 uri.AppendQuery("sign", sign, true);
@@ -256,7 +295,10 @@ namespace Azure.Analytics.PlanetaryComputer
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/stac/collections", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (sign != null)
             {
                 uri.AppendQuery("sign", sign, true);
@@ -280,7 +322,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/partition-type", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -296,7 +341,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/partition-type", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -313,7 +361,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/render-options", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
@@ -332,7 +383,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/render-options/", false);
             uri.AppendPath(renderOptionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -351,7 +405,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/render-options/", false);
             uri.AppendPath(renderOptionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -367,7 +424,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/render-options/", false);
             uri.AppendPath(renderOptionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -383,7 +443,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/render-options", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -399,12 +462,15 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/thumbnail", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/x-binary, image/jp2, image/jpeg, image/jpg, image/png, image/tiff; application=geotiff, image/webp");
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
             return message;
         }
 
@@ -415,7 +481,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/tile-settings", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -431,7 +500,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/tile-settings", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -442,12 +514,15 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetConformanceClassRequest(RequestContext context)
+        internal HttpMessage CreateGetConformanceClassesRequest(RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/stac/conformance", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -461,7 +536,10 @@ namespace Azure.Analytics.PlanetaryComputer
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/stac", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -477,7 +555,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/items", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -488,7 +569,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateCreateOrReplaceItemRequest(string collectionId, string itemId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateReplaceItemRequest(string collectionId, string itemId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -496,7 +577,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/items/", false);
             uri.AppendPath(itemId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -515,7 +599,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/items/", false);
             uri.AppendPath(itemId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -524,7 +611,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetItemRequest(string collectionId, string itemId, RequestContext context)
+        internal HttpMessage CreateGetItemRequest(string collectionId, string itemId, string sign, int? durationInMinutes, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -532,7 +619,18 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/items/", false);
             uri.AppendPath(itemId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (sign != null)
+            {
+                uri.AppendQuery("sign", sign, true);
+            }
+            if (durationInMinutes != null)
+            {
+                uri.AppendQuery("duration", TypeFormatters.ConvertToString(durationInMinutes), true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -541,14 +639,17 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetItemCollectionRequest(string collectionId, int? limit, IEnumerable<string> boundingBox, string datetime, RequestContext context)
+        internal HttpMessage CreateGetItemCollectionRequest(string collectionId, int? limit, IEnumerable<string> boundingBox, string datetime, string sign, int? durationInMinutes, string token, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/items", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (limit != null)
             {
                 uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
@@ -560,6 +661,18 @@ namespace Azure.Analytics.PlanetaryComputer
             if (datetime != null)
             {
                 uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sign != null)
+            {
+                uri.AppendQuery("sign", sign, true);
+            }
+            if (durationInMinutes != null)
+            {
+                uri.AppendQuery("duration", TypeFormatters.ConvertToString(durationInMinutes), true);
+            }
+            if (token != null)
+            {
+                uri.AppendQuery("token", token, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -577,7 +690,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/items/", false);
             uri.AppendPath(itemId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -595,7 +711,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/queryables", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
@@ -614,7 +733,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/queryables/", false);
             uri.AppendPath(queryableName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -633,7 +755,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/queryables/", false);
             uri.AppendPath(queryableName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -646,7 +771,10 @@ namespace Azure.Analytics.PlanetaryComputer
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/stac/queryables", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -662,7 +790,10 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/stac/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/queryables", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -676,7 +807,10 @@ namespace Azure.Analytics.PlanetaryComputer
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/stac/search", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (sign != null)
             {
                 uri.AppendQuery("sign", sign, true);

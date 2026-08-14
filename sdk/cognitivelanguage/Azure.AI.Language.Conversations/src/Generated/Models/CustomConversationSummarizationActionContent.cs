@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Supported parameters for a custom conversation summarization task. </summary>
     public partial class CustomConversationSummarizationActionContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CustomConversationSummarizationActionContent"/>. </summary>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
@@ -70,8 +42,8 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="stringIndexType"> String index type. </param>
         /// <param name="summaryLength"> Controls the approximate length of the output summaries. Recommended to use summaryLength over sentenceCount. </param>
         /// <param name="summaryAspects"> Array of Summary Aspects. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomConversationSummarizationActionContent(bool? loggingOptOut, string projectName, string deploymentName, int? sentenceCount, StringIndexType? stringIndexType, SummaryLengthBucket? summaryLength, IList<SummaryAspect> summaryAspects, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CustomConversationSummarizationActionContent(bool? loggingOptOut, string projectName, string deploymentName, int? sentenceCount, StringIndexType? stringIndexType, SummaryLengthBucket? summaryLength, IList<SummaryAspect> summaryAspects, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LoggingOptOut = loggingOptOut;
             ProjectName = projectName;
@@ -80,26 +52,27 @@ namespace Azure.AI.Language.Conversations.Models
             StringIndexType = stringIndexType;
             SummaryLength = summaryLength;
             SummaryAspects = summaryAspects;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CustomConversationSummarizationActionContent"/> for deserialization. </summary>
-        internal CustomConversationSummarizationActionContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> logging opt out. </summary>
         public bool? LoggingOptOut { get; set; }
+
         /// <summary> This field indicates the project name for the model. </summary>
         public string ProjectName { get; }
+
         /// <summary> This field indicates the deployment name for the model. </summary>
         public string DeploymentName { get; }
+
         /// <summary> It controls the approximate number of sentences in the output summaries. </summary>
         public int? SentenceCount { get; set; }
+
         /// <summary> String index type. </summary>
         public StringIndexType? StringIndexType { get; set; }
+
         /// <summary> Controls the approximate length of the output summaries. Recommended to use summaryLength over sentenceCount. </summary>
         public SummaryLengthBucket? SummaryLength { get; set; }
+
         /// <summary> Array of Summary Aspects. </summary>
         public IList<SummaryAspect> SummaryAspects { get; }
     }

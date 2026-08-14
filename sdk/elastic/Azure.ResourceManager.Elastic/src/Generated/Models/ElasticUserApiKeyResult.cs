@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Elastic.Models
         {
             get
             {
-                return Properties.ApiKey;
+                return Properties is null ? default : Properties.ApiKey;
             }
         }
     }

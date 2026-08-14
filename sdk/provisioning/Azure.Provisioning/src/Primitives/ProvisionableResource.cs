@@ -32,7 +32,7 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
     /// <summary>
     /// Gets the Bicep metadata for this resource, including decorators and conditions.
     /// </summary>
-    public BicepMetadata BicepMetadata { get; } = new BicepMetadata();
+    public ResourceBicepMetadata BicepMetadata { get; } = new ResourceBicepMetadata();
 
     /// <summary>
     /// Gets whether this is referencing an existing resource or we're defining
@@ -50,7 +50,8 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
                 foreach (IBicepValue property in ProvisionableProperties.Values)
                 {
                     // Name is the only property that's still settable
-                    if (property.Self?.PropertyName == "Name") { continue; }
+                    if (property.Self?.PropertyName == "Name")
+                    { continue; }
                     property.SetReadOnly();
                 }
             }
@@ -173,6 +174,12 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
             resource = resource.Decorate("batchSize", BicepSyntax.Value(BicepMetadata.BatchSize.Value));
         }
 
+        // Apply condition if specified
+        if (!BicepMetadata.Condition.IsEmpty)
+        {
+            resource.Condition = BicepMetadata.Condition.Compile();
+        }
+
         yield return resource;
     }
 
@@ -190,6 +197,16 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
     public virtual ResourceNameRequirements GetResourceNameRequirements() =>
         new(minLength: 1, maxLength: 24, validCharacters: ResourceNameCharacters.LowercaseLetters);
 
+    /// <summary>
+    /// Defines a resource reference property on this resource.
+    /// </summary>
+    /// <typeparam name="T">The type of the referenced resource.</typeparam>
+    /// <param name="propertyName">The property name.</param>
+    /// <param name="bicepPath">The Bicep path segments for this property.</param>
+    /// <param name="isOutput">Whether the property is an output.</param>
+    /// <param name="isRequired">Whether the property is required.</param>
+    /// <param name="defaultValue">An optional default resource value.</param>
+    /// <returns>The defined <see cref="ResourceReference{T}"/>.</returns>
     protected ResourceReference<T> DefineResource<T>(
         string propertyName,
         string[]? bicepPath,

@@ -24,7 +24,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
         public async Task GetPrebuiltAnalyzerAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
             #region Snippet:ContentUnderstandingGetPrebuiltAnalyzer
@@ -120,7 +120,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
         public async Task GetPrebuiltInvoiceAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
             #region Snippet:ContentUnderstandingGetPrebuiltInvoice
@@ -260,7 +260,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             string analyzerId = $"my_custom_analyzer_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
 #else
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
             client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
             // First, create a custom analyzer
@@ -287,7 +287,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Create analyzer configuration
             var config = new ContentAnalyzerConfig
             {
-                ReturnDetails = true
+                ShouldReturnDetails = true
             };
 
             // Create the custom analyzer
@@ -298,7 +298,11 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Config = config,
                 FieldSchema = fieldSchema
             };
-            analyzer.Models["completion"] = "gpt-4.1";
+#if SNIPPET
+            analyzer.Models["completion"] = "gpt-5.2";
+#else
+            analyzer.Models["completion"] = ModelProfile.CompletionModel;
+#endif
 
             // Create the analyzer
             await client.CreateAnalyzerAsync(
@@ -391,10 +395,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
                 // Verify config
                 Assert.IsNotNull(retrievedAnalyzer.Config, "Config should not be null");
-                Assert.IsNotNull(retrievedAnalyzer.Config!.ReturnDetails, "ReturnDetails should not be null");
-                Assert.AreEqual(true, retrievedAnalyzer.Config.ReturnDetails,
+                Assert.IsNotNull(retrievedAnalyzer.Config!.ShouldReturnDetails, "ReturnDetails should not be null");
+                Assert.AreEqual(true, retrievedAnalyzer.Config.ShouldReturnDetails,
                     "ReturnDetails should be true");
-                Console.WriteLine($"Config verified (ReturnDetails={retrievedAnalyzer.Config.ReturnDetails})");
+                Console.WriteLine($"Config verified (ReturnDetails={retrievedAnalyzer.Config.ShouldReturnDetails})");
 
                 // Verify models
                 Assert.IsNotNull(retrievedAnalyzer.Models, "Models should not be null");
@@ -405,7 +409,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Assert.IsTrue(retrievedAnalyzer.Models.ContainsKey("completion"),
                     "Should contain completion model");
                 var completionModel = retrievedAnalyzer.Models["completion"];
-                Assert.AreEqual("gpt-4.1", completionModel, "Completion model should be gpt-4.1");
+                Assert.AreEqual(ModelProfile.CompletionModel, completionModel, "Completion model should match the configured model");
                 Console.WriteLine($"  completion: {completionModel}");
 
                 // Verify the retrieved analyzer matches the original

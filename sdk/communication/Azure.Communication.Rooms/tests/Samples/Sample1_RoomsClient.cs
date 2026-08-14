@@ -4,8 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Communication.Identity;
 using Azure.Communication;
+using Azure.Communication.Identity;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -36,7 +36,7 @@ namespace Azure.Communication.Rooms.Tests.samples
             DateTimeOffset validFrom = DateTimeOffset.UtcNow;
             DateTimeOffset validUntil = validFrom.AddDays(1);
             RoomParticipant participant1 = new RoomParticipant(communicationUser1.Value); // If role is not provided, then it is set as Attendee by default
-            RoomParticipant participant2 = new RoomParticipant(communicationUser2.Value) { Role = ParticipantRole.Presenter};
+            RoomParticipant participant2 = new RoomParticipant(communicationUser2.Value) { Role = ParticipantRole.Presenter };
             // Starting in 1.2.0 release, A new role Collaborator is added
             RoomParticipant participant3 = new RoomParticipant(communicationUser3.Value) { Role = ParticipantRole.Collaborator };
             List<RoomParticipant> invitedParticipants = new List<RoomParticipant>
@@ -64,7 +64,7 @@ namespace Azure.Communication.Rooms.Tests.samples
 
             #endregion Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomAsync
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
+            Assert.That(string.IsNullOrWhiteSpace(createCommunicationRoom.Id), Is.False);
 
             string createdRoomId = createCommunicationRoom.Id;
 
@@ -86,14 +86,14 @@ namespace Azure.Communication.Rooms.Tests.samples
 
             #endregion Snippet:Azure_Communication_Rooms_Tests_Samples_UpdateRoomAsync
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(updateCommunicationRoom.Id));
+            Assert.That(string.IsNullOrWhiteSpace(updateCommunicationRoom.Id), Is.False);
 
             #region Snippet:Azure_Communication_Rooms_Tests_Samples_GetRoomAsync
             Response<CommunicationRoom> getRoomResponse = await roomsClient.GetRoomAsync(createdRoomId);
             CommunicationRoom getCommunicationRoom = getRoomResponse.Value;
             #endregion Snippet:Azure_Communication_Rooms_Tests_Samples_GetRoomAsync
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(getCommunicationRoom.Id));
+            Assert.That(string.IsNullOrWhiteSpace(getCommunicationRoom.Id), Is.False);
 
             #region Snippet:Azure_Communication_Rooms_Tests_Samples_GetRoomsAsync
 
@@ -120,7 +120,7 @@ namespace Azure.Communication.Rooms.Tests.samples
             Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
             #endregion Snippet:Azure_Communication_Rooms_Tests_Samples_DeleteRoomAsync
 
-            Assert.AreEqual(204, deleteRoomResponse.Status);
+            Assert.That(deleteRoomResponse.Status, Is.EqualTo(204));
         }
 
         [Test]
@@ -142,7 +142,7 @@ namespace Azure.Communication.Rooms.Tests.samples
             Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(validFrom, validUntil, createRoomParticipants);
             CommunicationRoom createCommunicationRoom = createRoomResponse.Value;
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
+            Assert.That(string.IsNullOrWhiteSpace(createCommunicationRoom.Id), Is.False);
 
             string createdRoomId = createCommunicationRoom.Id;
 

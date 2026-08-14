@@ -8,11 +8,11 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Storage.DataMovement.Blobs.Tests;
+using Azure.Storage.DataMovement.JobPlan;
 using BaseBlobs::Azure.Storage.Blobs;
 using BaseBlobs::Azure.Storage.Blobs.Specialized;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
-using Azure.Storage.DataMovement.JobPlan;
-using Azure.Storage.DataMovement.Blobs.Tests;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -60,7 +60,7 @@ namespace Azure.Storage.DataMovement.Tests
                 containerClient: test.Container,
                 localSourceFile: Path.Combine(disposingLocalDirectory.DirectoryPath, destinationBlobName),
                 blobName: destinationBlobName,
-                size: Constants.KB*4);
+                size: Constants.KB * 4);
             BlockBlobClient sasDestinationBlob = InstrumentClient(
                 GetServiceClient_BlobServiceSas_Blob(
                     containerName: containerName,

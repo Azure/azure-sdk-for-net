@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> The Storage config of AzureStackHCI Cluster. </summary>
-    internal partial class DeploymentSettingStorage
+    public partial class DeploymentSettingStorage
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeploymentSettingStorage"/>. </summary>
         public DeploymentSettingStorage()
@@ -52,15 +24,33 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Initializes a new instance of <see cref="DeploymentSettingStorage"/>. </summary>
         /// <param name="configurationMode"> By default, this mode is set to Express and your storage is configured as per best practices based on the number of nodes in the cluster. Allowed values are 'Express','InfraOnly', 'KeepStorage'. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentSettingStorage(string configurationMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="storageType"> Storage type for the HCI Cluster. Allowed values are 'S2D', 'SAN', 'SANS2D'. </param>
+        /// <param name="s2d"> S2D (Storage Spaces Direct) configuration. Applicable when StorageType is 'S2D' or 'SANS2D'. </param>
+        /// <param name="san"> SAN (Storage Area Network) configuration. Applicable when StorageType is 'SAN' or 'SANS2D'. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeploymentSettingStorage(string configurationMode, HciStorageType? storageType, StorageS2dConfig s2d, StorageSanConfig san, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConfigurationMode = configurationMode;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            StorageType = storageType;
+            S2d = s2d;
+            San = san;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> By default, this mode is set to Express and your storage is configured as per best practices based on the number of nodes in the cluster. Allowed values are 'Express','InfraOnly', 'KeepStorage'. </summary>
         [WirePath("configurationMode")]
         public string ConfigurationMode { get; set; }
+
+        /// <summary> Storage type for the HCI Cluster. Allowed values are 'S2D', 'SAN', 'SANS2D'. </summary>
+        [WirePath("storageType")]
+        public HciStorageType? StorageType { get; set; }
+
+        /// <summary> S2D (Storage Spaces Direct) configuration. Applicable when StorageType is 'S2D' or 'SANS2D'. </summary>
+        [WirePath("s2d")]
+        public StorageS2dConfig S2d { get; set; }
+
+        /// <summary> SAN (Storage Area Network) configuration. Applicable when StorageType is 'SAN' or 'SANS2D'. </summary>
+        [WirePath("san")]
+        public StorageSanConfig San { get; set; }
     }
 }

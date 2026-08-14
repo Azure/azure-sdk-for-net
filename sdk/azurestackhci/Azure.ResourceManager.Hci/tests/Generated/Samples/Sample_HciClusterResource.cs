@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Hci.Models;
+using Azure.ResourceManager.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Hci.Samples
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.Hci.Samples
                     WindowsServerSubscription = WindowsServerSubscription.Enabled,
                     DiagnosticLevel = HciClusterDiagnosticLevel.Basic,
                 },
-                ManagedServiceIdentityType = HciManagedServiceIdentityType.SystemAssigned,
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
             };
             HciClusterResource result = await hciCluster.UpdateAsync(patch);
 
@@ -304,7 +305,7 @@ namespace Azure.ResourceManager.Hci.Samples
             HciClusterResource hciCluster = client.GetHciClusterResource(hciClusterResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (HciClusterOfferResource item in hciCluster.GetHciClusterOffersAsync())
+            await foreach (HciClusterOfferResource item in hciCluster.GetByClusterAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

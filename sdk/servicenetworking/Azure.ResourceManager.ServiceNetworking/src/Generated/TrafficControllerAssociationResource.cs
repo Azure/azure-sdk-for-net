@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             TryGetApiVersion(ResourceType, out string trafficControllerAssociationApiVersion);
             _associationsInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking", ResourceType.Namespace, Diagnostics);
-            _associationsInterfaceRestClient = new AssociationsInterface(_associationsInterfaceClientDiagnostics, Pipeline, Endpoint, trafficControllerAssociationApiVersion ?? "2025-03-01-preview");
+            _associationsInterfaceRestClient = new AssociationsInterface(_associationsInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, trafficControllerAssociationApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

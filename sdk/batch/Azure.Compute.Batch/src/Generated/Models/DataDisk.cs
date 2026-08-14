@@ -34,15 +34,13 @@ namespace Azure.Compute.Batch
         /// <param name="caching"> The type of caching to be enabled for the data disks. The default value for caching is readwrite. For information about the caching options see: https://blogs.msdn.microsoft.com/windowsazurestorage/2012/06/27/exploring-windows-azure-drives-disks-and-images/. </param>
         /// <param name="diskSizeGb"> The initial disk size in gigabytes. </param>
         /// <param name="managedDisk"> The managed disk parameters. </param>
-        /// <param name="storageAccountType"> The storage Account type to be used for the data disk. If omitted, the default is "standard_lrs". </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataDisk(int logicalUnitNumber, CachingType? caching, int diskSizeGb, ManagedDisk managedDisk, StorageAccountType? storageAccountType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataDisk(int logicalUnitNumber, CachingType? caching, int diskSizeGb, ManagedDisk managedDisk, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LogicalUnitNumber = logicalUnitNumber;
             Caching = caching;
             DiskSizeGb = diskSizeGb;
             ManagedDisk = managedDisk;
-            StorageAccountType = storageAccountType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -57,8 +55,5 @@ namespace Azure.Compute.Batch
 
         /// <summary> The managed disk parameters. </summary>
         public ManagedDisk ManagedDisk { get; set; }
-
-        /// <summary> The storage Account type to be used for the data disk. If omitted, the default is "standard_lrs". </summary>
-        public StorageAccountType? StorageAccountType { get; set; }
     }
 }

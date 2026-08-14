@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.LargeInstance
         {
             TryGetApiVersion(LargeInstanceResource.ResourceType, out string largeInstanceApiVersion);
             _azureLargeInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LargeInstance", LargeInstanceResource.ResourceType.Namespace, Diagnostics);
-            _azureLargeInstanceRestClient = new AzureLargeInstance(_azureLargeInstanceClientDiagnostics, Pipeline, Endpoint, largeInstanceApiVersion ?? "2024-08-01-preview");
+            _azureLargeInstanceRestClient = new AzureLargeInstance(_azureLargeInstanceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, largeInstanceApiVersion ?? "2024-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.LargeInstance
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.LargeInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LargeInstanceData, LargeInstanceResource>(new AzureLargeInstanceGetByResourceGroupAsyncCollectionResultOfT(_azureLargeInstanceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new LargeInstanceResource(Client, data));
+            return new AsyncPageableWrapper<LargeInstanceData, LargeInstanceResource>(new AzureLargeInstanceGetByResourceGroupAsyncCollectionResultOfT(_azureLargeInstanceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LargeInstanceCollection.GetAll"), data => new LargeInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.LargeInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LargeInstanceData, LargeInstanceResource>(new AzureLargeInstanceGetByResourceGroupCollectionResultOfT(_azureLargeInstanceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new LargeInstanceResource(Client, data));
+            return new PageableWrapper<LargeInstanceData, LargeInstanceResource>(new AzureLargeInstanceGetByResourceGroupCollectionResultOfT(_azureLargeInstanceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LargeInstanceCollection.GetAll"), data => new LargeInstanceResource(Client, data));
         }
 
         /// <summary>

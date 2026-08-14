@@ -17,6 +17,8 @@ namespace Azure.Storage.DataMovement
         private const int ResumeTransferEvent = 5;
         private const int ResumeEnumerationCompleteEvent = 6;
         private const int UnexpectedTransferFailedEvent = 7;
+        private const int DirectorySkippedEvent = 8;
+        private const int UnexpectedCleanupErrorEvent = 9;
 
         private DataMovementEventSource() : base(EventSourceName) { }
 
@@ -37,7 +39,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        [Event(TransferCompletedEvent, Level = EventLevel.Informational, Message = "Transfer [{0}] Transfer completed: HasFailed={1}, HasKsipped={2}")]
+        [Event(TransferCompletedEvent, Level = EventLevel.Informational, Message = "Transfer [{0}] Transfer completed: HasFailed={1}, HasSkipped={2}")]
         public void TransferCompleted(string transferId, bool hasFailed, bool hasSkipped)
         {
             WriteEvent(TransferCompletedEvent, transferId, hasFailed, hasSkipped);
@@ -98,6 +100,18 @@ namespace Azure.Storage.DataMovement
         public void UnexpectedTransferFailed(string transferId, string errorMessage)
         {
             WriteEvent(UnexpectedTransferFailedEvent, transferId, errorMessage);
+        }
+
+        [Event(DirectorySkippedEvent, Level = EventLevel.Informational, Message = "Transfer [{0}] Directory skipped (already exists): {1}")]
+        public void DirectorySkipped(string transferId, string directoryUriPath)
+        {
+            WriteEvent(DirectorySkippedEvent, transferId, directoryUriPath);
+        }
+
+        [Event(UnexpectedCleanupErrorEvent, Level = EventLevel.Error, Message = "Transfer [{0}] Unexpected cleanup error: {1}")]
+        public void UnexpectedCleanupError(string transferId, string errorMessage)
+        {
+            WriteEvent(UnexpectedCleanupErrorEvent, transferId, errorMessage);
         }
     }
 }

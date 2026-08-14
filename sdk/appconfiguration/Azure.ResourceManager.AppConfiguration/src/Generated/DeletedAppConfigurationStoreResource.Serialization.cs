@@ -8,22 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    public partial class DeletedAppConfigurationStoreResource : IJsonModel<DeletedAppConfigurationStoreData>
+    /// <summary></summary>
+    public partial class DeletedAppConfigurationStoreResource : ArmResource, IJsonModel<DeletedAppConfigurationStoreData>
     {
-        private static DeletedAppConfigurationStoreData s_dataDeserializationInstance;
-        private static DeletedAppConfigurationStoreData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DeletedAppConfigurationStoreData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DeletedAppConfigurationStoreData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DeletedAppConfigurationStoreData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeletedAppConfigurationStoreData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeletedAppConfigurationStoreData>)Data).Write(writer, options);
 
-        DeletedAppConfigurationStoreData IJsonModel<DeletedAppConfigurationStoreData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeletedAppConfigurationStoreData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeletedAppConfigurationStoreData IJsonModel<DeletedAppConfigurationStoreData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DeletedAppConfigurationStoreData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeletedAppConfigurationStoreData>(Data, options, AzureResourceManagerAppConfigurationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DeletedAppConfigurationStoreData IPersistableModel<DeletedAppConfigurationStoreData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeletedAppConfigurationStoreData>(data, options, AzureResourceManagerAppConfigurationContext.Default);
 
-        string IPersistableModel<DeletedAppConfigurationStoreData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeletedAppConfigurationStoreData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeletedAppConfigurationStoreData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

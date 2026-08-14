@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.OracleDatabase
             TryGetApiVersion(AutonomousDBVersionResource.ResourceType, out string autonomousDBVersionApiVersion);
             _location = location;
             _autonomousDatabaseVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", AutonomousDBVersionResource.ResourceType.Namespace, Diagnostics);
-            _autonomousDatabaseVersionsRestClient = new AutonomousDatabaseVersions(_autonomousDatabaseVersionsClientDiagnostics, Pipeline, Endpoint, autonomousDBVersionApiVersion ?? "2025-09-01");
+            _autonomousDatabaseVersionsRestClient = new AutonomousDatabaseVersions(_autonomousDatabaseVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, autonomousDBVersionApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutonomousDBVersionData, AutonomousDBVersionResource>(new AutonomousDatabaseVersionsGetByLocationAsyncCollectionResultOfT(_autonomousDatabaseVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new AutonomousDBVersionResource(Client, data));
+            return new AsyncPageableWrapper<AutonomousDBVersionData, AutonomousDBVersionResource>(new AutonomousDatabaseVersionsGetByLocationAsyncCollectionResultOfT(_autonomousDatabaseVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "AutonomousDBVersionCollection.GetAll"), data => new AutonomousDBVersionResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutonomousDBVersionData, AutonomousDBVersionResource>(new AutonomousDatabaseVersionsGetByLocationCollectionResultOfT(_autonomousDatabaseVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new AutonomousDBVersionResource(Client, data));
+            return new PageableWrapper<AutonomousDBVersionData, AutonomousDBVersionResource>(new AutonomousDatabaseVersionsGetByLocationCollectionResultOfT(_autonomousDatabaseVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "AutonomousDBVersionCollection.GetAll"), data => new AutonomousDBVersionResource(Client, data));
         }
 
         /// <summary>

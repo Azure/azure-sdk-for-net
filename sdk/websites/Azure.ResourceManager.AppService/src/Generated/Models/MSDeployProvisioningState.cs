@@ -10,15 +10,15 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Provisioning state. </summary>
     public enum MSDeployProvisioningState
     {
-        /// <summary> accepted. </summary>
+        /// <summary> Accepted. </summary>
         Accepted,
-        /// <summary> running. </summary>
+        /// <summary> Running. </summary>
         Running,
-        /// <summary> succeeded. </summary>
+        /// <summary> Succeeded. </summary>
         Succeeded,
-        /// <summary> failed. </summary>
+        /// <summary> Failed. </summary>
         Failed,
-        /// <summary> canceled. </summary>
+        /// <summary> Canceled. </summary>
         Canceled
     }
 }

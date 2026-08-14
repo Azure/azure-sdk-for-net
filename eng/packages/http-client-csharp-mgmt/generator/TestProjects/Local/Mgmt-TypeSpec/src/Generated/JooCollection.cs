@@ -39,7 +39,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(JooResource.ResourceType, out string jooApiVersion);
             _joosClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", JooResource.ResourceType.Namespace, Diagnostics);
-            _joosRestClient = new Joos(_joosClientDiagnostics, Pipeline, Endpoint, jooApiVersion ?? "2024-05-01");
+            _joosRestClient = new Joos(_joosClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, jooApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -49,7 +49,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 

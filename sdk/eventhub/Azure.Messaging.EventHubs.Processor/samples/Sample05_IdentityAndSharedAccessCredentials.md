@@ -123,11 +123,11 @@ catch
 }
 finally
 {
-   // It is encouraged that you unregister your handlers when you have
-   // finished using the Event Processor to ensure proper cleanup.
+    // It is encouraged that you unregister your handlers when you have
+    // finished using the Event Processor to ensure proper cleanup.
 
-   processor.ProcessEventAsync -= Application.ProcessorEventHandler;
-   processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
+    processor.ProcessEventAsync -= Application.ProcessorEventHandler;
+    processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
 }
 ```
 
@@ -143,9 +143,9 @@ var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
- var storageClient = new BlobContainerClient(
-    storageConnectionString,
-    blobContainerName);
+var storageClient = new BlobContainerClient(
+   storageConnectionString,
+   blobContainerName);
 
 var processor = new EventProcessorClient(
     storageClient,
@@ -192,11 +192,11 @@ catch
 }
 finally
 {
-   // It is encouraged that you unregister your handlers when you have
-   // finished using the Event Processor to ensure proper cleanup.
+    // It is encouraged that you unregister your handlers when you have
+    // finished using the Event Processor to ensure proper cleanup.
 
-   processor.ProcessEventAsync -= Application.ProcessorEventHandler;
-   processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
+    processor.ProcessEventAsync -= Application.ProcessorEventHandler;
+    processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
 }
 ```
 
@@ -212,9 +212,9 @@ var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
- var storageClient = new BlobContainerClient(
-    storageConnectionString,
-    blobContainerName);
+var storageClient = new BlobContainerClient(
+   storageConnectionString,
+   blobContainerName);
 
 var processor = new EventProcessorClient(
     storageClient,
@@ -261,11 +261,11 @@ catch
 }
 finally
 {
-   // It is encouraged that you unregister your handlers when you have
-   // finished using the Event Processor to ensure proper cleanup.
+    // It is encouraged that you unregister your handlers when you have
+    // finished using the Event Processor to ensure proper cleanup.
 
-   processor.ProcessEventAsync -= Application.ProcessorEventHandler;
-   processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
+    processor.ProcessEventAsync -= Application.ProcessorEventHandler;
+    processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
 }
 ```
 
@@ -343,10 +343,10 @@ catch
 }
 finally
 {
-   // It is encouraged that you unregister your handlers when you have
-   // finished using the Event Processor to ensure proper cleanup.
+    // It is encouraged that you unregister your handlers when you have
+    // finished using the Event Processor to ensure proper cleanup.
 
-   processor.ProcessEventAsync -= Application.ProcessorEventHandler;
-   processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
+    processor.ProcessEventAsync -= Application.ProcessorEventHandler;
+    processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
 }
 ```

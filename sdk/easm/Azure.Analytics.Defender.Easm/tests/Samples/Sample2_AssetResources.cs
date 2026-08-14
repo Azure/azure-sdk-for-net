@@ -18,15 +18,15 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
         public void AssetResourcesScenario()
         {
             #region Snippet:Sample1_AssetResources_Create_Client
-            #if SNIPPET
+#if SNIPPET
             string endpoint = "https://<region>.easm.defender.microsoft.com/subscriptions/<Your_Subscription_Id>/resourceGroups/<Your_Resource_Group_Name>/workspaces/<Your_Workspace_Name>";
             EasmClient client = new EasmClient(new System.Uri(endpoint),
                             new DefaultAzureCredential());
-            #else
+#else
             string endpoint = $"https://{TestEnvironment.Region}.easm.defender.microsoft.com/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroupName}/workspaces/{TestEnvironment.WorkspaceName}";
             EasmClient client = new EasmClient(new System.Uri(endpoint),
                 TestEnvironment.Credential);
-            #endif
+#endif
             #endregion
 
             #region Snippet:Sample1_AssetResources_Get_Assets

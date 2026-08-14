@@ -27,7 +27,7 @@ namespace Azure.AI.Models
         /// <param name="credential"></param>
         public ModelsClient(Uri endpoint, TokenCredential credential)
             : this(endpoint, credential, MaaSClientHelpers.CreateOptions(endpoint))
-        {}
+        { }
 
         /// <summary>
         /// Constructs a ModelsClient with the specified endpoint and API key credential.
@@ -69,7 +69,8 @@ namespace Azure.AI.Models
         /// <summary>
         /// This is for mocking
         /// </summary>
-        protected ModelsClient() {
+        protected ModelsClient()
+        {
             _endpoint = null!;
             _keyCredential = null;
             _tokenCredential = null;
@@ -84,7 +85,7 @@ namespace Azure.AI.Models
         /// <exception cref="InvalidOperationException"></exception>
         public ChatClient GetChatClient(string model)
         {
-            if (_keyCredential!= null)
+            if (_keyCredential != null)
                 return new ModelsChatClient(model, _endpoint, _keyCredential);
             if (_tokenCredential != null)
                 return new ModelsChatClient(model, _endpoint, _tokenCredential);
@@ -99,7 +100,7 @@ namespace Azure.AI.Models
         /// <exception cref="InvalidOperationException"></exception>
         public EmbeddingClient GetEmbeddingClient(string model)
         {
-            if (_keyCredential!= null)
+            if (_keyCredential != null)
                 return new ModelEmbeddingsClient(model, _endpoint, _keyCredential);
             if (_tokenCredential != null)
                 return new ModelEmbeddingsClient(model, _endpoint, _tokenCredential);

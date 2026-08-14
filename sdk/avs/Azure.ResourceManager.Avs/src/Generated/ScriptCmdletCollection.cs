@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(ScriptCmdletResource.ResourceType, out string scriptCmdletApiVersion);
             _scriptCmdletsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ScriptCmdletResource.ResourceType.Namespace, Diagnostics);
-            _scriptCmdletsRestClient = new ScriptCmdlets(_scriptCmdletsClientDiagnostics, Pipeline, Endpoint, scriptCmdletApiVersion ?? "2025-09-01");
+            _scriptCmdletsRestClient = new ScriptCmdlets(_scriptCmdletsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scriptCmdletApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != ScriptPackageResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ScriptPackageResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ScriptPackageResource.ResourceType), nameof(id));
             }
         }
 
@@ -183,7 +183,8 @@ namespace Azure.ResourceManager.Avs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ScriptCmdletResource(Client, data));
+                context,
+                "ScriptCmdletCollection.GetAll"), data => new ScriptCmdletResource(Client, data));
         }
 
         /// <summary>
@@ -217,7 +218,8 @@ namespace Azure.ResourceManager.Avs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ScriptCmdletResource(Client, data));
+                context,
+                "ScriptCmdletCollection.GetAll"), data => new ScriptCmdletResource(Client, data));
         }
 
         /// <summary>

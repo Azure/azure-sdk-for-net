@@ -8,51 +8,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> It is a wrap up a Question Answering KB response. </summary>
     public partial class AnalyzeConversationOperationInput
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeConversationOperationInput"/>. </summary>
         /// <param name="conversationInput"> Analysis Input. </param>
-        /// <param name="actions">
-        /// Set of tasks to execute on the input conversation.
-        /// Please note <see cref="AnalyzeConversationOperationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="PiiOperationAction"/>, <see cref="SummarizationOperationAction"/> and <see cref="CustomSummarizationOperationAction"/>.
-        /// </param>
+        /// <param name="actions"> Set of tasks to execute on the input conversation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationInput"/> or <paramref name="actions"/> is null. </exception>
         public AnalyzeConversationOperationInput(MultiLanguageConversationInput conversationInput, IEnumerable<AnalyzeConversationOperationAction> actions)
         {
@@ -66,37 +34,27 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Initializes a new instance of <see cref="AnalyzeConversationOperationInput"/>. </summary>
         /// <param name="displayName"> Display name for the analysis job. </param>
         /// <param name="conversationInput"> Analysis Input. </param>
-        /// <param name="actions">
-        /// Set of tasks to execute on the input conversation.
-        /// Please note <see cref="AnalyzeConversationOperationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="PiiOperationAction"/>, <see cref="SummarizationOperationAction"/> and <see cref="CustomSummarizationOperationAction"/>.
-        /// </param>
+        /// <param name="actions"> Set of tasks to execute on the input conversation. </param>
         /// <param name="cancelAfter"> Optional duration in seconds after which the job will be canceled if not completed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationOperationInput(string displayName, MultiLanguageConversationInput conversationInput, IList<AnalyzeConversationOperationAction> actions, float? cancelAfter, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AnalyzeConversationOperationInput(string displayName, MultiLanguageConversationInput conversationInput, IList<AnalyzeConversationOperationAction> actions, float? cancelAfter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             ConversationInput = conversationInput;
             Actions = actions;
             CancelAfter = cancelAfter;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationOperationInput"/> for deserialization. </summary>
-        internal AnalyzeConversationOperationInput()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Display name for the analysis job. </summary>
         public string DisplayName { get; set; }
+
         /// <summary> Analysis Input. </summary>
         public MultiLanguageConversationInput ConversationInput { get; }
-        /// <summary>
-        /// Set of tasks to execute on the input conversation.
-        /// Please note <see cref="AnalyzeConversationOperationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="PiiOperationAction"/>, <see cref="SummarizationOperationAction"/> and <see cref="CustomSummarizationOperationAction"/>.
-        /// </summary>
+
+        /// <summary> Set of tasks to execute on the input conversation. </summary>
         public IList<AnalyzeConversationOperationAction> Actions { get; }
+
         /// <summary> Optional duration in seconds after which the job will be canceled if not completed. </summary>
         public float? CancelAfter { get; set; }
     }

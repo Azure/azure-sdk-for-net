@@ -98,9 +98,7 @@ if ($Artifacts -and $Artifacts.Count -gt 0) {
         $newVersion = [AzureEngSemanticVersion]::new($semVarsSorted[0])
       }
 
-      $newVersion.PrereleaseLabel = $newVersion.DefaultPrereleaseLabel
-      $newVersion.PrereleaseNumber = $BuildID
-      $newVersion.IsPrerelease = $True
+      $newVersion.SetPrerelease($newVersion.DefaultPrereleaseLabel, $BuildID)
 
       Write-Host "Version to publish [ $($newVersion.ToString()) ]"
 
@@ -147,9 +145,7 @@ if ($Artifacts -and $Artifacts.Count -gt 0) {
       $newVersion = [AzureEngSemanticVersion]::new($semVarsSorted[0])
     }
 
-    $newVersion.PrereleaseLabel = $newVersion.DefaultPrereleaseLabel
-    $newVersion.PrereleaseNumber = $BuildID
-    $newVersion.IsPrerelease = $True
+    $newVersion.SetPrerelease($newVersion.DefaultPrereleaseLabel, $BuildID)
 
     Write-Host "Version to publish [ $($newVersion.ToString()) ]"
 

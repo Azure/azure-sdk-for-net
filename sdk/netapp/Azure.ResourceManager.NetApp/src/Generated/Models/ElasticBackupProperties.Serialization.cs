@@ -10,261 +10,123 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class ElasticBackupProperties : IUtf8JsonSerializable, IJsonModel<ElasticBackupProperties>
+    /// <summary> Elastic Backup properties. </summary>
+    public partial class ElasticBackupProperties : IJsonModel<ElasticBackupProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticBackupProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<ElasticBackupProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        /// <summary> Initializes a new instance of <see cref="ElasticBackupProperties"/> for deserialization. </summary>
+        internal ElasticBackupProperties()
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
         }
 
-        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        internal static ElasticBackupProperties DeserializeElasticBackupProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticBackupProperties>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ElasticBackupProperties)} does not support writing '{format}' format.");
-            }
-
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
-            {
-                writer.WritePropertyName("creationDate"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(SnapshotCreationOn))
-            {
-                writer.WritePropertyName("snapshotCreationDate"u8);
-                writer.WriteStringValue(SnapshotCreationOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(CompletionOn))
-            {
-                writer.WritePropertyName("completionDate"u8);
-                writer.WriteStringValue(CompletionOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(Size))
-            {
-                writer.WritePropertyName("size"u8);
-                writer.WriteNumberValue(Size.Value);
-            }
-            if (Optional.IsDefined(Label))
-            {
-                writer.WritePropertyName("label"u8);
-                writer.WriteStringValue(Label);
-            }
-            if (options.Format != "W" && Optional.IsDefined(BackupType))
-            {
-                writer.WritePropertyName("backupType"u8);
-                writer.WriteStringValue(BackupType.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(FailureReason))
-            {
-                writer.WritePropertyName("failureReason"u8);
-                writer.WriteStringValue(FailureReason);
-            }
-            writer.WritePropertyName("elasticVolumeResourceId"u8);
-            writer.WriteStringValue(ElasticVolumeResourceId);
-            if (Optional.IsDefined(SnapshotUsage))
-            {
-                writer.WritePropertyName("snapshotUsage"u8);
-                writer.WriteStringValue(SnapshotUsage.Value.ToString());
-            }
-            if (Optional.IsDefined(ElasticSnapshotResourceId))
-            {
-                writer.WritePropertyName("elasticSnapshotResourceId"u8);
-                writer.WriteStringValue(ElasticSnapshotResourceId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ElasticBackupPolicyResourceId))
-            {
-                writer.WritePropertyName("elasticBackupPolicyResourceId"u8);
-                writer.WriteStringValue(ElasticBackupPolicyResourceId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(VolumeSize))
-            {
-                writer.WritePropertyName("volumeSize"u8);
-                writer.WriteStringValue(VolumeSize.Value.ToString());
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-        }
-
-        ElasticBackupProperties IJsonModel<ElasticBackupProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticBackupProperties>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ElasticBackupProperties)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeElasticBackupProperties(document.RootElement, options);
-        }
-
-        internal static ElasticBackupProperties DeserializeElasticBackupProperties(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset? creationDate = default;
-            DateTimeOffset? snapshotCreationDate = default;
-            DateTimeOffset? completionDate = default;
             NetAppProvisioningState? provisioningState = default;
             long? size = default;
             string label = default;
             ElasticBackupType? backupType = default;
             string failureReason = default;
             ResourceIdentifier elasticVolumeResourceId = default;
-            SnapshotUsage? snapshotUsage = default;
+            ElasticBackupSnapshotUsage? snapshotUsage = default;
             ResourceIdentifier elasticSnapshotResourceId = default;
             ResourceIdentifier elasticBackupPolicyResourceId = default;
-            VolumeSize? volumeSize = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ElasticBackupVolumeSize? volumeSize = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("creationDate"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    creationDate = property.Value.GetDateTimeOffset("O");
+                    provisioningState = new NetAppProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("snapshotCreationDate"u8))
+                if (prop.NameEquals("size"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    snapshotCreationDate = property.Value.GetDateTimeOffset("O");
+                    size = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("completionDate"u8))
+                if (prop.NameEquals("label"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    label = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("backupType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    completionDate = property.Value.GetDateTimeOffset("O");
+                    backupType = new ElasticBackupType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("failureReason"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    failureReason = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("elasticVolumeResourceId"u8))
+                {
+                    elasticVolumeResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("snapshotUsage"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = property.Value.GetString().ToNetAppProvisioningState();
+                    snapshotUsage = new ElasticBackupSnapshotUsage(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("size"u8))
+                if (prop.NameEquals("elasticSnapshotResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    size = property.Value.GetInt64();
+                    elasticSnapshotResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("label"u8))
+                if (prop.NameEquals("elasticBackupPolicyResourceId"u8))
                 {
-                    label = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("backupType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    backupType = new ElasticBackupType(property.Value.GetString());
+                    elasticBackupPolicyResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("failureReason"u8))
+                if (prop.NameEquals("volumeSize"u8))
                 {
-                    failureReason = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("elasticVolumeResourceId"u8))
-                {
-                    elasticVolumeResourceId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("snapshotUsage"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    snapshotUsage = new SnapshotUsage(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("elasticSnapshotResourceId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    elasticSnapshotResourceId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("elasticBackupPolicyResourceId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    elasticBackupPolicyResourceId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("volumeSize"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    volumeSize = new VolumeSize(property.Value.GetString());
+                    volumeSize = new ElasticBackupVolumeSize(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ElasticBackupProperties(
-                creationDate,
-                snapshotCreationDate,
-                completionDate,
                 provisioningState,
                 size,
                 label,
@@ -275,38 +137,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 elasticSnapshotResourceId,
                 elasticBackupPolicyResourceId,
                 volumeSize,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ElasticBackupProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticBackupProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ElasticBackupProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ElasticBackupProperties IPersistableModel<ElasticBackupProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticBackupProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeElasticBackupProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ElasticBackupProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ElasticBackupProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

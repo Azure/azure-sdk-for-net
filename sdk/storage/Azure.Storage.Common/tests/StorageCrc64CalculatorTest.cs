@@ -33,7 +33,7 @@ namespace Azure.Storage.Tests
                     uInitialCrcAB: 0,
                     uInitialCrcA: 0,
                     uFinalCrcA: composedCrc,
-                    uSizeA: (ulong) (blockSize * i),
+                    uSizeA: (ulong)(blockSize * i),
                     uInitialCrcB: 0,
                     uFinalCrcB: nextBlockCrc,
                     uSizeB: blockSize);
@@ -75,10 +75,10 @@ namespace Azure.Storage.Tests
                     uInitialCrcAB: 0,
                     uInitialCrcA: 0,
                     uFinalCrcA: composedCrc,
-                    uSizeA: (ulong) blockLengths[lengthIndex - 1],
+                    uSizeA: (ulong)blockLengths[lengthIndex - 1],
                     uInitialCrcB: 0,
                     uFinalCrcB: nextBlockCrc,
-                    uSizeB: (ulong) blockLengths[lengthIndex]);
+                    uSizeB: (ulong)blockLengths[lengthIndex]);
                 lengthIndex++;
             }
 
@@ -123,7 +123,8 @@ namespace Azure.Storage.Tests
             var random = new Random();
 
             List<ReadOnlyMemory<byte>> blocks = Enumerable.Range(0, numSegments)
-                .Select(_ => {
+                .Select(_ =>
+                {
                     var block = new byte[random.Next(minBlockSize, maxBlockSize)];
                     random.NextBytes(block);
                     return new ReadOnlyMemory<byte>(block);

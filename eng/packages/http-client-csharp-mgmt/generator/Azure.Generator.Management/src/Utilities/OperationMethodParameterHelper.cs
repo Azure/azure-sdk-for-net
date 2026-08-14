@@ -10,100 +10,108 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Generator.Management.Utilities
 {
     internal static class OperationMethodParameterHelper
     {
-        // TODO -- we should be able to just use the parameters from convenience method. But currently the xml doc provider has some bug that we build the parameters prematurely.
+        /// <summary>
+        /// Builds the operation method parameters by taking parameters from the convenience method
+        /// and filtering out contextual parameters that can be derived from the resource identifier.
+        /// </summary>
         public static IReadOnlyList<ParameterProvider> GetOperationMethodParameters(
             InputServiceMethod serviceMethod,
             MethodProvider convenienceMethod,
             ParameterContextRegistry parameterMapping,
             TypeProvider? enclosingTypeProvider,
-            bool forceLro = false)
+            bool shouldApplyLroHandling = false,
+            ParameterProvider? scopeParameter = null)
         {
             var requiredParameters = new List<ParameterProvider>();
             var optionalParameters = new List<ParameterProvider>();
             var scopeParameterTransformed = false;
 
-            // Add WaitUntil parameter for long-running operations
-            if (forceLro || serviceMethod.IsLongRunningOperation())
+            // Add WaitUntil parameter when this method should be generated with LRO handling.
+            if (shouldApplyLroHandling)
             {
                 requiredParameters.Add(KnownAzureParameters.WaitUntil);
             }
 
-            // Build a dictionary of convenience method parameters by name for efficient lookup
-            var convenienceParamsByName = convenienceMethod.Signature.Parameters
-                .Where(p => !p.Type.Equals(typeof(System.Threading.CancellationToken)))
-                .ToDictionary(p => p.Name, p => p);
-
-            // Loop through service method parameters and check their scope
-            foreach (var inputParameter in serviceMethod.Operation.Parameters)
+            // Add scope parameter for extension-scoped non-resource methods on ArmClient
+            if (scopeParameter != null)
             {
-                // Only include parameters with Method scope
-                if (inputParameter.Scope != InputParameterScope.Method)
+                requiredParameters.Add(scopeParameter);
+                scopeParameterTransformed = true;
+            }
+
+            // Iterate through the convenience method parameters directly
+            // The convenience method has already been processed by visitors (e.g., MatchConditionsHeadersVisitor)
+            // and contains the correct types (e.g., MatchConditions instead of separate ifMatch/ifNoneMatch)
+            foreach (var convenienceParam in convenienceMethod.Signature.Parameters)
+            {
+                // Skip CancellationToken - we add it at the end
+                if (convenienceParam.Type.Equals(typeof(System.Threading.CancellationToken)))
                 {
                     continue;
                 }
 
-                // Create temporary parameter to check filtering conditions
-                var tempParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(inputParameter)!;
+                // Get the serialized name from WireInfo if available
+                var serializedName = convenienceParam.WireInfo?.SerializedName;
 
-                // Skip contextual parameters
-                if (parameterMapping.TryGetValue(tempParameter.WireInfo.SerializedName, out var mapping) && mapping.ContextualParameter is not null)
+                // Check if this is a contextual parameter (can be derived from resource ID)
+                // If contextual, skip it - it will be resolved from the resource identifier
+                if (serializedName != null &&
+                    parameterMapping.TryGetValue(serializedName, out var mapping) &&
+                    mapping.ContextualParameter is not null)
                 {
                     continue;
                 }
 
-                // Try to find corresponding parameter in convenience method by name
-                ParameterProvider? outputParameter = null;
-                var inputParamName = tempParameter.Name;
-
-                // Check if convenience method has a parameter with the same name
-                if (convenienceParamsByName.TryGetValue(inputParamName, out var matchedParam))
+                ParameterProvider outputParameter = convenienceParam;
+                if (GetResourceDataTypeOverride(enclosingTypeProvider, convenienceParam.Type) is { } resourceDataTypeOverride)
                 {
-                    outputParameter = matchedParam;
-                }
-                else
-                {
-                    // If no match by name, create it from input parameter
-                    outputParameter = tempParameter;
+                    outputParameter = RenameWithNewInstance(outputParameter, outputParameter.Name, type: resourceDataTypeOverride);
                 }
 
-                // TODO -- we should be able to just update the parameters from convenience method.
-                // But currently the xml doc provider has some bug that we build the parameters prematurely, we create new instance here instead.
-
-                // Rename resource model parameters to "data"
-                if (inputParameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
+                // Normalize body parameter names based on the type name (e.g., "patch", "details", "data", "content", or camelCase type name)
+                if (convenienceParam.Location == ParameterLocation.Body)
                 {
-                    outputParameter = RenameWithNewInstance(outputParameter, "data");
-                }
-
-                // Apply name transformations as needed
-                // For extension-scoped operations in MockableArmClient, transform the first string parameter to ResourceIdentifier scope
-                if (enclosingTypeProvider is MockableArmClientProvider &&
-                    !scopeParameterTransformed &&
-                    inputParameter.Type is InputPrimitiveType primitiveType &&
-                    primitiveType.Kind == InputPrimitiveTypeKind.String)
-                {
-                    outputParameter = RenameWithNewInstance(outputParameter, "scope", description: $"The scope that the resource will apply against.", typeof(ResourceIdentifier));
-                    scopeParameterTransformed = true;
-                }
-
-                // Rename body parameters for Resource/ResourceCollection/MockableArmClient/MockableResource operations
-                if ((enclosingTypeProvider is ResourceClientProvider or ResourceCollectionClientProvider or MockableArmClientProvider or MockableResourceProvider) &&
-                    (serviceMethod.Operation.HttpMethod == "PUT" || serviceMethod.Operation.HttpMethod == "POST" || serviceMethod.Operation.HttpMethod == "PATCH"))
-                {
-                    var normalizedName = BodyParameterNameNormalizer.GetNormalizedBodyParameterName(outputParameter);
-                    if (normalizedName != null)
+                    // Rename body parameters for Resource/ResourceCollection/MockableArmClient/MockableResource operations
+                    if (enclosingTypeProvider is ResourceClientProvider or ResourceCollectionClientProvider or MockableArmClientProvider or MockableResourceProvider &&
+                        (serviceMethod.Operation.HttpMethod == "PUT" || serviceMethod.Operation.HttpMethod == "POST" || serviceMethod.Operation.HttpMethod == "PATCH"))
                     {
-                        outputParameter = RenameWithNewInstance(outputParameter, normalizedName);
+                        var normalizedName = BodyParameterNameNormalizer.GetNormalizedBodyParameterName(outputParameter);
+                        if (normalizedName != null)
+                        {
+                            outputParameter = RenameWithNewInstance(outputParameter, normalizedName);
+                        }
                     }
                 }
 
-                if (inputParameter.IsRequired)
+                // Apply name transformations as needed
+                // For extension-scoped operations in MockableArmClient, transform the first string parameter to ResourceIdentifier scope.
+                // Override validation to AssertNotNull because the original string-based AssertNotNullOrEmpty no longer applies.
+                if (enclosingTypeProvider is MockableArmClientProvider &&
+                    !scopeParameterTransformed &&
+                    convenienceParam.Type.Equals(typeof(string)))
+                {
+                    // Drop WireInfo from the synthetic "scope" parameter: it is no longer a wire-level argument
+                    // (the underlying request gets its values from the ResourceIdentifier via the OperationContext),
+                    // and keeping the original string parameter's WireInfo would let it collide with real wire
+                    // parameters that share the serialized name "scope" in ParameterContextRegistry.
+                    outputParameter = RenameWithNewInstance(outputParameter, "scope", description: $"The scope that the resource will apply against.", typeof(ResourceIdentifier), validation: ParameterValidationType.AssertNotNull, preserveWireInfo: false);
+                    scopeParameterTransformed = true;
+                }
+
+                // For PUT/PATCH operations, the body parameter is always required.
+                // Clear DefaultValue so that "= default" is not written in the output.
+                if (convenienceParam.Location == ParameterLocation.Body &&
+                    (serviceMethod.Operation.HttpMethod == "PUT" || serviceMethod.Operation.HttpMethod == "PATCH"))
+                {
+                    outputParameter.DefaultValue = null;
+                }
+
+                if (outputParameter.DefaultValue == null)
                 {
                     requiredParameters.Add(outputParameter);
                 }
@@ -118,7 +126,7 @@ namespace Azure.Generator.Management.Utilities
             return [.. requiredParameters, .. optionalParameters];
         }
 
-        private static ParameterProvider RenameWithNewInstance(ParameterProvider outputParameter, string normalizedName, FormattableString? description = null, Type? type = null)
+        private static ParameterProvider RenameWithNewInstance(ParameterProvider outputParameter, string normalizedName, FormattableString? description = null, CSharpType? type = null, ParameterValidationType? validation = null, bool preserveWireInfo = true)
             => new(
                     name: normalizedName,
                     description: description ?? outputParameter.Description,
@@ -133,7 +141,32 @@ namespace Azure.Generator.Management.Utilities
                     field: outputParameter.Field,
                     initializationValue: outputParameter.InitializationValue,
                     location: outputParameter.Location,
-                    wireInfo: outputParameter.WireInfo,
-                    validation: outputParameter.Validation);
+                    // When preserveWireInfo is false, pass an explicit WireInformation with an empty SerializedName
+                    // rather than null. The ParameterProvider constructor defaults a null wireInfo to
+                    // `new WireInformation(SerializationFormat.Default, name)`, which would re-introduce a
+                    // SerializedName equal to the new parameter name (e.g. "scope") and could collide with a
+                    // real wire parameter sharing that serialized name (e.g. an @query("scope")) when
+                    // ParameterContextRegistry.PopulateArguments matches arguments by WireInfo.SerializedName.
+                    // See issue #58484.
+                    wireInfo: preserveWireInfo ? outputParameter.WireInfo : new WireInformation(SerializationFormat.Default, string.Empty),
+                    validation: validation ?? outputParameter.Validation);
+
+        private static CSharpType? GetResourceDataTypeOverride(TypeProvider? enclosingTypeProvider, CSharpType type)
+        {
+            var resource = enclosingTypeProvider switch
+            {
+                ResourceClientProvider resourceClient => resourceClient,
+                ResourceCollectionClientProvider collectionClient => collectionClient.Resource,
+                _ => null
+            };
+
+            if (resource is not null &&
+                resource.TryGetResourceDataTypeOverride(type, out var resourceDataType))
+            {
+                return resourceDataType;
+            }
+
+            return null;
+        }
     }
 }

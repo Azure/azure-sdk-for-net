@@ -1,12 +1,17 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.AgentServer.Core", "Azure.AI.AgentServer.Core\src\Azure.AI.AgentServer.Core.csproj", "{ECB2A0BA-7429-44FE-B966-6EF6148138FA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.AgentServer.Contracts", "Azure.AI.AgentServer.Contracts\src\Azure.AI.AgentServer.Contracts.csproj", "{BCFE9AA8-CFF4-4540-A80C-EA681B4334D0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.AgentServer.AgentFramework", "Azure.AI.AgentServer.AgentFramework\src\Azure.AI.AgentServer.AgentFramework.csproj", "{46BCF299-464F-4DF3-BB24-53C0156D496D}"
-EndProject
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.TestFramework", "..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{7858B66C-12BD-41B8-A0C7-498B1AA9FCA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.AgentServer.Responses", "Azure.AI.AgentServer.Responses\src\Azure.AI.AgentServer.Responses.csproj", "{B2C3D4E5-F6A7-8901-BCDE-F12345678901}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.AgentServer.Responses.Tests", "Azure.AI.AgentServer.Responses\tests\Azure.AI.AgentServer.Responses.Tests.csproj", "{C3D4E5F6-A7B8-9012-CDEF-123456789012}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.AgentServer.Core", "Azure.AI.AgentServer.Core\src\Azure.AI.AgentServer.Core.csproj", "{D4E5F6A7-B890-1234-CDEF-234567890123}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.AgentServer.Core.Tests", "Azure.AI.AgentServer.Core\tests\Azure.AI.AgentServer.Core.Tests.csproj", "{E5F6A7B8-9012-3456-CDEF-345678901234}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.AgentServer.Invocations", "Azure.AI.AgentServer.Invocations\src\Azure.AI.AgentServer.Invocations.csproj", "{F6A7B8C9-0123-4567-CDEF-456789012345}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.AgentServer.Invocations.Tests", "Azure.AI.AgentServer.Invocations\tests\Azure.AI.AgentServer.Invocations.Tests.csproj", "{A7B8C9D0-1234-5678-CDEF-567890123456}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,25 +19,33 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{ECB2A0BA-7429-44FE-B966-6EF6148138FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ECB2A0BA-7429-44FE-B966-6EF6148138FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ECB2A0BA-7429-44FE-B966-6EF6148138FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ECB2A0BA-7429-44FE-B966-6EF6148138FA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BCFE9AA8-CFF4-4540-A80C-EA681B4334D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BCFE9AA8-CFF4-4540-A80C-EA681B4334D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BCFE9AA8-CFF4-4540-A80C-EA681B4334D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BCFE9AA8-CFF4-4540-A80C-EA681B4334D0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{46BCF299-464F-4DF3-BB24-53C0156D496D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{46BCF299-464F-4DF3-BB24-53C0156D496D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{46BCF299-464F-4DF3-BB24-53C0156D496D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{46BCF299-464F-4DF3-BB24-53C0156D496D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7858B66C-12BD-41B8-A0C7-498B1AA9FCA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7858B66C-12BD-41B8-A0C7-498B1AA9FCA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7858B66C-12BD-41B8-A0C7-498B1AA9FCA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7858B66C-12BD-41B8-A0C7-498B1AA9FCA3}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{18A7D57E-368D-4A89-89F6-1CE6DD7FFC77} = {32A6272F-5202-4670-8194-332F300CA6FC}
-		{7858B66C-12BD-41B8-A0C7-498B1AA9FCA3} = {32A6272F-5202-4670-8194-332F300CA6FC}
-		{C58869A9-CCB3-4D2A-B4E4-EFC7276B5E3B} = {32A6272F-5202-4670-8194-332F300CA6FC}
+		{B2C3D4E5-F6A7-8901-BCDE-F12345678901}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2C3D4E5-F6A7-8901-BCDE-F12345678901}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2C3D4E5-F6A7-8901-BCDE-F12345678901}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2C3D4E5-F6A7-8901-BCDE-F12345678901}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3D4E5F6-A7B8-9012-CDEF-123456789012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3D4E5F6-A7B8-9012-CDEF-123456789012}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3D4E5F6-A7B8-9012-CDEF-123456789012}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3D4E5F6-A7B8-9012-CDEF-123456789012}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4E5F6A7-B890-1234-CDEF-234567890123}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4E5F6A7-B890-1234-CDEF-234567890123}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4E5F6A7-B890-1234-CDEF-234567890123}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4E5F6A7-B890-1234-CDEF-234567890123}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5F6A7B8-9012-3456-CDEF-345678901234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5F6A7B8-9012-3456-CDEF-345678901234}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5F6A7B8-9012-3456-CDEF-345678901234}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5F6A7B8-9012-3456-CDEF-345678901234}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6A7B8C9-0123-4567-CDEF-456789012345}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6A7B8C9-0123-4567-CDEF-456789012345}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6A7B8C9-0123-4567-CDEF-456789012345}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6A7B8C9-0123-4567-CDEF-456789012345}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7B8C9D0-1234-5678-CDEF-567890123456}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7B8C9D0-1234-5678-CDEF-567890123456}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7B8C9D0-1234-5678-CDEF-567890123456}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7B8C9D0-1234-5678-CDEF-567890123456}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 using Azure.ResourceManager.Chaos.Tests.TestDependencies;
-using System.Linq;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Chaos.Tests
 {

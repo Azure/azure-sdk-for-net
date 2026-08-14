@@ -5,7 +5,6 @@
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.Storage" />
     <PackageReference Include="Azure.ResourceManager.Resources" />
-    <PackageReference Include="Azure.Identity" />
   </ItemGroup>
   <ItemGroup>
     <None Update="TestData\DeploymentTemplate.json">

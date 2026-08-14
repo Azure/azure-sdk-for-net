@@ -35,7 +35,7 @@
     ".vscode/cspell.json",
     "cspell.yaml",
     "assets.json",
-    "eng/Packages.Data.props",
+    "eng/centralpackagemanagement/**",
     "sdk/confidentialledger/Azure.Security.CodeTransparency/tests/TestFiles/*",
     // These services are opted out of public API surface spell checking.
     // Spelling issues must be addressed before adding these back in.
@@ -64,12 +64,15 @@
     "aadds",
     "aadkerb",
     "adls",
+    "agentic",
     "aoai",
     "apos",
     "azsdk",
     "blazor",
+    "bleu",
     "byok",
     "centralus",
+    "clippy",
     "colls",
     "contoso",
     "cpus",
@@ -141,7 +144,6 @@
     "otel",
     "overridden",
     "parallelization",
-    "personalizer",
     "petabit",
     "picometer",
     "pids",
@@ -163,6 +165,7 @@
     "skus",
     "somaxconn",
     "southcentralus",
+    "sovcloud",
     "structs",
     "sybase",
     "sysctls",
@@ -209,17 +212,6 @@
       "words": [
         "agri",
         "mobo"
-      ]
-    },
-    {
-      "filename": "**/sdk/ai/**/*.cs",
-      "words": [
-        "ansii",
-        "atbash",
-        "azureai",
-        "bleu",
-        "gleu",
-        "ubinary"
       ]
     },
     {
@@ -340,6 +332,12 @@
         "alexa",
         "cmek",
         "omnichannel"
+      ]
+    },
+    {
+      "filename": "**/sdk/certificateregistration/**/*.cs",
+      "words": [
+        "guage"
       ]
     },
     {
@@ -956,31 +954,13 @@
       ]
     },
     {
-      "filename": "**/sdk/kusto/**/*.cs",
-      "words": [
-        "openai",
-        "scsv",
-        "sohsv",
-        "tbps",
-        "tsve"
-      ]
-    },
-    {
       "filename": "**/sdk/labservices/**/*.cs",
       "words": [
         "reimage",
         "reimaging"
       ]
     },
-    {
-      "filename": "**/sdk/managednetworkfabric/**/*.cs",
-      "words": [
-        "dscp",
-        "evpn",
-        "gshut",
-        "mbps"
-      ]
-    },
+
     {
       "filename": "**/sdk/maps/Azure.Maps.TimeZones/**/*.cs",
       "words": [
@@ -993,18 +973,6 @@
         "actuals",
         "bangla",
         "hecto"
-      ]
-    },
-    {
-      "filename": "**/sdk/mediaservices/**/*.cs",
-      "words": [
-        "cabac",
-        "cavlc",
-        "cbcs",
-        "cenc",
-        "deinterlace",
-        "rtmp",
-        "scms"
       ]
     },
     {
@@ -1305,6 +1273,7 @@
         "hkey",
         "mcas",
         "mdatp",
+        "mdti",
         "msti",
         "nlstext",
         "puid",
@@ -1405,13 +1374,6 @@
       ]
     },
     {
-      "filename": "**/sdk/storagemover/**/*.cs",
-      "words": [
-        "mbps",
-        "unregistering"
-      ]
-    },
-    {
       "filename": "**/sdk/storagepool/**/*.cs",
       "words": [
         "iscsi"
@@ -1436,6 +1398,7 @@
         "informix",
         "magento",
         "netezza",
+        "ondemand",
         "oozie",
         "responsys",
         "sasl",
@@ -1598,12 +1561,6 @@
         "rpath",
         "runpath",
         "sbom"
-      ]
-    },
-    {
-      "filename": "**/sdk/monitor/**/*.cs",
-      "words": [
-        "resourceid"
       ]
     },
     {

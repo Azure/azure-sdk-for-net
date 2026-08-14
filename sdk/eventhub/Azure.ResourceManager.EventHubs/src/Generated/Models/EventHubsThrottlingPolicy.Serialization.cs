@@ -8,16 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubsThrottlingPolicy : IUtf8JsonSerializable, IJsonModel<EventHubsThrottlingPolicy>
+    /// <summary> Properties of the throttling policy. </summary>
+    public partial class EventHubsThrottlingPolicy : EventHubsApplicationGroupPolicy, IJsonModel<EventHubsThrottlingPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsThrottlingPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="EventHubsThrottlingPolicy"/> for deserialization. </summary>
+        internal EventHubsThrottlingPolicy()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EventHubsApplicationGroupPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsThrottlingPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEventHubsThrottlingPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EventHubsThrottlingPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsThrottlingPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventHubsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EventHubsThrottlingPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EventHubsThrottlingPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EventHubsThrottlingPolicy IPersistableModel<EventHubsThrottlingPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => (EventHubsThrottlingPolicy)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EventHubsThrottlingPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EventHubsThrottlingPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +74,11 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventHubsThrottlingPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsThrottlingPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EventHubsThrottlingPolicy)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("rateLimitThreshold"u8);
             writer.WriteNumberValue(RateLimitThreshold);
@@ -42,168 +86,64 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WriteStringValue(MetricId.ToString());
         }
 
-        EventHubsThrottlingPolicy IJsonModel<EventHubsThrottlingPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EventHubsThrottlingPolicy IJsonModel<EventHubsThrottlingPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EventHubsThrottlingPolicy)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EventHubsApplicationGroupPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventHubsThrottlingPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsThrottlingPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EventHubsThrottlingPolicy)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEventHubsThrottlingPolicy(document.RootElement, options);
         }
 
-        internal static EventHubsThrottlingPolicy DeserializeEventHubsThrottlingPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static EventHubsThrottlingPolicy DeserializeEventHubsThrottlingPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string name = default;
+            ApplicationGroupPolicyType applicationGroupPolicyType = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             long rateLimitThreshold = default;
             EventHubsMetricId metricId = default;
-            string name = default;
-            ApplicationGroupPolicyType type = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("rateLimitThreshold"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    rateLimitThreshold = property.Value.GetInt64();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricId"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    metricId = new EventHubsMetricId(property.Value.GetString());
+                    applicationGroupPolicyType = new ApplicationGroupPolicyType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("rateLimitThreshold"u8))
                 {
-                    name = property.Value.GetString();
+                    rateLimitThreshold = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("metricId"u8))
                 {
-                    type = new ApplicationGroupPolicyType(property.Value.GetString());
+                    metricId = new EventHubsMetricId(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new EventHubsThrottlingPolicy(name, type, serializedAdditionalRawData, rateLimitThreshold, metricId);
+            return new EventHubsThrottlingPolicy(name, applicationGroupPolicyType, additionalBinaryDataProperties, rateLimitThreshold, metricId);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RateLimitThreshold), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  rateLimitThreshold: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  rateLimitThreshold: ");
-                builder.AppendLine($"'{RateLimitThreshold.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetricId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  metricId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  metricId: ");
-                builder.AppendLine($"'{MetricId.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationGroupPolicyType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  type: ");
-                builder.AppendLine($"'{ApplicationGroupPolicyType.ToString()}'");
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<EventHubsThrottlingPolicy>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EventHubsThrottlingPolicy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventHubsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(EventHubsThrottlingPolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        EventHubsThrottlingPolicy IPersistableModel<EventHubsThrottlingPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EventHubsThrottlingPolicy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEventHubsThrottlingPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EventHubsThrottlingPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<EventHubsThrottlingPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

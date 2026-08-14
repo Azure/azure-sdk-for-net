@@ -7,7 +7,7 @@ using Azure.ResourceManager.Dns;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class DnsSpecification() :
-    Specification("Dns", typeof(DnsExtensions), ignorePropertiesWithoutPath: true)
+    Specification("Dns", typeof(DnsExtensions), ignorePropertiesWithoutPath: true, serviceDirectory: "dns")
 {
     protected override void Customize()
     { }

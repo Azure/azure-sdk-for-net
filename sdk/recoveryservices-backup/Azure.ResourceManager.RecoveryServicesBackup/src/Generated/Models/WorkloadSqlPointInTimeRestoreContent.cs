@@ -11,23 +11,18 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// AzureWorkload SQL -specific restore. Specifically for PointInTime/Log restore
-    /// Please note <see cref="WorkloadSqlPointInTimeRestoreContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="WorkloadSqlPointInTimeRestoreWithRehydrateContent"/>.
-    /// </summary>
+    /// <summary> AzureWorkload SQL -specific restore. Specifically for PointInTime/Log restore. </summary>
     public partial class WorkloadSqlPointInTimeRestoreContent : WorkloadSqlRestoreContent
     {
         /// <summary> Initializes a new instance of <see cref="WorkloadSqlPointInTimeRestoreContent"/>. </summary>
         public WorkloadSqlPointInTimeRestoreContent()
         {
-            ObjectType = "AzureWorkloadSQLPointInTimeRestoreRequest";
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadSqlPointInTimeRestoreContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryType"> Type of this recovery. </param>
         /// <param name="sourceResourceId"> Fully qualified ARM ID of the VM on which workload that was running is being recovered. </param>
         /// <param name="propertyBag"> Workload specific property bag. </param>
@@ -50,10 +45,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isNonRecoverable"> SQL specific property where user can chose to set no-recovery when restore operation is tried. </param>
         /// <param name="alternateDirectoryPaths"> Data directory details. </param>
         /// <param name="pointInTime"> PointInTime value. </param>
-        internal WorkloadSqlPointInTimeRestoreContent(string objectType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> serializedAdditionalRawData, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, string targetResourceGroupName, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails, SnapshotRestoreContent snapshotRestoreParameters, ResourceIdentifier targetVirtualMachineId, bool? shouldUseAlternateTargetLocation, bool? isNonRecoverable, IList<SqlDataDirectoryMapping> alternateDirectoryPaths, DateTimeOffset? pointInTime) : base(objectType, resourceGuardOperationRequests, serializedAdditionalRawData, recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetResourceGroupName, userAssignedManagedIdentityDetails, snapshotRestoreParameters, targetVirtualMachineId, shouldUseAlternateTargetLocation, isNonRecoverable, alternateDirectoryPaths)
+        internal WorkloadSqlPointInTimeRestoreContent(string objectType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, string targetResourceGroupName, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails, SnapshotRestoreContent snapshotRestoreParameters, ResourceIdentifier targetVirtualMachineId, bool? shouldUseAlternateTargetLocation, bool? isNonRecoverable, IList<SqlDataDirectoryMapping> alternateDirectoryPaths, DateTimeOffset? pointInTime) : base(objectType, resourceGuardOperationRequests, additionalBinaryDataProperties, recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetResourceGroupName, userAssignedManagedIdentityDetails, snapshotRestoreParameters, targetVirtualMachineId, shouldUseAlternateTargetLocation, isNonRecoverable, alternateDirectoryPaths)
         {
             PointInTime = pointInTime;
-            ObjectType = objectType ?? "AzureWorkloadSQLPointInTimeRestoreRequest";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadSqlPointInTimeRestoreContent"/>. </summary>
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        private protected WorkloadSqlPointInTimeRestoreContent(string objectType) : base("AzureWorkloadSQLPointInTimeRestoreRequest")
+        {
         }
 
         /// <summary> PointInTime value. </summary>

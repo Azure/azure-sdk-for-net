@@ -17,21 +17,13 @@ namespace _Type.Property.AdditionalProperties
     {
         internal DifferentSpreadFloatDerived() => throw null;
 
-        void IJsonModel<DifferentSpreadFloatDerived>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        DifferentSpreadFloatDerived IJsonModel<DifferentSpreadFloatDerived>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        protected override DifferentSpreadFloatRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<DifferentSpreadFloatDerived>.Write(ModelReaderWriterOptions options) => throw null;
+        protected override DifferentSpreadFloatRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        DifferentSpreadFloatDerived IPersistableModel<DifferentSpreadFloatDerived>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<DifferentSpreadFloatDerived>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected override DifferentSpreadFloatRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        DifferentSpreadFloatDerived IPersistableModel<DifferentSpreadFloatDerived>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<DifferentSpreadFloatDerived>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
@@ -39,5 +31,13 @@ namespace _Type.Property.AdditionalProperties
         public static implicit operator RequestContent(DifferentSpreadFloatDerived differentSpreadFloatDerived) => throw null;
 
         public static explicit operator DifferentSpreadFloatDerived(Response response) => throw null;
+
+        void IJsonModel<DifferentSpreadFloatDerived>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        DifferentSpreadFloatDerived IJsonModel<DifferentSpreadFloatDerived>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+
+        protected override DifferentSpreadFloatRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }
 }

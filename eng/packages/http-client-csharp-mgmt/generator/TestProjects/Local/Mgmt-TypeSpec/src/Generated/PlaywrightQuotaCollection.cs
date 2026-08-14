@@ -46,7 +46,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             TryGetApiVersion(PlaywrightQuotaResource.ResourceType, out string playwrightQuotaApiVersion);
             _location = location;
             _playwrightQuotasClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", PlaywrightQuotaResource.ResourceType.Namespace, Diagnostics);
-            _playwrightQuotasRestClient = new PlaywrightQuotas(_playwrightQuotasClientDiagnostics, Pipeline, Endpoint, playwrightQuotaApiVersion ?? "2024-05-01");
+            _playwrightQuotasRestClient = new PlaywrightQuotas(_playwrightQuotasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, playwrightQuotaApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -56,7 +56,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -281,7 +281,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PlaywrightQuotaData, PlaywrightQuotaResource>(new PlaywrightQuotasGetBySubscriptionAsyncCollectionResultOfT(_playwrightQuotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new PlaywrightQuotaResource(Client, data));
+            return new AsyncPageableWrapper<PlaywrightQuotaData, PlaywrightQuotaResource>(new PlaywrightQuotasGetBySubscriptionAsyncCollectionResultOfT(_playwrightQuotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "PlaywrightQuotaCollection.GetAll"), data => new PlaywrightQuotaResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PlaywrightQuotaData, PlaywrightQuotaResource>(new PlaywrightQuotasGetBySubscriptionCollectionResultOfT(_playwrightQuotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new PlaywrightQuotaResource(Client, data));
+            return new PageableWrapper<PlaywrightQuotaData, PlaywrightQuotaResource>(new PlaywrightQuotasGetBySubscriptionCollectionResultOfT(_playwrightQuotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "PlaywrightQuotaCollection.GetAll"), data => new PlaywrightQuotaResource(Client, data));
         }
 
         /// <summary>

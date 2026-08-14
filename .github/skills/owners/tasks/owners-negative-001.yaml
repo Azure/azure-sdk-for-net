@@ -1,0 +1,14 @@
+id: owners-negative-001
+name: Should Not Trigger - Unrelated Request
+description: |
+  Test that the skill does NOT trigger for non-CODEOWNERS requests.
+tags:
+  - negative
+inputs:
+  prompt: "How do I deploy my Azure Functions app to production?"
+expected:
+  output_contains:
+    - "deploy"
+  behavior:
+    max_tool_calls: 2
+    max_response_time_ms: 30000

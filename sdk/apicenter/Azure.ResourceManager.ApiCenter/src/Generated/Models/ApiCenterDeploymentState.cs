@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiCenter;
 
 namespace Azure.ResourceManager.ApiCenter.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ApiCenter.Models
     public readonly partial struct ApiCenterDeploymentState : IEquatable<ApiCenterDeploymentState>
     {
         private readonly string _value;
+        /// <summary> Active State. </summary>
+        private const string ActiveValue = "active";
+        /// <summary> Inactive State. </summary>
+        private const string InactiveValue = "inactive";
 
         /// <summary> Initializes a new instance of <see cref="ApiCenterDeploymentState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApiCenterDeploymentState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "active";
-        private const string InactiveValue = "inactive";
+            _value = value;
+        }
 
         /// <summary> Active State. </summary>
         public static ApiCenterDeploymentState Active { get; } = new ApiCenterDeploymentState(ActiveValue);
+
         /// <summary> Inactive State. </summary>
         public static ApiCenterDeploymentState Inactive { get; } = new ApiCenterDeploymentState(InactiveValue);
+
         /// <summary> Determines if two <see cref="ApiCenterDeploymentState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApiCenterDeploymentState left, ApiCenterDeploymentState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApiCenterDeploymentState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApiCenterDeploymentState left, ApiCenterDeploymentState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApiCenterDeploymentState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApiCenterDeploymentState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApiCenterDeploymentState(string value) => new ApiCenterDeploymentState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApiCenterDeploymentState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApiCenterDeploymentState?(string value) => value == null ? null : new ApiCenterDeploymentState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApiCenterDeploymentState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApiCenterDeploymentState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

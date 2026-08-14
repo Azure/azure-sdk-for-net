@@ -20,7 +20,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// Initialize a WebPubSubClientCredential instance
         /// </summary>
         /// <param name="clientAccessUri">The uri to be used to connect to the service</param>
-        public WebPubSubClientCredential(Uri clientAccessUri): this(_ => new ValueTask<Uri>(clientAccessUri))
+        public WebPubSubClientCredential(Uri clientAccessUri) : this(_ => new ValueTask<Uri>(clientAccessUri))
         {
         }
 

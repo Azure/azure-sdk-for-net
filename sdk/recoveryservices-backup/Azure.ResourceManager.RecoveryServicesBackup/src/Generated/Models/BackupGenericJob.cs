@@ -12,46 +12,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Defines workload agnostic properties for a job.
-    /// Please note <see cref="BackupGenericJob"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="IaasVmBackupJob"/>, <see cref="IaasVmBackupJobV2"/>, <see cref="StorageBackupJob"/>, <see cref="WorkloadBackupJob"/>, <see cref="DpmBackupJob"/>, <see cref="MabBackupJob"/> and <see cref="VaultBackupJob"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="IaasVmBackupJob"/>, <see cref="IaasVmBackupJobV2"/>, <see cref="StorageBackupJob"/>, <see cref="WorkloadBackupJob"/>, <see cref="DpmBackupJob"/>, <see cref="MabBackupJob"/>, and <see cref="VaultBackupJob"/>.
     /// </summary>
     public abstract partial class BackupGenericJob
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BackupGenericJob"/>. </summary>
-        protected BackupGenericJob()
+        /// <param name="jobType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        private protected BackupGenericJob(string jobType)
         {
+            JobType = jobType;
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupGenericJob"/>. </summary>
@@ -63,8 +35,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="endOn"> The end time. </param>
         /// <param name="activityId"> ActivityId of job. </param>
         /// <param name="jobType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupGenericJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BackupGenericJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EntityFriendlyName = entityFriendlyName;
             BackupManagementType = backupManagementType;
@@ -74,23 +46,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             EndOn = endOn;
             ActivityId = activityId;
             JobType = jobType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Friendly name of the entity on which the current job is executing. </summary>
         public string EntityFriendlyName { get; set; }
+
         /// <summary> Backup management type to execute the current job. </summary>
         public BackupManagementType? BackupManagementType { get; set; }
+
         /// <summary> The operation name. </summary>
         public string Operation { get; set; }
+
         /// <summary> Job status. </summary>
         public string Status { get; set; }
+
         /// <summary> The start time. </summary>
         public DateTimeOffset? StartOn { get; set; }
+
         /// <summary> The end time. </summary>
         public DateTimeOffset? EndOn { get; set; }
+
         /// <summary> ActivityId of job. </summary>
         public string ActivityId { get; set; }
+
         /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>
         internal string JobType { get; set; }
     }

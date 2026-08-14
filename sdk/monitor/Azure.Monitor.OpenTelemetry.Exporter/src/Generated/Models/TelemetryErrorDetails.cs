@@ -5,11 +5,16 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    /// <summary> The error details. </summary>
     internal partial class TelemetryErrorDetails
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="TelemetryErrorDetails"/>. </summary>
         internal TelemetryErrorDetails()
         {
@@ -19,17 +24,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="index"> The index in the original payload of the item. </param>
         /// <param name="statusCode"> The item specific [HTTP Response status code](#Response Status Codes). </param>
         /// <param name="message"> The error message. </param>
-        internal TelemetryErrorDetails(int? index, int? statusCode, string message)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TelemetryErrorDetails(int? index, int? statusCode, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Index = index;
             StatusCode = statusCode;
             Message = message;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The index in the original payload of the item. </summary>
         public int? Index { get; }
+
         /// <summary> The item specific [HTTP Response status code](#Response Status Codes). </summary>
         public int? StatusCode { get; }
+
         /// <summary> The error message. </summary>
         public string Message { get; }
     }

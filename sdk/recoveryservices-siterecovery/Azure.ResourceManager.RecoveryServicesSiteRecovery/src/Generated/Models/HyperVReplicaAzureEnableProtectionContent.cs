@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class HyperVReplicaAzureEnableProtectionContent : EnableProtectionProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureEnableProtectionContent"/>. </summary>
-        public HyperVReplicaAzureEnableProtectionContent()
+        public HyperVReplicaAzureEnableProtectionContent() : base("HyperVReplicaAzure")
         {
             DisksToInclude = new ChangeTrackingList<string>();
             DisksToIncludeForManagedDisks = new ChangeTrackingList<HyperVReplicaAzureDiskDetails>();
@@ -23,12 +24,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             SeedManagedDiskTags = new ChangeTrackingDictionary<string, string>();
             TargetManagedDiskTags = new ChangeTrackingDictionary<string, string>();
             TargetNicTags = new ChangeTrackingDictionary<string, string>();
-            InstanceType = "HyperVReplicaAzure";
         }
 
         /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureEnableProtectionContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="hyperVHostVmId"> The Hyper-V host VM Id. </param>
         /// <param name="vmName"> The VM Name. </param>
         /// <param name="osType"> The OS type associated with VM. </param>
@@ -60,7 +60,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="seedManagedDiskTags"> The tags for the seed managed disks. </param>
         /// <param name="targetManagedDiskTags"> The tags for the target managed disks. </param>
         /// <param name="targetNicTags"> The tags for the target NICs. </param>
-        internal HyperVReplicaAzureEnableProtectionContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string hyperVHostVmId, string vmName, string osType, string userSelectedOSName, string vhdId, ResourceIdentifier targetStorageAccountId, ResourceIdentifier targetAzureNetworkId, ResourceIdentifier targetAzureSubnetId, string enableRdpOnTargetOption, string targetAzureVmName, ResourceIdentifier logStorageAccountId, IList<string> disksToInclude, ResourceIdentifier targetAzureV1ResourceGroupId, ResourceIdentifier targetAzureV2ResourceGroupId, string useManagedDisks, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, SiteRecoveryLicenseType? licenseType, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile, string targetVmSize, ResourceIdentifier targetProximityPlacementGroupId, string useManagedDisksForReplication, SiteRecoveryDiskAccountType? diskType, IList<HyperVReplicaAzureDiskDetails> disksToIncludeForManagedDisks, ResourceIdentifier diskEncryptionSetId, IDictionary<string, string> targetVmTags, IDictionary<string, string> seedManagedDiskTags, IDictionary<string, string> targetManagedDiskTags, IDictionary<string, string> targetNicTags) : base(instanceType, serializedAdditionalRawData)
+        /// <param name="targetCapacityReservationGroupId"> The target capacity reservation group ARM Id. </param>
+        internal HyperVReplicaAzureEnableProtectionContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string hyperVHostVmId, string vmName, string osType, string userSelectedOSName, string vhdId, ResourceIdentifier targetStorageAccountId, ResourceIdentifier targetAzureNetworkId, ResourceIdentifier targetAzureSubnetId, string enableRdpOnTargetOption, string targetAzureVmName, ResourceIdentifier logStorageAccountId, IList<string> disksToInclude, ResourceIdentifier targetAzureV1ResourceGroupId, ResourceIdentifier targetAzureV2ResourceGroupId, string useManagedDisks, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, SiteRecoveryLicenseType? licenseType, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile, string targetVmSize, ResourceIdentifier targetProximityPlacementGroupId, string useManagedDisksForReplication, SiteRecoveryDiskAccountType? diskType, IList<HyperVReplicaAzureDiskDetails> disksToIncludeForManagedDisks, ResourceIdentifier diskEncryptionSetId, IDictionary<string, string> targetVmTags, IDictionary<string, string> seedManagedDiskTags, IDictionary<string, string> targetManagedDiskTags, IDictionary<string, string> targetNicTags, string targetCapacityReservationGroupId) : base(instanceType, additionalBinaryDataProperties)
         {
             HyperVHostVmId = hyperVHostVmId;
             VmName = vmName;
@@ -93,70 +94,103 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             SeedManagedDiskTags = seedManagedDiskTags;
             TargetManagedDiskTags = targetManagedDiskTags;
             TargetNicTags = targetNicTags;
-            InstanceType = instanceType ?? "HyperVReplicaAzure";
+            TargetCapacityReservationGroupId = targetCapacityReservationGroupId;
         }
 
         /// <summary> The Hyper-V host VM Id. </summary>
         public string HyperVHostVmId { get; set; }
+
         /// <summary> The VM Name. </summary>
         public string VmName { get; set; }
+
         /// <summary> The OS type associated with VM. </summary>
         public string OSType { get; set; }
+
         /// <summary> The OS name selected by user. </summary>
         public string UserSelectedOSName { get; set; }
+
         /// <summary> The OS disk VHD id associated with VM. </summary>
         public string VhdId { get; set; }
+
         /// <summary> The storage account Id. </summary>
         public ResourceIdentifier TargetStorageAccountId { get; set; }
+
         /// <summary> The selected target Azure network Id. </summary>
         public ResourceIdentifier TargetAzureNetworkId { get; set; }
+
         /// <summary> The selected target Azure subnet Id. </summary>
         public ResourceIdentifier TargetAzureSubnetId { get; set; }
+
         /// <summary> The selected option to enable RDP\SSH on target vm after failover. String value of SrsDataContract.EnableRDPOnTargetOption enum. </summary>
         public string EnableRdpOnTargetOption { get; set; }
+
         /// <summary> The target azure VM Name. </summary>
         public string TargetAzureVmName { get; set; }
+
         /// <summary> The storage account to be used for logging during replication. </summary>
         public ResourceIdentifier LogStorageAccountId { get; set; }
+
         /// <summary> The list of VHD Ids of disks to be protected. </summary>
         public IList<string> DisksToInclude { get; }
+
         /// <summary> The Id of the target resource group (for classic deployment) in which the failover VM is to be created. </summary>
         public ResourceIdentifier TargetAzureV1ResourceGroupId { get; set; }
+
         /// <summary> The Id of the target resource group (for resource manager deployment) in which the failover VM is to be created. </summary>
         public ResourceIdentifier TargetAzureV2ResourceGroupId { get; set; }
+
         /// <summary> A value indicating whether managed disks should be used during failover. </summary>
         public string UseManagedDisks { get; set; }
+
         /// <summary> The target availability set ARM Id for resource manager deployment. </summary>
         public ResourceIdentifier TargetAvailabilitySetId { get; set; }
+
         /// <summary> The target availability zone. </summary>
         public string TargetAvailabilityZone { get; set; }
+
         /// <summary> License type. </summary>
         public SiteRecoveryLicenseType? LicenseType { get; set; }
+
         /// <summary> The SQL Server license type. </summary>
         public SiteRecoverySqlServerLicenseType? SqlServerLicenseType { get; set; }
+
         /// <summary> The license type for Linux VM's. </summary>
         public RecoveryServicesSiteRecoveryLinuxLicenseType? LinuxLicenseType { get; set; }
+
         /// <summary> The target VM security profile. </summary>
         public RecoveryServicesSiteRecoverySecurityProfileProperties TargetVmSecurityProfile { get; set; }
+
         /// <summary> The target VM size. </summary>
         public string TargetVmSize { get; set; }
+
         /// <summary> The proximity placement group ARM Id. </summary>
         public ResourceIdentifier TargetProximityPlacementGroupId { get; set; }
+
         /// <summary> A value indicating whether managed disks should be used during replication. </summary>
         public string UseManagedDisksForReplication { get; set; }
+
         /// <summary> The disk type. </summary>
         public SiteRecoveryDiskAccountType? DiskType { get; set; }
+
         /// <summary> The disks to include list for managed disks. </summary>
         public IList<HyperVReplicaAzureDiskDetails> DisksToIncludeForManagedDisks { get; }
+
         /// <summary> The DiskEncryptionSet ARM Id. </summary>
         public ResourceIdentifier DiskEncryptionSetId { get; set; }
+
         /// <summary> The target VM tags. </summary>
         public IDictionary<string, string> TargetVmTags { get; }
+
         /// <summary> The tags for the seed managed disks. </summary>
         public IDictionary<string, string> SeedManagedDiskTags { get; }
+
         /// <summary> The tags for the target managed disks. </summary>
         public IDictionary<string, string> TargetManagedDiskTags { get; }
+
         /// <summary> The tags for the target NICs. </summary>
         public IDictionary<string, string> TargetNicTags { get; }
+
+        /// <summary> The target capacity reservation group ARM Id. </summary>
+        public string TargetCapacityReservationGroupId { get; set; }
     }
 }

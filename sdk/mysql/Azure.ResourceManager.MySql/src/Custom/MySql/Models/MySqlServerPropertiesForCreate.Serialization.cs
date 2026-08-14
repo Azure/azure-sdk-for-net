@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MySql.Models
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
@@ -105,10 +105,14 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Default": return MySqlServerPropertiesForDefaultCreate.DeserializeMySqlServerPropertiesForDefaultCreate(element, options);
-                    case "GeoRestore": return MySqlServerPropertiesForGeoRestore.DeserializeMySqlServerPropertiesForGeoRestore(element, options);
-                    case "PointInTimeRestore": return MySqlServerPropertiesForRestore.DeserializeMySqlServerPropertiesForRestore(element, options);
-                    case "Replica": return MySqlServerPropertiesForReplica.DeserializeMySqlServerPropertiesForReplica(element, options);
+                    case "Default":
+                        return MySqlServerPropertiesForDefaultCreate.DeserializeMySqlServerPropertiesForDefaultCreate(element, options);
+                    case "GeoRestore":
+                        return MySqlServerPropertiesForGeoRestore.DeserializeMySqlServerPropertiesForGeoRestore(element, options);
+                    case "PointInTimeRestore":
+                        return MySqlServerPropertiesForRestore.DeserializeMySqlServerPropertiesForRestore(element, options);
+                    case "Replica":
+                        return MySqlServerPropertiesForReplica.DeserializeMySqlServerPropertiesForReplica(element, options);
                 }
             }
             return UnknownServerPropertiesForCreate.DeserializeUnknownServerPropertiesForCreate(element, options);

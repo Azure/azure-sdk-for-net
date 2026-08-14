@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.LoadTesting.Tests
             ResourceGroupsOperations = Subscription.GetResourceGroups();
         }
 
-         public async Task<ResourceGroupResource> GetResourceGroupAsync(string name)
+        public async Task<ResourceGroupResource> GetResourceGroupAsync(string name)
         {
             return await Subscription.GetResourceGroups().GetAsync(name);
         }

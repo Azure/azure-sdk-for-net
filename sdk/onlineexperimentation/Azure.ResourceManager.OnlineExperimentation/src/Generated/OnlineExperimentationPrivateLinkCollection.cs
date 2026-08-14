@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
         {
             TryGetApiVersion(OnlineExperimentationPrivateLinkResource.ResourceType, out string onlineExperimentationPrivateLinkApiVersion);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OnlineExperimentation", OnlineExperimentationPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, onlineExperimentationPrivateLinkApiVersion ?? "2025-08-01-preview");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, onlineExperimentationPrivateLinkApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
         {
             if (id.ResourceType != OnlineExperimentationWorkspaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, OnlineExperimentationWorkspaceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, OnlineExperimentationWorkspaceResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OnlineExperimentationPrivateLinkData, OnlineExperimentationPrivateLinkResource>(new PrivateLinkResourcesGetAllAsyncCollectionResultOfT(_privateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new OnlineExperimentationPrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<OnlineExperimentationPrivateLinkData, OnlineExperimentationPrivateLinkResource>(new PrivateLinkResourcesGetAllAsyncCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "OnlineExperimentationPrivateLinkCollection.GetAll"), data => new OnlineExperimentationPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OnlineExperimentationPrivateLinkData, OnlineExperimentationPrivateLinkResource>(new PrivateLinkResourcesGetAllCollectionResultOfT(_privateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new OnlineExperimentationPrivateLinkResource(Client, data));
+            return new PageableWrapper<OnlineExperimentationPrivateLinkData, OnlineExperimentationPrivateLinkResource>(new PrivateLinkResourcesGetAllCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "OnlineExperimentationPrivateLinkCollection.GetAll"), data => new OnlineExperimentationPrivateLinkResource(Client, data));
         }
 
         /// <summary>

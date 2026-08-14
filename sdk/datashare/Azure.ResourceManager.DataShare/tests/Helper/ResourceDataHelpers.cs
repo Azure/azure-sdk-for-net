@@ -1,19 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.ResourceManager.DataShare.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
-using Azure.Core;
-using System;
-using System.Text;
-using Azure.ResourceManager.Resources;
-using System.Threading.Tasks;
 using NUnit.Framework.Internal;
-using System.IO;
-using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.DataShare.Tests.Helper
 {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataShare.Tests.Helper
             AssertResource(data1, data2);
             Assert.AreEqual(data1.Kind, data2.Kind);
         }
-        public static DataShareSynchronizationSettingData GetSynchronizationData(DateTimeOffset day )
+        public static DataShareSynchronizationSettingData GetSynchronizationData(DateTimeOffset day)
         {
             var data = new ScheduledSynchronizationSetting(DataShareSynchronizationRecurrenceInterval.Day, day)
             {

@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Search.Tests
 {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Search.Tests
 
         protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
         {
-            string rgName = Recording.GenerateAssetName("Search-SDK-Test");
+            string rgName = Recording.GenerateAssetName("SSS3PT_Search-SDK-Test");
             ResourceGroupData input = new ResourceGroupData(DefaultLocation);
             var lro = await DefaultLSubscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;

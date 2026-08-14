@@ -9,8 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
+using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.AI.Agents.Persistent;
 
 // This type of this object is marked as unknown in typespec. Here we create the
@@ -62,7 +62,7 @@ public partial class FunctionToolDefinition
     /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="parameters"/> is null. </exception>
     public FunctionToolDefinition(string name, string description, BinaryData parameters)
-        : this(type: "function", serializedAdditionalRawData: null, new InternalFunctionDefinition(name, description, parameters, serializedAdditionalRawData: null))
+        : this(type: "function", additionalBinaryDataProperties: null, new InternalFunctionDefinition(name, description, parameters, additionalBinaryDataProperties: null))
     {
     }
 
@@ -82,27 +82,59 @@ public partial class FunctionToolDefinition
     * These additions simply allow easy comparison between tool calls and tool definitions.
     */
 
+    /// <summary> Determines whether a <see cref="FunctionToolDefinition"/> matches a <see cref="RunStepFunctionToolCall"/> by name. </summary>
+    /// <param name="functionToolDefinition"> The function tool definition. </param>
+    /// <param name="functionToolCall"> The run step function tool call. </param>
+    /// <returns> <c>true</c> if the names match; otherwise, <c>false</c>. </returns>
     public static bool operator ==(FunctionToolDefinition functionToolDefinition, RunStepFunctionToolCall functionToolCall)
         => functionToolDefinition.Name == functionToolCall.Name;
 
+    /// <summary> Determines whether a <see cref="FunctionToolDefinition"/> does not match a <see cref="RunStepFunctionToolCall"/> by name. </summary>
+    /// <param name="functionToolDefinition"> The function tool definition. </param>
+    /// <param name="functionToolCall"> The run step function tool call. </param>
+    /// <returns> <c>true</c> if the names do not match; otherwise, <c>false</c>. </returns>
     public static bool operator !=(FunctionToolDefinition functionToolDefinition, RunStepFunctionToolCall functionToolCall)
         => functionToolDefinition.Name != functionToolCall.Name;
 
+    /// <summary> Determines whether a <see cref="RunStepFunctionToolCall"/> matches a <see cref="FunctionToolDefinition"/> by name. </summary>
+    /// <param name="functionToolCall"> The run step function tool call. </param>
+    /// <param name="functionToolDefinition"> The function tool definition. </param>
+    /// <returns> <c>true</c> if the names match; otherwise, <c>false</c>. </returns>
     public static bool operator ==(RunStepFunctionToolCall functionToolCall, FunctionToolDefinition functionToolDefinition)
         => functionToolCall.Name == functionToolDefinition.Name;
 
+    /// <summary> Determines whether a <see cref="RunStepFunctionToolCall"/> does not match a <see cref="FunctionToolDefinition"/> by name. </summary>
+    /// <param name="functionToolCall"> The run step function tool call. </param>
+    /// <param name="functionToolDefinition"> The function tool definition. </param>
+    /// <returns> <c>true</c> if the names do not match; otherwise, <c>false</c>. </returns>
     public static bool operator !=(RunStepFunctionToolCall functionToolCall, FunctionToolDefinition functionToolDefinition)
         => functionToolCall.Name != functionToolDefinition.Name;
 
+    /// <summary> Determines whether a <see cref="FunctionToolDefinition"/> matches a <see cref="RequiredFunctionToolCall"/> by name. </summary>
+    /// <param name="functionToolDefinition"> The function tool definition. </param>
+    /// <param name="functionToolCall"> The required function tool call. </param>
+    /// <returns> <c>true</c> if the names match; otherwise, <c>false</c>. </returns>
     public static bool operator ==(FunctionToolDefinition functionToolDefinition, RequiredFunctionToolCall functionToolCall)
         => functionToolDefinition.Name == functionToolCall.Name;
 
+    /// <summary> Determines whether a <see cref="FunctionToolDefinition"/> does not match a <see cref="RequiredFunctionToolCall"/> by name. </summary>
+    /// <param name="functionToolDefinition"> The function tool definition. </param>
+    /// <param name="functionToolCall"> The required function tool call. </param>
+    /// <returns> <c>true</c> if the names do not match; otherwise, <c>false</c>. </returns>
     public static bool operator !=(FunctionToolDefinition functionToolDefinition, RequiredFunctionToolCall functionToolCall)
         => functionToolDefinition.Name != functionToolCall.Name;
 
+    /// <summary> Determines whether a <see cref="RequiredFunctionToolCall"/> matches a <see cref="FunctionToolDefinition"/> by name. </summary>
+    /// <param name="functionToolCall"> The required function tool call. </param>
+    /// <param name="functionToolDefinition"> The function tool definition. </param>
+    /// <returns> <c>true</c> if the names match; otherwise, <c>false</c>. </returns>
     public static bool operator ==(RequiredFunctionToolCall functionToolCall, FunctionToolDefinition functionToolDefinition)
         => functionToolCall.Name == functionToolDefinition.Name;
 
+    /// <summary> Determines whether a <see cref="RequiredFunctionToolCall"/> does not match a <see cref="FunctionToolDefinition"/> by name. </summary>
+    /// <param name="functionToolCall"> The required function tool call. </param>
+    /// <param name="functionToolDefinition"> The function tool definition. </param>
+    /// <returns> <c>true</c> if the names do not match; otherwise, <c>false</c>. </returns>
     public static bool operator !=(RequiredFunctionToolCall functionToolCall, FunctionToolDefinition functionToolDefinition)
         => functionToolCall.Name != functionToolDefinition.Name;
 

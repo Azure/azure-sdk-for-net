@@ -14,12 +14,52 @@ using Azure.ResourceManager.IotOperations;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> Custom Authentication properties. </summary>
-    public partial class BrokerAuthenticatorCustomAuth : IJsonModel<BrokerAuthenticatorCustomAuth>
+    internal partial class BrokerAuthenticatorCustomAuth : IJsonModel<BrokerAuthenticatorCustomAuth>
     {
         /// <summary> Initializes a new instance of <see cref="BrokerAuthenticatorCustomAuth"/> for deserialization. </summary>
         internal BrokerAuthenticatorCustomAuth()
         {
         }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BrokerAuthenticatorCustomAuth PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BrokerAuthenticatorCustomAuth>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBrokerAuthenticatorCustomAuth(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BrokerAuthenticatorCustomAuth)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BrokerAuthenticatorCustomAuth>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BrokerAuthenticatorCustomAuth)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BrokerAuthenticatorCustomAuth>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BrokerAuthenticatorCustomAuth IPersistableModel<BrokerAuthenticatorCustomAuth>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BrokerAuthenticatorCustomAuth>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -99,45 +139,5 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             return new BrokerAuthenticatorCustomAuth(x509, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BrokerAuthenticatorCustomAuth>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerAuthenticatorCustomAuth>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BrokerAuthenticatorCustomAuth)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BrokerAuthenticatorCustomAuth IPersistableModel<BrokerAuthenticatorCustomAuth>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BrokerAuthenticatorCustomAuth PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerAuthenticatorCustomAuth>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBrokerAuthenticatorCustomAuth(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BrokerAuthenticatorCustomAuth)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BrokerAuthenticatorCustomAuth>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

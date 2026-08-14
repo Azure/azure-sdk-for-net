@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Confluent.Models
     /// <summary> Spec of the API Key record. </summary>
     public partial class ApiKeySpecEntity
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiKeySpecEntity"/>. </summary>
         internal ApiKeySpecEntity()
@@ -56,25 +27,29 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="secret"> API Key Secret. </param>
         /// <param name="resource"> Specification of the cluster. </param>
         /// <param name="owner"> Specification of the cluster. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiKeySpecEntity(string description, string name, string secret, ApiKeyResourceEntity resource, ApiKeyOwnerEntity owner, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiKeySpecEntity(string description, string name, string secret, ApiKeyResourceEntity resource, ApiKeyOwnerEntity owner, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Name = name;
             Secret = secret;
             Resource = resource;
             Owner = owner;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The description of the API Key. </summary>
         public string Description { get; }
+
         /// <summary> The name of the API Key. </summary>
         public string Name { get; }
+
         /// <summary> API Key Secret. </summary>
         public string Secret { get; }
+
         /// <summary> Specification of the cluster. </summary>
         public ApiKeyResourceEntity Resource { get; }
+
         /// <summary> Specification of the cluster. </summary>
         public ApiKeyOwnerEntity Owner { get; }
     }

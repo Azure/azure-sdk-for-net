@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DevCenter
 {
+    /// <summary></summary>
     public partial class ImageVersionResource : IJsonModel<ImageVersionData>
     {
-        private static ImageVersionData s_dataDeserializationInstance;
-        private static ImageVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ImageVersionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ImageVersionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ImageVersionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ImageVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ImageVersionData>)Data).Write(writer, options);
 
-        ImageVersionData IJsonModel<ImageVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ImageVersionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ImageVersionData IJsonModel<ImageVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ImageVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ImageVersionData>(Data, options, AzureResourceManagerDevCenterContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ImageVersionData IPersistableModel<ImageVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ImageVersionData>(data, options, AzureResourceManagerDevCenterContext.Default);
 
-        string IPersistableModel<ImageVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ImageVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ImageVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

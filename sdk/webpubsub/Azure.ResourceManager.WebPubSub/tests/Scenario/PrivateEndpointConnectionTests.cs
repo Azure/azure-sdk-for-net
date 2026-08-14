@@ -5,15 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.WebPubSub.Tests.Helpers;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.WebPubSub.Models;
+using Azure.ResourceManager.WebPubSub.Tests.Helpers;
 using NUnit.Framework;
-using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Tests
 {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                 Subnets =
             {
                 new SubnetData() { Name = "subnet01", AddressPrefix = "10.10.1.0/24", },
-                new SubnetData() { Name = "subnet02", AddressPrefix = "10.10.2.0/24", PrivateEndpointNetworkPolicy = "Disabled", }
+                new SubnetData() { Name = "subnet02", AddressPrefix = "10.10.2.0/24", PrivateEndpointNetworkPolicies = "Disabled", }
             },
             };
             vnetData.AddressPrefixes.Add("10.10.0.0/16");

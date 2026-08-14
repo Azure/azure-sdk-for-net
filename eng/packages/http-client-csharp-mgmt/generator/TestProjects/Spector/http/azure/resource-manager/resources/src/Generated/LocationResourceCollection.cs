@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Resources
             TryGetApiVersion(LocationResource.ResourceType, out string locationResourceApiVersion);
             _location = location;
             _locationResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", LocationResource.ResourceType.Namespace, Diagnostics);
-            _locationResourcesRestClient = new LocationResources(_locationResourcesClientDiagnostics, Pipeline, Endpoint, locationResourceApiVersion ?? "2023-12-01-preview");
+            _locationResourcesRestClient = new LocationResources(_locationResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, locationResourceApiVersion ?? "2023-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Resources
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Resources
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LocationResourceData, LocationResource>(new LocationResourcesGetByLocationAsyncCollectionResultOfT(_locationResourcesRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new LocationResource(Client, data));
+            return new AsyncPageableWrapper<LocationResourceData, LocationResource>(new LocationResourcesGetByLocationAsyncCollectionResultOfT(_locationResourcesRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "LocationResourceCollection.GetAll"), data => new LocationResource(Client, data));
         }
 
         /// <summary>
@@ -319,11 +319,11 @@ namespace Azure.ResourceManager.Resources
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LocationResourceData, LocationResource>(new LocationResourcesGetByLocationCollectionResultOfT(_locationResourcesRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new LocationResource(Client, data));
+            return new PageableWrapper<LocationResourceData, LocationResource>(new LocationResourcesGetByLocationCollectionResultOfT(_locationResourcesRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "LocationResourceCollection.GetAll"), data => new LocationResource(Client, data));
         }
 
         /// <summary>
-        /// Get a LocationResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Get a LocationResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Get a LocationResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Get a LocationResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

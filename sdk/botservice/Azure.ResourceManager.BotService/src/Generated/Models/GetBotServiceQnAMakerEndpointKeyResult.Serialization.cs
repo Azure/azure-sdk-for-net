@@ -9,14 +9,63 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class GetBotServiceQnAMakerEndpointKeyResult : IUtf8JsonSerializable, IJsonModel<GetBotServiceQnAMakerEndpointKeyResult>
+    /// <summary> Schema for EndpointKeys generate/refresh operations. </summary>
+    public partial class GetBotServiceQnAMakerEndpointKeyResult : IJsonModel<GetBotServiceQnAMakerEndpointKeyResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetBotServiceQnAMakerEndpointKeyResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GetBotServiceQnAMakerEndpointKeyResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GetBotServiceQnAMakerEndpointKeyResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGetBotServiceQnAMakerEndpointKeyResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GetBotServiceQnAMakerEndpointKeyResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBotServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GetBotServiceQnAMakerEndpointKeyResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GetBotServiceQnAMakerEndpointKeyResult IPersistableModel<GetBotServiceQnAMakerEndpointKeyResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GetBotServiceQnAMakerEndpointKeyResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GetBotServiceQnAMakerEndpointKeyResult"/> from. </param>
+        internal static GetBotServiceQnAMakerEndpointKeyResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeGetBotServiceQnAMakerEndpointKeyResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GetBotServiceQnAMakerEndpointKeyResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +77,11 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetBotServiceQnAMakerEndpointKeyResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetBotServiceQnAMakerEndpointKeyResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(PrimaryEndpointKey))
             {
                 writer.WritePropertyName("primaryEndpointKey"u8);
@@ -54,15 +102,15 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("lastStableVersion"u8);
                 writer.WriteStringValue(LastStableVersion);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,22 +119,27 @@ namespace Azure.ResourceManager.BotService.Models
             }
         }
 
-        GetBotServiceQnAMakerEndpointKeyResult IJsonModel<GetBotServiceQnAMakerEndpointKeyResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GetBotServiceQnAMakerEndpointKeyResult IJsonModel<GetBotServiceQnAMakerEndpointKeyResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GetBotServiceQnAMakerEndpointKeyResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetBotServiceQnAMakerEndpointKeyResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetBotServiceQnAMakerEndpointKeyResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGetBotServiceQnAMakerEndpointKeyResult(document.RootElement, options);
         }
 
-        internal static GetBotServiceQnAMakerEndpointKeyResult DeserializeGetBotServiceQnAMakerEndpointKeyResult(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GetBotServiceQnAMakerEndpointKeyResult DeserializeGetBotServiceQnAMakerEndpointKeyResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,68 +148,35 @@ namespace Azure.ResourceManager.BotService.Models
             string secondaryEndpointKey = default;
             string installedVersion = default;
             string lastStableVersion = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryEndpointKey"u8))
+                if (prop.NameEquals("primaryEndpointKey"u8))
                 {
-                    primaryEndpointKey = property.Value.GetString();
+                    primaryEndpointKey = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryEndpointKey"u8))
+                if (prop.NameEquals("secondaryEndpointKey"u8))
                 {
-                    secondaryEndpointKey = property.Value.GetString();
+                    secondaryEndpointKey = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("installedVersion"u8))
+                if (prop.NameEquals("installedVersion"u8))
                 {
-                    installedVersion = property.Value.GetString();
+                    installedVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastStableVersion"u8))
+                if (prop.NameEquals("lastStableVersion"u8))
                 {
-                    lastStableVersion = property.Value.GetString();
+                    lastStableVersion = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new GetBotServiceQnAMakerEndpointKeyResult(primaryEndpointKey, secondaryEndpointKey, installedVersion, lastStableVersion, serializedAdditionalRawData);
+            return new GetBotServiceQnAMakerEndpointKeyResult(primaryEndpointKey, secondaryEndpointKey, installedVersion, lastStableVersion, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<GetBotServiceQnAMakerEndpointKeyResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GetBotServiceQnAMakerEndpointKeyResult>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBotServiceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        GetBotServiceQnAMakerEndpointKeyResult IPersistableModel<GetBotServiceQnAMakerEndpointKeyResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GetBotServiceQnAMakerEndpointKeyResult>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeGetBotServiceQnAMakerEndpointKeyResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<GetBotServiceQnAMakerEndpointKeyResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

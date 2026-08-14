@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Purview
 {
+    /// <summary></summary>
     public partial class PurviewPrivateLinkResource : IJsonModel<PurviewPrivateLinkResourceData>
     {
-        private static PurviewPrivateLinkResourceData s_dataDeserializationInstance;
-        private static PurviewPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PurviewPrivateLinkResourceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PurviewPrivateLinkResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PurviewPrivateLinkResourceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PurviewPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PurviewPrivateLinkResourceData>)Data).Write(writer, options);
 
-        PurviewPrivateLinkResourceData IJsonModel<PurviewPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PurviewPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PurviewPrivateLinkResourceData IJsonModel<PurviewPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PurviewPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PurviewPrivateLinkResourceData>(Data, options, AzureResourceManagerPurviewContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PurviewPrivateLinkResourceData IPersistableModel<PurviewPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PurviewPrivateLinkResourceData>(data, options, AzureResourceManagerPurviewContext.Default);
 
-        string IPersistableModel<PurviewPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PurviewPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PurviewPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

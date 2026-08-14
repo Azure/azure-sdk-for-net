@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using NUnit.Framework;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.OracleDatabase.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
 {
@@ -23,7 +23,8 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
         [SetUp]
         public async Task ClearAndInitialize()
         {
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback) {
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            {
                 await CreateCommonClient();
             }
         }
@@ -43,7 +44,8 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             await DeleteAdbsScenario(_adbsResource);
         }
 
-        private async Task<AutonomousDatabaseResource> CreateAdbsScenario() {
+        private async Task<AutonomousDatabaseResource> CreateAdbsScenario()
+        {
             _adbsCollection = await GetAutonomousDatabaseCollectionAsync(DefaultResourceGroupName);
             _adbsName = Recording.GenerateAssetName("OFakeNetSdkTestAdbs");
 
@@ -61,36 +63,42 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             return adbsResource;
         }
 
-        private async Task DeleteAdbsScenario(AutonomousDatabaseResource adbsResource) {
-            if (adbsResource != null) {
+        private async Task DeleteAdbsScenario(AutonomousDatabaseResource adbsResource)
+        {
+            if (adbsResource != null)
+            {
                 var deleteAdbsOperation = await adbsResource.DeleteAsync(WaitUntil.Completed);
                 await deleteAdbsOperation.WaitForCompletionResponseAsync();
                 Assert.IsTrue(deleteAdbsOperation.HasCompleted);
             }
         }
 
-        private AutonomousDatabaseData GetDefaultAdbsData() {
+        private AutonomousDatabaseData GetDefaultAdbsData()
+        {
             AutonomousDatabaseProperties adbsProperties = GetDefaultAdbsProperties();
-            return new AutonomousDatabaseData(_location) {
+            return new AutonomousDatabaseData(_location)
+            {
                 Properties = adbsProperties
             };
         }
 
-        private AutonomousDatabaseProperties GetDefaultAdbsProperties() {
+        private AutonomousDatabaseProperties GetDefaultAdbsProperties()
+        {
             ResourceIdentifier vnetId = new ResourceIdentifier(string.Format(VnetIdFormat, DefaultSubscription.Data.Id, DefaultResourceGroupName, DefaultVnetName));
             ResourceIdentifier subnetId = new ResourceIdentifier(string.Format(SubnetIdFormat, DefaultSubscription.Data.Id, DefaultResourceGroupName, DefaultVnetName, DefaultSubnetName));
 
-            return new AutonomousDatabaseProperties() {
-            DisplayName = _adbsName,
-            DBWorkload = AutonomousDatabaseWorkloadType.DW,
-            ComputeCount = 2.0f,
-            DatabaseComputeModel = OracleDatabaseComputeModel.Ecpu,
-            DBVersion = "19c",
-            DataStorageSizeInTbs = 1,
-            AdminPassword = "NetSdkTestPass123",
-            LicenseModel = OracleLicenseModel.LicenseIncluded,
-            SubnetId = subnetId,
-            VnetId = vnetId
+            return new AutonomousDatabaseProperties()
+            {
+                DisplayName = _adbsName,
+                DBWorkload = AutonomousDatabaseWorkloadType.DW,
+                ComputeCount = 2.0f,
+                DatabaseComputeModel = OracleDatabaseComputeModel.Ecpu,
+                DBVersion = "19c",
+                DataStorageSizeInTbs = 1,
+                AdminPassword = "NetSdkTestPass123",
+                LicenseModel = OracleLicenseModel.LicenseIncluded,
+                SubnetId = subnetId,
+                VnetId = vnetId
             };
         }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     public readonly partial struct MySqlFlexibleServerMaintenanceState : IEquatable<MySqlFlexibleServerMaintenanceState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerMaintenanceState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MySqlFlexibleServerMaintenanceState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ScheduledValue = "Scheduled";
         private const string ReScheduledValue = "ReScheduled";
         private const string InPreparationValue = "InPreparation";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         private const string CompletedValue = "Completed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Scheduled. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerMaintenanceState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MySqlFlexibleServerMaintenanceState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Scheduled. </summary>
         public static MySqlFlexibleServerMaintenanceState Scheduled { get; } = new MySqlFlexibleServerMaintenanceState(ScheduledValue);
-        /// <summary> ReScheduled. </summary>
+
+        /// <summary> Gets the ReScheduled. </summary>
         public static MySqlFlexibleServerMaintenanceState ReScheduled { get; } = new MySqlFlexibleServerMaintenanceState(ReScheduledValue);
-        /// <summary> InPreparation. </summary>
+
+        /// <summary> Gets the InPreparation. </summary>
         public static MySqlFlexibleServerMaintenanceState InPreparation { get; } = new MySqlFlexibleServerMaintenanceState(InPreparationValue);
-        /// <summary> Processing. </summary>
+
+        /// <summary> Gets the Processing. </summary>
         public static MySqlFlexibleServerMaintenanceState Processing { get; } = new MySqlFlexibleServerMaintenanceState(ProcessingValue);
-        /// <summary> Completed. </summary>
+
+        /// <summary> Gets the Completed. </summary>
         public static MySqlFlexibleServerMaintenanceState Completed { get; } = new MySqlFlexibleServerMaintenanceState(CompletedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static MySqlFlexibleServerMaintenanceState Canceled { get; } = new MySqlFlexibleServerMaintenanceState(CanceledValue);
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerMaintenanceState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MySqlFlexibleServerMaintenanceState left, MySqlFlexibleServerMaintenanceState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerMaintenanceState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MySqlFlexibleServerMaintenanceState left, MySqlFlexibleServerMaintenanceState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlFlexibleServerMaintenanceState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerMaintenanceState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MySqlFlexibleServerMaintenanceState(string value) => new MySqlFlexibleServerMaintenanceState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerMaintenanceState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MySqlFlexibleServerMaintenanceState?(string value) => value == null ? null : new MySqlFlexibleServerMaintenanceState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MySqlFlexibleServerMaintenanceState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MySqlFlexibleServerMaintenanceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

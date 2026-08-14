@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ServiceClientOptionsType. </summary>
+    /// <summary></summary>
     public readonly partial struct ServiceClientOptionsType : IEquatable<ServiceClientOptionsType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ServiceClientOptionsType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ServiceClientOptionsType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotSpecifiedValue = "NotSpecified";
         private const string DisableAutomaticDecompressionValue = "DisableAutomaticDecompression";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceClientOptionsType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ServiceClientOptionsType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static ServiceClientOptionsType NotSpecified { get; } = new ServiceClientOptionsType(NotSpecifiedValue);
-        /// <summary> DisableAutomaticDecompression. </summary>
+
+        /// <summary> Gets the DisableAutomaticDecompression. </summary>
         public static ServiceClientOptionsType DisableAutomaticDecompression { get; } = new ServiceClientOptionsType(DisableAutomaticDecompressionValue);
+
         /// <summary> Determines if two <see cref="ServiceClientOptionsType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceClientOptionsType left, ServiceClientOptionsType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceClientOptionsType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceClientOptionsType left, ServiceClientOptionsType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceClientOptionsType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceClientOptionsType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceClientOptionsType(string value) => new ServiceClientOptionsType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceClientOptionsType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceClientOptionsType?(string value) => value == null ? null : new ServiceClientOptionsType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceClientOptionsType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceClientOptionsType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

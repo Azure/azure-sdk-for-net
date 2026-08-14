@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class LinuxOSConfig : IUtf8JsonSerializable, IJsonModel<LinuxOSConfig>
+    /// <summary> OS configurations of Linux agent nodes. See [AKS custom node configuration](https://docs.microsoft.com/azure/aks/custom-node-configuration) for more details. </summary>
+    public partial class LinuxOSConfig : IJsonModel<LinuxOSConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinuxOSConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LinuxOSConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LinuxOSConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLinuxOSConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LinuxOSConfig)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LinuxOSConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LinuxOSConfig)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LinuxOSConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LinuxOSConfig IPersistableModel<LinuxOSConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LinuxOSConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LinuxOSConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LinuxOSConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinuxOSConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LinuxOSConfig)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Sysctls))
             {
                 writer.WritePropertyName("sysctls"u8);
@@ -55,15 +94,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("swapFileSizeMB"u8);
                 writer.WriteNumberValue(SwapFileSizeInMB.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -72,22 +111,27 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        LinuxOSConfig IJsonModel<LinuxOSConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LinuxOSConfig IJsonModel<LinuxOSConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LinuxOSConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LinuxOSConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinuxOSConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LinuxOSConfig)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLinuxOSConfig(document.RootElement, options);
         }
 
-        internal static LinuxOSConfig DeserializeLinuxOSConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static LinuxOSConfig DeserializeLinuxOSConfig(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,170 +139,44 @@ namespace Azure.ResourceManager.ContainerService.Models
             SysctlConfig sysctls = default;
             string transparentHugePageEnabled = default;
             string transparentHugePageDefrag = default;
-            int? swapFileSizeMB = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            int? swapFileSizeInMB = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sysctls"u8))
+                if (prop.NameEquals("sysctls"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sysctls = SysctlConfig.DeserializeSysctlConfig(property.Value, options);
+                    sysctls = SysctlConfig.DeserializeSysctlConfig(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("transparentHugePageEnabled"u8))
+                if (prop.NameEquals("transparentHugePageEnabled"u8))
                 {
-                    transparentHugePageEnabled = property.Value.GetString();
+                    transparentHugePageEnabled = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("transparentHugePageDefrag"u8))
+                if (prop.NameEquals("transparentHugePageDefrag"u8))
                 {
-                    transparentHugePageDefrag = property.Value.GetString();
+                    transparentHugePageDefrag = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("swapFileSizeMB"u8))
+                if (prop.NameEquals("swapFileSizeMB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    swapFileSizeMB = property.Value.GetInt32();
+                    swapFileSizeInMB = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new LinuxOSConfig(sysctls, transparentHugePageEnabled, transparentHugePageDefrag, swapFileSizeMB, serializedAdditionalRawData);
+            return new LinuxOSConfig(sysctls, transparentHugePageEnabled, transparentHugePageDefrag, swapFileSizeInMB, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sysctls), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sysctls: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Sysctls))
-                {
-                    builder.Append("  sysctls: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Sysctls, options, 2, false, "  sysctls: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TransparentHugePageEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  transparentHugePageEnabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TransparentHugePageEnabled))
-                {
-                    builder.Append("  transparentHugePageEnabled: ");
-                    if (TransparentHugePageEnabled.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{TransparentHugePageEnabled}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{TransparentHugePageEnabled}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TransparentHugePageDefrag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  transparentHugePageDefrag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TransparentHugePageDefrag))
-                {
-                    builder.Append("  transparentHugePageDefrag: ");
-                    if (TransparentHugePageDefrag.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{TransparentHugePageDefrag}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{TransparentHugePageDefrag}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SwapFileSizeInMB), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  swapFileSizeMB: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SwapFileSizeInMB))
-                {
-                    builder.Append("  swapFileSizeMB: ");
-                    builder.AppendLine($"{SwapFileSizeInMB.Value}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<LinuxOSConfig>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LinuxOSConfig>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(LinuxOSConfig)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        LinuxOSConfig IPersistableModel<LinuxOSConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LinuxOSConfig>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeLinuxOSConfig(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LinuxOSConfig)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<LinuxOSConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -10,3 +10,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.CosmosDB
       safeName: AzureResourceManagerCosmosDB
+    - name: Azure.Provisioning.CosmosDB
+      safeName: AzureProvisioningCosmosDB

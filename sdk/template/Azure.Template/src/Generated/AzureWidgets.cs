@@ -281,7 +281,7 @@ namespace Azure.Template
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateCreateOrUpdateWidgetRequest(widgetName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "AzureWidgets.CreateOrUpdateWidgetAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "AzureWidgets.CreateOrUpdateWidget", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -331,7 +331,7 @@ namespace Azure.Template
                 Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
 
                 using HttpMessage message = CreateDeleteWidgetRequest(widgetName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "AzureWidgets.DeleteWidgetAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "AzureWidgets.DeleteWidget", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -365,7 +365,7 @@ namespace Azure.Template
             Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
 
             Operation<BinaryData> result = await DeleteWidgetAsync(waitUntil, widgetName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => WidgetSuite.FromLroResponse(response), ClientDiagnostics, "AzureWidgets.DeleteWidgetAsync");
+            return ProtocolOperationHelpers.Convert(result, response => WidgetSuite.FromLroResponse(response), ClientDiagnostics, "AzureWidgets.DeleteWidget");
         }
 
         /// <summary>
@@ -381,7 +381,7 @@ namespace Azure.Template
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetWidgets(RequestContext context)
         {
-            return new AzureWidgetsGetWidgetsCollectionResult(this, context);
+            return new AzureWidgetsGetWidgetsCollectionResult(this, context, "AzureWidgets.GetWidgets");
         }
 
         /// <summary>
@@ -397,7 +397,7 @@ namespace Azure.Template
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetWidgetsAsync(RequestContext context)
         {
-            return new AzureWidgetsGetWidgetsAsyncCollectionResult(this, context);
+            return new AzureWidgetsGetWidgetsAsyncCollectionResult(this, context, "AzureWidgets.GetWidgets");
         }
 
         /// <summary> List Widget resources. </summary>
@@ -405,7 +405,7 @@ namespace Azure.Template
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<WidgetSuite> GetWidgets(CancellationToken cancellationToken = default)
         {
-            return new AzureWidgetsGetWidgetsCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new AzureWidgetsGetWidgetsCollectionResultOfT(this, cancellationToken.ToRequestContext(), "AzureWidgets.GetWidgets");
         }
 
         /// <summary> List Widget resources. </summary>
@@ -413,7 +413,7 @@ namespace Azure.Template
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<WidgetSuite> GetWidgetsAsync(CancellationToken cancellationToken = default)
         {
-            return new AzureWidgetsGetWidgetsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new AzureWidgetsGetWidgetsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "AzureWidgets.GetWidgets");
         }
     }
 }

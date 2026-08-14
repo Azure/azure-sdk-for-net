@@ -45,7 +45,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         {
             get
             {
-                return Outbound is null ? default : Outbound.Assigned;
+                if (Outbound is null)
+                {
+                    Outbound = new DiscoveredOutboundEndpoints();
+                }
+                return Outbound.Assigned;
             }
         }
     }

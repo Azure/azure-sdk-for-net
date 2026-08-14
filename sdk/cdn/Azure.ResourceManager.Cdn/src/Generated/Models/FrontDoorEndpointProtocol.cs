@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct FrontDoorEndpointProtocol : IEquatable<FrontDoorEndpointProtocol>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="FrontDoorEndpointProtocol"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FrontDoorEndpointProtocol(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string HttpValue = "Http";
         private const string HttpsValue = "Https";
 
-        /// <summary> Http. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorEndpointProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public FrontDoorEndpointProtocol(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Http. </summary>
         public static FrontDoorEndpointProtocol Http { get; } = new FrontDoorEndpointProtocol(HttpValue);
-        /// <summary> Https. </summary>
+
+        /// <summary> Gets the Https. </summary>
         public static FrontDoorEndpointProtocol Https { get; } = new FrontDoorEndpointProtocol(HttpsValue);
+
         /// <summary> Determines if two <see cref="FrontDoorEndpointProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FrontDoorEndpointProtocol left, FrontDoorEndpointProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FrontDoorEndpointProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FrontDoorEndpointProtocol left, FrontDoorEndpointProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorEndpointProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FrontDoorEndpointProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FrontDoorEndpointProtocol(string value) => new FrontDoorEndpointProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FrontDoorEndpointProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FrontDoorEndpointProtocol?(string value) => value == null ? null : new FrontDoorEndpointProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FrontDoorEndpointProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FrontDoorEndpointProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

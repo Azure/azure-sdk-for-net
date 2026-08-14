@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources
         {
             TryGetApiVersion(ResourceType, out string nestedProxyResourceApiVersion);
             _nestedClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
-            _nestedRestClient = new Nested(_nestedClientDiagnostics, Pipeline, Endpoint, nestedProxyResourceApiVersion ?? "2023-12-01-preview");
+            _nestedRestClient = new Nested(_nestedClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, nestedProxyResourceApiVersion ?? "2023-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Resources
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

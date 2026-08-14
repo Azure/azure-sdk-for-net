@@ -25,17 +25,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample07_GetClassMapLegend
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             DataClient dataClient = client.GetDataClient();
 
             // Get a class map legend (categorical color map) for MTBS Severity
@@ -69,17 +69,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample07_GetIntervalLegend
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             DataClient dataClient = client.GetDataClient();
 
             // Get an interval legend (continuous color map)
@@ -109,24 +109,24 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample07_GetLegendAsPng
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             DataClient dataClient = client.GetDataClient();
 
             // Get a legend as a PNG image
             string colorMapName = "rdylgn";
-            Response<BinaryData> response = await dataClient.GetLegendAsync(colorMapName);
+            Response response = await dataClient.GetLegendAsync(new GetLegendOptions(colorMapName));
 
-            BinaryData legendData = response.Value;
+            BinaryData legendData = response.Content;
             byte[] legendBytes = legendData.ToArray();
 
             Console.WriteLine($"Legend PNG size: {legendBytes.Length} bytes");
@@ -158,24 +158,24 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample07_GetLegendWithDifferentColormap
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             DataClient dataClient = client.GetDataClient();
 
             // Get a legend with the viridis color map
             string colorMapName = "viridis";
-            Response<BinaryData> response = await dataClient.GetLegendAsync(colorMapName);
+            Response response = await dataClient.GetLegendAsync(new GetLegendOptions(colorMapName));
 
-            BinaryData legendData = response.Value;
+            BinaryData legendData = response.Content;
             byte[] legendBytes = legendData.ToArray();
 
             Console.WriteLine($"Viridis legend PNG size: {legendBytes.Length} bytes");
@@ -189,17 +189,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample07_ValidateClassMapStructure
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             DataClient dataClient = client.GetDataClient();
 
             // Get class map legend and validate structure
@@ -240,17 +240,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample07_WorkingWithMultipleColormaps
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             DataClient dataClient = client.GetDataClient();
 
             // Retrieve legends for multiple color maps
@@ -258,8 +258,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
             foreach (string colorMap in colorMaps)
             {
-                Response<BinaryData> response = await dataClient.GetLegendAsync(colorMap);
-                byte[] legendBytes = response.Value.ToArray();
+                Response response = await dataClient.GetLegendAsync(new GetLegendOptions(colorMap));
+                byte[] legendBytes = response.Content.ToArray();
 
                 Console.WriteLine($"{colorMap}: {legendBytes.Length} bytes");
                 System.IO.File.WriteAllBytes($"{colorMap}_legend.png", legendBytes);

@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Dynatrace
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of MonitoredSubscriptions for mocking. </summary>
         protected MonitoredSubscriptions()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.Dynatrace
         /// <summary> Initializes a new instance of MonitoredSubscriptions. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal MonitoredSubscriptions(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal MonitoredSubscriptions(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(MonitoredSubscriptions).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -52,11 +55,15 @@ namespace Azure.ResourceManager.Dynatrace
             uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/monitoredSubscriptions/default", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -72,12 +79,16 @@ namespace Azure.ResourceManager.Dynatrace
             uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/monitoredSubscriptions/default", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            if ("application/json" != null)
+            _userAgent.Apply(message);
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -97,12 +108,16 @@ namespace Azure.ResourceManager.Dynatrace
             uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/monitoredSubscriptions/default", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
-            if ("application/json" != null)
+            _userAgent.Apply(message);
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -122,11 +137,15 @@ namespace Azure.ResourceManager.Dynatrace
             uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/monitoredSubscriptions/default", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -141,11 +160,15 @@ namespace Azure.ResourceManager.Dynatrace
             uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/monitoredSubscriptions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -153,11 +176,23 @@ namespace Azure.ResourceManager.Dynatrace
         internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string monitorName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

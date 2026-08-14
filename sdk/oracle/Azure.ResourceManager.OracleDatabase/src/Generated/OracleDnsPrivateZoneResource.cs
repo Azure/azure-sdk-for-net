@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(ResourceType, out string oracleDnsPrivateZoneApiVersion);
             _dnsPrivateZonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
-            _dnsPrivateZonesRestClient = new DnsPrivateZones(_dnsPrivateZonesClientDiagnostics, Pipeline, Endpoint, oracleDnsPrivateZoneApiVersion ?? "2025-09-01");
+            _dnsPrivateZonesRestClient = new DnsPrivateZones(_dnsPrivateZonesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDnsPrivateZoneApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

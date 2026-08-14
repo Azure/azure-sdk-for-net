@@ -22,6 +22,46 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AcsIncomingCallEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsIncomingCallEventData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAcsIncomingCallEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AcsIncomingCallEventData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsIncomingCallEventData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AcsIncomingCallEventData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AcsIncomingCallEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AcsIncomingCallEventData IPersistableModel<AcsIncomingCallEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AcsIncomingCallEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsIncomingCallEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -65,6 +105,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 writer.WritePropertyName("onBehalfOfCallee"u8);
                 writer.WriteObjectValue(OnBehalfOfCallee, options);
+            }
+            if (Optional.IsDefined(OnBehalfOf))
+            {
+                writer.WritePropertyName("onBehalfOf"u8);
+                writer.WriteObjectValue(OnBehalfOf, options);
             }
             if (Optional.IsDefined(CorrelationId))
             {
@@ -120,6 +165,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             AcsIncomingCallCustomContext customContext = default;
             string incomingCallContext = default;
             CommunicationIdentifierModel onBehalfOfCallee = default;
+            CommunicationIdentifierModel onBehalfOf = default;
             string correlationId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -163,6 +209,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     onBehalfOfCallee = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("onBehalfOf"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    onBehalfOf = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("correlationId"u8))
                 {
                     correlationId = prop.Value.GetString();
@@ -181,49 +236,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 customContext,
                 incomingCallContext,
                 onBehalfOfCallee,
+                onBehalfOf,
                 correlationId,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AcsIncomingCallEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsIncomingCallEventData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AcsIncomingCallEventData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AcsIncomingCallEventData IPersistableModel<AcsIncomingCallEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AcsIncomingCallEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsIncomingCallEventData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAcsIncomingCallEventData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AcsIncomingCallEventData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AcsIncomingCallEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AcsIncomingCallEventDataConverter : JsonConverter<AcsIncomingCallEventData>
         {

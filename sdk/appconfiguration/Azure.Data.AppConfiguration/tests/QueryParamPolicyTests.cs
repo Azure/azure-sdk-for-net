@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace Azure.Data.AppConfiguration.Tests
 {
@@ -26,7 +26,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }, policy);
 
             MockRequest request = transport.SingleRequest;
-            Assert.AreEqual(expectedUrl, request.Uri.ToString());
+            Assert.That(request.Uri.ToString(), Is.EqualTo(expectedUrl));
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }, policy);
 
             MockRequest request = transport.SingleRequest;
-            Assert.AreEqual(expectedUrl, request.Uri.ToString());
+            Assert.That(request.Uri.ToString(), Is.EqualTo(expectedUrl));
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }, policy);
 
             MockRequest request = transport.SingleRequest;
-            Assert.AreEqual(expectedUrl, request.Uri.ToString());
+            Assert.That(request.Uri.ToString(), Is.EqualTo(expectedUrl));
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }, policy);
 
             MockRequest request = transport.SingleRequest;
-            Assert.AreEqual(expectedUrl, request.Uri.ToString());
+            Assert.That(request.Uri.ToString(), Is.EqualTo(expectedUrl));
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }, policy);
 
             MockRequest request = transport.SingleRequest;
-            Assert.AreEqual(expectedUrl, request.Uri.ToString());
+            Assert.That(request.Uri.ToString(), Is.EqualTo(expectedUrl));
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }, policy);
 
             MockRequest request = transport.SingleRequest;
-            Assert.AreEqual(expectedUrl, request.Uri.ToString());
+            Assert.That(request.Uri.ToString(), Is.EqualTo(expectedUrl));
         }
 
         [Test]
@@ -134,7 +134,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }, policy);
 
             MockRequest request = transport.SingleRequest;
-            Assert.AreEqual(expectedUrl, request.Uri.ToString());
+            Assert.That(request.Uri.ToString(), Is.EqualTo(expectedUrl));
         }
 
         [Test]
@@ -152,7 +152,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }, policy);
 
             MockRequest request = transport.SingleRequest;
-            Assert.AreEqual(expectedUrl, request.Uri.ToString());
+            Assert.That(request.Uri.ToString(), Is.EqualTo(expectedUrl));
         }
     }
 }

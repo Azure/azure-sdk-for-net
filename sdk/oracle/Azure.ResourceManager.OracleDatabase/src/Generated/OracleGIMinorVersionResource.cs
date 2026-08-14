@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(ResourceType, out string oracleGIMinorVersionApiVersion);
             _giMinorVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
-            _giMinorVersionsRestClient = new GiMinorVersions(_giMinorVersionsClientDiagnostics, Pipeline, Endpoint, oracleGIMinorVersionApiVersion ?? "2025-09-01");
+            _giMinorVersionsRestClient = new GiMinorVersions(_giMinorVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleGIMinorVersionApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

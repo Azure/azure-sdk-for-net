@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(ResourceType, out string hcxEnterpriseSiteApiVersion);
             _hcxEnterpriseSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
-            _hcxEnterpriseSitesRestClient = new HcxEnterpriseSites(_hcxEnterpriseSitesClientDiagnostics, Pipeline, Endpoint, hcxEnterpriseSiteApiVersion ?? "2025-09-01");
+            _hcxEnterpriseSitesRestClient = new HcxEnterpriseSites(_hcxEnterpriseSitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hcxEnterpriseSiteApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

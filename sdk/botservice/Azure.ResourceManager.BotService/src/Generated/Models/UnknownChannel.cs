@@ -7,26 +7,20 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    /// <summary> Unknown version of Channel. </summary>
     internal partial class UnknownChannel : BotChannelProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownChannel"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
-        /// <param name="etag"> Entity Tag of the resource. </param>
+        /// <param name="eTag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownChannel(string channelName, ETag? etag, string provisioningState, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(channelName, etag, provisioningState, location, serializedAdditionalRawData)
-        {
-            ChannelName = channelName ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownChannel"/> for deserialization. </summary>
-        internal UnknownChannel()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownChannel(string channelName, ETag? eTag, string provisioningState, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(channelName ?? "unknown", eTag, provisioningState, location, additionalBinaryDataProperties)
         {
         }
     }

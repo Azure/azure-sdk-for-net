@@ -70,6 +70,6 @@ namespace Azure.Data.ConfidentialLedger.Tests.Helper
             {
                 return (HttpStatusCode.InternalServerError, $"Error: {ex.Message}");
             }
-}
+        }
     }
 }

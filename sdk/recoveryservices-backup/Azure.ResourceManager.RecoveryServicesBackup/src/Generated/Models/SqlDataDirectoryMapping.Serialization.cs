@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class SqlDataDirectoryMapping : IUtf8JsonSerializable, IJsonModel<SqlDataDirectoryMapping>
+    /// <summary> Encapsulates information regarding data directory. </summary>
+    public partial class SqlDataDirectoryMapping : IJsonModel<SqlDataDirectoryMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDataDirectoryMapping>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SqlDataDirectoryMapping PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlDataDirectoryMapping>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSqlDataDirectoryMapping(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlDataDirectoryMapping)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlDataDirectoryMapping>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SqlDataDirectoryMapping)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SqlDataDirectoryMapping>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlDataDirectoryMapping IPersistableModel<SqlDataDirectoryMapping>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlDataDirectoryMapping>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlDataDirectoryMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlDataDirectoryMapping>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlDataDirectoryMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlDataDirectoryMapping)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(MappingType))
             {
                 writer.WritePropertyName("mappingType"u8);
@@ -54,15 +94,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("targetPath"u8);
                 writer.WriteStringValue(TargetPath);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,22 +111,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
         }
 
-        SqlDataDirectoryMapping IJsonModel<SqlDataDirectoryMapping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlDataDirectoryMapping IJsonModel<SqlDataDirectoryMapping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SqlDataDirectoryMapping JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlDataDirectoryMapping>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlDataDirectoryMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlDataDirectoryMapping)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSqlDataDirectoryMapping(document.RootElement, options);
         }
 
-        internal static SqlDataDirectoryMapping DeserializeSqlDataDirectoryMapping(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SqlDataDirectoryMapping DeserializeSqlDataDirectoryMapping(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,72 +140,39 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string sourceLogicalName = default;
             string sourcePath = default;
             string targetPath = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("mappingType"u8))
+                if (prop.NameEquals("mappingType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mappingType = new SqlDataDirectoryType(property.Value.GetString());
+                    mappingType = new SqlDataDirectoryType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceLogicalName"u8))
+                if (prop.NameEquals("sourceLogicalName"u8))
                 {
-                    sourceLogicalName = property.Value.GetString();
+                    sourceLogicalName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourcePath"u8))
+                if (prop.NameEquals("sourcePath"u8))
                 {
-                    sourcePath = property.Value.GetString();
+                    sourcePath = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetPath"u8))
+                if (prop.NameEquals("targetPath"u8))
                 {
-                    targetPath = property.Value.GetString();
+                    targetPath = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new SqlDataDirectoryMapping(mappingType, sourceLogicalName, sourcePath, targetPath, serializedAdditionalRawData);
+            return new SqlDataDirectoryMapping(mappingType, sourceLogicalName, sourcePath, targetPath, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<SqlDataDirectoryMapping>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlDataDirectoryMapping>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SqlDataDirectoryMapping)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SqlDataDirectoryMapping IPersistableModel<SqlDataDirectoryMapping>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlDataDirectoryMapping>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSqlDataDirectoryMapping(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SqlDataDirectoryMapping)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SqlDataDirectoryMapping>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

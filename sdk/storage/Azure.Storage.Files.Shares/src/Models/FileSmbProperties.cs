@@ -55,7 +55,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Creates a new FileSmbProperties instance.
         /// </summary>
-        public FileSmbProperties() {}
+        public FileSmbProperties() { }
 
         /// <summary>
         /// Checks if two FileSmbProperties are equal.

@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Template
 {
@@ -24,10 +26,31 @@ namespace Azure.Template
                 ServiceVersion.V2022_12_01 => "2022-12-01",
                 _ => throw new NotSupportedException()
             };
+            ConfigureLogging();
+        }
+
+        /// <summary> Initializes a new instance of WidgetAnalyticsClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal WidgetAnalyticsClientOptions(IConfigurationSection section) : base(section, null)
+        {
+            Version = "2022-12-01";
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version)
+            {
+                Version = version;
+            }
+            ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>
         internal string Version { get; }
+
+        /// <summary> Configures logging for the client options. </summary>
+        partial void ConfigureLogging();
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion

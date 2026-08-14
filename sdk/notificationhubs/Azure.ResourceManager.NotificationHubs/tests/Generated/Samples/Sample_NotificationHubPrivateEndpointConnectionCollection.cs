@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             {
                 Properties = new NotificationHubPrivateEndpointConnectionProperties
                 {
-                    ConnectionState = new RemotePrivateLinkServiceConnectionState
+                    PrivateLinkServiceConnectionState = new RemotePrivateLinkServiceConnectionState
                     {
                         Status = NotificationHubPrivateLinkConnectionStatus.Approved,
                     },

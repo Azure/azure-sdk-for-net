@@ -29,7 +29,8 @@
             "$ref": "1"
           },
           "doc": "Preview API version 2023-12-01-preview.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Azure.ResourceManager.NonResource",
@@ -37,14 +38,15 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
     {
       "$id": "4",
       "kind": "constant",
-      "name": "getContentType",
+      "name": "GetAccept",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -55,12 +57,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "6",
       "kind": "constant",
-      "name": "createContentType",
+      "name": "GetAccept1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -71,12 +74,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "8",
       "kind": "constant",
-      "name": "createContentType1",
+      "name": "GetAccept2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -87,7 +91,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -105,6 +110,12 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "NonResource"
+        }
+      },
+      "isExactName": false,
       "properties": [
         {
           "$id": "11",
@@ -130,7 +141,8 @@
               "name": "id"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "13",
@@ -156,7 +168,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "15",
@@ -182,7 +195,8 @@
               "name": "type"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -196,6 +210,12 @@
       "doc": "Common error response for all Azure Resource Manager APIs to return error details for failed operations.",
       "summary": "Error response",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ErrorResponse"
+        }
+      },
+      "isExactName": false,
       "properties": [
         {
           "$id": "18",
@@ -212,6 +232,12 @@
             "usage": "Json,Exception",
             "doc": "The error detail.",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "ErrorDetail"
+              }
+            },
+            "isExactName": false,
             "properties": [
               {
                 "$id": "20",
@@ -237,7 +263,8 @@
                     "name": "code"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "22",
@@ -263,7 +290,8 @@
                     "name": "message"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "24",
@@ -289,7 +317,8 @@
                     "name": "target"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "26",
@@ -318,7 +347,8 @@
                     "name": "details"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "28",
@@ -339,6 +369,12 @@
                     "usage": "Json,Exception",
                     "doc": "The resource management error additional info.",
                     "decorators": [],
+                    "serializationOptions": {
+                      "json": {
+                        "name": "ErrorAdditionalInfo"
+                      }
+                    },
+                    "isExactName": false,
                     "properties": [
                       {
                         "$id": "31",
@@ -364,7 +400,8 @@
                             "name": "type"
                           }
                         },
-                        "isHttpMetadata": false
+                        "isHttpMetadata": false,
+                        "isExactName": false
                       },
                       {
                         "$id": "33",
@@ -390,7 +427,8 @@
                             "name": "info"
                           }
                         },
-                        "isHttpMetadata": false
+                        "isHttpMetadata": false,
+                        "isExactName": false
                       }
                     ]
                   },
@@ -408,7 +446,8 @@
                     "name": "additionalInfo"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -423,7 +462,8 @@
               "name": "error"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -439,6 +479,7 @@
       "$id": "35",
       "kind": "client",
       "name": "NonResourceClient",
+      "isExactName": false,
       "namespace": "Azure.ResourceManager.NonResource",
       "doc": "Arm Resource Provider management API.",
       "methods": [],
@@ -471,7 +512,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.endpoint"
+          "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.endpoint",
+          "isExactName": false
         },
         {
           "$id": "39",
@@ -497,41 +539,22 @@
             },
             "value": "2023-12-01-preview"
           },
-          "optional": false,
+          "optional": true,
           "scope": "Method",
           "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.get.apiVersion",
           "readOnly": false,
           "access": "public",
-          "decorators": []
-        },
-        {
-          "$id": "42",
-          "kind": "method",
-          "name": "subscriptionId",
-          "serializedName": "subscriptionId",
-          "doc": "The ID of the target subscription. The value must be an UUID.",
-          "type": {
-            "$id": "43",
-            "kind": "string",
-            "name": "uuid",
-            "crossLanguageDefinitionId": "Azure.Core.uuid",
-            "baseType": {
-              "$id": "44",
-              "kind": "string",
-              "name": "string",
-              "crossLanguageDefinitionId": "TypeSpec.string",
-              "decorators": []
-            },
-            "decorators": []
-          },
-          "location": "",
-          "isApiVersion": false,
-          "optional": false,
-          "scope": "Method",
-          "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.get.subscriptionId",
-          "readOnly": false,
-          "access": "public",
-          "decorators": []
+          "decorators": [
+            {
+              "name": "TypeSpec.@minLength",
+              "arguments": {
+                "value": {
+                  "isInteger": true
+                }
+              }
+            }
+          ],
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -541,18 +564,29 @@
           "arguments": {}
         },
         {
-          "name": "Azure.ClientGenerator.Core.@nonResourceMethodSchema",
+          "name": "Azure.ClientGenerator.Core.@armProviderSchema",
           "arguments": {
+            "resources": [],
             "nonResourceMethods": [
               {
                 "methodId": "Azure.ResourceManager.NonResource.NonResourceOperations.get",
                 "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.NonResource/locations/{location}/otherParameters/{parameter}",
-                "operationScope": "Subscription"
+                "scope": {
+                  "$id": "42",
+                  "kind": "Subscription",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}",
+                  "scopeResourceType": "Microsoft.Resources/subscriptions"
+                }
               },
               {
                 "methodId": "Azure.ResourceManager.NonResource.NonResourceOperations.create",
                 "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.NonResource/locations/{location}/otherParameters/{parameter}",
-                "operationScope": "Subscription"
+                "scope": {
+                  "$id": "43",
+                  "kind": "Subscription",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}",
+                  "scopeResourceType": "Microsoft.Resources/subscriptions"
+                }
               }
             ]
           }
@@ -564,34 +598,37 @@
       ],
       "children": [
         {
-          "$id": "45",
+          "$id": "44",
           "kind": "client",
           "name": "NonResourceOperations",
+          "isExactName": false,
           "namespace": "Azure.ResourceManager.NonResource",
           "doc": "Operations on non resource model should not be marked as `@armResourceOperations`.",
           "methods": [
             {
-              "$id": "46",
+              "$id": "45",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2023-12-01-preview"
               ],
               "operation": {
-                "$id": "47",
+                "$id": "46",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "NonResourceOperations",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "48",
+                    "$id": "47",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "49",
+                      "$id": "48",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -601,7 +638,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "50",
+                        "$id": "49",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -610,23 +647,38 @@
                     },
                     "optional": false,
                     "scope": "Client",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.get.apiVersion",
-                    "readOnly": false
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "39"
+                      }
+                    ],
+                    "isExactName": false
                   },
                   {
-                    "$id": "51",
+                    "$id": "50",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "52",
+                      "$id": "51",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "53",
+                        "$id": "52",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -640,41 +692,68 @@
                     "allowReserved": false,
                     "skipUrlEncoding": false,
                     "optional": false,
-                    "scope": "Client",
-                    "decorators": [],
-                    "readOnly": false,
-                    "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.get.subscriptionId"
-                  },
-                  {
-                    "$id": "54",
-                    "kind": "path",
-                    "name": "location",
-                    "serializedName": "location",
-                    "doc": "The location parameter.",
-                    "type": {
-                      "$id": "55",
-                      "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
-                      "decorators": []
-                    },
-                    "isApiVersion": false,
-                    "explode": false,
-                    "style": "simple",
-                    "allowReserved": false,
-                    "skipUrlEncoding": false,
-                    "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.get.location"
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.get.subscriptionId",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "53",
+                        "kind": "method",
+                        "name": "subscriptionId",
+                        "serializedName": "subscriptionId",
+                        "doc": "The ID of the target subscription. The value must be an UUID.",
+                        "type": {
+                          "$id": "54",
+                          "kind": "string",
+                          "name": "uuid",
+                          "crossLanguageDefinitionId": "Azure.Core.uuid",
+                          "baseType": {
+                            "$id": "55",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
+                          "decorators": []
+                        },
+                        "location": "",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.get.subscriptionId",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "56",
                     "kind": "path",
-                    "name": "parameter",
-                    "serializedName": "parameter",
-                    "doc": "Another parameter.",
+                    "name": "location",
+                    "serializedName": "location",
+                    "doc": "The location parameter.",
                     "type": {
                       "$id": "57",
                       "kind": "string",
@@ -691,10 +770,86 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.get.parameter"
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.get.location",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "58",
+                        "kind": "method",
+                        "name": "location",
+                        "serializedName": "location",
+                        "doc": "The location parameter.",
+                        "type": {
+                          "$id": "59",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.get.location",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
                   },
                   {
-                    "$id": "58",
+                    "$id": "60",
+                    "kind": "path",
+                    "name": "parameter",
+                    "serializedName": "parameter",
+                    "doc": "Another parameter.",
+                    "type": {
+                      "$id": "61",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.get.parameter",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "62",
+                        "kind": "method",
+                        "name": "parameter",
+                        "serializedName": "parameter",
+                        "doc": "Another parameter.",
+                        "type": {
+                          "$id": "63",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.get.parameter",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "64",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -707,7 +862,28 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.get.accept"
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.get.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "65",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "4"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.get.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -722,7 +898,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -732,69 +913,34 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Azure.ResourceManager.NonResource"
               },
               "parameters": [
                 {
-                  "$id": "59",
-                  "kind": "method",
-                  "name": "location",
-                  "serializedName": "location",
-                  "doc": "The location parameter.",
-                  "type": {
-                    "$id": "60",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Path",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.get.location",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "58"
                 },
                 {
-                  "$id": "61",
-                  "kind": "method",
-                  "name": "parameter",
-                  "serializedName": "parameter",
-                  "doc": "Another parameter.",
-                  "type": {
-                    "$id": "62",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Path",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.get.parameter",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "62"
                 },
                 {
-                  "$id": "63",
+                  "$ref": "65"
+                },
+                {
+                  "$id": "66",
                   "kind": "method",
-                  "name": "accept",
-                  "serializedName": "Accept",
+                  "name": "subscriptionId",
+                  "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "4"
+                    "$ref": "51"
                   },
-                  "location": "Header",
-                  "isApiVersion": false,
                   "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.get.accept",
                   "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "serializedName": "subscriptionId",
+                  "isApiVersion": false,
+                  "scope": "Method",
+                  "location": "Path",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.get.subscriptionId"
                 }
               ],
               "response": {
@@ -808,27 +954,29 @@
               "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.get"
             },
             {
-              "$id": "64",
+              "$id": "67",
               "kind": "basic",
               "name": "create",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2023-12-01-preview"
               ],
               "operation": {
-                "$id": "65",
+                "$id": "68",
                 "name": "create",
+                "isExactName": false,
                 "resourceName": "NonResourceOperations",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "66",
+                    "$id": "69",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "67",
+                      "$id": "70",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -838,7 +986,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "68",
+                        "$id": "71",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -847,23 +995,38 @@
                     },
                     "optional": false,
                     "scope": "Client",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.apiVersion",
-                    "readOnly": false
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "39"
+                      }
+                    ],
+                    "isExactName": false
                   },
                   {
-                    "$id": "69",
+                    "$id": "72",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "70",
+                      "$id": "73",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "71",
+                        "$id": "74",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -877,19 +1040,34 @@
                     "allowReserved": false,
                     "skipUrlEncoding": false,
                     "optional": false,
-                    "scope": "Client",
-                    "decorators": [],
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.subscriptionId"
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.subscriptionId",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "53"
+                      }
+                    ],
+                    "isExactName": false
                   },
                   {
-                    "$id": "72",
+                    "$id": "75",
                     "kind": "path",
                     "name": "location",
                     "serializedName": "location",
                     "doc": "The location parameter.",
                     "type": {
-                      "$id": "73",
+                      "$id": "76",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -904,16 +1082,42 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.location"
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.location",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "77",
+                        "kind": "method",
+                        "name": "location",
+                        "serializedName": "location",
+                        "doc": "The location parameter.",
+                        "type": {
+                          "$id": "78",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.location",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
                   },
                   {
-                    "$id": "74",
+                    "$id": "79",
                     "kind": "path",
                     "name": "parameter",
                     "serializedName": "parameter",
                     "doc": "Another parameter.",
                     "type": {
-                      "$id": "75",
+                      "$id": "80",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -928,10 +1132,36 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.parameter"
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.parameter",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "81",
+                        "kind": "method",
+                        "name": "parameter",
+                        "serializedName": "parameter",
+                        "doc": "Another parameter.",
+                        "type": {
+                          "$id": "82",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.parameter",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
                   },
                   {
-                    "$id": "76",
+                    "$id": "83",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
@@ -945,10 +1175,32 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.contentType"
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "84",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "6"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
                   },
                   {
-                    "$id": "77",
+                    "$id": "85",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -961,10 +1213,31 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.accept"
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "86",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "8"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
                   },
                   {
-                    "$id": "78",
+                    "$id": "87",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
@@ -981,7 +1254,34 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.body"
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "88",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "doc": "The request body.",
+                        "type": {
+                          "$ref": "10"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "body"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -996,7 +1296,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "PUT",
@@ -1009,105 +1314,40 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Azure.ResourceManager.NonResource"
               },
               "parameters": [
                 {
-                  "$id": "79",
+                  "$ref": "77"
+                },
+                {
+                  "$ref": "81"
+                },
+                {
+                  "$ref": "88"
+                },
+                {
+                  "$ref": "84"
+                },
+                {
+                  "$ref": "86"
+                },
+                {
+                  "$id": "89",
                   "kind": "method",
-                  "name": "location",
-                  "serializedName": "location",
-                  "doc": "The location parameter.",
+                  "name": "subscriptionId",
+                  "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$id": "80",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
+                    "$ref": "73"
                   },
+                  "optional": false,
+                  "readOnly": false,
+                  "serializedName": "subscriptionId",
+                  "isApiVersion": false,
+                  "scope": "Method",
                   "location": "Path",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.location",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
-                },
-                {
-                  "$id": "81",
-                  "kind": "method",
-                  "name": "parameter",
-                  "serializedName": "parameter",
-                  "doc": "Another parameter.",
-                  "type": {
-                    "$id": "82",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Path",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.parameter",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
-                },
-                {
-                  "$id": "83",
-                  "kind": "method",
-                  "name": "body",
-                  "serializedName": "body",
-                  "doc": "The request body.",
-                  "type": {
-                    "$ref": "10"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.body",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
-                },
-                {
-                  "$id": "84",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "6"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
-                },
-                {
-                  "$id": "85",
-                  "kind": "method",
-                  "name": "accept",
-                  "serializedName": "Accept",
-                  "type": {
-                    "$ref": "8"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.accept",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.subscriptionId"
                 }
               ],
               "response": {
@@ -1123,13 +1363,13 @@
           ],
           "parameters": [
             {
-              "$id": "86",
+              "$id": "90",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "87",
+                "$id": "91",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1140,7 +1380,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "88",
+                  "$id": "92",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1150,13 +1390,11 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.endpoint"
+              "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.endpoint",
+              "isExactName": false
             },
             {
               "$ref": "39"
-            },
-            {
-              "$ref": "42"
             }
           ],
           "initializedBy": 0,
@@ -1167,9 +1405,11 @@
           ],
           "parent": {
             "$ref": "35"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ],
   "auth": {
@@ -1177,7 +1417,7 @@
       "flows": [
         {
           "scopes": [
-            "user_impersonation"
+            "https://management.azure.com/.default"
           ],
           "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize"
         }

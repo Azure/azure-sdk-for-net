@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.ContentSafety.Tests
 {

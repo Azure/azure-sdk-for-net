@@ -18,6 +18,8 @@ namespace Encode.Bytes._RequestBody
     {
         protected RequestBody() => throw null;
 
+        internal RequestBody(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Default(RequestContent content, RequestContext context = null) => throw null;

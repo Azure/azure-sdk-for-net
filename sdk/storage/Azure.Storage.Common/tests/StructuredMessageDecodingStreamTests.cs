@@ -106,7 +106,7 @@ namespace Azure.Storage.Tests
         public async Task DecodesData(
             [Values(2048, 2005)] int dataLength,
             [Values(default, 512)] int? seglen,
-            [Values(8*Constants.KB, 512, 530, 3)] int readLen,
+            [Values(8 * Constants.KB, 512, 530, 3)] int readLen,
             [Values(true, false)] bool useCrc)
         {
             int segmentContentLength = seglen ?? int.MaxValue;

@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.CosmosDBForPostgreSql;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableCosmosDBForPostgreSqlArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableCosmosDBForPostgreSqlArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableCosmosDBForPostgreSqlArmClient for mocking. </summary>
         protected MockableCosmosDBForPostgreSqlArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableCosmosDBForPostgreSqlArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableCosmosDBForPostgreSqlArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableCosmosDBForPostgreSqlArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableCosmosDBForPostgreSqlArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="CosmosDBForPostgreSqlClusterResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBForPostgreSqlClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBForPostgreSqlClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlClusterResource"/> object. </returns>
         public virtual CosmosDBForPostgreSqlClusterResource GetCosmosDBForPostgreSqlClusterResource(ResourceIdentifier id)
@@ -46,22 +35,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
             return new CosmosDBForPostgreSqlClusterResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="CosmosDBForPostgreSqlClusterServerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CosmosDBForPostgreSqlClusterServerResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBForPostgreSqlClusterServerResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlClusterServerResource"/> object. </returns>
-        public virtual CosmosDBForPostgreSqlClusterServerResource GetCosmosDBForPostgreSqlClusterServerResource(ResourceIdentifier id)
-        {
-            CosmosDBForPostgreSqlClusterServerResource.ValidateResourceId(id);
-            return new CosmosDBForPostgreSqlClusterServerResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="CosmosDBForPostgreSqlConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CosmosDBForPostgreSqlConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBForPostgreSqlConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBForPostgreSqlConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlConfigurationResource"/> object. </returns>
         public virtual CosmosDBForPostgreSqlConfigurationResource GetCosmosDBForPostgreSqlConfigurationResource(ResourceIdentifier id)
@@ -70,22 +44,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
             return new CosmosDBForPostgreSqlConfigurationResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource"/> object. </returns>
-        public virtual CosmosDBForPostgreSqlCoordinatorConfigurationResource GetCosmosDBForPostgreSqlCoordinatorConfigurationResource(ResourceIdentifier id)
-        {
-            CosmosDBForPostgreSqlCoordinatorConfigurationResource.ValidateResourceId(id);
-            return new CosmosDBForPostgreSqlCoordinatorConfigurationResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CosmosDBForPostgreSqlNodeConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/> object. </returns>
         public virtual CosmosDBForPostgreSqlNodeConfigurationResource GetCosmosDBForPostgreSqlNodeConfigurationResource(ResourceIdentifier id)
@@ -94,10 +53,16 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
             return new CosmosDBForPostgreSqlNodeConfigurationResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="CosmosDBForPostgreSqlFirewallRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CosmosDBForPostgreSqlFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBForPostgreSqlFirewallRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource"/> object. </returns>
+        public virtual CosmosDBForPostgreSqlCoordinatorConfigurationResource GetCosmosDBForPostgreSqlCoordinatorConfigurationResource(ResourceIdentifier id)
+        {
+            CosmosDBForPostgreSqlCoordinatorConfigurationResource.ValidateResourceId(id);
+            return new CosmosDBForPostgreSqlCoordinatorConfigurationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="CosmosDBForPostgreSqlFirewallRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlFirewallRuleResource"/> object. </returns>
         public virtual CosmosDBForPostgreSqlFirewallRuleResource GetCosmosDBForPostgreSqlFirewallRuleResource(ResourceIdentifier id)
@@ -106,22 +71,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
             return new CosmosDBForPostgreSqlFirewallRuleResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="CosmosDBForPostgreSqlRoleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CosmosDBForPostgreSqlRoleResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBForPostgreSqlRoleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlRoleResource"/> object. </returns>
-        public virtual CosmosDBForPostgreSqlRoleResource GetCosmosDBForPostgreSqlRoleResource(ResourceIdentifier id)
-        {
-            CosmosDBForPostgreSqlRoleResource.ValidateResourceId(id);
-            return new CosmosDBForPostgreSqlRoleResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionResource"/> object. </returns>
         public virtual CosmosDBForPostgreSqlPrivateEndpointConnectionResource GetCosmosDBForPostgreSqlPrivateEndpointConnectionResource(ResourceIdentifier id)
@@ -130,16 +80,31 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
             return new CosmosDBForPostgreSqlPrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="CosmosDBForPostgreSqlPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CosmosDBForPostgreSqlPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBForPostgreSqlPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBForPostgreSqlPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlPrivateLinkResource"/> object. </returns>
         public virtual CosmosDBForPostgreSqlPrivateLinkResource GetCosmosDBForPostgreSqlPrivateLinkResource(ResourceIdentifier id)
         {
             CosmosDBForPostgreSqlPrivateLinkResource.ValidateResourceId(id);
             return new CosmosDBForPostgreSqlPrivateLinkResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="CosmosDBForPostgreSqlRoleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlRoleResource"/> object. </returns>
+        public virtual CosmosDBForPostgreSqlRoleResource GetCosmosDBForPostgreSqlRoleResource(ResourceIdentifier id)
+        {
+            CosmosDBForPostgreSqlRoleResource.ValidateResourceId(id);
+            return new CosmosDBForPostgreSqlRoleResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="CosmosDBForPostgreSqlClusterServerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlClusterServerResource"/> object. </returns>
+        public virtual CosmosDBForPostgreSqlClusterServerResource GetCosmosDBForPostgreSqlClusterServerResource(ResourceIdentifier id)
+        {
+            CosmosDBForPostgreSqlClusterServerResource.ValidateResourceId(id);
+            return new CosmosDBForPostgreSqlClusterServerResource(Client, id);
         }
     }
 }

@@ -4,14 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using NUnit.Framework;
-using Azure.ResourceManager.Resources;
+using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.EventHubs;
+using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using Azure.Core;
+using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.EventHubs.Tests
 {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 Subnets = { new SubnetData() {
                     Name = "default",
                     AddressPrefix = "10.0.1.0/24",
-                    PrivateEndpointNetworkPolicy = VirtualNetworkPrivateEndpointNetworkPolicy.Disabled
+                    PrivateEndpointNetworkPolicies = VirtualNetworkPrivateEndpointNetworkPolicy.Disabled
                 }}
             };
             vnet.AddressPrefixes.Add("10.0.0.0/16");
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
             // Services will give diffferent ids and names for the incoming private endpoint connections, so comparing them is meaningless
             //Assert.AreEqual(expectedValue.Id, actualValue.Id);
             //Assert.AreEqual(expectedValue.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.ConnectionState.Status, actualValue.Data.ConnectionState.Status.ToString());
-            Assert.AreEqual(expectedValue.ConnectionState.Description, actualValue.Data.ConnectionState.Description);
+            Assert.AreEqual(expectedValue.PrivateLinkServiceConnectionState.Status, actualValue.Data.ConnectionState.Status.ToString());
+            Assert.AreEqual(expectedValue.PrivateLinkServiceConnectionState.Description, actualValue.Data.ConnectionState.Description);
         }
     }
 }

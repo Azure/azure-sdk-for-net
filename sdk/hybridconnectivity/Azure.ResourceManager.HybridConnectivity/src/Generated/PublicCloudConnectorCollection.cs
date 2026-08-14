@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             TryGetApiVersion(PublicCloudConnectorResource.ResourceType, out string publicCloudConnectorApiVersion);
             _publicCloudConnectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", PublicCloudConnectorResource.ResourceType.Namespace, Diagnostics);
-            _publicCloudConnectorsRestClient = new PublicCloudConnectors(_publicCloudConnectorsClientDiagnostics, Pipeline, Endpoint, publicCloudConnectorApiVersion ?? "2024-12-01");
+            _publicCloudConnectorsRestClient = new PublicCloudConnectors(_publicCloudConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, publicCloudConnectorApiVersion ?? "2024-12-01");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 HttpMessage message = _publicCloudConnectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, publicCloudConnector, PublicCloudConnectorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridConnectivityArmOperation<PublicCloudConnectorResource> operation = new HybridConnectivityArmOperation<PublicCloudConnectorResource>(
-                    new PublicCloudConnectorOperationSource(Client),
+                    new PublicCloudConnectorResourceOperationSource(Client),
                     _publicCloudConnectorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 HttpMessage message = _publicCloudConnectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, publicCloudConnector, PublicCloudConnectorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridConnectivityArmOperation<PublicCloudConnectorResource> operation = new HybridConnectivityArmOperation<PublicCloudConnectorResource>(
-                    new PublicCloudConnectorOperationSource(Client),
+                    new PublicCloudConnectorResourceOperationSource(Client),
                     _publicCloudConnectorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PublicCloudConnectorData, PublicCloudConnectorResource>(new PublicCloudConnectorsGetByResourceGroupAsyncCollectionResultOfT(_publicCloudConnectorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PublicCloudConnectorResource(Client, data));
+            return new AsyncPageableWrapper<PublicCloudConnectorData, PublicCloudConnectorResource>(new PublicCloudConnectorsGetByResourceGroupAsyncCollectionResultOfT(_publicCloudConnectorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PublicCloudConnectorCollection.GetAll"), data => new PublicCloudConnectorResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PublicCloudConnectorData, PublicCloudConnectorResource>(new PublicCloudConnectorsGetByResourceGroupCollectionResultOfT(_publicCloudConnectorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PublicCloudConnectorResource(Client, data));
+            return new PageableWrapper<PublicCloudConnectorData, PublicCloudConnectorResource>(new PublicCloudConnectorsGetByResourceGroupCollectionResultOfT(_publicCloudConnectorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PublicCloudConnectorCollection.GetAll"), data => new PublicCloudConnectorResource(Client, data));
         }
 
         /// <summary>

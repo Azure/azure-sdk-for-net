@@ -18,6 +18,46 @@ namespace Azure.Compute.Batch
     /// </summary>
     public partial class BatchJobScheduleConfiguration : IJsonModel<BatchJobScheduleConfiguration>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchJobScheduleConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJobScheduleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBatchJobScheduleConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchJobScheduleConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJobScheduleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BatchJobScheduleConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchJobScheduleConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchJobScheduleConfiguration IPersistableModel<BatchJobScheduleConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BatchJobScheduleConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchJobScheduleConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -36,10 +76,10 @@ namespace Azure.Compute.Batch
             {
                 throw new FormatException($"The model {nameof(BatchJobScheduleConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DoNotRunUntil))
+            if (Optional.IsDefined(DoNotRunBefore))
             {
                 writer.WritePropertyName("doNotRunUntil"u8);
-                writer.WriteStringValue(DoNotRunUntil.Value, "O");
+                writer.WriteStringValue(DoNotRunBefore.Value, "O");
             }
             if (Optional.IsDefined(DoNotRunAfter))
             {
@@ -98,7 +138,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            DateTimeOffset? doNotRunUntil = default;
+            DateTimeOffset? doNotRunBefore = default;
             DateTimeOffset? doNotRunAfter = default;
             TimeSpan? startWindow = default;
             TimeSpan? recurrenceInterval = default;
@@ -111,7 +151,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    doNotRunUntil = prop.Value.GetDateTimeOffset("O");
+                    doNotRunBefore = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("doNotRunAfter"u8))
@@ -146,47 +186,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchJobScheduleConfiguration(doNotRunUntil, doNotRunAfter, startWindow, recurrenceInterval, additionalBinaryDataProperties);
+            return new BatchJobScheduleConfiguration(doNotRunBefore, doNotRunAfter, startWindow, recurrenceInterval, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchJobScheduleConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchJobScheduleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BatchJobScheduleConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BatchJobScheduleConfiguration IPersistableModel<BatchJobScheduleConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BatchJobScheduleConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchJobScheduleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBatchJobScheduleConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BatchJobScheduleConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchJobScheduleConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

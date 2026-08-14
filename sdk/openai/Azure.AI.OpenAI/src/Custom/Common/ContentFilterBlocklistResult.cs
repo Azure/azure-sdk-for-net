@@ -12,6 +12,7 @@ namespace Azure.AI.OpenAI;
 [CodeGenType("AzureContentFilterBlocklistResult")]
 public partial class ContentFilterBlocklistResult
 {
+    /// <summary> Gets a dictionary mapping blocklist identifiers to whether the corresponding blocklist filtered the content. </summary>
     public IReadOnlyDictionary<string, bool> BlocklistFilterStatuses
     {
         get

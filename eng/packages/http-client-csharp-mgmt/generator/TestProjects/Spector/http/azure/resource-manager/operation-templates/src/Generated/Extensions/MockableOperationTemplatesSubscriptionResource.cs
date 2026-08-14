@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -23,6 +24,8 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
     {
         private ClientDiagnostics _checkNameAvailabilityClientDiagnostics;
         private CheckNameAvailability _checkNameAvailabilityRestClient;
+        private ClientDiagnostics _lroClientDiagnostics;
+        private Lro _lroRestClient;
         private ClientDiagnostics _optionalBodyClientDiagnostics;
         private OptionalBody _optionalBodyRestClient;
 
@@ -40,13 +43,33 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
 
         private ClientDiagnostics CheckNameAvailabilityClientDiagnostics => _checkNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationTemplates.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CheckNameAvailability CheckNameAvailabilityRestClient => _checkNameAvailabilityRestClient ??= new CheckNameAvailability(CheckNameAvailabilityClientDiagnostics, Pipeline, Endpoint, "2023-12-01-preview");
+        private CheckNameAvailability CheckNameAvailabilityRestClient => _checkNameAvailabilityRestClient ??= new CheckNameAvailability(CheckNameAvailabilityClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-12-01-preview");
+
+        private ClientDiagnostics LroClientDiagnostics => _lroClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationTemplates.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Lro LroRestClient => _lroRestClient ??= new Lro(LroClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-12-01-preview");
 
         private ClientDiagnostics OptionalBodyClientDiagnostics => _optionalBodyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationTemplates.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OptionalBody OptionalBodyRestClient => _optionalBodyRestClient ??= new OptionalBody(OptionalBodyClientDiagnostics, Pipeline, Endpoint, "2023-12-01-preview");
+        private OptionalBody OptionalBodyRestClient => _optionalBodyRestClient ??= new OptionalBody(OptionalBodyClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-12-01-preview");
 
-        /// <summary> Implements global CheckNameAvailability operations. </summary>
+        /// <summary>
+        /// Implements global CheckNameAvailability operations
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Azure.ResourceManager.OperationTemplates/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CheckNameAvailability_CheckGlobal. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -78,7 +101,23 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
             }
         }
 
-        /// <summary> Implements global CheckNameAvailability operations. </summary>
+        /// <summary>
+        /// Implements global CheckNameAvailability operations
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Azure.ResourceManager.OperationTemplates/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CheckNameAvailability_CheckGlobal. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -110,7 +149,23 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
             }
         }
 
-        /// <summary> Implements local CheckNameAvailability operations. </summary>
+        /// <summary>
+        /// Implements local CheckNameAvailability operations
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Azure.ResourceManager.OperationTemplates/locations/{location}/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CheckNameAvailability_CheckLocal. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -143,7 +198,23 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
             }
         }
 
-        /// <summary> Implements local CheckNameAvailability operations. </summary>
+        /// <summary>
+        /// Implements local CheckNameAvailability operations
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Azure.ResourceManager.OperationTemplates/locations/{location}/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CheckNameAvailability_CheckLocal. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -177,6 +248,116 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
         }
 
         /// <summary>
+        /// ExportArray
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Azure.ResourceManager.OperationTemplates/exportArray. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Lro_ExportArray. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<IList<ExportResult>>> ExportArrayAsync(WaitUntil waitUntil, ExportRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = LroClientDiagnostics.CreateScope("MockableOperationTemplatesSubscriptionResource.ExportArray");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LroRestClient.CreateExportArrayRequest(Guid.Parse(Id.SubscriptionId), ExportRequest.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                OperationTemplatesArmOperation<IList<ExportResult>> operation = new OperationTemplatesArmOperation<IList<ExportResult>>(
+                    new IListOfExportResultOperationSource(),
+                    LroClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// ExportArray
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Azure.ResourceManager.OperationTemplates/exportArray. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Lro_ExportArray. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<IList<ExportResult>> ExportArray(WaitUntil waitUntil, ExportRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = LroClientDiagnostics.CreateScope("MockableOperationTemplatesSubscriptionResource.ExportArray");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LroRestClient.CreateExportArrayRequest(Guid.Parse(Id.SubscriptionId), ExportRequest.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                OperationTemplatesArmOperation<IList<ExportResult>> operation = new OperationTemplatesArmOperation<IList<ExportResult>>(
+                    new IListOfExportResultOperationSource(),
+                    LroClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// ProviderPost
         /// <list type="bullet">
         /// <item>
@@ -193,9 +374,9 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ChangeAllowanceResult>> ProviderPostAsync(ChangeAllowanceRequest body = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ChangeAllowanceResult>> ProviderPostAsync(ChangeAllowanceRequest content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = OptionalBodyClientDiagnostics.CreateScope("MockableOperationTemplatesSubscriptionResource.ProviderPost");
             scope.Start();
@@ -205,7 +386,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OptionalBodyRestClient.CreateProviderPostRequest(Guid.Parse(Id.SubscriptionId), ChangeAllowanceRequest.ToRequestContent(body), context);
+                HttpMessage message = OptionalBodyRestClient.CreateProviderPostRequest(Guid.Parse(Id.SubscriptionId), ChangeAllowanceRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ChangeAllowanceResult> response = Response.FromValue(ChangeAllowanceResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -238,9 +419,9 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ChangeAllowanceResult> ProviderPost(ChangeAllowanceRequest body = default, CancellationToken cancellationToken = default)
+        public virtual Response<ChangeAllowanceResult> ProviderPost(ChangeAllowanceRequest content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = OptionalBodyClientDiagnostics.CreateScope("MockableOperationTemplatesSubscriptionResource.ProviderPost");
             scope.Start();
@@ -250,7 +431,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OptionalBodyRestClient.CreateProviderPostRequest(Guid.Parse(Id.SubscriptionId), ChangeAllowanceRequest.ToRequestContent(body), context);
+                HttpMessage message = OptionalBodyRestClient.CreateProviderPostRequest(Guid.Parse(Id.SubscriptionId), ChangeAllowanceRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ChangeAllowanceResult> response = Response.FromValue(ChangeAllowanceResult.FromResponse(result), result);
                 if (response.Value == null)

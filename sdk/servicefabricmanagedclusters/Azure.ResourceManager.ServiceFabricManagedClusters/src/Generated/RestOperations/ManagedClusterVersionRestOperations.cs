@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of ManagedClusterVersion for mocking. </summary>
         protected ManagedClusterVersion()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <summary> Initializes a new instance of ManagedClusterVersion. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ManagedClusterVersion(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ManagedClusterVersion(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(ManagedClusterVersion).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -51,11 +54,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/managedClusterVersions/", false);
             uri.AppendPath(clusterVersion, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -69,11 +76,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath("/providers/Microsoft.ServiceFabric/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/managedClusterVersions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -90,11 +101,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath(environment, true);
             uri.AppendPath("/managedClusterVersions/", false);
             uri.AppendPath(clusterVersion, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -110,11 +125,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath("/environments/", false);
             uri.AppendPath(environment, true);
             uri.AppendPath("/managedClusterVersions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

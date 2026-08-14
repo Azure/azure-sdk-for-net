@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             TryGetApiVersion(DataReplicationJobResource.ResourceType, out string dataReplicationJobApiVersion);
             _jobClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationJobResource.ResourceType.Namespace, Diagnostics);
-            _jobRestClient = new Job(_jobClientDiagnostics, Pipeline, Endpoint, dataReplicationJobApiVersion ?? "2024-09-01");
+            _jobRestClient = new Job(_jobClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationJobApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             if (id.ResourceType != DataReplicationVaultResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationVaultResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationVaultResource.ResourceType), nameof(id));
             }
         }
 
@@ -188,7 +188,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 odataOptions,
                 continuationToken,
                 pageSize,
-                context), data => new DataReplicationJobResource(Client, data));
+                context,
+                "DataReplicationJobCollection.GetAll"), data => new DataReplicationJobResource(Client, data));
         }
 
         /// <summary>
@@ -227,7 +228,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 odataOptions,
                 continuationToken,
                 pageSize,
-                context), data => new DataReplicationJobResource(Client, data));
+                context,
+                "DataReplicationJobCollection.GetAll"), data => new DataReplicationJobResource(Client, data));
         }
 
         /// <summary>

@@ -33,6 +33,6 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobContainerItem instance.
         /// </summary>
-        internal BlobContainerItem() {}
+        internal BlobContainerItem() { }
     }
 }

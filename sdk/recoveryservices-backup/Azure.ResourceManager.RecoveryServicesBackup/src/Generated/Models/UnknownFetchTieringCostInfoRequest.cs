@@ -10,21 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Unknown version of FetchTieringCostInfoRequest. </summary>
     internal partial class UnknownFetchTieringCostInfoRequest : FetchTieringCostInfoContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFetchTieringCostInfoRequest"/>. </summary>
         /// <param name="sourceTierType"> Source tier for the request. </param>
         /// <param name="targetTierType"> target tier for the request. </param>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownFetchTieringCostInfoRequest(RecoveryPointTierType sourceTierType, RecoveryPointTierType targetTierType, string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(sourceTierType, targetTierType, objectType, serializedAdditionalRawData)
-        {
-            ObjectType = objectType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownFetchTieringCostInfoRequest"/> for deserialization. </summary>
-        internal UnknownFetchTieringCostInfoRequest()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownFetchTieringCostInfoRequest(RecoveryPointTierType sourceTierType, RecoveryPointTierType targetTierType, string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(sourceTierType, targetTierType, objectType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

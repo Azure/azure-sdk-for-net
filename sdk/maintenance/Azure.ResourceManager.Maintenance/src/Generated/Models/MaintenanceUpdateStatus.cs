@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Maintenance;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
@@ -14,47 +15,87 @@ namespace Azure.ResourceManager.Maintenance.Models
     public readonly partial struct MaintenanceUpdateStatus : IEquatable<MaintenanceUpdateStatus>
     {
         private readonly string _value;
+        /// <summary> There are pending updates to be installed. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Updates installation are in progress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> All updates are successfully applied. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> Updates installation failed but are ready to retry again. </summary>
+        private const string RetryNowValue = "RetryNow";
+        /// <summary> Updates installation failed and should be retried later. </summary>
+        private const string RetryLaterValue = "RetryLater";
+        /// <summary> No updates are pending. </summary>
+        private const string NoUpdatesPendingValue = "NoUpdatesPending";
+        /// <summary> Cancel the schedule and stop creating PMR for resources part of it. Applicable to Maintenance Configuration resource type only. </summary>
+        private const string CancelValue = "Cancel";
+        /// <summary> Send the Cancelled response to the user if request came to cancel the schedule. Applicable to Maintenance Configuration resource type only. </summary>
+        private const string CancelledValue = "Cancelled";
 
         /// <summary> Initializes a new instance of <see cref="MaintenanceUpdateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MaintenanceUpdateStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingValue = "Pending";
-        private const string InProgressValue = "InProgress";
-        private const string CompletedValue = "Completed";
-        private const string RetryNowValue = "RetryNow";
-        private const string RetryLaterValue = "RetryLater";
+            _value = value;
+        }
 
         /// <summary> There are pending updates to be installed. </summary>
         public static MaintenanceUpdateStatus Pending { get; } = new MaintenanceUpdateStatus(PendingValue);
+
         /// <summary> Updates installation are in progress. </summary>
         public static MaintenanceUpdateStatus InProgress { get; } = new MaintenanceUpdateStatus(InProgressValue);
+
         /// <summary> All updates are successfully applied. </summary>
         public static MaintenanceUpdateStatus Completed { get; } = new MaintenanceUpdateStatus(CompletedValue);
+
         /// <summary> Updates installation failed but are ready to retry again. </summary>
         public static MaintenanceUpdateStatus RetryNow { get; } = new MaintenanceUpdateStatus(RetryNowValue);
+
         /// <summary> Updates installation failed and should be retried later. </summary>
         public static MaintenanceUpdateStatus RetryLater { get; } = new MaintenanceUpdateStatus(RetryLaterValue);
+
+        /// <summary> No updates are pending. </summary>
+        public static MaintenanceUpdateStatus NoUpdatesPending { get; } = new MaintenanceUpdateStatus(NoUpdatesPendingValue);
+
+        /// <summary> Cancel the schedule and stop creating PMR for resources part of it. Applicable to Maintenance Configuration resource type only. </summary>
+        public static MaintenanceUpdateStatus Cancel { get; } = new MaintenanceUpdateStatus(CancelValue);
+
+        /// <summary> Send the Cancelled response to the user if request came to cancel the schedule. Applicable to Maintenance Configuration resource type only. </summary>
+        public static MaintenanceUpdateStatus Cancelled { get; } = new MaintenanceUpdateStatus(CancelledValue);
+
         /// <summary> Determines if two <see cref="MaintenanceUpdateStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MaintenanceUpdateStatus left, MaintenanceUpdateStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MaintenanceUpdateStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MaintenanceUpdateStatus left, MaintenanceUpdateStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MaintenanceUpdateStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MaintenanceUpdateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MaintenanceUpdateStatus(string value) => new MaintenanceUpdateStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MaintenanceUpdateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MaintenanceUpdateStatus?(string value) => value == null ? null : new MaintenanceUpdateStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MaintenanceUpdateStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MaintenanceUpdateStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

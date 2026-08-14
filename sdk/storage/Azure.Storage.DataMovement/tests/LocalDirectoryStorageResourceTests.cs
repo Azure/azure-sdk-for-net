@@ -69,7 +69,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public void Ctor_Error()
         {
-            Assert.Catch<ArgumentException>( () =>
+            Assert.Catch<ArgumentException>(() =>
                 new LocalDirectoryStorageResourceContainer(""));
 
             Assert.Catch<ArgumentException>(() =>

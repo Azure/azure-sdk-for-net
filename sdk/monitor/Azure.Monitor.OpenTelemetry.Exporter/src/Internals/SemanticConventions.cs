@@ -239,5 +239,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// When present, takes precedence over computed result code from semantic conventions.
         /// </summary>
         public const string AttributeMicrosoftRequestResultCode = "microsoft.request.resultCode";
+
+        // Context tag attributes set by the Application Insights shim (TelemetryClient.Context)
+        public const string AttributeMicrosoftClientIp = "microsoft.client.ip";
+        public const string AttributeMicrosoftSessionId = "microsoft.session.id";
+        public const string AttributeAiDeviceId = "ai.device.id";
+        public const string AttributeAiDeviceModel = "ai.device.model";
+        public const string AttributeAiDeviceType = "ai.device.type";
+        public const string AttributeAiDeviceOsVersion = "ai.device.osVersion";
+        public const string AttributeMicrosoftSyntheticSource = "microsoft.synthetic_source";
+        public const string AttributeMicrosoftUserAccountId = "microsoft.user.account_id";
     }
 }

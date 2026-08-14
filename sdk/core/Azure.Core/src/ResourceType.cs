@@ -76,8 +76,13 @@ namespace Azure.Core
         /// Implicit operator for initializing a <see cref="ResourceType"/> instance from a string.
         /// </summary>
         /// <param name="resourceType"> String to be converted into a <see cref="ResourceType"/> object. </param>
-        public static implicit operator ResourceType(string resourceType)
+        public static implicit operator ResourceType(string? resourceType)
         {
+            if (resourceType is null)
+            {
+                return default;
+            }
+
             return new ResourceType(resourceType);
         }
 

@@ -102,7 +102,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var property in getterSetterProperties)
             {
-                Assert.That(knownMembers.Contains(property.Name), $"The property: { property.Name } of EventHubBufferedProducerClientOptions is not being cloned.");
+                Assert.That(knownMembers.Contains(property.Name), $"The property: {property.Name} of EventHubBufferedProducerClientOptions is not being cloned.");
             }
         }
 

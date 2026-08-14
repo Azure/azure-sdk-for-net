@@ -5,17 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Routes;
 
 namespace Routes._QueryParameters.QueryExpansion.Explode
 {
     public partial class QueryParametersQueryExpansionExplode
     {
         protected QueryParametersQueryExpansionExplode() => throw null;
+
+        internal QueryParametersQueryExpansionExplode(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
@@ -42,5 +46,13 @@ namespace Routes._QueryParameters.QueryExpansion.Explode
         public virtual Response Record(IDictionary<string, int> @param, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Task<Response> RecordAsync(IDictionary<string, int> @param, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Response Model(ExpandParameters @param, RequestContext context) => throw null;
+
+        public virtual Task<Response> ModelAsync(ExpandParameters @param, RequestContext context) => throw null;
+
+        public virtual Response Model(ExpandParameters @param, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response> ModelAsync(ExpandParameters @param, CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -7,21 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// DPM workload-specific protection container.
-    /// Please note <see cref="DpmContainer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="BackupServerContainer"/>.
-    /// </summary>
+    /// <summary> DPM workload-specific protection container. </summary>
     public partial class DpmContainer : BackupGenericProtectionContainer
     {
         /// <summary> Initializes a new instance of <see cref="DpmContainer"/>. </summary>
-        public DpmContainer()
+        public DpmContainer() : base("DPMContainer")
         {
             DpmServers = new ChangeTrackingList<string>();
-            ContainerType = ProtectableContainerType.DpmContainer;
         }
 
         /// <summary> Initializes a new instance of <see cref="DpmContainer"/>. </summary>
@@ -36,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Backup is VMAppContainer
         /// </param>
         /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="canReRegister"> Specifies whether the container is re-registrable. </param>
         /// <param name="containerId"> ID of container. </param>
         /// <param name="protectedItemCount"> Number of protected items in the BackupEngine. </param>
@@ -45,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isUpgradeAvailable"> To check if upgrade available. </param>
         /// <param name="protectionStatus"> Protection status of the container. </param>
         /// <param name="extendedInfo"> Extended Info of the container. </param>
-        internal DpmContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? canReRegister, string containerId, long? protectedItemCount, string dpmAgentVersion, IList<string> dpmServers, bool? isUpgradeAvailable, string protectionStatus, DpmContainerExtendedInfo extendedInfo) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, serializedAdditionalRawData)
+        internal DpmContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? canReRegister, string containerId, long? protectedItemCount, string dpmAgentVersion, IList<string> dpmServers, bool? isUpgradeAvailable, string protectionStatus, DPMContainerExtendedInfo extendedInfo) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, additionalBinaryDataProperties)
         {
             CanReRegister = canReRegister;
             ContainerId = containerId;
@@ -55,33 +51,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             IsUpgradeAvailable = isUpgradeAvailable;
             ProtectionStatus = protectionStatus;
             ExtendedInfo = extendedInfo;
-            ContainerType = containerType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DpmContainer"/>. </summary>
+        /// <param name="containerType">
+        /// Type of the container. The value of this property for: 1. Compute Azure VM is Microsoft.Compute/virtualMachines 2.
+        /// Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines 3. Windows machines (like MAB, DPM etc) is
+        /// Windows 4. Azure SQL instance is AzureSqlContainer. 5. Storage containers is StorageContainer. 6. Azure workload
+        /// Backup is VMAppContainer
+        /// </param>
+        private protected DpmContainer(ProtectableContainerType containerType) : base(containerType)
+        {
+            DpmServers = new ChangeTrackingList<string>();
         }
 
         /// <summary> Specifies whether the container is re-registrable. </summary>
         public bool? CanReRegister { get; set; }
+
         /// <summary> ID of container. </summary>
         public string ContainerId { get; set; }
+
         /// <summary> Number of protected items in the BackupEngine. </summary>
         public long? ProtectedItemCount { get; set; }
+
         /// <summary> Backup engine Agent version. </summary>
         public string DpmAgentVersion { get; set; }
+
         /// <summary> List of BackupEngines protecting the container. </summary>
         public IList<string> DpmServers { get; }
+
         /// <summary> To check if upgrade available. </summary>
         public bool? IsUpgradeAvailable { get; set; }
+
         /// <summary> Protection status of the container. </summary>
         public string ProtectionStatus { get; set; }
+
         /// <summary> Extended Info of the container. </summary>
-        internal DpmContainerExtendedInfo ExtendedInfo { get; set; }
+        internal DPMContainerExtendedInfo ExtendedInfo { get; set; }
+
         /// <summary> Last refresh time of the DPMContainer. </summary>
         public DateTimeOffset? ExtendedInfoLastRefreshedOn
         {
-            get => ExtendedInfo is null ? default : ExtendedInfo.LastRefreshedOn;
+            get
+            {
+                return ExtendedInfo is null ? default : ExtendedInfo.LastRefreshedOn;
+            }
             set
             {
                 if (ExtendedInfo is null)
-                    ExtendedInfo = new DpmContainerExtendedInfo();
+                {
+                    ExtendedInfo = new DPMContainerExtendedInfo();
+                }
                 ExtendedInfo.LastRefreshedOn = value;
             }
         }

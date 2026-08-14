@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                     new SapAvailabilityZoneDetailsContent(
                         _location, SapProductType.S4Hana, SapDatabaseType.Hana));
             Assert.NotNull(response);
-            Console.WriteLine("Sap Availability Zone Details Response : " + getObjectAsString(response.Value));
+            Console.WriteLine("Sap Availability Zone Details Response : " + GetObjectAsString(response.Value));
         }
 
         private async Task sapDiskConfigurations()
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                         SapDeploymentType.ThreeTier,
                         "Standard_M32ts"));
             Assert.NotNull(response);
-            Console.WriteLine("sap Disk Configurations Response : " + getObjectAsString(response.Value));
+            Console.WriteLine("sap Disk Configurations Response : " + GetObjectAsString(response.Value));
         }
 
         private async Task sapSupportedSkus()
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                     _location,
                     request);
             Assert.NotNull(response);
-            Console.WriteLine("sap Supported Skus Response : " + getObjectAsString(response.Value));
+            Console.WriteLine("sap Supported Skus Response : " + GetObjectAsString(response.Value));
         }
 
         private async Task sapSizingRecommendations()
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                     _location,
                     request);
             Assert.NotNull(response);
-            Console.WriteLine("sap Sizing Recommendations Response : " + getObjectAsString(response.Value));
+            Console.WriteLine("sap Sizing Recommendations Response : " + GetObjectAsString(response.Value));
         }
     }
 }

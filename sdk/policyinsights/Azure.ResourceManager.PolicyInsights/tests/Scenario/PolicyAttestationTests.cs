@@ -6,12 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.ResourceManager.PolicyInsights.Models;
+using Azure.ResourceManager.Resources;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PolicyInsights.Tests
 {
@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
         }
 
         [RecordedTest]
+        [Ignore("not authorized for running live re-record")]
         public async Task Attestation_SubscriptionCrud()
         {
             // Create a custom definition
@@ -89,6 +90,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
         }
 
         [RecordedTest]
+        [Ignore("not authorized for running live re-record")]
         public async Task Attestation_ResourceGroupCrud()
         {
             // Create a custom definition

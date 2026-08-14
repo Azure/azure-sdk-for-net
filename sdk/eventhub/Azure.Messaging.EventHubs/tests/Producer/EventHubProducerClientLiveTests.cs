@@ -102,8 +102,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     ConnectionOptions = new EventHubConnectionOptions
                     {
-                       ReceiveBufferSizeInBytes = 4096,
-                       SendBufferSizeInBytes = 12288
+                        ReceiveBufferSizeInBytes = 4096,
+                        SendBufferSizeInBytes = 12288
                     }
                 };
 
@@ -156,7 +156,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var events = Enumerable
                     .Range(0, eventsPerSend)
-                    .Select(index => new EventData($"Batch-{ sendIndex }-Event-{ index }"));
+                    .Select(index => new EventData($"Batch-{sendIndex}-Event-{index}"));
 
                 await producer.SendAsync(events, sendOptions, cancellationSource.Token);
             }
@@ -166,18 +166,18 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedEvents = (sendCount * eventsPerSend);
             var readEvents = 0;
 
-           await using var consumer = new EventHubConsumerClient(
-               EventHubConsumerClient.DefaultConsumerGroupName,
-               EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
-               scope.EventHubName,
-               EventHubsTestEnvironment.Instance.Credential);
+            await using var consumer = new EventHubConsumerClient(
+                EventHubConsumerClient.DefaultConsumerGroupName,
+                EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
+                scope.EventHubName,
+                EventHubsTestEnvironment.Instance.Credential);
 
             try
             {
                 await foreach (var receivedEvent in consumer.ReadEventsAsync(cancellationSource.Token))
                 {
                     Assert.That(receivedEvent.Data, Is.Not.Null, "No read should have an empty event.");
-                    Assert.That(receivedEvent.Partition.PartitionId, Is.EqualTo(partition), $"The event with body [{ receivedEvent.Data.EventBody }] was not read from the correct partition.");
+                    Assert.That(receivedEvent.Partition.PartitionId, Is.EqualTo(partition), $"The event with body [{receivedEvent.Data.EventBody}] was not read from the correct partition.");
 
                     ++readEvents;
 
@@ -220,11 +220,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 var events = Enumerable
                     .Range(0, eventsPerSend)
-                    .Select(index => new EventData($"Batch-{ sendIndex }-Event-{ index }"));
+                    .Select(index => new EventData($"Batch-{sendIndex}-Event-{index}"));
 
                 foreach (var eventData in events)
                 {
-                    Assert.That(batch.TryAdd(eventData), Is.True, $"The event with body [{ eventData.EventBody }] could not be added to the batch.");
+                    Assert.That(batch.TryAdd(eventData), Is.True, $"The event with body [{eventData.EventBody}] could not be added to the batch.");
                 }
 
                 await producer.SendAsync(batch, cancellationSource.Token);
@@ -246,7 +246,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 await foreach (var receivedEvent in consumer.ReadEventsAsync(cancellationSource.Token))
                 {
                     Assert.That(receivedEvent.Data, Is.Not.Null, "No read should have an empty event.");
-                    Assert.That(receivedEvent.Partition.PartitionId, Is.EqualTo(partition), $"The event with body [{ receivedEvent.Data.EventBody }] was not read from the correct partition.");
+                    Assert.That(receivedEvent.Partition.PartitionId, Is.EqualTo(partition), $"The event with body [{receivedEvent.Data.EventBody}] was not read from the correct partition.");
 
                     ++readEvents;
 
@@ -285,7 +285,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 for (var index = 0; index < events.Length; ++index)
                 {
                     events[index].Properties[index.ToString()] = "some value";
-                    events[index].Properties["Type"] = $"com.microsoft.test.Type{ index }";
+                    events[index].Properties["Type"] = $"com.microsoft.test.Type{index}";
                 }
 
                 await using (var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, EventHubsTestEnvironment.Instance.Credential))
@@ -309,7 +309,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var sendOptions = new SendEventOptions { PartitionKey = $"pkey={Guid.NewGuid() };" };
+            var sendOptions = new SendEventOptions { PartitionKey = $"pkey={Guid.NewGuid()};" };
             var sendCount = 5;
             var eventsPerSend = 100;
 
@@ -317,7 +317,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var events = Enumerable
                     .Range(0, eventsPerSend)
-                    .Select(index => new EventData($"Batch-{ sendIndex }-Event-{ index }"));
+                    .Select(index => new EventData($"Batch-{sendIndex}-Event-{index}"));
 
                 await producer.SendAsync(events, sendOptions, cancellationSource.Token);
             }
@@ -345,7 +345,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         firstReadPartition = receivedEvent.Partition.PartitionId;
                     }
 
-                    Assert.That(receivedEvent.Partition.PartitionId, Is.EqualTo(firstReadPartition), $"The event with body [{ receivedEvent.Data.EventBody }] was not read from the correct partition.");
+                    Assert.That(receivedEvent.Partition.PartitionId, Is.EqualTo(firstReadPartition), $"The event with body [{receivedEvent.Data.EventBody}] was not read from the correct partition.");
                     ++readEvents;
 
                     if (readEvents >= expectedEvents)
@@ -376,7 +376,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var batchOptions = new CreateBatchOptions { PartitionKey = $"pkey={Guid.NewGuid() };" };
+            var batchOptions = new CreateBatchOptions { PartitionKey = $"pkey={Guid.NewGuid()};" };
             var sendCount = 5;
             var eventsPerSend = 100;
 
@@ -386,11 +386,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 var events = Enumerable
                     .Range(0, eventsPerSend)
-                    .Select(index => new EventData($"Batch-{ sendIndex }-Event-{ index }"));
+                    .Select(index => new EventData($"Batch-{sendIndex}-Event-{index}"));
 
                 foreach (var eventData in events)
                 {
-                    Assert.That(batch.TryAdd(eventData), Is.True, $"The event with body [{ eventData.EventBody }] could not be added to the batch.");
+                    Assert.That(batch.TryAdd(eventData), Is.True, $"The event with body [{eventData.EventBody}] could not be added to the batch.");
                 }
 
                 await producer.SendAsync(batch, cancellationSource.Token);
@@ -419,7 +419,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         firstReadPartition = receivedEvent.Partition.PartitionId;
                     }
 
-                    Assert.That(receivedEvent.Partition.PartitionId, Is.EqualTo(firstReadPartition), $"The event with body [{ receivedEvent.Data.EventBody }] was not read from the correct partition.");
+                    Assert.That(receivedEvent.Partition.PartitionId, Is.EqualTo(firstReadPartition), $"The event with body [{receivedEvent.Data.EventBody}] was not read from the correct partition.");
                     ++readEvents;
 
                     if (readEvents >= expectedEvents)
@@ -446,11 +446,11 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
-               await using (var producer = new EventHubProducerClient(
-                   EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
-                   scope.EventHubName,
-                   EventHubsTestEnvironment.Instance.Credential,
-                   new EventHubProducerClientOptions { RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(5) } }))
+                await using (var producer = new EventHubProducerClient(
+                    EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
+                    scope.EventHubName,
+                    EventHubsTestEnvironment.Instance.Credential,
+                    new EventHubProducerClientOptions { RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(5) } }))
                 {
                     // Actual limit is 1046520 for a single event.
                     EventData[] eventSet = new[] { new EventData(new byte[100000]) };
@@ -1004,7 +1004,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                             for (var eventIndex = 0; eventIndex < eventsPerBatch; ++eventIndex)
                             {
-                                batch.TryAdd(new EventData(Encoding.UTF8.GetBytes($"Event { eventIndex } in the batch")));
+                                batch.TryAdd(new EventData(Encoding.UTF8.GetBytes($"Event {eventIndex} in the batch")));
                             }
 
                             await producer.SendAsync(batch);
@@ -1140,7 +1140,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     for (var index = 0; index < batches; index++)
                     {
-                        await producer.SendAsync(new[] { new EventData(Encoding.UTF8.GetBytes($"Just a few messages ({ index })")) }, batchOptions);
+                        await producer.SendAsync(new[] { new EventData(Encoding.UTF8.GetBytes($"Just a few messages ({index})")) }, batchOptions);
                     }
 
                     // Read the events.
@@ -1203,7 +1203,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 // Properties
 
-                message.Properties.AbsoluteExpiryTime = new DateTimeOffset(2015, 10, 27, 0, 0 ,0 ,0, TimeSpan.Zero);
+                message.Properties.AbsoluteExpiryTime = new DateTimeOffset(2015, 10, 27, 0, 0, 0, 0, TimeSpan.Zero);
                 message.Properties.ContentEncoding = "utf-8";
                 message.Properties.ContentType = "test/unit";
                 message.Properties.CorrelationId = new AmqpMessageId("OU812");
@@ -1413,7 +1413,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
-               await using (var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, EventHubsTestEnvironment.Instance.Credential))
+                await using (var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, EventHubsTestEnvironment.Instance.Credential))
                 {
                     Assert.That(async () => await producer.GetPartitionPropertiesAsync(invalidPartition), Throws.TypeOf<ArgumentOutOfRangeException>());
                 }

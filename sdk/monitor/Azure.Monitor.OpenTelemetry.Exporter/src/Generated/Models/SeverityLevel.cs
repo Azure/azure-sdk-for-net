@@ -10,51 +10,72 @@ using System.ComponentModel;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    /// <summary> Defines the level of severity for the event. </summary>
     internal readonly partial struct SeverityLevel : IEquatable<SeverityLevel>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SeverityLevel"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SeverityLevel(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
+        /// <summary> Verbose level. </summary>
         private const string VerboseValue = "Verbose";
+        /// <summary> Information level. </summary>
         private const string InformationValue = "Information";
+        /// <summary> Warning level. </summary>
         private const string WarningValue = "Warning";
+        /// <summary> Error level. </summary>
         private const string ErrorValue = "Error";
+        /// <summary> Critical level. </summary>
         private const string CriticalValue = "Critical";
 
-        /// <summary> Verbose. </summary>
+        /// <summary> Initializes a new instance of <see cref="SeverityLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public SeverityLevel(string value)
+        {
+            _value = value;
+        }
+
+        /// <summary> Verbose level. </summary>
         public static SeverityLevel Verbose { get; } = new SeverityLevel(VerboseValue);
-        /// <summary> Information. </summary>
+
+        /// <summary> Information level. </summary>
         public static SeverityLevel Information { get; } = new SeverityLevel(InformationValue);
-        /// <summary> Warning. </summary>
+
+        /// <summary> Warning level. </summary>
         public static SeverityLevel Warning { get; } = new SeverityLevel(WarningValue);
-        /// <summary> Error. </summary>
+
+        /// <summary> Error level. </summary>
         public static SeverityLevel Error { get; } = new SeverityLevel(ErrorValue);
-        /// <summary> Critical. </summary>
+
+        /// <summary> Critical level. </summary>
         public static SeverityLevel Critical { get; } = new SeverityLevel(CriticalValue);
+
         /// <summary> Determines if two <see cref="SeverityLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SeverityLevel left, SeverityLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SeverityLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SeverityLevel left, SeverityLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SeverityLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SeverityLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SeverityLevel(string value) => new SeverityLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SeverityLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SeverityLevel?(string value) => value == null ? null : new SeverityLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SeverityLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SeverityLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

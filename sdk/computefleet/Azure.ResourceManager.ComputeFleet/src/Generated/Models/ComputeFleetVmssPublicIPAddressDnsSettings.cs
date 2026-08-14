@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> Describes a virtual machines scale sets network configuration's DNS settings. </summary>
     public partial class ComputeFleetVmssPublicIPAddressDnsSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmssPublicIPAddressDnsSettings"/>. </summary>
         /// <param name="domainNameLabel">
@@ -71,17 +43,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// index will be the domain name labels of the PublicIPAddress resources that will
         /// be created
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmssPublicIPAddressDnsSettings(string domainNameLabel, ComputeFleetDomainNameLabelScopeType? domainNameLabelScope, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetVmssPublicIPAddressDnsSettings(string domainNameLabel, ComputeFleetDomainNameLabelScopeType? domainNameLabelScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DomainNameLabel = domainNameLabel;
             DomainNameLabelScope = domainNameLabelScope;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetVmssPublicIPAddressDnsSettings"/> for deserialization. </summary>
-        internal ComputeFleetVmssPublicIPAddressDnsSettings()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -90,6 +57,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// created
         /// </summary>
         public string DomainNameLabel { get; set; }
+
         /// <summary>
         /// The Domain name label scope.The concatenation of the hashed domain name label
         /// that generated according to the policy from domain name label scope and vm

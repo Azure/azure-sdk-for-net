@@ -15,6 +15,46 @@ namespace Azure.Compute.Batch
     /// <summary> The configuration parameters used while performing a rolling upgrade. </summary>
     public partial class RollingUpgradePolicy : IJsonModel<RollingUpgradePolicy>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RollingUpgradePolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RollingUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRollingUpgradePolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RollingUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RollingUpgradePolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RollingUpgradePolicy IPersistableModel<RollingUpgradePolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RollingUpgradePolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RollingUpgradePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -33,10 +73,10 @@ namespace Azure.Compute.Batch
             {
                 throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EnableCrossZoneUpgrade))
+            if (Optional.IsDefined(IsCrossZoneUpgradeEnabled))
             {
                 writer.WritePropertyName("enableCrossZoneUpgrade"u8);
-                writer.WriteBooleanValue(EnableCrossZoneUpgrade.Value);
+                writer.WriteBooleanValue(IsCrossZoneUpgradeEnabled.Value);
             }
             if (Optional.IsDefined(MaxBatchInstancePercent))
             {
@@ -110,7 +150,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            bool? enableCrossZoneUpgrade = default;
+            bool? isCrossZoneUpgradeEnabled = default;
             int? maxBatchInstancePercent = default;
             int? maxUnhealthyInstancePercent = default;
             int? maxUnhealthyUpgradedInstancePercent = default;
@@ -126,7 +166,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    enableCrossZoneUpgrade = prop.Value.GetBoolean();
+                    isCrossZoneUpgradeEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("maxBatchInstancePercent"u8))
@@ -189,7 +229,7 @@ namespace Azure.Compute.Batch
                 }
             }
             return new RollingUpgradePolicy(
-                enableCrossZoneUpgrade,
+                isCrossZoneUpgradeEnabled,
                 maxBatchInstancePercent,
                 maxUnhealthyInstancePercent,
                 maxUnhealthyUpgradedInstancePercent,
@@ -198,45 +238,5 @@ namespace Azure.Compute.Batch
                 rollbackFailedInstancesOnPolicyBreach,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RollingUpgradePolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RollingUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RollingUpgradePolicy IPersistableModel<RollingUpgradePolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RollingUpgradePolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RollingUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRollingUpgradePolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RollingUpgradePolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

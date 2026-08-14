@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of PostRules for mocking. </summary>
         protected PostRules()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <summary> Initializes a new instance of PostRules. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal PostRules(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal PostRules(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(PostRules).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -49,11 +52,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath(globalRulestackName, true);
             uri.AppendPath("/postRules/", false);
             uri.AppendPath(priority, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -66,11 +73,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath(globalRulestackName, true);
             uri.AppendPath("/postRules/", false);
             uri.AppendPath(priority, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -85,11 +96,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath(globalRulestackName, true);
             uri.AppendPath("/postRules/", false);
             uri.AppendPath(priority, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -100,11 +115,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
             uri.AppendPath(globalRulestackName, true);
             uri.AppendPath("/postRules", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -112,11 +131,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string globalRulestackName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -130,7 +161,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath("/postRules/", false);
             uri.AppendPath(priority, true);
             uri.AppendPath("/getCounters", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (firewallName != null)
             {
                 uri.AppendQuery("firewallName", firewallName, true);
@@ -139,6 +173,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -152,7 +187,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath("/postRules/", false);
             uri.AppendPath(priority, true);
             uri.AppendPath("/refreshCounters", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (firewallName != null)
             {
                 uri.AppendQuery("firewallName", firewallName, true);
@@ -161,6 +199,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -173,7 +212,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath("/postRules/", false);
             uri.AppendPath(priority, true);
             uri.AppendPath("/resetCounters", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (firewallName != null)
             {
                 uri.AppendQuery("firewallName", firewallName, true);
@@ -182,6 +224,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> Unknown version of OperationExtendedInfo. </summary>
     internal partial class UnknownOperationExtendedInfo : DataProtectionOperationExtendedInfo
     {
         /// <summary> Initializes a new instance of <see cref="UnknownOperationExtendedInfo"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownOperationExtendedInfo(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(objectType, serializedAdditionalRawData)
-        {
-            ObjectType = objectType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownOperationExtendedInfo"/> for deserialization. </summary>
-        internal UnknownOperationExtendedInfo()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownOperationExtendedInfo(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(objectType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

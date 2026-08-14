@@ -672,13 +672,13 @@ namespace Azure.Storage.Files.DataLake
             PathRestClient dfsPathRestClient = new PathRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: dfsUri.AbsoluteUri,
+                endpoint: dfsUri,
                 version: _clientConfiguration.ClientOptions.Version.ToVersionString());
 
             PathRestClient blobPathRestClient = new PathRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: blobUri.AbsoluteUri,
+                endpoint: blobUri,
                 version: _clientConfiguration.ClientOptions.Version.ToVersionString());
 
             return (dfsPathRestClient, blobPathRestClient);
@@ -1180,7 +1180,7 @@ namespace Azure.Storage.Files.DataLake
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<PathCreateHeaders> response;
+                    Response response;
 
                     long? serviceLeaseDuration = null;
                     if (leaseDuration.HasValue)
@@ -1217,10 +1217,7 @@ namespace Azure.Storage.Files.DataLake
                             properties: BuildMetadataString(metadata),
                             permissions: permissions,
                             umask: umask,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            requestConditions: conditions,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
@@ -1248,10 +1245,7 @@ namespace Azure.Storage.Files.DataLake
                             properties: BuildMetadataString(metadata),
                             permissions: permissions,
                             umask: umask,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            requestConditions: conditions,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
@@ -1268,7 +1262,7 @@ namespace Azure.Storage.Files.DataLake
 
                     return Response.FromValue(
                         response.ToPathInfo(),
-                        response.GetRawResponse());
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -1888,7 +1882,7 @@ namespace Azure.Storage.Files.DataLake
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<PathDeleteHeaders> response = null;
+                    Response response = null;
 
                     // Pagination only applies to service version 2023-08-03 and later, when using OAuth.
                     bool? paginated = null;
@@ -1899,18 +1893,17 @@ namespace Azure.Storage.Files.DataLake
                         paginated = true;
                     }
 
+                    string continuation = null;
+
                     do
                     {
                         if (async)
                         {
                             response = await PathRestClient.DeleteAsync(
                                 recursive: recursive,
-                                continuation: response?.Headers?.Continuation,
+                                continuation: continuation,
                                 leaseId: conditions?.LeaseId,
-                                ifMatch: conditions?.IfMatch?.ToString(),
-                                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                                ifModifiedSince: conditions?.IfModifiedSince,
-                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                requestConditions: conditions,
                                 paginated: paginated,
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
@@ -1919,19 +1912,17 @@ namespace Azure.Storage.Files.DataLake
                         {
                             response = PathRestClient.Delete(
                                 recursive: recursive,
-                                continuation: response?.Headers?.Continuation,
+                                continuation: continuation,
                                 leaseId: conditions?.LeaseId,
-                                ifMatch: conditions?.IfMatch?.ToString(),
-                                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                                ifModifiedSince: conditions?.IfModifiedSince,
-                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                requestConditions: conditions,
                                 paginated: paginated,
                                 cancellationToken: cancellationToken);
                         }
                     }
-                    while (!string.IsNullOrEmpty(response?.Headers?.Continuation));
+                    while (response.Headers.TryGetValue(DataLakeExtensions.ContinuationHeader, out continuation)
+                        && !string.IsNullOrEmpty(continuation));
 
-                    return response.GetRawResponse();
+                    return response;
                 }
                 catch (Exception ex)
                 {
@@ -2323,7 +2314,7 @@ namespace Azure.Storage.Files.DataLake
                             ClientConfiguration);
                     }
 
-                    ResponseWithHeaders<PathCreateHeaders> response;
+                    Response response;
 
                     if (async)
                     {
@@ -2332,10 +2323,7 @@ namespace Azure.Storage.Files.DataLake
                             renameSource: renameSource,
                             leaseId: destinationConditions?.LeaseId,
                             sourceLeaseId: sourceConditions?.LeaseId,
-                            ifMatch: destinationConditions?.IfMatch?.ToString(),
-                            ifNoneMatch: destinationConditions?.IfNoneMatch?.ToString(),
-                            ifModifiedSince: destinationConditions?.IfModifiedSince,
-                            ifUnmodifiedSince: destinationConditions?.IfUnmodifiedSince,
+                            requestConditions: destinationConditions,
                             sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
                             sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
@@ -2350,10 +2338,7 @@ namespace Azure.Storage.Files.DataLake
                             renameSource: renameSource,
                             leaseId: destinationConditions?.LeaseId,
                             sourceLeaseId: sourceConditions?.LeaseId,
-                            ifMatch: destinationConditions?.IfMatch?.ToString(),
-                            ifNoneMatch: destinationConditions?.IfNoneMatch?.ToString(),
-                            ifModifiedSince: destinationConditions?.IfModifiedSince,
-                            ifUnmodifiedSince: destinationConditions?.IfUnmodifiedSince,
+                            requestConditions: destinationConditions,
                             sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
                             sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
@@ -2363,7 +2348,7 @@ namespace Azure.Storage.Files.DataLake
 
                     return Response.FromValue(
                         destPathClient,
-                        response.GetRawResponse());
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -2530,7 +2515,7 @@ namespace Azure.Storage.Files.DataLake
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<PathGetPropertiesHeaders> response;
+                    Response response;
 
                     if (async)
                     {
@@ -2538,10 +2523,7 @@ namespace Azure.Storage.Files.DataLake
                             action: PathGetPropertiesAction.GetAccessControl,
                              upn: userPrincipalName,
                              leaseId: conditions?.LeaseId,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            requestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2551,16 +2533,13 @@ namespace Azure.Storage.Files.DataLake
                             action: PathGetPropertiesAction.GetAccessControl,
                              upn: userPrincipalName,
                              leaseId: conditions?.LeaseId,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            requestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
                     return Response.FromValue(
                         response.ToPathAccessControl(),
-                        response.GetRawResponse());
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -2746,7 +2725,7 @@ namespace Azure.Storage.Files.DataLake
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<PathSetAccessControlHeaders> response;
+                    Response response;
 
                     if (async)
                     {
@@ -2755,11 +2734,8 @@ namespace Azure.Storage.Files.DataLake
                             owner: owner,
                             group: group,
                             acl: PathAccessControlExtensions.ToAccessControlListString(accessControlList),
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            cancellationToken: cancellationToken)
+                            requestConditions: conditions,
+                            context: cancellationToken.ToRequestContext())
                             .ConfigureAwait(false);
                     }
                     else
@@ -2769,16 +2745,13 @@ namespace Azure.Storage.Files.DataLake
                             owner: owner,
                             group: group,
                             acl: PathAccessControlExtensions.ToAccessControlListString(accessControlList),
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            cancellationToken: cancellationToken);
+                            requestConditions: conditions,
+                            context: cancellationToken.ToRequestContext());
                     }
 
                     return Response.FromValue(
                         response.ToPathInfo(),
-                        response.GetRawResponse());
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -3151,7 +3124,7 @@ namespace Azure.Storage.Files.DataLake
                         $"batchSize: {options.BatchSize}");
                     try
                     {
-                        ResponseWithHeaders<SetAccessControlRecursiveResponse, PathSetAccessControlRecursiveHeaders> response;
+                        Response<SetAccessControlRecursiveResponse> response;
                         string lastContinuationToken = null;
 
                         int directoriesSuccessfulCount = 0;
@@ -3167,7 +3140,7 @@ namespace Azure.Storage.Files.DataLake
                                 if (async)
                                 {
                                     response = await PathRestClient.SetAccessControlRecursiveAsync(
-                                        mode: mode,
+                                        mode: mode.ToSerialString(),
                                         continuation: continuationToken,
                                         forceFlag: options?.ContinueOnFailure,
                                         maxRecords: options?.BatchSize,
@@ -3178,7 +3151,7 @@ namespace Azure.Storage.Files.DataLake
                                 else
                                 {
                                     response = PathRestClient.SetAccessControlRecursive(
-                                        mode: mode,
+                                        mode: mode.ToSerialString(),
                                         continuation: continuationToken,
                                         forceFlag: options?.ContinueOnFailure,
                                         maxRecords: options?.BatchSize,
@@ -3194,7 +3167,10 @@ namespace Azure.Storage.Files.DataLake
                             {
                                 throw DataLakeErrors.ChangeAclFailed(exception, continuationToken);
                             }
-                            continuationToken = response.Headers.Continuation;
+
+                            continuationToken = response.GetRawResponse().Headers.TryGetValue(DataLakeExtensions.ContinuationHeader, out var token)
+                                ? token
+                                : null;
 
                             if (!string.IsNullOrEmpty(continuationToken))
                             {
@@ -3463,7 +3439,7 @@ namespace Azure.Storage.Files.DataLake
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<PathSetAccessControlHeaders> response;
+                    Response response;
 
                     if (async)
                     {
@@ -3472,11 +3448,8 @@ namespace Azure.Storage.Files.DataLake
                             owner: owner,
                             group: group,
                             permissions: permissions?.ToSymbolicPermissions(),
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            cancellationToken: cancellationToken)
+                            requestConditions: conditions,
+                            context: cancellationToken.ToRequestContext())
                             .ConfigureAwait(false);
                     }
                     else
@@ -3486,16 +3459,13 @@ namespace Azure.Storage.Files.DataLake
                             owner: owner,
                             group: group,
                             permissions: permissions?.ToSymbolicPermissions(),
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            cancellationToken: cancellationToken);
+                            requestConditions: conditions,
+                            context: cancellationToken.ToRequestContext());
                     }
 
                     return Response.FromValue(
                         response.ToPathInfo(),
-                        response.GetRawResponse());
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -3511,6 +3481,163 @@ namespace Azure.Storage.Files.DataLake
             }
         }
         #endregion Set Permission
+
+        #region Get System Properties
+        /// <summary>
+        /// The <see cref="GetSystemProperties"/> operation returns all system defined properties for a path.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties">
+        /// Get Properties</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional <see cref="PathGetSystemPropertiesOptions"/> to include
+        /// when getting the path's system properties.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathSystemProperties}"/> describing the
+        /// path's system properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual Response<PathSystemProperties> GetSystemProperties(
+            PathGetSystemPropertiesOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return GetSystemPropertiesInternal(
+                options,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+        }
+
+        /// <summary>
+        /// The <see cref="GetSystemPropertiesAsync"/> operation returns all system defined properties for a path.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties">
+        /// Get Properties</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional <see cref="PathGetSystemPropertiesOptions"/> to include
+        /// when getting the path's system properties.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathSystemProperties}"/> describing the
+        /// path's system properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual async Task<Response<PathSystemProperties>> GetSystemPropertiesAsync(
+            PathGetSystemPropertiesOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await GetSystemPropertiesInternal(
+                options,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The <see cref="GetSystemPropertiesInternal"/> operation returns all system defined properties for a path.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties">
+        /// Get Properties</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional <see cref="PathGetSystemPropertiesOptions"/> to include
+        /// when getting the path's system properties.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathSystemProperties}"/> describing the
+        /// path's system properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        private async Task<Response<PathSystemProperties>> GetSystemPropertiesInternal(
+            PathGetSystemPropertiesOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(DataLakePathClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(DataLakePathClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(GetSystemProperties)}");
+
+                try
+                {
+                    scope.Start();
+                    Response response;
+
+                    if (async)
+                    {
+                        response = await PathRestClient.GetPropertiesAsync(
+                            action: PathGetPropertiesAction.GetStatus,
+                            leaseId: options?.RequestConditions?.LeaseId,
+                            requestConditions: options?.RequestConditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = PathRestClient.GetProperties(
+                            action: PathGetPropertiesAction.GetStatus,
+                            leaseId: options?.RequestConditions?.LeaseId,
+                            requestConditions: options?.RequestConditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToPathSystemProperties(),
+                        response);
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(DataLakePathClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion Get System Properties
 
         #region Get Properties
         /// <summary>
@@ -3901,8 +4028,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        // https://github.com/Azure/azure-sdk-for-net/issues/52168
-        internal virtual Response<GetPathTagResult> GetTags(
+        public virtual Response<GetPathTagResult> GetTags(
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
@@ -3953,8 +4079,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        // https://github.com/Azure/azure-sdk-for-net/issues/52168
-        internal virtual async Task<Response<GetPathTagResult>> GetTagsAsync(
+        public virtual async Task<Response<GetPathTagResult>> GetTagsAsync(
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
@@ -4014,8 +4139,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        // https://github.com/Azure/azure-sdk-for-net/issues/52168
-        internal virtual Response SetTags(
+        public virtual Response SetTags(
             Tags tags,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -4072,8 +4196,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        // https://github.com/Azure/azure-sdk-for-net/issues/52168
-        internal virtual async Task<Response> SetTagsAsync(
+        public virtual async Task<Response> SetTagsAsync(
             Tags tags,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)

@@ -8,60 +8,26 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary>
     /// Azure backup restore request
-    /// Please note <see cref="BackupRestoreContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="BackupRecoveryPointBasedRestoreContent"/>, <see cref="BackupRecoveryTimeBasedRestoreContent"/> and <see cref="BackupRestoreWithRehydrationContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BackupRecoveryPointBasedRestoreContent"/>, <see cref="BackupRestoreWithRehydrationContent"/>, and <see cref="BackupRecoveryTimeBasedRestoreContent"/>.
     /// </summary>
     public abstract partial class BackupRestoreContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BackupRestoreContent"/>. </summary>
-        /// <param name="restoreTargetInfo">
-        /// Gets or sets the restore target information.
-        /// Please note <see cref="RestoreTargetInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ItemLevelRestoreTargetInfo"/>, <see cref="RestoreFilesTargetInfo"/> and <see cref="Models.RestoreTargetInfo"/>.
-        /// </param>
+        /// <param name="objectType"></param>
+        /// <param name="restoreTargetInfo"> Gets or sets the restore target information. </param>
         /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="restoreTargetInfo"/> is null. </exception>
-        protected BackupRestoreContent(RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType)
+        private protected BackupRestoreContent(string objectType, RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType)
         {
-            Argument.AssertNotNull(restoreTargetInfo, nameof(restoreTargetInfo));
-
+            ObjectType = objectType;
             RestoreTargetInfo = restoreTargetInfo;
             SourceDataStoreType = sourceDataStoreType;
             ResourceGuardOperationRequests = new ChangeTrackingList<string>();
@@ -69,11 +35,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="BackupRestoreContent"/>. </summary>
         /// <param name="objectType"></param>
-        /// <param name="restoreTargetInfo">
-        /// Gets or sets the restore target information.
-        /// Please note <see cref="RestoreTargetInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ItemLevelRestoreTargetInfo"/>, <see cref="RestoreFilesTargetInfo"/> and <see cref="Models.RestoreTargetInfo"/>.
-        /// </param>
+        /// <param name="restoreTargetInfo"> Gets or sets the restore target information. </param>
         /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
         /// <param name="sourceResourceId"> Fully qualified Azure Resource Manager ID of the datasource which is being recovered. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
@@ -81,8 +43,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// Contains information of the Identity Details for the BI.
         /// If it is null, default will be considered as System Assigned.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupRestoreContent(string objectType, RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, IList<string> resourceGuardOperationRequests, DataProtectionIdentityDetails identityDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BackupRestoreContent(string objectType, RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, IList<string> resourceGuardOperationRequests, DataProtectionIdentityDetails identityDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ObjectType = objectType;
             RestoreTargetInfo = restoreTargetInfo;
@@ -90,28 +52,24 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             SourceResourceId = sourceResourceId;
             ResourceGuardOperationRequests = resourceGuardOperationRequests;
             IdentityDetails = identityDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BackupRestoreContent"/> for deserialization. </summary>
-        internal BackupRestoreContent()
-        {
-        }
-
-        /// <summary> Gets or sets the object type. </summary>
+        /// <summary> Gets or sets the ObjectType. </summary>
         internal string ObjectType { get; set; }
-        /// <summary>
-        /// Gets or sets the restore target information.
-        /// Please note <see cref="RestoreTargetInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ItemLevelRestoreTargetInfo"/>, <see cref="RestoreFilesTargetInfo"/> and <see cref="Models.RestoreTargetInfo"/>.
-        /// </summary>
+
+        /// <summary> Gets or sets the restore target information. </summary>
         public RestoreTargetInfoBase RestoreTargetInfo { get; }
+
         /// <summary> Gets or sets the type of the source data store. </summary>
         public SourceDataStoreType SourceDataStoreType { get; }
+
         /// <summary> Fully qualified Azure Resource Manager ID of the datasource which is being recovered. </summary>
         public ResourceIdentifier SourceResourceId { get; set; }
+
         /// <summary> ResourceGuardOperationRequests on which LAC check will be performed. </summary>
         public IList<string> ResourceGuardOperationRequests { get; }
+
         /// <summary>
         /// Contains information of the Identity Details for the BI.
         /// If it is null, default will be considered as System Assigned.

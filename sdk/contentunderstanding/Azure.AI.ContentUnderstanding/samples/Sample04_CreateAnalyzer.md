@@ -22,7 +22,7 @@ Custom analyzers allow you to define a field schema that specifies what structur
 
   For the complete and up-to-date list of supported base analyzers, see the [Analyzer reference documentation][analyzer-reference-docs].
 - Configure analysis options (OCR, layout, formulas)
-- Enable source and confidence tracking: Set `estimateFieldSourceAndConfidence` to `true` at the analyzer level (in `ContentAnalyzerConfig`) or `estimateSourceAndConfidence` to `true` at the field level to get source location (page number, bounding box) and confidence scores for extracted field values. This is required for fields with `method` = `extract` and is useful for validation, quality assurance, debugging, and highlighting source text in user interfaces. Field-level settings override analyzer-level settings. For more information, see [estimateSourceAndConfidence][estimate-source-confidence-docs].
+- Enable source and confidence tracking: Set `estimateFieldSourceAndConfidence` to `true` at the analyzer level (in `ContentAnalyzerConfig`) or `estimateSourceAndConfidence` to `true` at the field level to get source location (page number, bounding box) and confidence scores for extracted field values. Field-level settings override analyzer-level settings. For more information, see [estimateSourceAndConfidence][estimate-source-confidence-docs].
 
 ## Prerequisites
 
@@ -119,7 +119,7 @@ var config = new ContentAnalyzerConfig
     EnableLayout = true,
     EnableOcr = true,
     EstimateFieldSourceAndConfidence = true,
-    ReturnDetails = true
+    ShouldReturnDetails = true
 };
 
 // Create the custom analyzer
@@ -133,7 +133,7 @@ var customAnalyzer = new ContentAnalyzer
 
 // Add model mappings for supported large language models (required for custom analyzers)
 // Maps model roles (completion, embedding) to specific model names
-customAnalyzer.Models["completion"] = "gpt-4.1";
+customAnalyzer.Models["completion"] = "gpt-5.2";
 customAnalyzer.Models["embedding"] = "text-embedding-3-large";
 
 // Create the analyzer
@@ -156,7 +156,7 @@ var documentUrl = new Uri("<document_url>");
 var analyzeOperation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     analyzerId,
-    inputs: new[] { new AnalyzeInput { Url = documentUrl } });
+    inputs: new[] { new AnalysisInput { Uri = documentUrl } });
 
 var analyzeResult = analyzeOperation.Value;
 
@@ -167,10 +167,21 @@ if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent content)
     // Extract field (literal text extraction)
     if (content.Fields.TryGetValue("company_name", out var companyNameField))
     {
-        var companyName = companyNameField is StringField sf ? sf.ValueString : null;
+        var companyName = companyNameField is ContentStringField sf ? sf.Value : null;
         Console.WriteLine($"Company Name (extract): {companyName ?? "(not found)"}");
         Console.WriteLine($"  Confidence: {companyNameField.Confidence?.ToString("F2") ?? "N/A"}");
-        Console.WriteLine($"  Source: {companyNameField.Source ?? "N/A"}");
+        // Polygon: precise rotated region around the text.
+        // BoundingBox: axis-aligned rectangle — convenient for drawing highlights.
+        if (companyNameField.Sources != null)
+        {
+            foreach (var source in companyNameField.Sources)
+            {
+                if (source is DocumentSource docSource)
+                {
+                    Console.WriteLine($"  Page {docSource.PageNumber}, BoundingBox: {docSource.BoundingBox}");
+                }
+            }
+        }
         if (companyNameField.Spans != null && companyNameField.Spans.Count > 0)
         {
             var span = companyNameField.Spans[0];
@@ -181,10 +192,19 @@ if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent content)
     // Extract field (literal text extraction)
     if (content.Fields.TryGetValue("total_amount", out var totalAmountField))
     {
-        var totalAmount = totalAmountField is NumberField nf ? nf.ValueNumber : null;
+        var totalAmount = totalAmountField is ContentNumberField nf ? nf.Value : null;
         Console.WriteLine($"Total Amount (extract): {totalAmount?.ToString("F2") ?? "(not found)"}");
         Console.WriteLine($"  Confidence: {totalAmountField.Confidence?.ToString("F2") ?? "N/A"}");
-        Console.WriteLine($"  Source: {totalAmountField.Source ?? "N/A"}");
+        if (totalAmountField.Sources != null)
+        {
+            foreach (var source in totalAmountField.Sources)
+            {
+                if (source is DocumentSource docSource)
+                {
+                    Console.WriteLine($"  Page {docSource.PageNumber}, BoundingBox: {docSource.BoundingBox}");
+                }
+            }
+        }
         if (totalAmountField.Spans != null && totalAmountField.Spans.Count > 0)
         {
             var span = totalAmountField.Spans[0];
@@ -192,29 +212,25 @@ if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent content)
         }
     }
 
-    // Generate field (AI-generated value)
     if (content.Fields.TryGetValue("document_summary", out var summaryField))
     {
-        var summary = summaryField is StringField sf ? sf.ValueString : null;
-        Console.WriteLine($"Document Summary (generate): {summary ?? "(not found)"}");
+        var summary = summaryField is ContentStringField sf ? sf.Value : null;
+        Console.WriteLine($"Document Summary: {summary ?? "(not found)"}");
         Console.WriteLine($"  Confidence: {summaryField.Confidence?.ToString("F2") ?? "N/A"}");
-        // Note: Generated fields may not have source information
-        if (!string.IsNullOrEmpty(summaryField.Source))
+        if (summaryField.Sources != null)
         {
-            Console.WriteLine($"  Source: {summaryField.Source}");
+            Console.WriteLine($"  Grounding sources: {summaryField.Sources.Length}");
         }
     }
 
-    // Classify field (classification against predefined categories)
     if (content.Fields.TryGetValue("document_type", out var documentTypeField))
     {
-        var documentType = documentTypeField is StringField sf ? sf.ValueString : null;
-        Console.WriteLine($"Document Type (classify): {documentType ?? "(not found)"}");
+        var documentType = documentTypeField is ContentStringField sf ? sf.Value : null;
+        Console.WriteLine($"Document Type: {documentType ?? "(not found)"}");
         Console.WriteLine($"  Confidence: {documentTypeField.Confidence?.ToString("F2") ?? "N/A"}");
-        // Note: Classified fields may not have source information
-        if (!string.IsNullOrEmpty(documentTypeField.Source))
+        if (documentTypeField.Sources != null)
         {
-            Console.WriteLine($"  Source: {documentTypeField.Source}");
+            Console.WriteLine($"  Grounding sources: {documentTypeField.Sources.Length}");
         }
     }
 }

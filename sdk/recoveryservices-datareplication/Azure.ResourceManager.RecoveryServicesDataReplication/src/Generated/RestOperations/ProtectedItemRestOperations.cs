@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of ProtectedItem for mocking. </summary>
         protected ProtectedItem()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Initializes a new instance of ProtectedItem. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ProtectedItem(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ProtectedItem(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(ProtectedItem).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -53,11 +56,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             uri.AppendPath(vaultName, true);
             uri.AppendPath("/protectedItems/", false);
             uri.AppendPath(protectedItemName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -74,11 +81,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             uri.AppendPath(vaultName, true);
             uri.AppendPath("/protectedItems/", false);
             uri.AppendPath(protectedItemName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -97,11 +108,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             uri.AppendPath(vaultName, true);
             uri.AppendPath("/protectedItems/", false);
             uri.AppendPath(protectedItemName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -120,7 +135,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             uri.AppendPath(vaultName, true);
             uri.AppendPath("/protectedItems/", false);
             uri.AppendPath(protectedItemName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (forceDelete != null)
             {
                 uri.AppendQuery("forceDelete", TypeFormatters.ConvertToString(forceDelete), true);
@@ -129,6 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -143,7 +162,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             uri.AppendPath("/providers/Microsoft.DataReplication/replicationVaults/", false);
             uri.AppendPath(vaultName, true);
             uri.AppendPath("/protectedItems", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (odataOptions != null)
             {
                 uri.AppendQuery("odataOptions", odataOptions, true);
@@ -160,6 +182,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -167,11 +190,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string vaultName, string odataOptions, string continuationToken, int? pageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -189,11 +224,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             uri.AppendPath("/protectedItems/", false);
             uri.AppendPath(protectedItemName, true);
             uri.AppendPath("/plannedFailover", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;

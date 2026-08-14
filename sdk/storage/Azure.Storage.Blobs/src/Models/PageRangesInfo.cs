@@ -43,6 +43,6 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new PageRangesInfo instance.
         /// </summary>
-        internal PageRangesInfo() {}
+        internal PageRangesInfo() { }
     }
 }

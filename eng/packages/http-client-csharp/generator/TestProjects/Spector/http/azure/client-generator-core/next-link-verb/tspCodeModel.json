@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "listItemsContentType",
+      "name": "ListItemsAccept",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -30,6 +31,12 @@
       "usage": "Output,Json",
       "doc": "Paged response model.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ListTestResult"
+        }
+      },
+      "isExactName": false,
       "properties": [
         {
           "$id": "4",
@@ -50,6 +57,12 @@
               "usage": "Output,Json",
               "doc": "Test model.",
               "decorators": [],
+              "serializationOptions": {
+                "json": {
+                  "name": "Test"
+                }
+              },
+              "isExactName": false,
               "properties": [
                 {
                   "$id": "7",
@@ -75,7 +88,8 @@
                       "name": "id"
                     }
                   },
-                  "isHttpMetadata": false
+                  "isHttpMetadata": false,
+                  "isExactName": false
                 }
               ]
             },
@@ -93,7 +107,8 @@
               "name": "items"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "9",
@@ -119,7 +134,8 @@
               "name": "nextLink"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -132,6 +148,7 @@
       "$id": "11",
       "kind": "client",
       "name": "NextLinkVerbClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.ClientGenerator.Core.NextLinkVerb",
       "doc": "Test for @nextLinkVerb decorator.",
       "methods": [
@@ -139,11 +156,13 @@
           "$id": "12",
           "kind": "paging",
           "name": "listItems",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "13",
             "name": "listItems",
+            "isExactName": false,
             "resourceName": "NextLinkVerb",
             "accessibility": "public",
             "parameters": [
@@ -161,7 +180,28 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.NextLinkVerb.listItems.accept"
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.NextLinkVerb.listItems.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "15",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "1"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.NextLinkVerb.listItems.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -176,7 +216,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "POST",
@@ -186,25 +231,12 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.NextLinkVerb.listItems",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.NextLinkVerb"
           },
           "parameters": [
             {
-              "$id": "15",
-              "kind": "method",
-              "name": "accept",
-              "serializedName": "Accept",
-              "type": {
-                "$ref": "1"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.NextLinkVerb.listItems.accept",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "15"
             }
           ],
           "response": {
@@ -262,7 +294,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.NextLinkVerb.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.NextLinkVerb.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

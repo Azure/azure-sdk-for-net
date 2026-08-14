@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public readonly partial struct PersonalDesktopAssignmentType : IEquatable<PersonalDesktopAssignmentType>
     {
         private readonly string _value;
+        /// <summary> Automatically assigns an available personal desktop to the user. </summary>
+        private const string AutomaticValue = "Automatic";
+        /// <summary> Manually assigns a specific personal desktop to the user. </summary>
+        private const string DirectValue = "Direct";
 
         /// <summary> Initializes a new instance of <see cref="PersonalDesktopAssignmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PersonalDesktopAssignmentType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AutomaticValue = "Automatic";
-        private const string DirectValue = "Direct";
-
-        /// <summary> Automatic. </summary>
+        /// <summary> Automatically assigns an available personal desktop to the user. </summary>
         public static PersonalDesktopAssignmentType Automatic { get; } = new PersonalDesktopAssignmentType(AutomaticValue);
-        /// <summary> Direct. </summary>
+
+        /// <summary> Manually assigns a specific personal desktop to the user. </summary>
         public static PersonalDesktopAssignmentType Direct { get; } = new PersonalDesktopAssignmentType(DirectValue);
+
         /// <summary> Determines if two <see cref="PersonalDesktopAssignmentType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PersonalDesktopAssignmentType left, PersonalDesktopAssignmentType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PersonalDesktopAssignmentType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PersonalDesktopAssignmentType left, PersonalDesktopAssignmentType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PersonalDesktopAssignmentType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PersonalDesktopAssignmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PersonalDesktopAssignmentType(string value) => new PersonalDesktopAssignmentType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PersonalDesktopAssignmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PersonalDesktopAssignmentType?(string value) => value == null ? null : new PersonalDesktopAssignmentType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PersonalDesktopAssignmentType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PersonalDesktopAssignmentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -20,6 +20,46 @@ namespace Azure.AI.ContentUnderstanding
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DocumentHyperlink PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentHyperlink>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDocumentHyperlink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DocumentHyperlink)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentHyperlink>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DocumentHyperlink)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DocumentHyperlink>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DocumentHyperlink IPersistableModel<DocumentHyperlink>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DocumentHyperlink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DocumentHyperlink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -41,7 +81,7 @@ namespace Azure.AI.ContentUnderstanding
             writer.WritePropertyName("content"u8);
             writer.WriteStringValue(Content);
             writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Url);
+            writer.WriteStringValue(Uri);
             if (Optional.IsDefined(Span))
             {
                 writer.WritePropertyName("span"u8);
@@ -95,7 +135,7 @@ namespace Azure.AI.ContentUnderstanding
                 return null;
             }
             string content = default;
-            string url = default;
+            string uri = default;
             ContentSpan span = default;
             string source = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -108,7 +148,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    url = prop.Value.GetString();
+                    uri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("span"u8))
@@ -130,47 +170,7 @@ namespace Azure.AI.ContentUnderstanding
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DocumentHyperlink(content, url, span, source, additionalBinaryDataProperties);
+            return new DocumentHyperlink(content, uri, span, source, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentHyperlink>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentHyperlink>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DocumentHyperlink)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentHyperlink IPersistableModel<DocumentHyperlink>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DocumentHyperlink PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentHyperlink>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDocumentHyperlink(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DocumentHyperlink)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentHyperlink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

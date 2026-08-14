@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.WebPubSub.Models
     public readonly partial struct WebPubSubKeyType : IEquatable<WebPubSubKeyType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="WebPubSubKeyType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public WebPubSubKeyType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PrimaryValue = "Primary";
         private const string SecondaryValue = "Secondary";
         private const string SaltValue = "Salt";
 
-        /// <summary> Primary. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public WebPubSubKeyType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Primary. </summary>
         public static WebPubSubKeyType Primary { get; } = new WebPubSubKeyType(PrimaryValue);
-        /// <summary> Secondary. </summary>
+
+        /// <summary> Gets the Secondary. </summary>
         public static WebPubSubKeyType Secondary { get; } = new WebPubSubKeyType(SecondaryValue);
-        /// <summary> Salt. </summary>
+
+        /// <summary> Gets the Salt. </summary>
         public static WebPubSubKeyType Salt { get; } = new WebPubSubKeyType(SaltValue);
+
         /// <summary> Determines if two <see cref="WebPubSubKeyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WebPubSubKeyType left, WebPubSubKeyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WebPubSubKeyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WebPubSubKeyType left, WebPubSubKeyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WebPubSubKeyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WebPubSubKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WebPubSubKeyType(string value) => new WebPubSubKeyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WebPubSubKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WebPubSubKeyType?(string value) => value == null ? null : new WebPubSubKeyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WebPubSubKeyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WebPubSubKeyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Quota
         {
             TryGetApiVersion(GroupQuotaSubscriptionRequestStatusResource.ResourceType, out string groupQuotaSubscriptionRequestStatusApiVersion);
             _groupQuotaSubscriptionRequestStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", GroupQuotaSubscriptionRequestStatusResource.ResourceType.Namespace, Diagnostics);
-            _groupQuotaSubscriptionRequestStatusesRestClient = new GroupQuotaSubscriptionRequestStatuses(_groupQuotaSubscriptionRequestStatusesClientDiagnostics, Pipeline, Endpoint, groupQuotaSubscriptionRequestStatusApiVersion ?? "2025-09-01");
+            _groupQuotaSubscriptionRequestStatusesRestClient = new GroupQuotaSubscriptionRequestStatuses(_groupQuotaSubscriptionRequestStatusesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaSubscriptionRequestStatusApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Quota
         {
             if (id.ResourceType != GroupQuotaEntityResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GroupQuotaEntityResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GroupQuotaEntityResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GroupQuotaSubscriptionRequestStatusData, GroupQuotaSubscriptionRequestStatusResource>(new GroupQuotaSubscriptionRequestStatusesGetAllAsyncCollectionResultOfT(_groupQuotaSubscriptionRequestStatusesRestClient, Id.Parent.Name, Id.Name, context), data => new GroupQuotaSubscriptionRequestStatusResource(Client, data));
+            return new AsyncPageableWrapper<GroupQuotaSubscriptionRequestStatusData, GroupQuotaSubscriptionRequestStatusResource>(new GroupQuotaSubscriptionRequestStatusesGetAllAsyncCollectionResultOfT(_groupQuotaSubscriptionRequestStatusesRestClient, Id.Parent.Name, Id.Name, context, "GroupQuotaSubscriptionRequestStatusCollection.GetAll"), data => new GroupQuotaSubscriptionRequestStatusResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GroupQuotaSubscriptionRequestStatusData, GroupQuotaSubscriptionRequestStatusResource>(new GroupQuotaSubscriptionRequestStatusesGetAllCollectionResultOfT(_groupQuotaSubscriptionRequestStatusesRestClient, Id.Parent.Name, Id.Name, context), data => new GroupQuotaSubscriptionRequestStatusResource(Client, data));
+            return new PageableWrapper<GroupQuotaSubscriptionRequestStatusData, GroupQuotaSubscriptionRequestStatusResource>(new GroupQuotaSubscriptionRequestStatusesGetAllCollectionResultOfT(_groupQuotaSubscriptionRequestStatusesRestClient, Id.Parent.Name, Id.Name, context, "GroupQuotaSubscriptionRequestStatusCollection.GetAll"), data => new GroupQuotaSubscriptionRequestStatusResource(Client, data));
         }
 
         /// <summary>

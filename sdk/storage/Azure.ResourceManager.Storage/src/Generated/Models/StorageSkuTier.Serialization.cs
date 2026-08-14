@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     internal static partial class StorageSkuTierExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this StorageSkuTier value) => value switch
         {
             StorageSkuTier.Standard => "Standard",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Storage.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageSkuTier value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static StorageSkuTier ToStorageSkuTier(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return StorageSkuTier.Standard;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium")) return StorageSkuTier.Premium;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard"))
+            {
+                return StorageSkuTier.Standard;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium"))
+            {
+                return StorageSkuTier.Premium;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageSkuTier value.");
         }
     }

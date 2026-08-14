@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationTemplates.Models;
 
@@ -24,10 +23,11 @@ namespace Azure.ResourceManager.OperationTemplates
     [ModelReaderWriterBuildable(typeof(CheckNameAvailabilityResponse))]
     [ModelReaderWriterBuildable(typeof(ExportRequest))]
     [ModelReaderWriterBuildable(typeof(ExportResult))]
-    [ModelReaderWriterBuildable(typeof(OrderData))]
+    [ModelReaderWriterBuildable(typeof(Order))]
     [ModelReaderWriterBuildable(typeof(OrderProperties))]
-    [ModelReaderWriterBuildable(typeof(OrderResource))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(Product))]
+    [ModelReaderWriterBuildable(typeof(ProductListResult))]
+    [ModelReaderWriterBuildable(typeof(ProductProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(WidgetData))]
     [ModelReaderWriterBuildable(typeof(WidgetProperties))]

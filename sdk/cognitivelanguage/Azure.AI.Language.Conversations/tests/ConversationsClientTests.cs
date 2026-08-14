@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests
@@ -13,7 +14,7 @@ namespace Azure.AI.Language.Conversations.Tests
         public void ConversationsClientEndpointNull()
         {
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
-                () => new ConversationAnalysisClient(null, (AzureKeyCredential)null));
+                () => new ConversationAnalysisClient(null, new AzureKeyCredential("test-key")));
             Assert.AreEqual("endpoint", ex.ParamName);
         }
 
@@ -31,7 +32,7 @@ namespace Azure.AI.Language.Conversations.Tests
         public void ConversationsClientEndpointNullUsingTokenCredential()
         {
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
-                () => new ConversationAnalysisClient(null, (TokenCredential)null));
+                () => new ConversationAnalysisClient(null, new MockCredential()));
             Assert.AreEqual("endpoint", ex.ParamName);
         }
 

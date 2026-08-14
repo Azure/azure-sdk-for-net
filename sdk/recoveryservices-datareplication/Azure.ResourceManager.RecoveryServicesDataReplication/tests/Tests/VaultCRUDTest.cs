@@ -6,16 +6,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Helpers;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
-using Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Helpers;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
 {
-    public class VaultCRUDTest: RecoveryServicesDataReplicationManagementTestBase
+    public class VaultCRUDTest : RecoveryServicesDataReplicationManagementTestBase
     {
         public VaultCRUDTest(bool isAsync)
             : base(isAsync, RecordedTestMode.Playback)

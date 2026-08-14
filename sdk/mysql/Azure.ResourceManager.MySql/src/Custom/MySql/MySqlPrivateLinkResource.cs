@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MySql
             TryGetApiVersion(ResourceType, out string mySqlPrivateLinkResourcePrivateLinkResourcesApiVersion);
             _mySqlPrivateLinkResourcePrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlPrivateLinkResourcePrivateLinkResourcesApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct LeaseContainerAction : IEquatable<LeaseContainerAction>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="LeaseContainerAction"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LeaseContainerAction(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AcquireValue = "Acquire";
         private const string RenewValue = "Renew";
         private const string ChangeValue = "Change";
         private const string ReleaseValue = "Release";
         private const string BreakValue = "Break";
 
-        /// <summary> Acquire. </summary>
+        /// <summary> Initializes a new instance of <see cref="LeaseContainerAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public LeaseContainerAction(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Acquire. </summary>
         public static LeaseContainerAction Acquire { get; } = new LeaseContainerAction(AcquireValue);
-        /// <summary> Renew. </summary>
+
+        /// <summary> Gets the Renew. </summary>
         public static LeaseContainerAction Renew { get; } = new LeaseContainerAction(RenewValue);
-        /// <summary> Change. </summary>
+
+        /// <summary> Gets the Change. </summary>
         public static LeaseContainerAction Change { get; } = new LeaseContainerAction(ChangeValue);
-        /// <summary> Release. </summary>
+
+        /// <summary> Gets the Release. </summary>
         public static LeaseContainerAction Release { get; } = new LeaseContainerAction(ReleaseValue);
-        /// <summary> Break. </summary>
+
+        /// <summary> Gets the Break. </summary>
         public static LeaseContainerAction Break { get; } = new LeaseContainerAction(BreakValue);
+
         /// <summary> Determines if two <see cref="LeaseContainerAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LeaseContainerAction left, LeaseContainerAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LeaseContainerAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LeaseContainerAction left, LeaseContainerAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LeaseContainerAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LeaseContainerAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LeaseContainerAction(string value) => new LeaseContainerAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LeaseContainerAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LeaseContainerAction?(string value) => value == null ? null : new LeaseContainerAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LeaseContainerAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LeaseContainerAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -19,7 +19,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="TilerStacSearchRegistration"/>. </summary>
         /// <param name="search">
         /// Details of the saved search query
-        /// 
         /// See the [PgSTAC Search table definition](https://github.com/stac-utils/pgstac/blob/3499daa2bfa700ae7bb07503795c169bf2ebafc7/sql/004_search.sql#L907-L915).
         /// </param>
         internal TilerStacSearchRegistration(TilerStacSearchDefinition search)
@@ -31,7 +30,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="TilerStacSearchRegistration"/>. </summary>
         /// <param name="search">
         /// Details of the saved search query
-        /// 
         /// See the [PgSTAC Search table definition](https://github.com/stac-utils/pgstac/blob/3499daa2bfa700ae7bb07503795c169bf2ebafc7/sql/004_search.sql#L907-L915).
         /// </param>
         /// <param name="links"> Related links for the search query. </param>
@@ -45,7 +43,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Details of the saved search query
-        /// 
         /// See the [PgSTAC Search table definition](https://github.com/stac-utils/pgstac/blob/3499daa2bfa700ae7bb07503795c169bf2ebafc7/sql/004_search.sql#L907-L915).
         /// </summary>
         public TilerStacSearchDefinition Search { get; }

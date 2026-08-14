@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             TryGetApiVersion(PureStorageAvsStorageContainerVolumeResource.ResourceType, out string pureStorageAvsStorageContainerVolumeApiVersion);
             _avsStorageContainerVolumesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", PureStorageAvsStorageContainerVolumeResource.ResourceType.Namespace, Diagnostics);
-            _avsStorageContainerVolumesRestClient = new AvsStorageContainerVolumes(_avsStorageContainerVolumesClientDiagnostics, Pipeline, Endpoint, pureStorageAvsStorageContainerVolumeApiVersion ?? "2024-11-01");
+            _avsStorageContainerVolumesRestClient = new AvsStorageContainerVolumes(_avsStorageContainerVolumesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, pureStorageAvsStorageContainerVolumeApiVersion ?? "2024-11-01");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             if (id.ResourceType != PureStorageAvsStorageContainerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PureStorageAvsStorageContainerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PureStorageAvsStorageContainerResource.ResourceType), nameof(id));
             }
         }
 
@@ -183,7 +183,8 @@ namespace Azure.ResourceManager.PureStorageBlock
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new PureStorageAvsStorageContainerVolumeResource(Client, data));
+                context,
+                "PureStorageAvsStorageContainerVolumeCollection.GetAll"), data => new PureStorageAvsStorageContainerVolumeResource(Client, data));
         }
 
         /// <summary>
@@ -217,7 +218,8 @@ namespace Azure.ResourceManager.PureStorageBlock
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new PureStorageAvsStorageContainerVolumeResource(Client, data));
+                context,
+                "PureStorageAvsStorageContainerVolumeCollection.GetAll"), data => new PureStorageAvsStorageContainerVolumeResource(Client, data));
         }
 
         /// <summary>

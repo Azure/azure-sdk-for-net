@@ -6,7 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Parameters.Basic.Models;
+using Parameters.Basic._ExplicitBody;
 
 namespace Parameters.Basic
 {

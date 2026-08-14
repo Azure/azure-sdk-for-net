@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct StorageAccountKeySource : IEquatable<StorageAccountKeySource>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="StorageAccountKeySource"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageAccountKeySource(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string StorageValue = "Microsoft.Storage";
         private const string KeyVaultValue = "Microsoft.Keyvault";
 
-        /// <summary> Microsoft.Storage. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountKeySource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StorageAccountKeySource(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Storage. </summary>
         public static StorageAccountKeySource Storage { get; } = new StorageAccountKeySource(StorageValue);
-        /// <summary> Microsoft.Keyvault. </summary>
+
+        /// <summary> Gets the KeyVault. </summary>
         public static StorageAccountKeySource KeyVault { get; } = new StorageAccountKeySource(KeyVaultValue);
+
         /// <summary> Determines if two <see cref="StorageAccountKeySource"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageAccountKeySource left, StorageAccountKeySource right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageAccountKeySource"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageAccountKeySource left, StorageAccountKeySource right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageAccountKeySource"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageAccountKeySource"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageAccountKeySource(string value) => new StorageAccountKeySource(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageAccountKeySource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageAccountKeySource?(string value) => value == null ? null : new StorageAccountKeySource(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageAccountKeySource other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageAccountKeySource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

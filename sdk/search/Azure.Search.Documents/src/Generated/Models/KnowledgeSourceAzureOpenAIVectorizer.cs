@@ -7,26 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Indexes.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Specifies the Azure OpenAI resource used to vectorize a query string. </summary>
     public partial class KnowledgeSourceAzureOpenAIVectorizer : KnowledgeSourceVectorizer
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceAzureOpenAIVectorizer"/>. </summary>
-        public KnowledgeSourceAzureOpenAIVectorizer()
+        public KnowledgeSourceAzureOpenAIVectorizer() : base(VectorSearchVectorizerKind.AzureOpenAI)
         {
-            Kind = VectorSearchVectorizerKind.AzureOpenAI;
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceAzureOpenAIVectorizer"/>. </summary>
         /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="azureOpenAIParameters"> Contains the parameters specific to Azure OpenAI embedding vectorization. </param>
-        internal KnowledgeSourceAzureOpenAIVectorizer(VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureOpenAIVectorizerParameters azureOpenAIParameters) : base(kind, serializedAdditionalRawData)
+        internal KnowledgeSourceAzureOpenAIVectorizer(VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureOpenAIVectorizerParameters azureOpenAIParameters) : base(kind, additionalBinaryDataProperties)
         {
             AzureOpenAIParameters = azureOpenAIParameters;
-            Kind = kind;
         }
 
         /// <summary> Contains the parameters specific to Azure OpenAI embedding vectorization. </summary>

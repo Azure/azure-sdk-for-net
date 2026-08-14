@@ -155,7 +155,7 @@ namespace Azure.Storage.DataMovement.Blobs
             Argument.AssertNotNull(stream, nameof(stream));
 
             int currentVariableLengthIndex = DataMovementBlobConstants.DestinationCheckpointDetails.VariableLengthStartIndex;
-            BinaryWriter writer = new BinaryWriter(stream);
+            using BinaryWriter writer = new BinaryWriter(stream, Encoding.UTF8, leaveOpen: true);
 
             // Version
             writer.Write(Version);
@@ -300,7 +300,8 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             Argument.AssertNotNull(stream, nameof(stream));
 
-            BinaryReader reader = new BinaryReader(stream);
+            long streamLength = stream.Length;
+            using BinaryReader reader = new BinaryReader(stream, Encoding.UTF8, leaveOpen: true);
 
             // Version
             int version = reader.ReadInt32();
@@ -367,11 +368,15 @@ namespace Azure.Storage.DataMovement.Blobs
             int tagsOffset = reader.ReadInt32();
             int tagsLength = reader.ReadInt32();
 
-            // Values
+            // Variable-length values
+            // A non-positive offset (e.g. -1) means the field is not present and can be skipped.
+            // The sentinel value -1 is written by WriteEmptyLengthOffset / WriteVariableLengthFieldInfo.
+
             // ContentType
             string contentType = null;
             if (contentTypeOffset > 0)
             {
+                CheckpointerExtensions.ValidateOffsetsAndLength(contentTypeOffset, contentTypeLength, streamLength);
                 reader.BaseStream.Position = contentTypeOffset;
                 contentType = reader.ReadBytes(contentTypeLength).AsString();
             }
@@ -380,6 +385,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string contentEncoding = null;
             if (contentEncodingOffset > 0)
             {
+                CheckpointerExtensions.ValidateOffsetsAndLength(contentEncodingOffset, contentEncodingLength, streamLength);
                 reader.BaseStream.Position = contentEncodingOffset;
                 contentEncoding = reader.ReadBytes(contentEncodingLength).AsString();
             }
@@ -388,6 +394,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string contentLanguage = null;
             if (contentLanguageOffset > 0)
             {
+                CheckpointerExtensions.ValidateOffsetsAndLength(contentLanguageOffset, contentLanguageLength, streamLength);
                 reader.BaseStream.Position = contentLanguageOffset;
                 contentLanguage = reader.ReadBytes(contentLanguageLength).AsString();
             }
@@ -396,6 +403,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string contentDisposition = null;
             if (contentDispositionOffset > 0)
             {
+                CheckpointerExtensions.ValidateOffsetsAndLength(contentDispositionOffset, contentDispositionLength, streamLength);
                 reader.BaseStream.Position = contentDispositionOffset;
                 contentDisposition = reader.ReadBytes(contentDispositionLength).AsString();
             }
@@ -404,6 +412,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string cacheControl = null;
             if (cacheControlOffset > 0)
             {
+                CheckpointerExtensions.ValidateOffsetsAndLength(cacheControlOffset, cacheControlLength, streamLength);
                 reader.BaseStream.Position = cacheControlOffset;
                 cacheControl = reader.ReadBytes(cacheControlLength).AsString();
             }
@@ -412,6 +421,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string metadataString = string.Empty;
             if (metadataOffset > 0)
             {
+                CheckpointerExtensions.ValidateOffsetsAndLength(metadataOffset, metadataLength, streamLength);
                 reader.BaseStream.Position = metadataOffset;
                 metadataString = reader.ReadBytes(metadataLength).AsString();
             }
@@ -420,6 +430,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string tagsString = string.Empty;
             if (tagsOffset > 0)
             {
+                CheckpointerExtensions.ValidateOffsetsAndLength(tagsOffset, tagsLength, streamLength);
                 reader.BaseStream.Position = tagsOffset;
                 tagsString = reader.ReadBytes(tagsLength).AsString();
             }

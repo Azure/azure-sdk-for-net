@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NewRelicObservability
 {
+    /// <summary></summary>
     public partial class NewRelicMonitoredSubscriptionResource : IJsonModel<NewRelicMonitoredSubscriptionData>
     {
-        private static NewRelicMonitoredSubscriptionData s_dataDeserializationInstance;
-        private static NewRelicMonitoredSubscriptionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NewRelicMonitoredSubscriptionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NewRelicMonitoredSubscriptionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NewRelicMonitoredSubscriptionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NewRelicMonitoredSubscriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NewRelicMonitoredSubscriptionData>)Data).Write(writer, options);
 
-        NewRelicMonitoredSubscriptionData IJsonModel<NewRelicMonitoredSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NewRelicMonitoredSubscriptionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NewRelicMonitoredSubscriptionData IJsonModel<NewRelicMonitoredSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NewRelicMonitoredSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NewRelicMonitoredSubscriptionData>(Data, options, AzureResourceManagerNewRelicObservabilityContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NewRelicMonitoredSubscriptionData IPersistableModel<NewRelicMonitoredSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NewRelicMonitoredSubscriptionData>(data, options, AzureResourceManagerNewRelicObservabilityContext.Default);
 
-        string IPersistableModel<NewRelicMonitoredSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NewRelicMonitoredSubscriptionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NewRelicMonitoredSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

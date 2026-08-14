@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.TrafficManager;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.TrafficManager.Models
     public readonly partial struct AllowedEndpointRecordType : IEquatable<AllowedEndpointRecordType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AllowedEndpointRecordType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AllowedEndpointRecordType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DomainNameValue = "DomainName";
         private const string IPv4AddressValue = "IPv4Address";
         private const string IPv6AddressValue = "IPv6Address";
         private const string AnyValue = "Any";
 
-        /// <summary> DomainName. </summary>
+        /// <summary> Initializes a new instance of <see cref="AllowedEndpointRecordType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AllowedEndpointRecordType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the DomainName. </summary>
         public static AllowedEndpointRecordType DomainName { get; } = new AllowedEndpointRecordType(DomainNameValue);
-        /// <summary> IPv4Address. </summary>
+
+        /// <summary> Gets the IPv4Address. </summary>
         public static AllowedEndpointRecordType IPv4Address { get; } = new AllowedEndpointRecordType(IPv4AddressValue);
-        /// <summary> IPv6Address. </summary>
+
+        /// <summary> Gets the IPv6Address. </summary>
         public static AllowedEndpointRecordType IPv6Address { get; } = new AllowedEndpointRecordType(IPv6AddressValue);
-        /// <summary> Any. </summary>
+
+        /// <summary> Gets the Any. </summary>
         public static AllowedEndpointRecordType Any { get; } = new AllowedEndpointRecordType(AnyValue);
+
         /// <summary> Determines if two <see cref="AllowedEndpointRecordType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AllowedEndpointRecordType left, AllowedEndpointRecordType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AllowedEndpointRecordType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AllowedEndpointRecordType left, AllowedEndpointRecordType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AllowedEndpointRecordType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AllowedEndpointRecordType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AllowedEndpointRecordType(string value) => new AllowedEndpointRecordType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AllowedEndpointRecordType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AllowedEndpointRecordType?(string value) => value == null ? null : new AllowedEndpointRecordType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AllowedEndpointRecordType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AllowedEndpointRecordType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

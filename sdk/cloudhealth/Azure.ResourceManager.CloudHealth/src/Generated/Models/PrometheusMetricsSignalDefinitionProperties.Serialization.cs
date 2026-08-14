@@ -21,6 +21,46 @@ namespace Azure.ResourceManager.CloudHealth.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override HealthModelSignalDefinitionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PrometheusMetricsSignalDefinitionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePrometheusMetricsSignalDefinitionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PrometheusMetricsSignalDefinitionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PrometheusMetricsSignalDefinitionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCloudHealthContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PrometheusMetricsSignalDefinitionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PrometheusMetricsSignalDefinitionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PrometheusMetricsSignalDefinitionProperties IPersistableModel<PrometheusMetricsSignalDefinitionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (PrometheusMetricsSignalDefinitionProperties)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PrometheusMetricsSignalDefinitionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PrometheusMetricsSignalDefinitionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -78,10 +118,9 @@ namespace Azure.ResourceManager.CloudHealth.Models
             string displayName = default;
             EntitySignalKind signalKind = default;
             EntitySignalRefreshInterval? refreshInterval = default;
-            IDictionary<string, string> labels = default;
+            IDictionary<string, string> tags = default;
             string dataUnit = default;
             EntitySignalEvaluationRule evaluationRules = default;
-            DateTimeOffset? deletedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string queryText = default;
             string timeGrain = default;
@@ -115,7 +154,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     refreshInterval = new EntitySignalRefreshInterval(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("labels"u8))
+                if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,7 +172,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                             dictionary.Add(prop0.Name, prop0.Value.GetString());
                         }
                     }
-                    labels = dictionary;
+                    tags = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("dataUnit"u8))
@@ -144,15 +183,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 if (prop.NameEquals("evaluationRules"u8))
                 {
                     evaluationRules = EntitySignalEvaluationRule.DeserializeEntitySignalEvaluationRule(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("deletionDate"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deletedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("queryText"u8))
@@ -175,53 +205,12 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 displayName,
                 signalKind,
                 refreshInterval,
-                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 dataUnit,
                 evaluationRules,
-                deletedOn,
                 additionalBinaryDataProperties,
                 queryText,
                 timeGrain);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PrometheusMetricsSignalDefinitionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PrometheusMetricsSignalDefinitionProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCloudHealthContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PrometheusMetricsSignalDefinitionProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PrometheusMetricsSignalDefinitionProperties IPersistableModel<PrometheusMetricsSignalDefinitionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (PrometheusMetricsSignalDefinitionProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override HealthModelSignalDefinitionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PrometheusMetricsSignalDefinitionProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePrometheusMetricsSignalDefinitionProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PrometheusMetricsSignalDefinitionProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PrometheusMetricsSignalDefinitionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

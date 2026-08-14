@@ -16,6 +16,18 @@ namespace Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation
     {
         internal OutputModel() => throw null;
 
+        protected virtual OutputModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<OutputModel>.Write(ModelReaderWriterOptions options) => throw null;
+
+        OutputModel IPersistableModel<OutputModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<OutputModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator OutputModel(Response response) => throw null;
+
         void IJsonModel<OutputModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -23,17 +35,5 @@ namespace Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation
         OutputModel IJsonModel<OutputModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual OutputModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<OutputModel>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        OutputModel IPersistableModel<OutputModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual OutputModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<OutputModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        public static explicit operator OutputModel(Response response) => throw null;
     }
 }

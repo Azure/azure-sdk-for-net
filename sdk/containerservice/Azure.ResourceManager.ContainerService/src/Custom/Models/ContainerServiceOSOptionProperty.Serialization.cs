@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ContainerServiceOSOptionProperty : IUtf8JsonSerializable, IJsonModel<ContainerServiceOSOptionProperty>
@@ -100,58 +101,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new ContainerServiceOSOptionProperty(osType, enableFipsImage, serializedAdditionalRawData);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OSType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  os-type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OSType))
-                {
-                    builder.Append("  os-type: ");
-                    if (OSType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{OSType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{OSType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableFipsImage), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enable-fips-image: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  enable-fips-image: ");
-                var boolValue = EnableFipsImage == true ? "true" : "false";
-                builder.AppendLine($"{boolValue}");
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<ContainerServiceOSOptionProperty>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceOSOptionProperty>)this).GetFormatFromOptions(options) : options.Format;
@@ -160,8 +109,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerServiceOSOptionProperty)} does not support writing '{options.Format}' format.");
             }

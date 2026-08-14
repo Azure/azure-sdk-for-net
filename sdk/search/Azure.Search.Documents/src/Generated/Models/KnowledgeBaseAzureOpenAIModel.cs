@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,32 +15,25 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class KnowledgeBaseAzureOpenAIModel : KnowledgeBaseModel
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAzureOpenAIModel"/>. </summary>
-        /// <param name="azureOpenAIParameters"> Contains the parameters specific to Azure OpenAI model endpoint. </param>
+        /// <param name="azureOpenAIParameters"> Azure OpenAI parameters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureOpenAIParameters"/> is null. </exception>
-        public KnowledgeBaseAzureOpenAIModel(AzureOpenAIVectorizerParameters azureOpenAIParameters)
+        public KnowledgeBaseAzureOpenAIModel(AzureOpenAIVectorizerParameters azureOpenAIParameters) : base(KnowledgeBaseModelKind.AzureOpenAI)
         {
             Argument.AssertNotNull(azureOpenAIParameters, nameof(azureOpenAIParameters));
 
             AzureOpenAIParameters = azureOpenAIParameters;
-            Kind = KnowledgeBaseModelKind.AzureOpenAI;
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAzureOpenAIModel"/>. </summary>
-        /// <param name="kind"> The type of AI model. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="azureOpenAIParameters"> Contains the parameters specific to Azure OpenAI model endpoint. </param>
-        internal KnowledgeBaseAzureOpenAIModel(KnowledgeBaseModelKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureOpenAIVectorizerParameters azureOpenAIParameters) : base(kind, serializedAdditionalRawData)
+        /// <param name="kind"> The AI model to be used for query planning. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="azureOpenAIParameters"> Azure OpenAI parameters. </param>
+        internal KnowledgeBaseAzureOpenAIModel(KnowledgeBaseModelKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureOpenAIVectorizerParameters azureOpenAIParameters) : base(kind, additionalBinaryDataProperties)
         {
             AzureOpenAIParameters = azureOpenAIParameters;
-            Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAzureOpenAIModel"/> for deserialization. </summary>
-        internal KnowledgeBaseAzureOpenAIModel()
-        {
-        }
-
-        /// <summary> Contains the parameters specific to Azure OpenAI model endpoint. </summary>
+        /// <summary> Azure OpenAI parameters. </summary>
         public AzureOpenAIVectorizerParameters AzureOpenAIParameters { get; set; }
     }
 }

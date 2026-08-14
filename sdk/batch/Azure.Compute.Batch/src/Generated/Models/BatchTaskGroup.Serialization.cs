@@ -21,6 +21,56 @@ namespace Azure.Compute.Batch
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchTaskGroup PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchTaskGroup>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBatchTaskGroup(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchTaskGroup)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchTaskGroup>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BatchTaskGroup)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchTaskGroup>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchTaskGroup IPersistableModel<BatchTaskGroup>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BatchTaskGroup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="batchTaskGroup"> The <see cref="BatchTaskGroup"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(BatchTaskGroup batchTaskGroup)
+        {
+            if (batchTaskGroup == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(batchTaskGroup, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchTaskGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -41,7 +91,7 @@ namespace Azure.Compute.Batch
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (BatchTaskCreateOptions item in Values)
+            foreach (BatchTaskCreateOptions item in Tasks)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -88,7 +138,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            IList<BatchTaskCreateOptions> values = default;
+            IList<BatchTaskCreateOptions> tasks = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -99,7 +149,7 @@ namespace Azure.Compute.Batch
                     {
                         array.Add(BatchTaskCreateOptions.DeserializeBatchTaskCreateOptions(item, options));
                     }
-                    values = array;
+                    tasks = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -107,59 +157,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchTaskGroup(values, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchTaskGroup>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchTaskGroup>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BatchTaskGroup)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BatchTaskGroup IPersistableModel<BatchTaskGroup>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BatchTaskGroup PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchTaskGroup>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBatchTaskGroup(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BatchTaskGroup)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchTaskGroup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="batchTaskGroup"> The <see cref="BatchTaskGroup"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(BatchTaskGroup batchTaskGroup)
-        {
-            if (batchTaskGroup == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batchTaskGroup, ModelSerializationExtensions.WireOptions);
-            return content;
+            return new BatchTaskGroup(tasks, additionalBinaryDataProperties);
         }
     }
 }

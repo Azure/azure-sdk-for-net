@@ -7,54 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Mode of an ingress gateway.
-    /// Serialized Name: IstioIngressGatewayMode
-    /// </summary>
+    /// <summary> Mode of an ingress gateway. </summary>
     public readonly partial struct IstioIngressGatewayMode : IEquatable<IstioIngressGatewayMode>
     {
         private readonly string _value;
+        /// <summary> The ingress gateway is assigned a public IP address and is publicly accessible. </summary>
+        private const string ExternalValue = "External";
+        /// <summary> The ingress gateway is assigned an internal IP address and cannot is accessed publicly. </summary>
+        private const string InternalValue = "Internal";
 
         /// <summary> Initializes a new instance of <see cref="IstioIngressGatewayMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IstioIngressGatewayMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ExternalValue = "External";
-        private const string InternalValue = "Internal";
-
-        /// <summary>
-        /// The ingress gateway is assigned a public IP address and is publicly accessible.
-        /// Serialized Name: IstioIngressGatewayMode.External
-        /// </summary>
+        /// <summary> The ingress gateway is assigned a public IP address and is publicly accessible. </summary>
         public static IstioIngressGatewayMode External { get; } = new IstioIngressGatewayMode(ExternalValue);
-        /// <summary>
-        /// The ingress gateway is assigned an internal IP address and cannot is accessed publicly.
-        /// Serialized Name: IstioIngressGatewayMode.Internal
-        /// </summary>
+
+        /// <summary> The ingress gateway is assigned an internal IP address and cannot is accessed publicly. </summary>
         public static IstioIngressGatewayMode Internal { get; } = new IstioIngressGatewayMode(InternalValue);
+
         /// <summary> Determines if two <see cref="IstioIngressGatewayMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IstioIngressGatewayMode left, IstioIngressGatewayMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IstioIngressGatewayMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IstioIngressGatewayMode left, IstioIngressGatewayMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IstioIngressGatewayMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IstioIngressGatewayMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IstioIngressGatewayMode(string value) => new IstioIngressGatewayMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IstioIngressGatewayMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IstioIngressGatewayMode?(string value) => value == null ? null : new IstioIngressGatewayMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IstioIngressGatewayMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IstioIngressGatewayMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

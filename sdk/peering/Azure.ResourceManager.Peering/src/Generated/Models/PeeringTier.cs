@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Peering.Models
     public readonly partial struct PeeringTier : IEquatable<PeeringTier>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PeeringTier"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PeeringTier(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string BasicValue = "Basic";
         private const string PremiumValue = "Premium";
 
-        /// <summary> Basic. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PeeringTier(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Basic. </summary>
         public static PeeringTier Basic { get; } = new PeeringTier(BasicValue);
-        /// <summary> Premium. </summary>
+
+        /// <summary> Gets the Premium. </summary>
         public static PeeringTier Premium { get; } = new PeeringTier(PremiumValue);
+
         /// <summary> Determines if two <see cref="PeeringTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PeeringTier left, PeeringTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PeeringTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PeeringTier left, PeeringTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PeeringTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PeeringTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PeeringTier(string value) => new PeeringTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PeeringTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PeeringTier?(string value) => value == null ? null : new PeeringTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PeeringTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PeeringTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

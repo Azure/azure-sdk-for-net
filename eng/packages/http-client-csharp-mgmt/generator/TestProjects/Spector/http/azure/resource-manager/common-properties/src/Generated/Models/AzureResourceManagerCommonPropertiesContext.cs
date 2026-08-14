@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.CommonProperties.Models;
 using Azure.ResourceManager.Models;
 
@@ -16,6 +15,9 @@ namespace Azure.ResourceManager.CommonProperties
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ArmResourceIdentifierResource))]
+    [ModelReaderWriterBuildable(typeof(ArmResourceIdentifierResourceData))]
+    [ModelReaderWriterBuildable(typeof(ArmResourceIdentifierResourceProperties))]
     [ModelReaderWriterBuildable(typeof(ConfidentialResource))]
     [ModelReaderWriterBuildable(typeof(ConfidentialResourceData))]
     [ModelReaderWriterBuildable(typeof(ConfidentialResourceProperties))]
@@ -23,7 +25,6 @@ namespace Azure.ResourceManager.CommonProperties
     [ModelReaderWriterBuildable(typeof(ManagedIdentityTrackedResourceData))]
     [ModelReaderWriterBuildable(typeof(ManagedIdentityTrackedResourceProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerCommonPropertiesContext : ModelReaderWriterContext

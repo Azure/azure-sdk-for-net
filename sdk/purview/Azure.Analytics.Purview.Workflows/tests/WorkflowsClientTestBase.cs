@@ -10,7 +10,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Analytics.Purview.Workflow.Tests
 {
-    public class WorkflowsClientTestBase: RecordedTestBase<WorkflowsClientTestEnvironment>
+    public class WorkflowsClientTestBase : RecordedTestBase<WorkflowsClientTestEnvironment>
     {
         public WorkflowsClientTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync)
         {

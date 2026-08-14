@@ -5,13 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
-using Azure.Core;
-using static Azure.AI.Inference.Telemetry.OpenTelemetryConstants;
-using System.Threading.Tasks;
 using System.Linq;
-using System.Threading;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using static Azure.AI.Inference.Telemetry.OpenTelemetryConstants;
 
 namespace Azure.AI.Inference.Telemetry
 {

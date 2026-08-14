@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Redis.Models
     public readonly partial struct RedisSkuFamily : IEquatable<RedisSkuFamily>
     {
         private readonly string _value;
+        /// <summary> The SKU family to use - must be 'C' for Basic/Standard SKU redis caches. </summary>
+        private const string BasicOrStandardValue = "C";
+        /// <summary> The SKU family to use - must be 'P' for Premium SKU redis caches. </summary>
+        private const string PremiumValue = "P";
 
         /// <summary> Initializes a new instance of <see cref="RedisSkuFamily"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RedisSkuFamily(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string BasicOrStandardValue = "C";
-        private const string PremiumValue = "P";
-
-        /// <summary> C. </summary>
+        /// <summary> The SKU family to use - must be 'C' for Basic/Standard SKU redis caches. </summary>
         public static RedisSkuFamily BasicOrStandard { get; } = new RedisSkuFamily(BasicOrStandardValue);
-        /// <summary> P. </summary>
+
+        /// <summary> The SKU family to use - must be 'P' for Premium SKU redis caches. </summary>
         public static RedisSkuFamily Premium { get; } = new RedisSkuFamily(PremiumValue);
+
         /// <summary> Determines if two <see cref="RedisSkuFamily"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RedisSkuFamily left, RedisSkuFamily right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RedisSkuFamily"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RedisSkuFamily left, RedisSkuFamily right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisSkuFamily"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RedisSkuFamily"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RedisSkuFamily(string value) => new RedisSkuFamily(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RedisSkuFamily"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RedisSkuFamily?(string value) => value == null ? null : new RedisSkuFamily(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RedisSkuFamily other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RedisSkuFamily other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -22,8 +22,6 @@ extends:
       safeName: AzureCommunicationJobRouter
     - name: Azure.Communication.CallAutomation
       safeName: AzureCommunicationCallAutomation
-    - name: Azure.Communication.CallingServer
-      safeName: AzureCommunicationCallingServer
     - name: Azure.Communication.Chat
       safeName: AzureCommunicationChat
     - name: Azure.Communication.Messages
@@ -46,5 +44,3 @@ extends:
     - name: Azure.Communication.AlphaIds
       safeName: AzureCommunicationAlphaIds
       skipReleaseStage: true
-    - name: Azure.Communication.ProgrammableConnectivity
-      safeName: AzureCommunicationProgrammableConnectivity

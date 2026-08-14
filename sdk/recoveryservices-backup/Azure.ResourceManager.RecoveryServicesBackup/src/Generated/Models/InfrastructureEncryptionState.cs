@@ -7,48 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The InfrastructureEncryptionState. </summary>
+    /// <summary></summary>
     public readonly partial struct InfrastructureEncryptionState : IEquatable<InfrastructureEncryptionState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="InfrastructureEncryptionState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public InfrastructureEncryptionState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="InfrastructureEncryptionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public InfrastructureEncryptionState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static InfrastructureEncryptionState Invalid { get; } = new InfrastructureEncryptionState(InvalidValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static InfrastructureEncryptionState Disabled { get; } = new InfrastructureEncryptionState(DisabledValue);
-        /// <summary> Enabled. </summary>
+
+        /// <summary> Gets the Enabled. </summary>
         public static InfrastructureEncryptionState Enabled { get; } = new InfrastructureEncryptionState(EnabledValue);
+
         /// <summary> Determines if two <see cref="InfrastructureEncryptionState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InfrastructureEncryptionState left, InfrastructureEncryptionState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InfrastructureEncryptionState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InfrastructureEncryptionState left, InfrastructureEncryptionState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InfrastructureEncryptionState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InfrastructureEncryptionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InfrastructureEncryptionState(string value) => new InfrastructureEncryptionState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="InfrastructureEncryptionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InfrastructureEncryptionState?(string value) => value == null ? null : new InfrastructureEncryptionState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InfrastructureEncryptionState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InfrastructureEncryptionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

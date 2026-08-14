@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class LocalDnsProfile : IUtf8JsonSerializable, IJsonModel<LocalDnsProfile>
+    /// <summary> Configures the per-node local DNS, with VnetDNS and KubeDNS overrides. LocalDNS helps improve performance and reliability of DNS resolution in an AKS cluster. For more details see aka.ms/aks/localdns. </summary>
+    public partial class LocalDnsProfile : IJsonModel<LocalDnsProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LocalDnsProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LocalDnsProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LocalDnsProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLocalDnsProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LocalDnsProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LocalDnsProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LocalDnsProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LocalDnsProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LocalDnsProfile IPersistableModel<LocalDnsProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LocalDnsProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LocalDnsProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LocalDnsProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LocalDnsProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LocalDnsProfile)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -68,15 +106,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -85,22 +123,27 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        LocalDnsProfile IJsonModel<LocalDnsProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LocalDnsProfile IJsonModel<LocalDnsProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LocalDnsProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LocalDnsProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LocalDnsProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LocalDnsProfile)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLocalDnsProfile(document.RootElement, options);
         }
 
-        internal static LocalDnsProfile DeserializeLocalDnsProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static LocalDnsProfile DeserializeLocalDnsProfile(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -109,189 +152,61 @@ namespace Azure.ResourceManager.ContainerService.Models
             LocalDnsState? state = default;
             IDictionary<string, LocalDnsOverride> vnetDnsOverrides = default;
             IDictionary<string, LocalDnsOverride> kubeDnsOverrides = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("mode"u8))
+                if (prop.NameEquals("mode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mode = new LocalDnsMode(property.Value.GetString());
+                    mode = new LocalDnsMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("state"u8))
+                if (prop.NameEquals("state"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    state = new LocalDnsState(property.Value.GetString());
+                    state = new LocalDnsState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("vnetDNSOverrides"u8))
+                if (prop.NameEquals("vnetDNSOverrides"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, LocalDnsOverride> dictionary = new Dictionary<string, LocalDnsOverride>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, LocalDnsOverride.DeserializeLocalDnsOverride(property0.Value, options));
+                        dictionary.Add(prop0.Name, LocalDnsOverride.DeserializeLocalDnsOverride(prop0.Value, options));
                     }
                     vnetDnsOverrides = dictionary;
                     continue;
                 }
-                if (property.NameEquals("kubeDNSOverrides"u8))
+                if (prop.NameEquals("kubeDNSOverrides"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, LocalDnsOverride> dictionary = new Dictionary<string, LocalDnsOverride>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, LocalDnsOverride.DeserializeLocalDnsOverride(property0.Value, options));
+                        dictionary.Add(prop0.Name, LocalDnsOverride.DeserializeLocalDnsOverride(prop0.Value, options));
                     }
                     kubeDnsOverrides = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new LocalDnsProfile(mode, state, vnetDnsOverrides ?? new ChangeTrackingDictionary<string, LocalDnsOverride>(), kubeDnsOverrides ?? new ChangeTrackingDictionary<string, LocalDnsOverride>(), serializedAdditionalRawData);
+            return new LocalDnsProfile(mode, state, vnetDnsOverrides ?? new ChangeTrackingDictionary<string, LocalDnsOverride>(), kubeDnsOverrides ?? new ChangeTrackingDictionary<string, LocalDnsOverride>(), additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  mode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Mode))
-                {
-                    builder.Append("  mode: ");
-                    builder.AppendLine($"'{Mode.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  state: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(State))
-                {
-                    builder.Append("  state: ");
-                    builder.AppendLine($"'{State.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VnetDnsOverrides), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  vnetDNSOverrides: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(VnetDnsOverrides))
-                {
-                    if (VnetDnsOverrides.Any())
-                    {
-                        builder.Append("  vnetDNSOverrides: ");
-                        builder.AppendLine("{");
-                        foreach (var item in VnetDnsOverrides)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  vnetDNSOverrides: ");
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KubeDnsOverrides), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  kubeDNSOverrides: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(KubeDnsOverrides))
-                {
-                    if (KubeDnsOverrides.Any())
-                    {
-                        builder.Append("  kubeDNSOverrides: ");
-                        builder.AppendLine("{");
-                        foreach (var item in KubeDnsOverrides)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  kubeDNSOverrides: ");
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<LocalDnsProfile>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LocalDnsProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(LocalDnsProfile)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        LocalDnsProfile IPersistableModel<LocalDnsProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LocalDnsProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeLocalDnsProfile(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LocalDnsProfile)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<LocalDnsProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

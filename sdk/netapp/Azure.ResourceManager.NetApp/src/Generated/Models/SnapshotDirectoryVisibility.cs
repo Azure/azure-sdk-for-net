@@ -6,46 +6,15 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Controls the visibility of the Elastic Volume's read-only snapshot directory, which provides access to each of the volume's snapshots. </summary>
     public readonly partial struct SnapshotDirectoryVisibility : IEquatable<SnapshotDirectoryVisibility>
     {
-        private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SnapshotDirectoryVisibility"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SnapshotDirectoryVisibility(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string HiddenValue = "Hidden";
-        private const string VisibleValue = "Visible";
-
         /// <summary> Value indicating the read-only snapshot directory is not visible. </summary>
-        public static SnapshotDirectoryVisibility Hidden { get; } = new SnapshotDirectoryVisibility(HiddenValue);
+        private const string HiddenValue = "Hidden";
         /// <summary> Value indicating the read-only snapshot directory is visible. </summary>
-        public static SnapshotDirectoryVisibility Visible { get; } = new SnapshotDirectoryVisibility(VisibleValue);
-        /// <summary> Determines if two <see cref="SnapshotDirectoryVisibility"/> values are the same. </summary>
-        public static bool operator ==(SnapshotDirectoryVisibility left, SnapshotDirectoryVisibility right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="SnapshotDirectoryVisibility"/> values are not the same. </summary>
-        public static bool operator !=(SnapshotDirectoryVisibility left, SnapshotDirectoryVisibility right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SnapshotDirectoryVisibility"/>. </summary>
-        public static implicit operator SnapshotDirectoryVisibility(string value) => new SnapshotDirectoryVisibility(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SnapshotDirectoryVisibility other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(SnapshotDirectoryVisibility other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        private const string VisibleValue = "Visible";
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,84 +15,57 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The baseline results of a single metric. </summary>
     public partial class MonitorSingleMetricBaseline : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MonitorSingleMetricBaseline"/>. </summary>
-        /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested. </param>
-        /// <param name="interval"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
-        /// <param name="baselines"> The baseline for each time series that was queried. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="timespan"/> or <paramref name="baselines"/> is null. </exception>
-        internal MonitorSingleMetricBaseline(string timespan, TimeSpan interval, IEnumerable<MonitorTimeSeriesBaseline> baselines)
+        /// <param name="properties"> The metric baseline properties of the metric. </param>
+        internal MonitorSingleMetricBaseline(MetricBaselinesProperties properties)
         {
-            Argument.AssertNotNull(timespan, nameof(timespan));
-            Argument.AssertNotNull(baselines, nameof(baselines));
-
-            Timespan = timespan;
-            Interval = interval;
-            Baselines = baselines.ToList();
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitorSingleMetricBaseline"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested. </param>
-        /// <param name="interval"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
-        /// <param name="namespace"> The namespace of the metrics been queried. </param>
-        /// <param name="baselines"> The baseline for each time series that was queried. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorSingleMetricBaseline(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string timespan, TimeSpan interval, string @namespace, IReadOnlyList<MonitorTimeSeriesBaseline> baselines, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The metric baseline properties of the metric. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorSingleMetricBaseline(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MetricBaselinesProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Timespan = timespan;
-            Interval = interval;
-            Namespace = @namespace;
-            Baselines = baselines;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitorSingleMetricBaseline"/> for deserialization. </summary>
-        internal MonitorSingleMetricBaseline()
-        {
-        }
+        /// <summary> The metric baseline properties of the metric. </summary>
+        internal MetricBaselinesProperties Properties { get; }
 
         /// <summary> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested. </summary>
-        public string Timespan { get; }
+        public string Timespan
+        {
+            get
+            {
+                return Properties.Timespan;
+            }
+        }
+
         /// <summary> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </summary>
-        public TimeSpan Interval { get; }
+        public TimeSpan Interval
+        {
+            get
+            {
+                return Properties.Interval;
+            }
+        }
+
         /// <summary> The namespace of the metrics been queried. </summary>
-        public string Namespace { get; }
-        /// <summary> The baseline for each time series that was queried. </summary>
-        public IReadOnlyList<MonitorTimeSeriesBaseline> Baselines { get; }
+        public string Namespace
+        {
+            get
+            {
+                return Properties.Namespace;
+            }
+        }
     }
 }

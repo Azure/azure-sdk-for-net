@@ -1,8 +1,8 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return dataset.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_Create_Exists_Get_List_Delete()
         {
             // Get the resource group
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_AzureBlob_Create()
         {
             await DatasetCreate("blob", CreateAzureBlobStorageLinkedService, (string linkedServiceName) =>
@@ -140,8 +140,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_AzureDatabricksDeltaLake_Create()
         {
             await DatasetCreate("databricks", CreateAzureDatabricksDeltaLakeLinkedService, (string linkedServiceName) =>
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_AzureTable_Create()
         {
             await DatasetCreate("table", CreateAzureTableStorageLinkedService, (string linkedServiceName) =>
@@ -181,8 +181,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_AzureSqlTable_Create()
         {
             await DatasetCreate("asql", CreateAzureSqlDatabaseLinkedService, (string linkedServiceName) =>
@@ -201,8 +201,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_AzureSqlMITable_Create()
         {
             await DatasetCreate("asqlmi", CreateAzureSqlMILinkedService, (string linkedServiceName) =>
@@ -225,8 +225,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_AzureSqlDWTable_Create()
         {
             await DatasetCreate("asqlmw", CreateAzureSqlDWLinkedService, (string linkedServiceName) =>
@@ -245,8 +245,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_SqlServerTable_Create()
         {
             await DatasetCreate("sql", CreateSqlServerLinkedService, (string linkedServiceName) =>
@@ -258,8 +258,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_CustomDataset_Create()
         {
             await DatasetCreate("custom", CreateAzureBlobStorageLinkedService, (string linkedServiceName) =>
@@ -282,8 +282,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_OracleTable_Create()
         {
             await DatasetCreate("oracle", CreateOracleLinkedService, (string linkedServiceName) =>
@@ -304,8 +304,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_AmazonRdsForOracleTable_Create()
         {
             await DatasetCreate("rds", CreateAmazonRdsForOracleLinkedService, (string linkedServiceName) =>
@@ -329,8 +329,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_OData_Create()
         {
             await DatasetCreate("odata", CreateODataLinkedService, (string linkedServiceName) =>
@@ -349,8 +349,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_CassandraTable_Create()
         {
             await DatasetCreate("cassandra", CreateCassandraLinkedService, (string linkedServiceName) =>
@@ -373,8 +373,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_CosmosDb_Create()
         {
             await DatasetCreate("cosmosdb", CreateCosmosDBLinkedService, (string linkedServiceName) =>
@@ -390,8 +390,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_FileShare_Create()
         {
             await DatasetCreate("file", CreateFileServerLinkedService, (string linkedServiceName) =>
@@ -416,8 +416,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_AmazonS3Object_Create()
         {
             await DatasetCreate("s3", CreateAmazonS3LinkedService, (string linkedServiceName) =>
@@ -440,8 +440,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_MongoDb_Create()
         {
             await DatasetCreate("mongodb", CreateMongoDBLinkedService, (string linkedServiceName) =>
@@ -450,8 +450,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_RelationalTable_Create()
         {
             await DatasetCreate("rt", CreateAzureSqlDatabaseLinkedService, (string linkedServiceName) =>
@@ -469,8 +469,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_WebTable_Create()
         {
             await DatasetCreate("web", CreateWebLinkedService, (string linkedServiceName) =>
@@ -489,8 +489,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_AzureDataLakeStoreFile_Create()
         {
             await DatasetCreate("dlake", CreateAzureDataLakeStoreLinkedService, (string linkedServiceName) =>
@@ -511,8 +511,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_AzureSearchIndex_Create()
         {
             await DatasetCreate("search", CreateAzureSearchLinkedService, (string linkedServiceName) =>
@@ -528,8 +528,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_HttpFile_Create()
         {
             await DatasetCreate("http", CreateHttpLinkedService, (string linkedServiceName) =>
@@ -550,8 +550,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_AzureMySqlTable_Create()
         {
             await DatasetCreate("amysql", CreateAzureMySqlLinkedService, (string linkedServiceName) =>
@@ -577,8 +577,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_SalesforceObject_Create()
         {
             await DatasetCreate("salesforce", CreateSalesforceLinkedService, (string linkedServiceName) =>
@@ -604,8 +604,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_SalesforceServiceCloudObject_Create()
         {
             await DatasetCreate("salesforcec", CreateSalesforceServiceCloudLinkedService, (string linkedServiceName) =>
@@ -617,8 +617,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_AzureBlobDataset_Create()
         {
             await DatasetCreate("blob", CreateAzureBlobStorageLinkedService, (string linkedServiceName) =>
@@ -629,7 +629,6 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     FileName = "TestBlobName",
                     Format = new DatasetJsonFormat()
                     {
-                        DatasetStorageFormatType = "JsonFormat",
                         NestingSeparator = ",",
                         FilePattern = BinaryData.FromString("\"setOfObjects\""),
                         EncodingName = "utf-8",
@@ -657,8 +656,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_SapCloudForCustomerResource_Create()
         {
             await DatasetCreate("sapc", CreateSapCloudForCustomerLinkedService, (string linkedServiceName) =>
@@ -681,8 +680,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_AmazonMwsObject_Create()
         {
             await DatasetCreate("mws", CreateAmazonMwsLinkedService, (string linkedServiceName) =>
@@ -701,8 +700,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_AzurePostgreSqlTable_Create()
         {
             await DatasetCreate("apsql", CreateAzurePostgreSqlLinkedService, (string linkedServiceName) =>
@@ -718,8 +717,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_ConcurObject_Create()
         {
             await DatasetCreate("concur", CreateConcurLinkedService, (string linkedServiceName) =>
@@ -738,8 +737,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_CouchbaseTable_Create()
         {
             await DatasetCreate("couchbase", CreateCouchbaseLinkedService, (string linkedServiceName) =>
@@ -758,8 +757,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_DrillTable_Create()
         {
             await DatasetCreate("drill", CreateDrillLinkedService, (string linkedServiceName) =>
@@ -775,8 +774,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_EloquaObject_Create()
         {
             await DatasetCreate("eloqua", CreateEloquaLinkedService, (string linkedServiceName) =>
@@ -792,8 +791,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_GoogleBigQueryObject_Create()
         {
             await DatasetCreate("gbigquery", CreateGoogleBigQueryLinkedService, (string linkedServiceName) =>
@@ -812,8 +811,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_GreenplumTable_Create()
         {
             await DatasetCreate("greenp", CreateGreenplumLinkedService, (string linkedServiceName) =>
@@ -835,8 +834,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_HBaseObject_Create()
         {
             await DatasetCreate("hbase", CreateHBaseLinkedService, (string linkedServiceName) =>
@@ -852,8 +851,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_HiveObject_Create()
         {
             await DatasetCreate("hive", CreateHiveLinkedService, (string linkedServiceName) =>
@@ -869,8 +868,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_HubspotObject_Create()
         {
             await DatasetCreate("hubspot", CreateHubspotLinkedService, (string linkedServiceName) =>
@@ -886,8 +885,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_ImpalaObject_Create()
         {
             await DatasetCreate("impala", CreateImpalaLinkedService, (string linkedServiceName) =>
@@ -903,8 +902,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_JiraObject_Create()
         {
             await DatasetCreate("jira", CreateJiraLinkedService, (string linkedServiceName) =>
@@ -919,8 +918,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_MagentoObject_Create()
         {
             await DatasetCreate("magento", CreateMagentoLinkedService, (string linkedServiceName) =>
@@ -939,8 +938,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_MariaDBTable_Create()
         {
             await DatasetCreate("mariadb", CreateMariaDBLinkedService, (string linkedServiceName) =>
@@ -959,8 +958,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_AzureMariaDBTable_Create()
         {
             await DatasetCreate("amariadb", CreateAzureMariaDBLinkedService, (string linkedServiceName) =>
@@ -976,8 +975,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_MarketoObject_Create()
         {
             await DatasetCreate("marketo", CreateMarketoLinkedService, (string linkedServiceName) =>
@@ -993,8 +992,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_PaypalObject_Create()
         {
             await DatasetCreate("paypal", CreatePaypalLinkedService, (string linkedServiceName) =>
@@ -1010,8 +1009,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_PhoenixObject_Create()
         {
             await DatasetCreate("phoenix", CreatePhoenixLinkedService, (string linkedServiceName) =>
@@ -1027,8 +1026,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_PrestoObject_Create()
         {
             await DatasetCreate("presto", CreatePrestoLinkedService, (string linkedServiceName) =>
@@ -1053,8 +1052,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_QuickBooksObject_Create()
         {
             await DatasetCreate("quickbooks", CreateQuickBooksLinkedService, (string linkedServiceName) =>
@@ -1074,8 +1073,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_ServiceNowObject_Create()
         {
             await DatasetCreate("servicenow", CreateServiceNowLinkedService, (string linkedServiceName) =>
@@ -1091,8 +1090,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_ShopifyObject_Create()
         {
             await DatasetCreate("shopify", CreateShopifyLinkedService, (string linkedServiceName) =>
@@ -1108,8 +1107,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_SparkObject_Create()
         {
             await DatasetCreate("spark", CreateSparkLinkedService, (string linkedServiceName) =>
@@ -1134,8 +1133,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_SquareObject_Create()
         {
             await DatasetCreate("square", CreateSquareLinkedService, (string linkedServiceName) =>
@@ -1159,8 +1158,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_XeroObject_Create()
         {
             await DatasetCreate("xero", CreateXeroLinkedService, (string linkedServiceName) =>
@@ -1183,8 +1182,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_ZohoObject_Create()
         {
             await DatasetCreate("zoho", CreateZohoLinkedService, (string linkedServiceName) =>
@@ -1200,8 +1199,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_SapEccResource_Create()
         {
             await DatasetCreate("sapecc", CreateSapEccLinkedService, (string linkedServiceName) =>
@@ -1220,8 +1219,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_NetezzaTable_Create()
         {
             await DatasetCreate("netezza", CreateNetezzaLinkedService, (string linkedServiceName) =>
@@ -1239,8 +1238,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_VerticaTable_Create()
         {
             await DatasetCreate("vertica", CreateVerticaLinkedService, (string linkedServiceName) =>
@@ -1265,8 +1264,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_SapOpenHubTable_Create()
         {
             await DatasetCreate("sapopenhub", CreateSapOpenHubLinkedService, (string linkedServiceName) =>
@@ -1291,8 +1290,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_RestResource_Create()
         {
             await DatasetCreate("rest", CreateRestServiceLinkedService, (string linkedServiceName) =>
@@ -1315,15 +1314,15 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_Excel_Create()
         {
             await DatasetCreate("excel", CreateOffice365LinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new ExcelDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName))
                 {
-                    DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "releases-1.xlsx", Container = "exceltest" },
+                    DataLocation = new AzureBlobStorageLocation() { FileName = "releases-1.xlsx", Container = "exceltest" },
                     Compression = new DatasetCompression("Gzip") { Level = "Fasttest" },
                     SheetName = "test01",
                     Range = "A4:H9",
@@ -1341,15 +1340,15 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_Excel_SheetIndex_Create()
         {
             await DatasetCreate("excelsheet", CreateOffice365LinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new ExcelDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName))
                 {
-                    DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "releases-1.xlsx", Container = "exceltest" },
+                    DataLocation = new AzureBlobStorageLocation() { FileName = "releases-1.xlsx", Container = "exceltest" },
                     Compression = new DatasetCompression("Gzip") { Level = "Fasttest" },
                     SheetName = "test01",
                     Range = "A4:H9",
@@ -1368,15 +1367,15 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_Parquet_Create()
         {
             await DatasetCreate("parquet", CreateAzureBlobStorageLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new ParquetDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName))
                 {
-                    DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "data.parquet", Container = "ContainerName", FolderPath = "dataflow/test/input" },
+                    DataLocation = new AzureBlobStorageLocation() { FileName = "data.parquet", Container = "ContainerName", FolderPath = "dataflow/test/input" },
                     CompressionCodec = "gzip"
                 })
                 {
@@ -1411,8 +1410,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_SapTableResource_Create()
         {
             await DatasetCreate("saptable", CreateSapTableLinkedService, (string linkedServiceName) =>
@@ -1421,15 +1420,15 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_DelimitedText_Schema_Create()
         {
             await DatasetCreate("delimitedtext", CreateFileServerLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName))
                 {
-                    DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "test01", Container = "ContainerName", FolderPath = "xxxxx" },
+                    DataLocation = new AzureBlobStorageLocation() { FileName = "test01", Container = "ContainerName", FolderPath = "xxxxx" },
                     ColumnDelimiter = "\\n",
                     RowDelimiter = "\\t",
                     EncodingName = "UTF-8",
@@ -1454,15 +1453,15 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_Xml_Create()
         {
             await DatasetCreate("xml", CreateFileServerLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new XmlDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName))
                 {
-                    DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "test.json", Container = "ContainerName", FolderPath = "testfolder" },
+                    DataLocation = new AzureBlobStorageLocation() { FileName = "test.json", Container = "ContainerName", FolderPath = "testfolder" },
                     EncodingName = "UTF-8",
                     NullValue = null,
                     Compression = new DatasetCompression("Gzip") { Level = "optional" }
@@ -1470,43 +1469,43 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_Binary_Create()
         {
             await DatasetCreate("binary", CreateAzureBlobStorageLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new BinaryDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName))
                 {
-                    DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "data.parquet", Container = "ContainerName", FolderPath = "testfolder" },
+                    DataLocation = new AzureBlobStorageLocation() { FileName = "data.parquet", Container = "ContainerName", FolderPath = "testfolder" },
                     Compression = new DatasetCompression("Deflate") { Level = "fartest" }
                 });
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_Binary_Compression_Create()
         {
             await DatasetCreate("binaryzip", CreateAzureBlobStorageLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new BinaryDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName))
                 {
-                    DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "testTgz01", Container = "ContainerName", FolderPath = "testfolder" },
+                    DataLocation = new AzureBlobStorageLocation() { FileName = "testTgz01", Container = "ContainerName", FolderPath = "testfolder" },
                     Compression = new DatasetCompression("TarGzip") { Level = "optional" }
                 });
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_Orc_Create()
         {
             await DatasetCreate("orc", CreateOracleLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new OrcDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName))
                 {
-                    DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "data.orc", Container = "ContainerName", FolderPath = "testfolder" },
+                    DataLocation = new AzureBlobStorageLocation() { FileName = "data.orc", Container = "ContainerName", FolderPath = "testfolder" },
                     OrcCompressionCodec = "snappy",
                 })
                 {
@@ -1527,15 +1526,15 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_Orc_OrcCompressionCodec_Create()
         {
             await DatasetCreate("orczip", CreateOracleLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new OrcDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName))
                 {
-                    DataLocation = new AzureBlobStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FileName = "data.orc", Container = "ContainerName", FolderPath = "testfolder" },
+                    DataLocation = new AzureBlobStorageLocation() { FileName = "data.orc", Container = "ContainerName", FolderPath = "testfolder" },
                     OrcCompressionCodec = "lzo",
                 })
                 {
@@ -1569,8 +1568,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_TeradataTable_Create()
         {
             await DatasetCreate("teradata", CreateTeradataLinkedService, (string linkedServiceName) =>
@@ -1598,8 +1597,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_DynamicsCrmEntity_Create()
         {
             await DatasetCreate("dynamicscrm", CreateDynamicsCrmLinkedService, (string linkedServiceName) =>
@@ -1623,8 +1622,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_CommonDataServiceForAppsEntity_Create()
         {
             await DatasetCreate("cds4apps", CreateCommonDataServiceForAppsLinkedService, (string linkedServiceName) =>
@@ -1643,8 +1642,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_InformixTable_Create()
         {
             await DatasetCreate("informix", CreateInformixLinkedService, (string linkedServiceName) =>
@@ -1663,8 +1662,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_MicrosoftAccessTable_Create()
         {
             await DatasetCreate("access", CreateMicrosoftAccessLinkedService, (string linkedServiceName) =>
@@ -1676,8 +1675,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_AzurePostgreSqlTable_TableName_Create()
         {
             await DatasetCreate("apsqln", CreateAzurePostgreSqlLinkedService, (string linkedServiceName) =>
@@ -1699,8 +1698,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_MySqlTable_Create()
         {
             await DatasetCreate("mysql", CreateMySqlLinkedService, (string linkedServiceName) =>
@@ -1712,8 +1711,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_AzurePostgreSqlTable_TableNameSchema_Create()
         {
             await DatasetCreate("apsqls", CreateAzurePostgreSqlLinkedService, (string linkedServiceName) =>
@@ -1732,8 +1731,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_OdbcTable_Create()
         {
             await DatasetCreate("odbc", CreateOdbcLinkedService, (string linkedServiceName) =>
@@ -1757,8 +1756,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_AzureDataExplorerTable_Create()
         {
             await DatasetCreate("ade", CreateAzureDataExplorerLinkedService, (string linkedServiceName) =>
@@ -1781,8 +1780,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_SapBwCube_Create()
         {
             await DatasetCreate("sapbw", CreateSapBWLinkedService, (string linkedServiceName) =>
@@ -1804,8 +1803,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_SybaseTable_Create()
         {
             await DatasetCreate("sybase", CreateSybaseLinkedService, (string linkedServiceName) =>
@@ -1817,8 +1816,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_OracleTable_Description_Create()
         {
             await DatasetCreate("oracledes", CreateOracleLinkedService, (string linkedServiceName) =>
@@ -1836,8 +1835,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_AzureSqlTable_TableSchema_Create()
         {
             await DatasetCreate("asqlt", CreateAzureSqlDatabaseLinkedService, (string linkedServiceName) =>
@@ -1859,8 +1858,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             var result = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, linkedService);
             return result.Value;
         }
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_AmazonRdsForSqlServerTable_Create()
         {
             await DatasetCreate("rdssql", CreateAmazonRdsForSqlServerLinkedService, (string linkedServiceName) =>
@@ -1873,8 +1872,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_AzureSqlDWTable_TableSchema_Create()
         {
             await DatasetCreate("asqldws", CreateAzureSqlDWLinkedService, (string linkedServiceName) =>
@@ -1887,8 +1886,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_SqlServerTable_TableSchema_Create()
         {
             await DatasetCreate("sqlt", CreateSqlServerLinkedService, (string linkedServiceName) =>
@@ -1901,8 +1900,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_DrillTable_TableSchema_Create()
         {
             await DatasetCreate("drillt", CreateDrillLinkedService, (string linkedServiceName) =>
@@ -1915,8 +1914,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_GoogleBigQueryObject_TableSchema_Create()
         {
             await DatasetCreate("bigqueryt", CreateGoogleBigQueryLinkedService, (string linkedServiceName) =>
@@ -1929,8 +1928,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_GreenplumTable_TableSchema_Create()
         {
             await DatasetCreate("greenplumt", CreateGreenplumLinkedService, (string linkedServiceName) =>
@@ -1943,8 +1942,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_HiveObject_TableSchema_Create()
         {
             await DatasetCreate("hivet", CreateHiveLinkedService, (string linkedServiceName) =>
@@ -1957,8 +1956,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_ImpalaObject_TableSchema_Create()
         {
             await DatasetCreate("impalat", CreateImpalaLinkedService, (string linkedServiceName) =>
@@ -1971,8 +1970,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_PhoenixObject_TableSchema_Create()
         {
             await DatasetCreate("phoenixt", CreatePhoenixLinkedService, (string linkedServiceName) =>
@@ -1985,8 +1984,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_PrestoObject_TableSchema_Create()
         {
             await DatasetCreate("prestot", CreatePrestoLinkedService, (string linkedServiceName) =>
@@ -1999,8 +1998,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_SparkObject_TableSchema_Create()
         {
             await DatasetCreate("sparkt", CreateSparkLinkedService, (string linkedServiceName) =>
@@ -2013,8 +2012,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_VerticaTable_TableSchema_Create()
         {
             await DatasetCreate("verticalt", CreateVerticaLinkedService, (string linkedServiceName) =>
@@ -2027,8 +2026,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_NetezzaTable_TableSchema_Create()
         {
             await DatasetCreate("netezzat", CreateNetezzaLinkedService, (string linkedServiceName) =>
@@ -2051,8 +2050,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_PostgreSqlTable_Create()
         {
             await DatasetCreate("psql", CreatePostgreSqlLinkedService, (string linkedServiceName) =>
@@ -2075,8 +2074,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             var result = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, linkedService);
             return result.Value;
         }
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_AmazonRedshiftTable_Create()
         {
             await DatasetCreate("redshift", CreateAmazonRedshiftLinkedService, (string linkedServiceName) =>
@@ -2098,8 +2097,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             var result = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, linkedService);
             return result.Value;
         }
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_Db2Table_Create()
         {
             await DatasetCreate("db2", CreateDb2LinkedService, (string linkedServiceName) =>
@@ -2112,8 +2111,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_AzureMySqlTable_Table_Create()
         {
             await DatasetCreate("amysqlt", CreateAzureMySqlLinkedService, (string linkedServiceName) =>
@@ -2125,15 +2124,15 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_DelimitedText_Create()
         {
             await DatasetCreate("delimitedtexta", CreateFileServerLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName))
                 {
-                    DataLocation = new AzureFileStorageLocation() { DatasetLocationType = "AzureBlobStorageLocation", FolderPath = "folder/subfolder", AdditionalProperties = { { "bucketname", BinaryData.FromString("\"bucketname\"") } } },
+                    DataLocation = new AzureBlobStorageLocation() { FolderPath = "folder/subfolder", AdditionalProperties = { { "bucketname", BinaryData.FromString("\"bucketname\"") } } },
                     ColumnDelimiter = ",",
                     CompressionCodec = "Gzip",
                     QuoteChar = "\\",
@@ -2142,15 +2141,15 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_DelimitedText_GoogleCloudStorageLocation_Create()
         {
             await DatasetCreate("delimitedtextg", CreateFileServerLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName))
                 {
-                    DataLocation = new GoogleCloudStorageLocation() { DatasetLocationType = "GoogleCloudStorageLocation", FolderPath = "folder/subfolder", BucketName = "buckname" },
+                    DataLocation = new GoogleCloudStorageLocation() { FolderPath = "folder/subfolder", BucketName = "buckname" },
                     ColumnDelimiter = ",",
                     CompressionCodec = "Gzip",
                     QuoteChar = "\\",
@@ -2159,15 +2158,15 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_DelimitedText_AmazonS3CompatibleLocation_Create()
         {
             await DatasetCreate("delimitedtexts", CreateFileServerLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName))
                 {
-                    DataLocation = new AmazonS3CompatibleLocation() { DatasetLocationType = "AmazonS3CompatibleLocation", Version = "version", BucketName = "buckname" },
+                    DataLocation = new AmazonS3CompatibleLocation() { Version = "version", BucketName = "buckname" },
                     ColumnDelimiter = ",",
                     CompressionCodec = "Gzip",
                     QuoteChar = "\\",
@@ -2176,15 +2175,15 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_DelimitedText_OracleCloudStorageLocation_Create()
         {
             await DatasetCreate("delimitedtexto", CreateFileServerLinkedService, (string linkedServiceName) =>
             {
                 return new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName))
                 {
-                    DataLocation = new OracleCloudStorageLocation() { DatasetLocationType = "OracleCloudStorageLocation", Version = "version", BucketName = "buckname" },
+                    DataLocation = new OracleCloudStorageLocation() { Version = "version", BucketName = "buckname" },
                     ColumnDelimiter = ",",
                     CompressionCodec = "Gzip",
                     QuoteChar = "\\",
@@ -2201,8 +2200,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_SharePointOnlineListResource_Create()
         {
             await DatasetCreate("sharepoint", CreateSharePointOnlineListLinkedService, (string linkedServiceName) =>
@@ -2214,8 +2213,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_Avro_Create()
         {
             await DatasetCreate("avro", CreateAzureBlobStorageLinkedService, (string linkedServiceName) =>
@@ -2232,8 +2231,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task Dataset_Json_Create()
         {
             await DatasetCreate("json", CreateAzureBlobStorageLinkedService, (string linkedServiceName) =>

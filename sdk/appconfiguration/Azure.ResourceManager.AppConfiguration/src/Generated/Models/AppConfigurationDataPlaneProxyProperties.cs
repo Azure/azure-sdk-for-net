@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> The data plane proxy settings for a configuration store. </summary>
     public partial class AppConfigurationDataPlaneProxyProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationDataPlaneProxyProperties"/>. </summary>
         public AppConfigurationDataPlaneProxyProperties()
@@ -52,19 +24,20 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationDataPlaneProxyProperties"/>. </summary>
         /// <param name="authenticationMode"> The data plane proxy authentication mode. This property manages the authentication mode of request to the data plane resources. </param>
-        /// <param name="privateLinkDelegation"> The data plane proxy private link delegation. This property manages if a request from delegated Azure Resource Manager (ARM) private link is allowed when the data plane resource requires private link. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppConfigurationDataPlaneProxyProperties(DataPlaneProxyAuthenticationMode? authenticationMode, DataPlaneProxyPrivateLinkDelegation? privateLinkDelegation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="privateLinkDelegation"> The data plane proxy private link delegation. This property manages if a request from delegated ARM private link is allowed when the data plane resource requires private link. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppConfigurationDataPlaneProxyProperties(DataPlaneProxyAuthenticationMode? authenticationMode, DataPlaneProxyPrivateLinkDelegation? privateLinkDelegation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthenticationMode = authenticationMode;
             PrivateLinkDelegation = privateLinkDelegation;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The data plane proxy authentication mode. This property manages the authentication mode of request to the data plane resources. </summary>
         [WirePath("authenticationMode")]
         public DataPlaneProxyAuthenticationMode? AuthenticationMode { get; set; }
-        /// <summary> The data plane proxy private link delegation. This property manages if a request from delegated Azure Resource Manager (ARM) private link is allowed when the data plane resource requires private link. </summary>
+
+        /// <summary> The data plane proxy private link delegation. This property manages if a request from delegated ARM private link is allowed when the data plane resource requires private link. </summary>
         [WirePath("privateLinkDelegation")]
         public DataPlaneProxyPrivateLinkDelegation? PrivateLinkDelegation { get; set; }
     }

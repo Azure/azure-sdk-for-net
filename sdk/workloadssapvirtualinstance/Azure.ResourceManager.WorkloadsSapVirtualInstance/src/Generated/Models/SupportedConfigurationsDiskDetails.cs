@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         {
             get
             {
-                return Sku.Name;
+                return Sku is null ? default : Sku.Name;
             }
         }
     }

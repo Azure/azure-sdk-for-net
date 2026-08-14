@@ -119,7 +119,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Cancel all running operations of a geo-catalog collection
+        /// [Protocol Method] Cancel all pending and running operations across the entire GeoCatalog instance. This is a catalog-wide operation and is not scoped to a specific collection.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -146,7 +146,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Cancel all running operations of a geo-catalog collection
+        /// [Protocol Method] Cancel all pending and running operations across the entire GeoCatalog instance. This is a catalog-wide operation and is not scoped to a specific collection.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -172,7 +172,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
-        /// <summary> Cancel all running operations of a geo-catalog collection. </summary>
+        /// <summary> Cancel all pending and running operations across the entire GeoCatalog instance. This is a catalog-wide operation and is not scoped to a specific collection. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response CancelAllOperations(CancellationToken cancellationToken = default)
@@ -180,7 +180,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return CancelAllOperations(cancellationToken.ToRequestContext());
         }
 
-        /// <summary> Cancel all running operations of a geo-catalog collection. </summary>
+        /// <summary> Cancel all pending and running operations across the entire GeoCatalog instance. This is a catalog-wide operation and is not scoped to a specific collection. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> CancelAllOperationsAsync(CancellationToken cancellationToken = default)
@@ -248,20 +248,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="operationId"> Operation id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<LongRunningOperation> GetOperation(Guid operationId, CancellationToken cancellationToken = default)
+        public virtual Response<PlanetaryComputerOperation> GetOperation(Guid operationId, CancellationToken cancellationToken = default)
         {
             Response result = GetOperation(operationId, cancellationToken.ToRequestContext());
-            return Response.FromValue((LongRunningOperation)result, result);
+            return Response.FromValue((PlanetaryComputerOperation)result, result);
         }
 
         /// <summary> Get an operation of a geo-catalog collection. </summary>
         /// <param name="operationId"> Operation id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<LongRunningOperation>> GetOperationAsync(Guid operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlanetaryComputerOperation>> GetOperationAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
             Response result = await GetOperationAsync(operationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((LongRunningOperation)result, result);
+            return Response.FromValue((PlanetaryComputerOperation)result, result);
         }
 
         /// <summary>
@@ -272,22 +272,23 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="collectionId"> Operation id used to filter the results. </param>
         /// <param name="status"> Operation status used to filter the results. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetOperations(int? top, int? skip, string collectionId, string status, RequestContext context)
+        public virtual Pageable<BinaryData> GetOperations(int? maxCount, int? skip, string collectionId, string status, RequestContext context)
         {
             return new IngestionClientGetOperationsCollectionResult(
                 this,
-                top,
+                maxCount,
                 skip,
                 collectionId,
                 status,
-                context);
+                context,
+                "IngestionClient.GetOperations");
         }
 
         /// <summary>
@@ -298,58 +299,61 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="collectionId"> Operation id used to filter the results. </param>
         /// <param name="status"> Operation status used to filter the results. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetOperationsAsync(int? top, int? skip, string collectionId, string status, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetOperationsAsync(int? maxCount, int? skip, string collectionId, string status, RequestContext context)
         {
             return new IngestionClientGetOperationsAsyncCollectionResult(
                 this,
-                top,
+                maxCount,
                 skip,
                 collectionId,
                 status,
-                context);
+                context,
+                "IngestionClient.GetOperations");
         }
 
         /// <summary> Get operations of a geo-catalog collection. </summary>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="collectionId"> Operation id used to filter the results. </param>
         /// <param name="status"> Operation status used to filter the results. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<LongRunningOperation> GetOperations(int? top = default, int? skip = default, string collectionId = default, OperationStatus? status = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PlanetaryComputerOperation> GetOperations(int? maxCount = default, int? skip = default, string collectionId = default, PlanetaryComputerOperationStatus? status = default, CancellationToken cancellationToken = default)
         {
             return new IngestionClientGetOperationsCollectionResultOfT(
                 this,
-                top,
+                maxCount,
                 skip,
                 collectionId,
                 status?.ToString(),
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "IngestionClient.GetOperations");
         }
 
         /// <summary> Get operations of a geo-catalog collection. </summary>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="collectionId"> Operation id used to filter the results. </param>
         /// <param name="status"> Operation status used to filter the results. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<LongRunningOperation> GetOperationsAsync(int? top = default, int? skip = default, string collectionId = default, OperationStatus? status = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PlanetaryComputerOperation> GetOperationsAsync(int? maxCount = default, int? skip = default, string collectionId = default, PlanetaryComputerOperationStatus? status = default, CancellationToken cancellationToken = default)
         {
             return new IngestionClientGetOperationsAsyncCollectionResultOfT(
                 this,
-                top,
+                maxCount,
                 skip,
                 collectionId,
                 status?.ToString(),
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "IngestionClient.GetOperations");
         }
 
         /// <summary>
@@ -558,14 +562,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetRuns(string collectionId, Guid ingestionId, int? top, int? skip, RequestContext context)
+        public virtual Pageable<BinaryData> GetRuns(string collectionId, Guid ingestionId, int? maxCount, int? skip, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
@@ -573,9 +577,10 @@ namespace Azure.Analytics.PlanetaryComputer
                 this,
                 collectionId,
                 ingestionId,
-                top,
+                maxCount,
                 skip,
-                context);
+                context,
+                "IngestionClient.GetRuns");
         }
 
         /// <summary>
@@ -588,14 +593,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetRunsAsync(string collectionId, Guid ingestionId, int? top, int? skip, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetRunsAsync(string collectionId, Guid ingestionId, int? maxCount, int? skip, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
@@ -603,21 +608,22 @@ namespace Azure.Analytics.PlanetaryComputer
                 this,
                 collectionId,
                 ingestionId,
-                top,
+                maxCount,
                 skip,
-                context);
+                context,
+                "IngestionClient.GetRuns");
         }
 
         /// <summary> Get the runs of an ingestion. </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<IngestionRun> GetRuns(string collectionId, Guid ingestionId, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<IngestionRun> GetRuns(string collectionId, Guid ingestionId, int? maxCount = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
@@ -625,21 +631,22 @@ namespace Azure.Analytics.PlanetaryComputer
                 this,
                 collectionId,
                 ingestionId,
-                top,
+                maxCount,
                 skip,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "IngestionClient.GetRuns");
         }
 
         /// <summary> Get the runs of an ingestion. </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<IngestionRun> GetRunsAsync(string collectionId, Guid ingestionId, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<IngestionRun> GetRunsAsync(string collectionId, Guid ingestionId, int? maxCount = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
@@ -647,9 +654,10 @@ namespace Azure.Analytics.PlanetaryComputer
                 this,
                 collectionId,
                 ingestionId,
-                top,
+                maxCount,
                 skip,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "IngestionClient.GetRuns");
         }
 
         /// <summary>
@@ -795,7 +803,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
                 using HttpMessage message = CreateDeleteRequest(collectionId, ingestionId, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "IngestionClient.DeleteAsync", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "IngestionClient.Delete", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -937,18 +945,24 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetAll(string collectionId, int? top, int? skip, RequestContext context)
+        public virtual Pageable<BinaryData> GetAll(string collectionId, int? maxCount, int? skip, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return new IngestionClientGetAllCollectionResult(this, collectionId, top, skip, context);
+            return new IngestionClientGetAllCollectionResult(
+                this,
+                collectionId,
+                maxCount,
+                skip,
+                context,
+                "IngestionClient.GetAll");
         }
 
         /// <summary>
@@ -960,48 +974,66 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetAllAsync(string collectionId, int? top, int? skip, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetAllAsync(string collectionId, int? maxCount, int? skip, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return new IngestionClientGetAllAsyncCollectionResult(this, collectionId, top, skip, context);
+            return new IngestionClientGetAllAsyncCollectionResult(
+                this,
+                collectionId,
+                maxCount,
+                skip,
+                context,
+                "IngestionClient.GetAll");
         }
 
         /// <summary> Get ingestions of a catalog. </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<IngestionInformation> GetAll(string collectionId, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<IngestionInformation> GetAll(string collectionId, int? maxCount = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return new IngestionClientGetAllCollectionResultOfT(this, collectionId, top, skip, cancellationToken.ToRequestContext());
+            return new IngestionClientGetAllCollectionResultOfT(
+                this,
+                collectionId,
+                maxCount,
+                skip,
+                cancellationToken.ToRequestContext(),
+                "IngestionClient.GetAll");
         }
 
         /// <summary> Get ingestions of a catalog. </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<IngestionInformation> GetAllAsync(string collectionId, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<IngestionInformation> GetAllAsync(string collectionId, int? maxCount = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return new IngestionClientGetAllAsyncCollectionResultOfT(this, collectionId, top, skip, cancellationToken.ToRequestContext());
+            return new IngestionClientGetAllAsyncCollectionResultOfT(
+                this,
+                collectionId,
+                maxCount,
+                skip,
+                cancellationToken.ToRequestContext(),
+                "IngestionClient.GetAll");
         }
 
         /// <summary>
@@ -1170,13 +1202,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="sourceId"> Ingestion source id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response ReplaceSource(Guid id, RequestContent content, RequestContext context = null)
+        public virtual Response ReplaceSource(Guid sourceId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.ReplaceSource");
             scope.Start();
@@ -1184,7 +1216,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateReplaceSourceRequest(id, content, context);
+                using HttpMessage message = CreateReplaceSourceRequest(sourceId, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1202,13 +1234,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="sourceId"> Ingestion source id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ReplaceSourceAsync(Guid id, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> ReplaceSourceAsync(Guid sourceId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.ReplaceSource");
             scope.Start();
@@ -1216,7 +1248,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateReplaceSourceRequest(id, content, context);
+                using HttpMessage message = CreateReplaceSourceRequest(sourceId, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1227,30 +1259,30 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Update an existing ingestion source in a geo-catalog. </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="sourceId"> Ingestion source id. </param>
         /// <param name="body"> Definition of the ingestion source. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IngestionSource> ReplaceSource(Guid id, IngestionSource body, CancellationToken cancellationToken = default)
+        public virtual Response<IngestionSource> ReplaceSource(Guid sourceId, IngestionSource body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = ReplaceSource(id, body, cancellationToken.ToRequestContext());
+            Response result = ReplaceSource(sourceId, body, cancellationToken.ToRequestContext());
             return Response.FromValue((IngestionSource)result, result);
         }
 
         /// <summary> Update an existing ingestion source in a geo-catalog. </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="sourceId"> Ingestion source id. </param>
         /// <param name="body"> Definition of the ingestion source. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IngestionSource>> ReplaceSourceAsync(Guid id, IngestionSource body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IngestionSource>> ReplaceSourceAsync(Guid sourceId, IngestionSource body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await ReplaceSourceAsync(id, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await ReplaceSourceAsync(sourceId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((IngestionSource)result, result);
         }
 
@@ -1262,17 +1294,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="sourceId"> Ingestion source id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteSource(Guid id, RequestContext context)
+        public virtual Response DeleteSource(Guid sourceId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.DeleteSource");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteSourceRequest(id, context);
+                using HttpMessage message = CreateDeleteSourceRequest(sourceId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1290,17 +1322,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="sourceId"> Ingestion source id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteSourceAsync(Guid id, RequestContext context)
+        public virtual async Task<Response> DeleteSourceAsync(Guid sourceId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.DeleteSource");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteSourceRequest(id, context);
+                using HttpMessage message = CreateDeleteSourceRequest(sourceId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1311,21 +1343,21 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Delete an ingestion source from a geo-catalog. </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="sourceId"> Ingestion source id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response DeleteSource(Guid id, CancellationToken cancellationToken = default)
+        public virtual Response DeleteSource(Guid sourceId, CancellationToken cancellationToken = default)
         {
-            return DeleteSource(id, cancellationToken.ToRequestContext());
+            return DeleteSource(sourceId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete an ingestion source from a geo-catalog. </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="sourceId"> Ingestion source id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteSourceAsync(Guid id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteSourceAsync(Guid sourceId, CancellationToken cancellationToken = default)
         {
-            return await DeleteSourceAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DeleteSourceAsync(sourceId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1336,17 +1368,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="sourceId"> Ingestion source id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetSource(Guid id, RequestContext context)
+        public virtual Response GetSource(Guid sourceId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.GetSource");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSourceRequest(id, context);
+                using HttpMessage message = CreateGetSourceRequest(sourceId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1364,17 +1396,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="sourceId"> Ingestion source id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetSourceAsync(Guid id, RequestContext context)
+        public virtual async Task<Response> GetSourceAsync(Guid sourceId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.GetSource");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSourceRequest(id, context);
+                using HttpMessage message = CreateGetSourceRequest(sourceId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1385,22 +1417,22 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Get an ingestion source in a geo-catalog. </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="sourceId"> Ingestion source id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IngestionSource> GetSource(Guid id, CancellationToken cancellationToken = default)
+        public virtual Response<IngestionSource> GetSource(Guid sourceId, CancellationToken cancellationToken = default)
         {
-            Response result = GetSource(id, cancellationToken.ToRequestContext());
+            Response result = GetSource(sourceId, cancellationToken.ToRequestContext());
             return Response.FromValue((IngestionSource)result, result);
         }
 
         /// <summary> Get an ingestion source in a geo-catalog. </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="sourceId"> Ingestion source id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IngestionSource>> GetSourceAsync(Guid id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IngestionSource>> GetSourceAsync(Guid sourceId, CancellationToken cancellationToken = default)
         {
-            Response result = await GetSourceAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetSourceAsync(sourceId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((IngestionSource)result, result);
         }
 
@@ -1412,14 +1444,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetSources(int? top, int? skip, RequestContext context)
+        public virtual Pageable<BinaryData> GetSources(int? maxCount, int? skip, RequestContext context)
         {
-            return new IngestionClientGetSourcesCollectionResult(this, top, skip, context);
+            return new IngestionClientGetSourcesCollectionResult(this, maxCount, skip, context, "IngestionClient.GetSources");
         }
 
         /// <summary>
@@ -1430,34 +1462,34 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetSourcesAsync(int? top, int? skip, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetSourcesAsync(int? maxCount, int? skip, RequestContext context)
         {
-            return new IngestionClientGetSourcesAsyncCollectionResult(this, top, skip, context);
+            return new IngestionClientGetSourcesAsyncCollectionResult(this, maxCount, skip, context, "IngestionClient.GetSources");
         }
 
         /// <summary> Get ingestion sources in a geo-catalog. </summary>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<IngestionSourceSummary> GetSources(int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<IngestionSourceSummary> GetSources(int? maxCount = default, int? skip = default, CancellationToken cancellationToken = default)
         {
-            return new IngestionClientGetSourcesCollectionResultOfT(this, top, skip, cancellationToken.ToRequestContext());
+            return new IngestionClientGetSourcesCollectionResultOfT(this, maxCount, skip, cancellationToken.ToRequestContext(), "IngestionClient.GetSources");
         }
 
         /// <summary> Get ingestion sources in a geo-catalog. </summary>
-        /// <param name="top"> The number of items to return. </param>
+        /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<IngestionSourceSummary> GetSourcesAsync(int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<IngestionSourceSummary> GetSourcesAsync(int? maxCount = default, int? skip = default, CancellationToken cancellationToken = default)
         {
-            return new IngestionClientGetSourcesAsyncCollectionResultOfT(this, top, skip, cancellationToken.ToRequestContext());
+            return new IngestionClientGetSourcesAsyncCollectionResultOfT(this, maxCount, skip, cancellationToken.ToRequestContext(), "IngestionClient.GetSources");
         }
 
         /// <summary>
@@ -1473,7 +1505,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetManagedIdentities(RequestContext context)
         {
-            return new IngestionClientGetManagedIdentitiesCollectionResult(this, context);
+            return new IngestionClientGetManagedIdentitiesCollectionResult(this, context, "IngestionClient.GetManagedIdentities");
         }
 
         /// <summary>
@@ -1489,7 +1521,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetManagedIdentitiesAsync(RequestContext context)
         {
-            return new IngestionClientGetManagedIdentitiesAsyncCollectionResult(this, context);
+            return new IngestionClientGetManagedIdentitiesAsyncCollectionResult(this, context, "IngestionClient.GetManagedIdentities");
         }
 
         /// <summary> Get all managed identities with access to storage accounts configured for a geo-catalog. </summary>
@@ -1497,7 +1529,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ManagedIdentityMetadata> GetManagedIdentities(CancellationToken cancellationToken = default)
         {
-            return new IngestionClientGetManagedIdentitiesCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new IngestionClientGetManagedIdentitiesCollectionResultOfT(this, cancellationToken.ToRequestContext(), "IngestionClient.GetManagedIdentities");
         }
 
         /// <summary> Get all managed identities with access to storage accounts configured for a geo-catalog. </summary>
@@ -1505,7 +1537,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ManagedIdentityMetadata> GetManagedIdentitiesAsync(CancellationToken cancellationToken = default)
         {
-            return new IngestionClientGetManagedIdentitiesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new IngestionClientGetManagedIdentitiesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "IngestionClient.GetManagedIdentities");
         }
     }
 }

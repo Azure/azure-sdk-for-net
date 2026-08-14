@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class ETagConverterTests: JsonConverterTestBase
+    public class ETagConverterTests : JsonConverterTestBase
     {
         public ETagConverterTests(JsonSerializerType serializer) : base(serializer)
         {

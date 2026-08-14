@@ -8,24 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class JobRouterModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="JobRouter.DistributionPolicy"/>. </summary>
+        /// <summary> Policy governing how jobs are distributed to workers. </summary>
         /// <param name="eTag"> The entity tag for this resource. </param>
         /// <param name="id"> Id of a distribution policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
         /// <param name="offerExpiresAfter"> Number of seconds after which any offers created under this policy will be expired. </param>
-        /// <param name="mode">
-        /// Mode governing the specific distribution method.
-        /// Please note <see cref="DistributionMode"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BestWorkerMode"/>, <see cref="LongestIdleMode"/> and <see cref="RoundRobinMode"/>.
-        /// </param>
+        /// <param name="mode"> Mode governing the specific distribution method. </param>
         /// <returns> A new <see cref="JobRouter.DistributionPolicy"/> instance for mocking. </returns>
-        public static DistributionPolicy DistributionPolicy(ETag eTag = default, string id = null, string name = null, TimeSpan? offerExpiresAfter = null, DistributionMode mode = null)
+        public static DistributionPolicy DistributionPolicy(ETag eTag = default, string id = default, string name = default, TimeSpan? offerExpiresAfter = default, DistributionMode mode = default)
         {
             return new DistributionPolicy(
                 eTag,
@@ -33,283 +30,525 @@ namespace Azure.Communication.JobRouter
                 name,
                 offerExpiresAfter,
                 mode,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.FunctionRouterRule"/>. </summary>
+        /// <summary>
+        /// Abstract base class for defining a distribution mode.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="JobRouter.BestWorkerMode"/>, <see cref="JobRouter.LongestIdleMode"/>, and <see cref="JobRouter.RoundRobinMode"/>.
+        /// </summary>
+        /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>
+        /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
+        /// <param name="bypassSelectors"> If set to true, then router will match workers to jobs even if they don't match label selectors. Warning: You may get workers that are not qualified for a job they are matched with if you set this variable to true. This flag is intended more for temporary usage. By default, set to false. </param>
+        /// <param name="kind"> The type discriminator describing a sub-type of DistributionMode. </param>
+        /// <returns> A new <see cref="JobRouter.DistributionMode"/> instance for mocking. </returns>
+        public static DistributionMode DistributionMode(int minConcurrentOffers = default, int maxConcurrentOffers = default, bool? bypassSelectors = default, string kind = default)
+        {
+            return new UnknownDistributionMode(minConcurrentOffers, maxConcurrentOffers, bypassSelectors, new DistributionModeKind(kind), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Jobs are distributed to the worker with the strongest abilities available. </summary>
+        /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>
+        /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
+        /// <param name="bypassSelectors"> If set to true, then router will match workers to jobs even if they don't match label selectors. Warning: You may get workers that are not qualified for a job they are matched with if you set this variable to true. This flag is intended more for temporary usage. By default, set to false. </param>
+        /// <param name="scoringRule"> Define a scoring rule to use, when calculating a score to determine the best worker. If not set, will use a default scoring formula that uses the number of job labels that the worker labels match, as well as the number of label selectors the worker labels match and/or exceed using a logistic function (https://en.wikipedia.org/wiki/Logistic_function). </param>
+        /// <param name="scoringRuleOptions"> Options to configure 'scoringRule'. If not set, default values are used. </param>
+        /// <returns> A new <see cref="JobRouter.BestWorkerMode"/> instance for mocking. </returns>
+        public static BestWorkerMode BestWorkerMode(int minConcurrentOffers = default, int maxConcurrentOffers = default, bool? bypassSelectors = default, RouterRule scoringRule = default, ScoringRuleOptions scoringRuleOptions = default)
+        {
+            return new BestWorkerMode(
+                minConcurrentOffers,
+                maxConcurrentOffers,
+                bypassSelectors,
+                default,
+                additionalBinaryDataProperties: null,
+                scoringRule,
+                scoringRuleOptions);
+        }
+
+        /// <summary>
+        /// A rule of one of the following types:
+        /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
+        /// DirectMapRule:  A rule that return the same labels as the input labels.
+        /// ExpressionRule: A rule providing inline expression rules.
+        /// FunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
+        /// WebhookRule: A rule providing a binding to a webserver following OAuth2.0 authentication protocol.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="JobRouter.DirectMapRouterRule"/>, <see cref="JobRouter.ExpressionRouterRule"/>, <see cref="JobRouter.FunctionRouterRule"/>, <see cref="JobRouter.StaticRouterRule"/>, and <see cref="JobRouter.WebhookRouterRule"/>.
+        /// </summary>
+        /// <param name="kind"> The type discriminator describing a sub-type of RouterRule. </param>
+        /// <returns> A new <see cref="JobRouter.RouterRule"/> instance for mocking. </returns>
+        public static RouterRule RouterRule(string kind = default)
+        {
+            return new UnknownRouterRule(new RouterRuleKind(kind), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A rule that return the same labels as the input labels. </summary>
+        /// <returns> A new <see cref="JobRouter.DirectMapRouterRule"/> instance for mocking. </returns>
+        public static DirectMapRouterRule DirectMapRouterRule()
+        {
+            return new DirectMapRouterRule(default, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A rule providing inline expression rules. </summary>
+        /// <param name="language"> The expression language to compile to and execute. </param>
+        /// <param name="expression"> An expression to evaluate. Should contain return statement with calculated values. </param>
+        /// <returns> A new <see cref="JobRouter.ExpressionRouterRule"/> instance for mocking. </returns>
+        public static ExpressionRouterRule ExpressionRouterRule(string language = default, string expression = default)
+        {
+            return new ExpressionRouterRule(default, additionalBinaryDataProperties: null, language, expression);
+        }
+
+        /// <summary> A rule providing a binding to an HTTP Triggered Azure Function. </summary>
         /// <param name="functionUri"> URL for Azure Function. </param>
         /// <param name="credential"> Credentials used to access Azure function rule. </param>
         /// <returns> A new <see cref="JobRouter.FunctionRouterRule"/> instance for mocking. </returns>
-        public static FunctionRouterRule FunctionRouterRule(Uri functionUri = null, FunctionRouterRuleCredential credential = null)
+        public static FunctionRouterRule FunctionRouterRule(Uri functionUri = default, FunctionRouterRuleCredential credential = default)
         {
-            return new FunctionRouterRule(RouterRuleKind.Function, serializedAdditionalRawData: null, functionUri, credential);
+            return new FunctionRouterRule(default, additionalBinaryDataProperties: null, functionUri, credential);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.WebhookRouterRule"/>. </summary>
+        /// <summary> Credentials used to access Azure function rule. </summary>
+        /// <param name="functionKey"> Access key scoped to a particular function. </param>
+        /// <param name="appKey"> Access key scoped to a Azure Function app. This key grants access to all functions under the app. </param>
+        /// <param name="clientId"> Client id, when AppKey is provided In context of Azure function, this is usually the name of the key. </param>
+        /// <returns> A new <see cref="JobRouter.FunctionRouterRuleCredential"/> instance for mocking. </returns>
+        public static FunctionRouterRuleCredential FunctionRouterRuleCredential(string functionKey = default, string appKey = default, string clientId = default)
+        {
+            return new FunctionRouterRuleCredential(functionKey, appKey, clientId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A rule providing static rules that always return the same result, regardless of input. </summary>
+        /// <param name="value"> The static value this rule always returns. Values must be primitive values - number, string, boolean. </param>
+        /// <returns> A new <see cref="JobRouter.StaticRouterRule"/> instance for mocking. </returns>
+        public static StaticRouterRule StaticRouterRule(BinaryData value = default)
+        {
+            return new StaticRouterRule(default, additionalBinaryDataProperties: null, value);
+        }
+
+        /// <summary> A rule providing a binding to an external web server. </summary>
         /// <param name="authorizationServerUri"> Uri for Authorization Server. </param>
         /// <param name="clientCredential"> OAuth2.0 Credentials used to Contoso's Authorization server. Reference: https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/. </param>
         /// <param name="webhookUri"> Uri for Contoso's Web Server. </param>
         /// <returns> A new <see cref="JobRouter.WebhookRouterRule"/> instance for mocking. </returns>
-        public static WebhookRouterRule WebhookRouterRule(Uri authorizationServerUri = null, OAuth2WebhookClientCredential clientCredential = null, Uri webhookUri = null)
+        public static WebhookRouterRule WebhookRouterRule(Uri authorizationServerUri = default, OAuth2WebhookClientCredential clientCredential = default, Uri webhookUri = default)
         {
-            return new WebhookRouterRule(RouterRuleKind.Webhook, serializedAdditionalRawData: null, authorizationServerUri, clientCredential, webhookUri);
+            return new WebhookRouterRule(default, additionalBinaryDataProperties: null, authorizationServerUri, clientCredential, webhookUri);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.ClassificationPolicy"/>. </summary>
+        /// <summary> OAuth2.0 Credentials used to Contoso's Authorization server. Reference: https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/. </summary>
+        /// <param name="clientId"> ClientId for Contoso Authorization server. </param>
+        /// <param name="clientSecret"> Client secret for Contoso Authorization server. </param>
+        /// <returns> A new <see cref="JobRouter.OAuth2WebhookClientCredential"/> instance for mocking. </returns>
+        public static OAuth2WebhookClientCredential OAuth2WebhookClientCredential(string clientId = default, string clientSecret = default)
+        {
+            return new OAuth2WebhookClientCredential(clientId, clientSecret, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Encapsulates all options that can be passed as parameters for scoring rule with BestWorkerMode. </summary>
+        /// <param name="batchSize"> Set batch size when 'isBatchScoringEnabled' is set to true. Defaults to 20 if not configured. </param>
+        /// <param name="scoringParameters"> List of extra parameters from a job that will be sent as part of the payload to scoring rule. If not set, a job's labels (sent in the payload as `job`) and a job's worker selectors (sent in the payload as `selectors`) are added to the payload of the scoring rule by default. Note: Worker labels are always sent with scoring payload. </param>
+        /// <param name="isBatchScoringEnabled"> If set to true, will score workers in batches, and the parameter name of the worker labels will be sent as `workers`. By default, set to false and the parameter name for the worker labels will be sent as `worker`. Note: If enabled, use 'batchSize' to set batch size. </param>
+        /// <param name="descendingOrder"> If false, will sort scores by ascending order. By default, set to true. </param>
+        /// <returns> A new <see cref="JobRouter.ScoringRuleOptions"/> instance for mocking. </returns>
+        public static ScoringRuleOptions ScoringRuleOptions(int? batchSize = default, IEnumerable<ScoringRuleParameterSelector> scoringParameters = default, bool? isBatchScoringEnabled = default, bool? descendingOrder = default)
+        {
+            scoringParameters ??= new ChangeTrackingList<ScoringRuleParameterSelector>();
+
+            return new ScoringRuleOptions(batchSize, scoringParameters.ToList(), isBatchScoringEnabled, descendingOrder, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Jobs are directed to the worker who has been idle longest. </summary>
+        /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>
+        /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
+        /// <param name="bypassSelectors"> If set to true, then router will match workers to jobs even if they don't match label selectors. Warning: You may get workers that are not qualified for a job they are matched with if you set this variable to true. This flag is intended more for temporary usage. By default, set to false. </param>
+        /// <returns> A new <see cref="JobRouter.LongestIdleMode"/> instance for mocking. </returns>
+        public static LongestIdleMode LongestIdleMode(int minConcurrentOffers = default, int maxConcurrentOffers = default, bool? bypassSelectors = default)
+        {
+            return new LongestIdleMode(minConcurrentOffers, maxConcurrentOffers, bypassSelectors, default, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Jobs are distributed in order to workers, starting with the worker that is after the last worker to receive a job. </summary>
+        /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>
+        /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
+        /// <param name="bypassSelectors"> If set to true, then router will match workers to jobs even if they don't match label selectors. Warning: You may get workers that are not qualified for a job they are matched with if you set this variable to true. This flag is intended more for temporary usage. By default, set to false. </param>
+        /// <returns> A new <see cref="JobRouter.RoundRobinMode"/> instance for mocking. </returns>
+        public static RoundRobinMode RoundRobinMode(int minConcurrentOffers = default, int maxConcurrentOffers = default, bool? bypassSelectors = default)
+        {
+            return new RoundRobinMode(minConcurrentOffers, maxConcurrentOffers, bypassSelectors, default, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A container for the rules that govern how jobs are classified. </summary>
         /// <param name="eTag"> The entity tag for this resource. </param>
         /// <param name="id"> Id of a classification policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
         /// <param name="fallbackQueueId"> Id of a fallback queue to select if queue selector attachments doesn't find a match. </param>
-        /// <param name="queueSelectorAttachments">
-        /// Queue selector attachments used to resolve a queue for a job.
-        /// Please note <see cref="QueueSelectorAttachment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="JobRouter.ConditionalQueueSelectorAttachment"/>, <see cref="JobRouter.PassThroughQueueSelectorAttachment"/>, <see cref="JobRouter.RuleEngineQueueSelectorAttachment"/>, <see cref="JobRouter.StaticQueueSelectorAttachment"/> and <see cref="JobRouter.WeightedAllocationQueueSelectorAttachment"/>.
-        /// </param>
-        /// <param name="prioritizationRule">
-        /// A rule to determine a priority score for a job.
-        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="JobRouter.FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="JobRouter.WebhookRouterRule"/>.
-        /// </param>
-        /// <param name="workerSelectorAttachments">
-        /// Worker selector attachments used to attach worker selectors to a job.
-        /// Please note <see cref="WorkerSelectorAttachment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="JobRouter.ConditionalWorkerSelectorAttachment"/>, <see cref="JobRouter.PassThroughWorkerSelectorAttachment"/>, <see cref="JobRouter.RuleEngineWorkerSelectorAttachment"/>, <see cref="JobRouter.StaticWorkerSelectorAttachment"/> and <see cref="JobRouter.WeightedAllocationWorkerSelectorAttachment"/>.
-        /// </param>
+        /// <param name="queueSelectorAttachments"> Queue selector attachments used to resolve a queue for a job. </param>
+        /// <param name="prioritizationRule"> A rule to determine a priority score for a job. </param>
+        /// <param name="workerSelectorAttachments"> Worker selector attachments used to attach worker selectors to a job. </param>
         /// <returns> A new <see cref="JobRouter.ClassificationPolicy"/> instance for mocking. </returns>
-        public static ClassificationPolicy ClassificationPolicy(ETag eTag = default, string id = null, string name = null, string fallbackQueueId = null, IEnumerable<QueueSelectorAttachment> queueSelectorAttachments = null, RouterRule prioritizationRule = null, IEnumerable<WorkerSelectorAttachment> workerSelectorAttachments = null)
+        public static ClassificationPolicy ClassificationPolicy(ETag eTag = default, string id = default, string name = default, string fallbackQueueId = default, IEnumerable<QueueSelectorAttachment> queueSelectorAttachments = default, RouterRule prioritizationRule = default, IEnumerable<WorkerSelectorAttachment> workerSelectorAttachments = default)
         {
-            queueSelectorAttachments ??= new List<QueueSelectorAttachment>();
-            workerSelectorAttachments ??= new List<WorkerSelectorAttachment>();
+            queueSelectorAttachments ??= new ChangeTrackingList<QueueSelectorAttachment>();
+            workerSelectorAttachments ??= new ChangeTrackingList<WorkerSelectorAttachment>();
 
             return new ClassificationPolicy(
                 eTag,
                 id,
                 name,
                 fallbackQueueId,
-                queueSelectorAttachments?.ToList(),
+                queueSelectorAttachments.ToList(),
                 prioritizationRule,
-                workerSelectorAttachments?.ToList(),
-                serializedAdditionalRawData: null);
+                workerSelectorAttachments.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.ConditionalQueueSelectorAttachment"/>. </summary>
-        /// <param name="condition">
-        /// The condition that must be true for the queue selectors to be attached.
-        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="JobRouter.FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="JobRouter.WebhookRouterRule"/>.
-        /// </param>
+        /// <summary>
+        /// An attachment of queue selectors to resolve a queue to a job from a classification policy.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="JobRouter.ConditionalQueueSelectorAttachment"/>, <see cref="JobRouter.PassThroughQueueSelectorAttachment"/>, <see cref="JobRouter.RuleEngineQueueSelectorAttachment"/>, <see cref="JobRouter.StaticQueueSelectorAttachment"/>, and <see cref="JobRouter.WeightedAllocationQueueSelectorAttachment"/>.
+        /// </summary>
+        /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
+        /// <returns> A new <see cref="JobRouter.QueueSelectorAttachment"/> instance for mocking. </returns>
+        public static QueueSelectorAttachment QueueSelectorAttachment(string kind = default)
+        {
+            return new UnknownQueueSelectorAttachment(new QueueSelectorAttachmentKind(kind), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Describes a set of queue selectors that will be attached if the given condition resolves to true. </summary>
+        /// <param name="condition"> The condition that must be true for the queue selectors to be attached. </param>
         /// <param name="queueSelectors"> The queue selectors to attach. </param>
         /// <returns> A new <see cref="JobRouter.ConditionalQueueSelectorAttachment"/> instance for mocking. </returns>
-        public static ConditionalQueueSelectorAttachment ConditionalQueueSelectorAttachment(RouterRule condition = null, IEnumerable<RouterQueueSelector> queueSelectors = null)
+        public static ConditionalQueueSelectorAttachment ConditionalQueueSelectorAttachment(RouterRule condition = default, IEnumerable<RouterQueueSelector> queueSelectors = default)
         {
-            queueSelectors ??= new List<RouterQueueSelector>();
+            queueSelectors ??= new ChangeTrackingList<RouterQueueSelector>();
 
-            return new ConditionalQueueSelectorAttachment(QueueSelectorAttachmentKind.Conditional, serializedAdditionalRawData: null, condition, queueSelectors?.ToList());
+            return new ConditionalQueueSelectorAttachment(default, additionalBinaryDataProperties: null, condition, queueSelectors.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.PassThroughQueueSelectorAttachment"/>. </summary>
+        /// <summary> Describes a condition that must be met against a set of labels for queue selection. </summary>
+        /// <param name="key"> The label key to query against. </param>
+        /// <param name="labelOperator"> Describes how the value of the label is compared to the value defined on the label selector. </param>
+        /// <param name="value"> The value to compare against the actual label value with the given operator. Values must be primitive values - number, string, boolean. </param>
+        /// <returns> A new <see cref="JobRouter.RouterQueueSelector"/> instance for mocking. </returns>
+        public static RouterQueueSelector RouterQueueSelector(string key = default, LabelOperator labelOperator = default, BinaryData value = default)
+        {
+            return new RouterQueueSelector(key, labelOperator, value, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Attaches a queue selector where the value is passed through from a job's label with the same key. </summary>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>
         /// <returns> A new <see cref="JobRouter.PassThroughQueueSelectorAttachment"/> instance for mocking. </returns>
-        public static PassThroughQueueSelectorAttachment PassThroughQueueSelectorAttachment(string key = null, LabelOperator labelOperator = default)
+        public static PassThroughQueueSelectorAttachment PassThroughQueueSelectorAttachment(string key = default, LabelOperator labelOperator = default)
         {
-            return new PassThroughQueueSelectorAttachment(QueueSelectorAttachmentKind.PassThrough, serializedAdditionalRawData: null, key, labelOperator);
+            return new PassThroughQueueSelectorAttachment(default, additionalBinaryDataProperties: null, key, labelOperator);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.RuleEngineQueueSelectorAttachment"/>. </summary>
-        /// <param name="rule">
-        /// A RouterRule that resolves a collection of queue selectors to attach.
-        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="JobRouter.FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="JobRouter.WebhookRouterRule"/>.
-        /// </param>
+        /// <summary> Attaches queue selectors to a job when the RouterRule is resolved. </summary>
+        /// <param name="rule"> A RouterRule that resolves a collection of queue selectors to attach. </param>
         /// <returns> A new <see cref="JobRouter.RuleEngineQueueSelectorAttachment"/> instance for mocking. </returns>
-        public static RuleEngineQueueSelectorAttachment RuleEngineQueueSelectorAttachment(RouterRule rule = null)
+        public static RuleEngineQueueSelectorAttachment RuleEngineQueueSelectorAttachment(RouterRule rule = default)
         {
-            return new RuleEngineQueueSelectorAttachment(QueueSelectorAttachmentKind.RuleEngine, serializedAdditionalRawData: null, rule);
+            return new RuleEngineQueueSelectorAttachment(default, additionalBinaryDataProperties: null, rule);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.StaticQueueSelectorAttachment"/>. </summary>
+        /// <summary> Describes a queue selector that will be attached to a job. </summary>
         /// <param name="queueSelector"> The queue selector to attach. </param>
         /// <returns> A new <see cref="JobRouter.StaticQueueSelectorAttachment"/> instance for mocking. </returns>
-        public static StaticQueueSelectorAttachment StaticQueueSelectorAttachment(RouterQueueSelector queueSelector = null)
+        public static StaticQueueSelectorAttachment StaticQueueSelectorAttachment(RouterQueueSelector queueSelector = default)
         {
-            return new StaticQueueSelectorAttachment(QueueSelectorAttachmentKind.Static, serializedAdditionalRawData: null, queueSelector);
+            return new StaticQueueSelectorAttachment(default, additionalBinaryDataProperties: null, queueSelector);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.WeightedAllocationQueueSelectorAttachment"/>. </summary>
+        /// <summary> Describes multiple sets of queue selectors, of which one will be selected and attached according to a weighting. </summary>
         /// <param name="allocations"> A collection of percentage based weighted allocations. </param>
         /// <returns> A new <see cref="JobRouter.WeightedAllocationQueueSelectorAttachment"/> instance for mocking. </returns>
-        public static WeightedAllocationQueueSelectorAttachment WeightedAllocationQueueSelectorAttachment(IEnumerable<QueueWeightedAllocation> allocations = null)
+        public static WeightedAllocationQueueSelectorAttachment WeightedAllocationQueueSelectorAttachment(IEnumerable<QueueWeightedAllocation> allocations = default)
         {
-            allocations ??= new List<QueueWeightedAllocation>();
+            allocations ??= new ChangeTrackingList<QueueWeightedAllocation>();
 
-            return new WeightedAllocationQueueSelectorAttachment(QueueSelectorAttachmentKind.WeightedAllocation, serializedAdditionalRawData: null, allocations?.ToList());
+            return new WeightedAllocationQueueSelectorAttachment(default, additionalBinaryDataProperties: null, allocations.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.QueueWeightedAllocation"/>. </summary>
+        /// <summary> Contains the weight percentage and queue selectors to be applied if selected for weighted distributions. </summary>
         /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
         /// <param name="queueSelectors"> A collection of queue selectors that will be applied if this allocation is selected. </param>
         /// <returns> A new <see cref="JobRouter.QueueWeightedAllocation"/> instance for mocking. </returns>
-        public static QueueWeightedAllocation QueueWeightedAllocation(double weight = default, IEnumerable<RouterQueueSelector> queueSelectors = null)
+        public static QueueWeightedAllocation QueueWeightedAllocation(double weight = default, IEnumerable<RouterQueueSelector> queueSelectors = default)
         {
-            queueSelectors ??= new List<RouterQueueSelector>();
+            queueSelectors ??= new ChangeTrackingList<RouterQueueSelector>();
 
-            return new QueueWeightedAllocation(weight, queueSelectors?.ToList(), serializedAdditionalRawData: null);
+            return new QueueWeightedAllocation(weight, queueSelectors.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.ConditionalWorkerSelectorAttachment"/>. </summary>
-        /// <param name="condition">
-        /// The condition that must be true for the worker selectors to be attached.
-        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="JobRouter.FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="JobRouter.WebhookRouterRule"/>.
-        /// </param>
+        /// <summary>
+        /// An attachment which attaches worker selectors to a job.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="JobRouter.ConditionalWorkerSelectorAttachment"/>, <see cref="JobRouter.PassThroughWorkerSelectorAttachment"/>, <see cref="JobRouter.RuleEngineWorkerSelectorAttachment"/>, <see cref="JobRouter.StaticWorkerSelectorAttachment"/>, and <see cref="JobRouter.WeightedAllocationWorkerSelectorAttachment"/>.
+        /// </summary>
+        /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
+        /// <returns> A new <see cref="JobRouter.WorkerSelectorAttachment"/> instance for mocking. </returns>
+        public static WorkerSelectorAttachment WorkerSelectorAttachment(string kind = default)
+        {
+            return new UnknownWorkerSelectorAttachment(new WorkerSelectorAttachmentKind(kind), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Describes a set of worker selectors that will be attached if the given condition resolves to true. </summary>
+        /// <param name="condition"> The condition that must be true for the worker selectors to be attached. </param>
         /// <param name="workerSelectors"> The worker selectors to attach. </param>
         /// <returns> A new <see cref="JobRouter.ConditionalWorkerSelectorAttachment"/> instance for mocking. </returns>
-        public static ConditionalWorkerSelectorAttachment ConditionalWorkerSelectorAttachment(RouterRule condition = null, IEnumerable<RouterWorkerSelector> workerSelectors = null)
+        public static ConditionalWorkerSelectorAttachment ConditionalWorkerSelectorAttachment(RouterRule condition = default, IEnumerable<RouterWorkerSelector> workerSelectors = default)
         {
-            workerSelectors ??= new List<RouterWorkerSelector>();
+            workerSelectors ??= new ChangeTrackingList<RouterWorkerSelector>();
 
-            return new ConditionalWorkerSelectorAttachment(WorkerSelectorAttachmentKind.Conditional, serializedAdditionalRawData: null, condition, workerSelectors?.ToList());
+            return new ConditionalWorkerSelectorAttachment(default, additionalBinaryDataProperties: null, condition, workerSelectors.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.PassThroughWorkerSelectorAttachment"/>. </summary>
+        /// <summary> Describes a condition that must be met against a set of labels for worker selection. </summary>
+        /// <param name="key"> The label key to query against. </param>
+        /// <param name="labelOperator"> Describes how the value of the label is compared to the value defined on the worker selector. </param>
+        /// <param name="value"> The value to compare against the actual label value with the given operator. Values must be primitive values - number, string, boolean. </param>
+        /// <param name="expiresAfter"> Describes how long this label selector is valid in seconds. </param>
+        /// <param name="expedite"> Pushes a job to the front of the queue as long as this selector is active. </param>
+        /// <param name="status"> Status of the worker selector. </param>
+        /// <param name="expiresAt"> The time at which this worker selector expires in UTC. </param>
+        /// <returns> A new <see cref="JobRouter.RouterWorkerSelector"/> instance for mocking. </returns>
+        public static RouterWorkerSelector RouterWorkerSelector(string key = default, LabelOperator labelOperator = default, BinaryData value = default, TimeSpan? expiresAfter = default, bool? expedite = default, RouterWorkerSelectorStatus? status = default, DateTimeOffset? expiresAt = default)
+        {
+            return new RouterWorkerSelector(
+                key,
+                labelOperator,
+                value,
+                expiresAfter,
+                expedite,
+                status,
+                expiresAt,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Attaches a worker selector where the value is passed through from a job's label with the same key. </summary>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>
         /// <param name="expiresAfter"> Describes how long the attached label selector is valid in seconds. </param>
         /// <returns> A new <see cref="JobRouter.PassThroughWorkerSelectorAttachment"/> instance for mocking. </returns>
-        public static PassThroughWorkerSelectorAttachment PassThroughWorkerSelectorAttachment(string key = null, LabelOperator labelOperator = default, TimeSpan? expiresAfter = null)
+        public static PassThroughWorkerSelectorAttachment PassThroughWorkerSelectorAttachment(string key = default, LabelOperator labelOperator = default, TimeSpan? expiresAfter = default)
         {
-            return new PassThroughWorkerSelectorAttachment(WorkerSelectorAttachmentKind.PassThrough, serializedAdditionalRawData: null, key, labelOperator, expiresAfter);
+            return new PassThroughWorkerSelectorAttachment(default, additionalBinaryDataProperties: null, key, labelOperator, expiresAfter);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.RuleEngineWorkerSelectorAttachment"/>. </summary>
-        /// <param name="rule">
-        /// A RouterRule that resolves a collection of worker selectors to attach.
-        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="JobRouter.FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="JobRouter.WebhookRouterRule"/>.
-        /// </param>
+        /// <summary> Attaches worker selectors to a job when a RouterRule is resolved. </summary>
+        /// <param name="rule"> A RouterRule that resolves a collection of worker selectors to attach. </param>
         /// <returns> A new <see cref="JobRouter.RuleEngineWorkerSelectorAttachment"/> instance for mocking. </returns>
-        public static RuleEngineWorkerSelectorAttachment RuleEngineWorkerSelectorAttachment(RouterRule rule = null)
+        public static RuleEngineWorkerSelectorAttachment RuleEngineWorkerSelectorAttachment(RouterRule rule = default)
         {
-            return new RuleEngineWorkerSelectorAttachment(WorkerSelectorAttachmentKind.RuleEngine, serializedAdditionalRawData: null, rule);
+            return new RuleEngineWorkerSelectorAttachment(default, additionalBinaryDataProperties: null, rule);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.StaticWorkerSelectorAttachment"/>. </summary>
+        /// <summary> Describes a worker selector that will be attached to a job. </summary>
         /// <param name="workerSelector"> The worker selector to attach. </param>
         /// <returns> A new <see cref="JobRouter.StaticWorkerSelectorAttachment"/> instance for mocking. </returns>
-        public static StaticWorkerSelectorAttachment StaticWorkerSelectorAttachment(RouterWorkerSelector workerSelector = null)
+        public static StaticWorkerSelectorAttachment StaticWorkerSelectorAttachment(RouterWorkerSelector workerSelector = default)
         {
-            return new StaticWorkerSelectorAttachment(WorkerSelectorAttachmentKind.Static, serializedAdditionalRawData: null, workerSelector);
+            return new StaticWorkerSelectorAttachment(default, additionalBinaryDataProperties: null, workerSelector);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.WeightedAllocationWorkerSelectorAttachment"/>. </summary>
+        /// <summary> Describes multiple sets of worker selectors, of which one will be selected and attached according to a weighting. </summary>
         /// <param name="allocations"> A collection of percentage based weighted allocations. </param>
         /// <returns> A new <see cref="JobRouter.WeightedAllocationWorkerSelectorAttachment"/> instance for mocking. </returns>
-        public static WeightedAllocationWorkerSelectorAttachment WeightedAllocationWorkerSelectorAttachment(IEnumerable<WorkerWeightedAllocation> allocations = null)
+        public static WeightedAllocationWorkerSelectorAttachment WeightedAllocationWorkerSelectorAttachment(IEnumerable<WorkerWeightedAllocation> allocations = default)
         {
-            allocations ??= new List<WorkerWeightedAllocation>();
+            allocations ??= new ChangeTrackingList<WorkerWeightedAllocation>();
 
-            return new WeightedAllocationWorkerSelectorAttachment(WorkerSelectorAttachmentKind.WeightedAllocation, serializedAdditionalRawData: null, allocations?.ToList());
+            return new WeightedAllocationWorkerSelectorAttachment(default, additionalBinaryDataProperties: null, allocations.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.WorkerWeightedAllocation"/>. </summary>
+        /// <summary> Contains the weight percentage and worker selectors to be applied if selected for weighted distributions. </summary>
         /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
         /// <param name="workerSelectors"> A collection of worker selectors that will be applied if this allocation is selected. </param>
         /// <returns> A new <see cref="JobRouter.WorkerWeightedAllocation"/> instance for mocking. </returns>
-        public static WorkerWeightedAllocation WorkerWeightedAllocation(double weight = default, IEnumerable<RouterWorkerSelector> workerSelectors = null)
+        public static WorkerWeightedAllocation WorkerWeightedAllocation(double weight = default, IEnumerable<RouterWorkerSelector> workerSelectors = default)
         {
-            workerSelectors ??= new List<RouterWorkerSelector>();
+            workerSelectors ??= new ChangeTrackingList<RouterWorkerSelector>();
 
-            return new WorkerWeightedAllocation(weight, workerSelectors?.ToList(), serializedAdditionalRawData: null);
+            return new WorkerWeightedAllocation(weight, workerSelectors.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.ExceptionPolicy"/>. </summary>
+        /// <summary> A policy that defines actions to execute when exception are triggered. </summary>
         /// <param name="eTag"> The entity tag for this resource. </param>
         /// <param name="id"> Id of an exception policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
         /// <param name="exceptionRules"> A collection of exception rules on the exception policy. </param>
         /// <returns> A new <see cref="JobRouter.ExceptionPolicy"/> instance for mocking. </returns>
-        public static ExceptionPolicy ExceptionPolicy(ETag eTag = default, string id = null, string name = null, IEnumerable<ExceptionRule> exceptionRules = null)
+        public static ExceptionPolicy ExceptionPolicy(ETag eTag = default, string id = default, string name = default, IEnumerable<ExceptionRule> exceptionRules = default)
         {
-            exceptionRules ??= new List<ExceptionRule>();
+            exceptionRules ??= new ChangeTrackingList<ExceptionRule>();
 
-            return new ExceptionPolicy(eTag, id, name, exceptionRules?.ToList(), serializedAdditionalRawData: null);
+            return new ExceptionPolicy(eTag, id, name, exceptionRules.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.ExceptionRule"/>. </summary>
+        /// <summary> A rule that defines actions to execute upon a specific trigger. </summary>
         /// <param name="id"> Id of an exception rule. </param>
-        /// <param name="trigger">
-        /// The trigger for this exception rule.
-        /// Please note <see cref="ExceptionTrigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="JobRouter.QueueLengthExceptionTrigger"/> and <see cref="WaitTimeExceptionTrigger"/>.
-        /// </param>
-        /// <param name="actions">
-        /// A collection of actions to perform once the exception is triggered.
-        /// Please note <see cref="JobRouter.ExceptionAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="JobRouter.CancelExceptionAction"/>, <see cref="JobRouter.ManualReclassifyExceptionAction"/> and <see cref="ReclassifyExceptionAction"/>.
-        /// </param>
+        /// <param name="trigger"> The trigger for this exception rule. </param>
+        /// <param name="actions"> A collection of actions to perform once the exception is triggered. </param>
         /// <returns> A new <see cref="JobRouter.ExceptionRule"/> instance for mocking. </returns>
-        public static ExceptionRule ExceptionRule(string id = null, ExceptionTrigger trigger = null, IEnumerable<ExceptionAction> actions = null)
+        public static ExceptionRule ExceptionRule(string id = default, ExceptionTrigger trigger = default, IEnumerable<ExceptionAction> actions = default)
         {
-            actions ??= new List<ExceptionAction>();
+            actions ??= new ChangeTrackingList<ExceptionAction>();
 
-            return new ExceptionRule(id, trigger, actions?.ToList(), serializedAdditionalRawData: null);
+            return new ExceptionRule(id, trigger, actions.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.QueueLengthExceptionTrigger"/>. </summary>
+        /// <summary>
+        /// Abstract base class for defining a trigger for exception rules.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="JobRouter.QueueLengthExceptionTrigger"/> and <see cref="WaitTimeExceptionTrigger"/>.
+        /// </summary>
+        /// <param name="kind"> The type discriminator describing a sub-type of ExceptionTrigger. </param>
+        /// <returns> A new <see cref="JobRouter.ExceptionTrigger"/> instance for mocking. </returns>
+        public static ExceptionTrigger ExceptionTrigger(string kind = default)
+        {
+            return new UnknownExceptionTrigger(new ExceptionTriggerKind(kind), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Trigger for an exception action on exceeding queue length. </summary>
         /// <param name="threshold"> Threshold of number of jobs ahead in the queue to for this trigger to fire. </param>
         /// <returns> A new <see cref="JobRouter.QueueLengthExceptionTrigger"/> instance for mocking. </returns>
         public static QueueLengthExceptionTrigger QueueLengthExceptionTrigger(int threshold = default)
         {
-            return new QueueLengthExceptionTrigger(ExceptionTriggerKind.QueueLength, serializedAdditionalRawData: null, threshold);
+            return new QueueLengthExceptionTrigger(default, additionalBinaryDataProperties: null, threshold);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.ExceptionAction"/>. </summary>
+        /// <summary>
+        /// The action to take when the exception is triggered.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="JobRouter.CancelExceptionAction"/>, <see cref="JobRouter.ManualReclassifyExceptionAction"/>, and <see cref="JobRouter.ReclassifyExceptionAction"/>.
+        /// </summary>
         /// <param name="id"> Unique Id of the exception action. </param>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
         /// <returns> A new <see cref="JobRouter.ExceptionAction"/> instance for mocking. </returns>
-        public static ExceptionAction ExceptionAction(string id = null, string kind = null)
+        public static ExceptionAction ExceptionAction(string id = default, string kind = default)
         {
-            return new UnknownExceptionAction(id, kind == null ? default : new ExceptionActionKind(kind), serializedAdditionalRawData: null);
+            return new UnknownExceptionAction(id, new ExceptionActionKind(kind), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.CancelExceptionAction"/>. </summary>
+        /// <summary> An action that marks a job as cancelled. </summary>
         /// <param name="id"> Unique Id of the exception action. </param>
         /// <param name="note"> A note that will be appended to a job's notes collection with the current timestamp. </param>
         /// <param name="dispositionCode"> Indicates the outcome of a job, populate this field with your own custom values. </param>
         /// <returns> A new <see cref="JobRouter.CancelExceptionAction"/> instance for mocking. </returns>
-        public static CancelExceptionAction CancelExceptionAction(string id = null, string note = null, string dispositionCode = null)
+        public static CancelExceptionAction CancelExceptionAction(string id = default, string note = default, string dispositionCode = default)
         {
-            return new CancelExceptionAction(id, ExceptionActionKind.Cancel, serializedAdditionalRawData: null, note, dispositionCode);
+            return new CancelExceptionAction(id, default, additionalBinaryDataProperties: null, note, dispositionCode);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.ManualReclassifyExceptionAction"/>. </summary>
+        /// <summary> An action that manually reclassifies a job by providing the queue, priority and worker selectors. </summary>
         /// <param name="id"> Unique Id of the exception action. </param>
         /// <param name="queueId"> Updated QueueId. </param>
         /// <param name="priority"> Updated Priority. </param>
         /// <param name="workerSelectors"> Updated WorkerSelectors. </param>
         /// <returns> A new <see cref="JobRouter.ManualReclassifyExceptionAction"/> instance for mocking. </returns>
-        public static ManualReclassifyExceptionAction ManualReclassifyExceptionAction(string id = null, string queueId = null, int? priority = null, IEnumerable<RouterWorkerSelector> workerSelectors = null)
+        public static ManualReclassifyExceptionAction ManualReclassifyExceptionAction(string id = default, string queueId = default, int? priority = default, IEnumerable<RouterWorkerSelector> workerSelectors = default)
         {
-            workerSelectors ??= new List<RouterWorkerSelector>();
+            workerSelectors ??= new ChangeTrackingList<RouterWorkerSelector>();
 
             return new ManualReclassifyExceptionAction(
                 id,
-                ExceptionActionKind.ManualReclassify,
-                serializedAdditionalRawData: null,
+                default,
+                additionalBinaryDataProperties: null,
                 queueId,
                 priority,
-                workerSelectors?.ToList());
+                workerSelectors.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterJobAssignment"/>. </summary>
+        /// <summary> An action that modifies labels on a job and then reclassifies it. </summary>
+        /// <param name="id"> Unique Id of the exception action. </param>
+        /// <param name="classificationPolicyId"> The new classification policy that will determine queue, priority and worker selectors. </param>
+        /// <param name="labelsToUpsert"> Dictionary containing the labels to update (or add if not existing) in key-value pairs.  Values must be primitive values - number, string, boolean. </param>
+        /// <returns> A new <see cref="JobRouter.ReclassifyExceptionAction"/> instance for mocking. </returns>
+        public static ReclassifyExceptionAction ReclassifyExceptionAction(string id = default, string classificationPolicyId = default, IDictionary<string, BinaryData> labelsToUpsert = default)
+        {
+            labelsToUpsert ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new ReclassifyExceptionAction(id, default, additionalBinaryDataProperties: null, classificationPolicyId, labelsToUpsert);
+        }
+
+        /// <summary> A queue that can contain jobs to be routed. </summary>
+        /// <param name="eTag"> The entity tag for this resource. </param>
+        /// <param name="id"> Id of a queue. </param>
+        /// <param name="name"> Friendly name of this queue. </param>
+        /// <param name="distributionPolicyId"> Id of a distribution policy that will determine how a job is distributed to workers. </param>
+        /// <param name="labels"> A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean. </param>
+        /// <param name="exceptionPolicyId"> Id of an exception policy that determines various job escalation rules. </param>
+        /// <returns> A new <see cref="JobRouter.RouterQueue"/> instance for mocking. </returns>
+        public static RouterQueue RouterQueue(ETag eTag = default, string id = default, string name = default, string distributionPolicyId = default, IDictionary<string, object> labels = default, string exceptionPolicyId = default)
+        {
+            labels ??= new ChangeTrackingDictionary<string, object>();
+
+            return new RouterQueue(
+                eTag,
+                id,
+                name,
+                distributionPolicyId,
+                labels,
+                exceptionPolicyId,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A unit of work to be routed. </summary>
+        /// <param name="eTag"> The entity tag for this resource. </param>
+        /// <param name="id"> Id of a job. </param>
+        /// <param name="channelReference"> Reference to an external parent context, eg. call ID. </param>
+        /// <param name="status"> The status of the job. </param>
+        /// <param name="enqueuedAt"> Timestamp a job was queued in UTC. </param>
+        /// <param name="channelId"> The channel identifier. eg. voice, chat, etc. </param>
+        /// <param name="classificationPolicyId"> Id of a classification policy used for classifying this job. </param>
+        /// <param name="queueId"> Id of a queue that this job is queued to. </param>
+        /// <param name="priority"> Priority of this job. Value must be between -100 to 100. </param>
+        /// <param name="dispositionCode"> Reason code for cancelled or closed jobs. </param>
+        /// <param name="requestedWorkerSelectors"> A collection of manually specified worker selectors, which a worker must satisfy in order to process this job. </param>
+        /// <param name="attachedWorkerSelectors"> A collection of worker selectors attached by a classification policy, which a worker must satisfy in order to process this job. </param>
+        /// <param name="labels"> A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean. </param>
+        /// <param name="assignments"> A collection of the assignments of the job. Key is AssignmentId. </param>
+        /// <param name="tags"> A set of non-identifying attributes attached to this job. Values must be primitive values - number, string, boolean. </param>
+        /// <param name="notes"> Notes attached to a job, sorted by timestamp. </param>
+        /// <param name="scheduledAt"> If set, job will be scheduled to be enqueued at a given time. </param>
+        /// <param name="matchingMode"> If provided, will determine how job matching will be carried out. Default mode: QueueAndMatchMode. </param>
+        /// <returns> A new <see cref="JobRouter.RouterJob"/> instance for mocking. </returns>
+        public static RouterJob RouterJob(ETag eTag = default, string id = default, string channelReference = default, RouterJobStatus? status = default, DateTimeOffset? enqueuedAt = default, string channelId = default, string classificationPolicyId = default, string queueId = default, int? priority = default, string dispositionCode = default, IEnumerable<RouterWorkerSelector> requestedWorkerSelectors = default, IEnumerable<RouterWorkerSelector> attachedWorkerSelectors = default, IDictionary<string, BinaryData> labels = default, IReadOnlyDictionary<string, RouterJobAssignment> assignments = default, IDictionary<string, BinaryData> tags = default, IEnumerable<RouterJobNote> notes = default, DateTimeOffset? scheduledAt = default, JobMatchingMode matchingMode = default)
+        {
+            requestedWorkerSelectors ??= new ChangeTrackingList<RouterWorkerSelector>();
+            attachedWorkerSelectors ??= new ChangeTrackingList<RouterWorkerSelector>();
+            labels ??= new ChangeTrackingDictionary<string, BinaryData>();
+            assignments ??= new ChangeTrackingDictionary<string, RouterJobAssignment>();
+            tags ??= new ChangeTrackingDictionary<string, BinaryData>();
+            notes ??= new ChangeTrackingList<RouterJobNote>();
+
+            return new RouterJob(
+                eTag,
+                id,
+                channelReference,
+                status,
+                enqueuedAt,
+                channelId,
+                classificationPolicyId,
+                queueId,
+                priority,
+                dispositionCode,
+                requestedWorkerSelectors.ToList(),
+                attachedWorkerSelectors.ToList(),
+                labels,
+                assignments,
+                tags,
+                notes.ToList(),
+                scheduledAt,
+                matchingMode,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Assignment details of a job to a worker. </summary>
         /// <param name="assignmentId"> Id of a job assignment. </param>
         /// <param name="workerId"> Id of the Worker assigned to the job. </param>
         /// <param name="assignedAt"> Timestamp when the job was assigned to a worker in UTC. </param>
         /// <param name="completedAt"> Timestamp when the job was marked as completed after being assigned in UTC. </param>
         /// <param name="closedAt"> Timestamp when the job was marked as closed after being completed in UTC. </param>
         /// <returns> A new <see cref="JobRouter.RouterJobAssignment"/> instance for mocking. </returns>
-        public static RouterJobAssignment RouterJobAssignment(string assignmentId = null, string workerId = null, DateTimeOffset assignedAt = default, DateTimeOffset? completedAt = null, DateTimeOffset? closedAt = null)
+        public static RouterJobAssignment RouterJobAssignment(string assignmentId = default, string workerId = default, DateTimeOffset assignedAt = default, DateTimeOffset? completedAt = default, DateTimeOffset? closedAt = default)
         {
             return new RouterJobAssignment(
                 assignmentId,
@@ -317,34 +556,89 @@ namespace Azure.Communication.JobRouter
                 assignedAt,
                 completedAt,
                 closedAt,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterJobNote"/>. </summary>
+        /// <summary> A note attached to a job. </summary>
         /// <param name="message"> The message contained in the note. </param>
         /// <param name="addedAt"> The time at which the note was added in UTC. If not provided, will default to the current time. </param>
         /// <returns> A new <see cref="JobRouter.RouterJobNote"/> instance for mocking. </returns>
-        public static RouterJobNote RouterJobNote(string message = null, DateTimeOffset? addedAt = null)
+        public static RouterJobNote RouterJobNote(string message = default, DateTimeOffset? addedAt = default)
         {
-            return new RouterJobNote(message, addedAt, serializedAdditionalRawData: null);
+            return new RouterJobNote(message, addedAt, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.ScheduleAndSuspendMode"/>. </summary>
+        /// <summary>
+        /// A matching mode of one of the following types:
+        /// QueueAndMatchMode: Used when matching worker to a job is required to be done right after job is queued.
+        /// ScheduleAndSuspendMode: Used for scheduling jobs to be queued at a future time. At specified time, matching of a worker to the job will not start automatically.
+        /// SuspendMode: Used when matching workers to a job needs to be suspended.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="JobRouter.ScheduleAndSuspendMode"/>, <see cref="JobRouter.QueueAndMatchMode"/>, and <see cref="JobRouter.SuspendMode"/>.
+        /// </summary>
+        /// <param name="kind"> The type discriminator describing a sub-type of JobMatchingMode. </param>
+        /// <returns> A new <see cref="JobRouter.JobMatchingMode"/> instance for mocking. </returns>
+        public static JobMatchingMode JobMatchingMode(string kind = default)
+        {
+            return new UnknownJobMatchingMode(new JobMatchingModeKind(kind), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Describes a matching mode used for scheduling jobs to be queued at a future time. At the specified time, matching worker to a job will not start automatically. </summary>
         /// <param name="scheduleAt"> Requested schedule time. </param>
         /// <returns> A new <see cref="JobRouter.ScheduleAndSuspendMode"/> instance for mocking. </returns>
         public static ScheduleAndSuspendMode ScheduleAndSuspendMode(DateTimeOffset scheduleAt = default)
         {
-            return new ScheduleAndSuspendMode(JobMatchingModeKind.ScheduleAndSuspend, serializedAdditionalRawData: null, scheduleAt);
+            return new ScheduleAndSuspendMode(default, additionalBinaryDataProperties: null, scheduleAt);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterJobPositionDetails"/>. </summary>
+        /// <summary> Describes a matching mode where matching worker to a job is automatically started after job is queued successfully. </summary>
+        /// <returns> A new <see cref="JobRouter.QueueAndMatchMode"/> instance for mocking. </returns>
+        public static QueueAndMatchMode QueueAndMatchMode()
+        {
+            return new QueueAndMatchMode(default, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Describes a matching mode where matching worker to a job is suspended. </summary>
+        /// <returns> A new <see cref="JobRouter.SuspendMode"/> instance for mocking. </returns>
+        public static SuspendMode SuspendMode()
+        {
+            return new SuspendMode(default, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Request payload for cancelling a job. </summary>
+        /// <param name="note"> A note that will be appended to a job's Notes collection with the current timestamp. </param>
+        /// <param name="dispositionCode"> Indicates the outcome of a job, populate this field with your own custom values. If not provided, default value of "Cancelled" is set. </param>
+        /// <returns> A new <see cref="JobRouter.CancelJobOptions"/> instance for mocking. </returns>
+        public static CancelJobOptions CancelJobOptions(string note = default, string dispositionCode = default)
+        {
+            return new CancelJobOptions(note, dispositionCode, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Request payload for completing jobs. </summary>
+        /// <param name="note"> A note that will be appended to a job's Notes collection with the current timestamp. </param>
+        /// <returns> A new <see cref="JobRouter.CompleteJobOptions"/> instance for mocking. </returns>
+        public static CompleteJobOptions CompleteJobOptions(string note = default)
+        {
+            return new CompleteJobOptions(note, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Request payload for closing jobs. </summary>
+        /// <param name="dispositionCode"> Indicates the outcome of a job, populate this field with your own custom values. </param>
+        /// <param name="closeAt"> If not provided, worker capacity is released immediately along with a JobClosedEvent notification. If provided, worker capacity is released along with a JobClosedEvent notification at a future time in UTC. </param>
+        /// <param name="note"> A note that will be appended to a job's Notes collection with the current timestamp. </param>
+        /// <returns> A new <see cref="JobRouter.CloseJobOptions"/> instance for mocking. </returns>
+        public static CloseJobOptions CloseJobOptions(string dispositionCode = default, DateTimeOffset closeAt = default, string note = default)
+        {
+            return new CloseJobOptions(dispositionCode, closeAt, note, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Position and estimated wait time for a job. </summary>
         /// <param name="jobId"> Id of the job these details are about. </param>
         /// <param name="position"> Position of the job in question within that queue. </param>
         /// <param name="queueId"> Id of the queue this job is enqueued in. </param>
         /// <param name="queueLength"> Length of the queue: total number of enqueued jobs. </param>
         /// <param name="estimatedWaitTime"> Estimated wait time of the job rounded up to the nearest minute. </param>
         /// <returns> A new <see cref="JobRouter.RouterJobPositionDetails"/> instance for mocking. </returns>
-        public static RouterJobPositionDetails RouterJobPositionDetails(string jobId = null, int position = default, string queueId = null, int queueLength = default, TimeSpan estimatedWaitTime = default)
+        public static RouterJobPositionDetails RouterJobPositionDetails(string jobId = default, int position = default, string queueId = default, int queueLength = default, TimeSpan estimatedWaitTime = default)
         {
             return new RouterJobPositionDetails(
                 jobId,
@@ -352,59 +646,116 @@ namespace Azure.Communication.JobRouter
                 queueId,
                 queueLength,
                 estimatedWaitTime,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.UnassignJobResult"/>. </summary>
+        /// <summary> Request payload for unassigning a job. </summary>
+        /// <param name="suspendMatching"> If SuspendMatching is true, then a job is not queued for re-matching with a worker. </param>
+        /// <returns> A new <see cref="JobRouter.UnassignJobOptions"/> instance for mocking. </returns>
+        public static UnassignJobOptions UnassignJobOptions(bool? suspendMatching = default)
+        {
+            return new UnassignJobOptions(suspendMatching, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Response payload after a job has been successfully unassigned. </summary>
         /// <param name="jobId"> Id of an unassigned job. </param>
         /// <param name="unassignmentCount"> The number of times a job is unassigned. At a maximum 3. </param>
         /// <returns> A new <see cref="JobRouter.UnassignJobResult"/> instance for mocking. </returns>
-        public static UnassignJobResult UnassignJobResult(string jobId = null, int unassignmentCount = default)
+        public static UnassignJobResult UnassignJobResult(string jobId = default, int unassignmentCount = default)
         {
-            return new UnassignJobResult(jobId, unassignmentCount, serializedAdditionalRawData: null);
+            return new UnassignJobResult(jobId, unassignmentCount, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.AcceptJobOfferResult"/>. </summary>
+        /// <summary> Response containing ids for the worker, job, and assignment from an accepted offer. </summary>
         /// <param name="assignmentId"> Id of job assignment that assigns a worker that has accepted an offer to a job. </param>
         /// <param name="jobId"> Id of the job assigned. </param>
         /// <param name="workerId"> Id of the worker that has been assigned this job. </param>
         /// <returns> A new <see cref="JobRouter.AcceptJobOfferResult"/> instance for mocking. </returns>
-        public static AcceptJobOfferResult AcceptJobOfferResult(string assignmentId = null, string jobId = null, string workerId = null)
+        public static AcceptJobOfferResult AcceptJobOfferResult(string assignmentId = default, string jobId = default, string workerId = default)
         {
-            return new AcceptJobOfferResult(assignmentId, jobId, workerId, serializedAdditionalRawData: null);
+            return new AcceptJobOfferResult(assignmentId, jobId, workerId, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterQueueStatistics"/>. </summary>
+        /// <summary> Request payload for declining offers. </summary>
+        /// <param name="retryOfferAt"> If the RetryOfferAt is not provided, then this job will not be offered again to the worker who declined this job unless the worker is de-registered and re-registered.  If a RetryOfferAt time is provided, then the job will be re-matched to eligible workers at the retry time in UTC.  The worker that declined the job will also be eligible for the job at that time. </param>
+        /// <returns> A new <see cref="JobRouter.DeclineJobOfferOptions"/> instance for mocking. </returns>
+        public static DeclineJobOfferOptions DeclineJobOfferOptions(DateTimeOffset? retryOfferAt = default)
+        {
+            return new DeclineJobOfferOptions(retryOfferAt, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Statistics for the queue. </summary>
         /// <param name="queueId"> Id of the queue these details are about. </param>
         /// <param name="length"> Length of the queue: total number of enqueued jobs. </param>
         /// <param name="estimatedWaitTimes"> The estimated wait time of this queue rounded up to the nearest minute, grouped by job priority. </param>
         /// <param name="longestJobWaitTimeMinutes"> The wait time of the job that has been enqueued in this queue for the longest. </param>
         /// <returns> A new <see cref="JobRouter.RouterQueueStatistics"/> instance for mocking. </returns>
-        public static RouterQueueStatistics RouterQueueStatistics(string queueId = null, int length = default, IDictionary<int, TimeSpan> estimatedWaitTimes = null, double? longestJobWaitTimeMinutes = null)
+        public static RouterQueueStatistics RouterQueueStatistics(string queueId = default, int length = default, IDictionary<int, TimeSpan> estimatedWaitTimes = default, double? longestJobWaitTimeMinutes = default)
         {
-            estimatedWaitTimes ??= new Dictionary<int, TimeSpan>();
+            estimatedWaitTimes ??= new ChangeTrackingDictionary<int, TimeSpan>();
 
-            return new RouterQueueStatistics(queueId, length, estimatedWaitTimes, longestJobWaitTimeMinutes, serializedAdditionalRawData: null);
+            return new RouterQueueStatistics(queueId, length, estimatedWaitTimes, longestJobWaitTimeMinutes, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterChannel"/>. </summary>
+        /// <summary> An entity for jobs to be routed to. </summary>
+        /// <param name="eTag"> The entity tag for this resource. </param>
+        /// <param name="id"> Id of a worker. </param>
+        /// <param name="state"> Current state of a worker. </param>
+        /// <param name="queues"> Collection of queue(s) that this worker can receive work from. </param>
+        /// <param name="capacity"> The total capacity score this worker has to manage multiple concurrent jobs. </param>
+        /// <param name="labels"> A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean. </param>
+        /// <param name="tags"> A set of non-identifying attributes attached to this worker. Values must be primitive values - number, string, boolean. </param>
+        /// <param name="channels"> Collection of channel(s) this worker can handle and their impact on the workers capacity. </param>
+        /// <param name="offers"> A list of active offers issued to this worker. </param>
+        /// <param name="assignedJobs"> A list of assigned jobs attached to this worker. </param>
+        /// <param name="loadRatio"> A value indicating the workers capacity. A value of '1' means all capacity is consumed. A value of '0' means no capacity is currently consumed. </param>
+        /// <param name="availableForOffers"> A flag indicating this worker is open to receive offers or not. </param>
+        /// <param name="maxConcurrentOffers"> If this is set, the worker will only receive up to this many new offers at a time. </param>
+        /// <returns> A new <see cref="JobRouter.RouterWorker"/> instance for mocking. </returns>
+        public static RouterWorker RouterWorker(ETag eTag = default, string id = default, RouterWorkerState? state = default, IEnumerable<string> queues = default, int? capacity = default, IDictionary<string, BinaryData> labels = default, IDictionary<string, BinaryData> tags = default, IEnumerable<RouterChannel> channels = default, IEnumerable<RouterJobOffer> offers = default, IEnumerable<RouterWorkerAssignment> assignedJobs = default, double? loadRatio = default, bool? availableForOffers = default, int? maxConcurrentOffers = default)
+        {
+            queues ??= new ChangeTrackingList<string>();
+            labels ??= new ChangeTrackingDictionary<string, BinaryData>();
+            tags ??= new ChangeTrackingDictionary<string, BinaryData>();
+            channels ??= new ChangeTrackingList<RouterChannel>();
+            offers ??= new ChangeTrackingList<RouterJobOffer>();
+            assignedJobs ??= new ChangeTrackingList<RouterWorkerAssignment>();
+
+            return new RouterWorker(
+                eTag,
+                id,
+                state,
+                queues.ToList(),
+                capacity,
+                labels,
+                tags,
+                channels.ToList(),
+                offers.ToList(),
+                assignedJobs.ToList(),
+                loadRatio,
+                availableForOffers,
+                maxConcurrentOffers,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the capacity a job in this channel will consume from a worker. </summary>
         /// <param name="channelId"> Id of a channel. </param>
         /// <param name="capacityCostPerJob"> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </param>
         /// <param name="maxNumberOfJobs"> The maximum number of jobs that can be supported concurrently for this channel. Value must be greater than zero. </param>
         /// <returns> A new <see cref="JobRouter.RouterChannel"/> instance for mocking. </returns>
-        public static RouterChannel RouterChannel(string channelId = null, int capacityCostPerJob = default, int? maxNumberOfJobs = null)
+        public static RouterChannel RouterChannel(string channelId = default, int capacityCostPerJob = default, int? maxNumberOfJobs = default)
         {
-            return new RouterChannel(channelId, capacityCostPerJob, maxNumberOfJobs, serializedAdditionalRawData: null);
+            return new RouterChannel(channelId, capacityCostPerJob, maxNumberOfJobs, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterJobOffer"/>. </summary>
+        /// <summary> An offer of a job to a worker. </summary>
         /// <param name="offerId"> Id of an offer. </param>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="capacityCost"> The capacity cost consumed by the job offer. </param>
         /// <param name="offeredAt"> Timestamp when the offer was created in UTC. </param>
         /// <param name="expiresAt"> Timestamp when the offer will expire in UTC. </param>
         /// <returns> A new <see cref="JobRouter.RouterJobOffer"/> instance for mocking. </returns>
-        public static RouterJobOffer RouterJobOffer(string offerId = null, string jobId = null, int capacityCost = default, DateTimeOffset? offeredAt = null, DateTimeOffset? expiresAt = null)
+        public static RouterJobOffer RouterJobOffer(string offerId = default, string jobId = default, int capacityCost = default, DateTimeOffset? offeredAt = default, DateTimeOffset? expiresAt = default)
         {
             return new RouterJobOffer(
                 offerId,
@@ -412,18 +763,18 @@ namespace Azure.Communication.JobRouter
                 capacityCost,
                 offeredAt,
                 expiresAt,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterWorkerAssignment"/>. </summary>
+        /// <summary> The assignment for a worker to a job. </summary>
         /// <param name="assignmentId"> Id of the assignment. </param>
         /// <param name="jobId"> Id of the job assigned. </param>
         /// <param name="capacityCost"> The amount of capacity this assignment has consumed on the worker. </param>
         /// <param name="assignedAt"> The assignment time of the job in UTC. </param>
         /// <returns> A new <see cref="JobRouter.RouterWorkerAssignment"/> instance for mocking. </returns>
-        public static RouterWorkerAssignment RouterWorkerAssignment(string assignmentId = null, string jobId = null, int capacityCost = default, DateTimeOffset assignedAt = default)
+        public static RouterWorkerAssignment RouterWorkerAssignment(string assignmentId = default, string jobId = default, int capacityCost = default, DateTimeOffset assignedAt = default)
         {
-            return new RouterWorkerAssignment(assignmentId, jobId, capacityCost, assignedAt, serializedAdditionalRawData: null);
+            return new RouterWorkerAssignment(assignmentId, jobId, capacityCost, assignedAt, additionalBinaryDataProperties: null);
         }
     }
 }

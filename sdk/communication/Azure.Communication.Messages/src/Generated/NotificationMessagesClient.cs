@@ -6,272 +6,278 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Communication.Messages
 {
-    // Data plane generated client.
-    /// <summary> The NotificationMessages service client. </summary>
+    /// <summary> The NotificationMessagesClient. </summary>
     public partial class NotificationMessagesClient
     {
+        private readonly Uri _endpoint;
         private const string AuthorizationHeader = "Authorization";
-        private readonly AzureKeyCredential _keyCredential;
         private const string AuthorizationApiKeyPrefix = "Bearer";
         private static readonly string[] AuthorizationScopes = new string[] { "https://communication.azure.com/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
-        private readonly Uri _endpoint;
         private readonly string _apiVersion;
+
+        /// <summary> Initializes a new instance of NotificationMessagesClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal NotificationMessagesClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, CommunicationMessagesClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new CommunicationMessagesClientOptions();
+
+            _endpoint = endpoint;
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
+            _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of NotificationMessagesClient from a <see cref="NotificationMessagesClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for NotificationMessagesClient. </param>
+        [Experimental("SCME0002")]
+        public NotificationMessagesClient(NotificationMessagesClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
+        {
+        }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
-
-        /// <summary> Initializes a new instance of NotificationMessagesClient. </summary>
-        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public NotificationMessagesClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new CommunicationMessagesClientOptions())
+        /// <summary>
+        /// [Protocol Method] Sends a notification message from Business to User.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Send(RequestContent content, RequestContext context = null)
         {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.Send");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateSendRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Initializes a new instance of NotificationMessagesClient. </summary>
-        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public NotificationMessagesClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new CommunicationMessagesClientOptions())
+        /// <summary>
+        /// [Protocol Method] Sends a notification message from Business to User.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> SendAsync(RequestContent content, RequestContext context = null)
         {
-        }
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.Send");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-        /// <summary> Initializes a new instance of NotificationMessagesClient. </summary>
-        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public NotificationMessagesClient(Uri endpoint, TokenCredential credential, CommunicationMessagesClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new CommunicationMessagesClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
-            _endpoint = endpoint;
-            _apiVersion = options.Version;
+                using HttpMessage message = CreateSendRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Sends a notification message from Business to User. </summary>
         /// <param name="notificationContent"> Details of the message to send. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationContent"/> is null. </exception>
-        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendAsync(NotificationContent,CancellationToken)']/*" />
-        public virtual async Task<Response<SendMessageResult>> SendAsync(NotificationContent notificationContent, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(notificationContent, nameof(notificationContent));
-
-            using RequestContent content = notificationContent.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await SendAsync(content, context).ConfigureAwait(false);
-            return Response.FromValue(SendMessageResult.FromResponse(response), response);
-        }
-
-        /// <summary> Sends a notification message from Business to User. </summary>
-        /// <param name="notificationContent"> Details of the message to send. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notificationContent"/> is null. </exception>
-        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='Send(NotificationContent,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SendMessageResult> Send(NotificationContent notificationContent, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(notificationContent, nameof(notificationContent));
 
-            using RequestContent content = notificationContent.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Send(content, context);
-            return Response.FromValue(SendMessageResult.FromResponse(response), response);
+            Response result = Send(notificationContent, cancellationToken.ToRequestContext());
+            return Response.FromValue((SendMessageResult)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Sends a notification message from Business to User.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="SendAsync(NotificationContent,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <summary> Sends a notification message from Business to User. </summary>
+        /// <param name="notificationContent"> Details of the message to send. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationContent"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> SendAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<Response<SendMessageResult>> SendAsync(NotificationContent notificationContent, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(notificationContent, nameof(notificationContent));
 
-            using var scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.Send");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateSendRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Sends a notification message from Business to User.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="Send(NotificationContent,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='Send(RequestContent,RequestContext)']/*" />
-        public virtual Response Send(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.Send");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateSendRequest(content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Download the Media payload from a User to Business message. </summary>
-        /// <param name="id"> The stream ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<BinaryData>> DownloadMediaInternalAsync(string id, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await DownloadMediaInternalAsync(id, context).ConfigureAwait(false);
-            return Response.FromValue(response.Content, response);
-        }
-
-        /// <summary> Download the Media payload from a User to Business message. </summary>
-        /// <param name="id"> The stream ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<BinaryData> DownloadMediaInternal(string id, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = DownloadMediaInternal(id, context);
-            return Response.FromValue(response.Content, response);
+            Response result = await SendAsync(notificationContent, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((SendMessageResult)result, result);
         }
 
         /// <summary>
         /// [Protocol Method] Download the Media payload from a User to Business message.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="DownloadMediaInternalAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="id"> The stream ID. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> DownloadMediaInternalAsync(string id, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            using var scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.DownloadMediaInternal");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDownloadMediaInternalRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Download the Media payload from a User to Business message.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="DownloadMediaInternal(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="id"> The stream ID. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response DownloadMediaInternal(string id, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            using var scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.DownloadMediaInternal");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.DownloadMediaInternal");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDownloadMediaInternalRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Download the Media payload from a User to Business message.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> The stream ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> DownloadMediaInternalAsync(string id, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.DownloadMediaInternal");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDownloadMediaInternalRequest(id, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Download the Media payload from a User to Business message. </summary>
+        /// <param name="id"> The stream ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<BinaryData> DownloadMediaInternal(string id, CancellationToken cancellationToken = default)
+        {
+            Response result = DownloadMediaInternal(id, cancellationToken.ToRequestContext());
+            return Response.FromValue(result.Content, result);
+        }
+
+        /// <summary> Download the Media payload from a User to Business message. </summary>
+        /// <param name="id"> The stream ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<BinaryData>> DownloadMediaInternalAsync(string id, CancellationToken cancellationToken = default)
+        {
+            Response result = await DownloadMediaInternalAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue(result.Content, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Sends a read receipt update from Business to User.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response SendReadReceipt(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.SendReadReceipt");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateSendReadReceiptRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Sends a read receipt update from Business to User.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> SendReadReceiptAsync(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.SendReadReceipt");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateSendReadReceiptRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -282,176 +288,26 @@ namespace Azure.Communication.Messages
 
         /// <summary> Sends a read receipt update from Business to User. </summary>
         /// <param name="readReceiptContent"> Details of the read receipt update to send. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="readReceiptContent"/> is null. </exception>
-        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendReadReceiptAsync(ReadReceiptContent,CancellationToken)']/*" />
-        public virtual async Task<Response> SendReadReceiptAsync(ReadReceiptContent readReceiptContent, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(readReceiptContent, nameof(readReceiptContent));
-
-            using RequestContent content = readReceiptContent.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await SendReadReceiptAsync(content, context).ConfigureAwait(false);
-            return response;
-        }
-
-        /// <summary> Sends a read receipt update from Business to User. </summary>
-        /// <param name="readReceiptContent"> Details of the read receipt update to send. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="readReceiptContent"/> is null. </exception>
-        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendReadReceipt(ReadReceiptContent,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response SendReadReceipt(ReadReceiptContent readReceiptContent, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(readReceiptContent, nameof(readReceiptContent));
 
-            using RequestContent content = readReceiptContent.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = SendReadReceipt(content, context);
-            return response;
+            return SendReadReceipt(readReceiptContent, cancellationToken.ToRequestContext());
         }
 
-        /// <summary>
-        /// [Protocol Method] Sends a read receipt update from Business to User.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="SendReadReceiptAsync(ReadReceiptContent,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <summary> Sends a read receipt update from Business to User. </summary>
+        /// <param name="readReceiptContent"> Details of the read receipt update to send. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="readReceiptContent"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendReadReceiptAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> SendReadReceiptAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> SendReadReceiptAsync(ReadReceiptContent readReceiptContent, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(readReceiptContent, nameof(readReceiptContent));
 
-            using var scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.SendReadReceipt");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateSendReadReceiptRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return await SendReadReceiptAsync(readReceiptContent, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
-
-        /// <summary>
-        /// [Protocol Method] Sends a read receipt update from Business to User.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="SendReadReceipt(ReadReceiptContent,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendReadReceipt(RequestContent,RequestContext)']/*" />
-        public virtual Response SendReadReceipt(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.SendReadReceipt");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateSendReadReceiptRequest(content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        internal HttpMessage CreateSendRequest(RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/messages/notifications:send", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
-            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDownloadMediaInternalRequest(string id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/messages/streams/", false);
-            uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/octet-stream");
-            return message;
-        }
-
-        internal HttpMessage CreateSendReadReceiptRequest(RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/messages/readreceipts:send", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
-            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
-            {
-                return DefaultRequestContext;
-            }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
-        }
-
-        private static ResponseClassifier _responseClassifier202;
-        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }

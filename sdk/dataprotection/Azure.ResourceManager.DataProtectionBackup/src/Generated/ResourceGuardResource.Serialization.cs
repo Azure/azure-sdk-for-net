@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
+    /// <summary></summary>
     public partial class ResourceGuardResource : IJsonModel<ResourceGuardData>
     {
-        private static ResourceGuardData s_dataDeserializationInstance;
-        private static ResourceGuardData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ResourceGuardData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ResourceGuardData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ResourceGuardData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceGuardData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ResourceGuardData>)Data).Write(writer, options);
 
-        ResourceGuardData IJsonModel<ResourceGuardData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceGuardData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourceGuardData IJsonModel<ResourceGuardData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ResourceGuardData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceGuardData>(Data, options, AzureResourceManagerDataProtectionBackupContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ResourceGuardData IPersistableModel<ResourceGuardData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceGuardData>(data, options, AzureResourceManagerDataProtectionBackupContext.Default);
 
-        string IPersistableModel<ResourceGuardData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceGuardData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ResourceGuardData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

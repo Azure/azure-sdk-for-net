@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure;
 using Azure.Core;
+using Azure.ResourceManager.CommonTypes.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationTemplates;
 
@@ -19,17 +18,23 @@ namespace Azure.ResourceManager.OperationTemplates.Models
     public static partial class ArmOperationTemplatesModelFactory
     {
 
-        /// <summary> The check availability result. </summary>
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="type"> The resource type. </param>
+        /// <returns> A new <see cref="Models.CheckNameAvailabilityRequest"/> instance for mocking. </returns>
+        public static CheckNameAvailabilityRequest CheckNameAvailabilityRequest(string name = default, string @type = default)
+        {
+            return new CheckNameAvailabilityRequest(name, @type, default);
+        }
+
         /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
         /// <returns> A new <see cref="Models.CheckNameAvailabilityResponse"/> instance for mocking. </returns>
         public static CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool? nameAvailable = default, CheckNameAvailabilityReason? reason = default, string message = default)
         {
-            return new CheckNameAvailabilityResponse(nameAvailable, reason, message, additionalBinaryDataProperties: null);
+            return new CheckNameAvailabilityResponse(nameAvailable, reason, message, default);
         }
 
-        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -37,49 +42,45 @@ namespace Azure.ResourceManager.OperationTemplates.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="OperationTemplates.OrderData"/> instance for mocking. </returns>
-        public static OrderData OrderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, OrderProperties properties = default)
+        /// <returns> A new <see cref="Models.Order"/> instance for mocking. </returns>
+        public static Order Order(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, OrderProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new OrderData(
+            return new Order(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> The OrderProperties. </summary>
         /// <param name="productId"> The product ID of the order. </param>
         /// <param name="amount"> Amount of the product. </param>
         /// <param name="provisioningState"> The provisioning state of the product. </param>
         /// <returns> A new <see cref="Models.OrderProperties"/> instance for mocking. </returns>
         public static OrderProperties OrderProperties(string productId = default, int amount = default, string provisioningState = default)
         {
-            return new OrderProperties(productId, amount, provisioningState, additionalBinaryDataProperties: null);
+            return new OrderProperties(productId, amount, provisioningState, default);
         }
 
-        /// <summary> The ExportRequest. </summary>
         /// <param name="format"> Format of the exported order. </param>
         /// <returns> A new <see cref="Models.ExportRequest"/> instance for mocking. </returns>
         public static ExportRequest ExportRequest(string format = default)
         {
-            return new ExportRequest(format, additionalBinaryDataProperties: null);
+            return new ExportRequest(format, default);
         }
 
-        /// <summary> The ExportResult. </summary>
         /// <param name="content"> Content of the exported order. </param>
         /// <returns> A new <see cref="Models.ExportResult"/> instance for mocking. </returns>
         public static ExportResult ExportResult(string content = default)
         {
-            return new ExportResult(content, additionalBinaryDataProperties: null);
+            return new ExportResult(content, default);
         }
 
-        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -97,37 +98,50 @@ namespace Azure.ResourceManager.OperationTemplates.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> The WidgetProperties. </summary>
         /// <param name="name"> The name of the widget. </param>
         /// <param name="description"> The description of the widget. </param>
         /// <param name="provisioningState"> The provisioning state of the widget. </param>
         /// <returns> A new <see cref="Models.WidgetProperties"/> instance for mocking. </returns>
         public static WidgetProperties WidgetProperties(string name = default, string description = default, string provisioningState = default)
         {
-            return new WidgetProperties(name, description, provisioningState, additionalBinaryDataProperties: null);
+            return new WidgetProperties(name, description, provisioningState, default);
         }
 
-        /// <summary> The ActionResult. </summary>
+        /// <param name="actionType"> The action type to perform. </param>
+        /// <param name="parameters"> Additional action parameters. </param>
+        /// <returns> A new <see cref="Models.ActionRequest"/> instance for mocking. </returns>
+        public static ActionRequest ActionRequest(string actionType = default, string parameters = default)
+        {
+            return new ActionRequest(actionType, parameters, default);
+        }
+
         /// <param name="result"> The result of the action. </param>
         /// <returns> A new <see cref="Models.ActionResult"/> instance for mocking. </returns>
         public static ActionResult ActionResult(string result = default)
         {
-            return new ActionResult(result, additionalBinaryDataProperties: null);
+            return new ActionResult(result, default);
         }
 
-        /// <summary> The ChangeAllowanceResult. </summary>
+        /// <param name="totalAllowed"> The new total allowed widgets. </param>
+        /// <param name="reason"> The reason for the change. </param>
+        /// <returns> A new <see cref="Models.ChangeAllowanceRequest"/> instance for mocking. </returns>
+        public static ChangeAllowanceRequest ChangeAllowanceRequest(int? totalAllowed = default, string reason = default)
+        {
+            return new ChangeAllowanceRequest(totalAllowed, reason, default);
+        }
+
         /// <param name="totalAllowed"> The new total allowed widgets. </param>
         /// <param name="status"> The status of the change. </param>
         /// <returns> A new <see cref="Models.ChangeAllowanceResult"/> instance for mocking. </returns>
         public static ChangeAllowanceResult ChangeAllowanceResult(int totalAllowed = default, string status = default)
         {
-            return new ChangeAllowanceResult(totalAllowed, status, additionalBinaryDataProperties: null);
+            return new ChangeAllowanceResult(totalAllowed, status, default);
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     internal static partial class StorageAccountStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this StorageAccountStatus value) => value switch
         {
             StorageAccountStatus.Available => "available",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Storage.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageAccountStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static StorageAccountStatus ToStorageAccountStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "available")) return StorageAccountStatus.Available;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unavailable")) return StorageAccountStatus.Unavailable;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "available"))
+            {
+                return StorageAccountStatus.Available;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unavailable"))
+            {
+                return StorageAccountStatus.Unavailable;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageAccountStatus value.");
         }
     }

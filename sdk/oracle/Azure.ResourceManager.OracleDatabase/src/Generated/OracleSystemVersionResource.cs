@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(ResourceType, out string oracleSystemVersionApiVersion);
             _systemVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
-            _systemVersionsRestClient = new SystemVersions(_systemVersionsClientDiagnostics, Pipeline, Endpoint, oracleSystemVersionApiVersion ?? "2025-09-01");
+            _systemVersionsRestClient = new SystemVersions(_systemVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleSystemVersionApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

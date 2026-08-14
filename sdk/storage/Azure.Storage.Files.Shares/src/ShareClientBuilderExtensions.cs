@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.ComponentModel;
-using Azure.Core.Extensions;
+using System.Diagnostics.CodeAnalysis;
+using Azure;
 using Azure.Core;
+using Azure.Core.Extensions;
 using Azure.Storage;
 using Azure.Storage.Files.Shares;
-using Azure;
 
 namespace Microsoft.Extensions.Azure
 {

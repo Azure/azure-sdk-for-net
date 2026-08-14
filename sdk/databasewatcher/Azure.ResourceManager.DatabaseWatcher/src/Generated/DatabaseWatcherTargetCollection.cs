@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         {
             TryGetApiVersion(DatabaseWatcherTargetResource.ResourceType, out string databaseWatcherTargetApiVersion);
             _targetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher", DatabaseWatcherTargetResource.ResourceType.Namespace, Diagnostics);
-            _targetsRestClient = new Targets(_targetsClientDiagnostics, Pipeline, Endpoint, databaseWatcherTargetApiVersion ?? "2025-01-02");
+            _targetsRestClient = new Targets(_targetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databaseWatcherTargetApiVersion ?? "2025-01-02");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         {
             if (id.ResourceType != DatabaseWatcherResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DatabaseWatcherResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DatabaseWatcherResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabaseWatcherTargetData, DatabaseWatcherTargetResource>(new TargetsGetByWatcherAsyncCollectionResultOfT(_targetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DatabaseWatcherTargetResource(Client, data));
+            return new AsyncPageableWrapper<DatabaseWatcherTargetData, DatabaseWatcherTargetResource>(new TargetsGetByWatcherAsyncCollectionResultOfT(
+                _targetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DatabaseWatcherTargetCollection.GetAll"), data => new DatabaseWatcherTargetResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabaseWatcherTargetData, DatabaseWatcherTargetResource>(new TargetsGetByWatcherCollectionResultOfT(_targetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DatabaseWatcherTargetResource(Client, data));
+            return new PageableWrapper<DatabaseWatcherTargetData, DatabaseWatcherTargetResource>(new TargetsGetByWatcherCollectionResultOfT(
+                _targetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DatabaseWatcherTargetCollection.GetAll"), data => new DatabaseWatcherTargetResource(Client, data));
         }
 
         /// <summary>

@@ -60,15 +60,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="azureActiveDirectory"> The AAD authentication settings of the cluster. </param>
         /// <param name="fabricSettings"> The list of custom fabric settings to configure the cluster. </param>
         /// <param name="provisioningState"> The provisioning state of the managed cluster resource. </param>
-        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property is required when **clusterUpgradeMode** is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </param>
+        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property is required when <b>clusterUpgradeMode</b> is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use <b>availableClusterVersions</b>. </param>
         /// <param name="clusterUpgradeMode"> The upgrade mode of the cluster when new Service Fabric runtime version is available. </param>
-        /// <param name="clusterUpgradeCadence"> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **clusterUpgradeMode** is set to 'Automatic'. </param>
+        /// <param name="clusterUpgradeCadence"> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when <b>clusterUpgradeMode</b> is set to 'Automatic'. </param>
         /// <param name="addOnFeatures"> List of add-on features to enable on the cluster. </param>
         /// <param name="isAutoOSUpgradeEnabled"> Enables automatic OS upgrade for node types created using OS images with version 'latest'. The default value for this setting is false. </param>
         /// <param name="hasZoneResiliency"> Indicates if the cluster has zone resiliency. </param>
         /// <param name="applicationTypeVersionsCleanupPolicy"> The policy used to clean up unused versions. </param>
         /// <param name="isIPv6Enabled"> Setting this to true creates IPv6 address space for the default VNet used by the cluster. This setting cannot be changed once the cluster is created. The default value for this setting is false. </param>
-        /// <param name="subnetId"> If specified, the node types for the cluster are created in this subnet instead of the default VNet. The **networkSecurityRules** specified for the cluster are also applied to this subnet. This setting cannot be changed once the cluster is created. </param>
+        /// <param name="subnetId"> If specified, the node types for the cluster are created in this subnet instead of the default VNet. The <b>networkSecurityRules</b> specified for the cluster are also applied to this subnet. This setting cannot be changed once the cluster is created. </param>
         /// <param name="ipTags"> The list of IP tags associated with the default public IP address of the cluster. </param>
         /// <param name="iPv6Address"> IPv6 address for the cluster if IPv6 is enabled. </param>
         /// <param name="isServicePublicIPEnabled"> Setting this to true will link the IPv4 address as the ServicePublicIP of the IPv6 address. It can only be set to True if IPv6 is enabled on the cluster. </param>
@@ -86,8 +86,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="allocatedOutboundPorts"> The number of outbound ports allocated for SNAT for each node in the backend pool of the default load balancer. The default value is 0 which provides dynamic port allocation based on pool size. </param>
         /// <param name="vmImage"> The VM image the node types are configured with. This property controls the Service Fabric component packages to be used for the cluster. Allowed values are: 'Windows'. The default value is 'Windows'. </param>
         /// <param name="enableOutboundOnlyNodeTypes"> Enable the creation of node types with only outbound traffic enabled. If set, a separate load balancer backend pool will be created for node types with inbound traffic enabled. Can only be set at the time of cluster creation. </param>
+        /// <param name="skipManagedNsgAssignment"> Determines whether to skip the assignment of the managed network security group (SF-NSG) to the cluster subnet when using a bring-your-own virtual network (BYOVNET) configuration. The default value is false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterProperties(string dnsName, string fqdn, IPAddress iPv4Address, Guid? clusterId, ServiceFabricManagedClusterState? clusterState, IReadOnlyList<BinaryData> clusterCertificateThumbprints, int? clientConnectionPort, int? httpGatewayConnectionPort, string adminUserName, string adminPassword, IList<ManagedClusterLoadBalancingRule> loadBalancingRules, bool? isRdpAccessAllowed, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<ManagedClusterClientCertificate> clients, ManagedClusterAzureActiveDirectory azureActiveDirectory, IList<ClusterFabricSettingsSection> fabricSettings, ServiceFabricManagedResourceProvisioningState? provisioningState, string clusterCodeVersion, ManagedClusterUpgradeMode? clusterUpgradeMode, ManagedClusterUpgradeCadence? clusterUpgradeCadence, IList<ManagedClusterAddOnFeature> addOnFeatures, bool? isAutoOSUpgradeEnabled, bool? hasZoneResiliency, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, bool? isIPv6Enabled, string subnetId, IList<ManagedClusterIPTag> ipTags, IPAddress iPv6Address, bool? isServicePublicIPEnabled, IList<ManagedClusterSubnet> auxiliarySubnets, IList<ManagedClusterServiceEndpoint> serviceEndpoints, ZonalUpdateMode? zonalUpdateMode, bool? useCustomVnet, ResourceIdentifier publicIPPrefixId, ResourceIdentifier publicIPv6PrefixId, ResourceIdentifier ddosProtectionPlanId, ManagedClusterUpgradePolicy upgradeDescription, int? httpGatewayTokenAuthConnectionPort, bool? isHttpGatewayExclusiveAuthModeEnabled, AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope, int? allocatedOutboundPorts, string vmImage, bool? enableOutboundOnlyNodeTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterProperties(string dnsName, string fqdn, IPAddress iPv4Address, Guid? clusterId, ServiceFabricManagedClusterState? clusterState, IReadOnlyList<BinaryData> clusterCertificateThumbprints, int? clientConnectionPort, int? httpGatewayConnectionPort, string adminUserName, string adminPassword, IList<ManagedClusterLoadBalancingRule> loadBalancingRules, bool? isRdpAccessAllowed, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<ManagedClusterClientCertificate> clients, ManagedClusterAzureActiveDirectory azureActiveDirectory, IList<ClusterFabricSettingsSection> fabricSettings, ServiceFabricManagedResourceProvisioningState? provisioningState, string clusterCodeVersion, ManagedClusterUpgradeMode? clusterUpgradeMode, ManagedClusterUpgradeCadence? clusterUpgradeCadence, IList<ManagedClusterAddOnFeature> addOnFeatures, bool? isAutoOSUpgradeEnabled, bool? hasZoneResiliency, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, bool? isIPv6Enabled, string subnetId, IList<ManagedClusterIPTag> ipTags, IPAddress iPv6Address, bool? isServicePublicIPEnabled, IList<ManagedClusterSubnet> auxiliarySubnets, IList<ManagedClusterServiceEndpoint> serviceEndpoints, ZonalUpdateMode? zonalUpdateMode, bool? useCustomVnet, ResourceIdentifier publicIPPrefixId, ResourceIdentifier publicIPv6PrefixId, ResourceIdentifier ddosProtectionPlanId, ManagedClusterUpgradePolicy upgradeDescription, int? httpGatewayTokenAuthConnectionPort, bool? isHttpGatewayExclusiveAuthModeEnabled, AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope, int? allocatedOutboundPorts, string vmImage, bool? enableOutboundOnlyNodeTypes, bool? skipManagedNsgAssignment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DnsName = dnsName;
             Fqdn = fqdn;
@@ -132,6 +133,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             AllocatedOutboundPorts = allocatedOutboundPorts;
             VmImage = vmImage;
             EnableOutboundOnlyNodeTypes = enableOutboundOnlyNodeTypes;
+            SkipManagedNsgAssignment = skipManagedNsgAssignment;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -211,13 +213,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> The provisioning state of the managed cluster resource. </summary>
         public ServiceFabricManagedResourceProvisioningState? ProvisioningState { get; }
 
-        /// <summary> The Service Fabric runtime version of the cluster. This property is required when **clusterUpgradeMode** is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </summary>
+        /// <summary> The Service Fabric runtime version of the cluster. This property is required when <b>clusterUpgradeMode</b> is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use <b>availableClusterVersions</b>. </summary>
         public string ClusterCodeVersion { get; set; }
 
         /// <summary> The upgrade mode of the cluster when new Service Fabric runtime version is available. </summary>
         public ManagedClusterUpgradeMode? ClusterUpgradeMode { get; set; }
 
-        /// <summary> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **clusterUpgradeMode** is set to 'Automatic'. </summary>
+        /// <summary> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when <b>clusterUpgradeMode</b> is set to 'Automatic'. </summary>
         public ManagedClusterUpgradeCadence? ClusterUpgradeCadence { get; set; }
 
         /// <summary> List of add-on features to enable on the cluster. </summary>
@@ -235,7 +237,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Setting this to true creates IPv6 address space for the default VNet used by the cluster. This setting cannot be changed once the cluster is created. The default value for this setting is false. </summary>
         public bool? IsIPv6Enabled { get; set; }
 
-        /// <summary> If specified, the node types for the cluster are created in this subnet instead of the default VNet. The **networkSecurityRules** specified for the cluster are also applied to this subnet. This setting cannot be changed once the cluster is created. </summary>
+        /// <summary> If specified, the node types for the cluster are created in this subnet instead of the default VNet. The <b>networkSecurityRules</b> specified for the cluster are also applied to this subnet. This setting cannot be changed once the cluster is created. </summary>
         public string SubnetId { get; set; }
 
         /// <summary> The list of IP tags associated with the default public IP address of the cluster. </summary>
@@ -288,6 +290,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Enable the creation of node types with only outbound traffic enabled. If set, a separate load balancer backend pool will be created for node types with inbound traffic enabled. Can only be set at the time of cluster creation. </summary>
         public bool? EnableOutboundOnlyNodeTypes { get; set; }
+
+        /// <summary> Determines whether to skip the assignment of the managed network security group (SF-NSG) to the cluster subnet when using a bring-your-own virtual network (BYOVNET) configuration. The default value is false. </summary>
+        public bool? SkipManagedNsgAssignment { get; set; }
 
         /// <summary> Number of unused versions per application type to keep. </summary>
         public int? MaxUnusedVersionsToKeep

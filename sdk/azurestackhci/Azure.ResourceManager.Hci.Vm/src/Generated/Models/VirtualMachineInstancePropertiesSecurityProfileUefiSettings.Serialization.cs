@@ -16,6 +16,46 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> Uefi settings - Specifies whether secure boot should be enabled on the virtual machine instance. </summary>
     internal partial class VirtualMachineInstancePropertiesSecurityProfileUefiSettings : IJsonModel<VirtualMachineInstancePropertiesSecurityProfileUefiSettings>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VirtualMachineInstancePropertiesSecurityProfileUefiSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstancePropertiesSecurityProfileUefiSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVirtualMachineInstancePropertiesSecurityProfileUefiSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesSecurityProfileUefiSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstancePropertiesSecurityProfileUefiSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesSecurityProfileUefiSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VirtualMachineInstancePropertiesSecurityProfileUefiSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualMachineInstancePropertiesSecurityProfileUefiSettings IPersistableModel<VirtualMachineInstancePropertiesSecurityProfileUefiSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VirtualMachineInstancePropertiesSecurityProfileUefiSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualMachineInstancePropertiesSecurityProfileUefiSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -34,10 +74,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesSecurityProfileUefiSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SecureBootEnabled))
+            if (Optional.IsDefined(IsSecureBootEnabled))
             {
                 writer.WritePropertyName("secureBootEnabled"u8);
-                writer.WriteBooleanValue(SecureBootEnabled.Value);
+                writer.WriteBooleanValue(IsSecureBootEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -81,7 +121,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 return null;
             }
-            bool? secureBootEnabled = default;
+            bool? isSecureBootEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -91,7 +131,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    secureBootEnabled = prop.Value.GetBoolean();
+                    isSecureBootEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -99,47 +139,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualMachineInstancePropertiesSecurityProfileUefiSettings(secureBootEnabled, additionalBinaryDataProperties);
+            return new VirtualMachineInstancePropertiesSecurityProfileUefiSettings(isSecureBootEnabled, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VirtualMachineInstancePropertiesSecurityProfileUefiSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstancePropertiesSecurityProfileUefiSettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesSecurityProfileUefiSettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualMachineInstancePropertiesSecurityProfileUefiSettings IPersistableModel<VirtualMachineInstancePropertiesSecurityProfileUefiSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VirtualMachineInstancePropertiesSecurityProfileUefiSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstancePropertiesSecurityProfileUefiSettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeVirtualMachineInstancePropertiesSecurityProfileUefiSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesSecurityProfileUefiSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VirtualMachineInstancePropertiesSecurityProfileUefiSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

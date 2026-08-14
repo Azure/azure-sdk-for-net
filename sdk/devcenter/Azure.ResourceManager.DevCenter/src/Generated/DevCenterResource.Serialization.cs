@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DevCenter
 {
+    /// <summary></summary>
     public partial class DevCenterResource : IJsonModel<DevCenterData>
     {
-        private static DevCenterData s_dataDeserializationInstance;
-        private static DevCenterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DevCenterData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DevCenterData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DevCenterData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevCenterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterData>)Data).Write(writer, options);
 
-        DevCenterData IJsonModel<DevCenterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DevCenterData IJsonModel<DevCenterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DevCenterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevCenterData>(Data, options, AzureResourceManagerDevCenterContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DevCenterData IPersistableModel<DevCenterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevCenterData>(data, options, AzureResourceManagerDevCenterContext.Default);
 
-        string IPersistableModel<DevCenterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevCenterData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DevCenterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

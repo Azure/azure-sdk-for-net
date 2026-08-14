@@ -20,11 +20,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="type"> GeoJSON type identifier. </param>
         /// <param name="geometry"> Geometry object defining the feature's shape. </param>
         /// <param name="properties"> Properties. </param>
-        internal TilerInfoGeoJsonFeature(FeatureType @type, GeoJsonGeometry geometry, IDictionary<string, TilerInfo> properties)
+        internal TilerInfoGeoJsonFeature(FeatureKind @type, GeoJsonGeometry geometry, IDictionary<string, TilerInfo> properties)
         {
             Type = @type;
             Geometry = geometry;
             Properties = properties;
+            BoundingBox = new ChangeTrackingList<float>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TilerInfoGeoJsonFeature"/>. </summary>
@@ -34,7 +35,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="id"> Unique identifier for the feature. </param>
         /// <param name="boundingBox"> Bounding box coordinates for the feature. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TilerInfoGeoJsonFeature(FeatureType @type, GeoJsonGeometry geometry, IDictionary<string, TilerInfo> properties, string id, float? boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TilerInfoGeoJsonFeature(FeatureKind @type, GeoJsonGeometry geometry, IDictionary<string, TilerInfo> properties, string id, IList<float> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Geometry = geometry;
@@ -45,7 +46,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> GeoJSON type identifier. </summary>
-        public FeatureType Type { get; }
+        public FeatureKind Type { get; }
 
         /// <summary> Geometry object defining the feature's shape. </summary>
         public GeoJsonGeometry Geometry { get; }
@@ -57,6 +58,6 @@ namespace Azure.Analytics.PlanetaryComputer
         public string Id { get; }
 
         /// <summary> Bounding box coordinates for the feature. </summary>
-        public float? BoundingBox { get; }
+        public IList<float> BoundingBox { get; }
     }
 }

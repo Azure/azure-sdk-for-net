@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.ServiceBus.Models
     public readonly partial struct ServiceBusPublicNetworkAccess : IEquatable<ServiceBusPublicNetworkAccess>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ServiceBusPublicNetworkAccess"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ServiceBusPublicNetworkAccess(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
         private const string SecuredByPerimeterValue = "SecuredByPerimeter";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusPublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ServiceBusPublicNetworkAccess(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Enabled. </summary>
         public static ServiceBusPublicNetworkAccess Enabled { get; } = new ServiceBusPublicNetworkAccess(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static ServiceBusPublicNetworkAccess Disabled { get; } = new ServiceBusPublicNetworkAccess(DisabledValue);
-        /// <summary> SecuredByPerimeter. </summary>
+
+        /// <summary> Gets the SecuredByPerimeter. </summary>
         public static ServiceBusPublicNetworkAccess SecuredByPerimeter { get; } = new ServiceBusPublicNetworkAccess(SecuredByPerimeterValue);
+
         /// <summary> Determines if two <see cref="ServiceBusPublicNetworkAccess"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceBusPublicNetworkAccess left, ServiceBusPublicNetworkAccess right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceBusPublicNetworkAccess"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceBusPublicNetworkAccess left, ServiceBusPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceBusPublicNetworkAccess"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceBusPublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceBusPublicNetworkAccess(string value) => new ServiceBusPublicNetworkAccess(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceBusPublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceBusPublicNetworkAccess?(string value) => value == null ? null : new ServiceBusPublicNetworkAccess(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceBusPublicNetworkAccess other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceBusPublicNetworkAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

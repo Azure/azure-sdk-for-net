@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Represents a Configuration. </summary>
     public partial class MySqlFlexibleServerConfigurationForBatchUpdate
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerConfigurationForBatchUpdate"/>. </summary>
         public MySqlFlexibleServerConfigurationForBatchUpdate()
@@ -52,22 +23,53 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerConfigurationForBatchUpdate"/>. </summary>
         /// <param name="name"> Name of the configuration. </param>
-        /// <param name="value"> Value of the configuration. </param>
-        /// <param name="source"> Source of the configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerConfigurationForBatchUpdate(string name, string value, string source, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The properties can be updated for a configuration. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerConfigurationForBatchUpdate(string name, ConfigurationForBatchUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Value = value;
-            Source = source;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the configuration. </summary>
         public string Name { get; set; }
+
+        /// <summary> The properties can be updated for a configuration. </summary>
+        internal ConfigurationForBatchUpdateProperties Properties { get; set; }
+
         /// <summary> Value of the configuration. </summary>
-        public string Value { get; set; }
+        public string Value
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Value;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationForBatchUpdateProperties();
+                }
+                Properties.Value = value;
+            }
+        }
+
         /// <summary> Source of the configuration. </summary>
-        public string Source { get; set; }
+        public string Source
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Source;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationForBatchUpdateProperties();
+                }
+                Properties.Source = value;
+            }
+        }
     }
 }

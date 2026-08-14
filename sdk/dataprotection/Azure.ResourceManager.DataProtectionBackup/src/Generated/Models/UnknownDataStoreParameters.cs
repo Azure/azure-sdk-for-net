@@ -10,20 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> Unknown version of DataStoreParameters. </summary>
     internal partial class UnknownDataStoreParameters : DataStoreSettings
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataStoreParameters"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="dataStoreType"> type of datastore; Operational/Vault/Archive. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDataStoreParameters(string objectType, DataStoreType dataStoreType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(objectType, dataStoreType, serializedAdditionalRawData)
-        {
-            ObjectType = objectType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownDataStoreParameters"/> for deserialization. </summary>
-        internal UnknownDataStoreParameters()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDataStoreParameters(string objectType, DataStoreType dataStoreType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(objectType ?? "unknown", dataStoreType, additionalBinaryDataProperties)
         {
         }
     }

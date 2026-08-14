@@ -3,8 +3,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Administration;
 using Azure.Identity;
+using Azure.Messaging.ServiceBus.Administration;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
@@ -81,7 +81,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 QueueProperties createdQueue = await client.CreateQueueAsync(options);
                 #endregion
-                Assert.AreEqual(options, new CreateQueueOptions(createdQueue) { MaxMessageSizeInKilobytes = options.MaxMessageSizeInKilobytes});
+                Assert.AreEqual(options, new CreateQueueOptions(createdQueue) { MaxMessageSizeInKilobytes = options.MaxMessageSizeInKilobytes });
             }
             finally
             {
@@ -166,7 +166,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 };
                 SubscriptionProperties createdSubscription = await client.CreateSubscriptionAsync(subscriptionOptions);
                 #endregion
-                Assert.AreEqual(topicOptions, new CreateTopicOptions(createdTopic) { MaxMessageSizeInKilobytes = topicOptions.MaxMessageSizeInKilobytes});
+                Assert.AreEqual(topicOptions, new CreateTopicOptions(createdTopic) { MaxMessageSizeInKilobytes = topicOptions.MaxMessageSizeInKilobytes });
                 Assert.AreEqual(subscriptionOptions, new CreateSubscriptionOptions(createdSubscription));
             }
             finally

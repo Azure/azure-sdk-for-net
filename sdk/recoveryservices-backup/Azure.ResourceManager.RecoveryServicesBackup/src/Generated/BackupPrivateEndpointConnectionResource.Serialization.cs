@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
+    /// <summary></summary>
     public partial class BackupPrivateEndpointConnectionResource : IJsonModel<BackupPrivateEndpointConnectionData>
     {
-        private static BackupPrivateEndpointConnectionData s_dataDeserializationInstance;
-        private static BackupPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<BackupPrivateEndpointConnectionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<BackupPrivateEndpointConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new BackupPrivateEndpointConnectionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BackupPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BackupPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        BackupPrivateEndpointConnectionData IJsonModel<BackupPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BackupPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BackupPrivateEndpointConnectionData IJsonModel<BackupPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<BackupPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BackupPrivateEndpointConnectionData>(Data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         BackupPrivateEndpointConnectionData IPersistableModel<BackupPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackupPrivateEndpointConnectionData>(data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
-        string IPersistableModel<BackupPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BackupPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BackupPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

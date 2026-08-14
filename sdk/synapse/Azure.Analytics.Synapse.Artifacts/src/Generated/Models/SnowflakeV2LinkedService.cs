@@ -70,7 +70,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal SnowflakeV2LinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object accountIdentifier, object user, SecretBase password, object database, object warehouse, SnowflakeAuthenticationType? authenticationType, object clientId, SecretBase clientSecret, object tenantId, object scope, object role, object host, object schema, SecretBase privateKey, SecretBase privateKeyPassphrase, string encryptedCredential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="useUtcTimestamps"> Indicates whether to use UTC timezone for timestamp data types. Type: boolean. </param>
+        internal SnowflakeV2LinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object accountIdentifier, object user, SecretBase password, object database, object warehouse, SnowflakeAuthenticationType? authenticationType, object clientId, SecretBase clientSecret, object tenantId, object scope, object role, object host, object schema, SecretBase privateKey, SecretBase privateKeyPassphrase, string encryptedCredential, object useUtcTimestamps) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             AccountIdentifier = accountIdentifier;
             User = user;
@@ -88,6 +89,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             PrivateKey = privateKey;
             PrivateKeyPassphrase = privateKeyPassphrase;
             EncryptedCredential = encryptedCredential;
+            UseUtcTimestamps = useUtcTimestamps;
             Type = type ?? "SnowflakeV2";
         }
 
@@ -139,5 +141,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public SecretBase PrivateKeyPassphrase { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
+        /// <summary> Indicates whether to use UTC timezone for timestamp data types. Type: boolean. </summary>
+        public object UseUtcTimestamps { get; set; }
     }
 }

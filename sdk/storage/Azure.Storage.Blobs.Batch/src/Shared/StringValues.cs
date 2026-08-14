@@ -17,6 +17,7 @@ namespace Azure.Core.Http.Multipart
     /// <summary>
     /// Represents zero/null, one, or many strings in an efficient way.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     internal readonly struct StringValues : IList<string>, IReadOnlyList<string>, IEquatable<StringValues>, IEquatable<string>, IEquatable<string[]>
     {
         public static readonly StringValues Empty = new StringValues(Array.Empty<string>());
@@ -176,7 +177,8 @@ namespace Azure.Core.Http.Multipart
                 }
 #if NETCOREAPP
                 // Create the new string
-                return string.Create(length, values, (span, strings) => {
+                return string.Create(length, values, (span, strings) =>
+                {
                     var offset = 0;
                     // Skip null and empty values
                     for (var i = 0; i < strings.Length; i++)

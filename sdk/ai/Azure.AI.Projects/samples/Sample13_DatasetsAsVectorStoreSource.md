@@ -14,11 +14,11 @@ This sample demonstrates how to make use of datasets to create a Vector Store, t
 Start by initializing the necessary local variables based on preset environment variables, and initialize the `AIProjectClient`.
 
 ```C# Snippet:AI_Projects_VectorStoreWithDatasetsInitializeProjectClient
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
 var datasetVersion = System.Environment.GetEnvironmentVariable("DATASET_VERSION");
 var filePath = System.Environment.GetEnvironmentVariable("SAMPLE_FILE_PATH");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 ```

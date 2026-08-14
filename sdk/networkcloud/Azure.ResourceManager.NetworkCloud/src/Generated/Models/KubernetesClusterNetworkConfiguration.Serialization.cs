@@ -11,13 +11,60 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class KubernetesClusterNetworkConfiguration : IUtf8JsonSerializable, IJsonModel<KubernetesClusterNetworkConfiguration>
+    /// <summary> NetworkConfiguration specifies the Kubernetes cluster network related configuration. </summary>
+    public partial class KubernetesClusterNetworkConfiguration : IJsonModel<KubernetesClusterNetworkConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesClusterNetworkConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterNetworkConfiguration"/> for deserialization. </summary>
+        internal KubernetesClusterNetworkConfiguration()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KubernetesClusterNetworkConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKubernetesClusterNetworkConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesClusterNetworkConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesClusterNetworkConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KubernetesClusterNetworkConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KubernetesClusterNetworkConfiguration IPersistableModel<KubernetesClusterNetworkConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KubernetesClusterNetworkConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KubernetesClusterNetworkConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +76,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KubernetesClusterNetworkConfiguration)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(AttachedNetworkConfiguration))
             {
                 writer.WritePropertyName("attachedNetworkConfiguration"u8);
@@ -63,8 +109,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 writer.WritePropertyName("podCidrs"u8);
                 writer.WriteStartArray();
-                foreach (var item in PodCidrs)
+                foreach (string item in PodCidrs)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -73,21 +124,26 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 writer.WritePropertyName("serviceCidrs"u8);
                 writer.WriteStartArray();
-                foreach (var item in ServiceCidrs)
+                foreach (string item in ServiceCidrs)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -96,22 +152,27 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
         }
 
-        KubernetesClusterNetworkConfiguration IJsonModel<KubernetesClusterNetworkConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KubernetesClusterNetworkConfiguration IJsonModel<KubernetesClusterNetworkConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KubernetesClusterNetworkConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KubernetesClusterNetworkConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKubernetesClusterNetworkConfiguration(document.RootElement, options);
         }
 
-        internal static KubernetesClusterNetworkConfiguration DeserializeKubernetesClusterNetworkConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static KubernetesClusterNetworkConfiguration DeserializeKubernetesClusterNetworkConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -124,90 +185,102 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             L2ServiceLoadBalancerConfiguration l2ServiceLoadBalancerConfiguration = default;
             IList<string> podCidrs = default;
             IList<string> serviceCidrs = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("attachedNetworkConfiguration"u8))
+                if (prop.NameEquals("attachedNetworkConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    attachedNetworkConfiguration = AttachedNetworkConfiguration.DeserializeAttachedNetworkConfiguration(property.Value, options);
+                    attachedNetworkConfiguration = AttachedNetworkConfiguration.DeserializeAttachedNetworkConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("bgpServiceLoadBalancerConfiguration"u8))
+                if (prop.NameEquals("bgpServiceLoadBalancerConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    bgpServiceLoadBalancerConfiguration = BgpServiceLoadBalancerConfiguration.DeserializeBgpServiceLoadBalancerConfiguration(property.Value, options);
+                    bgpServiceLoadBalancerConfiguration = BgpServiceLoadBalancerConfiguration.DeserializeBgpServiceLoadBalancerConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("cloudServicesNetworkId"u8))
+                if (prop.NameEquals("cloudServicesNetworkId"u8))
                 {
-                    cloudServicesNetworkId = new ResourceIdentifier(property.Value.GetString());
+                    cloudServicesNetworkId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cniNetworkId"u8))
+                if (prop.NameEquals("cniNetworkId"u8))
                 {
-                    cniNetworkId = new ResourceIdentifier(property.Value.GetString());
+                    cniNetworkId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dnsServiceIp"u8))
+                if (prop.NameEquals("dnsServiceIp"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dnsServiceIP = IPAddress.Parse(property.Value.GetString());
+                    dnsServiceIP = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("l2ServiceLoadBalancerConfiguration"u8))
+                if (prop.NameEquals("l2ServiceLoadBalancerConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    l2ServiceLoadBalancerConfiguration = L2ServiceLoadBalancerConfiguration.DeserializeL2ServiceLoadBalancerConfiguration(property.Value, options);
+                    l2ServiceLoadBalancerConfiguration = L2ServiceLoadBalancerConfiguration.DeserializeL2ServiceLoadBalancerConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("podCidrs"u8))
+                if (prop.NameEquals("podCidrs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     podCidrs = array;
                     continue;
                 }
-                if (property.NameEquals("serviceCidrs"u8))
+                if (prop.NameEquals("serviceCidrs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     serviceCidrs = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new KubernetesClusterNetworkConfiguration(
                 attachedNetworkConfiguration,
                 bgpServiceLoadBalancerConfiguration,
@@ -217,38 +290,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 l2ServiceLoadBalancerConfiguration,
                 podCidrs ?? new ChangeTrackingList<string>(),
                 serviceCidrs ?? new ChangeTrackingList<string>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<KubernetesClusterNetworkConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterNetworkConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        KubernetesClusterNetworkConfiguration IPersistableModel<KubernetesClusterNetworkConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeKubernetesClusterNetworkConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterNetworkConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<KubernetesClusterNetworkConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

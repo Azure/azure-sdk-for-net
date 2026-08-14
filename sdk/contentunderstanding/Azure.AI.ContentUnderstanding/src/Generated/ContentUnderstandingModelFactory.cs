@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 
@@ -15,21 +16,22 @@ namespace Azure.AI.ContentUnderstanding
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ContentUnderstandingModelFactory
     {
+
         /// <summary> Additional input to analyze. </summary>
-        /// <param name="url"> The URL of the input to analyze.  Only one of url or data should be specified. </param>
+        /// <param name="uri"> The URL of the input to analyze.  Only one of url or data should be specified. </param>
         /// <param name="data"> Raw image bytes. Provide bytes-like object; do not base64-encode. Only one of url or data should be specified. </param>
         /// <param name="name"> Name of the input. </param>
         /// <param name="mimeType"> The MIME type of the input content.  Ex. application/pdf, image/jpeg, etc. </param>
-        /// <param name="inputRange"> Range of the input to analyze (ex. `1-3,5,9-`).  Document content uses 1-based page numbers, while audio visual content uses integer milliseconds. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.AnalyzeInput"/> instance for mocking. </returns>
-        public static AnalyzeInput AnalyzeInput(Uri url = default, BinaryData data = default, string name = default, string mimeType = default, string inputRange = default)
+        /// <param name="contentRangeValue"> Range of the input to analyze (ex. `1-3,5,9-`).  Document content uses 1-based page numbers, while audio visual content uses integer milliseconds. </param>
+        /// <returns> A new <see cref="ContentUnderstanding.AnalysisInput"/> instance for mocking. </returns>
+        public static AnalysisInput AnalysisInput(Uri uri = default, BinaryData data = default, string name = default, string mimeType = default, string contentRangeValue = default)
         {
-            return new AnalyzeInput(
-                url,
+            return new AnalysisInput(
+                uri,
                 data,
                 name,
                 mimeType,
-                inputRange,
+                contentRangeValue,
                 additionalBinaryDataProperties: null);
         }
 
@@ -38,22 +40,25 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="apiVersion"> The version of the API used to analyze the document. </param>
         /// <param name="createdAt"> The date and time when the result was created. </param>
         /// <param name="warnings"> Warnings encountered while analyzing the document. </param>
+        /// <param name="infos"> Additional diagnostic information about the analysis. </param>
         /// <param name="stringEncoding">
         ///   The string encoding format for content spans in the response.
         ///   Possible values are 'codePoint', 'utf16', and `utf8`.  Default is `codePoint`.")
         /// </param>
         /// <param name="contents"> The extracted content. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.AnalyzeResult"/> instance for mocking. </returns>
-        public static AnalyzeResult AnalyzeResult(string analyzerId = default, string apiVersion = default, DateTimeOffset? createdAt = default, IEnumerable<ResponseError> warnings = default, string stringEncoding = default, IEnumerable<MediaContent> contents = default)
+        /// <returns> A new <see cref="ContentUnderstanding.AnalysisResult"/> instance for mocking. </returns>
+        public static AnalysisResult AnalysisResult(string analyzerId = default, string apiVersion = default, DateTimeOffset? createdAt = default, IEnumerable<ResponseError> warnings = default, IEnumerable<ResponseError> infos = default, string stringEncoding = default, IEnumerable<AnalysisContent> contents = default)
         {
             warnings ??= new ChangeTrackingList<ResponseError>();
-            contents ??= new ChangeTrackingList<MediaContent>();
+            infos ??= new ChangeTrackingList<ResponseError>();
+            contents ??= new ChangeTrackingList<AnalysisContent>();
 
-            return new AnalyzeResult(
+            return new AnalysisResult(
                 analyzerId,
                 apiVersion,
                 createdAt,
                 warnings.ToList(),
+                infos.ToList(),
                 stringEncoding,
                 contents.ToList(),
                 additionalBinaryDataProperties: null);
@@ -70,36 +75,39 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="path"> The path of the content in the input. </param>
         /// <param name="markdown"> Markdown representation of the content. </param>
         /// <param name="fields"> Extracted fields from the content. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.MediaContent"/> instance for mocking. </returns>
-        public static MediaContent MediaContent(string kind = default, string mimeType = default, string analyzerId = default, string category = default, string path = default, string markdown = default, IDictionary<string, ContentField> fields = default)
+        /// <param name="metadata"> Metadata extracted from the input as string key/value pairs, such as author, title, creation date, or media properties. Keys and values are strings. Only keys with extracted values are present. </param>
+        /// <returns> A new <see cref="ContentUnderstanding.AnalysisContent"/> instance for mocking. </returns>
+        public static AnalysisContent AnalysisContent(string kind = default, string mimeType = default, string analyzerId = default, string category = default, string path = default, string markdown = default, IDictionary<string, ContentField> fields = default, IDictionary<string, string> metadata = default)
         {
             fields ??= new ChangeTrackingDictionary<string, ContentField>();
+            metadata ??= new ChangeTrackingDictionary<string, string>();
 
-            return new UnknownMediaContent(
-                new MediaContentKind(kind),
+            return new UnknownAnalysisContent(
+                new AnalysisContentKind(kind),
                 mimeType,
                 analyzerId,
                 category,
                 path,
                 markdown,
                 fields,
+                metadata,
                 additionalBinaryDataProperties: null);
         }
 
         /// <summary>
         /// Field extracted from the content.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentUnderstanding.StringField"/>, <see cref="ContentUnderstanding.DateField"/>, <see cref="ContentUnderstanding.TimeField"/>, <see cref="ContentUnderstanding.NumberField"/>, <see cref="ContentUnderstanding.IntegerField"/>, <see cref="ContentUnderstanding.BooleanField"/>, <see cref="ContentUnderstanding.ArrayField"/>, <see cref="ContentUnderstanding.ObjectField"/>, and <see cref="ContentUnderstanding.JsonField"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentUnderstanding.ContentStringField"/>, <see cref="ContentUnderstanding.ContentDateTimeOffsetField"/>, <see cref="ContentUnderstanding.ContentTimeField"/>, <see cref="ContentUnderstanding.ContentNumberField"/>, <see cref="ContentUnderstanding.ContentIntegerField"/>, <see cref="ContentUnderstanding.ContentBooleanField"/>, <see cref="ContentUnderstanding.ContentArrayField"/>, <see cref="ContentUnderstanding.ContentObjectField"/>, and <see cref="ContentUnderstanding.ContentJsonField"/>.
         /// </summary>
         /// <param name="type"> Semantic data type of the field value. </param>
         /// <param name="spans"> Span(s) associated with the field value in the markdown content. </param>
         /// <param name="confidence"> Confidence of predicting the field value. </param>
-        /// <param name="source"> Encoded source that identifies the position of the field value in the content. </param>
+        /// <param name="sourceValue"> Encoded source that identifies the position of the field value in the content. </param>
         /// <returns> A new <see cref="ContentUnderstanding.ContentField"/> instance for mocking. </returns>
-        public static ContentField ContentField(string @type = default, IEnumerable<ContentSpan> spans = default, float? confidence = default, string source = default)
+        public static ContentField ContentField(string @type = default, IEnumerable<ContentSpan> spans = default, float? confidence = default, string sourceValue = default)
         {
             spans ??= new ChangeTrackingList<ContentSpan>();
 
-            return new UnknownContentField(new ContentFieldType(@type), spans.ToList(), confidence, source, additionalBinaryDataProperties: null);
+            return new UnknownContentField(new ContentFieldType(@type), spans.ToList(), confidence, sourceValue, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Position of the element in markdown, specified as a character offset and length. </summary>
@@ -111,188 +119,6 @@ namespace Azure.AI.ContentUnderstanding
             return new ContentSpan(offset, length, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> String field extracted from the content. </summary>
-        /// <param name="spans"> Span(s) associated with the field value in the markdown content. </param>
-        /// <param name="confidence"> Confidence of predicting the field value. </param>
-        /// <param name="source"> Encoded source that identifies the position of the field value in the content. </param>
-        /// <param name="valueString"> String field value. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.StringField"/> instance for mocking. </returns>
-        public static StringField StringField(IEnumerable<ContentSpan> spans = default, float? confidence = default, string source = default, string valueString = default)
-        {
-            spans ??= new ChangeTrackingList<ContentSpan>();
-
-            return new StringField(
-                ContentFieldType.String,
-                spans.ToList(),
-                confidence,
-                source,
-                additionalBinaryDataProperties: null,
-                "string",
-                valueString);
-        }
-
-        /// <summary> Date field extracted from the content. </summary>
-        /// <param name="spans"> Span(s) associated with the field value in the markdown content. </param>
-        /// <param name="confidence"> Confidence of predicting the field value. </param>
-        /// <param name="source"> Encoded source that identifies the position of the field value in the content. </param>
-        /// <param name="valueDate"> Date field value, in ISO 8601 (YYYY-MM-DD) format. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.DateField"/> instance for mocking. </returns>
-        public static DateField DateField(IEnumerable<ContentSpan> spans = default, float? confidence = default, string source = default, DateTimeOffset? valueDate = default)
-        {
-            spans ??= new ChangeTrackingList<ContentSpan>();
-
-            return new DateField(
-                ContentFieldType.Date,
-                spans.ToList(),
-                confidence,
-                source,
-                additionalBinaryDataProperties: null,
-                "date",
-                valueDate);
-        }
-
-        /// <summary> Time field extracted from the content. </summary>
-        /// <param name="spans"> Span(s) associated with the field value in the markdown content. </param>
-        /// <param name="confidence"> Confidence of predicting the field value. </param>
-        /// <param name="source"> Encoded source that identifies the position of the field value in the content. </param>
-        /// <param name="valueTime"> Time field value, in ISO 8601 (hh:mm:ss) format. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.TimeField"/> instance for mocking. </returns>
-        public static TimeField TimeField(IEnumerable<ContentSpan> spans = default, float? confidence = default, string source = default, TimeSpan? valueTime = default)
-        {
-            spans ??= new ChangeTrackingList<ContentSpan>();
-
-            return new TimeField(
-                ContentFieldType.Time,
-                spans.ToList(),
-                confidence,
-                source,
-                additionalBinaryDataProperties: null,
-                "time",
-                valueTime);
-        }
-
-        /// <summary> Number field extracted from the content. </summary>
-        /// <param name="spans"> Span(s) associated with the field value in the markdown content. </param>
-        /// <param name="confidence"> Confidence of predicting the field value. </param>
-        /// <param name="source"> Encoded source that identifies the position of the field value in the content. </param>
-        /// <param name="valueNumber"> Number field value. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.NumberField"/> instance for mocking. </returns>
-        public static NumberField NumberField(IEnumerable<ContentSpan> spans = default, float? confidence = default, string source = default, double? valueNumber = default)
-        {
-            spans ??= new ChangeTrackingList<ContentSpan>();
-
-            return new NumberField(
-                ContentFieldType.Number,
-                spans.ToList(),
-                confidence,
-                source,
-                additionalBinaryDataProperties: null,
-                "number",
-                valueNumber);
-        }
-
-        /// <summary> Integer field extracted from the content. </summary>
-        /// <param name="spans"> Span(s) associated with the field value in the markdown content. </param>
-        /// <param name="confidence"> Confidence of predicting the field value. </param>
-        /// <param name="source"> Encoded source that identifies the position of the field value in the content. </param>
-        /// <param name="valueInteger"> Integer field value. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.IntegerField"/> instance for mocking. </returns>
-        public static IntegerField IntegerField(IEnumerable<ContentSpan> spans = default, float? confidence = default, string source = default, long? valueInteger = default)
-        {
-            spans ??= new ChangeTrackingList<ContentSpan>();
-
-            return new IntegerField(
-                ContentFieldType.Integer,
-                spans.ToList(),
-                confidence,
-                source,
-                additionalBinaryDataProperties: null,
-                "integer",
-                valueInteger);
-        }
-
-        /// <summary> Boolean field extracted from the content. </summary>
-        /// <param name="spans"> Span(s) associated with the field value in the markdown content. </param>
-        /// <param name="confidence"> Confidence of predicting the field value. </param>
-        /// <param name="source"> Encoded source that identifies the position of the field value in the content. </param>
-        /// <param name="valueBoolean"> Boolean field value. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.BooleanField"/> instance for mocking. </returns>
-        public static BooleanField BooleanField(IEnumerable<ContentSpan> spans = default, float? confidence = default, string source = default, bool? valueBoolean = default)
-        {
-            spans ??= new ChangeTrackingList<ContentSpan>();
-
-            return new BooleanField(
-                ContentFieldType.Boolean,
-                spans.ToList(),
-                confidence,
-                source,
-                additionalBinaryDataProperties: null,
-                "boolean",
-                valueBoolean);
-        }
-
-        /// <summary> Array field extracted from the content. </summary>
-        /// <param name="spans"> Span(s) associated with the field value in the markdown content. </param>
-        /// <param name="confidence"> Confidence of predicting the field value. </param>
-        /// <param name="source"> Encoded source that identifies the position of the field value in the content. </param>
-        /// <param name="valueArray"> Array field value. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.ArrayField"/> instance for mocking. </returns>
-        public static ArrayField ArrayField(IEnumerable<ContentSpan> spans = default, float? confidence = default, string source = default, IEnumerable<ContentField> valueArray = default)
-        {
-            spans ??= new ChangeTrackingList<ContentSpan>();
-            valueArray ??= new ChangeTrackingList<ContentField>();
-
-            return new ArrayField(
-                ContentFieldType.Array,
-                spans.ToList(),
-                confidence,
-                source,
-                additionalBinaryDataProperties: null,
-                "array",
-                valueArray.ToList());
-        }
-
-        /// <summary> Object field extracted from the content. </summary>
-        /// <param name="spans"> Span(s) associated with the field value in the markdown content. </param>
-        /// <param name="confidence"> Confidence of predicting the field value. </param>
-        /// <param name="source"> Encoded source that identifies the position of the field value in the content. </param>
-        /// <param name="valueObject"> Object field value. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.ObjectField"/> instance for mocking. </returns>
-        public static ObjectField ObjectField(IEnumerable<ContentSpan> spans = default, float? confidence = default, string source = default, IDictionary<string, ContentField> valueObject = default)
-        {
-            spans ??= new ChangeTrackingList<ContentSpan>();
-            valueObject ??= new ChangeTrackingDictionary<string, ContentField>();
-
-            return new ObjectField(
-                ContentFieldType.Object,
-                spans.ToList(),
-                confidence,
-                source,
-                additionalBinaryDataProperties: null,
-                "object",
-                valueObject);
-        }
-
-        /// <summary> JSON field extracted from the content. </summary>
-        /// <param name="spans"> Span(s) associated with the field value in the markdown content. </param>
-        /// <param name="confidence"> Confidence of predicting the field value. </param>
-        /// <param name="source"> Encoded source that identifies the position of the field value in the content. </param>
-        /// <param name="valueJson"> JSON field value. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.JsonField"/> instance for mocking. </returns>
-        public static JsonField JsonField(IEnumerable<ContentSpan> spans = default, float? confidence = default, string source = default, BinaryData valueJson = default)
-        {
-            spans ??= new ChangeTrackingList<ContentSpan>();
-
-            return new JsonField(
-                ContentFieldType.Json,
-                spans.ToList(),
-                confidence,
-                source,
-                additionalBinaryDataProperties: null,
-                "json",
-                valueJson);
-        }
-
         /// <summary> Document content.  Ex. text/plain, application/pdf, image/jpeg. </summary>
         /// <param name="mimeType"> Detected MIME type of the content.  Ex. application/pdf, image/jpeg, etc. </param>
         /// <param name="analyzerId"> The analyzer that generated this content. </param>
@@ -300,6 +126,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="path"> The path of the content in the input. </param>
         /// <param name="markdown"> Markdown representation of the content. </param>
         /// <param name="fields"> Extracted fields from the content. </param>
+        /// <param name="metadata"> Metadata extracted from the input as string key/value pairs, such as author, title, creation date, or media properties. Keys and values are strings. Only keys with extracted values are present. </param>
         /// <param name="startPageNumber"> Start page number (1-indexed) of the content. </param>
         /// <param name="endPageNumber"> End page number (1-indexed) of the content. </param>
         /// <param name="unit">
@@ -312,29 +139,35 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="tables"> List of tables in the document.  Only if enableLayout and returnDetails are true. </param>
         /// <param name="figures"> List of figures in the document.  Only if enableLayout and returnDetails are true. </param>
         /// <param name="annotations"> List of annotations in the document.  Only if enableAnnotations and returnDetails are true. </param>
+        /// <param name="signatures"> List of signatures in the document.  Only if enableLayout and returnDetails are true. </param>
         /// <param name="hyperlinks"> List of hyperlinks in the document.  Only if returnDetails are true. </param>
         /// <param name="segments"> List of detected content segments.  Only if enableSegment is true. </param>
+        /// <param name="chunks"> List of document chunks.  Only if chunkingStrategy is configured on the analyzer. </param>
         /// <returns> A new <see cref="ContentUnderstanding.DocumentContent"/> instance for mocking. </returns>
-        public static DocumentContent DocumentContent(string mimeType = default, string analyzerId = default, string category = default, string path = default, string markdown = default, IDictionary<string, ContentField> fields = default, int startPageNumber = default, int endPageNumber = default, LengthUnit? unit = default, IEnumerable<DocumentPage> pages = default, IEnumerable<DocumentParagraph> paragraphs = default, IEnumerable<DocumentSection> sections = default, IEnumerable<DocumentTable> tables = default, IEnumerable<DocumentFigure> figures = default, IEnumerable<DocumentAnnotation> annotations = default, IEnumerable<DocumentHyperlink> hyperlinks = default, IEnumerable<DocumentContentSegment> segments = default)
+        public static DocumentContent DocumentContent(string mimeType = default, string analyzerId = default, string category = default, string path = default, string markdown = default, IDictionary<string, ContentField> fields = default, IDictionary<string, string> metadata = default, int startPageNumber = default, int endPageNumber = default, LengthUnit? unit = default, IEnumerable<DocumentPage> pages = default, IEnumerable<DocumentParagraph> paragraphs = default, IEnumerable<DocumentSection> sections = default, IEnumerable<DocumentTable> tables = default, IEnumerable<DocumentFigure> figures = default, IEnumerable<DocumentAnnotation> annotations = default, IEnumerable<DocumentSignature> signatures = default, IEnumerable<DocumentHyperlink> hyperlinks = default, IEnumerable<DocumentContentSegment> segments = default, IEnumerable<DocumentChunk> chunks = default)
         {
             fields ??= new ChangeTrackingDictionary<string, ContentField>();
+            metadata ??= new ChangeTrackingDictionary<string, string>();
             pages ??= new ChangeTrackingList<DocumentPage>();
             paragraphs ??= new ChangeTrackingList<DocumentParagraph>();
             sections ??= new ChangeTrackingList<DocumentSection>();
             tables ??= new ChangeTrackingList<DocumentTable>();
             figures ??= new ChangeTrackingList<DocumentFigure>();
             annotations ??= new ChangeTrackingList<DocumentAnnotation>();
+            signatures ??= new ChangeTrackingList<DocumentSignature>();
             hyperlinks ??= new ChangeTrackingList<DocumentHyperlink>();
             segments ??= new ChangeTrackingList<DocumentContentSegment>();
+            chunks ??= new ChangeTrackingList<DocumentChunk>();
 
             return new DocumentContent(
-                MediaContentKind.Document,
+                AnalysisContentKind.Document,
                 mimeType,
                 analyzerId,
                 category,
                 path,
                 markdown,
                 fields,
+                metadata,
                 additionalBinaryDataProperties: null,
                 startPageNumber,
                 endPageNumber,
@@ -345,8 +178,10 @@ namespace Azure.AI.ContentUnderstanding
                 tables.ToList(),
                 figures.ToList(),
                 annotations.ToList(),
+                signatures.ToList(),
                 hyperlinks.ToList(),
-                segments.ToList());
+                segments.ToList(),
+                chunks.ToList());
         }
 
         /// <summary> Content from a document page. </summary>
@@ -695,15 +530,35 @@ namespace Azure.AI.ContentUnderstanding
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Signature detected in a document. </summary>
+        /// <param name="id"> Signature identifier. </param>
+        /// <param name="source"> Encoded source that identifies the position of the signature in the content. </param>
+        /// <param name="span"> Span of the signature in the markdown content. </param>
+        /// <param name="elements"> Child elements of the signature, such as paragraphs containing text within the signature region. </param>
+        /// <param name="role"> Semantic role of the signature. </param>
+        /// <returns> A new <see cref="ContentUnderstanding.DocumentSignature"/> instance for mocking. </returns>
+        public static DocumentSignature DocumentSignature(string id = default, string source = default, ContentSpan span = default, IEnumerable<string> elements = default, SemanticRole? role = default)
+        {
+            elements ??= new ChangeTrackingList<string>();
+
+            return new DocumentSignature(
+                id,
+                source,
+                span,
+                elements.ToList(),
+                role,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Hyperlink in a document, such as a link to a web page or an email address. </summary>
         /// <param name="content"> Hyperlinked content. </param>
-        /// <param name="url"> URL of the hyperlink. </param>
+        /// <param name="uri"> URL of the hyperlink. </param>
         /// <param name="span"> Span of the hyperlink in the markdown content. </param>
         /// <param name="source"> Position of the hyperlink. </param>
         /// <returns> A new <see cref="ContentUnderstanding.DocumentHyperlink"/> instance for mocking. </returns>
-        public static DocumentHyperlink DocumentHyperlink(string content = default, string url = default, ContentSpan span = default, string source = default)
+        public static DocumentHyperlink DocumentHyperlink(string content = default, string uri = default, ContentSpan span = default, string source = default)
         {
-            return new DocumentHyperlink(content, url, span, source, additionalBinaryDataProperties: null);
+            return new DocumentHyperlink(content, uri, span, source, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Detected document content segment. </summary>
@@ -712,8 +567,10 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="span"> Span of the segment in the markdown content. </param>
         /// <param name="startPageNumber"> Start page number (1-indexed) of the segment. </param>
         /// <param name="endPageNumber"> End page number (1-indexed) of the segment. </param>
+        /// <param name="confidence"> Confidence of the segmentation and category classification. </param>
+        /// <param name="source"> Encoded source that identifies the position of the segment in the content. Can be used as the 'range' input to route this segment to a sub-analyzer. </param>
         /// <returns> A new <see cref="ContentUnderstanding.DocumentContentSegment"/> instance for mocking. </returns>
-        public static DocumentContentSegment DocumentContentSegment(string segmentId = default, string category = default, ContentSpan span = default, int startPageNumber = default, int endPageNumber = default)
+        public static DocumentContentSegment DocumentContentSegment(string segmentId = default, string category = default, ContentSpan span = default, int startPageNumber = default, int endPageNumber = default, float? confidence = default, string source = default)
         {
             return new DocumentContentSegment(
                 segmentId,
@@ -721,7 +578,20 @@ namespace Azure.AI.ContentUnderstanding
                 span,
                 startPageNumber,
                 endPageNumber,
+                confidence,
+                source,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A chunk of document content, defined by one or more spans in the markdown. </summary>
+        /// <param name="spans"> List of spans defining the chunk's position(s) in the markdown content. </param>
+        /// <param name="source"> Encoded source expression describing the visual bounding polygons of the chunk's content on the page. Derived from the union of layout objects (paragraphs, tables, figures) that compose the chunk. </param>
+        /// <returns> A new <see cref="ContentUnderstanding.DocumentChunk"/> instance for mocking. </returns>
+        public static DocumentChunk DocumentChunk(IEnumerable<ContentSpan> spans = default, string source = default)
+        {
+            spans ??= new ChangeTrackingList<ContentSpan>();
+
+            return new DocumentChunk(spans.ToList(), source, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Audio visual content.  Ex. audio/wav, video/mp4. </summary>
@@ -731,60 +601,63 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="path"> The path of the content in the input. </param>
         /// <param name="markdown"> Markdown representation of the content. </param>
         /// <param name="fields"> Extracted fields from the content. </param>
-        /// <param name="startTimeMs"> Start time of the content in milliseconds. </param>
-        /// <param name="endTimeMs"> End time of the content in milliseconds. </param>
+        /// <param name="metadata"> Metadata extracted from the input as string key/value pairs, such as author, title, creation date, or media properties. Keys and values are strings. Only keys with extracted values are present. </param>
+        /// <param name="startTimeMsValue"> Start time of the content in milliseconds. </param>
+        /// <param name="endTimeMsValue"> End time of the content in milliseconds. </param>
         /// <param name="width"> Width of each video frame in pixels, if applicable. </param>
         /// <param name="height"> Height of each video frame in pixels, if applicable. </param>
-        /// <param name="cameraShotTimesMs"> List of camera shot changes in the video, represented by its timestamp in milliseconds.  Only if returnDetails is true. </param>
-        /// <param name="keyFrameTimesMs"> List of key frames in the video, represented by its timestamp in milliseconds.  Only if returnDetails is true. </param>
+        /// <param name="cameraShotTimesMsValues"> List of camera shot changes in the video, represented by its timestamp in milliseconds.  Only if returnDetails is true. </param>
+        /// <param name="keyFrameTimesMsValues"> List of key frames in the video, represented by its timestamp in milliseconds.  Only if returnDetails is true. </param>
         /// <param name="transcriptPhrases"> List of transcript phrases.  Only if returnDetails is true. </param>
         /// <param name="segments"> List of detected content segments.  Only if enableSegment is true. </param>
         /// <returns> A new <see cref="ContentUnderstanding.AudioVisualContent"/> instance for mocking. </returns>
-        public static AudioVisualContent AudioVisualContent(string mimeType = default, string analyzerId = default, string category = default, string path = default, string markdown = default, IDictionary<string, ContentField> fields = default, long startTimeMs = default, long endTimeMs = default, int? width = default, int? height = default, IEnumerable<long> cameraShotTimesMs = default, IEnumerable<long> keyFrameTimesMs = default, IEnumerable<TranscriptPhrase> transcriptPhrases = default, IEnumerable<AudioVisualContentSegment> segments = default)
+        public static AudioVisualContent AudioVisualContent(string mimeType = default, string analyzerId = default, string category = default, string path = default, string markdown = default, IDictionary<string, ContentField> fields = default, IDictionary<string, string> metadata = default, long startTimeMsValue = default, long endTimeMsValue = default, int? width = default, int? height = default, IEnumerable<long> cameraShotTimesMsValues = default, IEnumerable<long> keyFrameTimesMsValues = default, IEnumerable<TranscriptPhrase> transcriptPhrases = default, IEnumerable<AudioVisualContentSegment> segments = default)
         {
             fields ??= new ChangeTrackingDictionary<string, ContentField>();
-            cameraShotTimesMs ??= new ChangeTrackingList<long>();
-            keyFrameTimesMs ??= new ChangeTrackingList<long>();
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            cameraShotTimesMsValues ??= new ChangeTrackingList<long>();
+            keyFrameTimesMsValues ??= new ChangeTrackingList<long>();
             transcriptPhrases ??= new ChangeTrackingList<TranscriptPhrase>();
             segments ??= new ChangeTrackingList<AudioVisualContentSegment>();
 
             return new AudioVisualContent(
-                MediaContentKind.AudioVisual,
+                AnalysisContentKind.AudioVisual,
                 mimeType,
                 analyzerId,
                 category,
                 path,
                 markdown,
                 fields,
+                metadata,
                 additionalBinaryDataProperties: null,
-                startTimeMs,
-                endTimeMs,
+                startTimeMsValue,
+                endTimeMsValue,
                 width,
                 height,
-                cameraShotTimesMs.ToList(),
-                keyFrameTimesMs.ToList(),
+                cameraShotTimesMsValues.ToList(),
+                keyFrameTimesMsValues.ToList(),
                 transcriptPhrases.ToList(),
                 segments.ToList());
         }
 
         /// <summary> Transcript phrase. </summary>
         /// <param name="speaker"> Speaker index or name. </param>
-        /// <param name="startTimeMs"> Start time of the phrase in milliseconds. </param>
-        /// <param name="endTimeMs"> End time of the phrase in milliseconds. </param>
+        /// <param name="startTimeMsValue"> Start time of the phrase in milliseconds. </param>
+        /// <param name="endTimeMsValue"> End time of the phrase in milliseconds. </param>
         /// <param name="locale"> Detected locale of the phrase.  Ex. en-US. </param>
         /// <param name="text"> Transcript text. </param>
         /// <param name="confidence"> Confidence of predicting the phrase. </param>
         /// <param name="span"> Span of the phrase in the markdown content. </param>
         /// <param name="words"> List of words in the phrase. </param>
         /// <returns> A new <see cref="ContentUnderstanding.TranscriptPhrase"/> instance for mocking. </returns>
-        public static TranscriptPhrase TranscriptPhrase(string speaker = default, long startTimeMs = default, long endTimeMs = default, string locale = default, string text = default, float? confidence = default, ContentSpan span = default, IEnumerable<TranscriptWord> words = default)
+        public static TranscriptPhrase TranscriptPhrase(string speaker = default, long startTimeMsValue = default, long endTimeMsValue = default, string locale = default, string text = default, float? confidence = default, ContentSpan span = default, IEnumerable<TranscriptWord> words = default)
         {
             words ??= new ChangeTrackingList<TranscriptWord>();
 
             return new TranscriptPhrase(
                 speaker,
-                startTimeMs,
-                endTimeMs,
+                startTimeMsValue,
+                endTimeMsValue,
                 locale,
                 text,
                 confidence,
@@ -794,31 +667,81 @@ namespace Azure.AI.ContentUnderstanding
         }
 
         /// <summary> Transcript word. </summary>
-        /// <param name="startTimeMs"> Start time of the word in milliseconds. </param>
-        /// <param name="endTimeMs"> End time of the word in milliseconds. </param>
+        /// <param name="startTimeMsValue"> Start time of the word in milliseconds. </param>
+        /// <param name="endTimeMsValue"> End time of the word in milliseconds. </param>
         /// <param name="text"> Transcript text. </param>
         /// <param name="span"> Span of the word in the markdown content. </param>
         /// <returns> A new <see cref="ContentUnderstanding.TranscriptWord"/> instance for mocking. </returns>
-        public static TranscriptWord TranscriptWord(long startTimeMs = default, long endTimeMs = default, string text = default, ContentSpan span = default)
+        public static TranscriptWord TranscriptWord(long startTimeMsValue = default, long endTimeMsValue = default, string text = default, ContentSpan span = default)
         {
-            return new TranscriptWord(startTimeMs, endTimeMs, text, span, additionalBinaryDataProperties: null);
+            return new TranscriptWord(startTimeMsValue, endTimeMsValue, text, span, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Detected audio/visual content segment. </summary>
         /// <param name="segmentId"> Segment identifier. </param>
         /// <param name="category"> Classified content category. </param>
         /// <param name="span"> Span of the segment in the markdown content. </param>
-        /// <param name="startTimeMs"> Start time of the segment in milliseconds. </param>
-        /// <param name="endTimeMs"> End time of the segment in milliseconds. </param>
+        /// <param name="startTimeMsValue"> Start time of the segment in milliseconds. </param>
+        /// <param name="endTimeMsValue"> End time of the segment in milliseconds. </param>
         /// <returns> A new <see cref="ContentUnderstanding.AudioVisualContentSegment"/> instance for mocking. </returns>
-        public static AudioVisualContentSegment AudioVisualContentSegment(string segmentId = default, string category = default, ContentSpan span = default, long startTimeMs = default, long endTimeMs = default)
+        public static AudioVisualContentSegment AudioVisualContentSegment(string segmentId = default, string category = default, ContentSpan span = default, long startTimeMsValue = default, long endTimeMsValue = default)
         {
             return new AudioVisualContentSegment(
                 segmentId,
                 category,
                 span,
-                startTimeMs,
-                endTimeMs,
+                startTimeMsValue,
+                endTimeMsValue,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Usage details. </summary>
+        /// <param name="documentPagesMinimal">
+        /// The number of document pages processed at the minimal level.
+        /// For documents without explicit pages (ex. txt, html), every 3000 UTF-16 characters is counted as one page.
+        /// </param>
+        /// <param name="documentPagesBasic">
+        /// The number of document pages processed at the basic level.
+        /// For documents without explicit pages (ex. txt, html), every 3000 UTF-16 characters is counted as one page.
+        /// </param>
+        /// <param name="documentPagesStandard">
+        /// The number of document pages processed at the standard level.
+        /// For documents without explicit pages (ex. txt, html), every 3000 UTF-16 characters is counted as one page.
+        /// </param>
+        /// <param name="documentPagesMinimalInline">
+        /// The number of document pages processed at the minimal level by an inline analyze operation.
+        /// For documents without explicit pages (ex. txt, html), every 3000 UTF-16 characters is counted as one page.
+        /// </param>
+        /// <param name="documentPagesBasicInline">
+        /// The number of document pages processed at the basic level by an inline analyze operation.
+        /// For documents without explicit pages (ex. txt, html), every 3000 UTF-16 characters is counted as one page.
+        /// </param>
+        /// <param name="documentPagesStandardInline">
+        /// The number of document pages processed at the standard level by an inline analyze operation.
+        /// For documents without explicit pages (ex. txt, html), every 3000 UTF-16 characters is counted as one page.
+        /// </param>
+        /// <param name="audioHours"> The hours of audio processed. </param>
+        /// <param name="videoHours"> The hours of video processed. </param>
+        /// <param name="contextualizationTokens"> The number of contextualization tokens consumed for preparing context, generating confidence scores, source grounding, and output formatting. </param>
+        /// <param name="advancedContextualizationTokens"> The number of advanced contextualization tokens consumed for preparing context, generating confidence scores, source grounding, and output formatting. </param>
+        /// <param name="tokens"> The number of LLM and embedding tokens consumed, grouped by model (ex. GTP 4.1) and type (ex. input, cached input, output). </param>
+        /// <returns> A new <see cref="ContentUnderstanding.UsageDetails"/> instance for mocking. </returns>
+        public static UsageDetails UsageDetails(int? documentPagesMinimal = default, int? documentPagesBasic = default, int? documentPagesStandard = default, int? documentPagesMinimalInline = default, int? documentPagesBasicInline = default, int? documentPagesStandardInline = default, float? audioHours = default, float? videoHours = default, int? contextualizationTokens = default, int? advancedContextualizationTokens = default, IDictionary<string, int> tokens = default)
+        {
+            tokens ??= new ChangeTrackingDictionary<string, int>();
+
+            return new UsageDetails(
+                documentPagesMinimal,
+                documentPagesBasic,
+                documentPagesStandard,
+                documentPagesMinimalInline,
+                documentPagesBasicInline,
+                documentPagesStandardInline,
+                audioHours,
+                videoHours,
+                contextualizationTokens,
+                advancedContextualizationTokens,
+                tokens,
                 additionalBinaryDataProperties: null);
         }
 
@@ -833,7 +756,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="baseAnalyzerId"> The analyzer to incrementally train from. </param>
         /// <param name="config"> Analyzer configuration settings. </param>
         /// <param name="fieldSchema"> The schema of fields to extracted. </param>
-        /// <param name="dynamicFieldSchema"> Indicates whether the result may contain additional fields outside of the defined schema. </param>
+        /// <param name="hasDynamicFieldSchema"> Indicates whether the result may contain additional fields outside of the defined schema. </param>
         /// <param name="processingLocation"> The location where the data may be processed.  Defaults to global. </param>
         /// <param name="knowledgeSources"> Additional knowledge sources used to enhance the analyzer. </param>
         /// <param name="models">
@@ -842,7 +765,7 @@ namespace Azure.AI.ContentUnderstanding
         /// </param>
         /// <param name="supportedModels"> Chat completion and embedding models supported by the analyzer. </param>
         /// <returns> A new <see cref="ContentUnderstanding.ContentAnalyzer"/> instance for mocking. </returns>
-        public static ContentAnalyzer ContentAnalyzer(string analyzerId = default, string description = default, IDictionary<string, string> tags = default, ContentAnalyzerStatus status = default, DateTimeOffset createdAt = default, DateTimeOffset lastModifiedAt = default, IEnumerable<ResponseError> warnings = default, string baseAnalyzerId = default, ContentAnalyzerConfig config = default, ContentFieldSchema fieldSchema = default, bool? dynamicFieldSchema = default, ProcessingLocation? processingLocation = default, IEnumerable<KnowledgeSource> knowledgeSources = default, IDictionary<string, string> models = default, SupportedModels supportedModels = default)
+        public static ContentAnalyzer ContentAnalyzer(string analyzerId = default, string description = default, IDictionary<string, string> tags = default, ContentAnalyzerStatus status = default, DateTimeOffset createdAt = default, DateTimeOffset lastModifiedAt = default, IEnumerable<ResponseError> warnings = default, string baseAnalyzerId = default, ContentAnalyzerConfig config = default, ContentFieldSchema fieldSchema = default, bool? hasDynamicFieldSchema = default, ProcessingLocation? processingLocation = default, IEnumerable<KnowledgeSource> knowledgeSources = default, IDictionary<string, string> models = default, SupportedModels supportedModels = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             warnings ??= new ChangeTrackingList<ResponseError>();
@@ -860,7 +783,7 @@ namespace Azure.AI.ContentUnderstanding
                 baseAnalyzerId,
                 config,
                 fieldSchema,
-                dynamicFieldSchema,
+                hasDynamicFieldSchema,
                 processingLocation,
                 knowledgeSources.ToList(),
                 models,
@@ -869,7 +792,7 @@ namespace Azure.AI.ContentUnderstanding
         }
 
         /// <summary> Configuration settings for an analyzer. </summary>
-        /// <param name="returnDetails"> Return all content details. </param>
+        /// <param name="shouldReturnDetails"> Return all content details. </param>
         /// <param name="locales"> List of locale hints for speech transcription. </param>
         /// <param name="enableOcr"> Enable optical character recognition (OCR). </param>
         /// <param name="enableLayout"> Enable layout analysis. </param>
@@ -884,18 +807,27 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="contentCategories"> Map of categories to classify the input content(s) against. </param>
         /// <param name="enableSegment"> Enable segmentation of the input by contentCategories. </param>
         /// <param name="segmentPerPage"> Force segmentation of document content by page. </param>
-        /// <param name="omitContent">
+        /// <param name="shouldOmitContent">
         /// Omit the content for this analyzer from analyze result.
         /// Only return content(s) from additional analyzers specified in contentCategories, if any.
         /// </param>
+        /// <param name="workflow"> Workflow used for content analysis. </param>
+        /// <param name="allowInputTruncation">
+        /// When true, input that exceeds the service's processable-unit limit is truncated to the limit and returned as a
+        /// partial result with a warning, instead of failing. Field extraction and segmentation, where configured, run over
+        /// the processed content and may be inaccurate. Defaults to false. Overridable per request by the allowInputTruncation
+        /// query parameter.
+        /// </param>
+        /// <param name="allowInPageSegments"> Enable sub-page segmentation. When true, segments may cover a portion of a page instead of full pages. </param>
+        /// <param name="chunkingStrategy"> Strategy for chunking document content into smaller units for RAG scenarios. When omitted, chunking is disabled. </param>
         /// <returns> A new <see cref="ContentUnderstanding.ContentAnalyzerConfig"/> instance for mocking. </returns>
-        public static ContentAnalyzerConfig ContentAnalyzerConfig(bool? returnDetails = default, IEnumerable<string> locales = default, bool? enableOcr = default, bool? enableLayout = default, bool? enableFigureDescription = default, bool? enableFigureAnalysis = default, bool? enableFormula = default, TableFormat? tableFormat = default, ChartFormat? chartFormat = default, AnnotationFormat? annotationFormat = default, bool? disableFaceBlurring = default, bool? estimateFieldSourceAndConfidence = default, IDictionary<string, ContentCategoryDefinition> contentCategories = default, bool? enableSegment = default, bool? segmentPerPage = default, bool? omitContent = default)
+        public static ContentAnalyzerConfig ContentAnalyzerConfig(bool? shouldReturnDetails = default, IEnumerable<string> locales = default, bool? enableOcr = default, bool? enableLayout = default, bool? enableFigureDescription = default, bool? enableFigureAnalysis = default, bool? enableFormula = default, TableFormat? tableFormat = default, ChartFormat? chartFormat = default, AnnotationFormat? annotationFormat = default, bool? disableFaceBlurring = default, bool? estimateFieldSourceAndConfidence = default, IDictionary<string, ContentCategoryDefinition> contentCategories = default, bool? enableSegment = default, bool? segmentPerPage = default, bool? shouldOmitContent = default, ContentAnalyzerWorkflow? workflow = default, bool? allowInputTruncation = default, bool? allowInPageSegments = default, ChunkingStrategy chunkingStrategy = default)
         {
             locales ??= new ChangeTrackingList<string>();
             contentCategories ??= new ChangeTrackingDictionary<string, ContentCategoryDefinition>();
 
             return new ContentAnalyzerConfig(
-                returnDetails,
+                shouldReturnDetails,
                 locales.ToList(),
                 enableOcr,
                 enableLayout,
@@ -910,7 +842,11 @@ namespace Azure.AI.ContentUnderstanding
                 contentCategories,
                 enableSegment,
                 segmentPerPage,
-                omitContent,
+                shouldOmitContent,
+                workflow,
+                allowInputTruncation,
+                allowInPageSegments,
+                chunkingStrategy,
                 additionalBinaryDataProperties: null);
         }
 
@@ -922,6 +858,25 @@ namespace Azure.AI.ContentUnderstanding
         public static ContentCategoryDefinition ContentCategoryDefinition(string description = default, string analyzerId = default, ContentAnalyzer analyzer = default)
         {
             return new ContentCategoryDefinition(description, analyzerId, analyzer, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Strategy for chunking document content. The `kind` property serves as the discriminator.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentUnderstanding.SemanticChunkingStrategy"/>.
+        /// </summary>
+        /// <param name="kind"> The chunking strategy kind. </param>
+        /// <returns> A new <see cref="ContentUnderstanding.ChunkingStrategy"/> instance for mocking. </returns>
+        public static ChunkingStrategy ChunkingStrategy(string kind = default)
+        {
+            return new UnknownChunkingStrategy(new ChunkingStrategyKind(kind), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Semantic chunking strategy that splits content into semantically meaningful, size-controlled chunks. </summary>
+        /// <param name="maxTokens"> Target chunk size expressed in tokens. Interpreted as a soft limit; the chunking process may slightly exceed this value to respect semantic or structural boundaries. </param>
+        /// <returns> A new <see cref="ContentUnderstanding.SemanticChunkingStrategy"/> instance for mocking. </returns>
+        public static SemanticChunkingStrategy SemanticChunkingStrategy(int? maxTokens = default)
+        {
+            return new SemanticChunkingStrategy(ChunkingStrategyKind.Semantic, additionalBinaryDataProperties: null, maxTokens);
         }
 
         /// <summary> Schema of fields to be extracted from documents. </summary>
@@ -983,13 +938,13 @@ namespace Azure.AI.ContentUnderstanding
         }
 
         /// <summary> Labeled data knowledge source. </summary>
-        /// <param name="containerUrl"> The URL of the blob container containing labeled data. </param>
+        /// <param name="containerUri"> The URL of the blob container containing labeled data. </param>
         /// <param name="prefix"> An optional prefix to filter blobs within the container. </param>
         /// <param name="fileListPath"> An optional path to a file listing specific blobs to include. </param>
         /// <returns> A new <see cref="ContentUnderstanding.LabeledDataKnowledgeSource"/> instance for mocking. </returns>
-        public static LabeledDataKnowledgeSource LabeledDataKnowledgeSource(Uri containerUrl = default, string prefix = default, string fileListPath = default)
+        public static LabeledDataKnowledgeSource LabeledDataKnowledgeSource(Uri containerUri = default, string prefix = default, string fileListPath = default)
         {
-            return new LabeledDataKnowledgeSource(KnowledgeSourceKind.LabeledData, additionalBinaryDataProperties: null, containerUrl, prefix, fileListPath);
+            return new LabeledDataKnowledgeSource(KnowledgeSourceKind.LabeledData, additionalBinaryDataProperties: null, containerUri, prefix, fileListPath);
         }
 
         /// <summary> Chat completion and embedding models supported by the analyzer. </summary>
@@ -1004,11 +959,8 @@ namespace Azure.AI.ContentUnderstanding
             return new SupportedModels(completion.ToList(), embedding.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> default settings for this Content Understanding resource. </summary>
-        /// <param name="modelDeployments">
-        /// Mapping of model names to deployments.
-        /// Ex. { "gpt-4.1": "myGpt41Deployment", "text-embedding-3-large": "myTextEmbedding3LargeDeployment" }.
-        /// </param>
+        /// <summary> Default settings for this Content Understanding resource. </summary>
+        /// <param name="modelDeployments"> Specify the default mapping of model names to LLM/embedding deployments in Microsoft Foundry. For details and current semantics, see https://aka.ms/cudoc-quickstart-rest. </param>
         /// <returns> A new <see cref="ContentUnderstanding.ContentUnderstandingDefaults"/> instance for mocking. </returns>
         public static ContentUnderstandingDefaults ContentUnderstandingDefaults(IDictionary<string, string> modelDeployments = default)
         {
@@ -1025,6 +977,113 @@ namespace Azure.AI.ContentUnderstanding
         public static CopyAuthorization CopyAuthorization(string source = default, string targetAzureResourceId = default, DateTimeOffset expiresAt = default)
         {
             return new CopyAuthorization(source, targetAzureResourceId, expiresAt, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Analyze operation result. </summary>
+        /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
+        /// <param name="apiVersion"> The version of the API used to analyze the document. </param>
+        /// <param name="createdAt"> The date and time when the result was created. </param>
+        /// <param name="warnings"> Warnings encountered while analyzing the document. </param>
+        /// <param name="stringEncoding">
+        /// The string encoding format for content spans in the response.
+        ///               Possible values are 'codePoint', 'utf16', and `utf8`.  Default is `codePoint`.")
+        /// </param>
+        /// <param name="contents"> The extracted content. </param>
+        /// <returns> A new <see cref="ContentUnderstanding.AnalysisResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AnalysisResult AnalysisResult(string analyzerId, string apiVersion, DateTimeOffset? createdAt, IEnumerable<ResponseError> warnings, string stringEncoding, IEnumerable<AnalysisContent> contents)
+        {
+            return AnalysisResult(analyzerId: analyzerId, apiVersion: apiVersion, createdAt: createdAt, warnings: warnings, infos: default, stringEncoding: stringEncoding, contents: contents);
+        }
+
+        /// <summary> Document content.  Ex. text/plain, application/pdf, image/jpeg. </summary>
+        /// <param name="mimeType"> Detected MIME type of the content.  Ex. application/pdf, image/jpeg, etc. </param>
+        /// <param name="analyzerId"> The analyzer that generated this content. </param>
+        /// <param name="category"> Classified content category. </param>
+        /// <param name="path"> The path of the content in the input. </param>
+        /// <param name="markdown"> Markdown representation of the content. </param>
+        /// <param name="fields"> Extracted fields from the content. </param>
+        /// <param name="startPageNumber"> Start page number (1-indexed) of the content. </param>
+        /// <param name="endPageNumber"> End page number (1-indexed) of the content. </param>
+        /// <param name="unit">
+        /// Length unit used by the width, height, and source properties.
+        ///             For images/tiff, the default unit is pixel.  For PDF, the default unit is inch.
+        /// </param>
+        /// <param name="pages"> List of pages in the document. </param>
+        /// <param name="paragraphs"> List of paragraphs in the document.  Only if enableOcr and returnDetails are true. </param>
+        /// <param name="sections"> List of sections in the document.  Only if enableLayout and returnDetails are true. </param>
+        /// <param name="tables"> List of tables in the document.  Only if enableLayout and returnDetails are true. </param>
+        /// <param name="figures"> List of figures in the document.  Only if enableLayout and returnDetails are true. </param>
+        /// <param name="annotations"> List of annotations in the document.  Only if enableAnnotations and returnDetails are true. </param>
+        /// <param name="hyperlinks"> List of hyperlinks in the document.  Only if returnDetails are true. </param>
+        /// <param name="segments"> List of detected content segments.  Only if enableSegment is true. </param>
+        /// <returns> A new <see cref="ContentUnderstanding.DocumentContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DocumentContent DocumentContent(string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, int startPageNumber, int endPageNumber, LengthUnit? unit, IEnumerable<DocumentPage> pages, IEnumerable<DocumentParagraph> paragraphs, IEnumerable<DocumentSection> sections, IEnumerable<DocumentTable> tables, IEnumerable<DocumentFigure> figures, IEnumerable<DocumentAnnotation> annotations, IEnumerable<DocumentHyperlink> hyperlinks, IEnumerable<DocumentContentSegment> segments)
+        {
+            return DocumentContent(mimeType: mimeType, analyzerId: analyzerId, category: category, path: path, markdown: markdown, fields: fields, metadata: default, startPageNumber: startPageNumber, endPageNumber: endPageNumber, unit: unit, pages: pages, paragraphs: paragraphs, sections: sections, tables: tables, figures: figures, annotations: annotations, signatures: default, hyperlinks: hyperlinks, segments: segments, chunks: default);
+        }
+
+        /// <summary> Detected document content segment. </summary>
+        /// <param name="segmentId"> Segment identifier. </param>
+        /// <param name="category"> Classified content category. </param>
+        /// <param name="span"> Span of the segment in the markdown content. </param>
+        /// <param name="startPageNumber"> Start page number (1-indexed) of the segment. </param>
+        /// <param name="endPageNumber"> End page number (1-indexed) of the segment. </param>
+        /// <returns> A new <see cref="ContentUnderstanding.DocumentContentSegment"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DocumentContentSegment DocumentContentSegment(string segmentId, string category, ContentSpan span, int startPageNumber, int endPageNumber)
+        {
+            return DocumentContentSegment(segmentId: segmentId, category: category, span: span, startPageNumber: startPageNumber, endPageNumber: endPageNumber, confidence: default, source: default);
+        }
+
+        /// <summary> Audio visual content.  Ex. audio/wav, video/mp4. </summary>
+        /// <param name="mimeType"> Detected MIME type of the content.  Ex. application/pdf, image/jpeg, etc. </param>
+        /// <param name="analyzerId"> The analyzer that generated this content. </param>
+        /// <param name="category"> Classified content category. </param>
+        /// <param name="path"> The path of the content in the input. </param>
+        /// <param name="markdown"> Markdown representation of the content. </param>
+        /// <param name="fields"> Extracted fields from the content. </param>
+        /// <param name="startTimeMsValue"> Start time of the content in milliseconds. </param>
+        /// <param name="endTimeMsValue"> End time of the content in milliseconds. </param>
+        /// <param name="width"> Width of each video frame in pixels, if applicable. </param>
+        /// <param name="height"> Height of each video frame in pixels, if applicable. </param>
+        /// <param name="cameraShotTimesMsValues"> List of camera shot changes in the video, represented by its timestamp in milliseconds.  Only if returnDetails is true. </param>
+        /// <param name="keyFrameTimesMsValues"> List of key frames in the video, represented by its timestamp in milliseconds.  Only if returnDetails is true. </param>
+        /// <param name="transcriptPhrases"> List of transcript phrases.  Only if returnDetails is true. </param>
+        /// <param name="segments"> List of detected content segments.  Only if enableSegment is true. </param>
+        /// <returns> A new <see cref="ContentUnderstanding.AudioVisualContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AudioVisualContent AudioVisualContent(string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, long startTimeMsValue, long endTimeMsValue, int? width, int? height, IEnumerable<long> cameraShotTimesMsValues, IEnumerable<long> keyFrameTimesMsValues, IEnumerable<TranscriptPhrase> transcriptPhrases, IEnumerable<AudioVisualContentSegment> segments)
+        {
+            return AudioVisualContent(mimeType: mimeType, analyzerId: analyzerId, category: category, path: path, markdown: markdown, fields: fields, metadata: default, startTimeMsValue: startTimeMsValue, endTimeMsValue: endTimeMsValue, width: width, height: height, cameraShotTimesMsValues: cameraShotTimesMsValues, keyFrameTimesMsValues: keyFrameTimesMsValues, transcriptPhrases: transcriptPhrases, segments: segments);
+        }
+
+        /// <summary> Configuration settings for an analyzer. </summary>
+        /// <param name="shouldReturnDetails"> Return all content details. </param>
+        /// <param name="locales"> List of locale hints for speech transcription. </param>
+        /// <param name="enableOcr"> Enable optical character recognition (OCR). </param>
+        /// <param name="enableLayout"> Enable layout analysis. </param>
+        /// <param name="enableFigureDescription"> Enable generation of figure description. </param>
+        /// <param name="enableFigureAnalysis"> Enable analysis of figures, such as charts and diagrams. </param>
+        /// <param name="enableFormula"> Enable mathematical formula detection. </param>
+        /// <param name="tableFormat"> Representation format of tables in analyze result markdown. </param>
+        /// <param name="chartFormat"> Representation format of charts in analyze result markdown. </param>
+        /// <param name="annotationFormat"> Representation format of annotations in analyze result markdown. </param>
+        /// <param name="disableFaceBlurring"> Disable the default blurring of faces for privacy while processing the content. </param>
+        /// <param name="estimateFieldSourceAndConfidence"> Return field grounding source and confidence. </param>
+        /// <param name="contentCategories"> Map of categories to classify the input content(s) against. </param>
+        /// <param name="enableSegment"> Enable segmentation of the input by contentCategories. </param>
+        /// <param name="segmentPerPage"> Force segmentation of document content by page. </param>
+        /// <param name="shouldOmitContent">
+        /// Omit the content for this analyzer from analyze result.
+        ///             Only return content(s) from additional analyzers specified in contentCategories, if any.
+        /// </param>
+        /// <returns> A new <see cref="ContentUnderstanding.ContentAnalyzerConfig"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ContentAnalyzerConfig ContentAnalyzerConfig(bool? shouldReturnDetails, IEnumerable<string> locales, bool? enableOcr, bool? enableLayout, bool? enableFigureDescription, bool? enableFigureAnalysis, bool? enableFormula, TableFormat? tableFormat, ChartFormat? chartFormat, AnnotationFormat? annotationFormat, bool? disableFaceBlurring, bool? estimateFieldSourceAndConfidence, IDictionary<string, ContentCategoryDefinition> contentCategories, bool? enableSegment, bool? segmentPerPage, bool? shouldOmitContent)
+        {
+            return ContentAnalyzerConfig(shouldReturnDetails: shouldReturnDetails, locales: locales, enableOcr: enableOcr, enableLayout: enableLayout, enableFigureDescription: enableFigureDescription, enableFigureAnalysis: enableFigureAnalysis, enableFormula: enableFormula, tableFormat: tableFormat, chartFormat: chartFormat, annotationFormat: annotationFormat, disableFaceBlurring: disableFaceBlurring, estimateFieldSourceAndConfidence: estimateFieldSourceAndConfidence, contentCategories: contentCategories, enableSegment: enableSegment, segmentPerPage: segmentPerPage, shouldOmitContent: shouldOmitContent, workflow: default, allowInputTruncation: default, allowInPageSegments: default, chunkingStrategy: default);
         }
     }
 }

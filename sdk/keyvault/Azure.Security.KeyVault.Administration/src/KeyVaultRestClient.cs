@@ -38,11 +38,26 @@ namespace Azure.Security.KeyVault.Administration
             options ??= new KeyVaultAdministrationClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
             Pipeline = HttpPipelineBuilder.Build(options,
                     new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
             _endpoint = endpoint;
             _apiVersion = options.GetVersionString();
+        }
+
+        /// <summary> Initializes a new instance of KeyVaultRestClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal KeyVaultRestClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, KeyVaultAdministrationClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new KeyVaultAdministrationClientOptions();
+
+            _endpoint = endpoint;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            _apiVersion = options.GetVersionString();
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
     }
 }

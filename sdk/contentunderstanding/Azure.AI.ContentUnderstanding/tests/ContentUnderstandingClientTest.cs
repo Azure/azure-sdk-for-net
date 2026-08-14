@@ -11,24 +11,34 @@ using System.Threading.Tasks;
 using Azure.AI.ContentUnderstanding;
 using Azure.AI.ContentUnderstanding.Tests;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
 using NUnit.Framework;
 
 namespace Azure.AI.ContentUnderstanding.Tests
 {
+    [ClientTestFixture(
+        true,
+        ContentUnderstandingClientOptions.ServiceVersion.V2025_11_01,
+        ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview)]
     public class ContentUnderstandingClientTest : RecordedTestBase<ContentUnderstandingClientTestEnvironment>
     {
-        public ContentUnderstandingClientTest(bool isAsync)
+        private readonly ContentUnderstandingClientOptions.ServiceVersion _serviceVersion;
+
+        public ContentUnderstandingClientTest(
+            bool isAsync,
+            ContentUnderstandingClientOptions.ServiceVersion serviceVersion)
             : base(isAsync)
         {
+            _serviceVersion = serviceVersion;
             ContentUnderstandingTestBase.ConfigureCommonSanitizers(this);
         }
 
         private ContentUnderstandingClient GetClient()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
             return InstrumentClient(new ContentUnderstandingClient(
                 new Uri(endpoint),
                 TestEnvironment.Credential,
@@ -37,32 +47,22 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
         /// <summary>
         /// Tests updating default model deployments for the Content Understanding service.
-        /// Verifies that model deployments (gpt-4.1, gpt-4.1-mini, text-embedding-3-large) can be updated and are correctly persisted.
+        /// Verifies that concrete model deployments and prebuilt analyzer aliases can be updated and are correctly persisted.
         /// Also verifies that incremental updates work correctly (updating one model preserves others).
         /// </summary>
         [RecordedTest]
         public async Task UpdateDefaultsAsync()
         {
             ContentUnderstandingClient client = GetClient();
+            ContentUnderstandingModelProfile modelProfile = TestEnvironment.GetModelProfile(_serviceVersion);
 
-            // Check if model deployments are configured in test environment
-            string? gpt41Deployment = TestEnvironment.Gpt41Deployment;
-            string? gpt41MiniDeployment = TestEnvironment.Gpt41MiniDeployment;
-            string? textEmbeddingDeployment = TestEnvironment.TextEmbedding3LargeDeployment;
-
-            if (string.IsNullOrEmpty(gpt41Deployment) || string.IsNullOrEmpty(gpt41MiniDeployment) || string.IsNullOrEmpty(textEmbeddingDeployment))
+            if (!modelProfile.IsConfigured)
             {
                 Assert.Inconclusive("Model deployments are not configured in test environment. Skipping UpdateDefaultsAsync test.");
                 return;
             }
 
-            // Step 1: Set initial defaults with all three models
-            var initialModelDeployments = new Dictionary<string, string>
-            {
-                ["gpt-4.1"] = gpt41Deployment!,
-                ["gpt-4.1-mini"] = gpt41MiniDeployment!,
-                ["text-embedding-3-large"] = textEmbeddingDeployment!
-            };
+            IDictionary<string, string> initialModelDeployments = modelProfile.GetDefaultModelDeployments();
 
             Response<ContentUnderstandingDefaults> initialResponse = await client.UpdateDefaultsAsync(initialModelDeployments);
 
@@ -73,28 +73,18 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             // Verify the initial defaults were set correctly
             Assert.IsNotNull(initialDefaults.ModelDeployments, "Initial model deployments should not be null");
-            Assert.IsTrue(initialDefaults.ModelDeployments.Count >= 3, "Should have at least 3 model deployments initially");
-
-            Assert.IsTrue(initialDefaults.ModelDeployments.ContainsKey("gpt-4.1"), "Should contain gpt-4.1 deployment");
-            Assert.AreEqual(gpt41Deployment, initialDefaults.ModelDeployments["gpt-4.1"], "gpt-4.1 deployment should match");
-
-            Assert.IsTrue(initialDefaults.ModelDeployments.ContainsKey("gpt-4.1-mini"), "Should contain gpt-4.1-mini deployment");
-            Assert.AreEqual(gpt41MiniDeployment, initialDefaults.ModelDeployments["gpt-4.1-mini"], "gpt-4.1-mini deployment should match");
-
-            Assert.IsTrue(initialDefaults.ModelDeployments.ContainsKey("text-embedding-3-large"), "Should contain text-embedding-3-large deployment");
-            Assert.AreEqual(textEmbeddingDeployment, initialDefaults.ModelDeployments["text-embedding-3-large"], "text-embedding-3-large deployment should match");
+            Assert.IsTrue(initialDefaults.ModelDeployments.Count >= initialModelDeployments.Count, "Should contain all required model deployments initially");
+            AssertModelDeployments(initialDefaults.ModelDeployments, initialModelDeployments);
 
             // Step 2: Verify initial state by getting defaults
             Response<ContentUnderstandingDefaults> getInitialResponse = await client.GetDefaultsAsync();
             Assert.IsNotNull(getInitialResponse.Value, "Get defaults response should not be null");
             Assert.IsNotNull(getInitialResponse.Value.ModelDeployments, "Model deployments should not be null");
-            Assert.IsTrue(getInitialResponse.Value.ModelDeployments.Count >= 3, "Should have at least 3 model deployments after initial update");
+            Assert.IsTrue(getInitialResponse.Value.ModelDeployments.Count >= initialModelDeployments.Count, "Should contain all required model deployments after initial update");
 
-            // Step 3: Perform incremental update - update only one model
-            // Use a different deployment name to verify the update actually happened
             var incrementalUpdate = new Dictionary<string, string>
             {
-                ["gpt-4.1"] = gpt41Deployment! // Update only gpt-4.1 (using same value, but this verifies incremental update preserves others)
+                [modelProfile.CompletionModel] = modelProfile.CompletionDeployment!
             };
 
             Response<ContentUnderstandingDefaults> incrementalResponse = await client.UpdateDefaultsAsync(incrementalUpdate);
@@ -104,38 +94,18 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             ContentUnderstandingDefaults incrementalDefaults = incrementalResponse.Value;
 
-            // Step 4: Verify incremental update - all three models should still be present
             Assert.IsNotNull(incrementalDefaults.ModelDeployments, "Incremental updated model deployments should not be null");
-            Assert.AreEqual(3, incrementalDefaults.ModelDeployments.Count,
-                "All three models should still be present after incremental update (verifies incremental update works)");
-
-            // Verify gpt-4.1 was updated (or remains the same)
-            Assert.IsTrue(incrementalDefaults.ModelDeployments.ContainsKey("gpt-4.1"), "Should contain gpt-4.1 deployment after incremental update");
-            Assert.AreEqual(gpt41Deployment, incrementalDefaults.ModelDeployments["gpt-4.1"], "gpt-4.1 deployment should match after incremental update");
-
-            // Verify gpt-4.1-mini was preserved (this is the key test for incremental update)
-            Assert.IsTrue(incrementalDefaults.ModelDeployments.ContainsKey("gpt-4.1-mini"), "Should contain gpt-4.1-mini deployment after incremental update");
-            Assert.AreEqual(gpt41MiniDeployment, incrementalDefaults.ModelDeployments["gpt-4.1-mini"],
-                "gpt-4.1-mini should be preserved after incremental update (verifies incremental update works)");
-
-            // Verify text-embedding-3-large was preserved (this is the key test for incremental update)
-            Assert.IsTrue(incrementalDefaults.ModelDeployments.ContainsKey("text-embedding-3-large"), "Should contain text-embedding-3-large deployment after incremental update");
-            Assert.AreEqual(textEmbeddingDeployment, incrementalDefaults.ModelDeployments["text-embedding-3-large"],
-                "text-embedding-3-large should be preserved after incremental update (verifies incremental update works)");
+            Assert.IsTrue(incrementalDefaults.ModelDeployments.Count >= initialModelDeployments.Count,
+                "All model mappings should still be present after incremental update (verifies incremental update works)");
+            AssertModelDeployments(incrementalDefaults.ModelDeployments, initialModelDeployments);
 
             // Step 5: Verify by getting defaults again to ensure persistence
             Response<ContentUnderstandingDefaults> getAfterIncrementalResponse = await client.GetDefaultsAsync();
             Assert.IsNotNull(getAfterIncrementalResponse.Value, "Get defaults after incremental update response should not be null");
             Assert.IsNotNull(getAfterIncrementalResponse.Value.ModelDeployments, "Model deployments should not be null");
-            Assert.AreEqual(3, getAfterIncrementalResponse.Value.ModelDeployments.Count,
-                "All three models should still be present when getting defaults after incremental update");
-
-            Assert.AreEqual(gpt41Deployment, getAfterIncrementalResponse.Value.ModelDeployments["gpt-4.1"],
-                "gpt-4.1 deployment should match when getting defaults after incremental update");
-            Assert.AreEqual(gpt41MiniDeployment, getAfterIncrementalResponse.Value.ModelDeployments["gpt-4.1-mini"],
-                "gpt-4.1-mini should be preserved when getting defaults after incremental update");
-            Assert.AreEqual(textEmbeddingDeployment, getAfterIncrementalResponse.Value.ModelDeployments["text-embedding-3-large"],
-                "text-embedding-3-large should be preserved when getting defaults after incremental update");
+            Assert.IsTrue(getAfterIncrementalResponse.Value.ModelDeployments.Count >= initialModelDeployments.Count,
+                "All model mappings should still be present when getting defaults after incremental update");
+            AssertModelDeployments(getAfterIncrementalResponse.Value.ModelDeployments, initialModelDeployments);
         }
 
         /// <summary>
@@ -146,11 +116,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public async Task GetDefaultsAsync()
         {
             ContentUnderstandingClient client = GetClient();
-
-            // Load expected model values from test environment
-            string? gpt41Deployment = TestEnvironment.Gpt41Deployment;
-            string? gpt41MiniDeployment = TestEnvironment.Gpt41MiniDeployment;
-            string? textEmbeddingDeployment = TestEnvironment.TextEmbedding3LargeDeployment;
+            ContentUnderstandingModelProfile modelProfile = TestEnvironment.GetModelProfile(_serviceVersion);
 
             Response<ContentUnderstandingDefaults> response = await client.GetDefaultsAsync();
 
@@ -158,40 +124,31 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsNotNull(response.Value, "Response value should not be null");
 
             ContentUnderstandingDefaults defaults = response.Value;
-
-            // Verify defaults structure
             Assert.IsNotNull(defaults, "Defaults should not be null");
 
-            // ModelDeployments may be null or empty if not configured
             if (defaults.ModelDeployments != null && defaults.ModelDeployments.Count > 0)
             {
-                Assert.IsTrue(defaults.ModelDeployments.Count > 0, "Model deployments dictionary should not be empty if not null");
-
-                // Verify expected keys exist if deployments are configured
-                foreach (var kvp in defaults.ModelDeployments)
+                foreach (KeyValuePair<string, string> deployment in defaults.ModelDeployments)
                 {
-                    Assert.IsFalse(string.IsNullOrWhiteSpace(kvp.Key), "Model deployment key should not be null or empty");
-                    Assert.IsFalse(string.IsNullOrWhiteSpace(kvp.Value), "Model deployment value should not be null or empty");
+                    Assert.IsFalse(string.IsNullOrWhiteSpace(deployment.Key), "Model deployment key should not be null or empty");
+                    Assert.IsFalse(string.IsNullOrWhiteSpace(deployment.Value), "Model deployment value should not be null or empty");
                 }
 
-                // Verify specific model values if they are configured in test environment
-                if (!string.IsNullOrEmpty(gpt41Deployment))
+                if (modelProfile.IsConfigured)
                 {
-                    Assert.IsTrue(defaults.ModelDeployments.ContainsKey("gpt-4.1"), "Should contain gpt-4.1 deployment");
-                    Assert.AreEqual(gpt41Deployment, defaults.ModelDeployments["gpt-4.1"], "gpt-4.1 deployment should match test environment value");
+                    AssertModelDeployments(defaults.ModelDeployments, modelProfile.GetDefaultModelDeployments());
                 }
+            }
+        }
 
-                if (!string.IsNullOrEmpty(gpt41MiniDeployment))
-                {
-                    Assert.IsTrue(defaults.ModelDeployments.ContainsKey("gpt-4.1-mini"), "Should contain gpt-4.1-mini deployment");
-                    Assert.AreEqual(gpt41MiniDeployment, defaults.ModelDeployments["gpt-4.1-mini"], "gpt-4.1-mini deployment should match test environment value");
-                }
-
-                if (!string.IsNullOrEmpty(textEmbeddingDeployment))
-                {
-                    Assert.IsTrue(defaults.ModelDeployments.ContainsKey("text-embedding-3-large"), "Should contain text-embedding-3-large deployment");
-                    Assert.AreEqual(textEmbeddingDeployment, defaults.ModelDeployments["text-embedding-3-large"], "text-embedding-3-large deployment should match test environment value");
-                }
+        private static void AssertModelDeployments(
+            IDictionary<string, string> actualModelDeployments,
+            IDictionary<string, string> expectedModelDeployments)
+        {
+            foreach (KeyValuePair<string, string> deployment in expectedModelDeployments)
+            {
+                Assert.IsTrue(actualModelDeployments.ContainsKey(deployment.Key), $"Should contain {deployment.Key} deployment");
+                Assert.AreEqual(deployment.Value, actualModelDeployments[deployment.Key], $"{deployment.Key} deployment should match");
             }
         }
 
@@ -215,7 +172,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsNotNull(binaryData, "Binary data should not be null");
 
             // Analyze the document
-            Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
+            Operation<AnalysisResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
                 binaryData);
@@ -228,7 +185,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 $"Response status should be successful, but was {operation.GetRawResponse().Status}");
 
             // Verify result
-            AnalyzeResult result = operation.Value;
+            AnalysisResult result = operation.Value;
             Assert.IsNotNull(result, "Analysis result should not be null");
             Assert.IsNotNull(result.Contents, "Result contents should not be null");
             Assert.IsTrue(result.Contents.Count > 0, "Result should contain at least one content element");
@@ -251,12 +208,12 @@ namespace Azure.AI.ContentUnderstanding.Tests
             BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
             // Analyze the document
-            Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
+            Operation<AnalysisResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
                 binaryData);
 
-            AnalyzeResult result = operation.Value;
+            AnalysisResult result = operation.Value;
 
             // Verify contents exist
             Assert.IsNotNull(result.Contents, "Result should contain contents");
@@ -264,11 +221,11 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.AreEqual(1, result.Contents.Count, "PDF file should have exactly one content element");
 
             // Extract markdown from first content
-            MediaContent? content = result.Contents.First();
+            AnalysisContent? content = result.Contents.First();
             Assert.IsNotNull(content, "Content should not be null");
-            Assert.IsInstanceOf<MediaContent>(content, "Content should be of type MediaContent");
+            Assert.IsInstanceOf<AnalysisContent>(content, "Content should be of type AnalysisContent");
 
-            if (content is MediaContent mediaContent)
+            if (content is AnalysisContent mediaContent)
             {
                 Assert.IsNotNull(mediaContent.Markdown, "Markdown content should not be null");
                 Assert.IsTrue(mediaContent.Markdown.Length > 0, "Markdown content should not be empty");
@@ -294,18 +251,18 @@ namespace Azure.AI.ContentUnderstanding.Tests
             BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
             // Analyze the document
-            Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
+            Operation<AnalysisResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
                 binaryData);
 
-            AnalyzeResult result = operation.Value;
+            AnalysisResult result = operation.Value;
 
             // Verify contents exist
             Assert.IsNotNull(result.Contents, "Result should contain contents");
             Assert.IsTrue(result.Contents!.Count > 0, "Result should have at least one content");
 
-            MediaContent? content = result.Contents.First();
+            AnalysisContent? content = result.Contents.First();
             Assert.IsNotNull(content, "Content should not be null for document properties validation");
 
             // Verify document content type and properties
@@ -418,10 +375,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsTrue(uriSource.IsAbsoluteUri, "URI should be absolute");
 
             // Analyze the document from URL
-            Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
+            Operation<AnalysisResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
-                inputs: new[] { new AnalyzeInput { Url = uriSource } });
+                inputs: new[] { new AnalysisInput { Uri = uriSource } });
 
             // Verify operation completed successfully
             Assert.IsNotNull(operation, "Analysis operation should not be null");
@@ -432,18 +389,18 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 $"Response status should be successful, but was {operation.GetRawResponse().Status}");
 
             // Verify result
-            AnalyzeResult result = operation.Value;
+            AnalysisResult result = operation.Value;
             Assert.IsNotNull(result, "Analysis result should not be null");
             Assert.IsNotNull(result.Contents, "Result contents should not be null");
             Assert.IsTrue(result.Contents.Count > 0, "Result should contain at least one content element");
             Assert.AreEqual(1, result.Contents.Count, "PDF file should have exactly one content element");
 
             // Verify markdown content
-            MediaContent? content = result.Contents.First();
+            AnalysisContent? content = result.Contents.First();
             Assert.IsNotNull(content, "Content should not be null");
-            Assert.IsInstanceOf<MediaContent>(content, "Content should be of type MediaContent");
+            Assert.IsInstanceOf<AnalysisContent>(content, "Content should be of type AnalysisContent");
 
-            if (content is MediaContent mediaContent)
+            if (content is AnalysisContent mediaContent)
             {
                 Assert.IsNotNull(mediaContent.Markdown, "Markdown content should not be null");
                 Assert.IsTrue(mediaContent.Markdown.Length > 0, "Markdown content should not be empty");
@@ -465,10 +422,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsTrue(invoiceUrl.IsAbsoluteUri, "Invoice URL should be absolute");
 
             // Analyze the invoice
-            Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
+            Operation<AnalysisResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-invoice",
-                inputs: new[] { new AnalyzeInput { Url = invoiceUrl } });
+                inputs: new[] { new AnalysisInput { Uri = invoiceUrl } });
 
             // Verify operation completed successfully
             Assert.IsNotNull(operation, "Analysis operation should not be null");
@@ -479,7 +436,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 $"Response status should be successful, but was {operation.GetRawResponse().Status}");
 
             // Verify result
-            AnalyzeResult result = operation.Value;
+            AnalysisResult result = operation.Value;
             Assert.IsNotNull(result, "Analysis result should not be null");
             Assert.IsNotNull(result.Contents, "Result should contain contents");
             Assert.IsTrue(result.Contents!.Count > 0, "Result should have at least one content");
@@ -509,13 +466,13 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 // Note: LLM can return different variations, so we accept multiple possible values
                 if (docContent.Fields.TryGetValue("CustomerName", out var customerNameField))
                 {
-                    Assert.IsTrue(customerNameField is StringField, "CustomerName should be a StringField");
-                    if (customerNameField is StringField customerNameStr)
+                    Assert.IsTrue(customerNameField is ContentStringField, "CustomerName should be a ContentStringField");
+                    if (customerNameField is ContentStringField customerNameStr)
                     {
-                        Assert.IsFalse(string.IsNullOrWhiteSpace(customerNameStr.ValueString),
+                        Assert.IsFalse(string.IsNullOrWhiteSpace(customerNameStr.Value),
                             "CustomerName value should not be empty");
                         // Accept multiple possible values as LLM can return different variations
-                        var customerName = customerNameStr.ValueString;
+                        var customerName = customerNameStr.Value;
                         var acceptedValues = new[] { "MICROSOFT CORPORATION", "Microsoft Corp" };
                         Assert.IsTrue(acceptedValues.Contains(customerName),
                             $"CustomerName should be one of the accepted values: {string.Join(", ", acceptedValues)}, but was '{customerName}'");
@@ -526,20 +483,39 @@ namespace Azure.AI.ContentUnderstanding.Tests
                             Assert.IsTrue(customerNameStr.Confidence.Value >= 0 && customerNameStr.Confidence.Value <= 1,
                                 "CustomerName confidence should be between 0 and 1");
                         }
+
+                        // Verify grounding sources are parsed as DocumentSource
+                        if (customerNameStr.Sources != null)
+                        {
+                            Assert.IsTrue(customerNameStr.Sources.Length > 0,
+                                "Sources should have at least one element");
+                            Assert.IsInstanceOf<DocumentSource>(customerNameStr.Sources[0],
+                                "CustomerName grounding source should be DocumentSource");
+                            var docSource = (DocumentSource)customerNameStr.Sources[0];
+                            Assert.AreEqual(1, docSource.PageNumber,
+                                "CustomerName should be on page 1");
+                            Assert.AreEqual(4, docSource.Polygon!.Count,
+                                "DocumentSource polygon should have 4 points");
+                            foreach (var point in docSource.Polygon!)
+                            {
+                                Assert.IsTrue(point.X >= 0, $"Polygon X coordinate should be >= 0, but was {point.X}");
+                                Assert.IsTrue(point.Y >= 0, $"Polygon Y coordinate should be >= 0, but was {point.Y}");
+                            }
+                        }
                     }
                 }
 
                 // Verify InvoiceDate field with expected value
                 if (docContent.Fields.TryGetValue("InvoiceDate", out var invoiceDateField))
                 {
-                    Assert.IsTrue(invoiceDateField is DateField, "InvoiceDate should be a DateField");
-                    if (invoiceDateField is DateField invoiceDate)
+                    Assert.IsTrue(invoiceDateField is ContentDateTimeOffsetField, "InvoiceDate should be a ContentDateTimeOffsetField");
+                    if (invoiceDateField is ContentDateTimeOffsetField invoiceDate)
                     {
-                        Assert.IsTrue(invoiceDate.ValueDate.HasValue,
+                        Assert.IsTrue(invoiceDate.Value.HasValue,
                             "InvoiceDate should have a date value");
                         // Expected value from recording: "2019-11-15"
                         var expectedDate = new DateTime(2019, 11, 15);
-                        Assert.AreEqual(expectedDate, invoiceDate.ValueDate!.Value.Date,
+                        Assert.AreEqual(expectedDate, invoiceDate.Value!.Value.Date,
                             "InvoiceDate should match expected value");
                         Assert.IsTrue(invoiceDate.Confidence.HasValue,
                             "InvoiceDate should have confidence value");
@@ -554,19 +530,19 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 // Verify TotalAmount field with expected value
                 if (docContent.Fields.TryGetValue("TotalAmount", out var totalAmountField))
                 {
-                    Assert.IsTrue(totalAmountField is ObjectField, "TotalAmount should be an ObjectField");
-                    if (totalAmountField is ObjectField totalAmountObj)
+                    Assert.IsTrue(totalAmountField is ContentObjectField, "TotalAmount should be a ContentObjectField");
+                    if (totalAmountField is ContentObjectField totalAmountObj)
                     {
                         // Verify Amount sub-field - field is known to exist based on recording
                         var amountField = totalAmountObj["Amount"];  // Throws KeyNotFoundException if not found
                         Assert.IsNotNull(amountField, "TotalAmount.Amount should not be null");
-                        Assert.IsTrue(amountField is NumberField, "TotalAmount.Amount should be a NumberField");
-                        if (amountField is NumberField amountNum)
+                        Assert.IsTrue(amountField is ContentNumberField, "TotalAmount.Amount should be a ContentNumberField");
+                        if (amountField is ContentNumberField amountNum)
                         {
-                            Assert.IsTrue(amountNum.ValueNumber.HasValue,
+                            Assert.IsTrue(amountNum.Value.HasValue,
                                 "TotalAmount.Amount should have a numeric value");
                             // Expected value from recording: 110
-                            Assert.AreEqual(110.0, amountNum.ValueNumber!.Value,
+                            Assert.AreEqual(110.0, amountNum.Value!.Value,
                                 "TotalAmount.Amount should match expected value");
                         }
 
@@ -574,11 +550,11 @@ namespace Azure.AI.ContentUnderstanding.Tests
                         // Note: LLM can return different values or null at different runs, so we accept multiple possibilities
                         var currencyField = totalAmountObj["CurrencyCode"];  // Throws KeyNotFoundException if not found
                         Assert.IsNotNull(currencyField, "TotalAmount.CurrencyCode should not be null");
-                        Assert.IsTrue(currencyField is StringField, "TotalAmount.CurrencyCode should be a StringField");
-                        if (currencyField is StringField currencyStr)
+                        Assert.IsTrue(currencyField is ContentStringField, "TotalAmount.CurrencyCode should be a ContentStringField");
+                        if (currencyField is ContentStringField currencyStr)
                         {
                             // Accept both "USD" and null/empty as valid values since LLM may not always extract it
-                            var currencyValue = currencyStr.ValueString;
+                            var currencyValue = currencyStr.Value;
                             if (!string.IsNullOrWhiteSpace(currencyValue))
                             {
                                 // If value is present, it should be "USD"
@@ -594,125 +570,125 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 // Verify LineItems field with expected values
                 if (docContent.Fields.TryGetValue("LineItems", out var lineItemsField))
                 {
-                    Assert.IsTrue(lineItemsField is ArrayField, "LineItems should be an ArrayField");
-                    if (lineItemsField is ArrayField lineItems)
+                    Assert.IsTrue(lineItemsField is ContentArrayField, "LineItems should be a ContentArrayField");
+                    if (lineItemsField is ContentArrayField lineItems)
                     {
                         // Expected count from recording: 3
                         Assert.AreEqual(3, lineItems.Count,
                             "LineItems should have expected count");
 
                         // Verify first line item (Consulting Services)
-                        if (lineItems[0] is ObjectField item1)
+                        if (lineItems[0] is ContentObjectField item1)
                         {
                             // Fields known to exist based on recording - using indexer which throws if not found
                             var desc1 = item1["Description"];
                             Assert.IsNotNull(desc1, "Item 1 Description should not be null");
-                            if (desc1 is StringField desc1Str)
+                            if (desc1 is ContentStringField desc1Str)
                             {
                                 // Expected value from recording: "Consulting Services"
-                                Assert.AreEqual("Consulting Services", desc1Str.ValueString,
+                                Assert.AreEqual("Consulting Services", desc1Str.Value,
                                     "Item 1 Description should match expected value");
                             }
 
                             var qty1 = item1["Quantity"];
                             Assert.IsNotNull(qty1, "Item 1 Quantity should not be null");
-                            if (qty1 is NumberField qty1Num && qty1Num.ValueNumber.HasValue)
+                            if (qty1 is ContentNumberField qty1Num && qty1Num.Value.HasValue)
                             {
                                 // Expected value from recording: 2
-                                Assert.AreEqual(2.0, qty1Num.ValueNumber.Value,
+                                Assert.AreEqual(2.0, qty1Num.Value.Value,
                                     "Item 1 Quantity should match expected value");
                             }
 
                             // UnitPrice may or may not exist - using GetFieldOrDefault for null-safe access
-                            if (item1.ValueObject?.GetFieldOrDefault("UnitPrice") is ObjectField unitPrice1Obj)
+                            if (item1.Value?.GetFieldOrDefault("UnitPrice") is ContentObjectField unitPrice1Obj)
                             {
-                                var unitPrice1Amount = unitPrice1Obj.ValueObject?.GetFieldOrDefault("Amount");
-                                if (unitPrice1Amount is NumberField unitPrice1Num && unitPrice1Num.ValueNumber.HasValue)
+                                var unitPrice1Amount = unitPrice1Obj.Value?.GetFieldOrDefault("Amount");
+                                if (unitPrice1Amount is ContentNumberField unitPrice1Num && unitPrice1Num.Value.HasValue)
                                 {
                                     // Expected value from recording: 30
-                                    Assert.AreEqual(30.0, unitPrice1Num.ValueNumber.Value,
+                                    Assert.AreEqual(30.0, unitPrice1Num.Value.Value,
                                         "Item 1 UnitPrice.Amount should match expected value");
                                 }
                             }
                         }
 
                         // Verify second line item (Document Fee)
-                        if (lineItems[1] is ObjectField item2)
+                        if (lineItems[1] is ContentObjectField item2)
                         {
                             // Fields known to exist based on recording - using indexer which throws if not found
                             var desc2 = item2["Description"];
                             Assert.IsNotNull(desc2, "Item 2 Description should not be null");
-                            if (desc2 is StringField desc2Str)
+                            if (desc2 is ContentStringField desc2Str)
                             {
                                 // Expected value from recording: "Document Fee"
-                                Assert.AreEqual("Document Fee", desc2Str.ValueString,
+                                Assert.AreEqual("Document Fee", desc2Str.Value,
                                     "Item 2 Description should match expected value");
                             }
 
                             var qty2 = item2["Quantity"];
                             Assert.IsNotNull(qty2, "Item 2 Quantity should not be null");
-                            if (qty2 is NumberField qty2Num && qty2Num.ValueNumber.HasValue)
+                            if (qty2 is ContentNumberField qty2Num && qty2Num.Value.HasValue)
                             {
                                 // Expected value from recording: 3
-                                Assert.AreEqual(3.0, qty2Num.ValueNumber.Value,
+                                Assert.AreEqual(3.0, qty2Num.Value.Value,
                                     "Item 2 Quantity should match expected value");
                             }
 
                             // TotalAmount may or may not exist - using GetFieldOrDefault for null-safe access
-                            if (item2.ValueObject?.GetFieldOrDefault("TotalAmount") is ObjectField totalAmount2Obj)
+                            if (item2.Value?.GetFieldOrDefault("TotalAmount") is ContentObjectField totalAmount2Obj)
                             {
-                                var totalAmount2Amount = totalAmount2Obj.ValueObject?.GetFieldOrDefault("Amount");
-                                if (totalAmount2Amount is NumberField totalAmount2Num && totalAmount2Num.ValueNumber.HasValue)
+                                var totalAmount2Amount = totalAmount2Obj.Value?.GetFieldOrDefault("Amount");
+                                if (totalAmount2Amount is ContentNumberField totalAmount2Num && totalAmount2Num.Value.HasValue)
                                 {
                                     // Expected value from recording: 30
-                                    Assert.AreEqual(30.0, totalAmount2Num.ValueNumber.Value,
+                                    Assert.AreEqual(30.0, totalAmount2Num.Value.Value,
                                         "Item 2 TotalAmount.Amount should match expected value");
                                 }
                             }
                         }
 
                         // Verify third line item (Printing Fee)
-                        if (lineItems[2] is ObjectField item3)
+                        if (lineItems[2] is ContentObjectField item3)
                         {
                             // Fields known to exist based on recording - using indexer which throws if not found
                             var desc3 = item3["Description"];
                             Assert.IsNotNull(desc3, "Item 3 Description should not be null");
-                            if (desc3 is StringField desc3Str)
+                            if (desc3 is ContentStringField desc3Str)
                             {
                                 // Expected value from recording: "Printing Fee"
-                                Assert.AreEqual("Printing Fee", desc3Str.ValueString,
+                                Assert.AreEqual("Printing Fee", desc3Str.Value,
                                     "Item 3 Description should match expected value");
                             }
 
                             var qty3 = item3["Quantity"];
                             Assert.IsNotNull(qty3, "Item 3 Quantity should not be null");
-                            if (qty3 is NumberField qty3Num && qty3Num.ValueNumber.HasValue)
+                            if (qty3 is ContentNumberField qty3Num && qty3Num.Value.HasValue)
                             {
                                 // Expected value from recording: 10
-                                Assert.AreEqual(10.0, qty3Num.ValueNumber.Value,
+                                Assert.AreEqual(10.0, qty3Num.Value.Value,
                                     "Item 3 Quantity should match expected value");
                             }
 
                             // UnitPrice may or may not exist - using GetFieldOrDefault for null-safe access
-                            if (item3.ValueObject?.GetFieldOrDefault("UnitPrice") is ObjectField unitPrice3Obj)
+                            if (item3.Value?.GetFieldOrDefault("UnitPrice") is ContentObjectField unitPrice3Obj)
                             {
-                                var unitPrice3Amount = unitPrice3Obj.ValueObject?.GetFieldOrDefault("Amount");
-                                if (unitPrice3Amount is NumberField unitPrice3Num && unitPrice3Num.ValueNumber.HasValue)
+                                var unitPrice3Amount = unitPrice3Obj.Value?.GetFieldOrDefault("Amount");
+                                if (unitPrice3Amount is ContentNumberField unitPrice3Num && unitPrice3Num.Value.HasValue)
                                 {
                                     // Expected value from recording: 1
-                                    Assert.AreEqual(1.0, unitPrice3Num.ValueNumber.Value,
+                                    Assert.AreEqual(1.0, unitPrice3Num.Value.Value,
                                         "Item 3 UnitPrice.Amount should match expected value");
                                 }
                             }
 
                             // TotalAmount may or may not exist - using GetFieldOrDefault for null-safe access
-                            if (item3.ValueObject?.GetFieldOrDefault("TotalAmount") is ObjectField totalAmount3Obj)
+                            if (item3.Value?.GetFieldOrDefault("TotalAmount") is ContentObjectField totalAmount3Obj)
                             {
-                                var totalAmount3Amount = totalAmount3Obj.ValueObject?.GetFieldOrDefault("Amount");
-                                if (totalAmount3Amount is NumberField totalAmount3Num && totalAmount3Num.ValueNumber.HasValue)
+                                var totalAmount3Amount = totalAmount3Obj.Value?.GetFieldOrDefault("Amount");
+                                if (totalAmount3Amount is ContentNumberField totalAmount3Num && totalAmount3Num.Value.HasValue)
                                 {
                                     // Expected value from recording: 10
-                                    Assert.AreEqual(10.0, totalAmount3Num.ValueNumber.Value,
+                                    Assert.AreEqual(10.0, totalAmount3Num.Value.Value,
                                         "Item 3 TotalAmount.Amount should match expected value");
                                 }
                             }
@@ -727,6 +703,174 @@ namespace Azure.AI.ContentUnderstanding.Tests
         }
 
         /// <summary>
+        /// Tests analyzing a document with various ContentRange page selections.
+        /// Verifies that specifying a page range limits the returned content to selected pages.
+        /// </summary>
+        [RecordedTest]
+        public async Task AnalyzeUrlAsync_DocumentContentRange()
+        {
+            ContentUnderstandingClient client = GetClient();
+
+            Uri documentUrl = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/mixed_financial_docs.pdf");
+
+            // Full document analysis (no ContentRange) — baseline for comparison
+            Operation<AnalysisResult> fullOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                inputs: new[] { new AnalysisInput { Uri = documentUrl } });
+
+            var fullDoc = (DocumentContent)fullOperation.Value.Contents!.First();
+
+            // ContentRange.Pages(2, 3) — page range
+            Operation<AnalysisResult> pages23Operation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                inputs: new[] { new AnalysisInput { Uri = documentUrl, ContentRange = ContentRange.Pages(2, 3) } });
+
+            var pages23Doc = (DocumentContent)pages23Operation.Value.Contents!.First();
+
+            // ContentRange.PagesFrom(3) — from page 3 onward
+            Operation<AnalysisResult> pagesFrom3Operation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                inputs: new[] { new AnalysisInput { Uri = documentUrl, ContentRange = ContentRange.PagesFrom(3) } });
+
+            var pagesFrom3Doc = (DocumentContent)pagesFrom3Operation.Value.Contents!.First();
+
+            // Full document should have 4 pages
+            Assert.AreEqual(4, fullDoc.Pages!.Count, "Full document should have 4 pages");
+
+            // Pages(2,3): exactly 2 pages within range
+            Assert.AreEqual(2, pages23Doc.Pages!.Count, "ContentRange.Pages(2,3) should return 2 pages");
+            Assert.AreEqual(2, pages23Doc.StartPageNumber, "Pages(2,3) should start at page 2");
+            Assert.AreEqual(3, pages23Doc.EndPageNumber, "Pages(2,3) should end at page 3");
+
+            // PagesFrom(3): pages 3 and 4
+            Assert.AreEqual(2, pagesFrom3Doc.Pages!.Count, "ContentRange.PagesFrom(3) should return 2 pages");
+            Assert.AreEqual(3, pagesFrom3Doc.StartPageNumber, "PagesFrom(3) should start at page 3");
+            Assert.AreEqual(4, pagesFrom3Doc.EndPageNumber, "PagesFrom(3) should end at page 4");
+
+            // Full document markdown should be longer than any subset
+            Assert.IsTrue(fullDoc.Markdown!.Length > pages23Doc.Markdown!.Length,
+                $"Full document markdown ({fullDoc.Markdown.Length} chars) should exceed Pages(2,3) ({pages23Doc.Markdown.Length} chars)");
+            Assert.IsTrue(fullDoc.Markdown.Length > pagesFrom3Doc.Markdown!.Length,
+                $"Full document markdown ({fullDoc.Markdown.Length} chars) should exceed PagesFrom(3) ({pagesFrom3Doc.Markdown.Length} chars)");
+        }
+
+        /// <summary>
+        /// Tests analyzing a video with different ContentRange time windows.
+        /// Verifies that ranged analysis returns valid content with source-relative timestamps.
+        /// </summary>
+        [RecordedTest]
+        public async Task AnalyzeUrlAsync_VideoContentRange()
+        {
+            ContentUnderstandingClient client = GetClient();
+
+            Uri videoUrl = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/videos/sdk_samples/FlightSimulator.mp4");
+
+            // Full video analysis — baseline
+            Operation<AnalysisResult> fullOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-videoSearch",
+                inputs: new[] { new AnalysisInput { Uri = videoUrl } });
+
+            var fullSegments = fullOperation.Value.Contents!.Cast<AudioVisualContent>().ToList();
+            Assert.IsTrue(fullSegments.Count > 0, "Full video should return segments");
+            Assert.IsTrue(fullSegments.All(s => s.EndTime > s.StartTime), "Full video segments should have EndTime > StartTime");
+            // TODO: Assert exact segment count and total duration after re-recording
+
+            // ContentRange.TimeRange(0, 5s) — first 5 seconds only
+            Operation<AnalysisResult> range0to5Operation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-videoSearch",
+                inputs: new[] { new AnalysisInput { Uri = videoUrl, ContentRange = ContentRange.TimeRange(TimeSpan.Zero, TimeSpan.FromSeconds(5)) } });
+
+            var range0to5Segments = range0to5Operation.Value.Contents!.Cast<AudioVisualContent>().ToList();
+            Assert.IsTrue(range0to5Segments.Count > 0, "0-5s range should return segments");
+            // TODO: Assert exact segment count after re-recording: Assert.AreEqual(N, range0to5Segments.Count, "...");
+            Assert.AreEqual(fullSegments.First().StartTime, range0to5Segments.First().StartTime,
+                "Ranged video segments should retain source-relative start times");
+            Assert.IsTrue(range0to5Segments.All(s => s.EndTime > s.StartTime), "0-5s segments should have EndTime > StartTime");
+            Assert.IsTrue(range0to5Segments.All(s => !string.IsNullOrEmpty(s.Markdown)), "0-5s segments should have markdown");
+            Assert.AreEqual(fullSegments.Max(s => s.EndTime), range0to5Segments.Max(s => s.EndTime),
+                "Ranged video segments should retain the source duration");
+
+            // ContentRange.TimeRange(10s, 20s) — middle of the video
+            Operation<AnalysisResult> range10to20Operation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-videoSearch",
+                inputs: new[] { new AnalysisInput { Uri = videoUrl, ContentRange = ContentRange.TimeRange(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(20)) } });
+
+            var range10to20Segments = range10to20Operation.Value.Contents!.Cast<AudioVisualContent>().ToList();
+            Assert.IsTrue(range10to20Segments.Count > 0, "10-20s range should return segments");
+            // TODO: Assert exact segment count after re-recording: Assert.AreEqual(N, range10to20Segments.Count, "...");
+            Assert.AreEqual(fullSegments.First().StartTime, range10to20Segments.First().StartTime,
+                "Ranged video segments should retain source-relative start times");
+            Assert.IsTrue(range10to20Segments.All(s => s.EndTime > s.StartTime), "10-20s segments should have EndTime > StartTime");
+            Assert.IsTrue(range10to20Segments.All(s => !string.IsNullOrEmpty(s.Markdown)), "10-20s segments should have markdown");
+            Assert.AreEqual(fullSegments.Max(s => s.EndTime), range10to20Segments.Max(s => s.EndTime),
+                "Ranged video segments should retain the source duration");
+        }
+
+        /// <summary>
+        /// Tests analyzing audio with different ContentRange time windows.
+        /// Verifies that ranged analysis returns valid content with source-relative timestamps.
+        /// </summary>
+        [RecordedTest]
+        public async Task AnalyzeUrlAsync_AudioContentRange()
+        {
+            ContentUnderstandingClient client = GetClient();
+
+            Uri audioUrl = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/audio/callCenterRecording.mp3");
+
+            // Full audio analysis — baseline
+            Operation<AnalysisResult> fullOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-audioSearch",
+                inputs: new[] { new AnalysisInput { Uri = audioUrl } });
+
+            Assert.AreEqual(1, fullOperation.Value.Contents!.Count, "Full audio should return exactly 1 content");
+            var fullAudio = (AudioVisualContent)fullOperation.Value.Contents!.First();
+            Assert.IsTrue(fullAudio.EndTime > fullAudio.StartTime, "Full audio should have EndTime > StartTime");
+            Assert.AreEqual(TimeSpan.Zero, fullAudio.StartTime, "Full audio should start at exactly 0 ms");
+            // TODO: Assert exact EndTime after re-recording: Assert.AreEqual(TimeSpan.FromMilliseconds(N), fullAudio.EndTime, "...");
+            Assert.IsNotNull(fullAudio.Markdown, "Full audio should have markdown");
+            Assert.IsTrue(fullAudio.Markdown!.Length > 0, "Full audio markdown should not be empty");
+
+            // ContentRange.TimeRange(0, 10s) — first 10 seconds
+            Operation<AnalysisResult> range0to10Operation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-audioSearch",
+                inputs: new[] { new AnalysisInput { Uri = audioUrl, ContentRange = ContentRange.TimeRange(TimeSpan.Zero, TimeSpan.FromSeconds(10)) } });
+
+            Assert.AreEqual(1, range0to10Operation.Value.Contents!.Count, "TimeRange(0,10s) audio should return exactly 1 content");
+            var range0to10Audio = (AudioVisualContent)range0to10Operation.Value.Contents!.First();
+            Assert.IsTrue(range0to10Audio.EndTime > range0to10Audio.StartTime, "0-10s range should have EndTime > StartTime");
+            Assert.IsNotNull(range0to10Audio.Markdown, "0-10s range should have markdown");
+            Assert.IsTrue(range0to10Audio.Markdown!.Length > 0, "0-10s range markdown should not be empty");
+            Assert.AreEqual(TimeSpan.Zero, range0to10Audio.StartTime,
+                $"TimeRange(0,10s) audio should start at exactly 0 ms, actual: {range0to10Audio.StartTime.TotalMilliseconds} ms");
+            Assert.AreEqual(fullAudio.EndTime, range0to10Audio.EndTime,
+                "Ranged audio content should retain the source audio duration in its top-level metadata");
+
+            // ContentRange.TimeRangeFrom(10s) — from 10 seconds onward
+            Operation<AnalysisResult> rangeFrom10Operation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-audioSearch",
+                inputs: new[] { new AnalysisInput { Uri = audioUrl, ContentRange = ContentRange.TimeRangeFrom(TimeSpan.FromSeconds(10)) } });
+
+            Assert.AreEqual(1, rangeFrom10Operation.Value.Contents!.Count, "TimeRangeFrom(10s) audio should return exactly 1 content");
+            var rangeFrom10Audio = (AudioVisualContent)rangeFrom10Operation.Value.Contents!.First();
+            Assert.IsTrue(rangeFrom10Audio.EndTime > rangeFrom10Audio.StartTime, "10s-onward range should have EndTime > StartTime");
+            Assert.IsNotNull(rangeFrom10Audio.Markdown, "10s-onward range should have markdown");
+            Assert.IsTrue(rangeFrom10Audio.Markdown!.Length > 0, "10s-onward range markdown should not be empty");
+            Assert.AreEqual(fullAudio.StartTime, rangeFrom10Audio.StartTime,
+                "Ranged audio content should retain the source start time in its top-level metadata");
+            Assert.AreEqual(fullAudio.EndTime, rangeFrom10Audio.EndTime,
+                "Ranged audio content should retain the source duration in its top-level metadata");
+        }
+
+        /// <summary>
         /// Tests creating a custom analyzer with field schema.
         /// Verifies that the analyzer is created successfully with the specified configuration and fields.
         /// </summary>
@@ -734,6 +878,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public async Task CreateAnalyzerAsync()
         {
             ContentUnderstandingClient client = GetClient();
+            ContentUnderstandingModelProfile modelProfile = TestEnvironment.GetModelProfile(_serviceVersion);
 
             // Generate a unique analyzer ID
             string defaultId = $"test_custom_analyzer_{Recording.Random.NewGuid().ToString("N")}";
@@ -767,7 +912,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 EnableFormula = true,
                 EnableLayout = true,
                 EnableOcr = true,
-                ReturnDetails = true
+                ShouldReturnDetails = true
             };
 
             // Create the custom analyzer
@@ -780,8 +925,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
             };
 
             // Add model mappings (required for custom analyzers)
-            customAnalyzer.Models.Add("completion", "gpt-4.1");
-            customAnalyzer.Models.Add("embedding", "text-embedding-3-large");
+            customAnalyzer.Models.Add("completion", modelProfile.CompletionModel);
+            customAnalyzer.Models.Add("embedding", modelProfile.EmbeddingModel);
 
             // Create the analyzer
             var operation = await client.CreateAnalyzerAsync(
@@ -814,7 +959,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             {
                 await client.DeleteAnalyzerAsync(analyzerId);
             }
-            catch
+            catch (Exception)
             {
                 // Ignore cleanup errors in tests
             }
@@ -828,6 +973,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public async Task CreateClassifierAsync()
         {
             ContentUnderstandingClient client = GetClient();
+            ContentUnderstandingModelProfile modelProfile = TestEnvironment.GetModelProfile(_serviceVersion);
 
             // Generate a unique analyzer ID
             string defaultId = $"test_classifier_{Recording.Random.NewGuid().ToString("N")}";
@@ -853,7 +999,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // Create analyzer configuration
             var config = new ContentAnalyzerConfig
             {
-                ReturnDetails = true,
+                ShouldReturnDetails = true,
                 EnableSegment = true
             };
 
@@ -870,7 +1016,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 Description = "Custom classifier for financial document categorization",
                 Config = config
             };
-            classifier.Models.Add("completion", "gpt-4.1");
+            classifier.Models.Add("completion", modelProfile.CompletionModel);
 
             // Create the classifier
             var operation = await client.CreateAnalyzerAsync(
@@ -910,7 +1056,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
                 // Analyze the document using the classifier
-                Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
+                Operation<AnalysisResult> analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
                     binaryData);
@@ -924,7 +1070,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                     $"Response status should be successful, but was {analyzeOperation.GetRawResponse().Status}");
 
                 // Verify analysis result
-                AnalyzeResult analyzeResult = analyzeOperation.Value;
+                AnalysisResult analyzeResult = analyzeOperation.Value;
                 Assert.IsNotNull(analyzeResult, "Analysis result should not be null");
                 Assert.IsNotNull(analyzeResult.Contents, "Result should contain contents");
                 Assert.IsTrue(analyzeResult.Contents.Count > 0, "Result should have at least one content");
@@ -1009,7 +1155,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 {
                     await client.DeleteAnalyzerAsync(analyzerId);
                 }
-                catch
+                catch (Exception)
                 {
                     // Ignore cleanup errors in tests
                 }
@@ -1122,6 +1268,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public async Task UpdateAnalyzerAsync()
         {
             ContentUnderstandingClient client = GetClient();
+            ContentUnderstandingModelProfile modelProfile = TestEnvironment.GetModelProfile(_serviceVersion);
 
             // First create an analyzer to update
             string defaultId = $"test_analyzer_{Recording.Random.NewGuid().ToString("N")}";
@@ -1133,10 +1280,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 Description = "Initial description",
                 Config = new ContentAnalyzerConfig
                 {
-                    ReturnDetails = true
+                    ShouldReturnDetails = true
                 }
             };
-            initialAnalyzer.Models.Add("completion", "gpt-4.1");
+            initialAnalyzer.Models.Add("completion", modelProfile.CompletionModel);
             initialAnalyzer.Tags["tag1"] = "tag1_initial_value";
             initialAnalyzer.Tags["tag2"] = "tag2_initial_value";
 
@@ -1195,7 +1342,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 {
                     await client.DeleteAnalyzerAsync(analyzerId);
                 }
-                catch
+                catch (Exception)
                 {
                     // Ignore cleanup errors
                 }
@@ -1210,6 +1357,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public async Task DeleteAnalyzerAsync()
         {
             ContentUnderstandingClient client = GetClient();
+            ContentUnderstandingModelProfile modelProfile = TestEnvironment.GetModelProfile(_serviceVersion);
 
             // First create an analyzer to delete
             string defaultId = $"test_analyzer_{Recording.Random.NewGuid().ToString("N")}";
@@ -1221,10 +1369,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 Description = "Simple analyzer for deletion example",
                 Config = new ContentAnalyzerConfig
                 {
-                    ReturnDetails = true
+                    ShouldReturnDetails = true
                 }
             };
-            analyzer.Models.Add("completion", "gpt-4.1");
+            analyzer.Models.Add("completion", modelProfile.CompletionModel);
 
             await client.CreateAnalyzerAsync(
                 WaitUntil.Completed,
@@ -1273,7 +1421,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
             // Analyze with prebuilt-documentSearch which has formulas, layout, and OCR enabled
-            Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
+            Operation<AnalysisResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
                 binaryData);
@@ -1287,7 +1435,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 $"Response status should be successful, but was {operation.GetRawResponse().Status}");
 
             // Verify result
-            AnalyzeResult result = operation.Value;
+            AnalysisResult result = operation.Value;
             Assert.IsNotNull(result, "Analysis result should not be null");
             Assert.IsNotNull(result.Contents, "Result should contain contents");
             Assert.IsTrue(result.Contents.Count > 0, "Result should have at least one content");
@@ -1320,9 +1468,12 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // Use protocol method to get raw JSON response
             var operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
-                "prebuilt-documentSearch",
-                RequestContent.Create(BinaryData.FromBytes(fileBytes)),
-                "application/pdf");
+                new AnalyzeBinaryOptions(
+                    "prebuilt-documentSearch",
+                    BinaryData.FromBytes(fileBytes))
+                {
+                    ContentType = "application/pdf"
+                });
 
             // Verify operation completed successfully
             Assert.IsNotNull(operation, "Analysis operation should not be null");
@@ -1333,7 +1484,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 $"Response status should be successful, but was {operation.GetRawResponse().Status}");
 
             // Verify response data
-            BinaryData responseData = operation.Value;
+            BinaryData responseData = operation.GetRawResponse().Content;
             Assert.IsNotNull(responseData, "Response data should not be null");
             Assert.IsTrue(responseData.ToMemory().Length > 0, "Response data should not be empty");
 
@@ -1361,7 +1512,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var analyzeOperation = await client.AnalyzeAsync(
                 WaitUntil.Started,
                 "prebuilt-invoice",
-                inputs: new[] { new AnalyzeInput { Url = documentUrl } });
+                inputs: new[] { new AnalysisInput { Uri = documentUrl } });
 
             // Get the operation ID from the operation
             string operationId = analyzeOperation.Id;
@@ -1370,7 +1521,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             // Wait for completion
             await analyzeOperation.WaitForCompletionAsync();
-            AnalyzeResult result = analyzeOperation.Value;
+            AnalysisResult result = analyzeOperation.Value;
 
             // Verify analysis completed successfully
             Assert.IsNotNull(result, "Analysis result should not be null");
@@ -1404,7 +1555,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var analyzeOperation = await client.AnalyzeAsync(
                 WaitUntil.Started,
                 "prebuilt-videoSearch",
-                inputs: new[] { new AnalyzeInput { Url = videoUrl } });
+                inputs: new[] { new AnalysisInput { Uri = videoUrl } });
 
             // Get the operation ID from the operation
             string operationId = analyzeOperation.Id;
@@ -1413,7 +1564,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             // Wait for completion
             await analyzeOperation.WaitForCompletionAsync();
-            AnalyzeResult result = analyzeOperation.Value;
+            AnalysisResult result = analyzeOperation.Value;
 
             // Verify analysis completed successfully
             Assert.IsNotNull(result, "Analysis result should not be null");
@@ -1423,12 +1574,12 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // Find video content with keyframes
             var videoContent = result.Contents?.FirstOrDefault(c => c is AudioVisualContent) as AudioVisualContent;
             Assert.IsNotNull(videoContent, "Test requires AudioVisualContent (video content) for GetResultFile");
-            Assert.IsNotNull(videoContent!.KeyFrameTimesMs, "KeyFrameTimesMs should not be null");
-            Assert.IsTrue(videoContent.KeyFrameTimesMs!.Count > 0,
-                $"Video content should have at least one keyframe, but found {videoContent.KeyFrameTimesMs.Count}");
+            Assert.IsNotNull(videoContent!.KeyFrameTimes, "KeyFrameTimes should not be null");
+            Assert.IsTrue(videoContent.KeyFrameTimes!.Count > 0,
+                $"Video content should have at least one keyframe, but found {videoContent.KeyFrameTimes.Count}");
 
             // Get the first keyframe
-            long firstFrameTimeMs = videoContent.KeyFrameTimesMs[0];
+            long firstFrameTimeMs = (long)videoContent.KeyFrameTimes[0].TotalMilliseconds;
             string framePath = $"keyframes/{firstFrameTimeMs}";
 
             // Get the result file (keyframe image)
@@ -1448,6 +1599,262 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // Verify file data
             byte[] imageBytes = fileResponse.Value.ToArray();
             Assert.IsTrue(imageBytes.Length > 0, "Keyframe image should not be empty");
+        }
+
+        /// <summary>
+        /// Tests that clientRequestId parameter sets the x-ms-client-request-id header in Analyze operation.
+        /// </summary>
+        [Test]
+        public void Analyze_WithClientRequestId_SetsHeader()
+        {
+            // Arrange
+            var testGuid = Guid.NewGuid();
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader("Operation-Location", "https://example.com/operations/123");
+            var mockTransport = new MockTransport(mockResponse);
+
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions(_serviceVersion) { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromString("{\"inputs\":[]}"));
+
+            // Act
+            try
+            {
+                client.Analyze(
+                    WaitUntil.Started,
+                    "test-analyzer",
+                    requestContent,
+                    clientRequestId: testGuid);
+            }
+            catch (Exception)
+            {
+                // Expected - the mock response doesn't fully implement the operation.
+                // We only need to validate that the request was sent with the correct header.
+            }
+
+            // Assert
+            Assert.AreEqual(1, mockTransport.Requests.Count, "Should have made one request");
+            var request = mockTransport.Requests[0];
+            Assert.IsTrue(request.Headers.TryGetValue("x-ms-client-request-id", out string? headerValue),
+                "Request should contain x-ms-client-request-id header");
+            Assert.AreEqual(testGuid.ToString(), headerValue,
+                "x-ms-client-request-id header should match the provided GUID");
+        }
+
+        /// <summary>
+        /// Tests that clientRequestId parameter sets the x-ms-client-request-id header in AnalyzeAsync operation.
+        /// </summary>
+        [Test]
+        public async Task AnalyzeAsync_WithClientRequestId_SetsHeader()
+        {
+            // Arrange
+            var testGuid = Guid.NewGuid();
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader("Operation-Location", "https://example.com/operations/123");
+            var mockTransport = new MockTransport(mockResponse);
+
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions(_serviceVersion) { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromString("{\"inputs\":[]}"));
+
+            // Act
+            try
+            {
+                await client.AnalyzeAsync(
+                    WaitUntil.Started,
+                    "test-analyzer",
+                    requestContent,
+                    clientRequestId: testGuid);
+            }
+            catch (Exception)
+            {
+                // Expected - the mock response doesn't fully implement the operation.
+                // We only need to validate that the request was sent with the correct header.
+            }
+
+            // Assert
+            Assert.AreEqual(1, mockTransport.Requests.Count, "Should have made one request");
+            var request = mockTransport.Requests[0];
+            Assert.IsTrue(request.Headers.TryGetValue("x-ms-client-request-id", out string? headerValue),
+                "Request should contain x-ms-client-request-id header");
+            Assert.AreEqual(testGuid.ToString(), headerValue,
+                "x-ms-client-request-id header should match the provided GUID");
+        }
+
+        /// <summary>
+        /// Tests that clientRequestId parameter sets the x-ms-client-request-id header in AnalyzeBinary operation.
+        /// </summary>
+        [Test]
+        public void AnalyzeBinary_WithClientRequestId_SetsHeader()
+        {
+            // Arrange
+            var testGuid = Guid.NewGuid();
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader("Operation-Location", "https://example.com/operations/123");
+            var mockTransport = new MockTransport(mockResponse);
+
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions(_serviceVersion) { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromBytes(new byte[] { 0x01, 0x02, 0x03 }));
+
+            // Act
+            try
+            {
+                client.AnalyzeBinaryInline(
+                    "test-analyzer",
+                    requestContent,
+                    "application/pdf",
+                    clientRequestId: testGuid);
+            }
+            catch (Exception)
+            {
+                // Expected - the mock response doesn't fully implement the operation.
+                // We only need to validate that the request was sent with the correct header.
+            }
+
+            // Assert
+            Assert.AreEqual(1, mockTransport.Requests.Count, "Should have made one request");
+            var request = mockTransport.Requests[0];
+            Assert.IsTrue(request.Headers.TryGetValue("x-ms-client-request-id", out string? headerValue),
+                "Request should contain x-ms-client-request-id header");
+            Assert.AreEqual(testGuid.ToString(), headerValue,
+                "x-ms-client-request-id header should match the provided GUID");
+        }
+
+        /// <summary>
+        /// Tests that clientRequestId parameter sets the x-ms-client-request-id header in AnalyzeBinaryAsync operation.
+        /// </summary>
+        [Test]
+        public async Task AnalyzeBinaryAsync_WithClientRequestId_SetsHeader()
+        {
+            // Arrange
+            var testGuid = Guid.NewGuid();
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader("Operation-Location", "https://example.com/operations/123");
+            var mockTransport = new MockTransport(mockResponse);
+
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions(_serviceVersion) { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromBytes(new byte[] { 0x01, 0x02, 0x03 }));
+
+            // Act
+            try
+            {
+                await client.AnalyzeBinaryInlineAsync(
+                    "test-analyzer",
+                    requestContent,
+                    "application/pdf",
+                    clientRequestId: testGuid);
+            }
+            catch (Exception)
+            {
+                // Expected - the mock response doesn't fully implement the operation.
+                // We only need to validate that the request was sent with the correct header.
+            }
+
+            // Assert
+            Assert.AreEqual(1, mockTransport.Requests.Count, "Should have made one request");
+            var request = mockTransport.Requests[0];
+            Assert.IsTrue(request.Headers.TryGetValue("x-ms-client-request-id", out string? headerValue),
+                "Request should contain x-ms-client-request-id header");
+            Assert.AreEqual(testGuid.ToString(), headerValue,
+                "x-ms-client-request-id header should match the provided GUID");
+        }
+
+        /// <summary>
+        /// Tests that when clientRequestId is not provided, the x-ms-client-request-id header is auto-generated in Analyze operation.
+        /// </summary>
+        [Test]
+        public void Analyze_WithoutClientRequestId_AutoGeneratesHeader()
+        {
+            // Arrange
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader("Operation-Location", "https://example.com/operations/123");
+            var mockTransport = new MockTransport(mockResponse);
+
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions(_serviceVersion) { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromString("{\"inputs\":[]}"));
+
+            // Act
+            try
+            {
+                client.Analyze(
+                    WaitUntil.Started,
+                    "test-analyzer",
+                    requestContent);
+            }
+            catch (Exception)
+            {
+                // Expected - the mock response doesn't fully implement the operation.
+                // We only need to validate that the request was sent with the correct header.
+            }
+
+            // Assert
+            Assert.AreEqual(1, mockTransport.Requests.Count, "Should have made one request");
+            var request = mockTransport.Requests[0];
+            Assert.IsTrue(request.Headers.TryGetValue("x-ms-client-request-id", out string? headerValue),
+                "Request should contain auto-generated x-ms-client-request-id header");
+            Assert.IsNotNull(headerValue, "Auto-generated x-ms-client-request-id should not be null");
+            Assert.IsTrue(Guid.TryParse(headerValue, out _),
+                "Auto-generated x-ms-client-request-id should be a valid GUID");
+        }
+
+        /// <summary>
+        /// Tests that when clientRequestId is not provided, the x-ms-client-request-id header is auto-generated in AnalyzeBinary operation.
+        /// </summary>
+        [Test]
+        public void AnalyzeBinary_WithoutClientRequestId_AutoGeneratesHeader()
+        {
+            // Arrange
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader("Operation-Location", "https://example.com/operations/123");
+            var mockTransport = new MockTransport(mockResponse);
+
+            var client = new ContentUnderstandingClient(
+                new Uri("https://example.com"),
+                new AzureKeyCredential("fake-key"),
+                new ContentUnderstandingClientOptions(_serviceVersion) { Transport = mockTransport });
+
+            var requestContent = RequestContent.Create(BinaryData.FromBytes(new byte[] { 0x01, 0x02, 0x03 }));
+
+            // Act
+            try
+            {
+                client.AnalyzeBinaryInline(
+                    "test-analyzer",
+                    requestContent,
+                    "application/pdf");
+            }
+            catch (Exception)
+            {
+                // Expected - the mock response doesn't fully implement the operation.
+                // We only need to validate that the request was sent with the correct header.
+            }
+
+            // Assert
+            Assert.AreEqual(1, mockTransport.Requests.Count, "Should have made one request");
+            var request = mockTransport.Requests[0];
+            Assert.IsTrue(request.Headers.TryGetValue("x-ms-client-request-id", out string? headerValue),
+                "Request should contain auto-generated x-ms-client-request-id header");
+            Assert.IsNotNull(headerValue, "Auto-generated x-ms-client-request-id should not be null");
+            Assert.IsTrue(Guid.TryParse(headerValue, out _),
+                "Auto-generated x-ms-client-request-id should be a valid GUID");
         }
     }
 }

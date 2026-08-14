@@ -87,7 +87,7 @@ namespace Azure.Messaging.EventHubs.Tests
             caller = InvalidContainerCharactersExpression.Replace(caller.ToLowerInvariant(), string.Empty);
             caller = (caller.Length < 16) ? caller : caller.Substring(0, 15);
 
-            string CreateName() => $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
+            string CreateName() => $"{Guid.NewGuid().ToString("D").Substring(0, 13)}-{caller}";
 
             var attempts = 0;
             var capturedException = default(Exception);

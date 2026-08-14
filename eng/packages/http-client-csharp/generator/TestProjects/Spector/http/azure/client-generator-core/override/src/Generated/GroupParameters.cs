@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -17,11 +18,13 @@ namespace Specs.Azure.ClientGenerator.Core.Override
     {
         protected GroupParameters() => throw null;
 
+        internal GroupParameters(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+
         public virtual HttpPipeline Pipeline => throw null;
 
-        public virtual Response Group(string param1, string param2, RequestContext context = null) => throw null;
+        public virtual Response Group(GroupParametersOptions options, RequestContext context) => throw null;
 
-        public virtual Task<Response> GroupAsync(string param1, string param2, RequestContext context = null) => throw null;
+        public virtual Task<Response> GroupAsync(GroupParametersOptions options, RequestContext context) => throw null;
 
         public virtual Response Group(GroupParametersOptions options, CancellationToken cancellationToken = default) => throw null;
 

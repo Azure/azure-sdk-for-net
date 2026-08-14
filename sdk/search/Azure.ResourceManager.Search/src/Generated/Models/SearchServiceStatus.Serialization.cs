@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Search.Models
 {
     internal static partial class SearchServiceStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SearchServiceStatus value) => value switch
         {
             SearchServiceStatus.Running => "running",
@@ -19,17 +20,41 @@ namespace Azure.ResourceManager.Search.Models
             SearchServiceStatus.Degraded => "degraded",
             SearchServiceStatus.Disabled => "disabled",
             SearchServiceStatus.Error => "error",
+            SearchServiceStatus.Stopped => "stopped",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchServiceStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SearchServiceStatus ToSearchServiceStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "running")) return SearchServiceStatus.Running;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "provisioning")) return SearchServiceStatus.Provisioning;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "deleting")) return SearchServiceStatus.Deleting;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "degraded")) return SearchServiceStatus.Degraded;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "disabled")) return SearchServiceStatus.Disabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "error")) return SearchServiceStatus.Error;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "running"))
+            {
+                return SearchServiceStatus.Running;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "provisioning"))
+            {
+                return SearchServiceStatus.Provisioning;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "deleting"))
+            {
+                return SearchServiceStatus.Deleting;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "degraded"))
+            {
+                return SearchServiceStatus.Degraded;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "disabled"))
+            {
+                return SearchServiceStatus.Disabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "error"))
+            {
+                return SearchServiceStatus.Error;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "stopped"))
+            {
+                return SearchServiceStatus.Stopped;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchServiceStatus value.");
         }
     }

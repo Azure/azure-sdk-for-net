@@ -20,7 +20,7 @@ namespace Azure.AI.Translation.Document.Tests
 
         public DocumentTranslationLiveTestBase(bool isAsync, RecordedTestMode? mode = null)
             : base(isAsync)
-            //: base(isAsync, RecordedTestMode.Record)
+        //: base(isAsync, RecordedTestMode.Record)
         {
             JsonPathSanitizers.Add("$..sourceUrl");
             JsonPathSanitizers.Add("$..targetUrl");
@@ -47,7 +47,7 @@ namespace Azure.AI.Translation.Document.Tests
             {
                 var fileName = $"File_{i}.txt";
                 var text = "some random text";
-                result.Add( new TestDocument(fileName, text) );
+                result.Add(new TestDocument(fileName, text));
             }
             return result;
         }
@@ -58,8 +58,7 @@ namespace Azure.AI.Translation.Document.Tests
             bool useTokenCredential = default)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
-            // TODO remove service version pinning https://github.com/Azure/azure-sdk-for-net/issues/53189
-            options ??= new DocumentTranslationClientOptions(DocumentTranslationClientOptions.ServiceVersion.V2024_05_01)
+            options ??= new DocumentTranslationClientOptions()
             {
                 Diagnostics =
                 {

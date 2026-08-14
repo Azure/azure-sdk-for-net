@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Maximum provisioned storage, IOPS, bandwidth and number of file shares limits for the storage account. </summary>
     public partial class FileServiceAccountLimits
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FileServiceAccountLimits"/>. </summary>
         internal FileServiceAccountLimits()
@@ -55,25 +27,28 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="maxProvisionedStorageGiB"> The maximum provisioned storage quota limit in gibibytes for the storage account. </param>
         /// <param name="maxProvisionedIops"> The maximum provisioned IOPS limit for the storage account. </param>
         /// <param name="maxProvisionedBandwidthMiBPerSec"> The maximum provisioned bandwidth limit in mebibytes per second for the storage account. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileServiceAccountLimits(int? maxFileShares, int? maxProvisionedStorageGiB, int? maxProvisionedIops, int? maxProvisionedBandwidthMiBPerSec, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FileServiceAccountLimits(int? maxFileShares, int? maxProvisionedStorageGiB, int? maxProvisionedIops, int? maxProvisionedBandwidthMiBPerSec, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaxFileShares = maxFileShares;
             MaxProvisionedStorageGiB = maxProvisionedStorageGiB;
             MaxProvisionedIops = maxProvisionedIops;
             MaxProvisionedBandwidthMiBPerSec = maxProvisionedBandwidthMiBPerSec;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The maximum number of file shares limit for the storage account. </summary>
         [WirePath("maxFileShares")]
         public int? MaxFileShares { get; }
+
         /// <summary> The maximum provisioned storage quota limit in gibibytes for the storage account. </summary>
         [WirePath("maxProvisionedStorageGiB")]
         public int? MaxProvisionedStorageGiB { get; }
+
         /// <summary> The maximum provisioned IOPS limit for the storage account. </summary>
         [WirePath("maxProvisionedIOPS")]
         public int? MaxProvisionedIops { get; }
+
         /// <summary> The maximum provisioned bandwidth limit in mebibytes per second for the storage account. </summary>
         [WirePath("maxProvisionedBandwidthMiBPerSec")]
         public int? MaxProvisionedBandwidthMiBPerSec { get; }

@@ -46,25 +46,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// Specifying a list of entityType names in the classificationDef, ensures that
         /// classifications can
         /// only be applied to those entityTypes.
-        /// 
         /// Any subtypes of the entity types inherit the restriction.
-        /// 
         /// Any classificationDef subtypes inherit the parents entityTypes restrictions.
-        /// 
         /// Any classificationDef subtypes can further restrict the parents entityTypes
         /// restrictions by specifying a subset of the entityTypes.
-        /// 
         /// An empty entityTypes list when there are no parent restrictions means there are no
         /// restrictions.
-        /// 
         /// An empty entityTypes list when there are parent
         /// restrictions means that the subtype picks up the parents
         /// restrictions.
-        /// 
         /// If a list of entityTypes are supplied, where one inherits
         /// from another, this will be rejected. This should encourage cleaner
         /// classificationsDefs.
-        /// 
         /// </param>
         /// <param name="subTypes"> An array of sub types. </param>
         /// <param name="superTypes"> An array of super types. </param>
@@ -141,25 +134,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// Specifying a list of entityType names in the classificationDef, ensures that
         /// classifications can
         /// only be applied to those entityTypes.
-        /// 
         /// Any subtypes of the entity types inherit the restriction.
-        /// 
         /// Any classificationDef subtypes inherit the parents entityTypes restrictions.
-        /// 
         /// Any classificationDef subtypes can further restrict the parents entityTypes
         /// restrictions by specifying a subset of the entityTypes.
-        /// 
         /// An empty entityTypes list when there are no parent restrictions means there are no
         /// restrictions.
-        /// 
         /// An empty entityTypes list when there are parent
         /// restrictions means that the subtype picks up the parents
         /// restrictions.
-        /// 
         /// If a list of entityTypes are supplied, where one inherits
         /// from another, this will be rejected. This should encourage cleaner
         /// classificationsDefs.
-        /// 
         /// </summary>
         public IList<string> EntityTypes { get; }
 

@@ -53,6 +53,9 @@ namespace Azure.Storage
         /// <param name="offset">
         /// Absolute offset of this partition.
         /// </param>
+        /// <param name="blockId">
+        /// Pre-generated block ID for this partition, or null if not applicable.
+        /// </param>
         /// <param name="args">
         /// Service-specific args for upload.
         /// </param>
@@ -74,6 +77,7 @@ namespace Azure.Storage
         private delegate Task StageContentPartitionAsync<TContent>(
             TContent content,
             long offset,
+            string blockId,
             TServiceSpecificData args,
             UploadTransferValidationOptions validationOptions,
             IProgress<long> progressHandler,
@@ -113,6 +117,7 @@ namespace Azure.Storage
         public delegate Task UploadPartitionStreamingInternal(
             Stream contentStream,
             long offset,
+            string blockId,
             TServiceSpecificData args,
             IProgress<long> progressHandler,
             UploadTransferValidationOptions transferValidation,
@@ -121,13 +126,14 @@ namespace Azure.Storage
         public delegate Task UploadPartitionBinaryDataInternal(
             BinaryData content,
             long offset,
+            string blockId,
             TServiceSpecificData args,
             IProgress<long> progressHandler,
             UploadTransferValidationOptions transferValidation,
             bool async,
             CancellationToken cancellationToken);
         public delegate Task<Response<TCompleteUploadReturn>> CommitPartitionedUploadInternal(
-            List<(long Offset, long Size)> partitions,
+            List<(long Offset, long Size, string BlockId)> partitions,
             TServiceSpecificData args,
             bool async,
             CancellationToken cancellationToken);
@@ -141,6 +147,7 @@ namespace Azure.Storage
             public UploadPartitionBinaryDataInternal UploadPartitionBinaryData { get; set; }
             public CommitPartitionedUploadInternal CommitPartitionedUpload { get; set; }
             public CreateScope Scope { get; set; }
+            public Func<string> GenerateBlockId { get; set; }
         }
 
         public static readonly InitializeDestinationInternal InitializeNoOp = (args, async, cancellationToken) => Task.CompletedTask;
@@ -154,6 +161,7 @@ namespace Azure.Storage
         private readonly UploadPartitionBinaryDataInternal _uploadPartitionBinaryDataInternal;
         private readonly CommitPartitionedUploadInternal _commitPartitionedUploadInternal;
         private readonly CreateScope _createScope;
+        private readonly Func<string> _generateBlockId;
 
         /// <summary>
         /// The maximum number of simultaneous workers.
@@ -229,6 +237,7 @@ namespace Azure.Storage
                 behaviors.CommitPartitionedUpload, nameof(behaviors.CommitPartitionedUpload));
             _createScope = Argument.CheckNotNull(
                 behaviors.Scope, nameof(behaviors.Scope));
+            _generateBlockId = behaviors.GenerateBlockId;
 
             _arrayPool = arrayPool ?? ArrayPool<byte>.Shared;
 
@@ -580,7 +589,7 @@ namespace Azure.Storage
                 }
 
                 // The list tracking blocks IDs we're going to commit
-                List<(long Offset, long Size)> partitions = new();
+                List<(long Offset, long Size, string BlockId)> partitions = new();
 
                 Memory<byte> _composedBlockCrc64 = UseMasterCrc
                     ? new Memory<byte>(new byte[Constants.StorageCrc64SizeInBytes])
@@ -590,9 +599,11 @@ namespace Azure.Storage
                 // Partition the stream into individual blocks and stage them
                 async Task StageAsync(ContentPartition<TContent> block, bool async, CancellationToken cancellationToken)
                 {
+                    string blockId = _generateBlockId?.Invoke();
                     await stageContentAsync(
                             block.Content,
                             block.AbsolutePosition,
+                            blockId,
                             args,
                             new UploadTransferValidationOptions
                             {
@@ -603,7 +614,7 @@ namespace Azure.Storage
                             async,
                             cancellationToken).ConfigureAwait(false);
 
-                    partitions.Add((block.AbsolutePosition, block.Length));
+                    partitions.Add((block.AbsolutePosition, block.Length, blockId));
                     if (UseMasterCrc)
                     {
                         _composedBlockCrc64 = StorageCrc64Composer.Compose(
@@ -676,7 +687,7 @@ namespace Azure.Storage
                 }
 
                 // The list tracking blocks IDs we're going to commit
-                List<(long Offset, long Size)> partitions = new List<(long, long)>();
+                List<(long Offset, long Size, string BlockId)> partitions = new List<(long, long, string)>();
 
                 // A list of tasks that are currently executing which will
                 // always be smaller than _maxWorkerCount
@@ -693,7 +704,8 @@ namespace Azure.Storage
                     /* We need to do this first! Length is calculated on the fly based on stream buffer
                      * contents; We need to record the partition data first before consuming the stream
                      * asynchronously. */
-                    partitions.Add((block.AbsolutePosition, block.Length));
+                    string blockId = _generateBlockId?.Invoke();
+                    partitions.Add((block.AbsolutePosition, block.Length, blockId));
 
                     if (UseMasterCrc)
                     {
@@ -706,6 +718,7 @@ namespace Azure.Storage
                     Task task = stageContentAsync(
                         block.Content,
                         block.AbsolutePosition,
+                        blockId,
                         args,
                         new UploadTransferValidationOptions
                         {
@@ -781,6 +794,7 @@ namespace Azure.Storage
         private async Task StageStreamPartitionInternal(
             Stream partition,
             long offset,
+            string blockId,
             TServiceSpecificData args,
             UploadTransferValidationOptions validationOptions,
             IProgress<long> progressHandler,
@@ -792,6 +806,7 @@ namespace Azure.Storage
                 await _uploadPartitionStreamingInternal(
                     partition,
                     offset,
+                    blockId,
                     args,
                     progressHandler,
                     validationOptions,
@@ -814,6 +829,7 @@ namespace Azure.Storage
         private async Task StageBinaryDataPartitionInternal(
             BinaryData content,
             long offset,
+            string blockId,
             TServiceSpecificData args,
             UploadTransferValidationOptions validationOptions,
             IProgress<long> progressHandler,
@@ -823,6 +839,7 @@ namespace Azure.Storage
             await _uploadPartitionBinaryDataInternal(
                 content,
                 offset,
+                blockId,
                 args,
                 progressHandler,
                 validationOptions,

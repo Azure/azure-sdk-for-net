@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources
         {
             TryGetApiVersion(ResourceType, out string extensionsResourceApiVersion);
             _extensionsResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
-            _extensionsResourcesRestClient = new ExtensionsResources(_extensionsResourcesClientDiagnostics, Pipeline, Endpoint, extensionsResourceApiVersion ?? "2023-12-01-preview");
+            _extensionsResourcesRestClient = new ExtensionsResources(_extensionsResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, extensionsResourceApiVersion ?? "2023-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsResourcesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _extensionsResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExtensionsResourceData> response = Response.FromValue(ExtensionsResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsResourcesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _extensionsResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExtensionsResourceData> response = Response.FromValue(ExtensionsResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsResourcesRestClient.CreateUpdateRequest(Id.Parent, Id.Name, ExtensionsResourceData.ToRequestContent(data), context);
+                HttpMessage message = _extensionsResourcesRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, ExtensionsResourceData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExtensionsResourceData> response = Response.FromValue(ExtensionsResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsResourcesRestClient.CreateUpdateRequest(Id.Parent, Id.Name, ExtensionsResourceData.ToRequestContent(data), context);
+                HttpMessage message = _extensionsResourcesRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, ExtensionsResourceData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExtensionsResourceData> response = Response.FromValue(ExtensionsResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsResourcesRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _extensionsResourcesRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsResourcesRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _extensionsResourcesRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

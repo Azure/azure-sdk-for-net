@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    /// <summary> The ElasticSanDeleteSnapshotsUnderVolume. </summary>
+    /// <summary></summary>
     public readonly partial struct ElasticSanDeleteSnapshotsUnderVolume : IEquatable<ElasticSanDeleteSnapshotsUnderVolume>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ElasticSanDeleteSnapshotsUnderVolume"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ElasticSanDeleteSnapshotsUnderVolume(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string TrueValue = "true";
         private const string FalseValue = "false";
 
-        /// <summary> true. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanDeleteSnapshotsUnderVolume"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ElasticSanDeleteSnapshotsUnderVolume(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the True. </summary>
         public static ElasticSanDeleteSnapshotsUnderVolume True { get; } = new ElasticSanDeleteSnapshotsUnderVolume(TrueValue);
-        /// <summary> false. </summary>
+
+        /// <summary> Gets the False. </summary>
         public static ElasticSanDeleteSnapshotsUnderVolume False { get; } = new ElasticSanDeleteSnapshotsUnderVolume(FalseValue);
+
         /// <summary> Determines if two <see cref="ElasticSanDeleteSnapshotsUnderVolume"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ElasticSanDeleteSnapshotsUnderVolume left, ElasticSanDeleteSnapshotsUnderVolume right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ElasticSanDeleteSnapshotsUnderVolume"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ElasticSanDeleteSnapshotsUnderVolume left, ElasticSanDeleteSnapshotsUnderVolume right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticSanDeleteSnapshotsUnderVolume"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ElasticSanDeleteSnapshotsUnderVolume"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ElasticSanDeleteSnapshotsUnderVolume(string value) => new ElasticSanDeleteSnapshotsUnderVolume(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ElasticSanDeleteSnapshotsUnderVolume"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ElasticSanDeleteSnapshotsUnderVolume?(string value) => value == null ? null : new ElasticSanDeleteSnapshotsUnderVolume(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ElasticSanDeleteSnapshotsUnderVolume other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ElasticSanDeleteSnapshotsUnderVolume other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

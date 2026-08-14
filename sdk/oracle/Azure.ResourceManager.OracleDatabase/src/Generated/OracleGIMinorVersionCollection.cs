@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(OracleGIMinorVersionResource.ResourceType, out string oracleGIMinorVersionApiVersion);
             _giMinorVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleGIMinorVersionResource.ResourceType.Namespace, Diagnostics);
-            _giMinorVersionsRestClient = new GiMinorVersions(_giMinorVersionsClientDiagnostics, Pipeline, Endpoint, oracleGIMinorVersionApiVersion ?? "2025-09-01");
+            _giMinorVersionsRestClient = new GiMinorVersions(_giMinorVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleGIMinorVersionApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != OracleGIVersionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, OracleGIVersionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, OracleGIVersionResource.ResourceType), nameof(id));
             }
         }
 
@@ -185,9 +185,10 @@ namespace Azure.ResourceManager.OracleDatabase
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
                 Id.Name,
-                shapeFamily.ToString(),
+                shapeFamily?.ToString(),
                 zone,
-                context), data => new OracleGIMinorVersionResource(Client, data));
+                context,
+                "OracleGIMinorVersionCollection.GetAll"), data => new OracleGIMinorVersionResource(Client, data));
         }
 
         /// <summary>
@@ -222,9 +223,10 @@ namespace Azure.ResourceManager.OracleDatabase
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
                 Id.Name,
-                shapeFamily.ToString(),
+                shapeFamily?.ToString(),
                 zone,
-                context), data => new OracleGIMinorVersionResource(Client, data));
+                context,
+                "OracleGIMinorVersionCollection.GetAll"), data => new OracleGIMinorVersionResource(Client, data));
         }
 
         /// <summary>

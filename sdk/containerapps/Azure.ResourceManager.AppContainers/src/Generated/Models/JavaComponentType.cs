@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -14,41 +15,72 @@ namespace Azure.ResourceManager.AppContainers.Models
     internal readonly partial struct JavaComponentType : IEquatable<JavaComponentType>
     {
         private readonly string _value;
+        /// <summary> SpringBootAdmin. </summary>
+        private const string SpringBootAdminValue = "SpringBootAdmin";
+        /// <summary> SpringCloudEureka. </summary>
+        private const string SpringCloudEurekaValue = "SpringCloudEureka";
+        /// <summary> SpringCloudConfig. </summary>
+        private const string SpringCloudConfigValue = "SpringCloudConfig";
+        /// <summary> SpringCloudGateway. </summary>
+        private const string SpringCloudGatewayValue = "SpringCloudGateway";
+        /// <summary> Nacos. </summary>
+        private const string NacosValue = "Nacos";
 
         /// <summary> Initializes a new instance of <see cref="JavaComponentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JavaComponentType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SpringBootAdminValue = "SpringBootAdmin";
-        private const string SpringCloudEurekaValue = "SpringCloudEureka";
-        private const string SpringCloudConfigValue = "SpringCloudConfig";
+            _value = value;
+        }
 
         /// <summary> SpringBootAdmin. </summary>
         public static JavaComponentType SpringBootAdmin { get; } = new JavaComponentType(SpringBootAdminValue);
+
         /// <summary> SpringCloudEureka. </summary>
         public static JavaComponentType SpringCloudEureka { get; } = new JavaComponentType(SpringCloudEurekaValue);
+
         /// <summary> SpringCloudConfig. </summary>
         public static JavaComponentType SpringCloudConfig { get; } = new JavaComponentType(SpringCloudConfigValue);
+
+        /// <summary> SpringCloudGateway. </summary>
+        public static JavaComponentType SpringCloudGateway { get; } = new JavaComponentType(SpringCloudGatewayValue);
+
+        /// <summary> Nacos. </summary>
+        public static JavaComponentType Nacos { get; } = new JavaComponentType(NacosValue);
+
         /// <summary> Determines if two <see cref="JavaComponentType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(JavaComponentType left, JavaComponentType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="JavaComponentType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(JavaComponentType left, JavaComponentType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="JavaComponentType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="JavaComponentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator JavaComponentType(string value) => new JavaComponentType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="JavaComponentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator JavaComponentType?(string value) => value == null ? null : new JavaComponentType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is JavaComponentType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(JavaComponentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

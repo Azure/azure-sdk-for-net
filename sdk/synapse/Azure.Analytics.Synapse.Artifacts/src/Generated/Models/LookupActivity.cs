@@ -51,11 +51,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// </param>
         /// <param name="dataset"> Lookup activity dataset reference. </param>
         /// <param name="firstRowOnly"> Whether to return first row or all rows. Default value is true. Type: boolean (or Expression with resultType boolean). </param>
-        internal LookupActivity(string name, string type, string description, ActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, CopySource source, DatasetReference dataset, object firstRowOnly) : base(name, type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="treatDecimalAsString"> Indicates whether to treat decimal values as strings to avoid value overflow issue. This option is enabled for SnowflakeV2 connector only. Type: boolean (or Expression with resultType boolean). </param>
+        internal LookupActivity(string name, string type, string description, ActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, CopySource source, DatasetReference dataset, object firstRowOnly, object treatDecimalAsString) : base(name, type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Source = source;
             Dataset = dataset;
             FirstRowOnly = firstRowOnly;
+            TreatDecimalAsString = treatDecimalAsString;
             Type = type ?? "Lookup";
         }
 
@@ -69,5 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DatasetReference Dataset { get; set; }
         /// <summary> Whether to return first row or all rows. Default value is true. Type: boolean (or Expression with resultType boolean). </summary>
         public object FirstRowOnly { get; set; }
+        /// <summary> Indicates whether to treat decimal values as strings to avoid value overflow issue. This option is enabled for SnowflakeV2 connector only. Type: boolean (or Expression with resultType boolean). </summary>
+        public object TreatDecimalAsString { get; set; }
     }
 }

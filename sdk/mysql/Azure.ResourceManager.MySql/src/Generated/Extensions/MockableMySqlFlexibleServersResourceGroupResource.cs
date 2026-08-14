@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.MySql.FlexibleServers;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableMySqlFlexibleServersResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableMySqlFlexibleServersResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableMySqlFlexibleServersResourceGroupResource for mocking. </summary>
         protected MockableMySqlFlexibleServersResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMySqlFlexibleServersResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableMySqlFlexibleServersResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableMySqlFlexibleServersResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of MySqlFlexibleServerResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of MySqlFlexibleServerResources and their operations over a MySqlFlexibleServerResource. </returns>
+        /// <summary> Gets a collection of MySqlFlexibleServers in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of MySqlFlexibleServers and their operations over a MySqlFlexibleServerResource. </returns>
         public virtual MySqlFlexibleServerCollection GetMySqlFlexibleServers()
         {
             return GetCachedClient(client => new MySqlFlexibleServerCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// Gets information about a server.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Server_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Servers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlFlexibleServerResource>> GetMySqlFlexibleServerAsync(string serverName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+
             return await GetMySqlFlexibleServers().GetAsync(serverName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// Gets information about a server.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Server_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Servers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         [ForwardsClientCalls]
         public virtual Response<MySqlFlexibleServerResource> GetMySqlFlexibleServer(string serverName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+
             return GetMySqlFlexibleServers().Get(serverName, cancellationToken);
         }
     }

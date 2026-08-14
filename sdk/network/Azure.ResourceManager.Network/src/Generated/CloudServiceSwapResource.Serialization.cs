@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class CloudServiceSwapResource : IJsonModel<CloudServiceSwapData>
     {
-        private static CloudServiceSwapData s_dataDeserializationInstance;
-        private static CloudServiceSwapData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CloudServiceSwapData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CloudServiceSwapData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CloudServiceSwapData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CloudServiceSwapData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CloudServiceSwapData>)Data).Write(writer, options);
 
-        CloudServiceSwapData IJsonModel<CloudServiceSwapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudServiceSwapData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CloudServiceSwapData IJsonModel<CloudServiceSwapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CloudServiceSwapData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CloudServiceSwapData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CloudServiceSwapData IPersistableModel<CloudServiceSwapData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudServiceSwapData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<CloudServiceSwapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudServiceSwapData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CloudServiceSwapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

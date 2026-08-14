@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(AvsPrivateCloudClusterVirtualMachineResource.ResourceType, out string avsPrivateCloudClusterVirtualMachineApiVersion);
             _virtualMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", AvsPrivateCloudClusterVirtualMachineResource.ResourceType.Namespace, Diagnostics);
-            _virtualMachinesRestClient = new VirtualMachines(_virtualMachinesClientDiagnostics, Pipeline, Endpoint, avsPrivateCloudClusterVirtualMachineApiVersion ?? "2025-09-01");
+            _virtualMachinesRestClient = new VirtualMachines(_virtualMachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, avsPrivateCloudClusterVirtualMachineApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != AvsPrivateCloudClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudClusterResource.ResourceType), nameof(id));
             }
         }
 
@@ -183,7 +183,8 @@ namespace Azure.ResourceManager.Avs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new AvsPrivateCloudClusterVirtualMachineResource(Client, data));
+                context,
+                "AvsPrivateCloudClusterVirtualMachineCollection.GetAll"), data => new AvsPrivateCloudClusterVirtualMachineResource(Client, data));
         }
 
         /// <summary>
@@ -217,7 +218,8 @@ namespace Azure.ResourceManager.Avs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new AvsPrivateCloudClusterVirtualMachineResource(Client, data));
+                context,
+                "AvsPrivateCloudClusterVirtualMachineCollection.GetAll"), data => new AvsPrivateCloudClusterVirtualMachineResource(Client, data));
         }
 
         /// <summary>

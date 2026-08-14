@@ -12,46 +12,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Protectable Container Class.
-    /// Please note <see cref="ProtectableContainer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="StorageProtectableContainer"/> and <see cref="VmAppContainerProtectableContainer"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StorageProtectableContainer"/> and <see cref="VmAppContainerProtectableContainer"/>.
     /// </summary>
     public abstract partial class ProtectableContainer
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProtectableContainer"/>. </summary>
-        protected ProtectableContainer()
+        /// <param name="protectableContainerType">
+        /// Type of the container. The value of this property for
+        /// <list type="number"><item><description>Compute Azure VM is Microsoft.Compute/virtualMachines</description></item><item><description>Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines</description></item></list>
+        /// </param>
+        private protected ProtectableContainer(ProtectableContainerType protectableContainerType)
         {
+            ProtectableContainerType = protectableContainerType;
         }
 
         /// <summary> Initializes a new instance of <see cref="ProtectableContainer"/>. </summary>
@@ -59,34 +34,36 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="protectableContainerType">
         /// Type of the container. The value of this property for
-        /// 1. Compute Azure VM is Microsoft.Compute/virtualMachines
-        /// 2. Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines
+        /// <list type="number"><item><description>Compute Azure VM is Microsoft.Compute/virtualMachines</description></item><item><description>Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines</description></item></list>
         /// </param>
         /// <param name="healthStatus"> Status of health of the container. </param>
         /// <param name="containerId"> Fabric Id of the container such as ARM Id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProtectableContainer(string friendlyName, BackupManagementType? backupManagementType, ProtectableContainerType protectableContainerType, string healthStatus, string containerId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ProtectableContainer(string friendlyName, BackupManagementType? backupManagementType, ProtectableContainerType protectableContainerType, string healthStatus, string containerId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FriendlyName = friendlyName;
             BackupManagementType = backupManagementType;
             ProtectableContainerType = protectableContainerType;
             HealthStatus = healthStatus;
             ContainerId = containerId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Friendly name of the container. </summary>
         public string FriendlyName { get; set; }
+
         /// <summary> Type of backup management for the container. </summary>
         public BackupManagementType? BackupManagementType { get; set; }
+
         /// <summary>
         /// Type of the container. The value of this property for
-        /// 1. Compute Azure VM is Microsoft.Compute/virtualMachines
-        /// 2. Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines
+        /// <list type="number"><item><description>Compute Azure VM is Microsoft.Compute/virtualMachines</description></item><item><description>Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines</description></item></list>
         /// </summary>
         internal ProtectableContainerType ProtectableContainerType { get; set; }
+
         /// <summary> Status of health of the container. </summary>
         public string HealthStatus { get; set; }
+
         /// <summary> Fabric Id of the container such as ARM Id. </summary>
         public string ContainerId { get; set; }
     }

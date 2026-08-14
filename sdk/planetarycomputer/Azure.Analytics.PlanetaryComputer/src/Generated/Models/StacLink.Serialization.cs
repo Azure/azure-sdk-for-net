@@ -14,10 +14,8 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// Link model.
-    /// 
     /// Ref:
     /// http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/schemas/link.yaml
-    /// 
     /// Represents a link.
     /// </summary>
     public partial class StacLink : IJsonModel<StacLink>
@@ -26,6 +24,46 @@ namespace Azure.Analytics.PlanetaryComputer
         internal StacLink()
         {
         }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StacLink PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StacLink>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStacLink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StacLink)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StacLink>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(StacLink)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StacLink>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StacLink IPersistableModel<StacLink>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StacLink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -55,10 +93,10 @@ namespace Azure.Analytics.PlanetaryComputer
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(Kind.Value.ToString());
             }
             writer.WritePropertyName("href"u8);
             writer.WriteStringValue(Href);
@@ -165,7 +203,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             string rel = default;
             string title = default;
-            StacLinkType? @type = default;
+            StacLinkKind? kind = default;
             string href = default;
             string hreflang = default;
             int? length = default;
@@ -192,7 +230,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    @type = new StacLinkType(prop.Value.GetString());
+                    kind = new StacLinkKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("href"u8))
@@ -282,7 +320,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return new StacLink(
                 rel,
                 title,
-                @type,
+                kind,
                 href,
                 hreflang,
                 length,
@@ -292,45 +330,5 @@ namespace Azure.Analytics.PlanetaryComputer
                 merge,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StacLink>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StacLink>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(StacLink)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        StacLink IPersistableModel<StacLink>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StacLink PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StacLink>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeStacLink(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StacLink)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StacLink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

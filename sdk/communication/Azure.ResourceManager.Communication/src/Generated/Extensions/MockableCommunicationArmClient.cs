@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableCommunicationArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableCommunicationArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableCommunicationArmClient for mocking. </summary>
         protected MockableCommunicationArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableCommunicationArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableCommunicationArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableCommunicationArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableCommunicationArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="CommunicationServiceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CommunicationServiceResource.CreateResourceIdentifier" /> to create a <see cref="CommunicationServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="CommunicationServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CommunicationServiceResource"/> object. </returns>
         public virtual CommunicationServiceResource GetCommunicationServiceResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.Communication.Mocking
             return new CommunicationServiceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="CommunicationDomainResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CommunicationDomainResource.CreateResourceIdentifier" /> to create a <see cref="CommunicationDomainResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="CommunicationDomainResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CommunicationDomainResource"/> object. </returns>
         public virtual CommunicationDomainResource GetCommunicationDomainResource(ResourceIdentifier id)
@@ -58,10 +44,7 @@ namespace Azure.ResourceManager.Communication.Mocking
             return new CommunicationDomainResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EmailServiceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EmailServiceResource.CreateResourceIdentifier" /> to create an <see cref="EmailServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EmailServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EmailServiceResource"/> object. </returns>
         public virtual EmailServiceResource GetEmailServiceResource(ResourceIdentifier id)
@@ -70,10 +53,7 @@ namespace Azure.ResourceManager.Communication.Mocking
             return new EmailServiceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="SenderUsernameResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SenderUsernameResource.CreateResourceIdentifier" /> to create a <see cref="SenderUsernameResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="SenderUsernameResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SenderUsernameResource"/> object. </returns>
         public virtual SenderUsernameResource GetSenderUsernameResource(ResourceIdentifier id)
@@ -82,10 +62,7 @@ namespace Azure.ResourceManager.Communication.Mocking
             return new SenderUsernameResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="CommunicationSmtpUsernameResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CommunicationSmtpUsernameResource.CreateResourceIdentifier" /> to create a <see cref="CommunicationSmtpUsernameResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="CommunicationSmtpUsernameResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CommunicationSmtpUsernameResource"/> object. </returns>
         public virtual CommunicationSmtpUsernameResource GetCommunicationSmtpUsernameResource(ResourceIdentifier id)
@@ -94,10 +71,7 @@ namespace Azure.ResourceManager.Communication.Mocking
             return new CommunicationSmtpUsernameResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EmailSuppressionListResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EmailSuppressionListResource.CreateResourceIdentifier" /> to create an <see cref="EmailSuppressionListResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EmailSuppressionListResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EmailSuppressionListResource"/> object. </returns>
         public virtual EmailSuppressionListResource GetEmailSuppressionListResource(ResourceIdentifier id)
@@ -106,10 +80,7 @@ namespace Azure.ResourceManager.Communication.Mocking
             return new EmailSuppressionListResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EmailSuppressionListAddressResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EmailSuppressionListAddressResource.CreateResourceIdentifier" /> to create an <see cref="EmailSuppressionListAddressResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EmailSuppressionListAddressResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EmailSuppressionListAddressResource"/> object. </returns>
         public virtual EmailSuppressionListAddressResource GetEmailSuppressionListAddressResource(ResourceIdentifier id)

@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of <see cref="ServiceTypeHealthPolicy"/>. </summary>
         /// <param name="maxPercentUnhealthyServices">
         /// The maximum allowed percentage of unhealthy services.
-        /// 
         /// The percentage represents the maximum tolerated percentage of services that can be unhealthy before the application is considered in error.
         /// If the percentage is respected but there is at least one unhealthy service, the health is evaluated as Warning.
         /// This is calculated by dividing the number of unhealthy services of the specific service type over the total number of services of the specific service type.
@@ -27,7 +26,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// </param>
         /// <param name="maxPercentUnhealthyPartitionsPerService">
         /// The maximum allowed percentage of unhealthy partitions per service.
-        /// 
         /// The percentage represents the maximum tolerated percentage of partitions that can be unhealthy before the service is considered in error.
         /// If the percentage is respected but there is at least one unhealthy partition, the health is evaluated as Warning.
         /// The percentage is calculated by dividing the number of unhealthy partitions over the total number of partitions in the service.
@@ -35,7 +33,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// </param>
         /// <param name="maxPercentUnhealthyReplicasPerPartition">
         /// The maximum allowed percentage of unhealthy replicas per partition.
-        /// 
         /// The percentage represents the maximum tolerated percentage of replicas that can be unhealthy before the partition is considered in error.
         /// If the percentage is respected but there is at least one unhealthy replica, the health is evaluated as Warning.
         /// The percentage is calculated by dividing the number of unhealthy replicas over the total number of replicas in the partition.
@@ -51,7 +48,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of <see cref="ServiceTypeHealthPolicy"/>. </summary>
         /// <param name="maxPercentUnhealthyServices">
         /// The maximum allowed percentage of unhealthy services.
-        /// 
         /// The percentage represents the maximum tolerated percentage of services that can be unhealthy before the application is considered in error.
         /// If the percentage is respected but there is at least one unhealthy service, the health is evaluated as Warning.
         /// This is calculated by dividing the number of unhealthy services of the specific service type over the total number of services of the specific service type.
@@ -59,7 +55,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// </param>
         /// <param name="maxPercentUnhealthyPartitionsPerService">
         /// The maximum allowed percentage of unhealthy partitions per service.
-        /// 
         /// The percentage represents the maximum tolerated percentage of partitions that can be unhealthy before the service is considered in error.
         /// If the percentage is respected but there is at least one unhealthy partition, the health is evaluated as Warning.
         /// The percentage is calculated by dividing the number of unhealthy partitions over the total number of partitions in the service.
@@ -67,7 +62,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// </param>
         /// <param name="maxPercentUnhealthyReplicasPerPartition">
         /// The maximum allowed percentage of unhealthy replicas per partition.
-        /// 
         /// The percentage represents the maximum tolerated percentage of replicas that can be unhealthy before the partition is considered in error.
         /// If the percentage is respected but there is at least one unhealthy replica, the health is evaluated as Warning.
         /// The percentage is calculated by dividing the number of unhealthy replicas over the total number of replicas in the partition.
@@ -84,7 +78,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary>
         /// The maximum allowed percentage of unhealthy services.
-        /// 
         /// The percentage represents the maximum tolerated percentage of services that can be unhealthy before the application is considered in error.
         /// If the percentage is respected but there is at least one unhealthy service, the health is evaluated as Warning.
         /// This is calculated by dividing the number of unhealthy services of the specific service type over the total number of services of the specific service type.
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary>
         /// The maximum allowed percentage of unhealthy partitions per service.
-        /// 
         /// The percentage represents the maximum tolerated percentage of partitions that can be unhealthy before the service is considered in error.
         /// If the percentage is respected but there is at least one unhealthy partition, the health is evaluated as Warning.
         /// The percentage is calculated by dividing the number of unhealthy partitions over the total number of partitions in the service.
@@ -104,7 +96,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary>
         /// The maximum allowed percentage of unhealthy replicas per partition.
-        /// 
         /// The percentage represents the maximum tolerated percentage of replicas that can be unhealthy before the partition is considered in error.
         /// If the percentage is respected but there is at least one unhealthy replica, the health is evaluated as Warning.
         /// The percentage is calculated by dividing the number of unhealthy replicas over the total number of replicas in the partition.

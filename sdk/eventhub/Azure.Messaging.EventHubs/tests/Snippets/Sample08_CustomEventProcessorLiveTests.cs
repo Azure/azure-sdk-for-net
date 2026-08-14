@@ -151,11 +151,11 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
                 try
                 {
-                    Console.WriteLine($"Received events for partition { partition.PartitionId }");
+                    Console.WriteLine($"Received events for partition {partition.PartitionId}");
 
                     foreach (var currentEvent in events)
                     {
-                        Console.WriteLine($"Event: { currentEvent.EventBody }");
+                        Console.WriteLine($"Event: {currentEvent.EventBody}");
                         lastEvent = currentEvent;
                     }
 
@@ -179,7 +179,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     // In this case, the partition processing task will fault and be restarted
                     // from the last recorded checkpoint.
 
-                    Console.WriteLine($"Exception while processing events: { ex }");
+                    Console.WriteLine($"Exception while processing events: {ex}");
                 }
             }
 
@@ -194,13 +194,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     if (partition != null)
                     {
                         Console.Error.WriteLine(
-                            $"Exception on partition { partition.PartitionId } while " +
-                            $"performing { operationDescription }: {exception}");
+                            $"Exception on partition {partition.PartitionId} while " +
+                            $"performing {operationDescription}: {exception}");
                     }
                     else
                     {
                         Console.Error.WriteLine(
-                            $"Exception while performing { operationDescription }: { exception }");
+                            $"Exception while performing {operationDescription}: {exception}");
                     }
                 }
                 catch (Exception ex)
@@ -214,7 +214,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     // In this case, unhandled exceptions will not impact the processor
                     // operation but will go unobserved, hiding potential application problems.
 
-                    Console.WriteLine($"Exception while processing events: { ex }");
+                    Console.WriteLine($"Exception while processing events: {ex}");
                 }
 
                 return Task.CompletedTask;
@@ -226,7 +226,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             {
                 try
                 {
-                    Console.WriteLine($"Initializing partition { partition.PartitionId }");
+                    Console.WriteLine($"Initializing partition {partition.PartitionId}");
                 }
                 catch (Exception ex)
                 {
@@ -239,7 +239,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     // In this case, the partition processing task will fault and the
                     // partition will be initialized again.
 
-                    Console.WriteLine($"Exception while initializing a partition: { ex }");
+                    Console.WriteLine($"Exception while initializing a partition: {ex}");
                 }
 
                 return Task.CompletedTask;
@@ -253,8 +253,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 try
                 {
                     Console.WriteLine(
-                        $"No longer processing partition { partition.PartitionId } " +
-                        $"because { reason }");
+                        $"No longer processing partition {partition.PartitionId} " +
+                        $"because {reason}");
                 }
                 catch (Exception ex)
                 {
@@ -267,7 +267,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     // In this case, unhandled exceptions will not impact the processor
                     // operation but will go unobserved, hiding potential application problems.
 
-                    Console.WriteLine($"Exception while stopping processing for a partition: { ex }");
+                    Console.WriteLine($"Exception while stopping processing for a partition: {ex}");
                 }
 
                 return Task.CompletedTask;
@@ -323,11 +323,11 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
                     checkpoint = new EventProcessorCheckpoint
                     {
-                       FullyQualifiedNamespace = this.FullyQualifiedNamespace,
-                       EventHubName = this.EventHubName,
-                       ConsumerGroup = this.ConsumerGroup,
-                       PartitionId = partitionId,
-                       StartingPosition = EventPosition.FromEnqueuedTime(startingTime)
+                        FullyQualifiedNamespace = this.FullyQualifiedNamespace,
+                        EventHubName = this.EventHubName,
+                        ConsumerGroup = this.ConsumerGroup,
+                        PartitionId = partitionId,
+                        StartingPosition = EventPosition.FromEnqueuedTime(startingTime)
                     };
                 }
 
@@ -448,7 +448,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         ///
         public class BlobCheckpointStore : CheckpointStore
         {
-            public BlobCheckpointStore(BlobContainerClient storageClient) {}
+            public BlobCheckpointStore(BlobContainerClient storageClient) { }
             public override Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken) => Task.FromResult(Enumerable.Empty<EventProcessorPartitionOwnership>());
 
             public override Task<EventProcessorCheckpoint> GetCheckpointAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, CancellationToken cancellationToken) => Task.FromResult<EventProcessorCheckpoint>(null);

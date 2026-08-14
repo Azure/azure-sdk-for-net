@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.NotNull(regionalEventSubscriptionsByResourceGroup);
 
             // Get regional event subscriptions by topic type at resource group level from given location
-            var regionalEventSubscriptionsByTopicTypeResourceGroup =  ResourceGroup.GetRegionalEventSubscriptionsDataForTopicTypeAsync(DefaultLocation, topicTypeName, filter: null, top: null).WithCancellation(CancellationToken.None).ConfigureAwait(false);
+            var regionalEventSubscriptionsByTopicTypeResourceGroup = ResourceGroup.GetRegionalEventSubscriptionsDataForTopicTypeAsync(DefaultLocation, topicTypeName, filter: null, top: null).WithCancellation(CancellationToken.None).ConfigureAwait(false);
             Assert.NotNull(regionalEventSubscriptionsByTopicTypeResourceGroup);
 
             // Get regional event subscriptions by topic type at subscription level for given location

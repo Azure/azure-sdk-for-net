@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct BmcKeySetDetailedStatus : IEquatable<BmcKeySetDetailedStatus>
     {
         private readonly string _value;
+        /// <summary> The AllActive status. </summary>
+        private const string AllActiveValue = "AllActive";
+        /// <summary> The SomeInvalid status. </summary>
+        private const string SomeInvalidValue = "SomeInvalid";
+        /// <summary> The AllInvalid status. </summary>
+        private const string AllInvalidValue = "AllInvalid";
+        /// <summary> The Validating status. </summary>
+        private const string ValidatingValue = "Validating";
 
         /// <summary> Initializes a new instance of <see cref="BmcKeySetDetailedStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BmcKeySetDetailedStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AllActiveValue = "AllActive";
-        private const string SomeInvalidValue = "SomeInvalid";
-        private const string AllInvalidValue = "AllInvalid";
-        private const string ValidatingValue = "Validating";
-
-        /// <summary> AllActive. </summary>
+        /// <summary> The AllActive status. </summary>
         public static BmcKeySetDetailedStatus AllActive { get; } = new BmcKeySetDetailedStatus(AllActiveValue);
-        /// <summary> SomeInvalid. </summary>
+
+        /// <summary> The SomeInvalid status. </summary>
         public static BmcKeySetDetailedStatus SomeInvalid { get; } = new BmcKeySetDetailedStatus(SomeInvalidValue);
-        /// <summary> AllInvalid. </summary>
+
+        /// <summary> The AllInvalid status. </summary>
         public static BmcKeySetDetailedStatus AllInvalid { get; } = new BmcKeySetDetailedStatus(AllInvalidValue);
-        /// <summary> Validating. </summary>
+
+        /// <summary> The Validating status. </summary>
         public static BmcKeySetDetailedStatus Validating { get; } = new BmcKeySetDetailedStatus(ValidatingValue);
+
         /// <summary> Determines if two <see cref="BmcKeySetDetailedStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BmcKeySetDetailedStatus left, BmcKeySetDetailedStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BmcKeySetDetailedStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BmcKeySetDetailedStatus left, BmcKeySetDetailedStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BmcKeySetDetailedStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BmcKeySetDetailedStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BmcKeySetDetailedStatus(string value) => new BmcKeySetDetailedStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BmcKeySetDetailedStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BmcKeySetDetailedStatus?(string value) => value == null ? null : new BmcKeySetDetailedStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BmcKeySetDetailedStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BmcKeySetDetailedStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

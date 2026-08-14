@@ -15,7 +15,7 @@ This sample demonstrates how to use the synchronous and asynchronous `.indexes` 
 ## Synchronous Sample
 
 ```C# Snippet:AI_Projects_IndexesExampleSync
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var indexName = Environment.GetEnvironmentVariable("INDEX_NAME") ?? "my-index";
 var indexVersion = Environment.GetEnvironmentVariable("INDEX_VERSION") ?? "1.0";
 var aiSearchConnectionName = Environment.GetEnvironmentVariable("AI_SEARCH_CONNECTION_NAME") ?? "my-ai-search-connection-name";
@@ -59,7 +59,7 @@ projectClient.Indexes.Delete(name: indexName, version: indexVersion);
 ## Asynchronous Sample
 
 ```C# Snippet:AI_Projects_IndexesExampleAsync
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var indexName = Environment.GetEnvironmentVariable("INDEX_NAME") ?? "my-index";
 var indexVersion = Environment.GetEnvironmentVariable("INDEX_VERSION") ?? "1.0";
 var aiSearchConnectionName = Environment.GetEnvironmentVariable("AI_SEARCH_CONNECTION_NAME") ?? "my-ai-search-connection-name";

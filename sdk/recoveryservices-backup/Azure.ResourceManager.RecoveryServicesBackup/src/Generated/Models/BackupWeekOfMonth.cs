@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The BackupWeekOfMonth. </summary>
+    /// <summary></summary>
     public enum BackupWeekOfMonth
     {
         /// <summary> First. </summary>

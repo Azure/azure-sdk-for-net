@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
+    /// <summary></summary>
     public partial class BackupProtectionIntentResource : IJsonModel<BackupProtectionIntentData>
     {
-        private static BackupProtectionIntentData s_dataDeserializationInstance;
-        private static BackupProtectionIntentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<BackupProtectionIntentData> s_dataDeserializationInstance;
 
+        private static IJsonModel<BackupProtectionIntentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new BackupProtectionIntentData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BackupProtectionIntentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BackupProtectionIntentData>)Data).Write(writer, options);
 
-        BackupProtectionIntentData IJsonModel<BackupProtectionIntentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BackupProtectionIntentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BackupProtectionIntentData IJsonModel<BackupProtectionIntentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<BackupProtectionIntentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BackupProtectionIntentData>(Data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         BackupProtectionIntentData IPersistableModel<BackupProtectionIntentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackupProtectionIntentData>(data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
-        string IPersistableModel<BackupProtectionIntentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BackupProtectionIntentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BackupProtectionIntentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

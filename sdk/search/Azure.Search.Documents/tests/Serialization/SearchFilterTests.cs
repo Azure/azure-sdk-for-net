@@ -254,16 +254,16 @@ namespace Azure.Search.Documents.Tests
                 "A GeographyLineString must have matching first and last Points to form a searchable polygon.");
 
             // Require that polygons define exactly 1 ring.
-           GeographyPolygon polygon = GeographyFactory
-                .Polygon()
-                .Ring(0, 0)
-                .LineTo(0, 1)
-                .LineTo(1, 1)
-                .LineTo(0, 0)
-                .Ring(2, 2)
-                .LineTo(2, 3)
-                .LineTo(3, 3)
-                .LineTo(2, 2);
+            GeographyPolygon polygon = GeographyFactory
+                 .Polygon()
+                 .Ring(0, 0)
+                 .LineTo(0, 1)
+                 .LineTo(1, 1)
+                 .LineTo(0, 0)
+                 .Ring(2, 2)
+                 .LineTo(2, 3)
+                 .LineTo(3, 3)
+                 .LineTo(2, 2);
 
             yield return new TestCaseData(
                 polygon,

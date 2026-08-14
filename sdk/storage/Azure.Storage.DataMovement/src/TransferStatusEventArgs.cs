@@ -26,7 +26,7 @@ namespace Azure.Storage.DataMovement
             TransferStatus transferStatus,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)
-            : base (transferId, isRunningSynchronously, cancellationToken)
+            : base(transferId, isRunningSynchronously, cancellationToken)
         {
             TransferStatus = transferStatus;
         }

@@ -102,5 +102,128 @@ namespace Azure.ResourceManager.CommonProperties.Mocking
         {
             return GetCachedClient(client => new ConfidentialResourceCollection(client, Id));
         }
+
+        /// <summary>
+        /// Get a ConfidentialResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/confidentialResources/{confidentialResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Error_GetForPredefinedError. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="confidentialResourceName"> The name of the ConfidentialResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="confidentialResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="confidentialResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ConfidentialResource>> GetConfidentialResourceAsync(string confidentialResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(confidentialResourceName, nameof(confidentialResourceName));
+
+            return await GetConfidentialResources().GetAsync(confidentialResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a ConfidentialResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/confidentialResources/{confidentialResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Error_GetForPredefinedError. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="confidentialResourceName"> The name of the ConfidentialResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="confidentialResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="confidentialResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ConfidentialResource> GetConfidentialResource(string confidentialResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(confidentialResourceName, nameof(confidentialResourceName));
+
+            return GetConfidentialResources().Get(confidentialResourceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ArmResourceIdentifierResources in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ArmResourceIdentifierResources and their operations over a ArmResourceIdentifierResource. </returns>
+        public virtual ArmResourceIdentifierResourceCollection GetArmResourceIdentifierResources()
+        {
+            return GetCachedClient(client => new ArmResourceIdentifierResourceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a ArmResourceIdentifierResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/armResourceIdentifierResources/{armResourceIdentifierResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ArmResourceIdentifiers_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="armResourceIdentifierResourceName"> arm resource name for path. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResourceIdentifierResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="armResourceIdentifierResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ArmResourceIdentifierResource>> GetArmResourceIdentifierResourceAsync(string armResourceIdentifierResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(armResourceIdentifierResourceName, nameof(armResourceIdentifierResourceName));
+
+            return await GetArmResourceIdentifierResources().GetAsync(armResourceIdentifierResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a ArmResourceIdentifierResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.CommonProperties/armResourceIdentifierResources/{armResourceIdentifierResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ArmResourceIdentifiers_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="armResourceIdentifierResourceName"> arm resource name for path. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResourceIdentifierResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="armResourceIdentifierResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ArmResourceIdentifierResource> GetArmResourceIdentifierResource(string armResourceIdentifierResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(armResourceIdentifierResourceName, nameof(armResourceIdentifierResourceName));
+
+            return GetArmResourceIdentifierResources().Get(armResourceIdentifierResourceName, cancellationToken);
+        }
     }
 }

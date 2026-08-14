@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
 
         private ClientDiagnostics OrganizationsClientDiagnostics => _organizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.InformaticaDataManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Organizations OrganizationsRestClient => _organizationsRestClient ??= new Organizations(OrganizationsClientDiagnostics, Pipeline, Endpoint, "2024-05-08");
+        private Organizations OrganizationsRestClient => _organizationsRestClient ??= new Organizations(OrganizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-08");
 
         /// <summary>
         /// List InformaticaOrganizationResource resources by subscription ID
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Id.SubscriptionId, context), data => new InformaticaOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Id.SubscriptionId, context, "MockableInformaticaDataManagementSubscriptionResource.GetInformaticaOrganizations"), data => new InformaticaOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Id.SubscriptionId, context), data => new InformaticaOrganizationResource(Client, data));
+            return new PageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Id.SubscriptionId, context, "MockableInformaticaDataManagementSubscriptionResource.GetInformaticaOrganizations"), data => new InformaticaOrganizationResource(Client, data));
         }
     }
 }

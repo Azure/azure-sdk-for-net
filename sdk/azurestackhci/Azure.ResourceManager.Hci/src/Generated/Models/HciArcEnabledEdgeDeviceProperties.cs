@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -21,9 +22,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="HciArcEnabledEdgeDeviceProperties"/>. </summary>
         /// <param name="deviceConfiguration"> Device Configuration. </param>
         /// <param name="provisioningState"> Provisioning state of edgeDevice resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="reportedProperties"> The instance view of all current configurations on HCI device. </param>
-        internal HciArcEnabledEdgeDeviceProperties(HciEdgeDeviceConfiguration deviceConfiguration, HciProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, HciReportedProperties reportedProperties) : base(deviceConfiguration, provisioningState, serializedAdditionalRawData)
+        internal HciArcEnabledEdgeDeviceProperties(HciEdgeDeviceConfiguration deviceConfiguration, HciProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, HciReportedProperties reportedProperties) : base(deviceConfiguration, provisioningState, additionalBinaryDataProperties)
         {
             ReportedProperties = reportedProperties;
         }

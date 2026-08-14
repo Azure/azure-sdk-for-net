@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -19,7 +20,12 @@ namespace Specs.Azure.Core.Basic
     {
         public BasicClient() : this(new Uri("http://localhost:3000"), new BasicClientOptions()) => throw null;
 
-        public BasicClient(Uri endpoint, BasicClientOptions options) => throw null;
+        internal BasicClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, BasicClientOptions options) => throw null;
+
+        public BasicClient(Uri endpoint, BasicClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public BasicClient(BasicClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
@@ -43,13 +49,13 @@ namespace Specs.Azure.Core.Basic
 
         public virtual Task<Response<User>> GetAsync(int id, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Pageable<BinaryData> GetAll(int? top, int? skip, int? maxpagesize, IEnumerable<string> @orderby, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context) => throw null;
+        public virtual Pageable<BinaryData> GetAll(int? maxCount, int? skip, int? maxPageSize, IEnumerable<string> @orderby, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context) => throw null;
 
-        public virtual AsyncPageable<BinaryData> GetAllAsync(int? top, int? skip, int? maxpagesize, IEnumerable<string> @orderby, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context) => throw null;
+        public virtual AsyncPageable<BinaryData> GetAllAsync(int? maxCount, int? skip, int? maxPageSize, IEnumerable<string> @orderby, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context) => throw null;
 
-        public virtual Pageable<User> GetAll(int? top = default, int? skip = default, int? maxpagesize = default, IEnumerable<string> @orderby = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Pageable<User> GetAll(int? maxCount = default, int? skip = default, int? maxPageSize = default, IEnumerable<string> @orderby = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<User> GetAllAsync(int? top = default, int? skip = default, int? maxpagesize = default, IEnumerable<string> @orderby = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<User> GetAllAsync(int? maxCount = default, int? skip = default, int? maxPageSize = default, IEnumerable<string> @orderby = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Delete(int id, RequestContext context) => throw null;
 

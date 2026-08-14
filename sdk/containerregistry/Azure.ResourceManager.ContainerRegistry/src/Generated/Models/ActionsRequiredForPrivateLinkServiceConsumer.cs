@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public readonly partial struct ActionsRequiredForPrivateLinkServiceConsumer : IEquatable<ActionsRequiredForPrivateLinkServiceConsumer>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ActionsRequiredForPrivateLinkServiceConsumer"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ActionsRequiredForPrivateLinkServiceConsumer(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string RecreateValue = "Recreate";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionsRequiredForPrivateLinkServiceConsumer"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ActionsRequiredForPrivateLinkServiceConsumer(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static ActionsRequiredForPrivateLinkServiceConsumer None { get; } = new ActionsRequiredForPrivateLinkServiceConsumer(NoneValue);
-        /// <summary> Recreate. </summary>
+
+        /// <summary> Gets the Recreate. </summary>
         public static ActionsRequiredForPrivateLinkServiceConsumer Recreate { get; } = new ActionsRequiredForPrivateLinkServiceConsumer(RecreateValue);
+
         /// <summary> Determines if two <see cref="ActionsRequiredForPrivateLinkServiceConsumer"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ActionsRequiredForPrivateLinkServiceConsumer left, ActionsRequiredForPrivateLinkServiceConsumer right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ActionsRequiredForPrivateLinkServiceConsumer"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ActionsRequiredForPrivateLinkServiceConsumer left, ActionsRequiredForPrivateLinkServiceConsumer right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ActionsRequiredForPrivateLinkServiceConsumer"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ActionsRequiredForPrivateLinkServiceConsumer"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ActionsRequiredForPrivateLinkServiceConsumer(string value) => new ActionsRequiredForPrivateLinkServiceConsumer(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ActionsRequiredForPrivateLinkServiceConsumer"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ActionsRequiredForPrivateLinkServiceConsumer?(string value) => value == null ? null : new ActionsRequiredForPrivateLinkServiceConsumer(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ActionsRequiredForPrivateLinkServiceConsumer other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ActionsRequiredForPrivateLinkServiceConsumer other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

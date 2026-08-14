@@ -189,14 +189,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 severity: severity,
                 cveName: namePropertiesName,
                 effectiveCvssScore: cvss3score.Score > 0 ? cvss3score.Score : cvss2score.Score,
-                effectiveCvssVersion: cvss3score.Score > 0 ? 3: 2,
+                effectiveCvssVersion: cvss3score.Score > 0 ? 3 : 2,
                 cvssScores: cves,
                 links: links?.ToList(),
                 description: description
             );
         }
 
-         /// <summary> Initializes a new instance of <see cref="Models.FirmwareAnalysisWorkspacePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FirmwareAnalysisWorkspacePatch"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.FirmwareAnalysisWorkspacePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]

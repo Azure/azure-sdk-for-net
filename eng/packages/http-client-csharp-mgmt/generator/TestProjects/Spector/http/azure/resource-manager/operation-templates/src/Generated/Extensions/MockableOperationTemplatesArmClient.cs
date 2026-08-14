@@ -26,15 +26,6 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="OrderResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OrderResource"/> object. </returns>
-        public virtual OrderResource GetOrderResource(ResourceIdentifier id)
-        {
-            OrderResource.ValidateResourceId(id);
-            return new OrderResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="WidgetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WidgetResource"/> object. </returns>

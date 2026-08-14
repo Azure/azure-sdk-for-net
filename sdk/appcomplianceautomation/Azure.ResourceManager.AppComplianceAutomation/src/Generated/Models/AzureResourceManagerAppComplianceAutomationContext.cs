@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.AppComplianceAutomation.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AppComplianceCategory))]
     [ModelReaderWriterBuildable(typeof(AppComplianceControl))]
@@ -25,9 +26,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     [ModelReaderWriterBuildable(typeof(AppComplianceOnboardContent))]
     [ModelReaderWriterBuildable(typeof(AppComplianceOnboardResult))]
     [ModelReaderWriterBuildable(typeof(AppCompliancePdfReport))]
-    [ModelReaderWriterBuildable(typeof(AppComplianceReportCollectionGetAllOptions))]
     [ModelReaderWriterBuildable(typeof(AppComplianceReportData))]
-    [ModelReaderWriterBuildable(typeof(AppComplianceReportEvidenceCollectionGetAllOptions))]
     [ModelReaderWriterBuildable(typeof(AppComplianceReportEvidenceData))]
     [ModelReaderWriterBuildable(typeof(AppComplianceReportEvidenceProperties))]
     [ModelReaderWriterBuildable(typeof(AppComplianceReportEvidenceResource))]
@@ -41,11 +40,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     [ModelReaderWriterBuildable(typeof(AppComplianceReportScopingConfigurationData))]
     [ModelReaderWriterBuildable(typeof(AppComplianceReportScopingConfigurationProperties))]
     [ModelReaderWriterBuildable(typeof(AppComplianceReportScopingConfigurationResource))]
-    [ModelReaderWriterBuildable(typeof(AppComplianceReportSnapshotCollectionGetAllOptions))]
     [ModelReaderWriterBuildable(typeof(AppComplianceReportSnapshotData))]
     [ModelReaderWriterBuildable(typeof(AppComplianceReportSnapshotProperties))]
     [ModelReaderWriterBuildable(typeof(AppComplianceReportSnapshotResource))]
-    [ModelReaderWriterBuildable(typeof(AppComplianceReportWebhookCollectionGetAllOptions))]
     [ModelReaderWriterBuildable(typeof(AppComplianceReportWebhookData))]
     [ModelReaderWriterBuildable(typeof(AppComplianceReportWebhookPatch))]
     [ModelReaderWriterBuildable(typeof(AppComplianceReportWebhookProperties))]

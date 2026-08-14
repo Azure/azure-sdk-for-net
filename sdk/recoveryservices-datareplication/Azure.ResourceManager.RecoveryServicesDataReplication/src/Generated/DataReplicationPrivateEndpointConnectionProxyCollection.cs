@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             TryGetApiVersion(DataReplicationPrivateEndpointConnectionProxyResource.ResourceType, out string dataReplicationPrivateEndpointConnectionProxyApiVersion);
             _privateEndpointConnectionProxiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationPrivateEndpointConnectionProxyResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionProxiesRestClient = new PrivateEndpointConnectionProxies(_privateEndpointConnectionProxiesClientDiagnostics, Pipeline, Endpoint, dataReplicationPrivateEndpointConnectionProxyApiVersion ?? "2024-09-01");
+            _privateEndpointConnectionProxiesRestClient = new PrivateEndpointConnectionProxies(_privateEndpointConnectionProxiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationPrivateEndpointConnectionProxyApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             if (id.ResourceType != DataReplicationVaultResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationVaultResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationVaultResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationPrivateEndpointConnectionProxyData, DataReplicationPrivateEndpointConnectionProxyResource>(new PrivateEndpointConnectionProxiesGetAllAsyncCollectionResultOfT(_privateEndpointConnectionProxiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataReplicationPrivateEndpointConnectionProxyResource(Client, data));
+            return new AsyncPageableWrapper<DataReplicationPrivateEndpointConnectionProxyData, DataReplicationPrivateEndpointConnectionProxyResource>(new PrivateEndpointConnectionProxiesGetAllAsyncCollectionResultOfT(
+                _privateEndpointConnectionProxiesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataReplicationPrivateEndpointConnectionProxyCollection.GetAll"), data => new DataReplicationPrivateEndpointConnectionProxyResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationPrivateEndpointConnectionProxyData, DataReplicationPrivateEndpointConnectionProxyResource>(new PrivateEndpointConnectionProxiesGetAllCollectionResultOfT(_privateEndpointConnectionProxiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataReplicationPrivateEndpointConnectionProxyResource(Client, data));
+            return new PageableWrapper<DataReplicationPrivateEndpointConnectionProxyData, DataReplicationPrivateEndpointConnectionProxyResource>(new PrivateEndpointConnectionProxiesGetAllCollectionResultOfT(
+                _privateEndpointConnectionProxiesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataReplicationPrivateEndpointConnectionProxyCollection.GetAll"), data => new DataReplicationPrivateEndpointConnectionProxyResource(Client, data));
         }
 
         /// <summary>

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(AvsProvisionedNetworkResource.ResourceType, out string avsProvisionedNetworkApiVersion);
             _provisionedNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", AvsProvisionedNetworkResource.ResourceType.Namespace, Diagnostics);
-            _provisionedNetworksRestClient = new ProvisionedNetworks(_provisionedNetworksClientDiagnostics, Pipeline, Endpoint, avsProvisionedNetworkApiVersion ?? "2025-09-01");
+            _provisionedNetworksRestClient = new ProvisionedNetworks(_provisionedNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, avsProvisionedNetworkApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != AvsPrivateCloudResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvsProvisionedNetworkData, AvsProvisionedNetworkResource>(new ProvisionedNetworksGetAllAsyncCollectionResultOfT(_provisionedNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new AvsProvisionedNetworkResource(Client, data));
+            return new AsyncPageableWrapper<AvsProvisionedNetworkData, AvsProvisionedNetworkResource>(new ProvisionedNetworksGetAllAsyncCollectionResultOfT(
+                _provisionedNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AvsProvisionedNetworkCollection.GetAll"), data => new AvsProvisionedNetworkResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvsProvisionedNetworkData, AvsProvisionedNetworkResource>(new ProvisionedNetworksGetAllCollectionResultOfT(_provisionedNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new AvsProvisionedNetworkResource(Client, data));
+            return new PageableWrapper<AvsProvisionedNetworkData, AvsProvisionedNetworkResource>(new ProvisionedNetworksGetAllCollectionResultOfT(
+                _provisionedNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AvsProvisionedNetworkCollection.GetAll"), data => new AvsProvisionedNetworkResource(Client, data));
         }
 
         /// <summary>

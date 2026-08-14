@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Recommender
         {
             TryGetApiVersion(ResourceType, out string computeRecommenderDiagnosticApiVersion);
             _spotPlacementScoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.Recommender", ResourceType.Namespace, Diagnostics);
-            _spotPlacementScoresRestClient = new SpotPlacementScores(_spotPlacementScoresClientDiagnostics, Pipeline, Endpoint, computeRecommenderDiagnosticApiVersion ?? "2025-06-05");
+            _spotPlacementScoresRestClient = new SpotPlacementScores(_spotPlacementScoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, computeRecommenderDiagnosticApiVersion ?? "2026-05-05-preview");
             ValidateResourceId(id);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Recommender
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Recommender
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-05. </description>
+        /// <description> 2026-05-05-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute.Recommender
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-05. </description>
+        /// <description> 2026-05-05-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Compute.Recommender
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-05. </description>
+        /// <description> 2026-05-05-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Compute.Recommender
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-05. </description>
+        /// <description> 2026-05-05-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

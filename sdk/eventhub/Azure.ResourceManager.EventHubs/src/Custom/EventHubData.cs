@@ -4,20 +4,34 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.Core;
 using Azure.ResourceManager.EventHubs.Models;
-using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing the EventHubsNamespace data model. </summary>
-    public partial class EventHubData : ResourceData
+    // Suppress the generated MessageRetentionInDays property to add [Obsolete] and [EditorBrowsable(Never)] attributes
+    // for backward compatibility with the old AutoRest-generated SDK.
+    public partial class EventHubData
     {
-        /// <summary> MessageRetentionInDays :- Number of days to retain the events for this Event Hub, value should be 1 to 7 days. </summary>
+        /// <summary> Number of days to retain the events for this Event Hub, value should be 1 to 7 days. </summary>
         [Obsolete("This property is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public long? MessageRetentionInDays { get; set; }
+        [WirePath("properties.messageRetentionInDays")]
+        public long? MessageRetentionInDays
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MessageRetentionInDays;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EventhubProperties();
+                }
+                Properties.MessageRetentionInDays = value.Value;
+            }
+        }
     }
 }

@@ -14,49 +14,15 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> The result from PII detection and redaction operation for each conversation. </summary>
     public partial class ConversationPiiResults
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConversationPiiResults"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="conversations"> array of conversations. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="errors"/>, <paramref name="modelVersion"/> or <paramref name="conversations"/> is null. </exception>
         internal ConversationPiiResults(IEnumerable<DocumentError> errors, string modelVersion, IEnumerable<ConversationalPiiResult> conversations)
         {
-            Argument.AssertNotNull(errors, nameof(errors));
-            Argument.AssertNotNull(modelVersion, nameof(modelVersion));
-            Argument.AssertNotNull(conversations, nameof(conversations));
-
             Errors = errors.ToList();
             ModelVersion = modelVersion;
             Conversations = conversations.ToList();
@@ -67,28 +33,26 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="statistics"> statistics. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="conversations"> array of conversations. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationPiiResults(IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string modelVersion, IReadOnlyList<ConversationalPiiResult> conversations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConversationPiiResults(IList<DocumentError> errors, RequestStatistics statistics, string modelVersion, IList<ConversationalPiiResult> conversations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Errors = errors;
             Statistics = statistics;
             ModelVersion = modelVersion;
             Conversations = conversations;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConversationPiiResults"/> for deserialization. </summary>
-        internal ConversationPiiResults()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Errors by document id. </summary>
-        public IReadOnlyList<DocumentError> Errors { get; }
+        public IList<DocumentError> Errors { get; }
+
         /// <summary> statistics. </summary>
         public RequestStatistics Statistics { get; }
+
         /// <summary> This field indicates which model is used for scoring. </summary>
         public string ModelVersion { get; }
+
         /// <summary> array of conversations. </summary>
-        public IReadOnlyList<ConversationalPiiResult> Conversations { get; }
+        public IList<ConversationalPiiResult> Conversations { get; }
     }
 }

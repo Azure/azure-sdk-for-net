@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Serialization.EncodedName.Json
 {
     public partial class JsonClientOptions : ClientOptions
     {
+        public JsonClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal JsonClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

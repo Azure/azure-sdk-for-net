@@ -130,7 +130,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorAllowsMultipleEventHubNamesFromTheConnectionStringIfEqual()
         {
             var eventHubName = "myHub";
-            var connectionString = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath={ eventHubName }";
+            var connectionString = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath={eventHubName}";
 
             Assert.That(() => new MinimalProcessorMock(1, EventHubConsumerClient.DefaultConsumerGroupName, connectionString, eventHubName), Throws.Nothing);
         }
@@ -192,7 +192,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var defaultOptions = new EventProcessorOptions();
             var connectionOptions = GetConnectionOptions(eventProcessor);
 
-            Assert.That(connectionOptions.TransportType, Is.EqualTo(defaultOptions.ConnectionOptions.TransportType), $"The { constructorDescription } constructor should have a default set of connection options.");
+            Assert.That(connectionOptions.TransportType, Is.EqualTo(defaultOptions.ConnectionOptions.TransportType), $"The {constructorDescription} constructor should have a default set of connection options.");
         }
 
         /// <summary>
@@ -480,7 +480,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var credential = Mock.Of<TokenCredential>();
             var host = "mynamespace.servicebus.windows.net";
-            var namespaceUri = $"sb://{ host }";
+            var namespaceUri = $"sb://{host}";
             var eventProcessor = new MinimalProcessorMock(665, "consumerGroup", namespaceUri, "hub", credential);
 
             Assert.That(eventProcessor.FullyQualifiedNamespace, Is.EqualTo(host), "The constructor should parse the namespace from the URI");
@@ -495,7 +495,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var credential = new AzureNamedKeyCredential("key", "value");
             var host = "mynamespace.servicebus.windows.net";
-            var namespaceUri = $"sb://{ host }";
+            var namespaceUri = $"sb://{host}";
             var eventProcessor = new MinimalProcessorMock(665, "consumerGroup", namespaceUri, "hub", credential);
 
             Assert.That(eventProcessor.FullyQualifiedNamespace, Is.EqualTo(host), "The constructor should parse the namespace from the URI");
@@ -510,7 +510,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var credential = new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value);
             var host = "mynamespace.servicebus.windows.net";
-            var namespaceUri = $"sb://{ host }";
+            var namespaceUri = $"sb://{host}";
             var eventProcessor = new MinimalProcessorMock(665, "consumerGroup", namespaceUri, "hub", credential);
 
             Assert.That(eventProcessor.FullyQualifiedNamespace, Is.EqualTo(host), "The constructor should parse the namespace from the URI");

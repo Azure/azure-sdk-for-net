@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> Collection of Notification Hub or Notification Hub Namespace PNS credentials. </summary>
     public partial class PnsCredentials
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PnsCredentials"/>. </summary>
         public PnsCredentials()
@@ -60,8 +31,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="wnsCredential"> Description of a NotificationHub WnsCredential. </param>
         /// <param name="xiaomiCredential"> Description of a NotificationHub XiaomiCredential. </param>
         /// <param name="fcmV1Credential"> Description of a NotificationHub FcmV1Credential. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PnsCredentials(NotificationHubAdmCredential admCredential, NotificationHubApnsCredential apnsCredential, NotificationHubBaiduCredential baiduCredential, BrowserCredential browserCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubWnsCredential wnsCredential, XiaomiCredential xiaomiCredential, FcmV1Credential fcmV1Credential, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PnsCredentials(NotificationHubAdmCredential admCredential, NotificationHubApnsCredential apnsCredential, NotificationHubBaiduCredential baiduCredential, BrowserCredential browserCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubWnsCredential wnsCredential, XiaomiCredential xiaomiCredential, FcmV1Credential fcmV1Credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdmCredential = admCredential;
             ApnsCredential = apnsCredential;
@@ -72,25 +43,33 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             WnsCredential = wnsCredential;
             XiaomiCredential = xiaomiCredential;
             FcmV1Credential = fcmV1Credential;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Description of a NotificationHub AdmCredential. </summary>
         public NotificationHubAdmCredential AdmCredential { get; set; }
+
         /// <summary> Description of a NotificationHub ApnsCredential. </summary>
         public NotificationHubApnsCredential ApnsCredential { get; set; }
+
         /// <summary> Description of a NotificationHub BaiduCredential. </summary>
         public NotificationHubBaiduCredential BaiduCredential { get; set; }
+
         /// <summary> Description of a NotificationHub BrowserCredential. </summary>
         public BrowserCredential BrowserCredential { get; set; }
+
         /// <summary> Description of a NotificationHub GcmCredential. </summary>
         public NotificationHubGcmCredential GcmCredential { get; set; }
+
         /// <summary> Description of a NotificationHub MpnsCredential. </summary>
         public NotificationHubMpnsCredential MpnsCredential { get; set; }
+
         /// <summary> Description of a NotificationHub WnsCredential. </summary>
         public NotificationHubWnsCredential WnsCredential { get; set; }
+
         /// <summary> Description of a NotificationHub XiaomiCredential. </summary>
         public XiaomiCredential XiaomiCredential { get; set; }
+
         /// <summary> Description of a NotificationHub FcmV1Credential. </summary>
         public FcmV1Credential FcmV1Credential { get; set; }
     }

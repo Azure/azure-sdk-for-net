@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NotificationHubs
 {
+    /// <summary></summary>
     public partial class NotificationHubNamespaceResource : IJsonModel<NotificationHubNamespaceData>
     {
-        private static NotificationHubNamespaceData s_dataDeserializationInstance;
-        private static NotificationHubNamespaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NotificationHubNamespaceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NotificationHubNamespaceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NotificationHubNamespaceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NotificationHubNamespaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NotificationHubNamespaceData>)Data).Write(writer, options);
 
-        NotificationHubNamespaceData IJsonModel<NotificationHubNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NotificationHubNamespaceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NotificationHubNamespaceData IJsonModel<NotificationHubNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NotificationHubNamespaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NotificationHubNamespaceData>(Data, options, AzureResourceManagerNotificationHubsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NotificationHubNamespaceData IPersistableModel<NotificationHubNamespaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NotificationHubNamespaceData>(data, options, AzureResourceManagerNotificationHubsContext.Default);
 
-        string IPersistableModel<NotificationHubNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NotificationHubNamespaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NotificationHubNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

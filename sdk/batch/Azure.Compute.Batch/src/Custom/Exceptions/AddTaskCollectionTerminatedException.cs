@@ -23,7 +23,7 @@ namespace Azure.Compute.Batch
         public CreateTaskResult AddTaskResult { get; }
 
         internal AddTaskCollectionTerminatedException(CreateTaskResult result, Exception inner = null) :
-            base(null,GenerateMessageString(result), inner)
+            base(null, GenerateMessageString(result), inner)
         {
             this.AddTaskResult = result;
         }

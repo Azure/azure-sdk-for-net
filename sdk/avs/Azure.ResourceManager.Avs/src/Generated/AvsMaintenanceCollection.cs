@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(AvsMaintenanceResource.ResourceType, out string avsMaintenanceApiVersion);
             _maintenancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", AvsMaintenanceResource.ResourceType.Namespace, Diagnostics);
-            _maintenancesRestClient = new Maintenances(_maintenancesClientDiagnostics, Pipeline, Endpoint, avsMaintenanceApiVersion ?? "2025-09-01");
+            _maintenancesRestClient = new Maintenances(_maintenancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, avsMaintenanceApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != AvsPrivateCloudResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), nameof(id));
             }
         }
 
@@ -187,11 +187,12 @@ namespace Azure.ResourceManager.Avs
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
-                stateName.ToString(),
-                status.ToString(),
+                stateName?.ToString(),
+                status?.ToString(),
                 @from,
                 to,
-                context), data => new AvsMaintenanceResource(Client, data));
+                context,
+                "AvsMaintenanceCollection.GetAll"), data => new AvsMaintenanceResource(Client, data));
         }
 
         /// <summary>
@@ -228,11 +229,12 @@ namespace Azure.ResourceManager.Avs
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
-                stateName.ToString(),
-                status.ToString(),
+                stateName?.ToString(),
+                status?.ToString(),
                 @from,
                 to,
-                context), data => new AvsMaintenanceResource(Client, data));
+                context,
+                "AvsMaintenanceCollection.GetAll"), data => new AvsMaintenanceResource(Client, data));
         }
 
         /// <summary>

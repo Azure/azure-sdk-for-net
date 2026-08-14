@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ContainerService
 {
+    /// <summary></summary>
     public partial class ContainerServicePrivateEndpointConnectionResource : IJsonModel<ContainerServicePrivateEndpointConnectionData>
     {
-        private static ContainerServicePrivateEndpointConnectionData s_dataDeserializationInstance;
-        private static ContainerServicePrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ContainerServicePrivateEndpointConnectionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ContainerServicePrivateEndpointConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ContainerServicePrivateEndpointConnectionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerServicePrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServicePrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        ContainerServicePrivateEndpointConnectionData IJsonModel<ContainerServicePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServicePrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerServicePrivateEndpointConnectionData IJsonModel<ContainerServicePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ContainerServicePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerServicePrivateEndpointConnectionData>(Data, options, AzureResourceManagerContainerServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ContainerServicePrivateEndpointConnectionData IPersistableModel<ContainerServicePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerServicePrivateEndpointConnectionData>(data, options, AzureResourceManagerContainerServiceContext.Default);
 
-        string IPersistableModel<ContainerServicePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerServicePrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerServicePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

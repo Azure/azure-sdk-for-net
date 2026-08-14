@@ -19,6 +19,46 @@ namespace Azure.ResourceManager.Grafana.Models
     /// </summary>
     public partial class GrafanaSmtpSettings : IJsonModel<GrafanaSmtpSettings>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GrafanaSmtpSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GrafanaSmtpSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGrafanaSmtpSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GrafanaSmtpSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GrafanaSmtpSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GrafanaSmtpSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GrafanaSmtpSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GrafanaSmtpSettings IPersistableModel<GrafanaSmtpSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GrafanaSmtpSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GrafanaSmtpSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -67,10 +107,10 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WritePropertyName("fromName"u8);
                 writer.WriteStringValue(FromName);
             }
-            if (Optional.IsDefined(StartTLSPolicy))
+            if (Optional.IsDefined(StartTlsPolicy))
             {
                 writer.WritePropertyName("startTLSPolicy"u8);
-                writer.WriteStringValue(StartTLSPolicy.Value.ToString());
+                writer.WriteStringValue(StartTlsPolicy.Value.ToString());
             }
             if (Optional.IsDefined(SkipVerify))
             {
@@ -125,7 +165,7 @@ namespace Azure.ResourceManager.Grafana.Models
             string password = default;
             string fromAddress = default;
             string fromName = default;
-            GrafanaStartTlsPolicy? startTLSPolicy = default;
+            GrafanaStartTlsPolicy? startTlsPolicy = default;
             bool? skipVerify = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -170,7 +210,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    startTLSPolicy = new GrafanaStartTlsPolicy(prop.Value.GetString());
+                    startTlsPolicy = new GrafanaStartTlsPolicy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("skipVerify"u8))
@@ -194,49 +234,9 @@ namespace Azure.ResourceManager.Grafana.Models
                 password,
                 fromAddress,
                 fromName,
-                startTLSPolicy,
+                startTlsPolicy,
                 skipVerify,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GrafanaSmtpSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GrafanaSmtpSettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(GrafanaSmtpSettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        GrafanaSmtpSettings IPersistableModel<GrafanaSmtpSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GrafanaSmtpSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GrafanaSmtpSettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeGrafanaSmtpSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GrafanaSmtpSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GrafanaSmtpSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

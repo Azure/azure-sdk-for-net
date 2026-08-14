@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Azure.Core
 {
-    internal class ChangeTrackingList<T>: IList<T>, IReadOnlyList<T>
+    internal class ChangeTrackingList<T> : IList<T>, IReadOnlyList<T>
     {
         private IList<T>? _innerList;
 

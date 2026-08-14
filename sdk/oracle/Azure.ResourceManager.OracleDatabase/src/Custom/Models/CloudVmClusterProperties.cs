@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The OCID of the zone the cloud VM cluster is associated with. </summary>
         [Obsolete("This property is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ResourceIdentifier ZoneId { get => new ResourceIdentifier(ZoneOcid) ; set => ZoneOcid = value.ToString(); }
+        public ResourceIdentifier ZoneId { get => new ResourceIdentifier(ZoneOcid); set => ZoneOcid = value.ToString(); }
         /// <summary> The OCID of the DNS record for the SCAN IP addresses that are associated with the cloud VM cluster. </summary>
         [Obsolete("This property is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]

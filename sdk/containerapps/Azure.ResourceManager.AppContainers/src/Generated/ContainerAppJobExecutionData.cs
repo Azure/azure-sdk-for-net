@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary>
-    /// A class representing the ContainerAppJobExecution data model.
-    /// Container Apps Job execution.
-    /// </summary>
+    /// <summary> Container Apps Job execution. </summary>
     public partial class ContainerAppJobExecutionData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppJobExecutionData"/>. </summary>
         internal ContainerAppJobExecutionData()
@@ -57,35 +25,90 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppJobExecutionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="status"> Current running State of the job. </param>
-        /// <param name="startOn"> Job execution start time. </param>
-        /// <param name="endOn"> Job execution end time. </param>
-        /// <param name="template"> Job's execution container. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppJobExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobExecutionRunningState? status, DateTimeOffset? startOn, DateTimeOffset? endOn, ContainerAppJobExecutionTemplate template, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Container Apps Job execution specific properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppJobExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobExecutionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
-            Template = template;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Container Apps Job execution specific properties. </summary>
+        [WirePath("properties")]
+        internal JobExecutionProperties Properties { get; }
 
         /// <summary> Current running State of the job. </summary>
         [WirePath("properties.status")]
-        public JobExecutionRunningState? Status { get; }
+        public JobExecutionRunningState? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
         /// <summary> Job execution start time. </summary>
         [WirePath("properties.startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+        }
+
         /// <summary> Job execution end time. </summary>
         [WirePath("properties.endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOn;
+            }
+        }
+
         /// <summary> Job's execution container. </summary>
         [WirePath("properties.template")]
-        public ContainerAppJobExecutionTemplate Template { get; }
+        public ContainerAppJobExecutionTemplate Template
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Template;
+            }
+        }
+
+        /// <summary> Reason for the current condition of job execution. </summary>
+        [WirePath("properties.reason")]
+        public string Reason
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Reason;
+            }
+        }
+
+        /// <summary> Human readable message indicating details about the current condition of the job execution. </summary>
+        [WirePath("properties.message")]
+        public string Message
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Message;
+            }
+        }
+
+        /// <summary> Replicas in the execution. </summary>
+        [WirePath("properties.detailedStatus.replicas")]
+        public IList<ReplicaExecutionStatus> DetailedStatusReplicas
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatusReplicas;
+            }
+        }
     }
 }

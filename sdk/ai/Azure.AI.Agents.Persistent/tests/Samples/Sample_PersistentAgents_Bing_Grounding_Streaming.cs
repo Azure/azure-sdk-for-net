@@ -43,7 +43,7 @@ public partial class Sample_PersistentAgents_Bing_Grounding_Streaming : SamplesB
            model: modelDeploymentName,
            name: "my-agent",
            instructions: "You are a helpful agent.",
-           tools: [ bingGroundingTool ]);
+           tools: [bingGroundingTool]);
         #endregion
         // Create thread for communication
         #region Snippet:AgentsBingGroundingStreamingAsync_CreateThreadMessageAndStream

@@ -1,0 +1,276 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.ClientModel;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
+using Azure.Identity;
+using Microsoft.ClientModel.TestFramework;
+using NUnit.Framework;
+using OpenAI.Responses;
+
+namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
+
+public class PromptAgentSamples : ProjectsOpenAITestBase
+{
+    [Test]
+    public async Task CreateAPromptAgent()
+    {
+        IgnoreSampleMayBe();
+        #region Snippet:CreateAPromptAgent
+#if SNIPPET
+        string RAW_FOUNDRY_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("AZURE_AI_FOUNDRY_FOUNDRY_PROJECT_ENDPOINT")
+            ?? throw new InvalidOperationException("Missing environment variable 'AZURE_AI_FOUNDRY_FOUNDRY_PROJECT_ENDPOINT'");
+        string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("AZURE_AI_FOUNDRY_MODEL_DEPLOYMENT")
+            ?? throw new InvalidOperationException("Missing environment variable 'AZURE_AI_FOUNDRY_MODEL_DEPLOYMENT'");
+        string FOUNDRY_AGENT_NAME = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_NAME")
+            ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_AGENT_NAME'");
+#else
+        string RAW_FOUNDRY_PROJECT_ENDPOINT = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        string MODEL_DEPLOYMENT = TestEnvironment.FOUNDRY_MODEL_NAME;
+        string FOUNDRY_AGENT_NAME = TestEnvironment.FOUNDRY_AGENT_NAME;
+#endif
+
+        AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new AzureCliCredential());
+
+        ProjectsAgentDefinition agentDefinition = new DeclarativeAgentDefinition(MODEL_DEPLOYMENT)
+        {
+            Instructions = "You are a foo bar agent. In EVERY response you give, ALWAYS include both `foo` and `bar` strings somewhere in the response.",
+        };
+
+        ProjectsAgentVersion newAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+            agentName: FOUNDRY_AGENT_NAME,
+            options: new(agentDefinition));
+        Console.WriteLine($"Created new agent version: {newAgentVersion.Name}");
+        #endregion
+    }
+
+    [Test]
+    [AsyncOnly]
+    public async Task RunAPromptAgentNoConversationAsync()
+    {
+        IgnoreSampleMayBe();
+#if SNIPPET
+        string RAW_FOUNDRY_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT")
+    ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_PROJECT_ENDPOINT'");
+        string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME")
+            ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_MODEL_NAME'");
+#else
+        string RAW_FOUNDRY_PROJECT_ENDPOINT = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        string MODEL_DEPLOYMENT = TestEnvironment.FOUNDRY_MODEL_NAME;
+#endif
+        AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new AzureCliCredential());
+        ProjectOpenAIClient openaiClient = projectClient.GetProjectOpenAIClient();
+        #region Snippet:CreateAgent_Basic_Async
+        DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
+        {
+            Instructions = "You are a physics teacher with a sense of humor.",
+        };
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+            agentName: "myAgent",
+            options: new(agentDefinition)
+        );
+        #endregion
+        #region Snippet:CreateResponseBasic_Async
+        var agentReference = new AgentReference(name: agentVersion.Name);
+        ProjectResponsesClient responseClient = openaiClient.GetProjectResponsesClientForAgent(agentReference);
+        CreateResponseOptions responseOptions = new()
+        {
+            InputItems = { ResponseItem.CreateUserMessageItem("Write Maxwell's equation in LaTeX format.") }
+        };
+        ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
+        Console.WriteLine(response.GetOutputText());
+        #endregion
+        #region Snippet:FollowUp_Basic_Async
+        CreateResponseOptions followupOptions = new()
+        {
+            PreviousResponseId = response.Id,
+            InputItems = { ResponseItem.CreateUserMessageItem("What was the previous question?") },
+        };
+        response = await responseClient.CreateResponseAsync(followupOptions);
+        Console.WriteLine(response.GetOutputText());
+        #endregion
+        #region Snippet:CleanUp_Basic_Async
+        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName: "myAgent");
+        #endregion
+    }
+
+    [Test]
+    [SyncOnly]
+    public void RunAPromptAgentNoConversationSync()
+    {
+        IgnoreSampleMayBe();
+#if SNIPPET
+        string RAW_FOUNDRY_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT")
+    ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_PROJECT_ENDPOINT'");
+        string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME")
+            ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_MODEL_NAME'");
+#else
+        string RAW_FOUNDRY_PROJECT_ENDPOINT = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        string MODEL_DEPLOYMENT = TestEnvironment.FOUNDRY_MODEL_NAME;
+#endif
+        AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new AzureCliCredential());
+        ProjectOpenAIClient openAIClient = projectClient.GetProjectOpenAIClient();
+        DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
+        {
+            Instructions = "You are a physics teacher with a sense of humor.",
+        };
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
+            agentName: "myAgent",
+            options: new(agentDefinition)
+        );
+        var agentReference = new AgentReference(name: agentVersion.Name);
+        CreateResponseOptions responseOptions = new()
+        {
+            InputItems = { ResponseItem.CreateUserMessageItem("Write Maxwell's equation in LaTeX format.") }
+        };
+        ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClientForAgent(agentReference);
+        ResponseResult response = responseClient.CreateResponse(responseOptions);
+        Console.WriteLine(response.GetOutputText());
+        responseOptions.InputItems.Clear();
+        responseOptions.InputItems.Add(ResponseItem.CreateUserMessageItem("What was the previous question?"));
+        responseOptions.PreviousResponseId = response.Id;
+        response = responseClient.CreateResponse(responseOptions);
+        Console.WriteLine(response.GetOutputText());
+        projectClient.AgentAdministrationClient.DeleteAgent(agentName: "myAgent");
+    }
+
+    [Test]
+    public async Task RunAPromptAgent()
+    {
+        IgnoreSampleMayBe();
+#if SNIPPET
+        string RAW_FOUNDRY_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT")
+    ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_PROJECT_ENDPOINT'");
+        string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME")
+            ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_MODEL_NAME'");
+        string FOUNDRY_AGENT_NAME = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_NAME")
+            ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_AGENT_NAME'");
+#else
+        string RAW_FOUNDRY_PROJECT_ENDPOINT = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        string MODEL_DEPLOYMENT = TestEnvironment.FOUNDRY_MODEL_NAME;
+        string FOUNDRY_AGENT_NAME = TestEnvironment.FOUNDRY_AGENT_NAME;
+#endif
+        AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new AzureCliCredential());
+        ProjectOpenAIClient openAIClient = projectClient.GetProjectOpenAIClient();
+        #region Snippet:ConversationClient
+        CreateResponseOptions CreateResponseOptions = new();
+        // Optionally, use a conversation to automatically maintain state between calls.
+        ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(FOUNDRY_AGENT_NAME, conversation);
+        #endregion
+        List<ResponseItem> items = [ResponseItem.CreateUserMessageItem("Tell me a one-line story.")];
+        ResponseResult response = await responseClient.CreateResponseAsync("Tell me a one-line story.");
+
+        Console.WriteLine(response.GetOutputText());
+        #region Snippet:DeleteConversationClient
+        await openAIClient.GetConversationClient().DeleteConversationAsync(conversation.Id);
+        #endregion
+    }
+
+    [Test]
+    public async Task FullPromptAgentEndToEnd()
+    {
+        IgnoreSampleMayBe();
+#if SNIPPET
+        string RAW_FOUNDRY_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT")
+            ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_PROJECT_ENDPOINT'");
+        string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME")
+            ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_MODEL_NAME'");
+        string FOUNDRY_AGENT_NAME = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_NAME")
+            ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_AGENT_NAME'");
+#else
+        string RAW_FOUNDRY_PROJECT_ENDPOINT = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        string MODEL_DEPLOYMENT = TestEnvironment.FOUNDRY_MODEL_NAME;
+        string FOUNDRY_AGENT_NAME = TestEnvironment.FOUNDRY_AGENT_NAME;
+#endif
+        AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new AzureCliCredential());
+        ProjectOpenAIClient openAIClient = projectClient.GetProjectOpenAIClient();
+
+        //
+        // Create an agent version for a new prompt agent
+        //
+
+        ProjectsAgentDefinition agentDefinition = new DeclarativeAgentDefinition(MODEL_DEPLOYMENT)
+        {
+            Instructions = "You are a foo bar agent. In EVERY response you give, ALWAYS include both `foo` and `bar` strings somewhere in the response.",
+        };
+        ProjectsAgentVersion newAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+            agentName: FOUNDRY_AGENT_NAME,
+            options: new(agentDefinition));
+
+        //
+        // Create a conversation to maintain state between calls
+        //
+        #region Snippet:ExistingConversations
+        ProjectConversationCreationOptions conversationOptions = new()
+        {
+            Items = { ResponseItem.CreateSystemMessageItem("Your preferred genre of story today is: horror.") },
+            Metadata = { ["foo"] = "bar" },
+        };
+        ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(conversationOptions);
+
+        //
+        // Add items to an existing conversation to supplement the interaction state
+        //
+        string EXISTING_CONVERSATION_ID = conversation.Id;
+
+        _ = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationItemsAsync(
+            EXISTING_CONVERSATION_ID,
+            [ResponseItem.CreateSystemMessageItem(inputTextContent: "Story theme to use: department of licensing.")]);
+        //
+        // Use the agent and conversation in a response
+        //
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(FOUNDRY_AGENT_NAME);
+        CreateResponseOptions responseOptions = new()
+        {
+            AgentConversationId = EXISTING_CONVERSATION_ID,
+            InputItems =
+            {
+                ResponseItem.CreateUserMessageItem("Tell me a one-line story."),
+            },
+        };
+
+        List<ResponseItem> items = [];
+        ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
+        #endregion
+        Console.WriteLine(response.GetOutputText());
+        await openAIClient.GetConversationClient().DeleteConversationAsync(conversation.Id);
+    }
+
+    [Test]
+    public async Task AgentError()
+    {
+        IgnoreSampleMayBe();
+#if SNIPPET
+        string RAW_FOUNDRY_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT")
+            ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_PROJECT_ENDPOINT'");
+        string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME")
+            ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_MODEL_NAME'");
+        string FOUNDRY_AGENT_NAME = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_NAME")
+            ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_AGENT_NAME'");
+#else
+        string RAW_FOUNDRY_PROJECT_ENDPOINT = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        string MODEL_DEPLOYMENT = TestEnvironment.FOUNDRY_MODEL_NAME;
+        string FOUNDRY_AGENT_NAME = TestEnvironment.FOUNDRY_AGENT_NAME;
+#endif
+        AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new AzureCliCredential());
+        #region Snippet:ErrorHandling
+        try
+        {
+            ProjectsAgentVersion agent = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(
+                agentName: "agent_which_dies_not_exist", agentVersion: "1");
+        }
+        catch (ClientResultException e) when (e.Status == 404)
+        {
+            Console.WriteLine($"Exception status code: {e.Status}");
+            Console.WriteLine($"Exception message: {e.Message}");
+        }
+        #endregion
+    }
+    public PromptAgentSamples(bool isAsync) : base(isAsync)
+    { }
+}

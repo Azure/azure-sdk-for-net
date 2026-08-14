@@ -7,67 +7,41 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Response from a request to retrieve stats summary of all indexes. If successful, it includes the stats of each index in the service. </summary>
-    public partial class ListIndexStatsSummary
+    internal partial class ListIndexStatsSummary
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ListIndexStatsSummary"/>. </summary>
-        /// <param name="indexesStatistics"> The Statistics summary of all indexes in the Search service. </param>
-        internal ListIndexStatsSummary(IEnumerable<IndexStatisticsSummary> indexesStatistics)
-        {
-            IndexesStatistics = indexesStatistics.ToList();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ListIndexStatsSummary"/>. </summary>
-        /// <param name="indexesStatistics"> The Statistics summary of all indexes in the Search service. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListIndexStatsSummary(IReadOnlyList<IndexStatisticsSummary> indexesStatistics, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            IndexesStatistics = indexesStatistics;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ListIndexStatsSummary"/> for deserialization. </summary>
         internal ListIndexStatsSummary()
         {
+            IndexesStatistics = new ChangeTrackingList<IndexStatisticsSummary>();
         }
+
+        /// <summary> Initializes a new instance of <see cref="ListIndexStatsSummary"/>. </summary>
+        /// <param name="count"> The total count of index statistics in the service, or null if the count was not requested. </param>
+        /// <param name="indexesStatistics"> The Statistics summary of all indexes in the Search service. </param>
+        /// <param name="nextLink"> The URL that can be used to fetch the next set of results. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ListIndexStatsSummary(long? count, IReadOnlyList<IndexStatisticsSummary> indexesStatistics, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Count = count;
+            IndexesStatistics = indexesStatistics;
+            NextLink = nextLink;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> The total count of index statistics in the service, or null if the count was not requested. </summary>
+        public long? Count { get; }
 
         /// <summary> The Statistics summary of all indexes in the Search service. </summary>
         public IReadOnlyList<IndexStatisticsSummary> IndexesStatistics { get; }
+
+        /// <summary> The URL that can be used to fetch the next set of results. </summary>
+        public string NextLink { get; }
     }
 }

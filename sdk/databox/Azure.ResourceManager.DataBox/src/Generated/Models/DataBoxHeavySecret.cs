@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> The secrets related to a databox heavy. </summary>
     public partial class DataBoxHeavySecret
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxHeavySecret"/>. </summary>
         internal DataBoxHeavySecret()
@@ -58,25 +30,29 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="networkConfigurations"> Network configuration of the appliance. </param>
         /// <param name="encodedValidationCertPubKey"> The base 64 encoded public key to authenticate with the device. </param>
         /// <param name="accountCredentialDetails"> Per account level access credentials. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxHeavySecret(string deviceSerialNumber, string devicePassword, IReadOnlyList<ApplianceNetworkConfiguration> networkConfigurations, string encodedValidationCertPubKey, IReadOnlyList<DataBoxAccountCredentialDetails> accountCredentialDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxHeavySecret(string deviceSerialNumber, string devicePassword, IReadOnlyList<ApplianceNetworkConfiguration> networkConfigurations, string encodedValidationCertPubKey, IReadOnlyList<DataBoxAccountCredentialDetails> accountCredentialDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeviceSerialNumber = deviceSerialNumber;
             DevicePassword = devicePassword;
             NetworkConfigurations = networkConfigurations;
             EncodedValidationCertPubKey = encodedValidationCertPubKey;
             AccountCredentialDetails = accountCredentialDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Serial number of the assigned device. </summary>
         public string DeviceSerialNumber { get; }
+
         /// <summary> Password for out of the box experience on device. </summary>
         public string DevicePassword { get; }
+
         /// <summary> Network configuration of the appliance. </summary>
         public IReadOnlyList<ApplianceNetworkConfiguration> NetworkConfigurations { get; }
+
         /// <summary> The base 64 encoded public key to authenticate with the device. </summary>
         public string EncodedValidationCertPubKey { get; }
+
         /// <summary> Per account level access credentials. </summary>
         public IReadOnlyList<DataBoxAccountCredentialDetails> AccountCredentialDetails { get; }
     }

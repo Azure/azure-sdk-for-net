@@ -32,10 +32,12 @@ namespace Azure.ResourceManager.Maintenance.Samples
             string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             string resourceGroupName = "examplerg";
             string providerName = "Microsoft.Compute";
-            string resourceType = "virtualMachineScaleSets";
-            string resourceName = "smdtest1";
+            string resourceParentType = "virtualMachineScaleSets";
+            string resourceParentName = "smdtest1";
+            string resourceType = "virtualMachines";
+            string resourceName = "smdvm1";
             string applyUpdateName = "e9b9685d-78e4-44c4-a81c-64a14f9b87b6";
-            ResourceIdentifier maintenanceApplyUpdateResourceId = MaintenanceApplyUpdateResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, providerName, resourceType, resourceName, applyUpdateName);
+            ResourceIdentifier maintenanceApplyUpdateResourceId = MaintenanceApplyUpdateResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, applyUpdateName);
             MaintenanceApplyUpdateResource maintenanceApplyUpdate = client.GetMaintenanceApplyUpdateResource(maintenanceApplyUpdateResourceId);
 
             // invoke the operation

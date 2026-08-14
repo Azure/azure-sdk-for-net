@@ -56,47 +56,47 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
 
         private ClientDiagnostics GalleryImagesClientDiagnostics => _galleryImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GalleryImages GalleryImagesRestClient => _galleryImagesRestClient ??= new GalleryImages(GalleryImagesClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private GalleryImages GalleryImagesRestClient => _galleryImagesRestClient ??= new GalleryImages(GalleryImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics LogicalNetworksClientDiagnostics => _logicalNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LogicalNetworks LogicalNetworksRestClient => _logicalNetworksRestClient ??= new LogicalNetworks(LogicalNetworksClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private LogicalNetworks LogicalNetworksRestClient => _logicalNetworksRestClient ??= new LogicalNetworks(LogicalNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics MarketplaceGalleryImagesClientDiagnostics => _marketplaceGalleryImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MarketplaceGalleryImages MarketplaceGalleryImagesRestClient => _marketplaceGalleryImagesRestClient ??= new MarketplaceGalleryImages(MarketplaceGalleryImagesClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private MarketplaceGalleryImages MarketplaceGalleryImagesRestClient => _marketplaceGalleryImagesRestClient ??= new MarketplaceGalleryImages(MarketplaceGalleryImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics NetworkInterfacesClientDiagnostics => _networkInterfacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkInterfaces NetworkInterfacesRestClient => _networkInterfacesRestClient ??= new NetworkInterfaces(NetworkInterfacesClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private NetworkInterfaces NetworkInterfacesRestClient => _networkInterfacesRestClient ??= new NetworkInterfaces(NetworkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics NetworkSecurityGroupsClientDiagnostics => _networkSecurityGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkSecurityGroups NetworkSecurityGroupsRestClient => _networkSecurityGroupsRestClient ??= new NetworkSecurityGroups(NetworkSecurityGroupsClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private NetworkSecurityGroups NetworkSecurityGroupsRestClient => _networkSecurityGroupsRestClient ??= new NetworkSecurityGroups(NetworkSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics StorageContainersClientDiagnostics => _storageContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StorageContainers StorageContainersRestClient => _storageContainersRestClient ??= new StorageContainers(StorageContainersClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private StorageContainers StorageContainersRestClient => _storageContainersRestClient ??= new StorageContainers(StorageContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics VirtualHardDisksClientDiagnostics => _virtualHardDisksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualHardDisks VirtualHardDisksRestClient => _virtualHardDisksRestClient ??= new VirtualHardDisks(VirtualHardDisksClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private VirtualHardDisks VirtualHardDisksRestClient => _virtualHardDisksRestClient ??= new VirtualHardDisks(VirtualHardDisksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics VirtualNetworksClientDiagnostics => _virtualNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualNetworks VirtualNetworksRestClient => _virtualNetworksRestClient ??= new VirtualNetworks(VirtualNetworksClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private VirtualNetworks VirtualNetworksRestClient => _virtualNetworksRestClient ??= new VirtualNetworks(VirtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics PublicIPAddressesClientDiagnostics => _publicIPAddressesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PublicIPAddresses PublicIPAddressesRestClient => _publicIPAddressesRestClient ??= new PublicIPAddresses(PublicIPAddressesClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private PublicIPAddresses PublicIPAddressesRestClient => _publicIPAddressesRestClient ??= new PublicIPAddresses(PublicIPAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics NatGatewaysClientDiagnostics => _natGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NatGateways NatGatewaysRestClient => _natGatewaysRestClient ??= new NatGateways(NatGatewaysClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private NatGateways NatGatewaysRestClient => _natGatewaysRestClient ??= new NatGateways(NatGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics LoadBalancersClientDiagnostics => _loadBalancersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LoadBalancers LoadBalancersRestClient => _loadBalancersRestClient ??= new LoadBalancers(LoadBalancersClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private LoadBalancers LoadBalancersRestClient => _loadBalancersRestClient ??= new LoadBalancers(LoadBalancersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         /// <summary>
         /// Lists all of the gallery images in the specified subscription. Use the nextLink property in the response to get the next page of gallery images.
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmGalleryImageData, HciVmGalleryImageResource>(new GalleryImagesGetAllAsyncCollectionResultOfT(GalleryImagesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmGalleryImageResource(Client, data));
+            return new AsyncPageableWrapper<HciVmGalleryImageData, HciVmGalleryImageResource>(new GalleryImagesGetAllAsyncCollectionResultOfT(GalleryImagesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciVmSubscriptionResource.GetHciVmGalleryImages"), data => new HciVmGalleryImageResource(Client, data));
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmGalleryImageData, HciVmGalleryImageResource>(new GalleryImagesGetAllCollectionResultOfT(GalleryImagesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmGalleryImageResource(Client, data));
+            return new PageableWrapper<HciVmGalleryImageData, HciVmGalleryImageResource>(new GalleryImagesGetAllCollectionResultOfT(GalleryImagesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciVmSubscriptionResource.GetHciVmGalleryImages"), data => new HciVmGalleryImageResource(Client, data));
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmLogicalNetworkData, HciVmLogicalNetworkResource>(new LogicalNetworksGetAllAsyncCollectionResultOfT(LogicalNetworksRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmLogicalNetworkResource(Client, data));
+            return new AsyncPageableWrapper<HciVmLogicalNetworkData, HciVmLogicalNetworkResource>(new LogicalNetworksGetAllAsyncCollectionResultOfT(LogicalNetworksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciVmSubscriptionResource.GetHciVmLogicalNetworks"), data => new HciVmLogicalNetworkResource(Client, data));
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmLogicalNetworkData, HciVmLogicalNetworkResource>(new LogicalNetworksGetAllCollectionResultOfT(LogicalNetworksRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmLogicalNetworkResource(Client, data));
+            return new PageableWrapper<HciVmLogicalNetworkData, HciVmLogicalNetworkResource>(new LogicalNetworksGetAllCollectionResultOfT(LogicalNetworksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciVmSubscriptionResource.GetHciVmLogicalNetworks"), data => new HciVmLogicalNetworkResource(Client, data));
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmMarketplaceGalleryImageData, HciVmMarketplaceGalleryImageResource>(new MarketplaceGalleryImagesGetAllAsyncCollectionResultOfT(MarketplaceGalleryImagesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmMarketplaceGalleryImageResource(Client, data));
+            return new AsyncPageableWrapper<HciVmMarketplaceGalleryImageData, HciVmMarketplaceGalleryImageResource>(new MarketplaceGalleryImagesGetAllAsyncCollectionResultOfT(MarketplaceGalleryImagesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciVmSubscriptionResource.GetHciVmMarketplaceGalleryImages"), data => new HciVmMarketplaceGalleryImageResource(Client, data));
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmMarketplaceGalleryImageData, HciVmMarketplaceGalleryImageResource>(new MarketplaceGalleryImagesGetAllCollectionResultOfT(MarketplaceGalleryImagesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmMarketplaceGalleryImageResource(Client, data));
+            return new PageableWrapper<HciVmMarketplaceGalleryImageData, HciVmMarketplaceGalleryImageResource>(new MarketplaceGalleryImagesGetAllCollectionResultOfT(MarketplaceGalleryImagesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciVmSubscriptionResource.GetHciVmMarketplaceGalleryImages"), data => new HciVmMarketplaceGalleryImageResource(Client, data));
         }
 
         /// <summary>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmNetworkInterfaceData, HciVmNetworkInterfaceResource>(new NetworkInterfacesGetAllAsyncCollectionResultOfT(NetworkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmNetworkInterfaceResource(Client, data));
+            return new AsyncPageableWrapper<HciVmNetworkInterfaceData, HciVmNetworkInterfaceResource>(new NetworkInterfacesGetAllAsyncCollectionResultOfT(NetworkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciVmSubscriptionResource.GetHciVmNetworkInterfaces"), data => new HciVmNetworkInterfaceResource(Client, data));
         }
 
         /// <summary>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmNetworkInterfaceData, HciVmNetworkInterfaceResource>(new NetworkInterfacesGetAllCollectionResultOfT(NetworkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmNetworkInterfaceResource(Client, data));
+            return new PageableWrapper<HciVmNetworkInterfaceData, HciVmNetworkInterfaceResource>(new NetworkInterfacesGetAllCollectionResultOfT(NetworkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciVmSubscriptionResource.GetHciVmNetworkInterfaces"), data => new HciVmNetworkInterfaceResource(Client, data));
         }
 
         /// <summary>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmNetworkSecurityGroupData, HciVmNetworkSecurityGroupResource>(new NetworkSecurityGroupsGetAllAsyncCollectionResultOfT(NetworkSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmNetworkSecurityGroupResource(Client, data));
+            return new AsyncPageableWrapper<HciVmNetworkSecurityGroupData, HciVmNetworkSecurityGroupResource>(new NetworkSecurityGroupsGetAllAsyncCollectionResultOfT(NetworkSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciVmSubscriptionResource.GetHciVmNetworkSecurityGroups"), data => new HciVmNetworkSecurityGroupResource(Client, data));
         }
 
         /// <summary>
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmNetworkSecurityGroupData, HciVmNetworkSecurityGroupResource>(new NetworkSecurityGroupsGetAllCollectionResultOfT(NetworkSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmNetworkSecurityGroupResource(Client, data));
+            return new PageableWrapper<HciVmNetworkSecurityGroupData, HciVmNetworkSecurityGroupResource>(new NetworkSecurityGroupsGetAllCollectionResultOfT(NetworkSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciVmSubscriptionResource.GetHciVmNetworkSecurityGroups"), data => new HciVmNetworkSecurityGroupResource(Client, data));
         }
 
         /// <summary>
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmStorageContainerData, HciVmStorageContainerResource>(new StorageContainersGetAllAsyncCollectionResultOfT(StorageContainersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmStorageContainerResource(Client, data));
+            return new AsyncPageableWrapper<HciVmStorageContainerData, HciVmStorageContainerResource>(new StorageContainersGetAllAsyncCollectionResultOfT(StorageContainersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciVmSubscriptionResource.GetHciVmStorageContainers"), data => new HciVmStorageContainerResource(Client, data));
         }
 
         /// <summary>
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmStorageContainerData, HciVmStorageContainerResource>(new StorageContainersGetAllCollectionResultOfT(StorageContainersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmStorageContainerResource(Client, data));
+            return new PageableWrapper<HciVmStorageContainerData, HciVmStorageContainerResource>(new StorageContainersGetAllCollectionResultOfT(StorageContainersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciVmSubscriptionResource.GetHciVmStorageContainers"), data => new HciVmStorageContainerResource(Client, data));
         }
 
         /// <summary>
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmVirtualHardDiskData, HciVmVirtualHardDiskResource>(new VirtualHardDisksGetAllAsyncCollectionResultOfT(VirtualHardDisksRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmVirtualHardDiskResource(Client, data));
+            return new AsyncPageableWrapper<HciVmVirtualHardDiskData, HciVmVirtualHardDiskResource>(new VirtualHardDisksGetAllAsyncCollectionResultOfT(VirtualHardDisksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciVmSubscriptionResource.GetHciVmVirtualHardDisks"), data => new HciVmVirtualHardDiskResource(Client, data));
         }
 
         /// <summary>
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmVirtualHardDiskData, HciVmVirtualHardDiskResource>(new VirtualHardDisksGetAllCollectionResultOfT(VirtualHardDisksRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmVirtualHardDiskResource(Client, data));
+            return new PageableWrapper<HciVmVirtualHardDiskData, HciVmVirtualHardDiskResource>(new VirtualHardDisksGetAllCollectionResultOfT(VirtualHardDisksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciVmSubscriptionResource.GetHciVmVirtualHardDisks"), data => new HciVmVirtualHardDiskResource(Client, data));
         }
 
         /// <summary>
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmVirtualNetworkData, HciVmVirtualNetworkResource>(new VirtualNetworksGetAllAsyncCollectionResultOfT(VirtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmVirtualNetworkResource(Client, data));
+            return new AsyncPageableWrapper<HciVmVirtualNetworkData, HciVmVirtualNetworkResource>(new VirtualNetworksGetAllAsyncCollectionResultOfT(VirtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciVmSubscriptionResource.GetHciVmVirtualNetworks"), data => new HciVmVirtualNetworkResource(Client, data));
         }
 
         /// <summary>
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmVirtualNetworkData, HciVmVirtualNetworkResource>(new VirtualNetworksGetAllCollectionResultOfT(VirtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmVirtualNetworkResource(Client, data));
+            return new PageableWrapper<HciVmVirtualNetworkData, HciVmVirtualNetworkResource>(new VirtualNetworksGetAllCollectionResultOfT(VirtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciVmSubscriptionResource.GetHciVmVirtualNetworks"), data => new HciVmVirtualNetworkResource(Client, data));
         }
 
         /// <summary>
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmPublicIPAddressData, HciVmPublicIPAddressResource>(new PublicIPAddressesGetAllAsyncCollectionResultOfT(PublicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmPublicIPAddressResource(Client, data));
+            return new AsyncPageableWrapper<HciVmPublicIPAddressData, HciVmPublicIPAddressResource>(new PublicIPAddressesGetAllAsyncCollectionResultOfT(PublicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciVmSubscriptionResource.GetHciVmPublicIPAddresses"), data => new HciVmPublicIPAddressResource(Client, data));
         }
 
         /// <summary>
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmPublicIPAddressData, HciVmPublicIPAddressResource>(new PublicIPAddressesGetAllCollectionResultOfT(PublicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmPublicIPAddressResource(Client, data));
+            return new PageableWrapper<HciVmPublicIPAddressData, HciVmPublicIPAddressResource>(new PublicIPAddressesGetAllCollectionResultOfT(PublicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciVmSubscriptionResource.GetHciVmPublicIPAddresses"), data => new HciVmPublicIPAddressResource(Client, data));
         }
 
         /// <summary>
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmNatGatewayData, HciVmNatGatewayResource>(new NatGatewaysGetAllAsyncCollectionResultOfT(NatGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmNatGatewayResource(Client, data));
+            return new AsyncPageableWrapper<HciVmNatGatewayData, HciVmNatGatewayResource>(new NatGatewaysGetAllAsyncCollectionResultOfT(NatGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciVmSubscriptionResource.GetHciVmNatGateways"), data => new HciVmNatGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmNatGatewayData, HciVmNatGatewayResource>(new NatGatewaysGetAllCollectionResultOfT(NatGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmNatGatewayResource(Client, data));
+            return new PageableWrapper<HciVmNatGatewayData, HciVmNatGatewayResource>(new NatGatewaysGetAllCollectionResultOfT(NatGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciVmSubscriptionResource.GetHciVmNatGateways"), data => new HciVmNatGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmLoadBalancerData, HciVmLoadBalancerResource>(new LoadBalancersGetAllAsyncCollectionResultOfT(LoadBalancersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmLoadBalancerResource(Client, data));
+            return new AsyncPageableWrapper<HciVmLoadBalancerData, HciVmLoadBalancerResource>(new LoadBalancersGetAllAsyncCollectionResultOfT(LoadBalancersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciVmSubscriptionResource.GetHciVmLoadBalancers"), data => new HciVmLoadBalancerResource(Client, data));
         }
 
         /// <summary>
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmLoadBalancerData, HciVmLoadBalancerResource>(new LoadBalancersGetAllCollectionResultOfT(LoadBalancersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmLoadBalancerResource(Client, data));
+            return new PageableWrapper<HciVmLoadBalancerData, HciVmLoadBalancerResource>(new LoadBalancersGetAllCollectionResultOfT(LoadBalancersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciVmSubscriptionResource.GetHciVmLoadBalancers"), data => new HciVmLoadBalancerResource(Client, data));
         }
     }
 }

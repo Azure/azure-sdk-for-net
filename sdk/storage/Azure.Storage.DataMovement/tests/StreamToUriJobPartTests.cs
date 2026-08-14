@@ -4,15 +4,15 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Test;
 using Moq;
 using NUnit.Framework;
-using Azure.Storage.Test;
-using System.IO;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -245,7 +245,7 @@ namespace Azure.Storage.DataMovement.Tests
                         new HttpRange(position, chunkSize), // Your actual HttpRange
                         properties); // Your actual properties
                 });
-            mockSource.Setup(r => r.ReadStreamAsync(chunkSize*2, It.IsAny<long?>(), It.IsAny<CancellationToken>()))
+            mockSource.Setup(r => r.ReadStreamAsync(chunkSize * 2, It.IsAny<long?>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync((long position, long? length, CancellationToken token) =>
                 {
                     // Create a custom StorageResourceReadStreamResult

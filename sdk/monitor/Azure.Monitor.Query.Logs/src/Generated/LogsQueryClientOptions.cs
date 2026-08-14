@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Monitor.Query.Logs
 {
@@ -24,10 +26,35 @@ namespace Azure.Monitor.Query.Logs
                 ServiceVersion.V1 => "v1",
                 _ => throw new NotSupportedException()
             };
+            ConfigureLogging();
+        }
+
+        /// <summary> Initializes a new instance of LogsQueryClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal LogsQueryClientOptions(IConfigurationSection section) : base(section, null)
+        {
+            Version = "v1";
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version)
+            {
+                Version = version;
+            }
+            if (section["Audience"] is string audience)
+            {
+                Audience = new LogsQueryAudience(audience);
+            }
+            ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>
         internal string Version { get; }
+
+        /// <summary> Configures logging for the client options. </summary>
+        partial void ConfigureLogging();
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion

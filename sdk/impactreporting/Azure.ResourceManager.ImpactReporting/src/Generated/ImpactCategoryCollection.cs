@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ImpactReporting
         {
             TryGetApiVersion(ImpactCategoryResource.ResourceType, out string impactCategoryApiVersion);
             _impactCategoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImpactReporting", ImpactCategoryResource.ResourceType.Namespace, Diagnostics);
-            _impactCategoriesRestClient = new ImpactCategories(_impactCategoriesClientDiagnostics, Pipeline, Endpoint, impactCategoryApiVersion ?? "2024-05-01-preview");
+            _impactCategoriesRestClient = new ImpactCategories(_impactCategoriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, impactCategoryApiVersion ?? "2024-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ImpactReporting
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -182,7 +182,13 @@ namespace Azure.ResourceManager.ImpactReporting
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ImpactCategoryData, ImpactCategoryResource>(new ImpactCategoriesGetBySubscriptionAsyncCollectionResultOfT(_impactCategoriesRestClient, Id.SubscriptionId, resourceType, categoryName, context), data => new ImpactCategoryResource(Client, data));
+            return new AsyncPageableWrapper<ImpactCategoryData, ImpactCategoryResource>(new ImpactCategoriesGetBySubscriptionAsyncCollectionResultOfT(
+                _impactCategoriesRestClient,
+                Id.SubscriptionId,
+                resourceType,
+                categoryName,
+                context,
+                "ImpactCategoryCollection.GetAll"), data => new ImpactCategoryResource(Client, data));
         }
 
         /// <summary>
@@ -216,7 +222,13 @@ namespace Azure.ResourceManager.ImpactReporting
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ImpactCategoryData, ImpactCategoryResource>(new ImpactCategoriesGetBySubscriptionCollectionResultOfT(_impactCategoriesRestClient, Id.SubscriptionId, resourceType, categoryName, context), data => new ImpactCategoryResource(Client, data));
+            return new PageableWrapper<ImpactCategoryData, ImpactCategoryResource>(new ImpactCategoriesGetBySubscriptionCollectionResultOfT(
+                _impactCategoriesRestClient,
+                Id.SubscriptionId,
+                resourceType,
+                categoryName,
+                context,
+                "ImpactCategoryCollection.GetAll"), data => new ImpactCategoryResource(Client, data));
         }
 
         /// <summary>

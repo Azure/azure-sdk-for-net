@@ -10,15 +10,56 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class UserAssignedManagedIdentityDetails : IUtf8JsonSerializable, IJsonModel<UserAssignedManagedIdentityDetails>
+    /// <summary> User assigned managed identity details. </summary>
+    public partial class UserAssignedManagedIdentityDetails : IJsonModel<UserAssignedManagedIdentityDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserAssignedManagedIdentityDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual UserAssignedManagedIdentityDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<UserAssignedManagedIdentityDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeUserAssignedManagedIdentityDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UserAssignedManagedIdentityDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<UserAssignedManagedIdentityDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(UserAssignedManagedIdentityDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<UserAssignedManagedIdentityDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        UserAssignedManagedIdentityDetails IPersistableModel<UserAssignedManagedIdentityDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<UserAssignedManagedIdentityDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<UserAssignedManagedIdentityDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +71,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserAssignedManagedIdentityDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UserAssignedManagedIdentityDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UserAssignedManagedIdentityDetails)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(IdentityArmId))
             {
                 writer.WritePropertyName("identityArmId"u8);
@@ -51,15 +91,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("userAssignedIdentityProperties"u8);
                 ((IJsonModel<UserAssignedIdentity>)UserAssignedIdentityProperties).Write(writer, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -68,22 +108,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
         }
 
-        UserAssignedManagedIdentityDetails IJsonModel<UserAssignedManagedIdentityDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        UserAssignedManagedIdentityDetails IJsonModel<UserAssignedManagedIdentityDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual UserAssignedManagedIdentityDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserAssignedManagedIdentityDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UserAssignedManagedIdentityDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UserAssignedManagedIdentityDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeUserAssignedManagedIdentityDetails(document.RootElement, options);
         }
 
-        internal static UserAssignedManagedIdentityDetails DeserializeUserAssignedManagedIdentityDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static UserAssignedManagedIdentityDetails DeserializeUserAssignedManagedIdentityDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -91,67 +136,34 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string identityArmId = default;
             string identityName = default;
             UserAssignedIdentity userAssignedIdentityProperties = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("identityArmId"u8))
+                if (prop.NameEquals("identityArmId"u8))
                 {
-                    identityArmId = property.Value.GetString();
+                    identityArmId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identityName"u8))
+                if (prop.NameEquals("identityName"u8))
                 {
-                    identityName = property.Value.GetString();
+                    identityName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userAssignedIdentityProperties"u8))
+                if (prop.NameEquals("userAssignedIdentityProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    userAssignedIdentityProperties = ModelReaderWriter.Read<UserAssignedIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                    userAssignedIdentityProperties = ModelReaderWriter.Read<UserAssignedIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRecoveryServicesBackupContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new UserAssignedManagedIdentityDetails(identityArmId, identityName, userAssignedIdentityProperties, serializedAdditionalRawData);
+            return new UserAssignedManagedIdentityDetails(identityArmId, identityName, userAssignedIdentityProperties, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<UserAssignedManagedIdentityDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<UserAssignedManagedIdentityDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(UserAssignedManagedIdentityDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        UserAssignedManagedIdentityDetails IPersistableModel<UserAssignedManagedIdentityDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<UserAssignedManagedIdentityDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeUserAssignedManagedIdentityDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(UserAssignedManagedIdentityDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<UserAssignedManagedIdentityDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

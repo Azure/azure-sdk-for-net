@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Collections.Concurrent;
 
 namespace Azure.Messaging.ServiceBus.Stress;
 
@@ -16,7 +16,7 @@ namespace Azure.Messaging.ServiceBus.Stress;
 public class SessionSendProcessTest : TestScenario
 {
     /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
-    public override Role[] Roles { get; } = {Role.SessionSender, Role.SessionProcessor};
+    public override Role[] Roles { get; } = { Role.SessionSender, Role.SessionProcessor };
 
     /// <summary> The name of this test.</summary>
     public override string Name { get; } = "SessionSendProcessTest";
@@ -50,7 +50,7 @@ public class SessionSendProcessTest : TestScenario
     ///
     internal override Task RunRoleAsync(Role role, CancellationToken cancellationToken)
     {
-       switch (role)
+        switch (role)
         {
             case Role.SessionSender:
                 var senderConfiguration = new SenderConfiguration();
@@ -64,7 +64,7 @@ public class SessionSendProcessTest : TestScenario
                 return Task.Run(() => processor.RunAsync(MessageHandler, ErrorHandler, cancellationToken));
 
             default:
-                throw new NotSupportedException($"Running role { role.ToString() } is not supported by this test scenario.");
+                throw new NotSupportedException($"Running role {role.ToString()} is not supported by this test scenario.");
         }
     }
 

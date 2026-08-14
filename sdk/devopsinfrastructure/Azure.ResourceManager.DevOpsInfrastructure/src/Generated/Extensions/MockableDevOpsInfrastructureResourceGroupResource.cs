@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
 
         private ClientDiagnostics ImageVersionsClientDiagnostics => _imageVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ImageVersions ImageVersionsRestClient => _imageVersionsRestClient ??= new ImageVersions(ImageVersionsClientDiagnostics, Pipeline, Endpoint, "2025-09-20");
+        private ImageVersions ImageVersionsRestClient => _imageVersionsRestClient ??= new ImageVersions(ImageVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-20");
 
         /// <summary> Gets a collection of DevOpsPools in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of DevOpsPools and their operations over a DevOpsPoolResource. </returns>
@@ -135,7 +135,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ImageVersionsGetImageVersionsByImageAsyncCollectionResultOfT(ImageVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, imageName, context);
+            return new ImageVersionsGetImageVersionsByImageAsyncCollectionResultOfT(
+                ImageVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                imageName,
+                context,
+                "MockableDevOpsInfrastructureResourceGroupResource.GetImageVersionsByImage");
         }
 
         /// <summary>
@@ -168,7 +174,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ImageVersionsGetImageVersionsByImageCollectionResultOfT(ImageVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, imageName, context);
+            return new ImageVersionsGetImageVersionsByImageCollectionResultOfT(
+                ImageVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                imageName,
+                context,
+                "MockableDevOpsInfrastructureResourceGroupResource.GetImageVersionsByImage");
         }
     }
 }

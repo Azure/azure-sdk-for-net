@@ -92,7 +92,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = "I work at Microsoft and my email is atest@microsoft.com";
 
-            PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(document, "en", new RecognizePiiEntitiesOptions() { DomainFilter = PiiEntityDomain.ProtectedHealthInformation } );
+            PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(document, "en", new RecognizePiiEntitiesOptions() { DomainFilter = PiiEntityDomain.ProtectedHealthInformation });
 
             ValidateInDocumenResult(entities, new List<string>() { "atest@microsoft.com", "Microsoft" });
         }
@@ -103,7 +103,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             PiiEntityCollection entities;
 
-            entities = await client.RecognizePiiEntitiesAsync(EnglishDocument1, "en", new RecognizePiiEntitiesOptions() { CategoriesFilter = { PiiEntityCategory.PhoneNumber} });
+            entities = await client.RecognizePiiEntitiesAsync(EnglishDocument1, "en", new RecognizePiiEntitiesOptions() { CategoriesFilter = { PiiEntityCategory.PhoneNumber } });
             ValidateInDocumenResult(entities, new List<string>() { "800-102-1100" });
 
             entities = await client.RecognizePiiEntitiesAsync(EnglishDocument1, "en", new RecognizePiiEntitiesOptions() { CategoriesFilter = { PiiEntityCategory.PhoneNumber, PiiEntityCategory.Organization } });

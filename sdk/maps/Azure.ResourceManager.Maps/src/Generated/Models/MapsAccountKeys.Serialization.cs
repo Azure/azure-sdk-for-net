@@ -9,14 +9,63 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.Maps;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    public partial class MapsAccountKeys : IUtf8JsonSerializable, IJsonModel<MapsAccountKeys>
+    /// <summary> The set of keys which can be used to access the Maps REST APIs. Two keys are provided for key rotation without interruption. </summary>
+    public partial class MapsAccountKeys : IJsonModel<MapsAccountKeys>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapsAccountKeys>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MapsAccountKeys PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MapsAccountKeys>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMapsAccountKeys(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MapsAccountKeys)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MapsAccountKeys>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMapsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MapsAccountKeys)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MapsAccountKeys>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MapsAccountKeys IPersistableModel<MapsAccountKeys>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MapsAccountKeys>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MapsAccountKeys"/> from. </param>
+        internal static MapsAccountKeys FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMapsAccountKeys(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MapsAccountKeys>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +77,11 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MapsAccountKeys>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MapsAccountKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MapsAccountKeys)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(PrimaryKeyLastUpdatedOn))
             {
                 writer.WritePropertyName("primaryKeyLastUpdated"u8);
@@ -54,15 +102,15 @@ namespace Azure.ResourceManager.Maps.Models
                 writer.WritePropertyName("secondaryKeyLastUpdated"u8);
                 writer.WriteStringValue(SecondaryKeyLastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,100 +119,72 @@ namespace Azure.ResourceManager.Maps.Models
             }
         }
 
-        MapsAccountKeys IJsonModel<MapsAccountKeys>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MapsAccountKeys IJsonModel<MapsAccountKeys>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MapsAccountKeys JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MapsAccountKeys>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MapsAccountKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MapsAccountKeys)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMapsAccountKeys(document.RootElement, options);
         }
 
-        internal static MapsAccountKeys DeserializeMapsAccountKeys(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MapsAccountKeys DeserializeMapsAccountKeys(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset? primaryKeyLastUpdated = default;
+            DateTimeOffset? primaryKeyLastUpdatedOn = default;
             string primaryKey = default;
             string secondaryKey = default;
-            DateTimeOffset? secondaryKeyLastUpdated = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            DateTimeOffset? secondaryKeyLastUpdatedOn = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryKeyLastUpdated"u8))
+                if (prop.NameEquals("primaryKeyLastUpdated"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    primaryKeyLastUpdated = property.Value.GetDateTimeOffset("O");
+                    primaryKeyLastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("primaryKey"u8))
+                if (prop.NameEquals("primaryKey"u8))
                 {
-                    primaryKey = property.Value.GetString();
+                    primaryKey = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryKey"u8))
+                if (prop.NameEquals("secondaryKey"u8))
                 {
-                    secondaryKey = property.Value.GetString();
+                    secondaryKey = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryKeyLastUpdated"u8))
+                if (prop.NameEquals("secondaryKeyLastUpdated"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    secondaryKeyLastUpdated = property.Value.GetDateTimeOffset("O");
+                    secondaryKeyLastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new MapsAccountKeys(primaryKeyLastUpdated, primaryKey, secondaryKey, secondaryKeyLastUpdated, serializedAdditionalRawData);
+            return new MapsAccountKeys(primaryKeyLastUpdatedOn, primaryKey, secondaryKey, secondaryKeyLastUpdatedOn, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<MapsAccountKeys>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MapsAccountKeys>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMapsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MapsAccountKeys)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MapsAccountKeys IPersistableModel<MapsAccountKeys>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MapsAccountKeys>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMapsAccountKeys(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MapsAccountKeys)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MapsAccountKeys>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

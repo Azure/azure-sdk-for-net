@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
     /// <summary> Confluent Offer detail. </summary>
     public partial class ConfluentOfferDetail
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConfluentOfferDetail"/>. </summary>
         /// <param name="publisherId"> Publisher Id. </param>
@@ -78,8 +50,8 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="privateOfferId"> Private Offer Id. </param>
         /// <param name="privateOfferIds"> Array of Private Offer Ids. </param>
         /// <param name="status"> SaaS Offer Status. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfluentOfferDetail(string publisherId, string id, string planId, string planName, string termUnit, string termId, string privateOfferId, IList<string> privateOfferIds, ConfluentSaaSOfferStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConfluentOfferDetail(string publisherId, string id, string planId, string planName, string termUnit, string termId, string privateOfferId, IList<string> privateOfferIds, ConfluentSaaSOfferStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublisherId = publisherId;
             Id = id;
@@ -90,30 +62,33 @@ namespace Azure.ResourceManager.Confluent.Models
             PrivateOfferId = privateOfferId;
             PrivateOfferIds = privateOfferIds;
             Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConfluentOfferDetail"/> for deserialization. </summary>
-        internal ConfluentOfferDetail()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Publisher Id. </summary>
         public string PublisherId { get; set; }
+
         /// <summary> Offer Id. </summary>
         public string Id { get; set; }
+
         /// <summary> Offer Plan Id. </summary>
         public string PlanId { get; set; }
+
         /// <summary> Offer Plan Name. </summary>
         public string PlanName { get; set; }
+
         /// <summary> Offer Plan Term unit. </summary>
         public string TermUnit { get; set; }
+
         /// <summary> Offer Plan Term Id. </summary>
         public string TermId { get; set; }
+
         /// <summary> Private Offer Id. </summary>
         public string PrivateOfferId { get; set; }
+
         /// <summary> Array of Private Offer Ids. </summary>
         public IList<string> PrivateOfferIds { get; }
+
         /// <summary> SaaS Offer Status. </summary>
         public ConfluentSaaSOfferStatus? Status { get; set; }
     }

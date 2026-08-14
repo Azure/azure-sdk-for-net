@@ -25,7 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="SessionRecords\" />
     <Folder Include="Samples\sample_data\" />
   </ItemGroup>
 </Project>

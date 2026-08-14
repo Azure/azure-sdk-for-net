@@ -22,6 +22,46 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExadbVmClusterProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExadbVmClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeExadbVmClusterProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExadbVmClusterProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExadbVmClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExadbVmClusterProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExadbVmClusterProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExadbVmClusterProperties IPersistableModel<ExadbVmClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExadbVmClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExadbVmClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -181,7 +221,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             writer.WritePropertyName("totalEcpuCount"u8);
             writer.WriteNumberValue(TotalEcpuCount);
             writer.WritePropertyName("vmFileSystemStorage"u8);
-            writer.WriteObjectValue(VmFileSystemStorage, options);
+            writer.WriteObjectValue(VmFileSystem, options);
             if (options.Format != "W" && Optional.IsDefined(LifecycleDetails))
             {
                 writer.WritePropertyName("lifecycleDetails"u8);
@@ -335,7 +375,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string systemVersion = default;
             string timeZone = default;
             int totalEcpuCount = default;
-            ExadbVmClusterStorageDetails vmFileSystemStorage = default;
+            ExadbVmClusterStorageDetails vmFileSystem = default;
             string lifecycleDetails = default;
             string scanDnsName = default;
             IReadOnlyList<string> scanIPIds = default;
@@ -372,7 +412,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    nsgUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    nsgUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -569,7 +609,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (prop.NameEquals("vmFileSystemStorage"u8))
                 {
-                    vmFileSystemStorage = ExadbVmClusterStorageDetails.DeserializeExadbVmClusterStorageDetails(prop.Value, options);
+                    vmFileSystem = ExadbVmClusterStorageDetails.DeserializeExadbVmClusterStorageDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("lifecycleDetails"u8))
@@ -653,7 +693,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    ociUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    ociUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("iormConfigCache"u8))
@@ -721,7 +761,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 systemVersion,
                 timeZone,
                 totalEcpuCount,
-                vmFileSystemStorage,
+                vmFileSystem,
                 lifecycleDetails,
                 scanDnsName,
                 scanIPIds ?? new ChangeTrackingList<string>(),
@@ -736,45 +776,5 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 shapeAttribute,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExadbVmClusterProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExadbVmClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ExadbVmClusterProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ExadbVmClusterProperties IPersistableModel<ExadbVmClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExadbVmClusterProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExadbVmClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeExadbVmClusterProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExadbVmClusterProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExadbVmClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

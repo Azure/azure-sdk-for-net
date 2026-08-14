@@ -43,9 +43,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(WorkloadNetworkVmGroupResource.ResourceType, out string workloadNetworkVmGroupApiVersion);
             _workloadNetworkVmGroupsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", WorkloadNetworkVmGroupResource.ResourceType.Namespace, Diagnostics);
-            _workloadNetworkVmGroupsRestClient = new WorkloadNetworkVmGroups(_workloadNetworkVmGroupsClientDiagnostics, Pipeline, Endpoint, workloadNetworkVmGroupApiVersion ?? "2024-05-01");
+            _workloadNetworkVmGroupsRestClient = new WorkloadNetworkVmGroups(_workloadNetworkVmGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workloadNetworkVmGroupApiVersion ?? "2024-05-01");
             _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", WorkloadNetworkVmGroupResource.ResourceType.Namespace, Diagnostics);
-            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkVmGroupApiVersion ?? "2024-05-01");
+            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workloadNetworkVmGroupApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -98,12 +98,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, WorkloadNetworkVmGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<WorkloadNetworkVmGroupResource> operation = new TestsArmOperation<WorkloadNetworkVmGroupResource>(
-                    new WorkloadNetworkVmGroupOperationSource(Client),
+                    new WorkloadNetworkVmGroupResourceOperationSource(Client),
                     _workloadNetworkVmGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -156,12 +157,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, WorkloadNetworkVmGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<WorkloadNetworkVmGroupResource> operation = new TestsArmOperation<WorkloadNetworkVmGroupResource>(
-                    new WorkloadNetworkVmGroupOperationSource(Client),
+                    new WorkloadNetworkVmGroupResourceOperationSource(Client),
                     _workloadNetworkVmGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -300,7 +302,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadNetworkVmGroupData, WorkloadNetworkVmGroupResource>(new WorkloadNetworkVmGroupsGetAllAsyncCollectionResultOfT(_workloadNetworkVmGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new WorkloadNetworkVmGroupResource(Client, data));
+            return new AsyncPageableWrapper<WorkloadNetworkVmGroupData, WorkloadNetworkVmGroupResource>(new WorkloadNetworkVmGroupsGetAllAsyncCollectionResultOfT(_workloadNetworkVmGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WorkloadNetworkVmGroupCollection.GetAll"), data => new WorkloadNetworkVmGroupResource(Client, data));
         }
 
         /// <summary>
@@ -328,7 +330,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadNetworkVmGroupData, WorkloadNetworkVmGroupResource>(new WorkloadNetworkVmGroupsGetAllCollectionResultOfT(_workloadNetworkVmGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new WorkloadNetworkVmGroupResource(Client, data));
+            return new PageableWrapper<WorkloadNetworkVmGroupData, WorkloadNetworkVmGroupResource>(new WorkloadNetworkVmGroupsGetAllCollectionResultOfT(_workloadNetworkVmGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WorkloadNetworkVmGroupCollection.GetAll"), data => new WorkloadNetworkVmGroupResource(Client, data));
         }
 
         /// <summary>

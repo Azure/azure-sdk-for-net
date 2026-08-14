@@ -181,7 +181,7 @@ public partial class Sample_PersistentAgents_DeepResearch : SamplesBase<AIAgents
         Pageable<PersistentThreadMessage> messages
             = client.Messages.GetMessages(
                 threadId: run.ThreadId, order: ListSortOrder.Ascending);
-        PrintMessagesAndSaveSummary([..messages], "research_summary.md");
+        PrintMessagesAndSaveSummary([.. messages], "research_summary.md");
         #endregion
 
         #region Snippet:DeepResearchSync_Cleanup

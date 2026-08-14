@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     public readonly partial struct ApplicationRollingUpgradeMode : IEquatable<ApplicationRollingUpgradeMode>
     {
         private readonly string _value;
+        /// <summary> Indicates the upgrade mode is invalid. All Service Fabric enumerations have the invalid type. The value is zero. </summary>
+        private const string InvalidValue = "Invalid";
+        /// <summary> The upgrade will proceed automatically without performing any health monitoring. The value is 1. </summary>
+        private const string UnmonitoredAutoValue = "UnmonitoredAuto";
+        /// <summary> The upgrade will stop after completing each upgrade domain, giving the opportunity to manually monitor health before proceeding. The value is 2. </summary>
+        private const string UnmonitoredManualValue = "UnmonitoredManual";
+        /// <summary> The upgrade will stop after completing each upgrade domain and automatically monitor health before proceeding. The value is 3. </summary>
+        private const string MonitoredValue = "Monitored";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationRollingUpgradeMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationRollingUpgradeMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InvalidValue = "Invalid";
-        private const string UnmonitoredAutoValue = "UnmonitoredAuto";
-        private const string UnmonitoredManualValue = "UnmonitoredManual";
-        private const string MonitoredValue = "Monitored";
+            _value = value;
+        }
 
         /// <summary> Indicates the upgrade mode is invalid. All Service Fabric enumerations have the invalid type. The value is zero. </summary>
         public static ApplicationRollingUpgradeMode Invalid { get; } = new ApplicationRollingUpgradeMode(InvalidValue);
+
         /// <summary> The upgrade will proceed automatically without performing any health monitoring. The value is 1. </summary>
         public static ApplicationRollingUpgradeMode UnmonitoredAuto { get; } = new ApplicationRollingUpgradeMode(UnmonitoredAutoValue);
+
         /// <summary> The upgrade will stop after completing each upgrade domain, giving the opportunity to manually monitor health before proceeding. The value is 2. </summary>
         public static ApplicationRollingUpgradeMode UnmonitoredManual { get; } = new ApplicationRollingUpgradeMode(UnmonitoredManualValue);
+
         /// <summary> The upgrade will stop after completing each upgrade domain and automatically monitor health before proceeding. The value is 3. </summary>
         public static ApplicationRollingUpgradeMode Monitored { get; } = new ApplicationRollingUpgradeMode(MonitoredValue);
+
         /// <summary> Determines if two <see cref="ApplicationRollingUpgradeMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationRollingUpgradeMode left, ApplicationRollingUpgradeMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationRollingUpgradeMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationRollingUpgradeMode left, ApplicationRollingUpgradeMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationRollingUpgradeMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationRollingUpgradeMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationRollingUpgradeMode(string value) => new ApplicationRollingUpgradeMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationRollingUpgradeMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationRollingUpgradeMode?(string value) => value == null ? null : new ApplicationRollingUpgradeMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationRollingUpgradeMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationRollingUpgradeMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

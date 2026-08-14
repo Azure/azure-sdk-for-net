@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct ValidationThresholdType : IEquatable<ValidationThresholdType>
     {
         private readonly string _value;
+        /// <summary> The threshold is evaluated based on the count of successful operations. </summary>
+        private const string CountSuccessValue = "CountSuccess";
+        /// <summary> The threshold is evaluated based on the percentage of successful operations. </summary>
+        private const string PercentSuccessValue = "PercentSuccess";
 
         /// <summary> Initializes a new instance of <see cref="ValidationThresholdType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ValidationThresholdType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string CountSuccessValue = "CountSuccess";
-        private const string PercentSuccessValue = "PercentSuccess";
-
-        /// <summary> CountSuccess. </summary>
+        /// <summary> The threshold is evaluated based on the count of successful operations. </summary>
         public static ValidationThresholdType CountSuccess { get; } = new ValidationThresholdType(CountSuccessValue);
-        /// <summary> PercentSuccess. </summary>
+
+        /// <summary> The threshold is evaluated based on the percentage of successful operations. </summary>
         public static ValidationThresholdType PercentSuccess { get; } = new ValidationThresholdType(PercentSuccessValue);
+
         /// <summary> Determines if two <see cref="ValidationThresholdType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ValidationThresholdType left, ValidationThresholdType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ValidationThresholdType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ValidationThresholdType left, ValidationThresholdType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ValidationThresholdType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ValidationThresholdType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ValidationThresholdType(string value) => new ValidationThresholdType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ValidationThresholdType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ValidationThresholdType?(string value) => value == null ? null : new ValidationThresholdType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ValidationThresholdType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ValidationThresholdType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

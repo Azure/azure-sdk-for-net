@@ -63,7 +63,7 @@ namespace Azure.Storage
                     uInitialCrcAB: 0,
                     uInitialCrcA: 0,
                     uFinalCrcA: composedCrc,
-                    uSizeA: (ulong) composedDataLength,
+                    uSizeA: (ulong)composedDataLength,
                     uInitialCrcB: 0,
                     uFinalCrcB: crc64,
                     uSizeB: (ulong)originalDataLength);

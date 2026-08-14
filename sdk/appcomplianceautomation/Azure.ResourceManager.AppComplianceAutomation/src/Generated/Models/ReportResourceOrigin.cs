@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     public readonly partial struct ReportResourceOrigin : IEquatable<ReportResourceOrigin>
     {
         private readonly string _value;
+        /// <summary> The resource is from Azure. </summary>
+        private const string AzureValue = "Azure";
+        /// <summary> The resource is from AWS. </summary>
+        private const string AwsValue = "AWS";
+        /// <summary> The resource is from GCP. </summary>
+        private const string GcpValue = "GCP";
 
         /// <summary> Initializes a new instance of <see cref="ReportResourceOrigin"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ReportResourceOrigin(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AzureValue = "Azure";
-        private const string AwsValue = "AWS";
-        private const string GcpValue = "GCP";
+            _value = value;
+        }
 
         /// <summary> The resource is from Azure. </summary>
         public static ReportResourceOrigin Azure { get; } = new ReportResourceOrigin(AzureValue);
+
         /// <summary> The resource is from AWS. </summary>
         public static ReportResourceOrigin Aws { get; } = new ReportResourceOrigin(AwsValue);
+
         /// <summary> The resource is from GCP. </summary>
         public static ReportResourceOrigin Gcp { get; } = new ReportResourceOrigin(GcpValue);
+
         /// <summary> Determines if two <see cref="ReportResourceOrigin"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ReportResourceOrigin left, ReportResourceOrigin right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ReportResourceOrigin"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ReportResourceOrigin left, ReportResourceOrigin right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReportResourceOrigin"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ReportResourceOrigin"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ReportResourceOrigin(string value) => new ReportResourceOrigin(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ReportResourceOrigin"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReportResourceOrigin?(string value) => value == null ? null : new ReportResourceOrigin(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReportResourceOrigin other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ReportResourceOrigin other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

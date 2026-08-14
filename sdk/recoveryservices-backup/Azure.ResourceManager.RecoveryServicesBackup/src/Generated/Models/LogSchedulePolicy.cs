@@ -14,19 +14,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class LogSchedulePolicy : BackupSchedulePolicy
     {
         /// <summary> Initializes a new instance of <see cref="LogSchedulePolicy"/>. </summary>
-        public LogSchedulePolicy()
+        public LogSchedulePolicy() : base("LogSchedulePolicy")
         {
-            SchedulePolicyType = "LogSchedulePolicy";
         }
 
         /// <summary> Initializes a new instance of <see cref="LogSchedulePolicy"/>. </summary>
         /// <param name="schedulePolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="scheduleFrequencyInMins"> Frequency of the log schedule operation of this policy in minutes. </param>
-        internal LogSchedulePolicy(string schedulePolicyType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? scheduleFrequencyInMins) : base(schedulePolicyType, serializedAdditionalRawData)
+        internal LogSchedulePolicy(string schedulePolicyType, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? scheduleFrequencyInMins) : base(schedulePolicyType, additionalBinaryDataProperties)
         {
             ScheduleFrequencyInMins = scheduleFrequencyInMins;
-            SchedulePolicyType = schedulePolicyType ?? "LogSchedulePolicy";
         }
 
         /// <summary> Frequency of the log schedule operation of this policy in minutes. </summary>
