@@ -45,6 +45,7 @@ internal sealed class VoiceConnectionTelemetry
         s_connectionStartToken.Value = startToken;
         Activity? activity = null;
         Activity? startedActivity = null;
+        Activity? propagationActivity = null;
         ActivityContext extractedContext = default;
         EventHandler<ActivityChangedEventArgs> captureStartedActivity = (_, args) =>
         {
@@ -86,13 +87,28 @@ internal sealed class VoiceConnectionTelemetry
                     ConnectionOperationName,
                     ActivityKind.Server,
                     propagationContext.ActivityContext);
+                if (activity is null &&
+                    (extractedContext.TraceFlags & ActivityTraceFlags.Recorded) != 0)
+                {
+                    propagationActivity = new Activity(ConnectionOperationName)
+                        .SetParentId(
+                            extractedContext.TraceId,
+                            extractedContext.SpanId,
+                            extractedContext.TraceFlags);
+                    propagationActivity.TraceStateString = extractedContext.TraceState;
+                    activity = propagationActivity.Start();
+                }
             }
             catch (Exception exception) when (!ContainsOutOfMemoryException(exception))
             {
-                activity = startedActivity ?? Activity.Current;
+                activity = propagationActivity?.Id is not null
+                    ? propagationActivity
+                    : startedActivity ?? Activity.Current;
                 if (!IsConnectionActivity(activity))
                 {
-                    activity = null;
+                    activity = ReferenceEquals(activity, propagationActivity)
+                        ? activity
+                        : null;
                 }
             }
         }

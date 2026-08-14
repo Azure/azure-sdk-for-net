@@ -19,6 +19,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using OpenTelemetry;
+using OpenTelemetry.Context.Propagation;
 using OpenTelemetry.Instrumentation.AspNetCore;
 using OpenTelemetry.Trace;
 
@@ -449,6 +450,147 @@ public class VoiceConnectionTracingRedTests
     }
 
     [Test]
+    public void RecordedRemoteParent_WhenConnectionActivityDrops_CreatesDistinctPropagationChildren()
+    {
+        using var propagatorScope = UseTraceContextPropagator();
+        var traceId = ActivityTraceId.CreateRandom();
+        var parentSpanId = ActivitySpanId.CreateRandom();
+        const string traceState = "vendor=value";
+        var headers = new HeaderDictionary
+        {
+            ["traceparent"] = $"00-{traceId}-{parentSpanId}-01",
+            ["tracestate"] = traceState,
+        };
+        using var listener = new ActivityListener
+        {
+            ShouldListenTo = static source => source.Name == InvocationsSourceName,
+            Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.None,
+        };
+        ActivitySource.AddActivityListener(listener);
+
+        var first = VoiceConnectionTelemetry.Start(headers);
+        var second = VoiceConnectionTelemetry.Start(headers);
+        try
+        {
+            Assert.Multiple(() =>
+            {
+                Assert.That(first.Context.TraceId, Is.EqualTo(traceId));
+                Assert.That(first.Context.SpanId, Is.Not.EqualTo(default(ActivitySpanId)));
+                Assert.That(first.Context.SpanId, Is.Not.EqualTo(parentSpanId));
+                Assert.That(first.Context.TraceFlags, Is.EqualTo(ActivityTraceFlags.Recorded));
+                Assert.That(first.Context.TraceState, Is.EqualTo(traceState));
+                Assert.That(second.Context.TraceId, Is.EqualTo(traceId));
+                Assert.That(second.Context.SpanId, Is.Not.EqualTo(default(ActivitySpanId)));
+                Assert.That(second.Context.SpanId, Is.Not.EqualTo(first.Context.SpanId));
+            });
+        }
+        finally
+        {
+            first.Complete("session_first", 1000, null, null, 0);
+            second.Complete("session_second", 1000, null, null, 0);
+        }
+    }
+
+    [Test]
+    public void RecordedRemoteParent_WhenInvocationsSourceDrops_StillParentsCustomerSpan()
+    {
+        using var propagatorScope = UseTraceContextPropagator();
+        var traceId = ActivityTraceId.CreateRandom();
+        var parentSpanId = ActivitySpanId.CreateRandom();
+        var headers = new HeaderDictionary
+        {
+            ["traceparent"] = $"00-{traceId}-{parentSpanId}-01",
+        };
+        using var invocationsListener = new ActivityListener
+        {
+            ShouldListenTo = static source => source.Name == InvocationsSourceName,
+            Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.None,
+        };
+        ActivitySource.AddActivityListener(invocationsListener);
+        Activity? customerActivity = null;
+        using var customerListener = new ActivityListener
+        {
+            ShouldListenTo = static source => source.Name == TargetTurnCustomerSourceName,
+            Sample = (ref ActivityCreationOptions<ActivityContext> _) =>
+                ActivitySamplingResult.AllDataAndRecorded,
+            ActivityStarted = activity => customerActivity = activity,
+        };
+        ActivitySource.AddActivityListener(customerListener);
+        using var customerSource = new ActivitySource(TargetTurnCustomerSourceName);
+
+        var connection = VoiceConnectionTelemetry.Start(headers);
+        using var turn = VoiceTurnTrace.Start(
+            connection.Context,
+            VoiceTurnOrigin.User,
+            inputCount: 1);
+        ActivitySpanId turnSpanId;
+        using (turn.Activate())
+        {
+            turnSpanId = Activity.Current?.SpanId ?? default;
+            using var customer = customerSource.StartActivity("customer.model");
+        }
+        turn.Complete(new VoiceTurnResult(VoiceTurnOutcome.None, outputItemCount: 0));
+        connection.Complete("session_recorded_drop", 1000, null, null, 0);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(connection.Context.TraceId, Is.EqualTo(traceId));
+            Assert.That(connection.Context.SpanId, Is.Not.EqualTo(parentSpanId));
+            Assert.That(turnSpanId, Is.Not.EqualTo(default(ActivitySpanId)));
+            Assert.That(turnSpanId, Is.Not.EqualTo(connection.Context.SpanId));
+            Assert.That(customerActivity, Is.Not.Null);
+            Assert.That(customerActivity?.TraceId, Is.EqualTo(traceId));
+            Assert.That(customerActivity?.ParentSpanId, Is.EqualTo(turnSpanId));
+        });
+    }
+
+    [Test]
+    public void UnrecordedRemoteParent_WhenConnectionActivityDrops_DoesNotStartManualActivity()
+    {
+        using var propagatorScope = UseTraceContextPropagator();
+        var traceId = ActivityTraceId.CreateRandom();
+        var parentSpanId = ActivitySpanId.CreateRandom();
+        var headers = new HeaderDictionary
+        {
+            ["traceparent"] = $"00-{traceId}-{parentSpanId}-00",
+        };
+        using var listener = new ActivityListener
+        {
+            ShouldListenTo = static source => source.Name == InvocationsSourceName,
+            Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.None,
+        };
+        ActivitySource.AddActivityListener(listener);
+        var connectionActivityChanges = 0;
+        EventHandler<ActivityChangedEventArgs> currentChanged = (_, args) =>
+        {
+            if (IsManualConnectionActivity(args.Current) ||
+                IsManualConnectionActivity(args.Previous))
+            {
+                Interlocked.Increment(ref connectionActivityChanges);
+            }
+        };
+        Activity.CurrentChanged += currentChanged;
+        VoiceConnectionTelemetry? connection = null;
+        try
+        {
+            connection = VoiceConnectionTelemetry.Start(headers);
+        }
+        finally
+        {
+            Activity.CurrentChanged -= currentChanged;
+        }
+        connection.Complete("session_unrecorded_drop", 1000, null, null, 0);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(connection.Context.TraceId, Is.EqualTo(traceId));
+            Assert.That(connection.Context.SpanId, Is.Not.EqualTo(parentSpanId));
+            Assert.That(connection.Context.TraceFlags, Is.EqualTo(ActivityTraceFlags.None));
+            Assert.That(connectionActivityChanges, Is.Zero);
+        });
+    }
+
+    [Test]
     public async Task MissingAndInvalidTraceparent_RecordSanitizedPropagationFailureMetrics()
     {
         var measurements = new ConcurrentQueue<string?>();
@@ -522,11 +664,13 @@ public class VoiceConnectionTracingRedTests
         });
     }
 
-    [Test]
-    public async Task BeginScopeFailure_DoesNotChangeWireOrLeakConnection()
+    [TestCase(ScopeFailureTarget.Begin)]
+    [TestCase(ScopeFailureTarget.Dispose)]
+    public async Task ScopeFailure_DoesNotChangeWireOrLeakConnection(
+        ScopeFailureTarget failureTarget)
     {
         var exporter = new CapturingActivityExporter();
-        var logger = new ThrowOnceLoggerProvider(throwOnBeginScope: true);
+        var logger = new ThrowOnceLoggerProvider(scopeFailureTarget: failureTarget);
         await using var server = await StartVoiceServerAsync(
             exporter,
             loggerProvider: logger);
@@ -1443,6 +1587,10 @@ public class VoiceConnectionTracingRedTests
         activity.Source.Name == InvocationsSourceName &&
         activity.OperationName == ConnectionOperationName;
 
+    private static bool IsManualConnectionActivity(Activity? activity) =>
+        activity?.OperationName == ConnectionOperationName &&
+        activity.Source.Name != InvocationsSourceName;
+
     private static bool IsGenericWebSocketRequest(Activity activity) =>
         activity.Source.Name == "Microsoft.AspNetCore" &&
         activity.DisplayName.Contains("invocations_ws", StringComparison.Ordinal);
@@ -1459,7 +1607,23 @@ public class VoiceConnectionTracingRedTests
         activity.Source.Name == TargetTurnCustomerSourceName &&
         activity.OperationName == "customer.model";
 
+    private static IDisposable UseTraceContextPropagator()
+    {
+        var previous = Propagators.DefaultTextMapPropagator;
+        Sdk.SetDefaultTextMapPropagator(new TraceContextPropagator());
+        return new RestorePropagator(previous);
+    }
+
     private sealed class PassiveVoiceHandler : VoiceHandler;
+
+    private sealed class RestorePropagator : IDisposable
+    {
+        private readonly TextMapPropagator _propagator;
+
+        public RestorePropagator(TextMapPropagator propagator) => _propagator = propagator;
+
+        public void Dispose() => Sdk.SetDefaultTextMapPropagator(_propagator);
+    }
 
     private sealed class TargetTurnVoiceHandler : VoiceHandler
     {
@@ -1746,21 +1910,23 @@ public class VoiceConnectionTracingRedTests
 
     private sealed class ThrowOnceLoggerProvider : ILoggerProvider
     {
-        private readonly bool _throwOnBeginScope;
+        private readonly ScopeFailureTarget? _scopeFailureTarget;
         private readonly bool _throwOnException;
         private int _failureCount;
 
         public ThrowOnceLoggerProvider(
-            bool throwOnBeginScope = false,
+            ScopeFailureTarget? scopeFailureTarget = null,
             bool throwOnException = false)
         {
-            _throwOnBeginScope = throwOnBeginScope;
+            _scopeFailureTarget = scopeFailureTarget;
             _throwOnException = throwOnException;
         }
 
         public int FailureCount => Volatile.Read(ref _failureCount);
 
-        public ILogger CreateLogger(string categoryName) => new ThrowOnceLogger(this);
+        public ILogger CreateLogger(string categoryName) => new ThrowOnceLogger(
+            this,
+            categoryName == typeof(WebSocketEndpointHandler).FullName);
 
         public void Dispose()
         {
@@ -1777,16 +1943,27 @@ public class VoiceConnectionTracingRedTests
         private sealed class ThrowOnceLogger : ILogger
         {
             private readonly ThrowOnceLoggerProvider _owner;
+            private readonly bool _isEndpointLogger;
 
-            public ThrowOnceLogger(ThrowOnceLoggerProvider owner) => _owner = owner;
+            public ThrowOnceLogger(ThrowOnceLoggerProvider owner, bool isEndpointLogger)
+            {
+                _owner = owner;
+                _isEndpointLogger = isEndpointLogger;
+            }
 
             public IDisposable? BeginScope<TState>(TState state) where TState : notnull
             {
-                if (_owner._throwOnBeginScope)
+                if (!_isEndpointLogger)
+                {
+                    return null;
+                }
+                if (_owner._scopeFailureTarget == ScopeFailureTarget.Begin)
                 {
                     _owner.ThrowOnce();
                 }
-                return null;
+                return _owner._scopeFailureTarget == ScopeFailureTarget.Dispose
+                    ? new ThrowOnceScope(_owner)
+                    : null;
             }
 
             public bool IsEnabled(LogLevel logLevel) => true;
@@ -1804,6 +1981,21 @@ public class VoiceConnectionTracingRedTests
                 }
             }
         }
+
+        private sealed class ThrowOnceScope : IDisposable
+        {
+            private readonly ThrowOnceLoggerProvider _owner;
+
+            public ThrowOnceScope(ThrowOnceLoggerProvider owner) => _owner = owner;
+
+            public void Dispose() => _owner.ThrowOnce();
+        }
+    }
+
+    public enum ScopeFailureTarget
+    {
+        Begin,
+        Dispose,
     }
 
     private sealed class AcceptFailureFeatureDecorator

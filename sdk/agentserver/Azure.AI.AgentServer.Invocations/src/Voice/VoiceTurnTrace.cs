@@ -234,8 +234,7 @@ public class VoiceTurnTrace : IDisposable
                 ActivityKind.Internal,
                 connectionContext,
                 tags);
-            if (activity is null &&
-                (connectionContext.TraceFlags & ActivityTraceFlags.Recorded) == 0)
+            if (activity is null)
             {
                 propagationActivity = new Activity(OperationName)
                     .SetParentId(

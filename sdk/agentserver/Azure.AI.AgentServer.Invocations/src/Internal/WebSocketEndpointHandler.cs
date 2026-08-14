@@ -98,11 +98,14 @@ internal sealed class WebSocketEndpointHandler
         // Activity, so any spans the handler starts inherit it directly.
         _activitySource.PropagateInvocationBaggage(context, httpContext.Request.Headers);
 
-        using var logScope = _logger.BeginScope(new Dictionary<string, object>
+        var logScopeState = new Dictionary<string, object>
         {
             ["SessionId"] = sessionId,
             ["InvocationId"] = invocationId,
-        });
+        };
+        using var logScope = lifecycle is null
+            ? _logger.BeginScope(logScopeState)
+            : BeginLifecycleLogScopeSafely(logScopeState);
 
         var startTimestamp = Stopwatch.GetTimestamp();
         var closeCode = InvocationsWebSocketConstants.CloseNormal;
@@ -245,6 +248,13 @@ internal sealed class WebSocketEndpointHandler
         }
     }
 
+    private IDisposable? BeginLifecycleLogScopeSafely(Dictionary<string, object> state)
+    {
+        IDisposable? scope = null;
+        TryInvokeLogger(() => scope = _logger.BeginScope(state));
+        return scope is null ? null : new SafeLoggerScope(scope);
+    }
+
     private static void TryInvokeLogger(Action log)
     {
         try
@@ -253,6 +263,22 @@ internal sealed class WebSocketEndpointHandler
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
+        }
+    }
+
+    private sealed class SafeLoggerScope : IDisposable
+    {
+        private IDisposable? _scope;
+
+        public SafeLoggerScope(IDisposable scope) => _scope = scope;
+
+        public void Dispose()
+        {
+            var scope = Interlocked.Exchange(ref _scope, null);
+            if (scope is not null)
+            {
+                TryInvokeLogger(scope.Dispose);
+            }
         }
     }
 
