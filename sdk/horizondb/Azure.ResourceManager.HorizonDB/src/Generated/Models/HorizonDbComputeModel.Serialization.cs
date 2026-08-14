@@ -13,52 +13,52 @@ using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> The template for adding optional properties. </summary>
-    public partial class HorizonDBPrivateEndpointConnectionPatchProperties : IJsonModel<HorizonDBPrivateEndpointConnectionPatchProperties>
+    /// <summary> The compute model for a HorizonDB cluster. </summary>
+    public partial class HorizonDbComputeModel : IJsonModel<HorizonDbComputeModel>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HorizonDBPrivateEndpointConnectionPatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HorizonDbComputeModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBPrivateEndpointConnectionPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbComputeModel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHorizonDBPrivateEndpointConnectionPatchProperties(document.RootElement, options);
+                        return DeserializeHorizonDbComputeModel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDBPrivateEndpointConnectionPatchProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDbComputeModel)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBPrivateEndpointConnectionPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbComputeModel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHorizonDBContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDBPrivateEndpointConnectionPatchProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDbComputeModel)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HorizonDBPrivateEndpointConnectionPatchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HorizonDbComputeModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDBPrivateEndpointConnectionPatchProperties IPersistableModel<HorizonDBPrivateEndpointConnectionPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HorizonDbComputeModel IPersistableModel<HorizonDbComputeModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HorizonDBPrivateEndpointConnectionPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HorizonDbComputeModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HorizonDBPrivateEndpointConnectionPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HorizonDbComputeModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,30 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBPrivateEndpointConnectionPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbComputeModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDBPrivateEndpointConnectionPatchProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDbComputeModel)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (Optional.IsDefined(Type))
             {
-                writer.WritePropertyName("privateEndpoint"u8);
-                writer.WriteObjectValue(PrivateEndpoint, options);
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type.Value.ToString());
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (Optional.IsDefined(VCores))
             {
-                writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+                writer.WritePropertyName("vCores"u8);
+                writer.WriteNumberValue(VCores.Value);
+            }
+            if (Optional.IsDefined(MinvCores))
+            {
+                writer.WritePropertyName("minvCores"u8);
+                writer.WriteNumberValue(MinvCores.Value);
+            }
+            if (Optional.IsDefined(MaxvCores))
+            {
+                writer.WritePropertyName("maxvCores"u8);
+                writer.WriteNumberValue(MaxvCores.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,50 +113,70 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDBPrivateEndpointConnectionPatchProperties IJsonModel<HorizonDBPrivateEndpointConnectionPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HorizonDbComputeModel IJsonModel<HorizonDbComputeModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HorizonDBPrivateEndpointConnectionPatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HorizonDbComputeModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBPrivateEndpointConnectionPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbComputeModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDBPrivateEndpointConnectionPatchProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDbComputeModel)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHorizonDBPrivateEndpointConnectionPatchProperties(document.RootElement, options);
+            return DeserializeHorizonDbComputeModel(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HorizonDBPrivateEndpointConnectionPatchProperties DeserializeHorizonDBPrivateEndpointConnectionPatchProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static HorizonDbComputeModel DeserializeHorizonDbComputeModel(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            PrivateEndpoint privateEndpoint = default;
-            HorizonDBPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            HorizonDbComputeModelType? @type = default;
+            int? vCores = default;
+            double? minvCores = default;
+            double? maxvCores = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("privateEndpoint"u8))
+                if (prop.NameEquals("type"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    privateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(prop.Value, options);
+                    @type = new HorizonDbComputeModelType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("privateLinkServiceConnectionState"u8))
+                if (prop.NameEquals("vCores"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = HorizonDBPrivateLinkServiceConnectionState.DeserializeHorizonDBPrivateLinkServiceConnectionState(prop.Value, options);
+                    vCores = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("minvCores"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minvCores = prop.Value.GetDouble();
+                    continue;
+                }
+                if (prop.NameEquals("maxvCores"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxvCores = prop.Value.GetDouble();
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +184,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HorizonDBPrivateEndpointConnectionPatchProperties(privateEndpoint, privateLinkServiceConnectionState, additionalBinaryDataProperties);
+            return new HorizonDbComputeModel(@type, vCores, minvCores, maxvCores, additionalBinaryDataProperties);
         }
     }
 }
