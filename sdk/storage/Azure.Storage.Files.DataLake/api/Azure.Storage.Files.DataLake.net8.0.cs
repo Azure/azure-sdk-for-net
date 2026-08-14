@@ -49,7 +49,8 @@ namespace Azure.Storage.Files.DataLake
             V2026_04_06 = 30,
             V2026_06_06 = 31,
             V2026_10_06 = 32,
-            V2027_03_07 = 33,
+            V2026_12_06 = 33,
+            V2027_03_07 = 34,
         }
     }
     public partial class DataLakeDirectoryClient : Azure.Storage.Files.DataLake.DataLakePathClient

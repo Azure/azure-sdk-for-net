@@ -102,6 +102,7 @@ namespace Azure.Storage
                 ServiceVersion.V2026_04_06 => "2026-04-06",
                 ServiceVersion.V2026_06_06 => "2026-06-06",
                 ServiceVersion.V2026_10_06 => "2026-10-06",
+                ServiceVersion.V2026_12_06 => "2026-12-06",
                 ServiceVersion.V2027_03_07 => "2027-03-07",
 #endif
                 _ => throw Errors.VersionNotSupported(nameof(version))
@@ -180,6 +181,8 @@ namespace Azure.Storage
                             Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2026_06_06,
                 Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2026_10_06 =>
                             Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2026_10_06,
+                Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2026_12_06 =>
+                            Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2026_12_06,
                 Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2027_03_07 =>
                             Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2027_03_07,
                 _ => throw Errors.VersionNotSupported(nameof(version))
