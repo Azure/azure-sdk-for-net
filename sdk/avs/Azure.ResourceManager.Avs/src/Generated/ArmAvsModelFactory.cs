@@ -169,35 +169,6 @@ namespace Azure.ResourceManager.Avs.Models
             return new AvsClusterZone((hosts ?? new ChangeTrackingList<string>()).ToList(), zone, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> The state of the datastore provisioning. </param>
-        /// <param name="diskPoolVolume"> An iSCSI volume. </param>
-        /// <param name="pureStorageVolume"> A Pure Storage volume. </param>
-        /// <param name="status"> The operational status of the datastore. </param>
-        /// <param name="netAppVolumeId"> Azure resource ID of the NetApp volume. </param>
-        /// <param name="elasticSanVolumeTargetId"> Azure resource ID of the Elastic SAN Volume. </param>
-        /// <returns> A new <see cref="Avs.AvsPrivateCloudDatastoreData"/> instance for mocking. </returns>
-        public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AvsPrivateCloudDatastoreProvisioningState? provisioningState = default, DiskPoolVolume diskPoolVolume = default, AvsPureStorageVolume pureStorageVolume = default, DatastoreStatus? status = default, ResourceIdentifier netAppVolumeId = default, ResourceIdentifier elasticSanVolumeTargetId = default)
-        {
-            return new AvsPrivateCloudDatastoreData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && netAppVolumeId is null && diskPoolVolume is null && elasticSanVolumeTargetId is null && pureStorageVolume is null && status is null ? default : new DatastoreProperties(
-                    provisioningState,
-                    new NetAppVolume(netAppVolumeId, default),
-                    diskPoolVolume,
-                    new ElasticSanVolume(elasticSanVolumeTargetId, default),
-                    pureStorageVolume,
-                    status,
-                    default),
-                default);
-        }
-
         /// <param name="targetId"> Azure resource ID of the iSCSI target. </param>
         /// <param name="lunName"> Name of the LUN to be used for datastore. </param>
         /// <param name="mountOption">
@@ -1702,6 +1673,8 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsPrivateCloudClusterData AvsPrivateCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsSku sku, int? clusterSize, AvsPrivateCloudClusterProvisioningState? provisioningState, int? clusterId, IEnumerable<string> hosts, string vsanDatastoreName)
         {
+            hosts ??= new ChangeTrackingList<string>();
+
             return new AvsPrivateCloudClusterData(
                 id,
                 name,
@@ -1769,42 +1742,7 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsPrivateCloudData AvsPrivateCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IEnumerable<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, IEnumerable<string> extendedNetworkBlocks, AvsPrivateCloudProvisioningState? provisioningState, ExpressRouteCircuit circuit, AvsPrivateCloudEndpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vMotionNetwork, string vCenterPassword, string nsxtPassword, string vCenterCertificateThumbprint, string nsxtCertificateThumbprint, IEnumerable<ResourceIdentifier> externalCloudLinks, ExpressRouteCircuit secondaryCircuit, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised, ResourceIdentifier virtualNetworkId, AvsDnsZoneType? dnsZoneType, AvsSku sku, ManagedServiceIdentity identity, IEnumerable<string> zones)
         {
-            return new AvsPrivateCloudData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                managementCluster is null && internet is null && identitySources is null && availability is null && encryption is null && extendedNetworkBlocks is null && provisioningState is null && circuit is null && endpoints is null && networkBlock is null && managementNetwork is null && provisioningNetwork is null && vMotionNetwork is null && vCenterPassword is null && nsxtPassword is null && vCenterCertificateThumbprint is null && nsxtCertificateThumbprint is null && externalCloudLinks is null && secondaryCircuit is null && nsxPublicIPQuotaRaised is null && virtualNetworkId is null && dnsZoneType is null ? default : new PrivateCloudProperties(
-                    managementCluster,
-                    internet,
-                    (identitySources ?? new ChangeTrackingList<SingleSignOnIdentitySource>()).ToList(),
-                    availability,
-                    encryption,
-                    (extendedNetworkBlocks ?? new ChangeTrackingList<string>()).ToList(),
-                    provisioningState,
-                    circuit,
-                    endpoints,
-                    networkBlock,
-                    managementNetwork,
-                    provisioningNetwork,
-                    vMotionNetwork,
-                    vCenterPassword,
-                    nsxtPassword,
-                    vCenterCertificateThumbprint,
-                    nsxtCertificateThumbprint,
-                    (externalCloudLinks ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    secondaryCircuit,
-                    nsxPublicIPQuotaRaised,
-                    virtualNetworkId,
-                    dnsZoneType,
-                    default,
-                    default),
-                sku,
-                identity,
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                default);
+            return AvsPrivateCloudData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, managementCluster: managementCluster, internet: internet, identitySources: identitySources, availability: availability, encryption: encryption, extendedNetworkBlocks: extendedNetworkBlocks, provisioningState: provisioningState, circuit: circuit, endpoints: endpoints, networkBlock: networkBlock, managementNetwork: managementNetwork, provisioningNetwork: provisioningNetwork, vMotionNetwork: vMotionNetwork, vCenterPassword: vCenterPassword, nsxtPassword: nsxtPassword, vCenterCertificateThumbprint: vCenterCertificateThumbprint, nsxtCertificateThumbprint: nsxtCertificateThumbprint, externalCloudLinks: externalCloudLinks, secondaryCircuit: secondaryCircuit, nsxPublicIPQuotaRaised: nsxPublicIPQuotaRaised, virtualNetworkId: virtualNetworkId, dnsZoneType: dnsZoneType, vcfLicense: default, sku: sku, identity: identity, zones: zones);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudDatastoreData"/>. </summary>
@@ -1819,7 +1757,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="pureStorageVolume"> A Pure Storage volume. </param>
         /// <param name="status"> The operational status of the datastore. </param>
         /// <returns> A new <see cref="Avs.AvsPrivateCloudDatastoreData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AvsPrivateCloudDatastoreProvisioningState? provisioningState = default, ResourceIdentifier netAppVolumeId = default, DiskPoolVolume diskPoolVolume = default, ResourceIdentifier elasticSanVolumeTargetId = default, AvsPureStorageVolume pureStorageVolume = default, DatastoreStatus? status = default)
         {
             return new AvsPrivateCloudDatastoreData(
@@ -1888,42 +1825,7 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsPrivateCloudData AvsPrivateCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AvsSku sku, ManagedServiceIdentity identity, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IEnumerable<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, IEnumerable<string> extendedNetworkBlocks, AvsPrivateCloudProvisioningState? provisioningState, ExpressRouteCircuit circuit, AvsPrivateCloudEndpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vMotionNetwork, string vCenterPassword, string nsxtPassword, string vCenterCertificateThumbprint, string nsxtCertificateThumbprint, IEnumerable<ResourceIdentifier> externalCloudLinks, ExpressRouteCircuit secondaryCircuit, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised, ResourceIdentifier virtualNetworkId, AvsDnsZoneType? dnsZoneType)
         {
-            return new AvsPrivateCloudData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                managementCluster is null && internet is null && identitySources is null && availability is null && encryption is null && extendedNetworkBlocks is null && provisioningState is null && circuit is null && endpoints is null && networkBlock is null && managementNetwork is null && provisioningNetwork is null && vMotionNetwork is null && vCenterPassword is null && nsxtPassword is null && vCenterCertificateThumbprint is null && nsxtCertificateThumbprint is null && externalCloudLinks is null && secondaryCircuit is null && nsxPublicIPQuotaRaised is null && virtualNetworkId is null && dnsZoneType is null ? default : new PrivateCloudProperties(
-                    managementCluster,
-                    internet,
-                    (identitySources ?? new ChangeTrackingList<SingleSignOnIdentitySource>()).ToList(),
-                    availability,
-                    encryption,
-                    (extendedNetworkBlocks ?? new ChangeTrackingList<string>()).ToList(),
-                    provisioningState,
-                    circuit,
-                    endpoints,
-                    networkBlock,
-                    managementNetwork,
-                    provisioningNetwork,
-                    vMotionNetwork,
-                    vCenterPassword,
-                    nsxtPassword,
-                    vCenterCertificateThumbprint,
-                    nsxtCertificateThumbprint,
-                    (externalCloudLinks ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    secondaryCircuit,
-                    nsxPublicIPQuotaRaised,
-                    virtualNetworkId,
-                    dnsZoneType,
-                    default,
-                    default),
-                sku,
-                identity,
-                default,
-                default);
+            return AvsPrivateCloudData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, managementCluster: managementCluster, internet: internet, identitySources: identitySources, availability: availability, encryption: encryption, extendedNetworkBlocks: extendedNetworkBlocks, provisioningState: provisioningState, circuit: circuit, endpoints: endpoints, networkBlock: networkBlock, managementNetwork: managementNetwork, provisioningNetwork: provisioningNetwork, vMotionNetwork: vMotionNetwork, vCenterPassword: vCenterPassword, nsxtPassword: nsxtPassword, vCenterCertificateThumbprint: vCenterCertificateThumbprint, nsxtCertificateThumbprint: nsxtCertificateThumbprint, externalCloudLinks: externalCloudLinks, secondaryCircuit: secondaryCircuit, nsxPublicIPQuotaRaised: nsxPublicIPQuotaRaised, virtualNetworkId: virtualNetworkId, dnsZoneType: dnsZoneType, vcfLicense: default, sku: sku, identity: identity, zones: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AddonHcxProperties"/>. </summary>
@@ -1933,13 +1835,7 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AddonHcxProperties AddonHcxProperties(AddonProvisioningState? provisioningState, string offer)
         {
-            return new AddonHcxProperties(
-                default,
-                provisioningState,
-                default,
-                offer,
-                default,
-                default);
+            return AddonHcxProperties(provisioningState: provisioningState, offer: offer, managementNetwork: default, uplinkNetwork: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvsPrivateCloudEndpoints"/>. </summary>
@@ -1950,14 +1846,7 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsPrivateCloudEndpoints AvsPrivateCloudEndpoints(string nsxtManager, string vcsa, string hcxCloudManager)
         {
-            return new AvsPrivateCloudEndpoints(
-                nsxtManager,
-                vcsa,
-                hcxCloudManager,
-                default,
-                default,
-                default,
-                default);
+            return AvsPrivateCloudEndpoints(nsxtManager: nsxtManager, vcsa: vcsa, hcxCloudManager: hcxCloudManager, nsxtManagerIP: default, vcenterIP: default, hcxCloudManagerIP: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.HcxEnterpriseSiteData"/>. </summary>
@@ -1971,13 +1860,7 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HcxEnterpriseSiteData HcxEnterpriseSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string activationKey, HcxEnterpriseSiteStatus? status)
         {
-            return new HcxEnterpriseSiteData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                activationKey is null && status is null ? default : new HcxEnterpriseSiteProperties(default, activationKey, status, default),
-                default);
+            return HcxEnterpriseSiteData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default, activationKey: activationKey, status: status);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkData"/>. </summary>
@@ -1989,13 +1872,7 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static WorkloadNetworkData WorkloadNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData)
         {
-            return new WorkloadNetworkData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                default,
-                default);
+            return WorkloadNetworkData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkGatewayData"/>. </summary>
@@ -2009,13 +1886,7 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static WorkloadNetworkGatewayData WorkloadNetworkGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string path)
         {
-            return new WorkloadNetworkGatewayData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                displayName is null && path is null ? default : new WorkloadNetworkGatewayProperties(default, displayName, path, default),
-                default);
+            return WorkloadNetworkGatewayData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default, displayName: displayName, path: path);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkVirtualMachineData"/>. </summary>
@@ -2029,13 +1900,7 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static WorkloadNetworkVirtualMachineData WorkloadNetworkVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, WorkloadNetworkVmType? vmType)
         {
-            return new WorkloadNetworkVirtualMachineData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                displayName is null && vmType is null ? default : new WorkloadNetworkVirtualMachineProperties(default, displayName, vmType, default),
-                default);
+            return WorkloadNetworkVirtualMachineData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default, displayName: displayName, vmType: vmType);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.AvsCloudLinkData"/>. </summary>
@@ -2049,13 +1914,7 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsCloudLinkData AvsCloudLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsCloudLinkStatus? status, ResourceIdentifier linkedCloud)
         {
-            return new AvsCloudLinkData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                status is null && linkedCloud is null ? default : new CloudLinkProperties(default, status, linkedCloud, default),
-                default);
+            return AvsCloudLinkData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default, status: status, linkedCloud: linkedCloud);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudClusterVirtualMachineData"/>. </summary>
@@ -2071,19 +1930,7 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsPrivateCloudClusterVirtualMachineData AvsPrivateCloudClusterVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string moRefId, string folderPath, VirtualMachineRestrictMovementState? restrictMovement)
         {
-            return new AvsPrivateCloudClusterVirtualMachineData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                displayName is null && moRefId is null && folderPath is null && restrictMovement is null ? default : new VirtualMachineProperties(
-                    default,
-                    displayName,
-                    moRefId,
-                    folderPath,
-                    restrictMovement,
-                    default),
-                default);
+            return AvsPrivateCloudClusterVirtualMachineData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default, displayName: displayName, moRefId: moRefId, folderPath: folderPath, restrictMovement: restrictMovement);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.ScriptPackageData"/>. </summary>
@@ -2099,19 +1946,7 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ScriptPackageData ScriptPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string version, string company, Uri uri)
         {
-            return new ScriptPackageData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                description is null && version is null && company is null && uri is null ? default : new ScriptPackageProperties(
-                    default,
-                    description,
-                    version,
-                    company,
-                    uri,
-                    default),
-                default);
+            return ScriptPackageData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default, description: description, version: version, company: company, uri: uri);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.ScriptCmdletData"/>. </summary>
@@ -2126,19 +1961,7 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ScriptCmdletData ScriptCmdletData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, TimeSpan? timeout, IEnumerable<ScriptParameter> parameters)
         {
-            return new ScriptCmdletData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                description is null && timeout is null && parameters is null ? default : new ScriptCmdletProperties(
-                    default,
-                    description,
-                    timeout,
-                    default,
-                    (parameters ?? new ChangeTrackingList<ScriptParameter>()).ToList(),
-                    default),
-                default);
+            return ScriptCmdletData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default, description: description, timeout: timeout, audience: default, parameters: parameters);
         }
     }
 }

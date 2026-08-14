@@ -486,22 +486,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
-        /// <param name="scopeId"> Scope id of the resource. </param>
-        /// <param name="scopeDisplayName"> Display name of the resource. </param>
-        /// <param name="scopeType"> Type of the resource. </param>
-        /// <param name="roleDefinitionId"> Id of the role definition. </param>
-        /// <param name="roleDefinitionDisplayName"> Display name of the role definition. </param>
-        /// <param name="roleType"> Type of the role definition. </param>
-        /// <param name="principalId"> Id of the principal. </param>
-        /// <param name="principalDisplayName"> Display name of the principal. </param>
-        /// <param name="email"> Email id of the principal. </param>
-        /// <param name="principalType"> Type of the principal. </param>
-        /// <returns> A new <see cref="Models.RoleManagementExpandedProperties"/> instance for mocking. </returns>
-        public static RoleManagementExpandedProperties RoleManagementExpandedProperties(ResourceIdentifier scopeId = default, string scopeDisplayName = default, RoleManagementScopeType? scopeType = default, ResourceIdentifier roleDefinitionId = default, string roleDefinitionDisplayName = default, AuthorizationRoleType? roleType = default, Guid? principalId = default, string principalDisplayName = default, string email = default, RoleManagementPrincipalType? principalType = default)
-        {
-            return new RoleManagementExpandedProperties(scopeId is null && scopeDisplayName is null && scopeType is null ? default : new ExpandedPropertiesScope(scopeId, scopeDisplayName, scopeType, default), roleDefinitionId is null && roleDefinitionDisplayName is null && roleType is null ? default : new ExpandedPropertiesRoleDefinition(roleDefinitionId, roleDefinitionDisplayName, roleType, default), principalId is null && principalDisplayName is null && email is null && principalType is null ? default : new ExpandedPropertiesPrincipal(principalId, principalDisplayName, email, principalType, default), default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1039,33 +1023,6 @@ namespace Azure.ResourceManager.Authorization.Models
                     (effectiveRules ?? new ChangeTrackingList<RoleManagementPolicyRule>()).ToList(),
                     policyAssignmentProperties,
                     default),
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="scopeId"> Scope id of the resource. </param>
-        /// <param name="scopeDisplayName"> Display name of the resource. </param>
-        /// <param name="scopeType"> Type of the resource. </param>
-        /// <param name="roleDefinitionId"> Id of the role definition. </param>
-        /// <param name="roleDefinitionDisplayName"> Display name of the role definition. </param>
-        /// <param name="roleType"> Type of the role definition. </param>
-        /// <param name="policyId"> Id of the policy. </param>
-        /// <param name="lastModifiedBy"> The name of the entity last modified it. </param>
-        /// <param name="lastModifiedOn"> The last modified date time. </param>
-        /// <returns> A new <see cref="Models.PolicyAssignmentProperties"/> instance for mocking. </returns>
-        public static PolicyAssignmentProperties PolicyAssignmentProperties(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier scopeId = default, string scopeDisplayName = default, RoleManagementScopeType? scopeType = default, ResourceIdentifier roleDefinitionId = default, string roleDefinitionDisplayName = default, AuthorizationRoleType? roleType = default, ResourceIdentifier policyId = default, RoleManagementPrincipal lastModifiedBy = default, DateTimeOffset? lastModifiedOn = default)
-        {
-            return new PolicyAssignmentProperties(
-                id,
-                name,
-                resourceType,
-                systemData,
-                scopeId is null && scopeDisplayName is null && scopeType is null ? default : new PolicyAssignmentPropertiesScope(scopeId, scopeDisplayName, scopeType, default),
-                roleDefinitionId is null && roleDefinitionDisplayName is null && roleType is null ? default : new PolicyAssignmentPropertiesRoleDefinition(roleDefinitionId, roleDefinitionDisplayName, roleType, default),
-                policyId is null && lastModifiedBy is null && lastModifiedOn is null ? default : new PolicyAssignmentPropertiesPolicy(policyId, lastModifiedBy, lastModifiedOn, default),
                 default);
         }
 
@@ -1796,8 +1753,12 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="isSystemProtected"> Specifies whether this deny assignment was created by Azure and cannot be edited or deleted. </param>
         /// <returns> A new <see cref="Authorization.DenyAssignmentData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DenyAssignmentData DenyAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string denyAssignmentName = default, string description = default, IEnumerable<DenyAssignmentPermission> permissions = default, string scope = default, bool? isAppliedToChildScopes = default, IEnumerable<RoleManagementPrincipal> principals = default, IEnumerable<RoleManagementPrincipal> excludePrincipals = default, bool? isSystemProtected = default)
+        public static DenyAssignmentData DenyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string denyAssignmentName, string description, IEnumerable<DenyAssignmentPermission> permissions, string scope, bool? isAppliedToChildScopes, IEnumerable<RoleManagementPrincipal> principals, IEnumerable<RoleManagementPrincipal> excludePrincipals, bool? isSystemProtected)
         {
+            permissions ??= new ChangeTrackingList<DenyAssignmentPermission>();
+            principals ??= new ChangeTrackingList<RoleManagementPrincipal>();
+            excludePrincipals ??= new ChangeTrackingList<RoleManagementPrincipal>();
+
             return new DenyAssignmentData(
                 id,
                 name,
@@ -1835,25 +1796,9 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="assignableScopes"> Role definition assignable scopes. </param>
         /// <returns> A new <see cref="Authorization.AuthorizationRoleDefinitionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AuthorizationRoleDefinitionData AuthorizationRoleDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string roleName = default, string description = default, AuthorizationRoleType? roleType = default, IEnumerable<RoleDefinitionPermission> permissions = default, IEnumerable<string> assignableScopes = default)
+        public static AuthorizationRoleDefinitionData AuthorizationRoleDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string roleName, string description, AuthorizationRoleType? roleType, IEnumerable<RoleDefinitionPermission> permissions, IEnumerable<string> assignableScopes)
         {
-            return new AuthorizationRoleDefinitionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                roleName is null && description is null && roleType is null && permissions is null && assignableScopes is null ? default : new RoleDefinitionProperties(
-                    roleName,
-                    description,
-                    roleType,
-                    (permissions ?? new ChangeTrackingList<RoleDefinitionPermission>()).ToList(),
-                    (assignableScopes ?? new ChangeTrackingList<string>()).ToList(),
-                    default,
-                    default,
-                    default,
-                    default,
-                    default),
-                default);
+            return AuthorizationRoleDefinitionData(id: id, name: name, resourceType: resourceType, systemData: systemData, roleName: roleName, description: description, roleType: roleType, permissions: permissions, assignableScopes: assignableScopes, createdOn: default, updatedOn: default, createdBy: default, updatedBy: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RoleManagementExpandedProperties"/>. </summary>
@@ -1868,7 +1813,6 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="scopeDisplayName"> Display name of the resource. </param>
         /// <param name="scopeType"> Type of the scope. </param>
         /// <returns> A new <see cref="Models.RoleManagementExpandedProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static RoleManagementExpandedProperties RoleManagementExpandedProperties(Guid? principalId = default, string principalDisplayName = default, string email = default, RoleManagementPrincipalType? principalType = default, ResourceIdentifier roleDefinitionId = default, string roleDefinitionDisplayName = default, AuthorizationRoleType? roleType = default, ResourceIdentifier scopeId = default, string scopeDisplayName = default, RoleManagementScopeType? scopeType = default)
         {
             return new RoleManagementExpandedProperties(scopeId is null && scopeDisplayName is null && scopeType is null ? default : new ExpandedPropertiesScope(scopeId, scopeDisplayName, scopeType, default), roleDefinitionId is null && roleDefinitionDisplayName is null && roleType is null ? default : new ExpandedPropertiesRoleDefinition(roleDefinitionId, roleDefinitionDisplayName, roleType, default), principalId is null && principalDisplayName is null && email is null && principalType is null ? default : new ExpandedPropertiesPrincipal(principalId, principalDisplayName, email, principalType, default), default);
@@ -1889,7 +1833,6 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="scopeDisplayName"> Display name of the resource. </param>
         /// <param name="scopeType"> Type of the scope. </param>
         /// <returns> A new <see cref="Models.PolicyAssignmentProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static PolicyAssignmentProperties PolicyAssignmentProperties(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier policyId = default, RoleManagementPrincipal lastModifiedBy = default, DateTimeOffset? lastModifiedOn = default, ResourceIdentifier roleDefinitionId = default, string roleDefinitionDisplayName = default, AuthorizationRoleType? roleType = default, ResourceIdentifier scopeId = default, string scopeDisplayName = default, RoleManagementScopeType? scopeType = default)
         {
             return new PolicyAssignmentProperties(
