@@ -8813,6 +8813,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static A2AProtectedManagedDiskDetails A2AProtectedManagedDiskDetails(string diskId, ResourceIdentifier recoveryResourceGroupId, ResourceIdentifier recoveryTargetDiskId, ResourceIdentifier recoveryReplicaDiskId, ResourceIdentifier recoveryOrignalTargetDiskId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, ResourceIdentifier recoveryDiskEncryptionSetId, ResourceIdentifier primaryDiskEncryptionSetId, string diskName, long? diskCapacityInBytes, ResourceIdentifier primaryStagingAzureStorageAccountId, string diskType, bool? isResyncRequired, int? monitoringPercentageCompletion, string monitoringJobType, double? dataPendingInStagingStorageAccountInMB, double? dataPendingAtSourceAgentInMB, string diskState, IEnumerable<string> allowedDiskLevelOperation, bool? isDiskEncrypted, string secretIdentifier, ResourceIdentifier dekKeyVaultArmId, bool? isDiskKeyEncrypted, string keyIdentifier, ResourceIdentifier kekKeyVaultArmId, string failoverDiskName, string tfoDiskName)
         {
+            allowedDiskLevelOperation ??= new ChangeTrackingList<string>();
+
             return new A2AProtectedManagedDiskDetails(
                 diskId,
                 recoveryResourceGroupId,
@@ -8858,20 +8860,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="diskEncryptionInfo"> The recovery disk encryption information (for one / single pass flows). </param>
         /// <returns> A new <see cref="Models.A2AVmManagedDiskDetails"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static A2AVmManagedDiskDetails A2AVmManagedDiskDetails(string diskId = default, ResourceIdentifier primaryStagingAzureStorageAccountId = default, ResourceIdentifier recoveryResourceGroupId = default, string recoveryReplicaDiskAccountType = default, string recoveryTargetDiskAccountType = default, ResourceIdentifier recoveryDiskEncryptionSetId = default, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = default)
+        public static A2AVmManagedDiskDetails A2AVmManagedDiskDetails(string diskId, ResourceIdentifier primaryStagingAzureStorageAccountId, ResourceIdentifier recoveryResourceGroupId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, ResourceIdentifier recoveryDiskEncryptionSetId, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo)
         {
-            return new A2AVmManagedDiskDetails(
-                diskId,
-                primaryStagingAzureStorageAccountId,
-                recoveryResourceGroupId,
-                recoveryReplicaDiskAccountType,
-                recoveryTargetDiskAccountType,
-                recoveryDiskEncryptionSetId,
-                diskEncryptionInfo,
-                default,
-                default,
-                default,
-                default);
+            return A2AVmManagedDiskDetails(diskId: diskId, primaryStagingAzureStorageAccountId: primaryStagingAzureStorageAccountId, recoveryResourceGroupId: recoveryResourceGroupId, recoveryReplicaDiskAccountType: recoveryReplicaDiskAccountType, recoveryTargetDiskAccountType: recoveryTargetDiskAccountType, recoveryDiskEncryptionSetId: recoveryDiskEncryptionSetId, diskEncryptionInfo: diskEncryptionInfo, recoveryNetworkAccessPolicy: default, recoveryDiskAccessId: default, recoveryPublicNetworkAccess: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.A2AEnableProtectionContent"/>. </summary>
@@ -8897,32 +8888,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="autoProtectionOfDataDisk"> A value indicating whether the auto protection is enabled. </param>
         /// <returns> A new <see cref="Models.A2AEnableProtectionContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static A2AEnableProtectionContent A2AEnableProtectionContent(ResourceIdentifier fabricObjectId = default, ResourceIdentifier recoveryContainerId = default, ResourceIdentifier recoveryResourceGroupId = default, string recoveryCloudServiceId = default, ResourceIdentifier recoveryAvailabilitySetId = default, ResourceIdentifier recoveryProximityPlacementGroupId = default, IEnumerable<A2AVmDiskDetails> vmDisks = default, IEnumerable<A2AVmManagedDiskDetails> vmManagedDisks = default, string multiVmGroupName = default, string multiVmGroupId = default, ResourceIdentifier protectionClusterId = default, ResourceIdentifier recoveryBootDiagStorageAccountId = default, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = default, string recoveryAvailabilityZone = default, SiteRecoveryExtendedLocation recoveryExtendedLocation = default, ResourceIdentifier recoveryAzureNetworkId = default, string recoverySubnetName = default, ResourceIdentifier recoveryVirtualMachineScaleSetId = default, ResourceIdentifier recoveryCapacityReservationGroupId = default, AutoProtectionOfDataDisk? autoProtectionOfDataDisk = default)
+        public static A2AEnableProtectionContent A2AEnableProtectionContent(ResourceIdentifier fabricObjectId, ResourceIdentifier recoveryContainerId, ResourceIdentifier recoveryResourceGroupId, string recoveryCloudServiceId, ResourceIdentifier recoveryAvailabilitySetId, ResourceIdentifier recoveryProximityPlacementGroupId, IEnumerable<A2AVmDiskDetails> vmDisks, IEnumerable<A2AVmManagedDiskDetails> vmManagedDisks, string multiVmGroupName, string multiVmGroupId, ResourceIdentifier protectionClusterId, ResourceIdentifier recoveryBootDiagStorageAccountId, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, string recoveryAvailabilityZone, SiteRecoveryExtendedLocation recoveryExtendedLocation, ResourceIdentifier recoveryAzureNetworkId, string recoverySubnetName, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId, AutoProtectionOfDataDisk? autoProtectionOfDataDisk)
         {
-            return new A2AEnableProtectionContent(
-                default,
-                default,
-                fabricObjectId,
-                recoveryContainerId,
-                recoveryResourceGroupId,
-                recoveryCloudServiceId,
-                recoveryAvailabilitySetId,
-                recoveryProximityPlacementGroupId,
-                (vmDisks ?? new ChangeTrackingList<A2AVmDiskDetails>()).ToList(),
-                (vmManagedDisks ?? new ChangeTrackingList<A2AVmManagedDiskDetails>()).ToList(),
-                multiVmGroupName,
-                multiVmGroupId,
-                protectionClusterId,
-                recoveryBootDiagStorageAccountId,
-                diskEncryptionInfo,
-                recoveryAvailabilityZone,
-                recoveryExtendedLocation,
-                recoveryAzureNetworkId,
-                recoverySubnetName,
-                recoveryVirtualMachineScaleSetId,
-                recoveryCapacityReservationGroupId,
-                default,
-                autoProtectionOfDataDisk);
+            return A2AEnableProtectionContent(fabricObjectId: fabricObjectId, recoveryContainerId: recoveryContainerId, recoveryResourceGroupId: recoveryResourceGroupId, recoveryCloudServiceId: recoveryCloudServiceId, recoveryAvailabilitySetId: recoveryAvailabilitySetId, recoveryProximityPlacementGroupId: recoveryProximityPlacementGroupId, vmDisks: vmDisks, vmManagedDisks: vmManagedDisks, multiVmGroupName: multiVmGroupName, multiVmGroupId: multiVmGroupId, protectionClusterId: protectionClusterId, recoveryBootDiagStorageAccountId: recoveryBootDiagStorageAccountId, diskEncryptionInfo: diskEncryptionInfo, recoveryAvailabilityZone: recoveryAvailabilityZone, recoveryExtendedLocation: recoveryExtendedLocation, recoveryAzureNetworkId: recoveryAzureNetworkId, recoverySubnetName: recoverySubnetName, recoveryVirtualMachineScaleSetId: recoveryVirtualMachineScaleSetId, recoveryCapacityReservationGroupId: recoveryCapacityReservationGroupId, platformFaultDomain: default, autoProtectionOfDataDisk: autoProtectionOfDataDisk);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.A2AReplicationDetails"/>. </summary>
@@ -8984,79 +8952,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="churnOptionSelected"> A value indicating the churn option selected by user. </param>
         /// <returns> A new <see cref="Models.A2AReplicationDetails"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static A2AReplicationDetails A2AReplicationDetails(ResourceIdentifier fabricObjectId = default, string initialPrimaryZone = default, AzureLocation? initialPrimaryFabricLocation = default, string initialRecoveryZone = default, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation = default, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation = default, AzureLocation? initialRecoveryFabricLocation = default, string multiVmGroupId = default, string multiVmGroupName = default, MultiVmGroupCreateOption? multiVmGroupCreateOption = default, string managementId = default, ResourceIdentifier protectionClusterId = default, bool? isClusterInfraReady = default, IEnumerable<A2AProtectedDiskDetails> protectedDisks = default, IEnumerable<A2AUnprotectedDiskDetails> unprotectedDisks = default, IEnumerable<A2AProtectedManagedDiskDetails> protectedManagedDisks = default, ResourceIdentifier recoveryBootDiagStorageAccountId = default, AzureLocation? primaryFabricLocation = default, AzureLocation? recoveryFabricLocation = default, string osType = default, string recoveryAzureVmSize = default, string recoveryAzureVmName = default, ResourceIdentifier recoveryAzureResourceGroupId = default, string recoveryCloudService = default, string recoveryAvailabilitySet = default, ResourceIdentifier selectedRecoveryAzureNetworkId = default, ResourceIdentifier selectedTfoAzureNetworkId = default, IEnumerable<VmNicDetails> vmNics = default, A2AVmSyncedConfigDetails vmSyncedConfigDetails = default, int? monitoringPercentageCompletion = default, string monitoringJobType = default, DateTimeOffset? lastHeartbeat = default, string agentVersion = default, DateTimeOffset? agentExpireOn = default, bool? isReplicationAgentUpdateRequired = default, DateTimeOffset? agentCertificateExpireOn = default, bool? isReplicationAgentCertificateUpdateRequired = default, ResourceIdentifier recoveryFabricObjectId = default, string vmProtectionState = default, string vmProtectionStateDescription = default, string lifecycleId = default, ResourceIdentifier testFailoverRecoveryFabricObjectId = default, long? rpoInSeconds = default, DateTimeOffset? lastRpoCalculatedOn = default, string primaryAvailabilityZone = default, string recoveryAvailabilityZone = default, SiteRecoveryExtendedLocation primaryExtendedLocation = default, SiteRecoveryExtendedLocation recoveryExtendedLocation = default, SiteRecoveryVmEncryptionType? vmEncryptionType = default, string tfoAzureVmName = default, string recoveryAzureGeneration = default, ResourceIdentifier recoveryProximityPlacementGroupId = default, AutoProtectionOfDataDisk? autoProtectionOfDataDisk = default, ResourceIdentifier recoveryVirtualMachineScaleSetId = default, ResourceIdentifier recoveryCapacityReservationGroupId = default, ChurnOptionSelected? churnOptionSelected = default)
+        public static A2AReplicationDetails A2AReplicationDetails(ResourceIdentifier fabricObjectId, string initialPrimaryZone, AzureLocation? initialPrimaryFabricLocation, string initialRecoveryZone, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation, AzureLocation? initialRecoveryFabricLocation, string multiVmGroupId, string multiVmGroupName, MultiVmGroupCreateOption? multiVmGroupCreateOption, string managementId, ResourceIdentifier protectionClusterId, bool? isClusterInfraReady, IEnumerable<A2AProtectedDiskDetails> protectedDisks, IEnumerable<A2AUnprotectedDiskDetails> unprotectedDisks, IEnumerable<A2AProtectedManagedDiskDetails> protectedManagedDisks, ResourceIdentifier recoveryBootDiagStorageAccountId, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation, string osType, string recoveryAzureVmSize, string recoveryAzureVmName, ResourceIdentifier recoveryAzureResourceGroupId, string recoveryCloudService, string recoveryAvailabilitySet, ResourceIdentifier selectedRecoveryAzureNetworkId, ResourceIdentifier selectedTfoAzureNetworkId, IEnumerable<VmNicDetails> vmNics, A2AVmSyncedConfigDetails vmSyncedConfigDetails, int? monitoringPercentageCompletion, string monitoringJobType, DateTimeOffset? lastHeartbeat, string agentVersion, DateTimeOffset? agentExpireOn, bool? isReplicationAgentUpdateRequired, DateTimeOffset? agentCertificateExpireOn, bool? isReplicationAgentCertificateUpdateRequired, ResourceIdentifier recoveryFabricObjectId, string vmProtectionState, string vmProtectionStateDescription, string lifecycleId, ResourceIdentifier testFailoverRecoveryFabricObjectId, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string primaryAvailabilityZone, string recoveryAvailabilityZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation, SiteRecoveryVmEncryptionType? vmEncryptionType, string tfoAzureVmName, string recoveryAzureGeneration, ResourceIdentifier recoveryProximityPlacementGroupId, AutoProtectionOfDataDisk? autoProtectionOfDataDisk, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId, ChurnOptionSelected? churnOptionSelected)
         {
-            return new A2AReplicationDetails(
-                default,
-                default,
-                fabricObjectId,
-                initialPrimaryZone,
-                initialPrimaryFabricLocation,
-                initialRecoveryZone,
-                initialPrimaryExtendedLocation,
-                initialRecoveryExtendedLocation,
-                initialRecoveryFabricLocation,
-                multiVmGroupId,
-                multiVmGroupName,
-                multiVmGroupCreateOption,
-                managementId,
-                protectionClusterId,
-                isClusterInfraReady,
-                (protectedDisks ?? new ChangeTrackingList<A2AProtectedDiskDetails>()).ToList(),
-                (unprotectedDisks ?? new ChangeTrackingList<A2AUnprotectedDiskDetails>()).ToList(),
-                (protectedManagedDisks ?? new ChangeTrackingList<A2AProtectedManagedDiskDetails>()).ToList(),
-                recoveryBootDiagStorageAccountId,
-                primaryFabricLocation,
-                recoveryFabricLocation,
-                osType,
-                recoveryAzureVmSize,
-                recoveryAzureVmName,
-                recoveryAzureResourceGroupId,
-                recoveryCloudService,
-                recoveryAvailabilitySet,
-                selectedRecoveryAzureNetworkId,
-                selectedTfoAzureNetworkId,
-                (vmNics ?? new ChangeTrackingList<VmNicDetails>()).ToList(),
-                vmSyncedConfigDetails,
-                monitoringPercentageCompletion,
-                monitoringJobType,
-                lastHeartbeat,
-                agentVersion,
-                agentExpireOn,
-                isReplicationAgentUpdateRequired,
-                agentCertificateExpireOn,
-                isReplicationAgentCertificateUpdateRequired,
-                recoveryFabricObjectId,
-                vmProtectionState,
-                vmProtectionStateDescription,
-                lifecycleId,
-                testFailoverRecoveryFabricObjectId,
-                rpoInSeconds,
-                lastRpoCalculatedOn,
-                primaryAvailabilityZone,
-                recoveryAvailabilityZone,
-                primaryExtendedLocation,
-                recoveryExtendedLocation,
-                vmEncryptionType,
-                tfoAzureVmName,
-                recoveryAzureGeneration,
-                recoveryProximityPlacementGroupId,
-                autoProtectionOfDataDisk,
-                recoveryVirtualMachineScaleSetId,
-                recoveryCapacityReservationGroupId,
-                churnOptionSelected,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default);
+            return A2AReplicationDetails(fabricObjectId: fabricObjectId, initialPrimaryZone: initialPrimaryZone, initialPrimaryFabricLocation: initialPrimaryFabricLocation, initialRecoveryZone: initialRecoveryZone, initialPrimaryExtendedLocation: initialPrimaryExtendedLocation, initialRecoveryExtendedLocation: initialRecoveryExtendedLocation, initialRecoveryFabricLocation: initialRecoveryFabricLocation, multiVmGroupId: multiVmGroupId, multiVmGroupName: multiVmGroupName, multiVmGroupCreateOption: multiVmGroupCreateOption, managementId: managementId, protectionClusterId: protectionClusterId, isClusterInfraReady: isClusterInfraReady, protectedDisks: protectedDisks, unprotectedDisks: unprotectedDisks, protectedManagedDisks: protectedManagedDisks, recoveryBootDiagStorageAccountId: recoveryBootDiagStorageAccountId, primaryFabricLocation: primaryFabricLocation, recoveryFabricLocation: recoveryFabricLocation, osType: osType, recoveryAzureVmSize: recoveryAzureVmSize, recoveryAzureVmName: recoveryAzureVmName, recoveryAzureResourceGroupId: recoveryAzureResourceGroupId, recoveryCloudService: recoveryCloudService, recoveryAvailabilitySet: recoveryAvailabilitySet, selectedRecoveryAzureNetworkId: selectedRecoveryAzureNetworkId, selectedTfoAzureNetworkId: selectedTfoAzureNetworkId, vmNics: vmNics, vmSyncedConfigDetails: vmSyncedConfigDetails, monitoringPercentageCompletion: monitoringPercentageCompletion, monitoringJobType: monitoringJobType, lastHeartbeat: lastHeartbeat, agentVersion: agentVersion, agentExpireOn: agentExpireOn, isReplicationAgentUpdateRequired: isReplicationAgentUpdateRequired, agentCertificateExpireOn: agentCertificateExpireOn, isReplicationAgentCertificateUpdateRequired: isReplicationAgentCertificateUpdateRequired, recoveryFabricObjectId: recoveryFabricObjectId, vmProtectionState: vmProtectionState, vmProtectionStateDescription: vmProtectionStateDescription, lifecycleId: lifecycleId, testFailoverRecoveryFabricObjectId: testFailoverRecoveryFabricObjectId, rpoInSeconds: rpoInSeconds, lastRpoCalculatedOn: lastRpoCalculatedOn, primaryAvailabilityZone: primaryAvailabilityZone, recoveryAvailabilityZone: recoveryAvailabilityZone, primaryExtendedLocation: primaryExtendedLocation, recoveryExtendedLocation: recoveryExtendedLocation, vmEncryptionType: vmEncryptionType, tfoAzureVmName: tfoAzureVmName, recoveryAzureGeneration: recoveryAzureGeneration, recoveryProximityPlacementGroupId: recoveryProximityPlacementGroupId, autoProtectionOfDataDisk: autoProtectionOfDataDisk, recoveryVirtualMachineScaleSetId: recoveryVirtualMachineScaleSetId, recoveryCapacityReservationGroupId: recoveryCapacityReservationGroupId, churnOptionSelected: churnOptionSelected, agentReinstallAttemptToVersion: default, osFamilyName: default, distroName: default, distroNameForWhichAgentIsInstalled: default, isAgentUpgradeable: default, isAgentReinstallRequired: default, reasonsBlockingReInstall: default, reasonsBlockingReinstallDetails: default, isAgentUpgradeInProgress: default, autoAgentUpgradeRetryCount: default, isAgentUpgradeRetryThresholdExhausted: default, platformFaultDomain: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HyperVReplicaAzureManagedDiskDetails"/>. </summary>
@@ -9068,19 +8966,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="sectorSizeInBytes"> The logical sector size (in bytes), 512 by default. </param>
         /// <returns> A new <see cref="Models.HyperVReplicaAzureManagedDiskDetails"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HyperVReplicaAzureManagedDiskDetails HyperVReplicaAzureManagedDiskDetails(string diskId = default, string seedManagedDiskId = default, string replicaDiskType = default, ResourceIdentifier diskEncryptionSetId = default, SiteRecoveryDiskAccountType? targetDiskAccountType = default, int? sectorSizeInBytes = default)
+        public static HyperVReplicaAzureManagedDiskDetails HyperVReplicaAzureManagedDiskDetails(string diskId, string seedManagedDiskId, string replicaDiskType, ResourceIdentifier diskEncryptionSetId, SiteRecoveryDiskAccountType? targetDiskAccountType, int? sectorSizeInBytes)
         {
-            return new HyperVReplicaAzureManagedDiskDetails(
-                diskId,
-                seedManagedDiskId,
-                replicaDiskType,
-                diskEncryptionSetId,
-                targetDiskAccountType,
-                sectorSizeInBytes,
-                default,
-                default,
-                default,
-                default);
+            return HyperVReplicaAzureManagedDiskDetails(diskId: diskId, seedManagedDiskId: seedManagedDiskId, replicaDiskType: replicaDiskType, diskEncryptionSetId: diskEncryptionSetId, targetDiskAccountType: targetDiskAccountType, sectorSizeInBytes: sectorSizeInBytes, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HyperVReplicaAzureReplicationDetails"/>. </summary>
@@ -9122,48 +9010,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetVmSecurityProfile"> The target VM security profile. </param>
         /// <returns> A new <see cref="Models.HyperVReplicaAzureReplicationDetails"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HyperVReplicaAzureReplicationDetails HyperVReplicaAzureReplicationDetails(IEnumerable<SiteRecoveryVmDiskDetails> azureVmDiskDetails = default, string recoveryAzureVmName = default, string recoveryAzureVmSize = default, string recoveryAzureStorageAccount = default, ResourceIdentifier recoveryAzureLogStorageAccountId = default, DateTimeOffset? lastReplicatedOn = default, long? rpoInSeconds = default, DateTimeOffset? lastRpoCalculatedOn = default, string vmId = default, string vmProtectionState = default, string vmProtectionStateDescription = default, InitialReplicationDetails initialReplicationDetails = default, IEnumerable<VmNicDetails> vmNics = default, ResourceIdentifier selectedRecoveryAzureNetworkId = default, string selectedSourceNicId = default, string encryption = default, SiteRecoveryOSDetails osDetails = default, int? sourceVmRamSizeInMB = default, int? sourceVmCpuCount = default, string enableRdpOnTargetOption = default, ResourceIdentifier recoveryAzureResourceGroupId = default, ResourceIdentifier recoveryAvailabilitySetId = default, string targetAvailabilityZone = default, ResourceIdentifier targetProximityPlacementGroupId = default, string useManagedDisks = default, string licenseType = default, string sqlServerLicenseType = default, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = default, DateTimeOffset? lastRecoveryPointReceived = default, IReadOnlyDictionary<string, string> targetVmTags = default, IReadOnlyDictionary<string, string> seedManagedDiskTags = default, IReadOnlyDictionary<string, string> targetManagedDiskTags = default, IReadOnlyDictionary<string, string> targetNicTags = default, IEnumerable<HyperVReplicaAzureManagedDiskDetails> protectedManagedDisks = default, IEnumerable<OSUpgradeSupportedVersions> allAvailableOSUpgradeConfigurations = default, RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile = default)
+        public static HyperVReplicaAzureReplicationDetails HyperVReplicaAzureReplicationDetails(IEnumerable<SiteRecoveryVmDiskDetails> azureVmDiskDetails, string recoveryAzureVmName, string recoveryAzureVmSize, string recoveryAzureStorageAccount, ResourceIdentifier recoveryAzureLogStorageAccountId, DateTimeOffset? lastReplicatedOn, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string vmId, string vmProtectionState, string vmProtectionStateDescription, InitialReplicationDetails initialReplicationDetails, IEnumerable<VmNicDetails> vmNics, ResourceIdentifier selectedRecoveryAzureNetworkId, string selectedSourceNicId, string encryption, SiteRecoveryOSDetails osDetails, int? sourceVmRamSizeInMB, int? sourceVmCpuCount, string enableRdpOnTargetOption, ResourceIdentifier recoveryAzureResourceGroupId, ResourceIdentifier recoveryAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, string useManagedDisks, string licenseType, string sqlServerLicenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, DateTimeOffset? lastRecoveryPointReceived, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyDictionary<string, string> seedManagedDiskTags, IReadOnlyDictionary<string, string> targetManagedDiskTags, IReadOnlyDictionary<string, string> targetNicTags, IEnumerable<HyperVReplicaAzureManagedDiskDetails> protectedManagedDisks, IEnumerable<OSUpgradeSupportedVersions> allAvailableOSUpgradeConfigurations, RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile)
         {
-            return new HyperVReplicaAzureReplicationDetails(
-                default,
-                default,
-                (azureVmDiskDetails ?? new ChangeTrackingList<SiteRecoveryVmDiskDetails>()).ToList(),
-                recoveryAzureVmName,
-                recoveryAzureVmSize,
-                recoveryAzureStorageAccount,
-                recoveryAzureLogStorageAccountId,
-                lastReplicatedOn,
-                rpoInSeconds,
-                lastRpoCalculatedOn,
-                vmId,
-                vmProtectionState,
-                vmProtectionStateDescription,
-                initialReplicationDetails,
-                (vmNics ?? new ChangeTrackingList<VmNicDetails>()).ToList(),
-                selectedRecoveryAzureNetworkId,
-                selectedSourceNicId,
-                encryption,
-                osDetails,
-                sourceVmRamSizeInMB,
-                sourceVmCpuCount,
-                enableRdpOnTargetOption,
-                recoveryAzureResourceGroupId,
-                recoveryAvailabilitySetId,
-                targetAvailabilityZone,
-                targetProximityPlacementGroupId,
-                useManagedDisks,
-                licenseType,
-                sqlServerLicenseType,
-                linuxLicenseType,
-                lastRecoveryPointReceived,
-                targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
-                seedManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
-                targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
-                targetNicTags ?? new ChangeTrackingDictionary<string, string>(),
-                (protectedManagedDisks ?? new ChangeTrackingList<HyperVReplicaAzureManagedDiskDetails>()).ToList(),
-                (allAvailableOSUpgradeConfigurations ?? new ChangeTrackingList<OSUpgradeSupportedVersions>()).ToList(),
-                targetVmSecurityProfile,
-                default);
+            return HyperVReplicaAzureReplicationDetails(azureVmDiskDetails: azureVmDiskDetails, recoveryAzureVmName: recoveryAzureVmName, recoveryAzureVmSize: recoveryAzureVmSize, recoveryAzureStorageAccount: recoveryAzureStorageAccount, recoveryAzureLogStorageAccountId: recoveryAzureLogStorageAccountId, lastReplicatedOn: lastReplicatedOn, rpoInSeconds: rpoInSeconds, lastRpoCalculatedOn: lastRpoCalculatedOn, vmId: vmId, vmProtectionState: vmProtectionState, vmProtectionStateDescription: vmProtectionStateDescription, initialReplicationDetails: initialReplicationDetails, vmNics: vmNics, selectedRecoveryAzureNetworkId: selectedRecoveryAzureNetworkId, selectedSourceNicId: selectedSourceNicId, encryption: encryption, osDetails: osDetails, sourceVmRamSizeInMB: sourceVmRamSizeInMB, sourceVmCpuCount: sourceVmCpuCount, enableRdpOnTargetOption: enableRdpOnTargetOption, recoveryAzureResourceGroupId: recoveryAzureResourceGroupId, recoveryAvailabilitySetId: recoveryAvailabilitySetId, targetAvailabilityZone: targetAvailabilityZone, targetProximityPlacementGroupId: targetProximityPlacementGroupId, useManagedDisks: useManagedDisks, licenseType: licenseType, sqlServerLicenseType: sqlServerLicenseType, linuxLicenseType: linuxLicenseType, lastRecoveryPointReceived: lastRecoveryPointReceived, targetVmTags: targetVmTags, seedManagedDiskTags: seedManagedDiskTags, targetManagedDiskTags: targetManagedDiskTags, targetNicTags: targetNicTags, protectedManagedDisks: protectedManagedDisks, allAvailableOSUpgradeConfigurations: allAvailableOSUpgradeConfigurations, targetVmSecurityProfile: targetVmSecurityProfile, targetCapacityReservationGroupId: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UpdateDiskContent"/>. </summary>
@@ -9171,15 +9020,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetDiskName"> The target disk name. </param>
         /// <returns> A new <see cref="Models.UpdateDiskContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static UpdateDiskContent UpdateDiskContent(string diskId = default, string targetDiskName = default)
+        public static UpdateDiskContent UpdateDiskContent(string diskId, string targetDiskName)
         {
-            return new UpdateDiskContent(
-                diskId,
-                targetDiskName,
-                default,
-                default,
-                default,
-                default);
+            return UpdateDiskContent(diskId: diskId, targetDiskName: targetDiskName, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmDiskContent"/>. </summary>
@@ -9190,19 +9033,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="sectorSizeInBytes"> The logical sector size (in bytes), 512 by default. </param>
         /// <returns> A new <see cref="Models.InMageRcmDiskContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static InMageRcmDiskContent InMageRcmDiskContent(string diskId = default, ResourceIdentifier logStorageAccountId = default, SiteRecoveryDiskAccountType diskType = default, ResourceIdentifier diskEncryptionSetId = default, int? sectorSizeInBytes = default)
+        public static InMageRcmDiskContent InMageRcmDiskContent(string diskId, ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType diskType, ResourceIdentifier diskEncryptionSetId, int? sectorSizeInBytes)
         {
-            return new InMageRcmDiskContent(
-                diskId,
-                logStorageAccountId,
-                diskType,
-                diskEncryptionSetId,
-                default,
-                sectorSizeInBytes,
-                default,
-                default,
-                default,
-                default);
+            return InMageRcmDiskContent(diskId: diskId, logStorageAccountId: logStorageAccountId, diskType: diskType, diskEncryptionSetId: diskEncryptionSetId, confidentialDiskEncryptionSetId: default, sectorSizeInBytes: sectorSizeInBytes, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmDisksDefaultContent"/>. </summary>
@@ -9212,18 +9045,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="sectorSizeInBytes"> The logical sector size (in bytes), 512 by default. </param>
         /// <returns> A new <see cref="Models.InMageRcmDisksDefaultContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static InMageRcmDisksDefaultContent InMageRcmDisksDefaultContent(ResourceIdentifier logStorageAccountId = default, SiteRecoveryDiskAccountType diskType = default, ResourceIdentifier diskEncryptionSetId = default, int? sectorSizeInBytes = default)
+        public static InMageRcmDisksDefaultContent InMageRcmDisksDefaultContent(ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType diskType, ResourceIdentifier diskEncryptionSetId, int? sectorSizeInBytes)
         {
-            return new InMageRcmDisksDefaultContent(
-                logStorageAccountId,
-                diskType,
-                diskEncryptionSetId,
-                default,
-                sectorSizeInBytes,
-                default,
-                default,
-                default,
-                default);
+            return InMageRcmDisksDefaultContent(logStorageAccountId: logStorageAccountId, diskType: diskType, diskEncryptionSetId: diskEncryptionSetId, confidentialDiskEncryptionSetId: default, sectorSizeInBytes: sectorSizeInBytes, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmEnableProtectionContent"/>. </summary>
@@ -9255,38 +9079,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetVmSecurityProfile"> The target VM security profile. </param>
         /// <returns> A new <see cref="Models.InMageRcmEnableProtectionContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static InMageRcmEnableProtectionContent InMageRcmEnableProtectionContent(string fabricDiscoveryMachineId = default, IEnumerable<InMageRcmDiskContent> disksToInclude = default, InMageRcmDisksDefaultContent disksDefault = default, ResourceIdentifier targetResourceGroupId = default, ResourceIdentifier targetNetworkId = default, ResourceIdentifier testNetworkId = default, string targetSubnetName = default, string testSubnetName = default, string targetVmName = default, string targetVmSize = default, SiteRecoveryLicenseType? licenseType = default, ResourceIdentifier targetAvailabilitySetId = default, string targetAvailabilityZone = default, ResourceIdentifier targetProximityPlacementGroupId = default, ResourceIdentifier targetBootDiagnosticsStorageAccountId = default, string runAsAccountId = default, Guid processServerId = default, string multiVmGroupName = default, SiteRecoverySqlServerLicenseType? sqlServerLicenseType = default, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = default, IEnumerable<UserCreatedResourceTag> targetVmTags = default, IEnumerable<UserCreatedResourceTag> seedManagedDiskTags = default, IEnumerable<UserCreatedResourceTag> targetManagedDiskTags = default, IEnumerable<UserCreatedResourceTag> targetNicTags = default, string userSelectedOSName = default, RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile = default)
+        public static InMageRcmEnableProtectionContent InMageRcmEnableProtectionContent(string fabricDiscoveryMachineId, IEnumerable<InMageRcmDiskContent> disksToInclude, InMageRcmDisksDefaultContent disksDefault, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, string targetSubnetName, string testSubnetName, string targetVmName, string targetVmSize, SiteRecoveryLicenseType? licenseType, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, string runAsAccountId, Guid processServerId, string multiVmGroupName, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, IEnumerable<UserCreatedResourceTag> targetVmTags, IEnumerable<UserCreatedResourceTag> seedManagedDiskTags, IEnumerable<UserCreatedResourceTag> targetManagedDiskTags, IEnumerable<UserCreatedResourceTag> targetNicTags, string userSelectedOSName, RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile)
         {
-            return new InMageRcmEnableProtectionContent(
-                default,
-                default,
-                fabricDiscoveryMachineId,
-                (disksToInclude ?? new ChangeTrackingList<InMageRcmDiskContent>()).ToList(),
-                disksDefault,
-                targetResourceGroupId,
-                targetNetworkId,
-                testNetworkId,
-                targetSubnetName,
-                testSubnetName,
-                targetVmName,
-                targetVmSize,
-                licenseType,
-                targetAvailabilitySetId,
-                targetAvailabilityZone,
-                targetProximityPlacementGroupId,
-                targetBootDiagnosticsStorageAccountId,
-                runAsAccountId,
-                processServerId,
-                multiVmGroupName,
-                sqlServerLicenseType,
-                linuxLicenseType,
-                (targetVmTags ?? new ChangeTrackingList<UserCreatedResourceTag>()).ToList(),
-                (seedManagedDiskTags ?? new ChangeTrackingList<UserCreatedResourceTag>()).ToList(),
-                (targetManagedDiskTags ?? new ChangeTrackingList<UserCreatedResourceTag>()).ToList(),
-                (targetNicTags ?? new ChangeTrackingList<UserCreatedResourceTag>()).ToList(),
-                userSelectedOSName,
-                targetVmSecurityProfile,
-                default);
+            return InMageRcmEnableProtectionContent(fabricDiscoveryMachineId: fabricDiscoveryMachineId, disksToInclude: disksToInclude, disksDefault: disksDefault, targetResourceGroupId: targetResourceGroupId, targetNetworkId: targetNetworkId, testNetworkId: testNetworkId, targetSubnetName: targetSubnetName, testSubnetName: testSubnetName, targetVmName: targetVmName, targetVmSize: targetVmSize, licenseType: licenseType, targetAvailabilitySetId: targetAvailabilitySetId, targetAvailabilityZone: targetAvailabilityZone, targetProximityPlacementGroupId: targetProximityPlacementGroupId, targetBootDiagnosticsStorageAccountId: targetBootDiagnosticsStorageAccountId, runAsAccountId: runAsAccountId, processServerId: processServerId, multiVmGroupName: multiVmGroupName, sqlServerLicenseType: sqlServerLicenseType, linuxLicenseType: linuxLicenseType, targetVmTags: targetVmTags, seedManagedDiskTags: seedManagedDiskTags, targetManagedDiskTags: targetManagedDiskTags, targetNicTags: targetNicTags, userSelectedOSName: userSelectedOSName, targetVmSecurityProfile: targetVmSecurityProfile, targetCapacityReservationGroupId: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmMobilityAgentDetails"/>. </summary>
@@ -9302,32 +9097,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="isUpgradeable"> A value indicating whether agent is upgradeable or not. </param>
         /// <returns> A new <see cref="Models.InMageRcmMobilityAgentDetails"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static InMageRcmMobilityAgentDetails InMageRcmMobilityAgentDetails(string version = default, string latestVersion = default, string latestAgentReleaseDate = default, string driverVersion = default, string latestUpgradableVersionWithoutReboot = default, DateTimeOffset? agentVersionExpireOn = default, DateTimeOffset? driverVersionExpireOn = default, DateTimeOffset? lastHeartbeatReceivedOn = default, IEnumerable<AgentUpgradeBlockedReason> reasonsBlockingUpgrade = default, string isUpgradeable = default)
+        public static InMageRcmMobilityAgentDetails InMageRcmMobilityAgentDetails(string version, string latestVersion, string latestAgentReleaseDate, string driverVersion, string latestUpgradableVersionWithoutReboot, DateTimeOffset? agentVersionExpireOn, DateTimeOffset? driverVersionExpireOn, DateTimeOffset? lastHeartbeatReceivedOn, IEnumerable<AgentUpgradeBlockedReason> reasonsBlockingUpgrade, string isUpgradeable)
         {
-            return new InMageRcmMobilityAgentDetails(
-                version,
-                latestVersion,
-                latestAgentReleaseDate,
-                driverVersion,
-                latestUpgradableVersionWithoutReboot,
-                agentVersionExpireOn,
-                driverVersionExpireOn,
-                lastHeartbeatReceivedOn,
-                (reasonsBlockingUpgrade ?? new ChangeTrackingList<AgentUpgradeBlockedReason>()).ToList(),
-                isUpgradeable,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default);
+            return InMageRcmMobilityAgentDetails(version: version, latestVersion: latestVersion, latestAgentReleaseDate: latestAgentReleaseDate, driverVersion: driverVersion, latestUpgradableVersionWithoutReboot: latestUpgradableVersionWithoutReboot, agentVersionExpireOn: agentVersionExpireOn, driverVersionExpireOn: driverVersionExpireOn, lastHeartbeatReceivedOn: lastHeartbeatReceivedOn, reasonsBlockingUpgrade: reasonsBlockingUpgrade, isUpgradeable: isUpgradeable, agentReinstallState: default, lastAgentReinstallType: default, agentReinstallJobId: default, agentReinstallAttemptToVersion: default, osFamilyName: default, distroName: default, distroNameForWhichAgentIsInstalled: default, isAgentUpgradeable: default, isAgentReinstallRequired: default, isLastReinstallSuccessful: default, reasonsBlockingReinstall: default, reasonsBlockingReinstallDetails: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmProtectedDiskDetails"/>. </summary>
@@ -9351,32 +9123,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="sectorSizeInBytes"> The logical sector size (in bytes), 512 by default. </param>
         /// <returns> A new <see cref="Models.InMageRcmProtectedDiskDetails"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static InMageRcmProtectedDiskDetails InMageRcmProtectedDiskDetails(string diskId = default, string diskName = default, string isOSDisk = default, long? capacityInBytes = default, RecoveryServicesSiteRecoveryDiskState? diskState = default, ResourceIdentifier logStorageAccountId = default, ResourceIdentifier diskEncryptionSetId = default, string seedManagedDiskId = default, Uri seedBlobUri = default, string targetManagedDiskId = default, SiteRecoveryDiskAccountType? diskType = default, double? dataPendingInLogDataStoreInMB = default, double? dataPendingAtSourceAgentInMB = default, string isInitialReplicationComplete = default, InMageRcmSyncDetails irDetails = default, InMageRcmSyncDetails resyncDetails = default, string customTargetDiskName = default, int? sectorSizeInBytes = default)
+        public static InMageRcmProtectedDiskDetails InMageRcmProtectedDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, RecoveryServicesSiteRecoveryDiskState? diskState, ResourceIdentifier logStorageAccountId, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, SiteRecoveryDiskAccountType? diskType, double? dataPendingInLogDataStoreInMB, double? dataPendingAtSourceAgentInMB, string isInitialReplicationComplete, InMageRcmSyncDetails irDetails, InMageRcmSyncDetails resyncDetails, string customTargetDiskName, int? sectorSizeInBytes)
         {
-            return new InMageRcmProtectedDiskDetails(
-                diskId,
-                diskName,
-                isOSDisk,
-                capacityInBytes,
-                diskState,
-                logStorageAccountId,
-                diskEncryptionSetId,
-                default,
-                seedManagedDiskId,
-                seedBlobUri,
-                targetManagedDiskId,
-                diskType,
-                dataPendingInLogDataStoreInMB,
-                dataPendingAtSourceAgentInMB,
-                isInitialReplicationComplete,
-                irDetails,
-                resyncDetails,
-                customTargetDiskName,
-                sectorSizeInBytes,
-                default,
-                default,
-                default,
-                default);
+            return InMageRcmProtectedDiskDetails(diskId: diskId, diskName: diskName, isOSDisk: isOSDisk, capacityInBytes: capacityInBytes, diskState: diskState, logStorageAccountId: logStorageAccountId, diskEncryptionSetId: diskEncryptionSetId, confidentialDiskEncryptionSetId: default, seedManagedDiskId: seedManagedDiskId, seedBlobUri: seedBlobUri, targetManagedDiskId: targetManagedDiskId, diskType: diskType, dataPendingInLogDataStoreInMB: dataPendingInLogDataStoreInMB, dataPendingAtSourceAgentInMB: dataPendingAtSourceAgentInMB, isInitialReplicationComplete: isInitialReplicationComplete, irDetails: irDetails, resyncDetails: resyncDetails, customTargetDiskName: customTargetDiskName, sectorSizeInBytes: sectorSizeInBytes, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmReplicationDetails"/>. </summary>
@@ -9444,74 +9193,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetVmSecurityProfile"> The target VM security profile. </param>
         /// <returns> A new <see cref="Models.InMageRcmReplicationDetails"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static InMageRcmReplicationDetails InMageRcmReplicationDetails(string internalIdentifier = default, string fabricDiscoveryMachineId = default, string multiVmGroupName = default, string discoveryType = default, Guid? processServerId = default, int? processorCoreCount = default, double? allocatedMemoryInMB = default, string processServerName = default, string runAsAccountId = default, string osType = default, string firmwareType = default, IPAddress primaryNicIPAddress = default, string targetGeneration = default, string licenseType = default, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = default, ResourceIdentifier storageAccountId = default, string targetVmName = default, string targetVmSize = default, ResourceIdentifier targetResourceGroupId = default, string targetLocation = default, ResourceIdentifier targetAvailabilitySetId = default, string targetAvailabilityZone = default, ResourceIdentifier targetProximityPlacementGroupId = default, ResourceIdentifier targetBootDiagnosticsStorageAccountId = default, ResourceIdentifier targetNetworkId = default, ResourceIdentifier testNetworkId = default, ResourceIdentifier failoverRecoveryPointId = default, DateTimeOffset? lastRecoveryPointReceived = default, long? lastRpoInSeconds = default, DateTimeOffset? lastRpoCalculatedOn = default, ResourceIdentifier lastRecoveryPointId = default, int? initialReplicationProgressPercentage = default, long? initialReplicationProcessedBytes = default, long? initialReplicationTransferredBytes = default, VmReplicationProgressHealth? initialReplicationProgressHealth = default, int? resyncProgressPercentage = default, long? resyncProcessedBytes = default, long? resyncTransferredBytes = default, VmReplicationProgressHealth? resyncProgressHealth = default, string resyncRequired = default, SiteRecoveryResyncState? resyncState = default, MobilityAgentUpgradeState? agentUpgradeState = default, string lastAgentUpgradeType = default, string agentUpgradeJobId = default, string agentUpgradeAttemptToVersion = default, IEnumerable<InMageRcmProtectedDiskDetails> protectedDisks = default, IEnumerable<InMageRcmUnProtectedDiskDetails> unprotectedDisks = default, string isLastUpgradeSuccessful = default, bool? isAgentRegistrationSuccessfulAfterFailover = default, InMageRcmMobilityAgentDetails mobilityAgentDetails = default, IEnumerable<InMageRcmLastAgentUpgradeErrorDetails> lastAgentUpgradeErrorDetails = default, IEnumerable<InMageRcmAgentUpgradeBlockingErrorDetails> agentUpgradeBlockingErrorDetails = default, IEnumerable<InMageRcmNicDetails> vmNics = default, InMageRcmDiscoveredProtectedVmDetails discoveredVmDetails = default, IEnumerable<UserCreatedResourceTag> targetVmTags = default, IEnumerable<UserCreatedResourceTag> seedManagedDiskTags = default, IEnumerable<UserCreatedResourceTag> targetManagedDiskTags = default, IEnumerable<UserCreatedResourceTag> targetNicTags = default, string sqlServerLicenseType = default, IEnumerable<string> supportedOSVersions = default, string osName = default, RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile = default)
+        public static InMageRcmReplicationDetails InMageRcmReplicationDetails(string internalIdentifier, string fabricDiscoveryMachineId, string multiVmGroupName, string discoveryType, Guid? processServerId, int? processorCoreCount, double? allocatedMemoryInMB, string processServerName, string runAsAccountId, string osType, string firmwareType, IPAddress primaryNicIPAddress, string targetGeneration, string licenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, ResourceIdentifier storageAccountId, string targetVmName, string targetVmSize, ResourceIdentifier targetResourceGroupId, string targetLocation, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, ResourceIdentifier failoverRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, long? lastRpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, ResourceIdentifier lastRecoveryPointId, int? initialReplicationProgressPercentage, long? initialReplicationProcessedBytes, long? initialReplicationTransferredBytes, VmReplicationProgressHealth? initialReplicationProgressHealth, int? resyncProgressPercentage, long? resyncProcessedBytes, long? resyncTransferredBytes, VmReplicationProgressHealth? resyncProgressHealth, string resyncRequired, SiteRecoveryResyncState? resyncState, MobilityAgentUpgradeState? agentUpgradeState, string lastAgentUpgradeType, string agentUpgradeJobId, string agentUpgradeAttemptToVersion, IEnumerable<InMageRcmProtectedDiskDetails> protectedDisks, IEnumerable<InMageRcmUnProtectedDiskDetails> unprotectedDisks, string isLastUpgradeSuccessful, bool? isAgentRegistrationSuccessfulAfterFailover, InMageRcmMobilityAgentDetails mobilityAgentDetails, IEnumerable<InMageRcmLastAgentUpgradeErrorDetails> lastAgentUpgradeErrorDetails, IEnumerable<InMageRcmAgentUpgradeBlockingErrorDetails> agentUpgradeBlockingErrorDetails, IEnumerable<InMageRcmNicDetails> vmNics, InMageRcmDiscoveredProtectedVmDetails discoveredVmDetails, IEnumerable<UserCreatedResourceTag> targetVmTags, IEnumerable<UserCreatedResourceTag> seedManagedDiskTags, IEnumerable<UserCreatedResourceTag> targetManagedDiskTags, IEnumerable<UserCreatedResourceTag> targetNicTags, string sqlServerLicenseType, IEnumerable<string> supportedOSVersions, string osName, RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile)
         {
-            return new InMageRcmReplicationDetails(
-                default,
-                default,
-                internalIdentifier,
-                fabricDiscoveryMachineId,
-                multiVmGroupName,
-                discoveryType,
-                processServerId,
-                processorCoreCount,
-                allocatedMemoryInMB,
-                processServerName,
-                runAsAccountId,
-                osType,
-                firmwareType,
-                primaryNicIPAddress,
-                targetGeneration,
-                licenseType,
-                linuxLicenseType,
-                storageAccountId,
-                targetVmName,
-                targetVmSize,
-                targetResourceGroupId,
-                targetLocation,
-                targetAvailabilitySetId,
-                targetAvailabilityZone,
-                targetProximityPlacementGroupId,
-                targetBootDiagnosticsStorageAccountId,
-                targetNetworkId,
-                testNetworkId,
-                failoverRecoveryPointId,
-                lastRecoveryPointReceived,
-                lastRpoInSeconds,
-                lastRpoCalculatedOn,
-                lastRecoveryPointId,
-                initialReplicationProgressPercentage,
-                initialReplicationProcessedBytes,
-                initialReplicationTransferredBytes,
-                initialReplicationProgressHealth,
-                resyncProgressPercentage,
-                resyncProcessedBytes,
-                resyncTransferredBytes,
-                resyncProgressHealth,
-                resyncRequired,
-                resyncState,
-                agentUpgradeState,
-                lastAgentUpgradeType,
-                agentUpgradeJobId,
-                agentUpgradeAttemptToVersion,
-                (protectedDisks ?? new ChangeTrackingList<InMageRcmProtectedDiskDetails>()).ToList(),
-                (unprotectedDisks ?? new ChangeTrackingList<InMageRcmUnProtectedDiskDetails>()).ToList(),
-                isLastUpgradeSuccessful,
-                isAgentRegistrationSuccessfulAfterFailover,
-                mobilityAgentDetails,
-                (lastAgentUpgradeErrorDetails ?? new ChangeTrackingList<InMageRcmLastAgentUpgradeErrorDetails>()).ToList(),
-                (agentUpgradeBlockingErrorDetails ?? new ChangeTrackingList<InMageRcmAgentUpgradeBlockingErrorDetails>()).ToList(),
-                (vmNics ?? new ChangeTrackingList<InMageRcmNicDetails>()).ToList(),
-                discoveredVmDetails,
-                (targetVmTags ?? new ChangeTrackingList<UserCreatedResourceTag>()).ToList(),
-                (seedManagedDiskTags ?? new ChangeTrackingList<UserCreatedResourceTag>()).ToList(),
-                (targetManagedDiskTags ?? new ChangeTrackingList<UserCreatedResourceTag>()).ToList(),
-                (targetNicTags ?? new ChangeTrackingList<UserCreatedResourceTag>()).ToList(),
-                sqlServerLicenseType,
-                (supportedOSVersions ?? new ChangeTrackingList<string>()).ToList(),
-                osName,
-                targetVmSecurityProfile,
-                default);
+            return InMageRcmReplicationDetails(internalIdentifier: internalIdentifier, fabricDiscoveryMachineId: fabricDiscoveryMachineId, multiVmGroupName: multiVmGroupName, discoveryType: discoveryType, processServerId: processServerId, processorCoreCount: processorCoreCount, allocatedMemoryInMB: allocatedMemoryInMB, processServerName: processServerName, runAsAccountId: runAsAccountId, osType: osType, firmwareType: firmwareType, primaryNicIPAddress: primaryNicIPAddress, targetGeneration: targetGeneration, licenseType: licenseType, linuxLicenseType: linuxLicenseType, storageAccountId: storageAccountId, targetVmName: targetVmName, targetVmSize: targetVmSize, targetResourceGroupId: targetResourceGroupId, targetLocation: targetLocation, targetAvailabilitySetId: targetAvailabilitySetId, targetAvailabilityZone: targetAvailabilityZone, targetProximityPlacementGroupId: targetProximityPlacementGroupId, targetBootDiagnosticsStorageAccountId: targetBootDiagnosticsStorageAccountId, targetNetworkId: targetNetworkId, testNetworkId: testNetworkId, failoverRecoveryPointId: failoverRecoveryPointId, lastRecoveryPointReceived: lastRecoveryPointReceived, lastRpoInSeconds: lastRpoInSeconds, lastRpoCalculatedOn: lastRpoCalculatedOn, lastRecoveryPointId: lastRecoveryPointId, initialReplicationProgressPercentage: initialReplicationProgressPercentage, initialReplicationProcessedBytes: initialReplicationProcessedBytes, initialReplicationTransferredBytes: initialReplicationTransferredBytes, initialReplicationProgressHealth: initialReplicationProgressHealth, resyncProgressPercentage: resyncProgressPercentage, resyncProcessedBytes: resyncProcessedBytes, resyncTransferredBytes: resyncTransferredBytes, resyncProgressHealth: resyncProgressHealth, resyncRequired: resyncRequired, resyncState: resyncState, agentUpgradeState: agentUpgradeState, lastAgentUpgradeType: lastAgentUpgradeType, agentUpgradeJobId: agentUpgradeJobId, agentUpgradeAttemptToVersion: agentUpgradeAttemptToVersion, protectedDisks: protectedDisks, unprotectedDisks: unprotectedDisks, isLastUpgradeSuccessful: isLastUpgradeSuccessful, isAgentRegistrationSuccessfulAfterFailover: isAgentRegistrationSuccessfulAfterFailover, mobilityAgentDetails: mobilityAgentDetails, lastAgentUpgradeErrorDetails: lastAgentUpgradeErrorDetails, agentUpgradeBlockingErrorDetails: agentUpgradeBlockingErrorDetails, vmNics: vmNics, discoveredVmDetails: discoveredVmDetails, targetVmTags: targetVmTags, seedManagedDiskTags: seedManagedDiskTags, targetManagedDiskTags: targetManagedDiskTags, targetNicTags: targetNicTags, sqlServerLicenseType: sqlServerLicenseType, supportedOSVersions: supportedOSVersions, osName: osName, targetVmSecurityProfile: targetVmSecurityProfile, targetCapacityReservationGroupId: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmUnplannedFailoverContent"/>. </summary>
@@ -9520,15 +9204,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="osUpgradeVersion"> A value indicating the inplace OS Upgrade version. </param>
         /// <returns> A new <see cref="Models.InMageRcmUnplannedFailoverContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static InMageRcmUnplannedFailoverContent InMageRcmUnplannedFailoverContent(string performShutdown = default, ResourceIdentifier recoveryPointId = default, string osUpgradeVersion = default)
+        public static InMageRcmUnplannedFailoverContent InMageRcmUnplannedFailoverContent(string performShutdown, ResourceIdentifier recoveryPointId, string osUpgradeVersion)
         {
-            return new InMageRcmUnplannedFailoverContent(
-                default,
-                default,
-                performShutdown,
-                recoveryPointId,
-                osUpgradeVersion,
-                default);
+            return InMageRcmUnplannedFailoverContent(performShutdown: performShutdown, recoveryPointId: recoveryPointId, osUpgradeVersion: osUpgradeVersion, targetCapacityReservationGroupId: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VMwareCbtDiskContent"/>. </summary>
@@ -9541,21 +9219,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="sectorSizeInBytes"> The logical sector size (in bytes), 512 by default. </param>
         /// <returns> A new <see cref="Models.VMwareCbtDiskContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VMwareCbtDiskContent VMwareCbtDiskContent(string diskId = default, SiteRecoveryDiskAccountType? diskType = default, string isOSDisk = default, ResourceIdentifier logStorageAccountId = default, string logStorageAccountSasSecretName = default, ResourceIdentifier diskEncryptionSetId = default, int? sectorSizeInBytes = default)
+        public static VMwareCbtDiskContent VMwareCbtDiskContent(string diskId, SiteRecoveryDiskAccountType? diskType, string isOSDisk, ResourceIdentifier logStorageAccountId, string logStorageAccountSasSecretName, ResourceIdentifier diskEncryptionSetId, int? sectorSizeInBytes)
         {
-            return new VMwareCbtDiskContent(
-                diskId,
-                diskType,
-                isOSDisk,
-                logStorageAccountId,
-                logStorageAccountSasSecretName,
-                diskEncryptionSetId,
-                default,
-                sectorSizeInBytes,
-                default,
-                default,
-                default,
-                default);
+            return VMwareCbtDiskContent(diskId: diskId, diskType: diskType, isOSDisk: isOSDisk, logStorageAccountId: logStorageAccountId, logStorageAccountSasSecretName: logStorageAccountSasSecretName, diskEncryptionSetId: diskEncryptionSetId, confidentialDiskEncryptionSetId: default, sectorSizeInBytes: sectorSizeInBytes, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VMwareCbtEnableMigrationContent"/>. </summary>
@@ -9588,8 +9254,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="userSelectedOSName"> The OS name selected by user. </param>
         /// <returns> A new <see cref="Models.VMwareCbtEnableMigrationContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VMwareCbtEnableMigrationContent VMwareCbtEnableMigrationContent(ResourceIdentifier vmwareMachineId = default, IEnumerable<VMwareCbtDiskContent> disksToInclude = default, SiteRecoveryLicenseType? licenseType = default, SiteRecoverySqlServerLicenseType? sqlServerLicenseType = default, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = default, string performSqlBulkRegistration = default, ResourceIdentifier dataMoverRunAsAccountId = default, ResourceIdentifier snapshotRunAsAccountId = default, string targetVmName = default, string targetVmSize = default, ResourceIdentifier targetResourceGroupId = default, ResourceIdentifier targetNetworkId = default, ResourceIdentifier testNetworkId = default, string targetSubnetName = default, string testSubnetName = default, ResourceIdentifier targetAvailabilitySetId = default, string targetAvailabilityZone = default, ResourceIdentifier targetProximityPlacementGroupId = default, ResourceIdentifier confidentialVmKeyVaultId = default, VMwareCbtSecurityProfileProperties targetVmSecurityProfile = default, ResourceIdentifier targetBootDiagnosticsStorageAccountId = default, string performAutoResync = default, IDictionary<string, string> targetVmTags = default, IDictionary<string, string> seedDiskTags = default, IDictionary<string, string> targetDiskTags = default, IDictionary<string, string> targetNicTags = default, string userSelectedOSName = default)
+        public static VMwareCbtEnableMigrationContent VMwareCbtEnableMigrationContent(ResourceIdentifier vmwareMachineId, IEnumerable<VMwareCbtDiskContent> disksToInclude, SiteRecoveryLicenseType? licenseType, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, string performSqlBulkRegistration, ResourceIdentifier dataMoverRunAsAccountId, ResourceIdentifier snapshotRunAsAccountId, string targetVmName, string targetVmSize, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, string targetSubnetName, string testSubnetName, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier confidentialVmKeyVaultId, VMwareCbtSecurityProfileProperties targetVmSecurityProfile, ResourceIdentifier targetBootDiagnosticsStorageAccountId, string performAutoResync, IDictionary<string, string> targetVmTags, IDictionary<string, string> seedDiskTags, IDictionary<string, string> targetDiskTags, IDictionary<string, string> targetNicTags, string userSelectedOSName)
         {
+            disksToInclude ??= new ChangeTrackingList<VMwareCbtDiskContent>();
+            targetVmTags ??= new ChangeTrackingDictionary<string, string>();
+            seedDiskTags ??= new ChangeTrackingDictionary<string, string>();
+            targetDiskTags ??= new ChangeTrackingDictionary<string, string>();
+            targetNicTags ??= new ChangeTrackingDictionary<string, string>();
+
             return new VMwareCbtEnableMigrationContent(
                 default,
                 default,
@@ -9629,15 +9301,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="postMigrationSteps"> The managed run command script input. </param>
         /// <returns> A new <see cref="Models.VMwareCbtMigrateContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VMwareCbtMigrateContent VMwareCbtMigrateContent(string performShutdown = default, string osUpgradeVersion = default, IEnumerable<ManagedRunCommandScriptContent> postMigrationSteps = default)
+        public static VMwareCbtMigrateContent VMwareCbtMigrateContent(string performShutdown, string osUpgradeVersion, IEnumerable<ManagedRunCommandScriptContent> postMigrationSteps)
         {
-            return new VMwareCbtMigrateContent(
-                default,
-                default,
-                performShutdown,
-                osUpgradeVersion,
-                (postMigrationSteps ?? new ChangeTrackingList<ManagedRunCommandScriptContent>()).ToList(),
-                default);
+            return VMwareCbtMigrateContent(performShutdown: performShutdown, osUpgradeVersion: osUpgradeVersion, postMigrationSteps: postMigrationSteps, targetCapacityReservationGroupId: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VMwareCbtMigrationDetails"/>. </summary>
@@ -9692,8 +9358,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="operationName"> A value indicating the SRS operation name. </param>
         /// <returns> A new <see cref="Models.VMwareCbtMigrationDetails"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VMwareCbtMigrationDetails VMwareCbtMigrationDetails(ResourceIdentifier vmwareMachineId = default, string osType = default, string osName = default, string firmwareType = default, string targetGeneration = default, string licenseType = default, string sqlServerLicenseType = default, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = default, ResourceIdentifier dataMoverRunAsAccountId = default, ResourceIdentifier snapshotRunAsAccountId = default, ResourceIdentifier storageAccountId = default, string targetVmName = default, string targetVmSize = default, string targetLocation = default, ResourceIdentifier targetResourceGroupId = default, ResourceIdentifier targetAvailabilitySetId = default, string targetAvailabilityZone = default, ResourceIdentifier targetProximityPlacementGroupId = default, ResourceIdentifier confidentialVmKeyVaultId = default, VMwareCbtSecurityProfileProperties targetVmSecurityProfile = default, ResourceIdentifier targetBootDiagnosticsStorageAccountId = default, IReadOnlyDictionary<string, string> targetVmTags = default, IEnumerable<VMwareCbtProtectedDiskDetails> protectedDisks = default, ResourceIdentifier targetNetworkId = default, ResourceIdentifier testNetworkId = default, IEnumerable<VMwareCbtNicDetails> vmNics = default, IReadOnlyDictionary<string, string> targetNicTags = default, ResourceIdentifier migrationRecoveryPointId = default, DateTimeOffset? lastRecoveryPointReceived = default, ResourceIdentifier lastRecoveryPointId = default, int? initialSeedingProgressPercentage = default, int? migrationProgressPercentage = default, int? resyncProgressPercentage = default, int? resumeProgressPercentage = default, int? deltaSyncProgressPercentage = default, string isCheckSumResyncCycle = default, long? initialSeedingRetryCount = default, long? resyncRetryCount = default, long? resumeRetryCount = default, long? deltaSyncRetryCount = default, string resyncRequired = default, SiteRecoveryResyncState? resyncState = default, string performAutoResync = default, IReadOnlyDictionary<string, string> seedDiskTags = default, IReadOnlyDictionary<string, string> targetDiskTags = default, IEnumerable<string> supportedOSVersions = default, ApplianceMonitoringDetails applianceMonitoringDetails = default, GatewayOperationDetails gatewayOperationDetails = default, string operationName = default)
+        public static VMwareCbtMigrationDetails VMwareCbtMigrationDetails(ResourceIdentifier vmwareMachineId, string osType, string osName, string firmwareType, string targetGeneration, string licenseType, string sqlServerLicenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, ResourceIdentifier dataMoverRunAsAccountId, ResourceIdentifier snapshotRunAsAccountId, ResourceIdentifier storageAccountId, string targetVmName, string targetVmSize, string targetLocation, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier confidentialVmKeyVaultId, VMwareCbtSecurityProfileProperties targetVmSecurityProfile, ResourceIdentifier targetBootDiagnosticsStorageAccountId, IReadOnlyDictionary<string, string> targetVmTags, IEnumerable<VMwareCbtProtectedDiskDetails> protectedDisks, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, IEnumerable<VMwareCbtNicDetails> vmNics, IReadOnlyDictionary<string, string> targetNicTags, ResourceIdentifier migrationRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, ResourceIdentifier lastRecoveryPointId, int? initialSeedingProgressPercentage, int? migrationProgressPercentage, int? resyncProgressPercentage, int? resumeProgressPercentage, int? deltaSyncProgressPercentage, string isCheckSumResyncCycle, long? initialSeedingRetryCount, long? resyncRetryCount, long? resumeRetryCount, long? deltaSyncRetryCount, string resyncRequired, SiteRecoveryResyncState? resyncState, string performAutoResync, IReadOnlyDictionary<string, string> seedDiskTags, IReadOnlyDictionary<string, string> targetDiskTags, IEnumerable<string> supportedOSVersions, ApplianceMonitoringDetails applianceMonitoringDetails, GatewayOperationDetails gatewayOperationDetails, string operationName)
         {
+            targetVmTags ??= new ChangeTrackingDictionary<string, string>();
+            protectedDisks ??= new ChangeTrackingList<VMwareCbtProtectedDiskDetails>();
+            vmNics ??= new ChangeTrackingList<VMwareCbtNicDetails>();
+            targetNicTags ??= new ChangeTrackingDictionary<string, string>();
+            seedDiskTags ??= new ChangeTrackingDictionary<string, string>();
+            targetDiskTags ??= new ChangeTrackingDictionary<string, string>();
+            supportedOSVersions ??= new ChangeTrackingList<string>();
+
             return new VMwareCbtMigrationDetails(
                 default,
                 default,
@@ -9768,30 +9442,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="sectorSizeInBytes"> The logical sector size (in bytes), 512 by default. </param>
         /// <returns> A new <see cref="Models.VMwareCbtProtectedDiskDetails"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VMwareCbtProtectedDiskDetails VMwareCbtProtectedDiskDetails(string diskId = default, string diskName = default, SiteRecoveryDiskAccountType? diskType = default, string diskPath = default, string isOSDisk = default, long? capacityInBytes = default, ResourceIdentifier logStorageAccountId = default, string logStorageAccountSasSecretName = default, ResourceIdentifier diskEncryptionSetId = default, string seedManagedDiskId = default, Uri seedBlobUri = default, string targetManagedDiskId = default, Uri targetBlobUri = default, string targetDiskName = default, GatewayOperationDetails gatewayOperationDetails = default, int? sectorSizeInBytes = default)
+        public static VMwareCbtProtectedDiskDetails VMwareCbtProtectedDiskDetails(string diskId, string diskName, SiteRecoveryDiskAccountType? diskType, string diskPath, string isOSDisk, long? capacityInBytes, ResourceIdentifier logStorageAccountId, string logStorageAccountSasSecretName, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, Uri targetBlobUri, string targetDiskName, GatewayOperationDetails gatewayOperationDetails, int? sectorSizeInBytes)
         {
-            return new VMwareCbtProtectedDiskDetails(
-                diskId,
-                diskName,
-                diskType,
-                diskPath,
-                isOSDisk,
-                capacityInBytes,
-                logStorageAccountId,
-                logStorageAccountSasSecretName,
-                diskEncryptionSetId,
-                default,
-                seedManagedDiskId,
-                seedBlobUri,
-                targetManagedDiskId,
-                targetBlobUri,
-                targetDiskName,
-                gatewayOperationDetails,
-                sectorSizeInBytes,
-                default,
-                default,
-                default,
-                default);
+            return VMwareCbtProtectedDiskDetails(diskId: diskId, diskName: diskName, diskType: diskType, diskPath: diskPath, isOSDisk: isOSDisk, capacityInBytes: capacityInBytes, logStorageAccountId: logStorageAccountId, logStorageAccountSasSecretName: logStorageAccountSasSecretName, diskEncryptionSetId: diskEncryptionSetId, confidentialDiskEncryptionSetId: default, seedManagedDiskId: seedManagedDiskId, seedBlobUri: seedBlobUri, targetManagedDiskId: targetManagedDiskId, targetBlobUri: targetBlobUri, targetDiskName: targetDiskName, gatewayOperationDetails: gatewayOperationDetails, sectorSizeInBytes: sectorSizeInBytes, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VMwareCbtUpdateDiskContent"/>. </summary>
@@ -9800,16 +9453,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
         /// <returns> A new <see cref="Models.VMwareCbtUpdateDiskContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VMwareCbtUpdateDiskContent VMwareCbtUpdateDiskContent(string diskId = default, string targetDiskName = default, string isOSDisk = default)
+        public static VMwareCbtUpdateDiskContent VMwareCbtUpdateDiskContent(string diskId, string targetDiskName, string isOSDisk)
         {
-            return new VMwareCbtUpdateDiskContent(
-                diskId,
-                targetDiskName,
-                isOSDisk,
-                default,
-                default,
-                default,
-                default);
+            return VMwareCbtUpdateDiskContent(diskId: diskId, targetDiskName: targetDiskName, isOSDisk: isOSDisk, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.A2AEnableProtectionContent"/>. </summary>
@@ -9836,30 +9482,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static A2AEnableProtectionContent A2AEnableProtectionContent(ResourceIdentifier fabricObjectId, ResourceIdentifier recoveryContainerId, ResourceIdentifier recoveryResourceGroupId, string recoveryCloudServiceId, ResourceIdentifier recoveryAvailabilitySetId, ResourceIdentifier recoveryProximityPlacementGroupId, IEnumerable<A2AVmDiskDetails> vmDisks, IEnumerable<A2AVmManagedDiskDetails> vmManagedDisks, string multiVmGroupName, string multiVmGroupId, ResourceIdentifier recoveryBootDiagStorageAccountId, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, string recoveryAvailabilityZone, SiteRecoveryExtendedLocation recoveryExtendedLocation, ResourceIdentifier recoveryAzureNetworkId, string recoverySubnetName, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId, AutoProtectionOfDataDisk? autoProtectionOfDataDisk)
         {
-            return new A2AEnableProtectionContent(
-                default,
-                default,
-                fabricObjectId,
-                recoveryContainerId,
-                recoveryResourceGroupId,
-                recoveryCloudServiceId,
-                recoveryAvailabilitySetId,
-                recoveryProximityPlacementGroupId,
-                (vmDisks ?? new ChangeTrackingList<A2AVmDiskDetails>()).ToList(),
-                (vmManagedDisks ?? new ChangeTrackingList<A2AVmManagedDiskDetails>()).ToList(),
-                multiVmGroupName,
-                multiVmGroupId,
-                default,
-                recoveryBootDiagStorageAccountId,
-                diskEncryptionInfo,
-                recoveryAvailabilityZone,
-                recoveryExtendedLocation,
-                recoveryAzureNetworkId,
-                recoverySubnetName,
-                recoveryVirtualMachineScaleSetId,
-                recoveryCapacityReservationGroupId,
-                default,
-                autoProtectionOfDataDisk);
+            return A2AEnableProtectionContent(fabricObjectId: fabricObjectId, recoveryContainerId: recoveryContainerId, recoveryResourceGroupId: recoveryResourceGroupId, recoveryCloudServiceId: recoveryCloudServiceId, recoveryAvailabilitySetId: recoveryAvailabilitySetId, recoveryProximityPlacementGroupId: recoveryProximityPlacementGroupId, vmDisks: vmDisks, vmManagedDisks: vmManagedDisks, multiVmGroupName: multiVmGroupName, multiVmGroupId: multiVmGroupId, protectionClusterId: default, recoveryBootDiagStorageAccountId: recoveryBootDiagStorageAccountId, diskEncryptionInfo: diskEncryptionInfo, recoveryAvailabilityZone: recoveryAvailabilityZone, recoveryExtendedLocation: recoveryExtendedLocation, recoveryAzureNetworkId: recoveryAzureNetworkId, recoverySubnetName: recoverySubnetName, recoveryVirtualMachineScaleSetId: recoveryVirtualMachineScaleSetId, recoveryCapacityReservationGroupId: recoveryCapacityReservationGroupId, platformFaultDomain: default, autoProtectionOfDataDisk: autoProtectionOfDataDisk);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.A2AReplicationDetails"/>. </summary>
@@ -9921,77 +9544,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static A2AReplicationDetails A2AReplicationDetails(ResourceIdentifier fabricObjectId, string initialPrimaryZone, AzureLocation? initialPrimaryFabricLocation, string initialRecoveryZone, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation, AzureLocation? initialRecoveryFabricLocation, string multiVmGroupId, string multiVmGroupName, MultiVmGroupCreateOption? multiVmGroupCreateOption, string managementId, IEnumerable<A2AProtectedDiskDetails> protectedDisks, IEnumerable<A2AUnprotectedDiskDetails> unprotectedDisks, IEnumerable<A2AProtectedManagedDiskDetails> protectedManagedDisks, ResourceIdentifier recoveryBootDiagStorageAccountId, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation, string osType, string recoveryAzureVmSize, string recoveryAzureVmName, ResourceIdentifier recoveryAzureResourceGroupId, string recoveryCloudService, string recoveryAvailabilitySet, ResourceIdentifier selectedRecoveryAzureNetworkId, ResourceIdentifier selectedTfoAzureNetworkId, IEnumerable<VmNicDetails> vmNics, A2AVmSyncedConfigDetails vmSyncedConfigDetails, int? monitoringPercentageCompletion, string monitoringJobType, DateTimeOffset? lastHeartbeat, string agentVersion, DateTimeOffset? agentExpireOn, bool? isReplicationAgentUpdateRequired, DateTimeOffset? agentCertificateExpireOn, bool? isReplicationAgentCertificateUpdateRequired, ResourceIdentifier recoveryFabricObjectId, string vmProtectionState, string vmProtectionStateDescription, string lifecycleId, ResourceIdentifier testFailoverRecoveryFabricObjectId, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string primaryAvailabilityZone, string recoveryAvailabilityZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation, SiteRecoveryVmEncryptionType? vmEncryptionType, string tfoAzureVmName, string recoveryAzureGeneration, ResourceIdentifier recoveryProximityPlacementGroupId, AutoProtectionOfDataDisk? autoProtectionOfDataDisk, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId, ChurnOptionSelected? churnOptionSelected)
         {
-            return new A2AReplicationDetails(
-                default,
-                default,
-                fabricObjectId,
-                initialPrimaryZone,
-                initialPrimaryFabricLocation,
-                initialRecoveryZone,
-                initialPrimaryExtendedLocation,
-                initialRecoveryExtendedLocation,
-                initialRecoveryFabricLocation,
-                multiVmGroupId,
-                multiVmGroupName,
-                multiVmGroupCreateOption,
-                managementId,
-                default,
-                default,
-                (protectedDisks ?? new ChangeTrackingList<A2AProtectedDiskDetails>()).ToList(),
-                (unprotectedDisks ?? new ChangeTrackingList<A2AUnprotectedDiskDetails>()).ToList(),
-                (protectedManagedDisks ?? new ChangeTrackingList<A2AProtectedManagedDiskDetails>()).ToList(),
-                recoveryBootDiagStorageAccountId,
-                primaryFabricLocation,
-                recoveryFabricLocation,
-                osType,
-                recoveryAzureVmSize,
-                recoveryAzureVmName,
-                recoveryAzureResourceGroupId,
-                recoveryCloudService,
-                recoveryAvailabilitySet,
-                selectedRecoveryAzureNetworkId,
-                selectedTfoAzureNetworkId,
-                (vmNics ?? new ChangeTrackingList<VmNicDetails>()).ToList(),
-                vmSyncedConfigDetails,
-                monitoringPercentageCompletion,
-                monitoringJobType,
-                lastHeartbeat,
-                agentVersion,
-                agentExpireOn,
-                isReplicationAgentUpdateRequired,
-                agentCertificateExpireOn,
-                isReplicationAgentCertificateUpdateRequired,
-                recoveryFabricObjectId,
-                vmProtectionState,
-                vmProtectionStateDescription,
-                lifecycleId,
-                testFailoverRecoveryFabricObjectId,
-                rpoInSeconds,
-                lastRpoCalculatedOn,
-                primaryAvailabilityZone,
-                recoveryAvailabilityZone,
-                primaryExtendedLocation,
-                recoveryExtendedLocation,
-                vmEncryptionType,
-                tfoAzureVmName,
-                recoveryAzureGeneration,
-                recoveryProximityPlacementGroupId,
-                autoProtectionOfDataDisk,
-                recoveryVirtualMachineScaleSetId,
-                recoveryCapacityReservationGroupId,
-                churnOptionSelected,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default);
+            return A2AReplicationDetails(fabricObjectId: fabricObjectId, initialPrimaryZone: initialPrimaryZone, initialPrimaryFabricLocation: initialPrimaryFabricLocation, initialRecoveryZone: initialRecoveryZone, initialPrimaryExtendedLocation: initialPrimaryExtendedLocation, initialRecoveryExtendedLocation: initialRecoveryExtendedLocation, initialRecoveryFabricLocation: initialRecoveryFabricLocation, multiVmGroupId: multiVmGroupId, multiVmGroupName: multiVmGroupName, multiVmGroupCreateOption: multiVmGroupCreateOption, managementId: managementId, protectionClusterId: default, isClusterInfraReady: default, protectedDisks: protectedDisks, unprotectedDisks: unprotectedDisks, protectedManagedDisks: protectedManagedDisks, recoveryBootDiagStorageAccountId: recoveryBootDiagStorageAccountId, primaryFabricLocation: primaryFabricLocation, recoveryFabricLocation: recoveryFabricLocation, osType: osType, recoveryAzureVmSize: recoveryAzureVmSize, recoveryAzureVmName: recoveryAzureVmName, recoveryAzureResourceGroupId: recoveryAzureResourceGroupId, recoveryCloudService: recoveryCloudService, recoveryAvailabilitySet: recoveryAvailabilitySet, selectedRecoveryAzureNetworkId: selectedRecoveryAzureNetworkId, selectedTfoAzureNetworkId: selectedTfoAzureNetworkId, vmNics: vmNics, vmSyncedConfigDetails: vmSyncedConfigDetails, monitoringPercentageCompletion: monitoringPercentageCompletion, monitoringJobType: monitoringJobType, lastHeartbeat: lastHeartbeat, agentVersion: agentVersion, agentExpireOn: agentExpireOn, isReplicationAgentUpdateRequired: isReplicationAgentUpdateRequired, agentCertificateExpireOn: agentCertificateExpireOn, isReplicationAgentCertificateUpdateRequired: isReplicationAgentCertificateUpdateRequired, recoveryFabricObjectId: recoveryFabricObjectId, vmProtectionState: vmProtectionState, vmProtectionStateDescription: vmProtectionStateDescription, lifecycleId: lifecycleId, testFailoverRecoveryFabricObjectId: testFailoverRecoveryFabricObjectId, rpoInSeconds: rpoInSeconds, lastRpoCalculatedOn: lastRpoCalculatedOn, primaryAvailabilityZone: primaryAvailabilityZone, recoveryAvailabilityZone: recoveryAvailabilityZone, primaryExtendedLocation: primaryExtendedLocation, recoveryExtendedLocation: recoveryExtendedLocation, vmEncryptionType: vmEncryptionType, tfoAzureVmName: tfoAzureVmName, recoveryAzureGeneration: recoveryAzureGeneration, recoveryProximityPlacementGroupId: recoveryProximityPlacementGroupId, autoProtectionOfDataDisk: autoProtectionOfDataDisk, recoveryVirtualMachineScaleSetId: recoveryVirtualMachineScaleSetId, recoveryCapacityReservationGroupId: recoveryCapacityReservationGroupId, churnOptionSelected: churnOptionSelected, agentReinstallAttemptToVersion: default, osFamilyName: default, distroName: default, distroNameForWhichAgentIsInstalled: default, isAgentUpgradeable: default, isAgentReinstallRequired: default, reasonsBlockingReInstall: default, reasonsBlockingReinstallDetails: default, isAgentUpgradeInProgress: default, autoAgentUpgradeRetryCount: default, isAgentUpgradeRetryThresholdExhausted: default, platformFaultDomain: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HyperVReplicaAzureManagedDiskDetails"/>. </summary>
@@ -10003,17 +9556,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HyperVReplicaAzureManagedDiskDetails HyperVReplicaAzureManagedDiskDetails(string diskId, string seedManagedDiskId, string replicaDiskType, ResourceIdentifier diskEncryptionSetId)
         {
-            return new HyperVReplicaAzureManagedDiskDetails(
-                diskId,
-                seedManagedDiskId,
-                replicaDiskType,
-                diskEncryptionSetId,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default);
+            return HyperVReplicaAzureManagedDiskDetails(diskId: diskId, seedManagedDiskId: seedManagedDiskId, replicaDiskType: replicaDiskType, diskEncryptionSetId: diskEncryptionSetId, targetDiskAccountType: default, sectorSizeInBytes: default, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HyperVReplicaAzureReplicationDetails"/>. </summary>
@@ -10055,46 +9598,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HyperVReplicaAzureReplicationDetails HyperVReplicaAzureReplicationDetails(IEnumerable<SiteRecoveryVmDiskDetails> azureVmDiskDetails, string recoveryAzureVmName, string recoveryAzureVmSize, string recoveryAzureStorageAccount, ResourceIdentifier recoveryAzureLogStorageAccountId, DateTimeOffset? lastReplicatedOn, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string vmId, string vmProtectionState, string vmProtectionStateDescription, InitialReplicationDetails initialReplicationDetails, IEnumerable<VmNicDetails> vmNics, ResourceIdentifier selectedRecoveryAzureNetworkId, string selectedSourceNicId, string encryption, SiteRecoveryOSDetails osDetails, int? sourceVmRamSizeInMB, int? sourceVmCpuCount, string enableRdpOnTargetOption, ResourceIdentifier recoveryAzureResourceGroupId, ResourceIdentifier recoveryAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, string useManagedDisks, string licenseType, string sqlServerLicenseType, DateTimeOffset? lastRecoveryPointReceived, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyDictionary<string, string> seedManagedDiskTags, IReadOnlyDictionary<string, string> targetManagedDiskTags, IReadOnlyDictionary<string, string> targetNicTags, IEnumerable<HyperVReplicaAzureManagedDiskDetails> protectedManagedDisks, IEnumerable<OSUpgradeSupportedVersions> allAvailableOSUpgradeConfigurations)
         {
-            return new HyperVReplicaAzureReplicationDetails(
-                default,
-                default,
-                (azureVmDiskDetails ?? new ChangeTrackingList<SiteRecoveryVmDiskDetails>()).ToList(),
-                recoveryAzureVmName,
-                recoveryAzureVmSize,
-                recoveryAzureStorageAccount,
-                recoveryAzureLogStorageAccountId,
-                lastReplicatedOn,
-                rpoInSeconds,
-                lastRpoCalculatedOn,
-                vmId,
-                vmProtectionState,
-                vmProtectionStateDescription,
-                initialReplicationDetails,
-                (vmNics ?? new ChangeTrackingList<VmNicDetails>()).ToList(),
-                selectedRecoveryAzureNetworkId,
-                selectedSourceNicId,
-                encryption,
-                osDetails,
-                sourceVmRamSizeInMB,
-                sourceVmCpuCount,
-                enableRdpOnTargetOption,
-                recoveryAzureResourceGroupId,
-                recoveryAvailabilitySetId,
-                targetAvailabilityZone,
-                targetProximityPlacementGroupId,
-                useManagedDisks,
-                licenseType,
-                sqlServerLicenseType,
-                default,
-                lastRecoveryPointReceived,
-                targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
-                seedManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
-                targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
-                targetNicTags ?? new ChangeTrackingDictionary<string, string>(),
-                (protectedManagedDisks ?? new ChangeTrackingList<HyperVReplicaAzureManagedDiskDetails>()).ToList(),
-                (allAvailableOSUpgradeConfigurations ?? new ChangeTrackingList<OSUpgradeSupportedVersions>()).ToList(),
-                default,
-                default);
+            return HyperVReplicaAzureReplicationDetails(azureVmDiskDetails: azureVmDiskDetails, recoveryAzureVmName: recoveryAzureVmName, recoveryAzureVmSize: recoveryAzureVmSize, recoveryAzureStorageAccount: recoveryAzureStorageAccount, recoveryAzureLogStorageAccountId: recoveryAzureLogStorageAccountId, lastReplicatedOn: lastReplicatedOn, rpoInSeconds: rpoInSeconds, lastRpoCalculatedOn: lastRpoCalculatedOn, vmId: vmId, vmProtectionState: vmProtectionState, vmProtectionStateDescription: vmProtectionStateDescription, initialReplicationDetails: initialReplicationDetails, vmNics: vmNics, selectedRecoveryAzureNetworkId: selectedRecoveryAzureNetworkId, selectedSourceNicId: selectedSourceNicId, encryption: encryption, osDetails: osDetails, sourceVmRamSizeInMB: sourceVmRamSizeInMB, sourceVmCpuCount: sourceVmCpuCount, enableRdpOnTargetOption: enableRdpOnTargetOption, recoveryAzureResourceGroupId: recoveryAzureResourceGroupId, recoveryAvailabilitySetId: recoveryAvailabilitySetId, targetAvailabilityZone: targetAvailabilityZone, targetProximityPlacementGroupId: targetProximityPlacementGroupId, useManagedDisks: useManagedDisks, licenseType: licenseType, sqlServerLicenseType: sqlServerLicenseType, linuxLicenseType: default, lastRecoveryPointReceived: lastRecoveryPointReceived, targetVmTags: targetVmTags, seedManagedDiskTags: seedManagedDiskTags, targetManagedDiskTags: targetManagedDiskTags, targetNicTags: targetNicTags, protectedManagedDisks: protectedManagedDisks, allAvailableOSUpgradeConfigurations: allAvailableOSUpgradeConfigurations, targetVmSecurityProfile: default, targetCapacityReservationGroupId: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryOSDetails"/>. </summary>
@@ -10108,15 +9612,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SiteRecoveryOSDetails SiteRecoveryOSDetails(string osType, string productType, string osEdition, string osVersion, string osMajorVersion, string osMinorVersion)
         {
-            return new SiteRecoveryOSDetails(
-                osType,
-                productType,
-                osEdition,
-                osVersion,
-                osMajorVersion,
-                osMinorVersion,
-                default,
-                default);
+            return SiteRecoveryOSDetails(osType: osType, productType: productType, osEdition: osEdition, osVersion: osVersion, osMajorVersion: osMajorVersion, osMinorVersion: osMinorVersion, userSelectedOSName: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmDiskContent"/>. </summary>
@@ -10128,17 +9624,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static InMageRcmDiskContent InMageRcmDiskContent(string diskId, ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType diskType, ResourceIdentifier diskEncryptionSetId)
         {
-            return new InMageRcmDiskContent(
-                diskId,
-                logStorageAccountId,
-                diskType,
-                diskEncryptionSetId,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default);
+            return InMageRcmDiskContent(diskId: diskId, logStorageAccountId: logStorageAccountId, diskType: diskType, diskEncryptionSetId: diskEncryptionSetId, confidentialDiskEncryptionSetId: default, sectorSizeInBytes: default, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmDisksDefaultContent"/>. </summary>
@@ -10149,16 +9635,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static InMageRcmDisksDefaultContent InMageRcmDisksDefaultContent(ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType diskType, ResourceIdentifier diskEncryptionSetId)
         {
-            return new InMageRcmDisksDefaultContent(
-                logStorageAccountId,
-                diskType,
-                diskEncryptionSetId,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default);
+            return InMageRcmDisksDefaultContent(logStorageAccountId: logStorageAccountId, diskType: diskType, diskEncryptionSetId: diskEncryptionSetId, confidentialDiskEncryptionSetId: default, sectorSizeInBytes: default, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmEnableProtectionContent"/>. </summary>
@@ -10184,36 +9661,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static InMageRcmEnableProtectionContent InMageRcmEnableProtectionContent(string fabricDiscoveryMachineId, IEnumerable<InMageRcmDiskContent> disksToInclude, InMageRcmDisksDefaultContent disksDefault, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, string targetSubnetName, string testSubnetName, string targetVmName, string targetVmSize, SiteRecoveryLicenseType? licenseType, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, string runAsAccountId, Guid processServerId, string multiVmGroupName)
         {
-            return new InMageRcmEnableProtectionContent(
-                default,
-                default,
-                fabricDiscoveryMachineId,
-                (disksToInclude ?? new ChangeTrackingList<InMageRcmDiskContent>()).ToList(),
-                disksDefault,
-                targetResourceGroupId,
-                targetNetworkId,
-                testNetworkId,
-                targetSubnetName,
-                testSubnetName,
-                targetVmName,
-                targetVmSize,
-                licenseType,
-                targetAvailabilitySetId,
-                targetAvailabilityZone,
-                targetProximityPlacementGroupId,
-                targetBootDiagnosticsStorageAccountId,
-                runAsAccountId,
-                processServerId,
-                multiVmGroupName,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default);
+            return InMageRcmEnableProtectionContent(fabricDiscoveryMachineId: fabricDiscoveryMachineId, disksToInclude: disksToInclude, disksDefault: disksDefault, targetResourceGroupId: targetResourceGroupId, targetNetworkId: targetNetworkId, testNetworkId: testNetworkId, targetSubnetName: targetSubnetName, testSubnetName: testSubnetName, targetVmName: targetVmName, targetVmSize: targetVmSize, licenseType: licenseType, targetAvailabilitySetId: targetAvailabilitySetId, targetAvailabilityZone: targetAvailabilityZone, targetProximityPlacementGroupId: targetProximityPlacementGroupId, targetBootDiagnosticsStorageAccountId: targetBootDiagnosticsStorageAccountId, runAsAccountId: runAsAccountId, processServerId: processServerId, multiVmGroupName: multiVmGroupName, sqlServerLicenseType: default, linuxLicenseType: default, targetVmTags: default, seedManagedDiskTags: default, targetManagedDiskTags: default, targetNicTags: default, userSelectedOSName: default, targetVmSecurityProfile: default, targetCapacityReservationGroupId: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmNicDetails"/>. </summary>
@@ -10234,22 +9682,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static InMageRcmNicDetails InMageRcmNicDetails(string nicId, string isPrimaryNic, string isSelectedForFailover, IPAddress sourceIPAddress, SiteRecoveryEthernetAddressType? sourceIPAddressType, ResourceIdentifier sourceNetworkId, string sourceSubnetName, IPAddress targetIPAddress, SiteRecoveryEthernetAddressType? targetIPAddressType, string targetSubnetName, string testSubnetName, IPAddress testIPAddress, SiteRecoveryEthernetAddressType? testIPAddressType)
         {
-            return new InMageRcmNicDetails(
-                nicId,
-                isPrimaryNic,
-                isSelectedForFailover,
-                sourceIPAddress,
-                sourceIPAddressType,
-                sourceNetworkId,
-                sourceSubnetName,
-                targetIPAddress,
-                targetIPAddressType,
-                targetSubnetName,
-                testSubnetName,
-                testIPAddress,
-                testIPAddressType,
-                default,
-                default);
+            return InMageRcmNicDetails(nicId: nicId, isPrimaryNic: isPrimaryNic, isSelectedForFailover: isSelectedForFailover, sourceIPAddress: sourceIPAddress, sourceIPAddressType: sourceIPAddressType, sourceNetworkId: sourceNetworkId, sourceSubnetName: sourceSubnetName, targetIPAddress: targetIPAddress, targetIPAddressType: targetIPAddressType, targetSubnetName: targetSubnetName, testSubnetName: testSubnetName, testIPAddress: testIPAddress, testIPAddressType: testIPAddressType, targetNicName: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmNicContent"/>. </summary>
@@ -10264,16 +9697,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static InMageRcmNicContent InMageRcmNicContent(string nicId, string isPrimaryNic, string isSelectedForFailover, string targetSubnetName, IPAddress targetStaticIPAddress, string testSubnetName, IPAddress testStaticIPAddress)
         {
-            return new InMageRcmNicContent(
-                nicId,
-                isPrimaryNic,
-                isSelectedForFailover,
-                targetSubnetName,
-                targetStaticIPAddress,
-                testSubnetName,
-                testStaticIPAddress,
-                default,
-                default);
+            return InMageRcmNicContent(nicId: nicId, isPrimaryNic: isPrimaryNic, isSelectedForFailover: isSelectedForFailover, targetSubnetName: targetSubnetName, targetStaticIPAddress: targetStaticIPAddress, testSubnetName: testSubnetName, testStaticIPAddress: testStaticIPAddress, targetNicName: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmProtectedDiskDetails"/>. </summary>
@@ -10296,30 +9720,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static InMageRcmProtectedDiskDetails InMageRcmProtectedDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, ResourceIdentifier logStorageAccountId, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, SiteRecoveryDiskAccountType? diskType, double? dataPendingInLogDataStoreInMB, double? dataPendingAtSourceAgentInMB, string isInitialReplicationComplete, InMageRcmSyncDetails irDetails, InMageRcmSyncDetails resyncDetails)
         {
-            return new InMageRcmProtectedDiskDetails(
-                diskId,
-                diskName,
-                isOSDisk,
-                capacityInBytes,
-                default,
-                logStorageAccountId,
-                diskEncryptionSetId,
-                default,
-                seedManagedDiskId,
-                seedBlobUri,
-                targetManagedDiskId,
-                diskType,
-                dataPendingInLogDataStoreInMB,
-                dataPendingAtSourceAgentInMB,
-                isInitialReplicationComplete,
-                irDetails,
-                resyncDetails,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default);
+            return InMageRcmProtectedDiskDetails(diskId: diskId, diskName: diskName, isOSDisk: isOSDisk, capacityInBytes: capacityInBytes, diskState: default, logStorageAccountId: logStorageAccountId, diskEncryptionSetId: diskEncryptionSetId, confidentialDiskEncryptionSetId: default, seedManagedDiskId: seedManagedDiskId, seedBlobUri: seedBlobUri, targetManagedDiskId: targetManagedDiskId, diskType: diskType, dataPendingInLogDataStoreInMB: dataPendingInLogDataStoreInMB, dataPendingAtSourceAgentInMB: dataPendingAtSourceAgentInMB, isInitialReplicationComplete: isInitialReplicationComplete, irDetails: irDetails, resyncDetails: resyncDetails, customTargetDiskName: default, sectorSizeInBytes: default, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmReplicationDetails"/>. </summary>
@@ -10379,72 +9780,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static InMageRcmReplicationDetails InMageRcmReplicationDetails(string internalIdentifier, string fabricDiscoveryMachineId, string multiVmGroupName, string discoveryType, Guid? processServerId, int? processorCoreCount, double? allocatedMemoryInMB, string processServerName, string runAsAccountId, string osType, string firmwareType, IPAddress primaryNicIPAddress, string targetGeneration, string licenseType, ResourceIdentifier storageAccountId, string targetVmName, string targetVmSize, ResourceIdentifier targetResourceGroupId, string targetLocation, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, ResourceIdentifier failoverRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, long? lastRpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, ResourceIdentifier lastRecoveryPointId, int? initialReplicationProgressPercentage, long? initialReplicationProcessedBytes, long? initialReplicationTransferredBytes, VmReplicationProgressHealth? initialReplicationProgressHealth, int? resyncProgressPercentage, long? resyncProcessedBytes, long? resyncTransferredBytes, VmReplicationProgressHealth? resyncProgressHealth, string resyncRequired, SiteRecoveryResyncState? resyncState, MobilityAgentUpgradeState? agentUpgradeState, string lastAgentUpgradeType, string agentUpgradeJobId, string agentUpgradeAttemptToVersion, IEnumerable<InMageRcmProtectedDiskDetails> protectedDisks, string isLastUpgradeSuccessful, bool? isAgentRegistrationSuccessfulAfterFailover, InMageRcmMobilityAgentDetails mobilityAgentDetails, IEnumerable<InMageRcmLastAgentUpgradeErrorDetails> lastAgentUpgradeErrorDetails, IEnumerable<InMageRcmAgentUpgradeBlockingErrorDetails> agentUpgradeBlockingErrorDetails, IEnumerable<InMageRcmNicDetails> vmNics, InMageRcmDiscoveredProtectedVmDetails discoveredVmDetails)
         {
-            return new InMageRcmReplicationDetails(
-                default,
-                default,
-                internalIdentifier,
-                fabricDiscoveryMachineId,
-                multiVmGroupName,
-                discoveryType,
-                processServerId,
-                processorCoreCount,
-                allocatedMemoryInMB,
-                processServerName,
-                runAsAccountId,
-                osType,
-                firmwareType,
-                primaryNicIPAddress,
-                targetGeneration,
-                licenseType,
-                default,
-                storageAccountId,
-                targetVmName,
-                targetVmSize,
-                targetResourceGroupId,
-                targetLocation,
-                targetAvailabilitySetId,
-                targetAvailabilityZone,
-                targetProximityPlacementGroupId,
-                targetBootDiagnosticsStorageAccountId,
-                targetNetworkId,
-                testNetworkId,
-                failoverRecoveryPointId,
-                lastRecoveryPointReceived,
-                lastRpoInSeconds,
-                lastRpoCalculatedOn,
-                lastRecoveryPointId,
-                initialReplicationProgressPercentage,
-                initialReplicationProcessedBytes,
-                initialReplicationTransferredBytes,
-                initialReplicationProgressHealth,
-                resyncProgressPercentage,
-                resyncProcessedBytes,
-                resyncTransferredBytes,
-                resyncProgressHealth,
-                resyncRequired,
-                resyncState,
-                agentUpgradeState,
-                lastAgentUpgradeType,
-                agentUpgradeJobId,
-                agentUpgradeAttemptToVersion,
-                (protectedDisks ?? new ChangeTrackingList<InMageRcmProtectedDiskDetails>()).ToList(),
-                default,
-                isLastUpgradeSuccessful,
-                isAgentRegistrationSuccessfulAfterFailover,
-                mobilityAgentDetails,
-                (lastAgentUpgradeErrorDetails ?? new ChangeTrackingList<InMageRcmLastAgentUpgradeErrorDetails>()).ToList(),
-                (agentUpgradeBlockingErrorDetails ?? new ChangeTrackingList<InMageRcmAgentUpgradeBlockingErrorDetails>()).ToList(),
-                (vmNics ?? new ChangeTrackingList<InMageRcmNicDetails>()).ToList(),
-                discoveredVmDetails,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default);
+            return InMageRcmReplicationDetails(internalIdentifier: internalIdentifier, fabricDiscoveryMachineId: fabricDiscoveryMachineId, multiVmGroupName: multiVmGroupName, discoveryType: discoveryType, processServerId: processServerId, processorCoreCount: processorCoreCount, allocatedMemoryInMB: allocatedMemoryInMB, processServerName: processServerName, runAsAccountId: runAsAccountId, osType: osType, firmwareType: firmwareType, primaryNicIPAddress: primaryNicIPAddress, targetGeneration: targetGeneration, licenseType: licenseType, linuxLicenseType: default, storageAccountId: storageAccountId, targetVmName: targetVmName, targetVmSize: targetVmSize, targetResourceGroupId: targetResourceGroupId, targetLocation: targetLocation, targetAvailabilitySetId: targetAvailabilitySetId, targetAvailabilityZone: targetAvailabilityZone, targetProximityPlacementGroupId: targetProximityPlacementGroupId, targetBootDiagnosticsStorageAccountId: targetBootDiagnosticsStorageAccountId, targetNetworkId: targetNetworkId, testNetworkId: testNetworkId, failoverRecoveryPointId: failoverRecoveryPointId, lastRecoveryPointReceived: lastRecoveryPointReceived, lastRpoInSeconds: lastRpoInSeconds, lastRpoCalculatedOn: lastRpoCalculatedOn, lastRecoveryPointId: lastRecoveryPointId, initialReplicationProgressPercentage: initialReplicationProgressPercentage, initialReplicationProcessedBytes: initialReplicationProcessedBytes, initialReplicationTransferredBytes: initialReplicationTransferredBytes, initialReplicationProgressHealth: initialReplicationProgressHealth, resyncProgressPercentage: resyncProgressPercentage, resyncProcessedBytes: resyncProcessedBytes, resyncTransferredBytes: resyncTransferredBytes, resyncProgressHealth: resyncProgressHealth, resyncRequired: resyncRequired, resyncState: resyncState, agentUpgradeState: agentUpgradeState, lastAgentUpgradeType: lastAgentUpgradeType, agentUpgradeJobId: agentUpgradeJobId, agentUpgradeAttemptToVersion: agentUpgradeAttemptToVersion, protectedDisks: protectedDisks, unprotectedDisks: default, isLastUpgradeSuccessful: isLastUpgradeSuccessful, isAgentRegistrationSuccessfulAfterFailover: isAgentRegistrationSuccessfulAfterFailover, mobilityAgentDetails: mobilityAgentDetails, lastAgentUpgradeErrorDetails: lastAgentUpgradeErrorDetails, agentUpgradeBlockingErrorDetails: agentUpgradeBlockingErrorDetails, vmNics: vmNics, discoveredVmDetails: discoveredVmDetails, targetVmTags: default, seedManagedDiskTags: default, targetManagedDiskTags: default, targetNicTags: default, sqlServerLicenseType: default, supportedOSVersions: default, osName: default, targetVmSecurityProfile: default, targetCapacityReservationGroupId: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmUnplannedFailoverContent"/>. </summary>
@@ -10454,13 +9790,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static InMageRcmUnplannedFailoverContent InMageRcmUnplannedFailoverContent(string performShutdown, ResourceIdentifier recoveryPointId)
         {
-            return new InMageRcmUnplannedFailoverContent(
-                default,
-                default,
-                performShutdown,
-                recoveryPointId,
-                default,
-                default);
+            return InMageRcmUnplannedFailoverContent(performShutdown: performShutdown, recoveryPointId: recoveryPointId, osUpgradeVersion: default, targetCapacityReservationGroupId: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VMwareCbtDiskContent"/>. </summary>
@@ -10474,19 +9804,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VMwareCbtDiskContent VMwareCbtDiskContent(string diskId, SiteRecoveryDiskAccountType? diskType, string isOSDisk, ResourceIdentifier logStorageAccountId, string logStorageAccountSasSecretName, ResourceIdentifier diskEncryptionSetId)
         {
-            return new VMwareCbtDiskContent(
-                diskId,
-                diskType,
-                isOSDisk,
-                logStorageAccountId,
-                logStorageAccountSasSecretName,
-                diskEncryptionSetId,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default);
+            return VMwareCbtDiskContent(diskId: diskId, diskType: diskType, isOSDisk: isOSDisk, logStorageAccountId: logStorageAccountId, logStorageAccountSasSecretName: logStorageAccountSasSecretName, diskEncryptionSetId: diskEncryptionSetId, confidentialDiskEncryptionSetId: default, sectorSizeInBytes: default, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VMwareCbtEnableMigrationContent"/>. </summary>
@@ -10519,6 +9837,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VMwareCbtEnableMigrationContent VMwareCbtEnableMigrationContent(ResourceIdentifier vmwareMachineId, IEnumerable<VMwareCbtDiskContent> disksToInclude, SiteRecoveryLicenseType? licenseType, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, string performSqlBulkRegistration, ResourceIdentifier dataMoverRunAsAccountId, ResourceIdentifier snapshotRunAsAccountId, string targetVmName, string targetVmSize, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, string targetSubnetName, string testSubnetName, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier confidentialVmKeyVaultId, VMwareCbtSecurityProfileProperties targetVmSecurityProfile, ResourceIdentifier targetBootDiagnosticsStorageAccountId, string performAutoResync, IDictionary<string, string> targetVmTags, IDictionary<string, string> seedDiskTags, IDictionary<string, string> targetDiskTags, IDictionary<string, string> targetNicTags)
         {
+            disksToInclude ??= new ChangeTrackingList<VMwareCbtDiskContent>();
+            targetVmTags ??= new ChangeTrackingDictionary<string, string>();
+            seedDiskTags ??= new ChangeTrackingDictionary<string, string>();
+            targetDiskTags ??= new ChangeTrackingDictionary<string, string>();
+            targetNicTags ??= new ChangeTrackingDictionary<string, string>();
+
             return new VMwareCbtEnableMigrationContent(
                 default,
                 default,
@@ -10559,13 +9883,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VMwareCbtMigrateContent VMwareCbtMigrateContent(string performShutdown, string osUpgradeVersion)
         {
-            return new VMwareCbtMigrateContent(
-                default,
-                default,
-                performShutdown,
-                osUpgradeVersion,
-                default,
-                default);
+            return VMwareCbtMigrateContent(performShutdown: performShutdown, osUpgradeVersion: osUpgradeVersion, postMigrationSteps: default, targetCapacityReservationGroupId: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VMwareCbtMigrationDetails"/>. </summary>
@@ -10621,6 +9939,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VMwareCbtMigrationDetails VMwareCbtMigrationDetails(ResourceIdentifier vmwareMachineId, string osType, string osName, string firmwareType, string targetGeneration, string licenseType, string sqlServerLicenseType, ResourceIdentifier dataMoverRunAsAccountId, ResourceIdentifier snapshotRunAsAccountId, ResourceIdentifier storageAccountId, string targetVmName, string targetVmSize, string targetLocation, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier confidentialVmKeyVaultId, VMwareCbtSecurityProfileProperties targetVmSecurityProfile, ResourceIdentifier targetBootDiagnosticsStorageAccountId, IReadOnlyDictionary<string, string> targetVmTags, IEnumerable<VMwareCbtProtectedDiskDetails> protectedDisks, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, IEnumerable<VMwareCbtNicDetails> vmNics, IReadOnlyDictionary<string, string> targetNicTags, ResourceIdentifier migrationRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, ResourceIdentifier lastRecoveryPointId, int? initialSeedingProgressPercentage, int? migrationProgressPercentage, int? resyncProgressPercentage, int? resumeProgressPercentage, int? deltaSyncProgressPercentage, string isCheckSumResyncCycle, long? initialSeedingRetryCount, long? resyncRetryCount, long? resumeRetryCount, long? deltaSyncRetryCount, string resyncRequired, SiteRecoveryResyncState? resyncState, string performAutoResync, IReadOnlyDictionary<string, string> seedDiskTags, IReadOnlyDictionary<string, string> targetDiskTags, IEnumerable<string> supportedOSVersions, ApplianceMonitoringDetails applianceMonitoringDetails, GatewayOperationDetails gatewayOperationDetails, string operationName)
         {
+            targetVmTags ??= new ChangeTrackingDictionary<string, string>();
+            protectedDisks ??= new ChangeTrackingList<VMwareCbtProtectedDiskDetails>();
+            vmNics ??= new ChangeTrackingList<VMwareCbtNicDetails>();
+            targetNicTags ??= new ChangeTrackingDictionary<string, string>();
+            seedDiskTags ??= new ChangeTrackingDictionary<string, string>();
+            targetDiskTags ??= new ChangeTrackingDictionary<string, string>();
+            supportedOSVersions ??= new ChangeTrackingList<string>();
+
             return new VMwareCbtMigrationDetails(
                 default,
                 default,
@@ -10696,28 +10022,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VMwareCbtProtectedDiskDetails VMwareCbtProtectedDiskDetails(string diskId, string diskName, SiteRecoveryDiskAccountType? diskType, string diskPath, string isOSDisk, long? capacityInBytes, ResourceIdentifier logStorageAccountId, string logStorageAccountSasSecretName, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, Uri targetBlobUri, string targetDiskName, GatewayOperationDetails gatewayOperationDetails)
         {
-            return new VMwareCbtProtectedDiskDetails(
-                diskId,
-                diskName,
-                diskType,
-                diskPath,
-                isOSDisk,
-                capacityInBytes,
-                logStorageAccountId,
-                logStorageAccountSasSecretName,
-                diskEncryptionSetId,
-                default,
-                seedManagedDiskId,
-                seedBlobUri,
-                targetManagedDiskId,
-                targetBlobUri,
-                targetDiskName,
-                gatewayOperationDetails,
-                default,
-                default,
-                default,
-                default,
-                default);
+            return VMwareCbtProtectedDiskDetails(diskId: diskId, diskName: diskName, diskType: diskType, diskPath: diskPath, isOSDisk: isOSDisk, capacityInBytes: capacityInBytes, logStorageAccountId: logStorageAccountId, logStorageAccountSasSecretName: logStorageAccountSasSecretName, diskEncryptionSetId: diskEncryptionSetId, confidentialDiskEncryptionSetId: default, seedManagedDiskId: seedManagedDiskId, seedBlobUri: seedBlobUri, targetManagedDiskId: targetManagedDiskId, targetBlobUri: targetBlobUri, targetDiskName: targetDiskName, gatewayOperationDetails: gatewayOperationDetails, sectorSizeInBytes: default, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VMwareCbtTestMigrateContent"/>. </summary>
@@ -10729,14 +10034,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VMwareCbtTestMigrateContent VMwareCbtTestMigrateContent(ResourceIdentifier recoveryPointId, ResourceIdentifier networkId, IEnumerable<VMwareCbtNicContent> vmNics, string osUpgradeVersion)
         {
-            return new VMwareCbtTestMigrateContent(
-                default,
-                default,
-                recoveryPointId,
-                networkId,
-                (vmNics ?? new ChangeTrackingList<VMwareCbtNicContent>()).ToList(),
-                osUpgradeVersion,
-                default);
+            return VMwareCbtTestMigrateContent(recoveryPointId: recoveryPointId, networkId: networkId, vmNics: vmNics, osUpgradeVersion: osUpgradeVersion, postMigrationSteps: default);
         }
 
         /// <summary> Initializes a new instance of A2AReplicationDetails. </summary>
@@ -10797,77 +10095,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static A2AReplicationDetails A2AReplicationDetails(ResourceIdentifier fabricObjectId, string initialPrimaryZone, AzureLocation? initialPrimaryFabricLocation, string initialRecoveryZone, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation, AzureLocation? initialRecoveryFabricLocation, string multiVmGroupId, string multiVmGroupName, MultiVmGroupCreateOption? multiVmGroupCreateOption, string managementId, IEnumerable<A2AProtectedDiskDetails> protectedDisks, IEnumerable<A2AUnprotectedDiskDetails> unprotectedDisks, IEnumerable<A2AProtectedManagedDiskDetails> protectedManagedDisks, ResourceIdentifier recoveryBootDiagStorageAccountId, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation, string osType, string recoveryAzureVmSize, string recoveryAzureVmName, ResourceIdentifier recoveryAzureResourceGroupId, string recoveryCloudService, string recoveryAvailabilitySet, ResourceIdentifier selectedRecoveryAzureNetworkId, ResourceIdentifier selectedTfoAzureNetworkId, IEnumerable<VmNicDetails> vmNics, A2AVmSyncedConfigDetails vmSyncedConfigDetails, int? monitoringPercentageCompletion, string monitoringJobType, DateTimeOffset? lastHeartbeat, string agentVersion, DateTimeOffset? agentExpireOn, bool? isReplicationAgentUpdateRequired, DateTimeOffset? agentCertificateExpireOn, bool? isReplicationAgentCertificateUpdateRequired, ResourceIdentifier recoveryFabricObjectId, string vmProtectionState, string vmProtectionStateDescription, string lifecycleId, ResourceIdentifier testFailoverRecoveryFabricObjectId, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string primaryAvailabilityZone, string recoveryAvailabilityZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation, SiteRecoveryVmEncryptionType? vmEncryptionType, string tfoAzureVmName, string recoveryAzureGeneration, ResourceIdentifier recoveryProximityPlacementGroupId, AutoProtectionOfDataDisk? autoProtectionOfDataDisk, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId)
         {
-            return new A2AReplicationDetails(
-                default,
-                default,
-                fabricObjectId,
-                initialPrimaryZone,
-                initialPrimaryFabricLocation,
-                initialRecoveryZone,
-                initialPrimaryExtendedLocation,
-                initialRecoveryExtendedLocation,
-                initialRecoveryFabricLocation,
-                multiVmGroupId,
-                multiVmGroupName,
-                multiVmGroupCreateOption,
-                managementId,
-                default,
-                default,
-                (protectedDisks ?? new ChangeTrackingList<A2AProtectedDiskDetails>()).ToList(),
-                (unprotectedDisks ?? new ChangeTrackingList<A2AUnprotectedDiskDetails>()).ToList(),
-                (protectedManagedDisks ?? new ChangeTrackingList<A2AProtectedManagedDiskDetails>()).ToList(),
-                recoveryBootDiagStorageAccountId,
-                primaryFabricLocation,
-                recoveryFabricLocation,
-                osType,
-                recoveryAzureVmSize,
-                recoveryAzureVmName,
-                recoveryAzureResourceGroupId,
-                recoveryCloudService,
-                recoveryAvailabilitySet,
-                selectedRecoveryAzureNetworkId,
-                selectedTfoAzureNetworkId,
-                (vmNics ?? new ChangeTrackingList<VmNicDetails>()).ToList(),
-                vmSyncedConfigDetails,
-                monitoringPercentageCompletion,
-                monitoringJobType,
-                lastHeartbeat,
-                agentVersion,
-                agentExpireOn,
-                isReplicationAgentUpdateRequired,
-                agentCertificateExpireOn,
-                isReplicationAgentCertificateUpdateRequired,
-                recoveryFabricObjectId,
-                vmProtectionState,
-                vmProtectionStateDescription,
-                lifecycleId,
-                testFailoverRecoveryFabricObjectId,
-                rpoInSeconds,
-                lastRpoCalculatedOn,
-                primaryAvailabilityZone,
-                recoveryAvailabilityZone,
-                primaryExtendedLocation,
-                recoveryExtendedLocation,
-                vmEncryptionType,
-                tfoAzureVmName,
-                recoveryAzureGeneration,
-                recoveryProximityPlacementGroupId,
-                autoProtectionOfDataDisk,
-                recoveryVirtualMachineScaleSetId,
-                recoveryCapacityReservationGroupId,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default);
+            return A2AReplicationDetails(fabricObjectId: fabricObjectId, initialPrimaryZone: initialPrimaryZone, initialPrimaryFabricLocation: initialPrimaryFabricLocation, initialRecoveryZone: initialRecoveryZone, initialPrimaryExtendedLocation: initialPrimaryExtendedLocation, initialRecoveryExtendedLocation: initialRecoveryExtendedLocation, initialRecoveryFabricLocation: initialRecoveryFabricLocation, multiVmGroupId: multiVmGroupId, multiVmGroupName: multiVmGroupName, multiVmGroupCreateOption: multiVmGroupCreateOption, managementId: managementId, protectionClusterId: default, isClusterInfraReady: default, protectedDisks: protectedDisks, unprotectedDisks: unprotectedDisks, protectedManagedDisks: protectedManagedDisks, recoveryBootDiagStorageAccountId: recoveryBootDiagStorageAccountId, primaryFabricLocation: primaryFabricLocation, recoveryFabricLocation: recoveryFabricLocation, osType: osType, recoveryAzureVmSize: recoveryAzureVmSize, recoveryAzureVmName: recoveryAzureVmName, recoveryAzureResourceGroupId: recoveryAzureResourceGroupId, recoveryCloudService: recoveryCloudService, recoveryAvailabilitySet: recoveryAvailabilitySet, selectedRecoveryAzureNetworkId: selectedRecoveryAzureNetworkId, selectedTfoAzureNetworkId: selectedTfoAzureNetworkId, vmNics: vmNics, vmSyncedConfigDetails: vmSyncedConfigDetails, monitoringPercentageCompletion: monitoringPercentageCompletion, monitoringJobType: monitoringJobType, lastHeartbeat: lastHeartbeat, agentVersion: agentVersion, agentExpireOn: agentExpireOn, isReplicationAgentUpdateRequired: isReplicationAgentUpdateRequired, agentCertificateExpireOn: agentCertificateExpireOn, isReplicationAgentCertificateUpdateRequired: isReplicationAgentCertificateUpdateRequired, recoveryFabricObjectId: recoveryFabricObjectId, vmProtectionState: vmProtectionState, vmProtectionStateDescription: vmProtectionStateDescription, lifecycleId: lifecycleId, testFailoverRecoveryFabricObjectId: testFailoverRecoveryFabricObjectId, rpoInSeconds: rpoInSeconds, lastRpoCalculatedOn: lastRpoCalculatedOn, primaryAvailabilityZone: primaryAvailabilityZone, recoveryAvailabilityZone: recoveryAvailabilityZone, primaryExtendedLocation: primaryExtendedLocation, recoveryExtendedLocation: recoveryExtendedLocation, vmEncryptionType: vmEncryptionType, tfoAzureVmName: tfoAzureVmName, recoveryAzureGeneration: recoveryAzureGeneration, recoveryProximityPlacementGroupId: recoveryProximityPlacementGroupId, autoProtectionOfDataDisk: autoProtectionOfDataDisk, recoveryVirtualMachineScaleSetId: recoveryVirtualMachineScaleSetId, recoveryCapacityReservationGroupId: recoveryCapacityReservationGroupId, churnOptionSelected: default, agentReinstallAttemptToVersion: default, osFamilyName: default, distroName: default, distroNameForWhichAgentIsInstalled: default, isAgentUpgradeable: default, isAgentReinstallRequired: default, reasonsBlockingReInstall: default, reasonsBlockingReinstallDetails: default, isAgentUpgradeInProgress: default, autoAgentUpgradeRetryCount: default, isAgentUpgradeRetryThresholdExhausted: default, platformFaultDomain: default);
         }
 
         /// <summary> Initializes a new instance of HyperVReplicaAzureReplicationDetails. </summary>
@@ -10908,46 +10136,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HyperVReplicaAzureReplicationDetails HyperVReplicaAzureReplicationDetails(IEnumerable<SiteRecoveryVmDiskDetails> azureVmDiskDetails, string recoveryAzureVmName, string recoveryAzureVmSize, string recoveryAzureStorageAccount, ResourceIdentifier recoveryAzureLogStorageAccountId, DateTimeOffset? lastReplicatedOn, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string vmId, string vmProtectionState, string vmProtectionStateDescription, InitialReplicationDetails initialReplicationDetails, IEnumerable<VmNicDetails> vmNics, ResourceIdentifier selectedRecoveryAzureNetworkId, string selectedSourceNicId, string encryption, SiteRecoveryOSDetails osDetails, int? sourceVmRamSizeInMB, int? sourceVmCpuCount, string enableRdpOnTargetOption, ResourceIdentifier recoveryAzureResourceGroupId, ResourceIdentifier recoveryAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, string useManagedDisks, string licenseType, string sqlServerLicenseType, DateTimeOffset? lastRecoveryPointReceived, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyDictionary<string, string> seedManagedDiskTags, IReadOnlyDictionary<string, string> targetManagedDiskTags, IReadOnlyDictionary<string, string> targetNicTags, IEnumerable<HyperVReplicaAzureManagedDiskDetails> protectedManagedDisks)
         {
-            return new HyperVReplicaAzureReplicationDetails(
-                default,
-                default,
-                (azureVmDiskDetails ?? new ChangeTrackingList<SiteRecoveryVmDiskDetails>()).ToList(),
-                recoveryAzureVmName,
-                recoveryAzureVmSize,
-                recoveryAzureStorageAccount,
-                recoveryAzureLogStorageAccountId,
-                lastReplicatedOn,
-                rpoInSeconds,
-                lastRpoCalculatedOn,
-                vmId,
-                vmProtectionState,
-                vmProtectionStateDescription,
-                initialReplicationDetails,
-                (vmNics ?? new ChangeTrackingList<VmNicDetails>()).ToList(),
-                selectedRecoveryAzureNetworkId,
-                selectedSourceNicId,
-                encryption,
-                osDetails,
-                sourceVmRamSizeInMB,
-                sourceVmCpuCount,
-                enableRdpOnTargetOption,
-                recoveryAzureResourceGroupId,
-                recoveryAvailabilitySetId,
-                targetAvailabilityZone,
-                targetProximityPlacementGroupId,
-                useManagedDisks,
-                licenseType,
-                sqlServerLicenseType,
-                default,
-                lastRecoveryPointReceived,
-                targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
-                seedManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
-                targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
-                targetNicTags ?? new ChangeTrackingDictionary<string, string>(),
-                (protectedManagedDisks ?? new ChangeTrackingList<HyperVReplicaAzureManagedDiskDetails>()).ToList(),
-                default,
-                default,
-                default);
+            return HyperVReplicaAzureReplicationDetails(azureVmDiskDetails: azureVmDiskDetails, recoveryAzureVmName: recoveryAzureVmName, recoveryAzureVmSize: recoveryAzureVmSize, recoveryAzureStorageAccount: recoveryAzureStorageAccount, recoveryAzureLogStorageAccountId: recoveryAzureLogStorageAccountId, lastReplicatedOn: lastReplicatedOn, rpoInSeconds: rpoInSeconds, lastRpoCalculatedOn: lastRpoCalculatedOn, vmId: vmId, vmProtectionState: vmProtectionState, vmProtectionStateDescription: vmProtectionStateDescription, initialReplicationDetails: initialReplicationDetails, vmNics: vmNics, selectedRecoveryAzureNetworkId: selectedRecoveryAzureNetworkId, selectedSourceNicId: selectedSourceNicId, encryption: encryption, osDetails: osDetails, sourceVmRamSizeInMB: sourceVmRamSizeInMB, sourceVmCpuCount: sourceVmCpuCount, enableRdpOnTargetOption: enableRdpOnTargetOption, recoveryAzureResourceGroupId: recoveryAzureResourceGroupId, recoveryAvailabilitySetId: recoveryAvailabilitySetId, targetAvailabilityZone: targetAvailabilityZone, targetProximityPlacementGroupId: targetProximityPlacementGroupId, useManagedDisks: useManagedDisks, licenseType: licenseType, sqlServerLicenseType: sqlServerLicenseType, linuxLicenseType: default, lastRecoveryPointReceived: lastRecoveryPointReceived, targetVmTags: targetVmTags, seedManagedDiskTags: seedManagedDiskTags, targetManagedDiskTags: targetManagedDiskTags, targetNicTags: targetNicTags, protectedManagedDisks: protectedManagedDisks, allAvailableOSUpgradeConfigurations: default, targetVmSecurityProfile: default, targetCapacityReservationGroupId: default);
         }
 
         /// <summary> Initializes a new instance of InMageAzureV2ReplicationDetails. </summary>
@@ -11022,79 +10211,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static InMageAzureV2ReplicationDetails InMageAzureV2ReplicationDetails(string infrastructureVmId, string vCenterInfrastructureId, string protectionStage, string vmId, string vmProtectionState, string vmProtectionStateDescription, int? resyncProgressPercentage, long? rpoInSeconds, double? compressedDataRateInMB, double? uncompressedDataRateInMB, IPAddress ipAddress, string agentVersion, DateTimeOffset? agentExpireOn, string isAgentUpdateRequired, string isRebootAfterUpdateRequired, DateTimeOffset? lastHeartbeat, Guid? processServerId, string processServerName, string multiVmGroupId, string multiVmGroupName, string multiVmSyncStatus, IEnumerable<InMageAzureV2ProtectedDiskDetails> protectedDisks, string diskResized, string masterTargetId, int? sourceVmCpuCount, int? sourceVmRamSizeInMB, string osType, string vhdName, string osDiskId, IEnumerable<SiteRecoveryVmDiskDetails> azureVmDiskDetails, string recoveryAzureVmName, string recoveryAzureVmSize, string recoveryAzureStorageAccount, ResourceIdentifier recoveryAzureLogStorageAccountId, IEnumerable<VmNicDetails> vmNics, ResourceIdentifier selectedRecoveryAzureNetworkId, ResourceIdentifier selectedTfoAzureNetworkId, string selectedSourceNicId, string discoveryType, string enableRdpOnTargetOption, IEnumerable<string> datastores, string targetVmId, ResourceIdentifier recoveryAzureResourceGroupId, ResourceIdentifier recoveryAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, string useManagedDisks, string licenseType, string sqlServerLicenseType, IEnumerable<SiteRecoveryHealthError> validationErrors, DateTimeOffset? lastRpoCalculatedOn, DateTimeOffset? lastUpdateReceivedOn, string replicaId, string osVersion, IEnumerable<InMageAzureV2ManagedDiskDetails> protectedManagedDisks, DateTimeOffset? lastRecoveryPointReceived, string firmwareType, string azureVmGeneration, bool? isAdditionalStatsAvailable, long? totalDataTransferred, string totalProgressHealth, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyDictionary<string, string> seedManagedDiskTags, IReadOnlyDictionary<string, string> targetManagedDiskTags, IReadOnlyDictionary<string, string> targetNicTags, IEnumerable<InMageAzureV2SwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails, InMageAzureV2SwitchProviderDetails switchProviderDetails)
         {
-            return new InMageAzureV2ReplicationDetails(
-                default,
-                default,
-                infrastructureVmId,
-                vCenterInfrastructureId,
-                protectionStage,
-                vmId,
-                vmProtectionState,
-                vmProtectionStateDescription,
-                resyncProgressPercentage,
-                rpoInSeconds,
-                compressedDataRateInMB,
-                uncompressedDataRateInMB,
-                ipAddress,
-                agentVersion,
-                agentExpireOn,
-                isAgentUpdateRequired,
-                isRebootAfterUpdateRequired,
-                lastHeartbeat,
-                processServerId,
-                processServerName,
-                multiVmGroupId,
-                multiVmGroupName,
-                multiVmSyncStatus,
-                (protectedDisks ?? new ChangeTrackingList<InMageAzureV2ProtectedDiskDetails>()).ToList(),
-                diskResized,
-                masterTargetId,
-                sourceVmCpuCount,
-                sourceVmRamSizeInMB,
-                osType,
-                vhdName,
-                osDiskId,
-                (azureVmDiskDetails ?? new ChangeTrackingList<SiteRecoveryVmDiskDetails>()).ToList(),
-                recoveryAzureVmName,
-                recoveryAzureVmSize,
-                recoveryAzureStorageAccount,
-                recoveryAzureLogStorageAccountId,
-                (vmNics ?? new ChangeTrackingList<VmNicDetails>()).ToList(),
-                selectedRecoveryAzureNetworkId,
-                selectedTfoAzureNetworkId,
-                selectedSourceNicId,
-                discoveryType,
-                enableRdpOnTargetOption,
-                (datastores ?? new ChangeTrackingList<string>()).ToList(),
-                targetVmId,
-                recoveryAzureResourceGroupId,
-                recoveryAvailabilitySetId,
-                targetAvailabilityZone,
-                targetProximityPlacementGroupId,
-                useManagedDisks,
-                licenseType,
-                sqlServerLicenseType,
-                (validationErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>()).ToList(),
-                lastRpoCalculatedOn,
-                lastUpdateReceivedOn,
-                replicaId,
-                osVersion,
-                (protectedManagedDisks ?? new ChangeTrackingList<InMageAzureV2ManagedDiskDetails>()).ToList(),
-                lastRecoveryPointReceived,
-                firmwareType,
-                azureVmGeneration,
-                isAdditionalStatsAvailable,
-                totalDataTransferred,
-                totalProgressHealth,
-                targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
-                seedManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
-                targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
-                targetNicTags ?? new ChangeTrackingDictionary<string, string>(),
-                (switchProviderBlockingErrorDetails ?? new ChangeTrackingList<InMageAzureV2SwitchProviderBlockingErrorDetails>()).ToList(),
-                switchProviderDetails,
-                default,
-                default,
-                default);
+            return InMageAzureV2ReplicationDetails(infrastructureVmId: infrastructureVmId, vCenterInfrastructureId: vCenterInfrastructureId, protectionStage: protectionStage, vmId: vmId, vmProtectionState: vmProtectionState, vmProtectionStateDescription: vmProtectionStateDescription, resyncProgressPercentage: resyncProgressPercentage, rpoInSeconds: rpoInSeconds, compressedDataRateInMB: compressedDataRateInMB, uncompressedDataRateInMB: uncompressedDataRateInMB, ipAddress: ipAddress, agentVersion: agentVersion, agentExpireOn: agentExpireOn, isAgentUpdateRequired: isAgentUpdateRequired, isRebootAfterUpdateRequired: isRebootAfterUpdateRequired, lastHeartbeat: lastHeartbeat, processServerId: processServerId, processServerName: processServerName, multiVmGroupId: multiVmGroupId, multiVmGroupName: multiVmGroupName, multiVmSyncStatus: multiVmSyncStatus, protectedDisks: protectedDisks, diskResized: diskResized, masterTargetId: masterTargetId, sourceVmCpuCount: sourceVmCpuCount, sourceVmRamSizeInMB: sourceVmRamSizeInMB, osType: osType, vhdName: vhdName, osDiskId: osDiskId, azureVmDiskDetails: azureVmDiskDetails, recoveryAzureVmName: recoveryAzureVmName, recoveryAzureVmSize: recoveryAzureVmSize, recoveryAzureStorageAccount: recoveryAzureStorageAccount, recoveryAzureLogStorageAccountId: recoveryAzureLogStorageAccountId, vmNics: vmNics, selectedRecoveryAzureNetworkId: selectedRecoveryAzureNetworkId, selectedTfoAzureNetworkId: selectedTfoAzureNetworkId, selectedSourceNicId: selectedSourceNicId, discoveryType: discoveryType, enableRdpOnTargetOption: enableRdpOnTargetOption, datastores: datastores, targetVmId: targetVmId, recoveryAzureResourceGroupId: recoveryAzureResourceGroupId, recoveryAvailabilitySetId: recoveryAvailabilitySetId, targetAvailabilityZone: targetAvailabilityZone, targetProximityPlacementGroupId: targetProximityPlacementGroupId, useManagedDisks: useManagedDisks, licenseType: licenseType, sqlServerLicenseType: sqlServerLicenseType, validationErrors: validationErrors, lastRpoCalculatedOn: lastRpoCalculatedOn, lastUpdateReceivedOn: lastUpdateReceivedOn, replicaId: replicaId, osVersion: osVersion, protectedManagedDisks: protectedManagedDisks, lastRecoveryPointReceived: lastRecoveryPointReceived, firmwareType: firmwareType, azureVmGeneration: azureVmGeneration, isAdditionalStatsAvailable: isAdditionalStatsAvailable, totalDataTransferred: totalDataTransferred, totalProgressHealth: totalProgressHealth, targetVmTags: targetVmTags, seedManagedDiskTags: seedManagedDiskTags, targetManagedDiskTags: targetManagedDiskTags, targetNicTags: targetNicTags, switchProviderBlockingErrorDetails: switchProviderBlockingErrorDetails, switchProviderDetails: switchProviderDetails, supportedOSVersions: default, allAvailableOSUpgradeConfigurations: default, osName: default);
         }
 
         /// <summary> Initializes a new instance of VMwareCbtMigrationDetails. </summary>
@@ -11144,6 +10261,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VMwareCbtMigrationDetails VMwareCbtMigrationDetails(ResourceIdentifier vmwareMachineId, string osType, string osName, string firmwareType, string targetGeneration, string licenseType, string sqlServerLicenseType, ResourceIdentifier dataMoverRunAsAccountId, ResourceIdentifier snapshotRunAsAccountId, ResourceIdentifier storageAccountId, string targetVmName, string targetVmSize, string targetLocation, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier confidentialVmKeyVaultId, VMwareCbtSecurityProfileProperties targetVmSecurityProfile, ResourceIdentifier targetBootDiagnosticsStorageAccountId, IReadOnlyDictionary<string, string> targetVmTags, IEnumerable<VMwareCbtProtectedDiskDetails> protectedDisks, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, IEnumerable<VMwareCbtNicDetails> vmNics, IReadOnlyDictionary<string, string> targetNicTags, ResourceIdentifier migrationRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, ResourceIdentifier lastRecoveryPointId, int? initialSeedingProgressPercentage, int? migrationProgressPercentage, int? resyncProgressPercentage, int? resumeProgressPercentage, long? initialSeedingRetryCount, long? resyncRetryCount, long? resumeRetryCount, string resyncRequired, SiteRecoveryResyncState? resyncState, string performAutoResync, IReadOnlyDictionary<string, string> seedDiskTags, IReadOnlyDictionary<string, string> targetDiskTags, IEnumerable<string> supportedOSVersions)
         {
+            targetVmTags ??= new ChangeTrackingDictionary<string, string>();
+            protectedDisks ??= new ChangeTrackingList<VMwareCbtProtectedDiskDetails>();
+            vmNics ??= new ChangeTrackingList<VMwareCbtNicDetails>();
+            targetNicTags ??= new ChangeTrackingDictionary<string, string>();
+            seedDiskTags ??= new ChangeTrackingDictionary<string, string>();
+            targetDiskTags ??= new ChangeTrackingDictionary<string, string>();
+            supportedOSVersions ??= new ChangeTrackingList<string>();
+
             return new VMwareCbtMigrationDetails(
                 default,
                 default,
@@ -11218,28 +10343,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VMwareCbtProtectedDiskDetails VMwareCbtProtectedDiskDetails(string diskId, string diskName, SiteRecoveryDiskAccountType? diskType, string diskPath, string isOSDisk, long? capacityInBytes, ResourceIdentifier logStorageAccountId, string logStorageAccountSasSecretName, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, Uri targetBlobUri, string targetDiskName)
         {
-            return new VMwareCbtProtectedDiskDetails(
-                diskId,
-                diskName,
-                diskType,
-                diskPath,
-                isOSDisk,
-                capacityInBytes,
-                logStorageAccountId,
-                logStorageAccountSasSecretName,
-                diskEncryptionSetId,
-                default,
-                seedManagedDiskId,
-                seedBlobUri,
-                targetManagedDiskId,
-                targetBlobUri,
-                targetDiskName,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default);
+            return VMwareCbtProtectedDiskDetails(diskId: diskId, diskName: diskName, diskType: diskType, diskPath: diskPath, isOSDisk: isOSDisk, capacityInBytes: capacityInBytes, logStorageAccountId: logStorageAccountId, logStorageAccountSasSecretName: logStorageAccountSasSecretName, diskEncryptionSetId: diskEncryptionSetId, confidentialDiskEncryptionSetId: default, seedManagedDiskId: seedManagedDiskId, seedBlobUri: seedBlobUri, targetManagedDiskId: targetManagedDiskId, targetBlobUri: targetBlobUri, targetDiskName: targetDiskName, gatewayOperationDetails: default, sectorSizeInBytes: default, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
     }
 }

@@ -669,28 +669,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <returns> A new <see cref="Models.RecoveryServicesVaultProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RecoveryServicesVaultProperties RecoveryServicesVaultProperties(string provisioningState = default, VaultUpgradeDetails upgradeDetails = default, IEnumerable<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections = default, VaultPrivateEndpointState? privateEndpointStateForBackup = default, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery = default, VaultPropertiesEncryption encryption = default, VaultPropertiesMoveDetails moveDetails = default, ResourceMoveState? moveState = default, BackupStorageVersion? backupStorageVersion = default, VaultPublicNetworkAccess? publicNetworkAccess = default, VaultMonitoringSettings monitoringSettings = default, CrossSubscriptionRestoreState? crossSubscriptionRestoreState = default, VaultPropertiesRedundancySettings redundancySettings = default, RecoveryServicesSecuritySettings securitySettings = default, SecureScoreLevel? secureScore = default, BcdrSecurityLevel? bcdrSecurityLevel = default, IEnumerable<string> resourceGuardOperationRequests = default)
+        public static RecoveryServicesVaultProperties RecoveryServicesVaultProperties(string provisioningState, VaultUpgradeDetails upgradeDetails, IEnumerable<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections, VaultPrivateEndpointState? privateEndpointStateForBackup, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery, VaultPropertiesEncryption encryption, VaultPropertiesMoveDetails moveDetails, ResourceMoveState? moveState, BackupStorageVersion? backupStorageVersion, VaultPublicNetworkAccess? publicNetworkAccess, VaultMonitoringSettings monitoringSettings, CrossSubscriptionRestoreState? crossSubscriptionRestoreState, VaultPropertiesRedundancySettings redundancySettings, RecoveryServicesSecuritySettings securitySettings, SecureScoreLevel? secureScore, BcdrSecurityLevel? bcdrSecurityLevel, IEnumerable<string> resourceGuardOperationRequests)
         {
-            return new RecoveryServicesVaultProperties(
-                provisioningState,
-                upgradeDetails,
-                (privateEndpointConnections ?? new ChangeTrackingList<RecoveryServicesPrivateEndpointConnectionVaultProperties>()).ToList(),
-                privateEndpointStateForBackup,
-                privateEndpointStateForSiteRecovery,
-                encryption,
-                moveDetails,
-                moveState,
-                backupStorageVersion,
-                publicNetworkAccess,
-                monitoringSettings,
-                default,
-                crossSubscriptionRestoreState is null ? default : new RestoreSettings(new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, default), default),
-                redundancySettings,
-                securitySettings,
-                secureScore,
-                bcdrSecurityLevel,
-                (resourceGuardOperationRequests ?? new ChangeTrackingList<string>()).ToList(),
-                default);
+            return RecoveryServicesVaultProperties(provisioningState: provisioningState, upgradeDetails: upgradeDetails, privateEndpointConnections: privateEndpointConnections, privateEndpointStateForBackup: privateEndpointStateForBackup, privateEndpointStateForSiteRecovery: privateEndpointStateForSiteRecovery, encryption: encryption, moveDetails: moveDetails, moveState: moveState, backupStorageVersion: backupStorageVersion, publicNetworkAccess: publicNetworkAccess, monitoringSettings: monitoringSettings, costManagementGranularityLevel: default, crossSubscriptionRestoreState: crossSubscriptionRestoreState, redundancySettings: redundancySettings, securitySettings: securitySettings, secureScore: secureScore, bcdrSecurityLevel: bcdrSecurityLevel, resourceGuardOperationRequests: resourceGuardOperationRequests);
         }
 
         /// <param name="immutabilityState"> Gets or sets the State. </param>
@@ -699,7 +680,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="sourceScanConfiguration"> Source scan configuration of vault. </param>
         /// <returns> A new <see cref="Models.RecoveryServicesSecuritySettings"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RecoveryServicesSecuritySettings RecoveryServicesSecuritySettings(ImmutabilityState? immutabilityState = default, RecoveryServicesSoftDeleteSettings softDeleteSettings = default, MultiUserAuthorization? multiUserAuthorization = default, SourceScanConfiguration sourceScanConfiguration = default)
+        public static RecoveryServicesSecuritySettings RecoveryServicesSecuritySettings(ImmutabilityState? immutabilityState, RecoveryServicesSoftDeleteSettings softDeleteSettings, MultiUserAuthorization? multiUserAuthorization, SourceScanConfiguration sourceScanConfiguration)
         {
             return new RecoveryServicesSecuritySettings(immutabilityState is null ? default : new ImmutabilitySettings(immutabilityState, default, default), softDeleteSettings, multiUserAuthorization, sourceScanConfiguration, default);
         }
@@ -724,26 +705,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RecoveryServicesVaultProperties RecoveryServicesVaultProperties(string provisioningState, VaultUpgradeDetails upgradeDetails, IEnumerable<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections, VaultPrivateEndpointState? privateEndpointStateForBackup, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery, VaultPropertiesEncryption encryption, VaultPropertiesMoveDetails moveDetails, ResourceMoveState? moveState, BackupStorageVersion? backupStorageVersion, VaultPublicNetworkAccess? publicNetworkAccess, VaultMonitoringSettings monitoringSettings, CrossSubscriptionRestoreState? crossSubscriptionRestoreState, VaultPropertiesRedundancySettings redundancySettings, RecoveryServicesSecuritySettings securitySettings, SecureScoreLevel? secureScore)
         {
-            return new RecoveryServicesVaultProperties(
-                provisioningState,
-                upgradeDetails,
-                (privateEndpointConnections ?? new ChangeTrackingList<RecoveryServicesPrivateEndpointConnectionVaultProperties>()).ToList(),
-                privateEndpointStateForBackup,
-                privateEndpointStateForSiteRecovery,
-                encryption,
-                moveDetails,
-                moveState,
-                backupStorageVersion,
-                publicNetworkAccess,
-                monitoringSettings,
-                default,
-                crossSubscriptionRestoreState is null ? default : new RestoreSettings(new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, default), default),
-                redundancySettings,
-                securitySettings,
-                secureScore,
-                default,
-                default,
-                default);
+            return RecoveryServicesVaultProperties(provisioningState: provisioningState, upgradeDetails: upgradeDetails, privateEndpointConnections: privateEndpointConnections, privateEndpointStateForBackup: privateEndpointStateForBackup, privateEndpointStateForSiteRecovery: privateEndpointStateForSiteRecovery, encryption: encryption, moveDetails: moveDetails, moveState: moveState, backupStorageVersion: backupStorageVersion, publicNetworkAccess: publicNetworkAccess, monitoringSettings: monitoringSettings, costManagementGranularityLevel: default, crossSubscriptionRestoreState: crossSubscriptionRestoreState, redundancySettings: redundancySettings, securitySettings: securitySettings, secureScore: secureScore, bcdrSecurityLevel: default, resourceGuardOperationRequests: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesSecuritySettings"/>. </summary>

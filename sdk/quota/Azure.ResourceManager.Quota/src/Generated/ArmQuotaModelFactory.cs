@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -504,83 +503,6 @@ namespace Azure.ResourceManager.Quota.Models
                 message,
                 subRequestId,
                 limit,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GroupQuotaLimitProperties"/>. </summary>
-        /// <param name="resourceName"> The resource name, such as SKU name. </param>
-        /// <param name="limit"> The current Group Quota Limit at the parentId level. </param>
-        /// <param name="comment"> Any comment related to quota request. </param>
-        /// <param name="unit"> The usages units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
-        /// <param name="value"> Resource name. </param>
-        /// <param name="localizedValue"> Resource display name. </param>
-        /// <param name="availableLimit"> The available Group Quota Limit at the MG level. This Group quota can be allocated to subscription(s). </param>
-        /// <param name="allocatedToSubscriptionsValue"> Quota allocated to subscriptions. </param>
-        /// <returns> A new <see cref="Models.GroupQuotaLimitProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static GroupQuotaLimitProperties GroupQuotaLimitProperties(string resourceName = default, long? limit = default, string comment = default, string unit = default, string value = default, string localizedValue = default, long? availableLimit = default, IEnumerable<SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = default)
-        {
-            return new GroupQuotaLimitProperties(
-                resourceName,
-                limit,
-                comment,
-                unit,
-                value is null && localizedValue is null ? default : new GroupQuotaDetailsName(value, localizedValue, default),
-                availableLimit,
-                allocatedToSubscriptionsValue is null ? default : new AllocatedQuotaToSubscriptionList((allocatedToSubscriptionsValue ?? new ChangeTrackingList<SubscriptionAllocatedQuota>()).ToList(), default),
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GroupQuotaDetails"/>. </summary>
-        /// <param name="resourceName"> The resource name, such as SKU name. </param>
-        /// <param name="limit"> The current Group Quota Limit at the parentId level. </param>
-        /// <param name="comment"> Any comment related to quota request. </param>
-        /// <param name="unit"> The usages units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
-        /// <param name="value"> Resource name. </param>
-        /// <param name="localizedValue"> Resource display name. </param>
-        /// <param name="availableLimit"> The available Group Quota Limit at the MG level. This Group quota can be allocated to subscription(s). </param>
-        /// <param name="allocatedToSubscriptionsValue"> Quota allocated to subscriptions. </param>
-        /// <returns> A new <see cref="Models.GroupQuotaDetails"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static GroupQuotaDetails GroupQuotaDetails(string resourceName = default, long? limit = default, string comment = default, string unit = default, string value = default, string localizedValue = default, long? availableLimit = default, IEnumerable<SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = default)
-        {
-            return new GroupQuotaDetails(
-                resourceName,
-                limit,
-                comment,
-                unit,
-                value is null && localizedValue is null ? default : new GroupQuotaDetailsName(value, localizedValue, default),
-                availableLimit,
-                allocatedToSubscriptionsValue is null ? default : new AllocatedQuotaToSubscriptionList((allocatedToSubscriptionsValue ?? new ChangeTrackingList<SubscriptionAllocatedQuota>()).ToList(), default),
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Quota.QuotaRequestDetailData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> The quota request status. </param>
-        /// <param name="message"> User-friendly status message. </param>
-        /// <param name="error"> Error details of the quota request. </param>
-        /// <param name="requestSubmitOn"> The quota request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="value"> Quota request details. </param>
-        /// <returns> A new <see cref="Quota.QuotaRequestDetailData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static QuotaRequestDetailData QuotaRequestDetailData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, QuotaRequestState? provisioningState = default, string message = default, ServiceErrorDetail error = default, DateTimeOffset? requestSubmitOn = default, IEnumerable<QuotaSubRequestDetail> value = default)
-        {
-            return new QuotaRequestDetailData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && message is null && error is null && requestSubmitOn is null && value is null ? default : new QuotaRequestProperties(
-                    provisioningState,
-                    message,
-                    error,
-                    requestSubmitOn,
-                    (value ?? new ChangeTrackingList<QuotaSubRequestDetail>()).ToList(),
-                    default),
                 default);
         }
     }

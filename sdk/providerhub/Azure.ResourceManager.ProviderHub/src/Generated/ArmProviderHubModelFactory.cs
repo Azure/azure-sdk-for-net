@@ -1717,9 +1717,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="linkedAction"></param>
         /// <returns> A new <see cref="Models.LinkedOperationRule"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LinkedOperationRule LinkedOperationRule(LinkedOperation linkedOperation = default, LinkedAction linkedAction = default)
+        public static LinkedOperationRule LinkedOperationRule(LinkedOperation linkedOperation, LinkedAction linkedAction)
         {
-            return new LinkedOperationRule(linkedOperation, linkedAction, default, default);
+            return LinkedOperationRule(linkedOperation: linkedOperation, linkedAction: linkedAction, dependsOnTypes: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProviderResourceType"/>. </summary>
@@ -1749,8 +1749,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="resourceDeletionPolicy"></param>
         /// <returns> A new <see cref="Models.ProviderResourceType"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ProviderResourceType ProviderResourceType(string name = default, ResourceRoutingType? routingType = default, ResourceValidation? resourceValidation = default, IEnumerable<string> allowedUnauthorizedActions = default, IEnumerable<AuthorizationActionMapping> authorizationActionMappings = default, IEnumerable<LinkedAccessCheck> linkedAccessChecks = default, string defaultApiVersion = default, IEnumerable<LoggingRule> loggingRules = default, IEnumerable<ThrottlingRule> throttlingRules = default, IEnumerable<ResourceProviderEndpoint> endpoints = default, MarketplaceType? marketplaceType = default, IdentityManagementType? managementType = default, BinaryData metadata = default, IEnumerable<string> requiredFeatures = default, FeaturesPolicy? requiredFeaturesPolicy = default, IEnumerable<ProviderSubscriptionStateRule> subscriptionStateRules = default, IEnumerable<ServiceTreeInfo> serviceTreeInfos = default, OptInHeaderType? optInHeaders = default, string skuLink = default, IEnumerable<string> disallowedActionVerbs = default, TemplateDeploymentPolicy templateDeploymentPolicy = default, IEnumerable<ProviderHubExtendedLocationOptions> extendedLocations = default, IEnumerable<LinkedOperationRule> linkedOperationRules = default, ManifestResourceDeletionPolicy? resourceDeletionPolicy = default)
+        public static ProviderResourceType ProviderResourceType(string name, ResourceRoutingType? routingType, ResourceValidation? resourceValidation, IEnumerable<string> allowedUnauthorizedActions, IEnumerable<AuthorizationActionMapping> authorizationActionMappings, IEnumerable<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IEnumerable<LoggingRule> loggingRules, IEnumerable<ThrottlingRule> throttlingRules, IEnumerable<ResourceProviderEndpoint> endpoints, MarketplaceType? marketplaceType, IdentityManagementType? managementType, BinaryData metadata, IEnumerable<string> requiredFeatures, FeaturesPolicy? requiredFeaturesPolicy, IEnumerable<ProviderSubscriptionStateRule> subscriptionStateRules, IEnumerable<ServiceTreeInfo> serviceTreeInfos, OptInHeaderType? optInHeaders, string skuLink, IEnumerable<string> disallowedActionVerbs, TemplateDeploymentPolicy templateDeploymentPolicy, IEnumerable<ProviderHubExtendedLocationOptions> extendedLocations, IEnumerable<LinkedOperationRule> linkedOperationRules, ManifestResourceDeletionPolicy? resourceDeletionPolicy)
         {
+            allowedUnauthorizedActions ??= new ChangeTrackingList<string>();
+            authorizationActionMappings ??= new ChangeTrackingList<AuthorizationActionMapping>();
+            linkedAccessChecks ??= new ChangeTrackingList<LinkedAccessCheck>();
+            loggingRules ??= new ChangeTrackingList<LoggingRule>();
+            throttlingRules ??= new ChangeTrackingList<ThrottlingRule>();
+            endpoints ??= new ChangeTrackingList<ResourceProviderEndpoint>();
+            requiredFeatures ??= new ChangeTrackingList<string>();
+            subscriptionStateRules ??= new ChangeTrackingList<ProviderSubscriptionStateRule>();
+            serviceTreeInfos ??= new ChangeTrackingList<ServiceTreeInfo>();
+            disallowedActionVerbs ??= new ChangeTrackingList<string>();
+            extendedLocations ??= new ChangeTrackingList<ProviderHubExtendedLocationOptions>();
+            linkedOperationRules ??= new ChangeTrackingList<LinkedOperationRule>();
+
             return new ProviderResourceType(
                 name,
                 routingType,
@@ -1796,19 +1809,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="timeout"></param>
         /// <returns> A new <see cref="Models.ResourceProviderEndpoint"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ResourceProviderEndpoint ResourceProviderEndpoint(bool? isEnabled = default, IEnumerable<string> apiVersions = default, Uri endpointUri = default, IEnumerable<AzureLocation> locations = default, IEnumerable<string> requiredFeatures = default, FeaturesPolicy? requiredFeaturesPolicy = default, TimeSpan? timeout = default)
+        public static ResourceProviderEndpoint ResourceProviderEndpoint(bool? isEnabled, IEnumerable<string> apiVersions, Uri endpointUri, IEnumerable<AzureLocation> locations, IEnumerable<string> requiredFeatures, FeaturesPolicy? requiredFeaturesPolicy, TimeSpan? timeout)
         {
-            return new ResourceProviderEndpoint(
-                isEnabled,
-                (apiVersions ?? new ChangeTrackingList<string>()).ToList(),
-                endpointUri,
-                (locations ?? new ChangeTrackingList<AzureLocation>()).ToList(),
-                (requiredFeatures ?? new ChangeTrackingList<string>()).ToList(),
-                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.GetValueOrDefault(), default),
-                timeout,
-                default,
-                default,
-                default);
+            return ResourceProviderEndpoint(isEnabled: isEnabled, apiVersions: apiVersions, endpointUri: endpointUri, locations: locations, requiredFeatures: requiredFeatures, requiredFeaturesPolicy: requiredFeaturesPolicy, timeout: timeout, endpointType: default, skuLink: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TemplateDeploymentPolicy"/>. </summary>
@@ -1816,9 +1819,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="preflightOptions"></param>
         /// <returns> A new <see cref="Models.TemplateDeploymentPolicy"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static TemplateDeploymentPolicy TemplateDeploymentPolicy(TemplateDeploymentCapability capabilities = default, TemplateDeploymentPreflightOption preflightOptions = default)
+        public static TemplateDeploymentPolicy TemplateDeploymentPolicy(TemplateDeploymentCapability capabilities, TemplateDeploymentPreflightOption preflightOptions)
         {
-            return new TemplateDeploymentPolicy(capabilities, preflightOptions, default, default);
+            return TemplateDeploymentPolicy(capabilities: capabilities, preflightOptions: preflightOptions, preflightNotifications: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ProviderHub.ProviderRegistrationData"/>. </summary>
@@ -1831,14 +1834,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProviderRegistrationData ProviderRegistrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProviderRegistrationProperties properties)
         {
-            return new ProviderRegistrationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default,
-                default);
+            return ProviderRegistrationData(id: id, name: name, resourceType: resourceType, systemData: systemData, properties: properties, kind: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ProviderHub.ResourceTypeRegistrationData"/>. </summary>
@@ -1851,14 +1847,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ResourceTypeRegistrationData ResourceTypeRegistrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceTypeRegistrationProperties properties)
         {
-            return new ResourceTypeRegistrationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default,
-                default);
+            return ResourceTypeRegistrationData(id: id, name: name, resourceType: resourceType, systemData: systemData, properties: properties, kind: default);
         }
     }
 }

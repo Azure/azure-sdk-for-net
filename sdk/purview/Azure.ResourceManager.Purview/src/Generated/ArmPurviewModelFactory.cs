@@ -440,38 +440,9 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="identity"> Identity Info on the tracked resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <returns> A new <see cref="Purview.PurviewAccountData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PurviewAccountData PurviewAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PurviewAccountSku sku = default, string cloudConnectorsAwsExternalId = default, DateTimeOffset? createdOn = default, string createdBy = default, string createdByObjectId = default, PurviewAccountEndpoint endpoints = default, string friendlyName = default, string managedResourceGroupName = default, PurviewManagedResource managedResources = default, IEnumerable<PurviewPrivateEndpointConnectionData> privateEndpointConnections = default, PurviewProvisioningState? provisioningState = default, PurviewPublicNetworkAccess? publicNetworkAccess = default, ManagedServiceIdentity identity = default)
+        public static PurviewAccountData PurviewAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PurviewAccountSku sku, string cloudConnectorsAwsExternalId, DateTimeOffset? createdOn, string createdBy, string createdByObjectId, PurviewAccountEndpoint endpoints, string friendlyName, string managedResourceGroupName, PurviewManagedResource managedResources, IEnumerable<PurviewPrivateEndpointConnectionData> privateEndpointConnections, PurviewProvisioningState? provisioningState, PurviewPublicNetworkAccess? publicNetworkAccess, ManagedServiceIdentity identity)
         {
-            return new PurviewAccountData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                cloudConnectorsAwsExternalId is null && createdOn is null && createdBy is null && createdByObjectId is null && endpoints is null && friendlyName is null && publicNetworkAccess is null && managedResourceGroupName is null && managedResources is null && privateEndpointConnections is null && provisioningState is null && publicNetworkAccess is null ? default : new PurviewAccountProperties(
-                    default,
-                    new CloudConnectors(cloudConnectorsAwsExternalId, default),
-                    createdOn,
-                    createdBy,
-                    createdByObjectId,
-                    default,
-                    endpoints,
-                    friendlyName,
-                    new PurviewIngestionStorage(default, default, publicNetworkAccess, default),
-                    default,
-                    managedResourceGroupName,
-                    managedResources,
-                    default,
-                    default,
-                    (privateEndpointConnections ?? new ChangeTrackingList<PurviewPrivateEndpointConnectionData>()).ToList(),
-                    provisioningState,
-                    publicNetworkAccess,
-                    default,
-                    default),
-                identity,
-                sku,
-                default);
+            return PurviewAccountData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, accountStatus: default, createdOn: createdOn, createdBy: createdBy, createdByObjectId: createdByObjectId, defaultDomain: default, endpoints: endpoints, friendlyName: friendlyName, ingestionStorage: default, managedEventHubState: default, managedResourceGroupName: managedResourceGroupName, managedResources: managedResources, managedResourcesPublicNetworkAccess: default, mergeInfo: default, privateEndpointConnections: privateEndpointConnections, provisioningState: provisioningState, publicNetworkAccess: publicNetworkAccess, tenantEndpointState: default, cloudConnectorsAwsExternalId: cloudConnectorsAwsExternalId, identity: identity, sku: sku);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PurviewAccountEndpoint"/>. </summary>
@@ -480,7 +451,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="scan"> Gets the scan endpoint. </param>
         /// <returns> A new <see cref="Models.PurviewAccountEndpoint"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PurviewAccountEndpoint PurviewAccountEndpoint(string catalog = default, string guardian = default, string scan = default)
+        public static PurviewAccountEndpoint PurviewAccountEndpoint(string catalog, string guardian, string scan)
         {
             return new PurviewAccountEndpoint(catalog, scan, default);
         }
@@ -493,7 +464,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="properties"> The private link resource properties. </param>
         /// <returns> A new <see cref="Purview.PurviewPrivateLinkResourceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PurviewPrivateLinkResourceData PurviewPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PurviewPrivateLinkResourceProperties properties = default)
+        public static PurviewPrivateLinkResourceData PurviewPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PurviewPrivateLinkResourceProperties properties)
         {
             return new PurviewPrivateLinkResourceData(
                 id,
