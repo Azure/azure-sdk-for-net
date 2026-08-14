@@ -78,6 +78,14 @@
     "typescript-eslint": "^8.62.0",
     "vitest": "^4.1.9"
   },
+  "overrides": {
+    "body-parser": {
+      "content-type": "2.0.0"
+    },
+    "type-is": {
+      "content-type": "2.0.0"
+    }
+  },
   "azure-sdk/emitter-package-json-pinning": [
     "@azure-tools/typespec-autorest",
     "@azure-tools/typespec-azure-core",
