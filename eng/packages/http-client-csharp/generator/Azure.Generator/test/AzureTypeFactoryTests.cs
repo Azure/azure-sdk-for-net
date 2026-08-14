@@ -160,6 +160,7 @@ namespace Azure.Generator.Tests
         [TestCase(typeof(ResponseError))]
         [TestCase(typeof(ClientDiagnostics))]
         [TestCase(typeof(RequestConditions))]
+        [TestCase(typeof(DataFactoryElement<>))]
         public void CreatesFrameworkType(Type expectedType)
         {
             var factory = new TestTypeFactory();
