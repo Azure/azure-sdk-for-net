@@ -524,20 +524,9 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="liftrResourcePreference"> The priority of the resource. </param>
         /// <returns> A new <see cref="Models.DatadogMonitorProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DatadogMonitorProperties DatadogMonitorProperties(DatadogProvisioningState? provisioningState = default, DatadogMonitoringStatus? monitoringStatus = default, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default, DatadogOrganizationProperties datadogOrganizationProperties = default, DatadogUserInfo userInfo = default, DatadogLiftrResourceCategory? liftrResourceCategory = default, int? liftrResourcePreference = default)
+        public static DatadogMonitorProperties DatadogMonitorProperties(DatadogProvisioningState? provisioningState, DatadogMonitoringStatus? monitoringStatus, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, DatadogOrganizationProperties datadogOrganizationProperties, DatadogUserInfo userInfo, DatadogLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference)
         {
-            return new DatadogMonitorProperties(
-                provisioningState,
-                monitoringStatus,
-                marketplaceSubscriptionStatus,
-                datadogOrganizationProperties,
-                userInfo,
-                liftrResourceCategory,
-                liftrResourcePreference,
-                default,
-                default,
-                default,
-                default);
+            return DatadogMonitorProperties(provisioningState: provisioningState, monitoringStatus: monitoringStatus, marketplaceSubscriptionStatus: marketplaceSubscriptionStatus, datadogOrganizationProperties: datadogOrganizationProperties, userInfo: userInfo, liftrResourceCategory: liftrResourceCategory, liftrResourcePreference: liftrResourcePreference, saaSResourceId: default, sreAgentConfiguration: default, marketplaceOfferDetails: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MarketplaceSaaSInfo"/>. </summary>
@@ -548,16 +537,9 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="isSubscribed"> Flag specifying if the Marketplace status is subscribed or not. </param>
         /// <returns> A new <see cref="Models.MarketplaceSaaSInfo"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MarketplaceSaaSInfo MarketplaceSaaSInfo(string marketplaceSubscriptionId = default, string marketplaceName = default, string marketplaceStatus = default, string billedAzureSubscriptionId = default, bool? isSubscribed = default)
+        public static MarketplaceSaaSInfo MarketplaceSaaSInfo(string marketplaceSubscriptionId, string marketplaceName, string marketplaceStatus, string billedAzureSubscriptionId, bool? isSubscribed)
         {
-            return new MarketplaceSaaSInfo(
-                marketplaceSubscriptionId,
-                marketplaceName,
-                marketplaceStatus,
-                billedAzureSubscriptionId,
-                default,
-                isSubscribed,
-                default);
+            return MarketplaceSaaSInfo(marketplaceSubscriptionId: marketplaceSubscriptionId, marketplaceName: marketplaceName, marketplaceStatus: marketplaceStatus, billedAzureSubscriptionId: billedAzureSubscriptionId, offerId: default, isSubscribed: isSubscribed);
         }
     }
 }

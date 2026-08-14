@@ -539,49 +539,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new EdgeRemoteSupportSettings(remoteApplicationType, accessLevel, expireOn, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="jobType"> The type of the job. </param>
-        /// <param name="currentStage"> Current stage of the update operation. </param>
-        /// <param name="downloadProgress"> The download progress. </param>
-        /// <param name="installProgress"> The install progress. </param>
-        /// <param name="totalRefreshErrors"> Total number of errors encountered during the refresh process. </param>
-        /// <param name="errorManifestFile"> Local share/remote container relative path to the error manifest file of the refresh. </param>
-        /// <param name="refreshedEntityId"> ARM ID of the entity that was refreshed. </param>
-        /// <param name="folder"> If only subfolders need to be refreshed, then the subfolder path inside the share or container. (The path is empty if there are no subfolders.). </param>
-        /// <param name="status"> The current status of the job. </param>
-        /// <param name="startOn"> The UTC date and time at which the job started. </param>
-        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
-        /// <param name="percentComplete"> The percentage of the job that is complete. </param>
-        /// <param name="error"> The error details. </param>
-        /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeJobData"/> instance for mocking. </returns>
-        public static DataBoxEdgeJobData DataBoxEdgeJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataBoxEdgeJobType? jobType = default, UpdateOperationStage? currentStage = default, UpdateDownloadProgress downloadProgress = default, UpdateInstallProgress installProgress = default, int? totalRefreshErrors = default, string errorManifestFile = default, ResourceIdentifier refreshedEntityId = default, string folder = default, DataBoxEdgeJobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, int? percentComplete = default, DataBoxEdgeJobErrorDetails error = default)
-        {
-            return new DataBoxEdgeJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                jobType is null && currentStage is null && downloadProgress is null && installProgress is null && totalRefreshErrors is null && errorManifestFile is null && refreshedEntityId is null && folder is null ? default : new JobProperties(
-                    jobType,
-                    currentStage,
-                    downloadProgress,
-                    installProgress,
-                    totalRefreshErrors,
-                    errorManifestFile,
-                    refreshedEntityId,
-                    folder,
-                    default),
-                status,
-                startOn,
-                endOn,
-                percentComplete,
-                error,
-                default);
-        }
-
         /// <param name="downloadPhase"> The download phase. </param>
         /// <param name="percentComplete"> Percentage of completion. </param>
         /// <param name="totalBytesToDownload"> Total bytes to download. </param>
@@ -630,43 +587,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             recommendations ??= new ChangeTrackingList<string>();
 
             return new DataBoxEdgeJobErrorItem((recommendations ?? new ChangeTrackingList<string>()).ToList(), code, message, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="orderId"> It specify the order resource id. </param>
-        /// <param name="contactInformation"> The contact details. </param>
-        /// <param name="shippingAddress"> The shipping address. </param>
-        /// <param name="currentStatus"> Current status of the order. </param>
-        /// <param name="orderHistory"> List of status changes in the order. </param>
-        /// <param name="serialNumber"> Serial number of the device. </param>
-        /// <param name="deliveryTrackingInfo"> Tracking information for the package delivered to the customer whether it has an original or a replacement device. </param>
-        /// <param name="returnTrackingInfo"> Tracking information for the package returned from the customer whether it has an original or a replacement device. </param>
-        /// <param name="shipmentType"> ShipmentType of the order. </param>
-        /// <param name="kind"> It specify the order api version. </param>
-        /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeOrderData"/> instance for mocking. </returns>
-        public static DataBoxEdgeOrderData DataBoxEdgeOrderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string orderId = default, DataBoxEdgeContactDetails contactInformation = default, DataBoxEdgeShippingAddress shippingAddress = default, DataBoxEdgeOrderStatus currentStatus = default, IEnumerable<DataBoxEdgeOrderStatus> orderHistory = default, string serialNumber = default, IEnumerable<DataBoxEdgeTrackingInfo> deliveryTrackingInfo = default, IEnumerable<DataBoxEdgeTrackingInfo> returnTrackingInfo = default, DataBoxEdgeShipmentType? shipmentType = default, string kind = default)
-        {
-            return new DataBoxEdgeOrderData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                orderId is null && contactInformation is null && shippingAddress is null && currentStatus is null && orderHistory is null && serialNumber is null && deliveryTrackingInfo is null && returnTrackingInfo is null && shipmentType is null ? default : new OrderProperties(
-                    orderId,
-                    contactInformation,
-                    shippingAddress,
-                    currentStatus,
-                    (orderHistory ?? new ChangeTrackingList<DataBoxEdgeOrderStatus>()).ToList(),
-                    serialNumber,
-                    (deliveryTrackingInfo ?? new ChangeTrackingList<DataBoxEdgeTrackingInfo>()).ToList(),
-                    (returnTrackingInfo ?? new ChangeTrackingList<DataBoxEdgeTrackingInfo>()).ToList(),
-                    shipmentType,
-                    default),
-                kind,
-                default);
         }
 
         /// <param name="contactPerson"> The contact person name. </param>
@@ -756,26 +676,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 systemData,
                 default,
                 default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="localManagementStatus"> Local Edge Management Status. </param>
-        /// <param name="roleStatus"> Role status. </param>
-        /// <param name="edgeSubscription"> Edge Profile Subscription. </param>
-        /// <returns> A new <see cref="Models.CloudEdgeManagementRole"/> instance for mocking. </returns>
-        public static CloudEdgeManagementRole CloudEdgeManagementRole(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataBoxEdgeRoleStatus? localManagementStatus = default, DataBoxEdgeRoleStatus? roleStatus = default, EdgeProfileSubscription edgeSubscription = default)
-        {
-            return new CloudEdgeManagementRole(
-                id,
-                name,
-                resourceType,
-                systemData,
-                default,
-                default,
-                localManagementStatus is null && edgeSubscription is null && roleStatus is null ? default : new CloudEdgeManagementRoleProperties(localManagementStatus, new EdgeProfile(edgeSubscription, default), roleStatus, default));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1114,27 +1014,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="customContextTag"> A custom context tag typically used to correlate the trigger against its usage. For example, if a periodic timer trigger is intended for certain specific IoT modules in the device, the tag can be the name or the image URL of the module. </param>
-        /// <param name="sourceInfoShareId"> File share ID. </param>
-        /// <param name="sinkInfoRoleId"> Compute role ID. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceInfoShareId"/> or <paramref name="sinkInfoRoleId"/> is null. </exception>
-        /// <returns> A new <see cref="Models.EdgeFileEventTrigger"/> instance for mocking. </returns>
-        public static EdgeFileEventTrigger EdgeFileEventTrigger(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string customContextTag = default, ResourceIdentifier sourceInfoShareId = default, ResourceIdentifier sinkInfoRoleId = default)
-        {
-            return new EdgeFileEventTrigger(
-                id,
-                name,
-                resourceType,
-                systemData,
-                default,
-                default,
-                sourceInfoShareId is null && sinkInfoRoleId is null ? default : new FileTriggerProperties(new EdgeFileSourceInfo(sourceInfoShareId, default), new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId, default), default, default));
-        }
-
         /// <param name="shareId"> File share ID. </param>
         /// <returns> A new <see cref="Models.EdgeFileSourceInfo"/> instance for mocking. </returns>
         public static EdgeFileSourceInfo EdgeFileSourceInfo(ResourceIdentifier shareId = default)
@@ -1147,27 +1026,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeRoleSinkInfo DataBoxEdgeRoleSinkInfo(ResourceIdentifier roleId = default)
         {
             return new DataBoxEdgeRoleSinkInfo(roleId, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="sourceInfo"> Periodic timer details. </param>
-        /// <param name="customContextTag"> A custom context tag typically used to correlate the trigger against its usage. For example, if a periodic timer trigger is intended for certain specific IoT modules in the device, the tag can be the name or the image URL of the module. </param>
-        /// <param name="sinkInfoRoleId"> Compute role ID. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceInfo"/> or <paramref name="sinkInfoRoleId"/> is null. </exception>
-        /// <returns> A new <see cref="Models.PeriodicTimerEventTrigger"/> instance for mocking. </returns>
-        public static PeriodicTimerEventTrigger PeriodicTimerEventTrigger(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PeriodicTimerSourceInfo sourceInfo = default, string customContextTag = default, ResourceIdentifier sinkInfoRoleId = default)
-        {
-            return new PeriodicTimerEventTrigger(
-                id,
-                name,
-                resourceType,
-                systemData,
-                default,
-                default,
-                sinkInfoRoleId is null ? default : new PeriodicTimerProperties(default, new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId, default), default, default));
         }
 
         /// <param name="startOn"> The time of the day that results in a valid trigger. Schedule is computed with reference to the time specified upto seconds. If timezone is not specified the time will considered to be in device timezone. The value will always be returned as UTC time. </param>
@@ -1567,8 +1425,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="residencyType"> The details of data-residency related properties for this resource. </param>
         /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeDeviceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataBoxEdgeDeviceData DataBoxEdgeDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DataBoxEdgeSku sku = default, ETag? etag = default, ManagedServiceIdentity identity = default, DataBoxEdgeDeviceKind? kind = default, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus = default, string serialNumber = default, string description = default, string modelDescription = default, DataBoxEdgeDeviceType? deviceType = default, string friendlyName = default, string culture = default, string deviceModel = default, string deviceSoftwareVersion = default, long? deviceLocalCapacity = default, string timeZone = default, string deviceHcsVersion = default, IEnumerable<DataBoxEdgeRoleType> configuredRoleTypes = default, int? nodeCount = default, DataBoxEdgeResourceMoveDetails resourceMoveDetails = default, EdgeProfileSubscription edgeSubscription = default, DataBoxEdgeDataResidencyType? residencyType = default)
+        public static DataBoxEdgeDeviceData DataBoxEdgeDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxEdgeSku sku, ETag? etag, ManagedServiceIdentity identity, DataBoxEdgeDeviceKind? kind, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus, string serialNumber, string description, string modelDescription, DataBoxEdgeDeviceType? deviceType, string friendlyName, string culture, string deviceModel, string deviceSoftwareVersion, long? deviceLocalCapacity, string timeZone, string deviceHcsVersion, IEnumerable<DataBoxEdgeRoleType> configuredRoleTypes, int? nodeCount, DataBoxEdgeResourceMoveDetails resourceMoveDetails, EdgeProfileSubscription edgeSubscription, DataBoxEdgeDataResidencyType? residencyType)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            configuredRoleTypes ??= new ChangeTrackingList<DataBoxEdgeRoleType>();
+
             return new DataBoxEdgeDeviceData(
                 id,
                 name,
@@ -1623,7 +1484,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="refreshedEntityId"> ARM ID of the entity that was refreshed. </param>
         /// <param name="folder"> If only subfolders need to be refreshed, then the subfolder path inside the share or container. (The path is empty if there are no subfolders.). </param>
         /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeJobData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataBoxEdgeJobData DataBoxEdgeJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataBoxEdgeJobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, int? percentComplete = default, DataBoxEdgeJobErrorDetails error = default, DataBoxEdgeJobType? jobType = default, UpdateOperationStage? currentStage = default, UpdateDownloadProgress downloadProgress = default, UpdateInstallProgress installProgress = default, int? totalRefreshErrors = default, string errorManifestFile = default, ResourceIdentifier refreshedEntityId = default, string folder = default)
         {
             return new DataBoxEdgeJobData(
@@ -1665,9 +1525,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="returnTrackingInfo"> Tracking information for the package returned from the customer whether it has an original or a replacement device. </param>
         /// <param name="shipmentType"> ShipmentType of the order. </param>
         /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeOrderData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataBoxEdgeOrderData DataBoxEdgeOrderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string orderId = default, DataBoxEdgeContactDetails contactInformation = default, DataBoxEdgeShippingAddress shippingAddress = default, DataBoxEdgeOrderStatus currentStatus = default, IEnumerable<DataBoxEdgeOrderStatus> orderHistory = default, string serialNumber = default, IEnumerable<DataBoxEdgeTrackingInfo> deliveryTrackingInfo = default, IEnumerable<DataBoxEdgeTrackingInfo> returnTrackingInfo = default, DataBoxEdgeShipmentType? shipmentType = default)
         {
+            orderHistory ??= new ChangeTrackingList<DataBoxEdgeOrderStatus>();
+            deliveryTrackingInfo ??= new ChangeTrackingList<DataBoxEdgeTrackingInfo>();
+            returnTrackingInfo ??= new ChangeTrackingList<DataBoxEdgeTrackingInfo>();
+
             return new DataBoxEdgeOrderData(
                 id,
                 name,
@@ -1697,7 +1560,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="edgeSubscription"> Edge Profile of the resource. </param>
         /// <param name="roleStatus"> Role status. </param>
         /// <returns> A new <see cref="Models.CloudEdgeManagementRole"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static CloudEdgeManagementRole CloudEdgeManagementRole(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataBoxEdgeRoleStatus? localManagementStatus = default, EdgeProfileSubscription edgeSubscription = default, DataBoxEdgeRoleStatus? roleStatus = default)
         {
             return new CloudEdgeManagementRole(
@@ -1719,7 +1581,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="sinkInfoRoleId"> Role sink info. </param>
         /// <param name="customContextTag"> A custom context tag typically used to correlate the trigger against its usage. For example, if a periodic timer trigger is intended for certain specific IoT modules in the device, the tag can be the name or the image URL of the module. </param>
         /// <returns> A new <see cref="Models.EdgeFileEventTrigger"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static EdgeFileEventTrigger EdgeFileEventTrigger(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier sourceInfoShareId = default, ResourceIdentifier sinkInfoRoleId = default, string customContextTag = default)
         {
             return new EdgeFileEventTrigger(
@@ -1737,9 +1598,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="version"> Load balancer version. </param>
         /// <returns> A new <see cref="Models.DataBoxEdgeLoadBalancerConfig"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataBoxEdgeLoadBalancerConfig DataBoxEdgeLoadBalancerConfig(string loadBalancerConfigType = default, string version = default)
+        public static DataBoxEdgeLoadBalancerConfig DataBoxEdgeLoadBalancerConfig(string loadBalancerConfigType, string version)
         {
-            return new DataBoxEdgeLoadBalancerConfig(loadBalancerConfigType, version, default, default);
+            return DataBoxEdgeLoadBalancerConfig(loadBalancerConfigType: loadBalancerConfigType, version: version, ipRange: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PeriodicTimerEventTrigger"/>. </summary>
@@ -1751,7 +1612,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="sinkInfoRoleId"> Role Sink information. </param>
         /// <param name="customContextTag"> A custom context tag typically used to correlate the trigger against its usage. For example, if a periodic timer trigger is intended for certain specific IoT modules in the device, the tag can be the name or the image URL of the module. </param>
         /// <returns> A new <see cref="Models.PeriodicTimerEventTrigger"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static PeriodicTimerEventTrigger PeriodicTimerEventTrigger(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PeriodicTimerSourceInfo sourceInfo = default, ResourceIdentifier sinkInfoRoleId = default, string customContextTag = default)
         {
             return new PeriodicTimerEventTrigger(

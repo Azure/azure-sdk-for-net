@@ -517,26 +517,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new SessionHostMaintenanceWindowProperties(hour, dayOfWeek, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <param name="privateEndpointId"> The ARM identifier for private endpoint. </param>
-        /// <returns> A new <see cref="Models.DesktopVirtualizationPrivateEndpointConnection"/> instance for mocking. </returns>
-        public static DesktopVirtualizationPrivateEndpointConnection DesktopVirtualizationPrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> groupIds = default, DesktopVirtualizationPrivateLinkServiceConnectionState connectionState = default, DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
-        {
-            return new DesktopVirtualizationPrivateEndpointConnection(
-                id,
-                name,
-                resourceType,
-                systemData,
-                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
-                default);
-        }
-
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
@@ -877,26 +857,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static VirtualDesktopPatch VirtualDesktopPatch(string description = default, string friendlyName = default)
         {
             return new VirtualDesktopPatch(description is null && friendlyName is null ? default : new DesktopPatchProperties(description, friendlyName, default), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <param name="privateEndpointId"> The ARM identifier for private endpoint. </param>
-        /// <returns> A new <see cref="DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData"/> instance for mocking. </returns>
-        public static DesktopVirtualizationPrivateEndpointConnectionDataData DesktopVirtualizationPrivateEndpointConnectionDataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> groupIds = default, DesktopVirtualizationPrivateLinkServiceConnectionState connectionState = default, DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
-        {
-            return new DesktopVirtualizationPrivateEndpointConnectionDataData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
-                default);
         }
 
         /// <param name="healthCheckName"> Represents the name of the health check operation performed. </param>
@@ -1765,57 +1725,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DesktopVirtualization.VirtualWorkspaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="objectId"> ObjectId of Workspace. (internal use). </param>
-        /// <param name="description"> Description of Workspace. </param>
-        /// <param name="friendlyName"> Friendly name of Workspace. </param>
-        /// <param name="applicationGroupReferences"> List of applicationGroup resource Ids. </param>
-        /// <param name="isCloudPCResource"> Is cloud pc resource. </param>
-        /// <param name="publicNetworkAccess"> Enabled allows this resource to be accessed from both public and private networks, Disabled allows this resource to only be accessed via private endpoints. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified resource. </param>
-        /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
-        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. E.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        /// <param name="etag"> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned. </param>
-        /// <param name="sku"> The resource model definition representing SKU. </param>
-        /// <param name="plan"> Gets or sets the plan. </param>
-        /// <returns> A new <see cref="DesktopVirtualization.VirtualWorkspaceData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VirtualWorkspaceData VirtualWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string description = default, string friendlyName = default, IEnumerable<string> applicationGroupReferences = default, bool? isCloudPCResource = default, DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = default, ResourceIdentifier managedBy = default, string kind = default, ETag? etag = default, ManagedServiceIdentity identity = default, DesktopVirtualizationSku sku = default, ArmPlan plan = default)
-        {
-            return new VirtualWorkspaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                objectId is null && description is null && friendlyName is null && applicationGroupReferences is null && isCloudPCResource is null && publicNetworkAccess is null && privateEndpointConnections is null ? default : new WorkspaceProperties(
-                    objectId,
-                    description,
-                    friendlyName,
-                    (applicationGroupReferences ?? new ChangeTrackingList<string>()).ToList(),
-                    isCloudPCResource,
-                    publicNetworkAccess,
-                    (privateEndpointConnections ?? new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnection>()).ToList(),
-                    default,
-                    default,
-                    default),
-                identity,
-                etag,
-                kind,
-                managedBy,
-                plan,
-                sku,
-                default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.DesktopVirtualizationPrivateEndpointConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1826,9 +1735,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="Models.DesktopVirtualizationPrivateEndpointConnection"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DesktopVirtualizationPrivateEndpointConnection DesktopVirtualizationPrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> groupIds = default, ResourceIdentifier privateEndpointId = default, DesktopVirtualizationPrivateLinkServiceConnectionState connectionState = default, DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState = default)
         {
+            groupIds ??= new ChangeTrackingList<string>();
+
             return new DesktopVirtualizationPrivateEndpointConnection(
                 id,
                 name,
@@ -1848,9 +1758,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DesktopVirtualizationPrivateEndpointConnectionDataData DesktopVirtualizationPrivateEndpointConnectionDataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> groupIds = default, ResourceIdentifier privateEndpointId = default, DesktopVirtualizationPrivateLinkServiceConnectionState connectionState = default, DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState = default)
         {
+            groupIds ??= new ChangeTrackingList<string>();
+
             return new DesktopVirtualizationPrivateEndpointConnectionDataData(
                 id,
                 name,
@@ -1883,8 +1794,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="plan"> Gets or sets the plan. </param>
         /// <returns> A new <see cref="DesktopVirtualization.ScalingPlanData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ScalingPlanData ScalingPlanData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string description = default, string friendlyName = default, string timeZone = default, ScalingHostPoolType? scalingHostPoolType = default, string exclusionTag = default, IEnumerable<ScalingSchedule> schedules = default, IEnumerable<ScalingHostPoolReference> hostPoolReferences = default, ResourceIdentifier managedBy = default, string kind = default, ETag? etag = default, ManagedServiceIdentity identity = default, DesktopVirtualizationSku sku = default, ArmPlan plan = default)
+        public static ScalingPlanData ScalingPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, string timeZone, ScalingHostPoolType? scalingHostPoolType, string exclusionTag, IEnumerable<ScalingSchedule> schedules, IEnumerable<ScalingHostPoolReference> hostPoolReferences, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            schedules ??= new ChangeTrackingList<ScalingSchedule>();
+            hostPoolReferences ??= new ChangeTrackingList<ScalingHostPoolReference>();
+
             return new ScalingPlanData(
                 id,
                 name,
@@ -1935,36 +1850,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="offPeakLoadBalancingAlgorithm"> Load balancing algorithm for off-peak period. </param>
         /// <returns> A new <see cref="DesktopVirtualization.ScalingPlanPooledScheduleData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ScalingPlanPooledScheduleData ScalingPlanPooledScheduleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<DesktopVirtualizationDayOfWeek> daysOfWeek = default, ScalingActionTime rampUpStartTime = default, SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm = default, int? rampUpMinimumHostsPct = default, int? rampUpCapacityThresholdPct = default, ScalingActionTime peakStartTime = default, SessionHostLoadBalancingAlgorithm? peakLoadBalancingAlgorithm = default, ScalingActionTime rampDownStartTime = default, SessionHostLoadBalancingAlgorithm? rampDownLoadBalancingAlgorithm = default, int? rampDownMinimumHostsPct = default, int? rampDownCapacityThresholdPct = default, bool? rampDownForceLogoffUsers = default, DesktopVirtualizationStopHostsWhen? rampDownStopHostsWhen = default, int? rampDownWaitTimeMinutes = default, string rampDownNotificationMessage = default, ScalingActionTime offPeakStartTime = default, SessionHostLoadBalancingAlgorithm? offPeakLoadBalancingAlgorithm = default)
+        public static ScalingPlanPooledScheduleData ScalingPlanPooledScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<DesktopVirtualizationDayOfWeek> daysOfWeek, ScalingActionTime rampUpStartTime, SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm, int? rampUpMinimumHostsPct, int? rampUpCapacityThresholdPct, ScalingActionTime peakStartTime, SessionHostLoadBalancingAlgorithm? peakLoadBalancingAlgorithm, ScalingActionTime rampDownStartTime, SessionHostLoadBalancingAlgorithm? rampDownLoadBalancingAlgorithm, int? rampDownMinimumHostsPct, int? rampDownCapacityThresholdPct, bool? rampDownForceLogoffUsers, DesktopVirtualizationStopHostsWhen? rampDownStopHostsWhen, int? rampDownWaitTimeMinutes, string rampDownNotificationMessage, ScalingActionTime offPeakStartTime, SessionHostLoadBalancingAlgorithm? offPeakLoadBalancingAlgorithm)
         {
-            return new ScalingPlanPooledScheduleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                daysOfWeek is null && rampUpStartTime is null && rampUpLoadBalancingAlgorithm is null && rampUpMinimumHostsPct is null && rampUpCapacityThresholdPct is null && peakStartTime is null && peakLoadBalancingAlgorithm is null && rampDownStartTime is null && rampDownLoadBalancingAlgorithm is null && rampDownMinimumHostsPct is null && rampDownCapacityThresholdPct is null && rampDownForceLogoffUsers is null && rampDownStopHostsWhen is null && rampDownWaitTimeMinutes is null && rampDownNotificationMessage is null && offPeakStartTime is null && offPeakLoadBalancingAlgorithm is null ? default : new ScalingPlanPooledScheduleProperties(
-                    default,
-                    (daysOfWeek ?? new ChangeTrackingList<DesktopVirtualizationDayOfWeek>()).ToList(),
-                    default,
-                    default,
-                    rampUpStartTime,
-                    rampUpLoadBalancingAlgorithm,
-                    rampUpMinimumHostsPct,
-                    rampUpCapacityThresholdPct,
-                    peakStartTime,
-                    peakLoadBalancingAlgorithm,
-                    rampDownStartTime,
-                    rampDownLoadBalancingAlgorithm,
-                    rampDownMinimumHostsPct,
-                    rampDownCapacityThresholdPct,
-                    rampDownForceLogoffUsers,
-                    rampDownStopHostsWhen,
-                    rampDownWaitTimeMinutes,
-                    rampDownNotificationMessage,
-                    offPeakStartTime,
-                    offPeakLoadBalancingAlgorithm,
-                    default),
-                default);
+            return ScalingPlanPooledScheduleData(id: id, name: name, resourceType: resourceType, systemData: systemData, scheduleName: default, daysOfWeek: daysOfWeek, scalingMethod: default, createDelete: default, rampUpStartTime: rampUpStartTime, rampUpLoadBalancingAlgorithm: rampUpLoadBalancingAlgorithm, rampUpMinimumHostsPct: rampUpMinimumHostsPct, rampUpCapacityThresholdPct: rampUpCapacityThresholdPct, peakStartTime: peakStartTime, peakLoadBalancingAlgorithm: peakLoadBalancingAlgorithm, rampDownStartTime: rampDownStartTime, rampDownLoadBalancingAlgorithm: rampDownLoadBalancingAlgorithm, rampDownMinimumHostsPct: rampDownMinimumHostsPct, rampDownCapacityThresholdPct: rampDownCapacityThresholdPct, rampDownForceLogoffUsers: rampDownForceLogoffUsers, rampDownStopHostsWhen: rampDownStopHostsWhen, rampDownWaitTimeMinutes: rampDownWaitTimeMinutes, rampDownNotificationMessage: rampDownNotificationMessage, offPeakStartTime: offPeakStartTime, offPeakLoadBalancingAlgorithm: offPeakLoadBalancingAlgorithm);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ScalingPlanPooledSchedulePatch"/>. </summary>
@@ -1991,36 +1879,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="offPeakLoadBalancingAlgorithm"> Load balancing algorithm for off-peak period. </param>
         /// <returns> A new <see cref="Models.ScalingPlanPooledSchedulePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ScalingPlanPooledSchedulePatch ScalingPlanPooledSchedulePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<DesktopVirtualizationDayOfWeek> daysOfWeek = default, ScalingActionTime rampUpStartTime = default, SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm = default, int? rampUpMinimumHostsPct = default, int? rampUpCapacityThresholdPct = default, ScalingActionTime peakStartTime = default, SessionHostLoadBalancingAlgorithm? peakLoadBalancingAlgorithm = default, ScalingActionTime rampDownStartTime = default, SessionHostLoadBalancingAlgorithm? rampDownLoadBalancingAlgorithm = default, int? rampDownMinimumHostsPct = default, int? rampDownCapacityThresholdPct = default, bool? rampDownForceLogoffUsers = default, DesktopVirtualizationStopHostsWhen? rampDownStopHostsWhen = default, int? rampDownWaitTimeMinutes = default, string rampDownNotificationMessage = default, ScalingActionTime offPeakStartTime = default, SessionHostLoadBalancingAlgorithm? offPeakLoadBalancingAlgorithm = default)
+        public static ScalingPlanPooledSchedulePatch ScalingPlanPooledSchedulePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<DesktopVirtualizationDayOfWeek> daysOfWeek, ScalingActionTime rampUpStartTime, SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm, int? rampUpMinimumHostsPct, int? rampUpCapacityThresholdPct, ScalingActionTime peakStartTime, SessionHostLoadBalancingAlgorithm? peakLoadBalancingAlgorithm, ScalingActionTime rampDownStartTime, SessionHostLoadBalancingAlgorithm? rampDownLoadBalancingAlgorithm, int? rampDownMinimumHostsPct, int? rampDownCapacityThresholdPct, bool? rampDownForceLogoffUsers, DesktopVirtualizationStopHostsWhen? rampDownStopHostsWhen, int? rampDownWaitTimeMinutes, string rampDownNotificationMessage, ScalingActionTime offPeakStartTime, SessionHostLoadBalancingAlgorithm? offPeakLoadBalancingAlgorithm)
         {
-            return new ScalingPlanPooledSchedulePatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                daysOfWeek is null && rampUpStartTime is null && rampUpLoadBalancingAlgorithm is null && rampUpMinimumHostsPct is null && rampUpCapacityThresholdPct is null && peakStartTime is null && peakLoadBalancingAlgorithm is null && rampDownStartTime is null && rampDownLoadBalancingAlgorithm is null && rampDownMinimumHostsPct is null && rampDownCapacityThresholdPct is null && rampDownForceLogoffUsers is null && rampDownStopHostsWhen is null && rampDownWaitTimeMinutes is null && rampDownNotificationMessage is null && offPeakStartTime is null && offPeakLoadBalancingAlgorithm is null ? default : new ScalingPlanPooledSchedulePatchProperties(
-                    default,
-                    (daysOfWeek ?? new ChangeTrackingList<DesktopVirtualizationDayOfWeek>()).ToList(),
-                    default,
-                    default,
-                    rampUpStartTime,
-                    rampUpLoadBalancingAlgorithm,
-                    rampUpMinimumHostsPct,
-                    rampUpCapacityThresholdPct,
-                    peakStartTime,
-                    peakLoadBalancingAlgorithm,
-                    rampDownStartTime,
-                    rampDownLoadBalancingAlgorithm,
-                    rampDownMinimumHostsPct,
-                    rampDownCapacityThresholdPct,
-                    rampDownForceLogoffUsers,
-                    rampDownStopHostsWhen,
-                    rampDownWaitTimeMinutes,
-                    rampDownNotificationMessage,
-                    offPeakStartTime,
-                    offPeakLoadBalancingAlgorithm,
-                    default),
-                default);
+            return ScalingPlanPooledSchedulePatch(id: id, name: name, resourceType: resourceType, systemData: systemData, scheduleName: default, daysOfWeek: daysOfWeek, scalingMethod: default, createDelete: default, rampUpStartTime: rampUpStartTime, rampUpLoadBalancingAlgorithm: rampUpLoadBalancingAlgorithm, rampUpMinimumHostsPct: rampUpMinimumHostsPct, rampUpCapacityThresholdPct: rampUpCapacityThresholdPct, peakStartTime: peakStartTime, peakLoadBalancingAlgorithm: peakLoadBalancingAlgorithm, rampDownStartTime: rampDownStartTime, rampDownLoadBalancingAlgorithm: rampDownLoadBalancingAlgorithm, rampDownMinimumHostsPct: rampDownMinimumHostsPct, rampDownCapacityThresholdPct: rampDownCapacityThresholdPct, rampDownForceLogoffUsers: rampDownForceLogoffUsers, rampDownStopHostsWhen: rampDownStopHostsWhen, rampDownWaitTimeMinutes: rampDownWaitTimeMinutes, rampDownNotificationMessage: rampDownNotificationMessage, offPeakStartTime: offPeakStartTime, offPeakLoadBalancingAlgorithm: offPeakLoadBalancingAlgorithm);
         }
 
         /// <summary> Initializes a new instance of <see cref="DesktopVirtualization.VirtualApplicationGroupData"/>. </summary>
@@ -2046,8 +1907,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="plan"> Gets or sets the plan. </param>
         /// <returns> A new <see cref="DesktopVirtualization.VirtualApplicationGroupData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VirtualApplicationGroupData VirtualApplicationGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string description = default, string friendlyName = default, ResourceIdentifier hostPoolId = default, ResourceIdentifier workspaceId = default, VirtualApplicationGroupType applicationGroupType = default, bool? isCloudPCResource = default, bool? showInFeed = default, ResourceIdentifier managedBy = default, string kind = default, ETag? etag = default, ManagedServiceIdentity identity = default, DesktopVirtualizationSku sku = default, ArmPlan plan = default)
+        public static VirtualApplicationGroupData VirtualApplicationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, ResourceIdentifier hostPoolId, ResourceIdentifier workspaceId, VirtualApplicationGroupType applicationGroupType, bool? isCloudPCResource, bool? showInFeed, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new VirtualApplicationGroupData(
                 id,
                 name,
@@ -2115,8 +1978,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="plan"> Gets or sets the plan. </param>
         /// <returns> A new <see cref="DesktopVirtualization.HostPoolData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HostPoolData HostPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string friendlyName = default, string description = default, HostPoolType hostPoolType = default, PersonalDesktopAssignmentType? personalDesktopAssignmentType = default, string customRdpProperty = default, int? maxSessionLimit = default, HostPoolLoadBalancerType loadBalancerType = default, int? ring = default, bool? isValidationEnvironment = default, HostPoolRegistrationInfo registrationInfo = default, string vmTemplate = default, IEnumerable<string> applicationGroupReferences = default, IEnumerable<string> appAttachPackageReferences = default, string ssoAdfsAuthority = default, string ssoClientId = default, string ssoClientSecretKeyVaultPath = default, HostPoolSsoSecretType? ssoSecretType = default, PreferredAppGroupType preferredAppGroupType = default, bool? startVmOnConnect = default, bool? isCloudPCResource = default, HostPoolPublicNetworkAccess? publicNetworkAccess = default, SessionHostAgentUpdateProperties agentUpdate = default, IEnumerable<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = default, ResourceIdentifier managedBy = default, string kind = default, ETag? etag = default, ManagedServiceIdentity identity = default, DesktopVirtualizationSku sku = default, ArmPlan plan = default)
+        public static HostPoolData HostPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string friendlyName, string description, HostPoolType hostPoolType, PersonalDesktopAssignmentType? personalDesktopAssignmentType, string customRdpProperty, int? maxSessionLimit, HostPoolLoadBalancerType loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfo registrationInfo, string vmTemplate, IEnumerable<string> applicationGroupReferences, IEnumerable<string> appAttachPackageReferences, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType preferredAppGroupType, bool? startVmOnConnect, bool? isCloudPCResource, HostPoolPublicNetworkAccess? publicNetworkAccess, SessionHostAgentUpdateProperties agentUpdate, IEnumerable<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            applicationGroupReferences ??= new ChangeTrackingList<string>();
+            appAttachPackageReferences ??= new ChangeTrackingList<string>();
+            privateEndpointConnections ??= new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnection>();
+
             return new HostPoolData(
                 id,
                 name,
@@ -2194,100 +2062,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="agentUpdate"> The session host configuration for updating agent, monitoring agent, and stack component. </param>
         /// <returns> A new <see cref="Models.HostPoolPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HostPoolPatch HostPoolPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string friendlyName = default, string description = default, string customRdpProperty = default, int? maxSessionLimit = default, PersonalDesktopAssignmentType? personalDesktopAssignmentType = default, HostPoolLoadBalancerType? loadBalancerType = default, int? ring = default, bool? isValidationEnvironment = default, HostPoolRegistrationInfoPatch registrationInfo = default, string vmTemplate = default, string ssoAdfsAuthority = default, string ssoClientId = default, string ssoClientSecretKeyVaultPath = default, HostPoolSsoSecretType? ssoSecretType = default, PreferredAppGroupType? preferredAppGroupType = default, bool? startVmOnConnect = default, HostPoolPublicNetworkAccess? publicNetworkAccess = default, SessionHostAgentUpdatePatchProperties agentUpdate = default)
+        public static HostPoolPatch HostPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, string friendlyName, string description, string customRdpProperty, int? maxSessionLimit, PersonalDesktopAssignmentType? personalDesktopAssignmentType, HostPoolLoadBalancerType? loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfoPatch registrationInfo, string vmTemplate, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType? preferredAppGroupType, bool? startVmOnConnect, HostPoolPublicNetworkAccess? publicNetworkAccess, SessionHostAgentUpdatePatchProperties agentUpdate)
         {
-            return new HostPoolPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                friendlyName is null && description is null && customRdpProperty is null && maxSessionLimit is null && personalDesktopAssignmentType is null && loadBalancerType is null && ring is null && isValidationEnvironment is null && registrationInfo is null && vmTemplate is null && ssoAdfsAuthority is null && ssoClientId is null && ssoClientSecretKeyVaultPath is null && ssoSecretType is null && preferredAppGroupType is null && startVmOnConnect is null && publicNetworkAccess is null && agentUpdate is null ? default : new HostPoolPatchProperties(
-                    friendlyName,
-                    description,
-                    customRdpProperty,
-                    maxSessionLimit,
-                    personalDesktopAssignmentType,
-                    loadBalancerType,
-                    ring,
-                    isValidationEnvironment,
-                    registrationInfo,
-                    vmTemplate,
-                    ssoAdfsAuthority,
-                    ssoClientId,
-                    ssoClientSecretKeyVaultPath,
-                    ssoSecretType,
-                    preferredAppGroupType,
-                    startVmOnConnect,
-                    publicNetworkAccess,
-                    agentUpdate,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default),
-                default,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DesktopVirtualization.SessionHostData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="objectId"> ObjectId of SessionHost. (internal use). </param>
-        /// <param name="lastHeartBeatOn"> Last heart beat from SessionHost. </param>
-        /// <param name="sessions"> Number of sessions on SessionHost. </param>
-        /// <param name="agentVersion"> Version of agent on SessionHost. </param>
-        /// <param name="allowNewSession"> Allow a new session. </param>
-        /// <param name="vmId"> Virtual Machine Id of SessionHost's underlying virtual machine. </param>
-        /// <param name="resourceId"> Resource Id of SessionHost's underlying virtual machine. </param>
-        /// <param name="assignedUser"> User assigned to SessionHost. </param>
-        /// <param name="friendlyName"> Friendly name of SessionHost. </param>
-        /// <param name="status"> Status for a SessionHost. </param>
-        /// <param name="statusTimestamp"> The timestamp of the status. </param>
-        /// <param name="osVersion"> The version of the OS on the session host. </param>
-        /// <param name="sxsStackVersion"> The version of the side by side stack on the session host. </param>
-        /// <param name="updateState"> Update state of a SessionHost. </param>
-        /// <param name="lastUpdatedOn"> The timestamp of the last update. </param>
-        /// <param name="updateErrorMessage"> The error message. </param>
-        /// <param name="sessionHostHealthCheckResults"> List of SessionHostHealthCheckReports. </param>
-        /// <returns> A new <see cref="DesktopVirtualization.SessionHostData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SessionHostData SessionHostData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string objectId = default, DateTimeOffset? lastHeartBeatOn = default, int? sessions = default, string agentVersion = default, bool? allowNewSession = default, string vmId = default, ResourceIdentifier resourceId = default, string assignedUser = default, string friendlyName = default, SessionHostStatus? status = default, DateTimeOffset? statusTimestamp = default, string osVersion = default, string sxsStackVersion = default, SessionHostUpdateState? updateState = default, DateTimeOffset? lastUpdatedOn = default, string updateErrorMessage = default, IEnumerable<SessionHostHealthCheckReport> sessionHostHealthCheckResults = default)
-        {
-            return new SessionHostData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                objectId is null && lastHeartBeatOn is null && sessions is null && agentVersion is null && allowNewSession is null && vmId is null && resourceId is null && assignedUser is null && friendlyName is null && status is null && statusTimestamp is null && osVersion is null && sxsStackVersion is null && updateState is null && lastUpdatedOn is null && updateErrorMessage is null && sessionHostHealthCheckResults is null ? default : new SessionHostProperties(
-                    default,
-                    default,
-                    default,
-                    objectId,
-                    lastHeartBeatOn,
-                    sessions,
-                    agentVersion,
-                    allowNewSession,
-                    vmId,
-                    resourceId,
-                    assignedUser,
-                    friendlyName,
-                    status,
-                    statusTimestamp,
-                    osVersion,
-                    sxsStackVersion,
-                    updateState,
-                    lastUpdatedOn,
-                    updateErrorMessage,
-                    default,
-                    default,
-                    (sessionHostHealthCheckResults ?? new ChangeTrackingList<SessionHostHealthCheckReport>()).ToList(),
-                    default),
-                default);
+            return HostPoolPatch(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, friendlyName: friendlyName, description: description, customRdpProperty: customRdpProperty, maxSessionLimit: maxSessionLimit, personalDesktopAssignmentType: personalDesktopAssignmentType, loadBalancerType: loadBalancerType, ring: ring, isValidationEnvironment: isValidationEnvironment, registrationInfo: registrationInfo, vmTemplate: vmTemplate, ssoAdfsAuthority: ssoAdfsAuthority, ssoClientId: ssoClientId, ssoClientSecretKeyVaultPath: ssoClientSecretKeyVaultPath, ssoSecretType: ssoSecretType, preferredAppGroupType: preferredAppGroupType, startVmOnConnect: startVmOnConnect, publicNetworkAccess: publicNetworkAccess, agentUpdate: agentUpdate, managedPrivateUdp: default, directUdp: default, publicUdp: default, relayUdp: default, allowRdpShortPathWithPrivateLink: default, conditionalRdpProperty: default, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppAttachPackageProperties"/>. </summary>
@@ -2298,19 +2075,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="failHealthCheckOnStagingFailure"> Parameter indicating how the health check should behave if this package fails staging. </param>
         /// <returns> A new <see cref="Models.AppAttachPackageProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AppAttachPackageProperties AppAttachPackageProperties(AppAttachPackageProvisioningState? provisioningState = default, AppAttachPackageInfoProperties image = default, IEnumerable<string> hostPoolReferences = default, Uri keyVaultUri = default, FailHealthCheckOnStagingFailure? failHealthCheckOnStagingFailure = default)
+        public static AppAttachPackageProperties AppAttachPackageProperties(AppAttachPackageProvisioningState? provisioningState, AppAttachPackageInfoProperties image, IEnumerable<string> hostPoolReferences, Uri keyVaultUri, FailHealthCheckOnStagingFailure? failHealthCheckOnStagingFailure)
         {
-            return new AppAttachPackageProperties(
-                provisioningState,
-                image,
-                (hostPoolReferences ?? new ChangeTrackingList<string>()).ToList(),
-                keyVaultUri,
-                failHealthCheckOnStagingFailure,
-                default,
-                default,
-                default,
-                default,
-                default);
+            return AppAttachPackageProperties(provisioningState: provisioningState, image: image, hostPoolReferences: hostPoolReferences, keyVaultUri: keyVaultUri, failHealthCheckOnStagingFailure: failHealthCheckOnStagingFailure, packageOwnerName: default, packageLookbackUri: default, customData: default, deploymentScope: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppAttachPackagePatch"/>. </summary>
@@ -2321,16 +2088,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="properties"> Detailed properties for App Attach Package. </param>
         /// <returns> A new <see cref="Models.AppAttachPackagePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AppAttachPackagePatch AppAttachPackagePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppAttachPackagePatchProperties properties = default)
+        public static AppAttachPackagePatch AppAttachPackagePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppAttachPackagePatchProperties properties)
         {
-            return new AppAttachPackagePatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                default,
-                properties,
-                default);
+            return AppAttachPackagePatch(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: default, properties: properties);
         }
 
         /// <param name="id"> The id. </param>
@@ -2369,6 +2129,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HostPoolData HostPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string friendlyName, string description, HostPoolType hostPoolType, PersonalDesktopAssignmentType? personalDesktopAssignmentType, string customRdpProperty, int? maxSessionLimit, HostPoolLoadBalancerType loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfo registrationInfo, string vmTemplate, IEnumerable<string> applicationGroupReferences, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType preferredAppGroupType, bool? startVmOnConnect, bool? isCloudPCResource, SessionHostAgentUpdateProperties agentUpdate, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            applicationGroupReferences ??= new ChangeTrackingList<string>();
+
             return new HostPoolData(
                 id,
                 name,
@@ -2446,40 +2209,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HostPoolPatch HostPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, string friendlyName, string description, string customRdpProperty, int? maxSessionLimit, PersonalDesktopAssignmentType? personalDesktopAssignmentType, HostPoolLoadBalancerType? loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfoPatch registrationInfo, string vmTemplate, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType? preferredAppGroupType, bool? startVmOnConnect, SessionHostAgentUpdatePatchProperties agentUpdate)
         {
-            return new HostPoolPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                friendlyName is null && description is null && customRdpProperty is null && maxSessionLimit is null && personalDesktopAssignmentType is null && loadBalancerType is null && ring is null && isValidationEnvironment is null && registrationInfo is null && vmTemplate is null && ssoAdfsAuthority is null && ssoClientId is null && ssoClientSecretKeyVaultPath is null && ssoSecretType is null && preferredAppGroupType is null && startVmOnConnect is null && agentUpdate is null ? default : new HostPoolPatchProperties(
-                    friendlyName,
-                    description,
-                    customRdpProperty,
-                    maxSessionLimit,
-                    personalDesktopAssignmentType,
-                    loadBalancerType,
-                    ring,
-                    isValidationEnvironment,
-                    registrationInfo,
-                    vmTemplate,
-                    ssoAdfsAuthority,
-                    ssoClientId,
-                    ssoClientSecretKeyVaultPath,
-                    ssoSecretType,
-                    preferredAppGroupType,
-                    startVmOnConnect,
-                    default,
-                    agentUpdate,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default),
-                default,
-                default);
+            return HostPoolPatch(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, friendlyName: friendlyName, description: description, customRdpProperty: customRdpProperty, maxSessionLimit: maxSessionLimit, personalDesktopAssignmentType: personalDesktopAssignmentType, loadBalancerType: loadBalancerType, ring: ring, isValidationEnvironment: isValidationEnvironment, registrationInfo: registrationInfo, vmTemplate: vmTemplate, ssoAdfsAuthority: ssoAdfsAuthority, ssoClientId: ssoClientId, ssoClientSecretKeyVaultPath: ssoClientSecretKeyVaultPath, ssoSecretType: ssoSecretType, preferredAppGroupType: preferredAppGroupType, startVmOnConnect: startVmOnConnect, publicNetworkAccess: default, agentUpdate: agentUpdate, managedPrivateUdp: default, directUdp: default, publicUdp: default, relayUdp: default, allowRdpShortPathWithPrivateLink: default, conditionalRdpProperty: default, identity: default);
         }
 
         /// <summary> Initializes a new instance of VirtualApplicationGroupData. </summary>
@@ -2505,6 +2235,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualApplicationGroupData VirtualApplicationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, ResourceIdentifier hostPoolId, ResourceIdentifier workspaceId, VirtualApplicationGroupType applicationGroupType, bool? isCloudPCResource, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new VirtualApplicationGroupData(
                 id,
                 name,
@@ -2544,62 +2276,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualApplicationGroupPatch VirtualApplicationGroupPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, string description, string friendlyName)
         {
-            return new VirtualApplicationGroupPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                description is null && friendlyName is null ? default : new ApplicationGroupPatchProperties(description, friendlyName, default, default),
-                default);
-        }
-
-        /// <summary> Initializes a new instance of VirtualWorkspaceData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="objectId"> ObjectId of Workspace. (internal use). </param>
-        /// <param name="description"> Description of Workspace. </param>
-        /// <param name="friendlyName"> Friendly name of Workspace. </param>
-        /// <param name="applicationGroupReferences"> List of applicationGroup resource Ids. </param>
-        /// <param name="isCloudPCResource"> Is cloud pc resource. </param>
-        /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
-        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        /// <param name="etag"> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned. </param>
-        /// <param name="sku"> The resource model definition representing SKU. </param>
-        /// <param name="plan"> Gets or sets the plan. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VirtualWorkspaceData VirtualWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, IEnumerable<string> applicationGroupReferences, bool? isCloudPCResource, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan)
-        {
-            return new VirtualWorkspaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                objectId is null && description is null && friendlyName is null && applicationGroupReferences is null && isCloudPCResource is null ? default : new WorkspaceProperties(
-                    objectId,
-                    description,
-                    friendlyName,
-                    (applicationGroupReferences ?? new ChangeTrackingList<string>()).ToList(),
-                    isCloudPCResource,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default),
-                identity,
-                etag,
-                kind,
-                managedBy,
-                plan,
-                sku,
-                default);
+            return VirtualApplicationGroupPatch(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, description: description, friendlyName: friendlyName, showInFeed: default);
         }
 
         /// <summary> Initializes a new instance of HostPoolData. </summary>
@@ -2642,6 +2319,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HostPoolData HostPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string friendlyName, string description, HostPoolType hostPoolType, PersonalDesktopAssignmentType? personalDesktopAssignmentType, string customRdpProperty, int? maxSessionLimit, HostPoolLoadBalancerType loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfo registrationInfo, string vmTemplate, IEnumerable<string> applicationGroupReferences, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType preferredAppGroupType, bool? startVmOnConnect, bool? isCloudPCResource, HostPoolPublicNetworkAccess? publicNetworkAccess, SessionHostAgentUpdateProperties agentUpdate, IEnumerable<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            applicationGroupReferences ??= new ChangeTrackingList<string>();
+            privateEndpointConnections ??= new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnection>();
+
             return new HostPoolData(
                 id,
                 name,
@@ -2715,29 +2396,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ExpandMsixImage ExpandMsixImage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string packageAlias, string imagePath, string packageName, string packageFamilyName, string packageFullName, string displayName, string packageRelativePath, bool? isRegularRegistration, bool? isActive, IEnumerable<MsixPackageDependencies> packageDependencies, string version, DateTimeOffset? lastUpdatedOn, IEnumerable<MsixPackageApplications> packageApplications)
         {
-            return new ExpandMsixImage(
-                id,
-                name,
-                resourceType,
-                systemData,
-                packageAlias is null && imagePath is null && packageName is null && packageFamilyName is null && packageFullName is null && displayName is null && packageRelativePath is null && isRegularRegistration is null && isActive is null && packageDependencies is null && version is null && lastUpdatedOn is null && packageApplications is null ? default : new ExpandMsixImageProperties(
-                    packageAlias,
-                    imagePath,
-                    packageName,
-                    packageFamilyName,
-                    packageFullName,
-                    displayName,
-                    packageRelativePath,
-                    isRegularRegistration,
-                    isActive,
-                    (packageDependencies ?? new ChangeTrackingList<MsixPackageDependencies>()).ToList(),
-                    version,
-                    lastUpdatedOn,
-                    (packageApplications ?? new ChangeTrackingList<MsixPackageApplications>()).ToList(),
-                    default,
-                    default,
-                    default),
-                default);
+            return ExpandMsixImage(id: id, name: name, resourceType: resourceType, systemData: systemData, packageAlias: packageAlias, imagePath: imagePath, packageName: packageName, packageFamilyName: packageFamilyName, packageFullName: packageFullName, displayName: displayName, packageRelativePath: packageRelativePath, isRegularRegistration: isRegularRegistration, isActive: isActive, packageDependencies: packageDependencies, version: version, lastUpdatedOn: lastUpdatedOn, packageApplications: packageApplications, certificateName: default, certificateExpiry: default);
         }
     }
 }

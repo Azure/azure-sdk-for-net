@@ -22,51 +22,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     public static partial class ArmDataFactoryModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Factory provisioning state, example Succeeded. </param>
-        /// <param name="createdOn"> Time the factory was created in ISO8601 format. </param>
-        /// <param name="version"> Version of the factory. </param>
-        /// <param name="repoConfiguration"> Git repo information of the factory. </param>
-        /// <param name="globalParameters"> List of parameters for factory. </param>
-        /// <param name="encryption"> Properties to enable Customer Managed Key for the factory. </param>
-        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the data factory. </param>
-        /// <param name="purviewResourceId"> Purview resource id. </param>
-        /// <param name="identity"> Managed service identity of the factory. </param>
-        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="DataFactory.DataFactoryData"/> instance for mocking. </returns>
-        public static DataFactoryData DataFactoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, DateTimeOffset? createdOn = default, string version = default, FactoryRepoConfiguration repoConfiguration = default, IDictionary<string, DataFactoryGlobalParameterProperties> globalParameters = default, DataFactoryEncryptionConfiguration encryption = default, DataFactoryPublicNetworkAccess? publicNetworkAccess = default, ResourceIdentifier purviewResourceId = default, ManagedServiceIdentity identity = default, ETag? eTag = default, IDictionary<string, BinaryData> additionalProperties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new DataFactoryData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && createdOn is null && version is null && purviewResourceId is null && repoConfiguration is null && globalParameters is null && encryption is null && publicNetworkAccess is null ? default : new FactoryProperties(
-                    provisioningState,
-                    createdOn,
-                    version,
-                    new PurviewConfiguration(purviewResourceId, default),
-                    repoConfiguration,
-                    globalParameters ?? new ChangeTrackingDictionary<string, DataFactoryGlobalParameterProperties>(),
-                    encryption,
-                    publicNetworkAccess,
-                    default),
-                identity,
-                eTag,
-                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
-        }
-
         /// <param name="factoryRepoConfigurationType"> Type of repo configuration. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="repositoryName"> Repository name. </param>
@@ -1042,28 +997,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new UnknownIntegrationRuntime(default, description, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
-        }
-
-        /// <param name="description"> Integration runtime description. </param>
-        /// <param name="additionalProperties"></param>
-        /// <param name="state"> Integration runtime state, only valid for managed dedicated integration runtime. </param>
-        /// <param name="computeProperties"> The compute resource for managed integration runtime. </param>
-        /// <param name="ssisProperties"> SSIS properties for managed integration runtime. </param>
-        /// <param name="interactiveQuery"> Interactive authoring capability reference. </param>
-        /// <param name="customerVirtualNetworkSubnetId"> The ID of subnet to which Azure-SSIS integration runtime will join. </param>
-        /// <param name="managedVirtualNetwork"> Managed Virtual Network reference. </param>
-        /// <returns> A new <see cref="Models.ManagedIntegrationRuntime"/> instance for mocking. </returns>
-        public static ManagedIntegrationRuntime ManagedIntegrationRuntime(string description = default, IDictionary<string, BinaryData> additionalProperties = default, IntegrationRuntimeState? state = default, IntegrationRuntimeComputeProperties computeProperties = default, IntegrationRuntimeSsisProperties ssisProperties = default, InteractiveQueryProperties interactiveQuery = default, ResourceIdentifier customerVirtualNetworkSubnetId = default, ManagedVirtualNetworkReference managedVirtualNetwork = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new ManagedIntegrationRuntime(
-                default,
-                description,
-                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                state,
-                customerVirtualNetworkSubnetId is null ? default : new ManagedIntegrationRuntimeTypeProperties(default, default, new IntegrationRuntimeCustomerVirtualNetwork(customerVirtualNetworkSubnetId, default), default, default),
-                managedVirtualNetwork);
         }
 
         /// <param name="location"> The location for managed integration runtime. The supported regions could be found on https://docs.microsoft.com/en-us/azure/data-factory/data-factory-data-movement-activities. </param>
@@ -13728,43 +13661,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="description"> The description of the change data capture. </param>
-        /// <param name="sourceConnectionsInfo"> List of sources connections that can be used as sources in the CDC. </param>
-        /// <param name="targetConnectionsInfo"> List of target connections that can be used as sources in the CDC. </param>
-        /// <param name="policy"> CDC policy. </param>
-        /// <param name="allowVnetOverride"> A boolean to determine if the vnet configuration needs to be overwritten. </param>
-        /// <param name="status"> Status of the CDC as to if it is running or stopped. </param>
-        /// <param name="folderName"> The name of the folder that this CDC is in. </param>
-        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <param name="additionalProperties"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionsInfo"/>, <paramref name="targetConnectionsInfo"/> or <paramref name="policy"/> is null. </exception>
-        /// <returns> A new <see cref="DataFactory.DataFactoryChangeDataCaptureData"/> instance for mocking. </returns>
-        public static DataFactoryChangeDataCaptureData DataFactoryChangeDataCaptureData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, IEnumerable<MapperSourceConnectionsInfo> sourceConnectionsInfo = default, IEnumerable<MapperTargetConnectionsInfo> targetConnectionsInfo = default, MapperPolicy policy = default, bool? allowVnetOverride = default, string status = default, string folderName = default, ETag? eTag = default, IDictionary<string, BinaryData> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new DataFactoryChangeDataCaptureData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                folderName is null && allowVnetOverride is null ? default : new ChangeDataCapture(
-                    new ChangeDataCaptureFolder(folderName, default),
-                    default,
-                    default,
-                    default,
-                    default,
-                    allowVnetOverride,
-                    default,
-                    default),
-                eTag,
-                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
-        }
-
         /// <param name="sourceEntities"> List of source tables for a source connection. </param>
         /// <param name="connection"> Source connection details. </param>
         /// <returns> A new <see cref="Models.MapperSourceConnectionsInfo"/> instance for mocking. </returns>
@@ -13927,9 +13823,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="eTag"> Etag identifies change in the resource. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="DataFactory.DataFactoryData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataFactoryData DataFactoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, string provisioningState = default, DateTimeOffset? createdOn = default, string version = default, ResourceIdentifier purviewResourceId = default, FactoryRepoConfiguration repoConfiguration = default, IDictionary<string, DataFactoryGlobalParameterProperties> globalParameters = default, DataFactoryEncryptionConfiguration encryption = default, DataFactoryPublicNetworkAccess? publicNetworkAccess = default, ETag? eTag = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            globalParameters ??= new ChangeTrackingDictionary<string, DataFactoryGlobalParameterProperties>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
             return new DataFactoryData(
                 id,
                 name,
@@ -13967,9 +13866,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="eTag"> Etag identifies change in the resource. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="DataFactory.DataFactoryChangeDataCaptureData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataFactoryChangeDataCaptureData DataFactoryChangeDataCaptureData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string folderName = default, string description = default, IEnumerable<MapperSourceConnectionsInfo> sourceConnectionsInfo = default, IEnumerable<MapperTargetConnectionsInfo> targetConnectionsInfo = default, MapperPolicy policy = default, bool? allowVnetOverride = default, string status = default, ETag? eTag = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
+            sourceConnectionsInfo ??= new ChangeTrackingList<MapperSourceConnectionsInfo>();
+            targetConnectionsInfo ??= new ChangeTrackingList<MapperTargetConnectionsInfo>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
             return new DataFactoryChangeDataCaptureData(
                 id,
                 name,
@@ -13998,9 +13900,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="customerVirtualNetworkSubnetId"> The name of virtual network to which Azure-SSIS integration runtime will join. </param>
         /// <param name="interactiveQuery"> Interactive authoring capability reference. </param>
         /// <returns> A new <see cref="Models.ManagedIntegrationRuntime"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ManagedIntegrationRuntime ManagedIntegrationRuntime(string description = default, IDictionary<string, BinaryData> additionalProperties = default, IntegrationRuntimeState? state = default, ManagedVirtualNetworkReference managedVirtualNetwork = default, IntegrationRuntimeComputeProperties computeProperties = default, IntegrationRuntimeSsisProperties ssisProperties = default, ResourceIdentifier customerVirtualNetworkSubnetId = default, InteractiveQueryProperties interactiveQuery = default)
         {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
             return new ManagedIntegrationRuntime(
                 default,
                 description,
@@ -14021,17 +13924,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedService"> The Azure Storage linked service reference. </param>
         /// <returns> A new <see cref="Models.DataFactoryBlobTrigger"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataFactoryBlobTrigger DataFactoryBlobTrigger(string description = default, DataFactoryTriggerRuntimeState? runtimeState = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, IEnumerable<TriggerPipelineReference> pipelines = default, string folderPath = default, int maxConcurrency = 0, DataFactoryLinkedServiceReference linkedService = default)
+        public static DataFactoryBlobTrigger DataFactoryBlobTrigger(string description, DataFactoryTriggerRuntimeState? runtimeState, IEnumerable<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IEnumerable<TriggerPipelineReference> pipelines, string folderPath, int maxConcurrency, DataFactoryLinkedServiceReference linkedService)
         {
-            return new DataFactoryBlobTrigger(
-                default,
-                description,
-                runtimeState,
-                (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
-                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                (pipelines ?? new ChangeTrackingList<TriggerPipelineReference>()).ToList(),
-                folderPath is null ? default : new BlobTriggerTypeProperties(folderPath, maxConcurrency, default, default),
-                linkedService);
+            return DataFactoryBlobTrigger(description: description, runtimeState: runtimeState, annotations: annotations, additionalProperties: additionalProperties, pipelines: pipelines, folderPath: folderPath, maxConcurrency: maxConcurrency, linkedService: linkedService, linkedService: linkedService);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedIntegrationRuntime"/>. </summary>
@@ -14046,13 +13941,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ManagedIntegrationRuntime ManagedIntegrationRuntime(string description, IDictionary<string, BinaryData> additionalProperties, IntegrationRuntimeState? state, ManagedVirtualNetworkReference managedVirtualNetwork, IntegrationRuntimeComputeProperties computeProperties, IntegrationRuntimeSsisProperties ssisProperties, ResourceIdentifier customerVirtualNetworkSubnetId)
         {
-            return new ManagedIntegrationRuntime(
-                default,
-                description,
-                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                state,
-                computeProperties is null && ssisProperties is null && customerVirtualNetworkSubnetId is null ? default : new ManagedIntegrationRuntimeTypeProperties(computeProperties, ssisProperties, new IntegrationRuntimeCustomerVirtualNetwork(customerVirtualNetworkSubnetId, default), default, default),
-                managedVirtualNetwork);
+            return ManagedIntegrationRuntime(description: description, additionalProperties: additionalProperties, state: state, computeProperties: computeProperties, ssisProperties: ssisProperties, interactiveQuery: default, customerVirtualNetworkSubnetId: customerVirtualNetworkSubnetId, managedVirtualNetwork: managedVirtualNetwork);
         }
     }
 }

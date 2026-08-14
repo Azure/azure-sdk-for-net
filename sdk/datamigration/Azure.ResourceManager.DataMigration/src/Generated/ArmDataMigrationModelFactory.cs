@@ -5331,29 +5331,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="tableList"> List of tables to copy. </param>
         /// <returns> A new <see cref="Models.DatabaseMigrationSqlDBProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DatabaseMigrationSqlDBProperties DatabaseMigrationSqlDBProperties(string scope = default, DataMigrationProvisioningState? provisioningState = default, string migrationStatus = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, ResourceIdentifier migrationService = default, string migrationOperationId = default, SqlMigrationErrorInfo migrationFailureError = default, string provisioningError = default, DataMigrationSqlConnectionInformation sourceSqlConnection = default, string sourceDatabaseName = default, string sourceServerName = default, string targetDatabaseCollation = default, DataMigrationSqlDBMigrationStatusDetails migrationStatusDetails = default, DataMigrationSqlConnectionInformation targetSqlConnection = default, bool? isOfflineMigration = default, IEnumerable<string> tableList = default)
+        public static DatabaseMigrationSqlDBProperties DatabaseMigrationSqlDBProperties(string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, DataMigrationSqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation, DataMigrationSqlDBMigrationStatusDetails migrationStatusDetails, DataMigrationSqlConnectionInformation targetSqlConnection, bool? isOfflineMigration, IEnumerable<string> tableList)
         {
-            return new DatabaseMigrationSqlDBProperties(
-                default,
-                scope,
-                provisioningState,
-                migrationStatus,
-                startedOn,
-                endedOn,
-                migrationService,
-                migrationOperationId,
-                migrationFailureError,
-                provisioningError,
-                default,
-                sourceSqlConnection,
-                sourceDatabaseName,
-                sourceServerName,
-                targetDatabaseCollation,
-                default,
-                migrationStatusDetails,
-                targetSqlConnection,
-                isOfflineMigration is null ? default : new DataMigrationSqlDBOfflineConfiguration(isOfflineMigration, default),
-                (tableList ?? new ChangeTrackingList<string>()).ToList());
+            return DatabaseMigrationSqlDBProperties(scope: scope, provisioningState: provisioningState, migrationStatus: migrationStatus, startedOn: startedOn, endedOn: endedOn, migrationService: migrationService, migrationOperationId: migrationOperationId, migrationFailureError: migrationFailureError, provisioningError: provisioningError, sourceSqlConnection: sourceSqlConnection, sourceDatabaseName: sourceDatabaseName, sourceServerName: sourceServerName, targetDatabaseCollation: targetDatabaseCollation, sqlServerInstanceId: default, migrationStatusDetails: migrationStatusDetails, targetSqlConnection: targetSqlConnection, isOfflineMigration: isOfflineMigration, tableList: tableList);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationProperties"/>. </summary>
@@ -5372,25 +5352,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetDatabaseCollation"> Database collation to be used for the target database. </param>
         /// <returns> A new <see cref="Models.DatabaseMigrationProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DatabaseMigrationProperties DatabaseMigrationProperties(string scope = default, DataMigrationProvisioningState? provisioningState = default, string migrationStatus = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, ResourceIdentifier migrationService = default, string migrationOperationId = default, SqlMigrationErrorInfo migrationFailureError = default, string provisioningError = default, DataMigrationSqlConnectionInformation sourceSqlConnection = default, string sourceDatabaseName = default, string sourceServerName = default, string targetDatabaseCollation = default)
+        public static DatabaseMigrationProperties DatabaseMigrationProperties(string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, DataMigrationSqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation)
         {
-            return new DatabaseMigrationProperties(
-                default,
-                scope,
-                provisioningState,
-                migrationStatus,
-                startedOn,
-                endedOn,
-                migrationService,
-                migrationOperationId,
-                migrationFailureError,
-                provisioningError,
-                default,
-                sourceSqlConnection,
-                sourceDatabaseName,
-                sourceServerName,
-                targetDatabaseCollation,
-                default);
+            return DatabaseMigrationProperties(scope: scope, provisioningState: provisioningState, migrationStatus: migrationStatus, startedOn: startedOn, endedOn: endedOn, migrationService: migrationService, migrationOperationId: migrationOperationId, migrationFailureError: migrationFailureError, provisioningError: provisioningError, sourceSqlConnection: sourceSqlConnection, sourceDatabaseName: sourceDatabaseName, sourceServerName: sourceServerName, targetDatabaseCollation: targetDatabaseCollation, sqlServerInstanceId: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationSqlMIProperties"/>. </summary>
@@ -5412,28 +5376,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="offlineConfiguration"> Offline configuration. </param>
         /// <returns> A new <see cref="Models.DatabaseMigrationSqlMIProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DatabaseMigrationSqlMIProperties DatabaseMigrationSqlMIProperties(string scope = default, DataMigrationProvisioningState? provisioningState = default, string migrationStatus = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, ResourceIdentifier migrationService = default, string migrationOperationId = default, SqlMigrationErrorInfo migrationFailureError = default, string provisioningError = default, DataMigrationSqlConnectionInformation sourceSqlConnection = default, string sourceDatabaseName = default, string sourceServerName = default, string targetDatabaseCollation = default, DataMigrationStatusDetails migrationStatusDetails = default, DataMigrationBackupConfiguration backupConfiguration = default, DataMigrationOfflineConfiguration offlineConfiguration = default)
+        public static DatabaseMigrationSqlMIProperties DatabaseMigrationSqlMIProperties(string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, DataMigrationSqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation, DataMigrationStatusDetails migrationStatusDetails, DataMigrationBackupConfiguration backupConfiguration, DataMigrationOfflineConfiguration offlineConfiguration)
         {
-            return new DatabaseMigrationSqlMIProperties(
-                default,
-                scope,
-                provisioningState,
-                migrationStatus,
-                startedOn,
-                endedOn,
-                migrationService,
-                migrationOperationId,
-                migrationFailureError,
-                provisioningError,
-                default,
-                sourceSqlConnection,
-                sourceDatabaseName,
-                sourceServerName,
-                targetDatabaseCollation,
-                default,
-                migrationStatusDetails,
-                backupConfiguration,
-                offlineConfiguration);
+            return DatabaseMigrationSqlMIProperties(scope: scope, provisioningState: provisioningState, migrationStatus: migrationStatus, startedOn: startedOn, endedOn: endedOn, migrationService: migrationService, migrationOperationId: migrationOperationId, migrationFailureError: migrationFailureError, provisioningError: provisioningError, sourceSqlConnection: sourceSqlConnection, sourceDatabaseName: sourceDatabaseName, sourceServerName: sourceServerName, targetDatabaseCollation: targetDatabaseCollation, sqlServerInstanceId: default, migrationStatusDetails: migrationStatusDetails, backupConfiguration: backupConfiguration, offlineConfiguration: offlineConfiguration);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationSqlVmProperties"/>. </summary>
@@ -5455,28 +5400,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="offlineConfiguration"> Offline configuration. </param>
         /// <returns> A new <see cref="Models.DatabaseMigrationSqlVmProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DatabaseMigrationSqlVmProperties DatabaseMigrationSqlVmProperties(string scope = default, DataMigrationProvisioningState? provisioningState = default, string migrationStatus = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, ResourceIdentifier migrationService = default, string migrationOperationId = default, SqlMigrationErrorInfo migrationFailureError = default, string provisioningError = default, DataMigrationSqlConnectionInformation sourceSqlConnection = default, string sourceDatabaseName = default, string sourceServerName = default, string targetDatabaseCollation = default, DataMigrationStatusDetails migrationStatusDetails = default, DataMigrationBackupConfiguration backupConfiguration = default, DataMigrationOfflineConfiguration offlineConfiguration = default)
+        public static DatabaseMigrationSqlVmProperties DatabaseMigrationSqlVmProperties(string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, DataMigrationSqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation, DataMigrationStatusDetails migrationStatusDetails, DataMigrationBackupConfiguration backupConfiguration, DataMigrationOfflineConfiguration offlineConfiguration)
         {
-            return new DatabaseMigrationSqlVmProperties(
-                default,
-                scope,
-                provisioningState,
-                migrationStatus,
-                startedOn,
-                endedOn,
-                migrationService,
-                migrationOperationId,
-                migrationFailureError,
-                provisioningError,
-                default,
-                sourceSqlConnection,
-                sourceDatabaseName,
-                sourceServerName,
-                targetDatabaseCollation,
-                default,
-                migrationStatusDetails,
-                backupConfiguration,
-                offlineConfiguration);
+            return DatabaseMigrationSqlVmProperties(scope: scope, provisioningState: provisioningState, migrationStatus: migrationStatus, startedOn: startedOn, endedOn: endedOn, migrationService: migrationService, migrationOperationId: migrationOperationId, migrationFailureError: migrationFailureError, provisioningError: provisioningError, sourceSqlConnection: sourceSqlConnection, sourceDatabaseName: sourceDatabaseName, sourceServerName: sourceServerName, targetDatabaseCollation: targetDatabaseCollation, sqlServerInstanceId: default, migrationStatusDetails: migrationStatusDetails, backupConfiguration: backupConfiguration, offlineConfiguration: offlineConfiguration);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMigration.DataMigrationServiceData"/>. </summary>
@@ -5497,8 +5423,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="shouldDeleteResourcesOnStop"> Whether service resources should be deleted when stopped. (Turned on by default). </param>
         /// <returns> A new <see cref="DataMigration.DataMigrationServiceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataMigrationServiceData DataMigrationServiceData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, string kind = default, DataMigrationServiceSku sku = default, DataMigrationServiceProvisioningState? provisioningState = default, string publicKey = default, string virtualSubnetId = default, string virtualNicId = default, string autoStopDelay = default, bool? shouldDeleteResourcesOnStop = default)
+        public static DataMigrationServiceData DataMigrationServiceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string kind, DataMigrationServiceSku sku, DataMigrationServiceProvisioningState? provisioningState, string publicKey, string virtualSubnetId, string virtualNicId, string autoStopDelay, bool? shouldDeleteResourcesOnStop)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new DataMigrationServiceData(
                 id,
                 name,
@@ -5533,7 +5461,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// </param>
         /// <returns> A new <see cref="DataMigration.DataMigrationProjectTaskData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataMigrationProjectTaskData DataMigrationProjectTaskData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, DataMigrationProjectTaskProperties properties = default)
+        public static DataMigrationProjectTaskData DataMigrationProjectTaskData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, ETag? etag, DataMigrationProjectTaskProperties properties)
         {
             return new DataMigrationProjectTaskData(
                 id,
@@ -5571,8 +5499,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="provisioningState"> The project's provisioning state. </param>
         /// <returns> A new <see cref="DataMigration.DataMigrationProjectData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataMigrationProjectData DataMigrationProjectData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, DataMigrationProjectSourcePlatform? sourcePlatform = default, DataMigrationAadApp azureAuthenticationInfo = default, DataMigrationProjectTargetPlatform? targetPlatform = default, DateTimeOffset? createdOn = default, ServerConnectionInfo sourceConnectionInfo = default, ServerConnectionInfo targetConnectionInfo = default, IEnumerable<DataMigrationProjectDatabaseInfo> databasesInfo = default, DataMigrationProjectProvisioningState? provisioningState = default)
+        public static DataMigrationProjectData DataMigrationProjectData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, DataMigrationProjectSourcePlatform? sourcePlatform, DataMigrationAadApp azureAuthenticationInfo, DataMigrationProjectTargetPlatform? targetPlatform, DateTimeOffset? createdOn, ServerConnectionInfo sourceConnectionInfo, ServerConnectionInfo targetConnectionInfo, IEnumerable<DataMigrationProjectDatabaseInfo> databasesInfo, DataMigrationProjectProvisioningState? provisioningState)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            databasesInfo ??= new ChangeTrackingList<DataMigrationProjectDatabaseInfo>();
+
             return new DataMigrationProjectData(
                 id,
                 name,
@@ -5603,7 +5534,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="properties"> Custom file properties. </param>
         /// <returns> A new <see cref="DataMigration.DataMigrationProjectFileData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataMigrationProjectFileData DataMigrationProjectFileData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, DataMigrationProjectFileProperties properties = default)
+        public static DataMigrationProjectFileData DataMigrationProjectFileData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, ETag? etag, DataMigrationProjectFileProperties properties)
         {
             return new DataMigrationProjectFileData(
                 id,

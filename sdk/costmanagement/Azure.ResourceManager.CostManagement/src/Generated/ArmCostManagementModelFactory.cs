@@ -1123,25 +1123,6 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new CostAllocationRuleCheckNameAvailabilityResponse(nameAvailable, reason, message, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="kind"> Reservation or SavingsPlan. </param>
-        /// <param name="properties"> The properties of the benefit recommendations. </param>
-        /// <returns> A new <see cref="Models.BenefitRecommendationModel"/> instance for mocking. </returns>
-        public static BenefitRecommendationModel BenefitRecommendationModel(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingAccountBenefitKind? kind = default, BenefitRecommendationProperties properties = default)
-        {
-            return new BenefitRecommendationModel(
-                id,
-                name,
-                resourceType,
-                systemData,
-                kind,
-                default,
-                properties);
-        }
-
         /// <param name="firstConsumptionOn"> The first usage date used for looking back for computing the recommendations. </param>
         /// <param name="lastConsumptionOn"> The last usage date used for looking back for computing the recommendations. </param>
         /// <param name="lookBackPeriod"> The number of days of usage evaluated for computing the recommendations. </param>
@@ -1825,7 +1806,6 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// </param>
         /// <param name="kind"> Reservation or SavingsPlan. </param>
         /// <returns> A new <see cref="Models.BenefitRecommendationModel"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static BenefitRecommendationModel BenefitRecommendationModel(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BenefitRecommendationProperties properties = default, BillingAccountBenefitKind? kind = default)
         {
             return new BenefitRecommendationModel(
@@ -1855,6 +1835,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CostManagementExportData CostManagementExportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExportFormatType? format, ExportDeliveryDestination deliveryInfoDestination, ExportDefinition definition, IEnumerable<ExportRun> runHistoryValue, bool? partitionData, DateTimeOffset? nextRunTimeEstimate, ExportSchedule schedule, ETag? eTag)
         {
+            runHistoryValue ??= new ChangeTrackingList<ExportRun>();
+
             return new CostManagementExportData(
                 id,
                 name,
@@ -1890,18 +1872,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CommonExportProperties CommonExportProperties(ExportFormatType? format, ExportDeliveryDestination deliveryInfoDestination, ExportDefinition definition, IEnumerable<ExportRun> runHistoryValue, bool? partitionData, DateTimeOffset? nextRunTimeEstimate)
         {
-            return new CommonExportProperties(
-                format,
-                deliveryInfoDestination is null ? default : new ExportDeliveryInfo(deliveryInfoDestination, default),
-                definition,
-                runHistoryValue is null ? default : new ExportExecutionListResult((runHistoryValue ?? new ChangeTrackingList<ExportRun>()).ToList(), default),
-                partitionData,
-                default,
-                default,
-                default,
-                nextRunTimeEstimate,
-                default,
-                default);
+            return CommonExportProperties(format: format, deliveryInfoDestination: deliveryInfoDestination, definition: definition, runHistoryValue: runHistoryValue, partitionData: partitionData, dataOverwriteBehavior: default, compressionMode: default, exportDescription: default, nextRunTimeEstimate: nextRunTimeEstimate, systemSuspensionContext: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExportRun"/>. </summary>
@@ -1965,6 +1936,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ScheduledActionData ScheduledActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IEnumerable<ScheduledActionFileFormat> fileFormats, NotificationProperties notification, string notificationEmail, ScheduleProperties schedule, ResourceIdentifier scope, ScheduledActionStatus? status, ResourceIdentifier viewId, ETag? eTag, ScheduledActionKind? kind)
         {
+            fileFormats ??= new ChangeTrackingList<ScheduledActionFileFormat>();
+
             return new ScheduledActionData(
                 id,
                 name,
