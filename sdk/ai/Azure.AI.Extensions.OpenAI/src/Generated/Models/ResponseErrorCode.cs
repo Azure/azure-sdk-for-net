@@ -21,8 +21,8 @@ namespace Azure.AI.Extensions.OpenAI
         InvalidImageFormat,
         /// <summary> InvalidBase64Image. </summary>
         InvalidBase64Image,
-        /// <summary> InvalidImageUrl. </summary>
-        InvalidImageUrl,
+        /// <summary> InvalidImageUri. </summary>
+        InvalidImageUri,
         /// <summary> ImageTooLarge. </summary>
         ImageTooLarge,
         /// <summary> ImageTooSmall. </summary>

@@ -7,16 +7,14 @@
 
 using Azure.Core;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Compute
 {
     /// <summary> The source of the gallery artifact version. </summary>
-    public partial class GalleryArtifactVersionFullSource : ProvisionableConstruct
+    public partial class GalleryArtifactVersionFullSource : GalleryArtifactVersionSource
     {
         private BicepValue<string> _communityGalleryImageId;
         private BicepValue<ResourceIdentifier> _virtualMachineId;
-        private BicepValue<ResourceIdentifier> _id;
 
         /// <summary> Creates a new GalleryArtifactVersionFullSource. </summary>
         public GalleryArtifactVersionFullSource()
@@ -53,28 +51,12 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
-        {
-            get
-            {
-                Initialize();
-                return _id;
-            }
-            set
-            {
-                Initialize();
-                _id.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for GalleryArtifactVersionFullSource. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _communityGalleryImageId = DefineProperty<string>(nameof(CommunityGalleryImageId), new string[] { "communityGalleryImageId" });
             _virtualMachineId = DefineProperty<ResourceIdentifier>(nameof(VirtualMachineId), new string[] { "virtualMachineId" });
-            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
             DefineAdditionalProperties();
         }
 

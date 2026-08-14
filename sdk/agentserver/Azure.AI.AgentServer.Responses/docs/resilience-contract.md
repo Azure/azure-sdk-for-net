@@ -153,8 +153,8 @@ requests have no resilient record; Path C does not apply.
 ### Recovered entry
 
 On a recovered re-invocation (Row 1 Path B post-restart, or Path C) the handler
-observes `IsRecovery == true`. Its cross-turn checkpoint store is
-`ConversationChainMetadata`; its single-turn, per-response watermark surface is
+observes `IsRecovery == true`. Cross-turn application checkpoints belong in an
+explicit `FoundryStateStore`; the single-turn, per-response watermark surface is
 `internal_metadata`. The handler seeds its resumption from the entry-only
 `PersistedResponse` snapshot (the last resiliently persisted snapshot; see
 Row 11).
@@ -227,8 +227,8 @@ with `IsRecovery = true`.
 **Recovered handler entry contract** (Path B post-restart and Path C):
 
 - `IsRecovery == true`.
-- `ConversationChainMetadata` carries any cross-turn checkpoint state the handler
-  flushed in a prior lifetime.
+- An application-owned `FoundryStateStore` carries any cross-turn checkpoint
+  state persisted in a prior lifetime.
 - The framework does not impose a watermark schema. The handler chooses what it
   stores and how it resumes.
 - For streaming, the recovered handler emits a `response.in_progress` reset
@@ -342,7 +342,7 @@ test for a clause MUST assert to at least the depth described below.
 | `seq monotonicity` | `sequence_number` is strictly increasing and contiguous across lifetimes; the recovered reset's seq strictly exceeds the pre-crash max. |
 | `event content` | the payload carried by a specific event (e.g. the recovered `response.in_progress` reset carries the corrected output). |
 | `response.output content` | the final `response.output` items are correct (right count, right per-phase text, no loss/dup across recovery). |
-| `metadata` | a `ConversationChainMetadata` / internal-metadata guarantee (durability, namespace isolation, `_`-rejection, persist-but-strip). |
+| `metadata` | a State Store / internal-metadata guarantee (durability, application scoping, persist-but-strip). |
 | `chain id` | the derived `conversation_chain_id` shape/stability. |
 | `payload schema` | the persisted recovery payload's field set / types / casing / round-trip. |
 | `dispatch` | the row classification / disposition / primitive selection. |
@@ -468,13 +468,10 @@ verbatim. The digest is cross-language stable with Python.
 
 ### R7 — Metadata (`metadata`)
 
-`ConversationChainMetadata` is a callable/named-namespace facade over the Core
-task metadata checkpoint store. Persistence is **explicit** — call
-`FlushAsync()` before any side effect whose durability must survive a crash.
-Namespaces are isolated (each tracks dirty state independently). Namespace names
-and keys beginning with `_` are **rejected** (reserved for framework-internal
-namespaces such as `_responses`). On the base (non-resilient) context,
-`FlushAsync()` is a no-op.
+Application-owned cross-turn metadata and checkpoints belong in an explicit
+Core `FoundryStateStore`, scoped by a stable application key such as
+`ResponseContext.ConversationChainId`. The Responses framework does not provide
+or implicitly flush an application metadata facade.
 
 **Internal metadata (persist-but-strip)**: `internal_metadata` (item-level) and
 `_internal_metadata` (response-level, inside `metadata`) are persisted (survive
@@ -527,8 +524,8 @@ non-durable, connection-scoped task.
   response `in_progress` for next-lifetime recovery.
 - For the checkpoint pattern (Row 11), call `stream.Checkpoint()` at safe phase
   boundaries and, on recovery, resume from `PersistedResponse`.
-- For at-most-once side effects across recovery, write a dedup marker to
-  `ConversationChainMetadata` and call `FlushAsync()` before the side effect.
+- For at-most-once side effects across recovery, write a dedup marker to an
+  explicit `FoundryStateStore` before the side effect.
 
 ---
 

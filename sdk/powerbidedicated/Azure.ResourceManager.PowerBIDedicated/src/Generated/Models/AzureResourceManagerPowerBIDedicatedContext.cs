@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PowerBIDedicated.Models;
 
@@ -33,6 +34,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
     [ModelReaderWriterBuildable(typeof(DedicatedCapacityProperties))]
     [ModelReaderWriterBuildable(typeof(DedicatedCapacityResource))]
     [ModelReaderWriterBuildable(typeof(OkResponse))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SkuDetails))]
     [ModelReaderWriterBuildable(typeof(SkuEnumerationForExistingResourceResult))]
     [ModelReaderWriterBuildable(typeof(SkuEnumerationForNewResourceResult))]

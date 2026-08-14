@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.InformaticaDataManagement.Models;
 using Azure.ResourceManager.Models;
 
@@ -48,6 +49,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
     [ModelReaderWriterBuildable(typeof(InformaticaUserDetails))]
     [ModelReaderWriterBuildable(typeof(InformaticaUserDetailsUpdate))]
     [ModelReaderWriterBuildable(typeof(LinkOrganization))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServerlessConfigProperties))]
     [ModelReaderWriterBuildable(typeof(ServerlessMetadataResponse))]
     [ModelReaderWriterBuildable(typeof(ServerlessRuntimeConfigProperties))]
