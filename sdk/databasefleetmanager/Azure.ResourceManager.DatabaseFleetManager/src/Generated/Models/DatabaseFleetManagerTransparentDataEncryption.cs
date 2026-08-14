@@ -12,23 +12,23 @@ using Azure.ResourceManager.DatabaseFleetManager;
 namespace Azure.ResourceManager.DatabaseFleetManager.Models
 {
     /// <summary> Transparent Data Encryption properties. </summary>
-    public partial class TransparentDataEncryption
+    public partial class DatabaseFleetManagerTransparentDataEncryption
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TransparentDataEncryption"/>. </summary>
-        public TransparentDataEncryption()
+        /// <summary> Initializes a new instance of <see cref="DatabaseFleetManagerTransparentDataEncryption"/>. </summary>
+        public DatabaseFleetManagerTransparentDataEncryption()
         {
             Keys = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TransparentDataEncryption"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseFleetManagerTransparentDataEncryption"/>. </summary>
         /// <param name="keyUri"> Customer Managed Key (CMK) Uri. </param>
         /// <param name="keys"> Additional Keys. </param>
         /// <param name="enableAutoRotation"> Enable key auto rotation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TransparentDataEncryption(Uri keyUri, IList<string> keys, bool? enableAutoRotation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseFleetManagerTransparentDataEncryption(Uri keyUri, IList<string> keys, bool? enableAutoRotation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyUri = keyUri;
             Keys = keys;

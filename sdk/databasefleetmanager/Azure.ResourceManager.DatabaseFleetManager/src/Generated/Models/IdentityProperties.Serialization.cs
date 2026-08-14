@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             {
                 return null;
             }
-            IdentityType? identityType = default;
+            DatabaseFleetManagerIdentityType? identityType = default;
             IList<DatabaseIdentity> userAssignedIdentities = default;
             Guid? federatedClientId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                     {
                         continue;
                     }
-                    identityType = new IdentityType(prop.Value.GetString());
+                    identityType = new DatabaseFleetManagerIdentityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("userAssignedIdentities"u8))

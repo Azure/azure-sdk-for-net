@@ -15,61 +15,61 @@ using Azure.ResourceManager.DatabaseFleetManager;
 namespace Azure.ResourceManager.DatabaseFleetManager.Models
 {
     /// <summary> Server registration definition. </summary>
-    public partial class RegisterServerProperties : IJsonModel<RegisterServerProperties>
+    public partial class RegisterServerContent : IJsonModel<RegisterServerContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RegisterServerProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RegisterServerContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegisterServerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RegisterServerContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRegisterServerProperties(document.RootElement, options);
+                        return DeserializeRegisterServerContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RegisterServerProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegisterServerContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegisterServerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RegisterServerContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDatabaseFleetManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RegisterServerProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegisterServerContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RegisterServerProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RegisterServerContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RegisterServerProperties IPersistableModel<RegisterServerProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RegisterServerContent IPersistableModel<RegisterServerContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RegisterServerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RegisterServerContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="registerServerProperties"> The <see cref="RegisterServerProperties"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(RegisterServerProperties registerServerProperties)
+        /// <param name="registerServerContent"> The <see cref="RegisterServerContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(RegisterServerContent registerServerContent)
         {
-            if (registerServerProperties == null)
+            if (registerServerContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(registerServerProperties, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(registerServerContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RegisterServerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RegisterServerContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegisterServerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RegisterServerContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegisterServerProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RegisterServerContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(TierName))
             {
@@ -134,24 +134,24 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RegisterServerProperties IJsonModel<RegisterServerProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RegisterServerContent IJsonModel<RegisterServerContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RegisterServerProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RegisterServerContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegisterServerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RegisterServerContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegisterServerProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RegisterServerContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRegisterServerProperties(document.RootElement, options);
+            return DeserializeRegisterServerContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RegisterServerProperties DeserializeRegisterServerProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static RegisterServerContent DeserializeRegisterServerContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RegisterServerProperties(
+            return new RegisterServerContent(
                 tierName,
                 sourceSubscriptionId,
                 sourceResourceGroupName,

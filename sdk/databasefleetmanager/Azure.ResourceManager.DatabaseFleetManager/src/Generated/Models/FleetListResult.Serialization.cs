@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (FleetData item in Value)
+            foreach (DatabaseFleetData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             {
                 return null;
             }
-            IList<FleetData> value = default;
+            IList<DatabaseFleetData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<FleetData> array = new List<FleetData>();
+                    List<DatabaseFleetData> array = new List<DatabaseFleetData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FleetData.DeserializeFleetData(item, options));
+                        array.Add(DatabaseFleetData.DeserializeDatabaseFleetData(item, options));
                     }
                     value = array;
                     continue;

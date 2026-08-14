@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                 writer.WritePropertyName("disabled"u8);
                 writer.WriteBooleanValue(Disabled.Value);
             }
-            if (Optional.IsDefined(Serverless))
+            if (Optional.IsDefined(IsServerless))
             {
                 writer.WritePropertyName("serverless"u8);
-                writer.WriteBooleanValue(Serverless.Value);
+                writer.WriteBooleanValue(IsServerless.Value);
             }
-            if (Optional.IsDefined(Pooled))
+            if (Optional.IsDefined(IsPooled))
             {
                 writer.WritePropertyName("pooled"u8);
-                writer.WriteBooleanValue(Pooled.Value);
+                writer.WriteBooleanValue(IsPooled.Value);
             }
             if (Optional.IsDefined(ServiceTier))
             {
@@ -182,14 +182,14 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                 return null;
             }
             bool? disabled = default;
-            bool? serverless = default;
-            bool? pooled = default;
+            bool? isServerless = default;
+            bool? isPooled = default;
             string serviceTier = default;
             string family = default;
             int? capacity = default;
             int? poolNumOfDatabasesMax = default;
             int? highAvailabilityReplicaCount = default;
-            ZoneRedundancy? zoneRedundancy = default;
+            DatabaseFleetManagerZoneRedundancy? zoneRedundancy = default;
             double? databaseCapacityMin = default;
             double? databaseCapacityMax = default;
             int? databaseSizeGbMax = default;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                     {
                         continue;
                     }
-                    serverless = prop.Value.GetBoolean();
+                    isServerless = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("pooled"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                     {
                         continue;
                     }
-                    pooled = prop.Value.GetBoolean();
+                    isPooled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("serviceTier"u8))
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                     {
                         continue;
                     }
-                    zoneRedundancy = new ZoneRedundancy(prop.Value.GetString());
+                    zoneRedundancy = new DatabaseFleetManagerZoneRedundancy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("databaseCapacityMin"u8))
@@ -313,8 +313,8 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             }
             return new FleetTierProperties(
                 disabled,
-                serverless,
-                pooled,
+                isServerless,
+                isPooled,
                 serviceTier,
                 family,
                 capacity,

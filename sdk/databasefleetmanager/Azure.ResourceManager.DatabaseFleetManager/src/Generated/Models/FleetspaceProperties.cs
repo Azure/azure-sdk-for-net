@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="capacityMax"> Maximum number of vCores database fleet manager is allowed to provision in the fleetspace. </param>
         /// <param name="mainPrincipal"> Main Microsoft Entra ID principal that has admin access to all databases in the fleetspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FleetspaceProperties(AzureProvisioningState? provisioningState, int? capacityMax, MainPrincipal mainPrincipal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FleetspaceProperties(AzureProvisioningState? provisioningState, int? capacityMax, FleetAdministrator mainPrincipal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             CapacityMax = capacityMax;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         public int? CapacityMax { get; set; }
 
         /// <summary> Main Microsoft Entra ID principal that has admin access to all databases in the fleetspace. </summary>
-        public MainPrincipal MainPrincipal { get; set; }
+        public FleetAdministrator MainPrincipal { get; set; }
     }
 }

@@ -56,39 +56,39 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FleetspaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DatabaseFleetspaceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDatabaseFleetManagerArmClient.GetFleetspaceResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDatabaseFleetManagerArmClient.GetDatabaseFleetspaceResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="FleetspaceResource"/> object. </returns>
-        public static FleetspaceResource GetFleetspaceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseFleetspaceResource"/> object. </returns>
+        public static DatabaseFleetspaceResource GetDatabaseFleetspaceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDatabaseFleetManagerArmClient(client).GetFleetspaceResource(id);
+            return GetMockableDatabaseFleetManagerArmClient(client).GetDatabaseFleetspaceResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FleetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DatabaseFleetResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDatabaseFleetManagerArmClient.GetFleetResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDatabaseFleetManagerArmClient.GetDatabaseFleetResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="FleetResource"/> object. </returns>
-        public static FleetResource GetFleetResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseFleetResource"/> object. </returns>
+        public static DatabaseFleetResource GetDatabaseFleetResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDatabaseFleetManagerArmClient(client).GetFleetResource(id);
+            return GetMockableDatabaseFleetManagerArmClient(client).GetDatabaseFleetResource(id);
         }
 
         /// <summary>
@@ -128,27 +128,27 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         }
 
         /// <summary>
-        /// Gets a collection of Fleets in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of DatabaseFleets in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDatabaseFleetManagerResourceGroupResource.GetFleets()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDatabaseFleetManagerResourceGroupResource.GetDatabaseFleets()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of Fleets and their operations over a FleetResource. </returns>
-        public static FleetCollection GetFleets(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DatabaseFleets and their operations over a DatabaseFleetResource. </returns>
+        public static DatabaseFleetCollection GetDatabaseFleets(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDatabaseFleetManagerResourceGroupResource(resourceGroupResource).GetFleets();
+            return GetMockableDatabaseFleetManagerResourceGroupResource(resourceGroupResource).GetDatabaseFleets();
         }
 
         /// <summary>
         /// Gets a fleet resource.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDatabaseFleetManagerResourceGroupResource.GetFleetAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDatabaseFleetManagerResourceGroupResource.GetDatabaseFleetAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -156,18 +156,18 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<FleetResource>> GetFleetAsync(this ResourceGroupResource resourceGroupResource, string fleetName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DatabaseFleetResource>> GetDatabaseFleetAsync(this ResourceGroupResource resourceGroupResource, string fleetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableDatabaseFleetManagerResourceGroupResource(resourceGroupResource).GetFleetAsync(fleetName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDatabaseFleetManagerResourceGroupResource(resourceGroupResource).GetDatabaseFleetAsync(fleetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets a fleet resource.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDatabaseFleetManagerResourceGroupResource.GetFleet(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDatabaseFleetManagerResourceGroupResource.GetDatabaseFleet(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -175,47 +175,47 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<FleetResource> GetFleet(this ResourceGroupResource resourceGroupResource, string fleetName, CancellationToken cancellationToken = default)
+        public static Response<DatabaseFleetResource> GetDatabaseFleet(this ResourceGroupResource resourceGroupResource, string fleetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDatabaseFleetManagerResourceGroupResource(resourceGroupResource).GetFleet(fleetName, cancellationToken);
+            return GetMockableDatabaseFleetManagerResourceGroupResource(resourceGroupResource).GetDatabaseFleet(fleetName, cancellationToken);
         }
 
         /// <summary>
         /// Gets all fleets in a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDatabaseFleetManagerSubscriptionResource.GetFleetsAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDatabaseFleetManagerSubscriptionResource.GetDatabaseFleetsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="FleetResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<FleetResource> GetFleetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatabaseFleetResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DatabaseFleetResource> GetDatabaseFleetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDatabaseFleetManagerSubscriptionResource(subscriptionResource).GetFleetsAsync(cancellationToken);
+            return GetMockableDatabaseFleetManagerSubscriptionResource(subscriptionResource).GetDatabaseFleetsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Gets all fleets in a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDatabaseFleetManagerSubscriptionResource.GetFleets(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDatabaseFleetManagerSubscriptionResource.GetDatabaseFleets(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="FleetResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<FleetResource> GetFleets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatabaseFleetResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DatabaseFleetResource> GetDatabaseFleets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDatabaseFleetManagerSubscriptionResource(subscriptionResource).GetFleets(cancellationToken);
+            return GetMockableDatabaseFleetManagerSubscriptionResource(subscriptionResource).GetDatabaseFleets(cancellationToken);
         }
     }
 }

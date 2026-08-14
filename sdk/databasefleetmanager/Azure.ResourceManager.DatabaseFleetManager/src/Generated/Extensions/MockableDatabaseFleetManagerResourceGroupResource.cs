@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Mocking
         {
         }
 
-        /// <summary> Gets a collection of Fleets in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Fleets and their operations over a FleetResource. </returns>
-        public virtual FleetCollection GetFleets()
+        /// <summary> Gets a collection of DatabaseFleets in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DatabaseFleets and their operations over a DatabaseFleetResource. </returns>
+        public virtual DatabaseFleetCollection GetDatabaseFleets()
         {
-            return GetCachedClient(client => new FleetCollection(client, Id));
+            return GetCachedClient(client => new DatabaseFleetCollection(client, Id));
         }
 
         /// <summary>
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FleetResource>> GetFleetAsync(string fleetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseFleetResource>> GetDatabaseFleetAsync(string fleetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
 
-            return await GetFleets().GetAsync(fleetName, cancellationToken).ConfigureAwait(false);
+            return await GetDatabaseFleets().GetAsync(fleetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FleetResource> GetFleet(string fleetName, CancellationToken cancellationToken = default)
+        public virtual Response<DatabaseFleetResource> GetDatabaseFleet(string fleetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
 
-            return GetFleets().Get(fleetName, cancellationToken);
+            return GetDatabaseFleets().Get(fleetName, cancellationToken);
         }
     }
 }

@@ -12,22 +12,22 @@ using Azure.ResourceManager.DatabaseFleetManager;
 namespace Azure.ResourceManager.DatabaseFleetManager.Models
 {
     /// <summary> An update to a Database Fleet. </summary>
-    public partial class FleetPatch
+    public partial class DatabaseFleetPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FleetPatch"/>. </summary>
-        public FleetPatch()
+        /// <summary> Initializes a new instance of <see cref="DatabaseFleetPatch"/>. </summary>
+        public DatabaseFleetPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FleetPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseFleetPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The Database Fleet properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FleetPatch(IDictionary<string, string> tags, FleetProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseFleetPatch(IDictionary<string, string> tags, FleetProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;

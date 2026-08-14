@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
             }
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType resourceType = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
             FleetDatabaseProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                     {
                         continue;
                     }
-                    resourceType = new Core.ResourceType(prop.Value.GetString());
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("systemData"u8))

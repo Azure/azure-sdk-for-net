@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DatabaseFleetManager
 {
     /// <summary></summary>
-    internal partial class FleetResourceOperationSource : IOperationSource<FleetResource>
+    internal partial class DatabaseFleetResourceOperationSource : IOperationSource<DatabaseFleetResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal FleetResourceOperationSource(ArmClient client)
+        internal DatabaseFleetResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        FleetResource IOperationSource<FleetResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DatabaseFleetResource IOperationSource<DatabaseFleetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            FleetData data = FleetData.DeserializeFleetData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new FleetResource(_client, data);
+            DatabaseFleetData data = DatabaseFleetData.DeserializeDatabaseFleetData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DatabaseFleetResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<FleetResource> IOperationSource<FleetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DatabaseFleetResource> IOperationSource<DatabaseFleetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            FleetData data = FleetData.DeserializeFleetData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new FleetResource(_client, data);
+            DatabaseFleetData data = DatabaseFleetData.DeserializeDatabaseFleetData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DatabaseFleetResource(_client, data);
         }
     }
 }

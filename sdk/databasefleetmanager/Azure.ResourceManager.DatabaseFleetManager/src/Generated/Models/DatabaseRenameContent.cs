@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DatabaseFleetManager.Models
 {
     /// <summary> A database rename definition. </summary>
-    public partial class DatabaseRenameProperties
+    public partial class DatabaseRenameContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DatabaseRenameProperties"/>. </summary>
-        public DatabaseRenameProperties()
+        /// <summary> Initializes a new instance of <see cref="DatabaseRenameContent"/>. </summary>
+        public DatabaseRenameContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatabaseRenameProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseRenameContent"/>. </summary>
         /// <param name="newName"> New database name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseRenameProperties(string newName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseRenameContent(string newName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NewName = newName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

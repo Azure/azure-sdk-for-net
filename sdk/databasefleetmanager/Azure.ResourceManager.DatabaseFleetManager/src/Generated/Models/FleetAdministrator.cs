@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DatabaseFleetManager.Models
 {
     /// <summary> A main principal. </summary>
-    public partial class MainPrincipal
+    public partial class FleetAdministrator
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MainPrincipal"/>. </summary>
-        public MainPrincipal()
+        /// <summary> Initializes a new instance of <see cref="FleetAdministrator"/>. </summary>
+        public FleetAdministrator()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MainPrincipal"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FleetAdministrator"/>. </summary>
         /// <param name="login"> Login name of the main principal. </param>
         /// <param name="applicationId"> Application Id of the main principal. </param>
         /// <param name="objectId"> Object Id of the main principal. </param>
         /// <param name="tenantId"> Tenant Id of the main principal. </param>
         /// <param name="principalType"> Principal type of the main principal. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MainPrincipal(string login, Guid? applicationId, Guid? objectId, Guid? tenantId, PrincipalType? principalType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FleetAdministrator(string login, Guid? applicationId, Guid? objectId, Guid? tenantId, DatabaseFleetManagerPrincipalType? principalType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Login = login;
             ApplicationId = applicationId;
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         public Guid? TenantId { get; set; }
 
         /// <summary> Principal type of the main principal. </summary>
-        public PrincipalType? PrincipalType { get; set; }
+        public DatabaseFleetManagerPrincipalType? PrincipalType { get; set; }
     }
 }

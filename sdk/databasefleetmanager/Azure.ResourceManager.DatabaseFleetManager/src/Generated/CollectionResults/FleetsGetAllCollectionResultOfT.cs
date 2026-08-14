@@ -14,7 +14,7 @@ using Azure.ResourceManager.DatabaseFleetManager.Models;
 
 namespace Azure.ResourceManager.DatabaseFleetManager
 {
-    internal partial class FleetsGetAllCollectionResultOfT : Pageable<FleetData>
+    internal partial class FleetsGetAllCollectionResultOfT : Pageable<DatabaseFleetData>
     {
         private readonly Fleets _client;
         private readonly Guid _subscriptionId;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of FleetsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<FleetData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<DatabaseFleetData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 }
                 FleetListResult result = FleetListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<FleetData>.FromValues((IReadOnlyList<FleetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<DatabaseFleetData>.FromValues((IReadOnlyList<DatabaseFleetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
     /// <summary>
     /// A class representing a FleetTier along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FleetTierResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FleetResource"/> using the GetFleetTiers method.
+    /// Otherwise you can get one from its parent resource <see cref="DatabaseFleetResource"/> using the GetFleetTiers method.
     /// </summary>
     public partial class FleetTierResource : ArmResource
     {

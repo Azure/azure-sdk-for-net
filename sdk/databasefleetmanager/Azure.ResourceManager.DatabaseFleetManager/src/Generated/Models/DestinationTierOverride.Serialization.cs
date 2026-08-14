@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             {
                 return null;
             }
-            ResourceType resourceType = default;
+            DatabaseFleetResourceKind resourceType = default;
             string tierName = default;
             string resourceName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             {
                 if (prop.NameEquals("resourceType"u8))
                 {
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    resourceType = new DatabaseFleetResourceKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tierName"u8))

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DatabaseFleetManager
 {
     /// <summary>
     /// A class representing a collection of <see cref="FleetTierResource"/> and their operations.
-    /// Each <see cref="FleetTierResource"/> in the collection will belong to the same instance of <see cref="FleetResource"/>.
-    /// To get a <see cref="FleetTierCollection"/> instance call the GetFleetTiers method from an instance of <see cref="FleetResource"/>.
+    /// Each <see cref="FleetTierResource"/> in the collection will belong to the same instance of <see cref="DatabaseFleetResource"/>.
+    /// To get a <see cref="FleetTierCollection"/> instance call the GetFleetTiers method from an instance of <see cref="DatabaseFleetResource"/>.
     /// </summary>
     public partial class FleetTierCollection : ArmCollection, IEnumerable<FleetTierResource>, IAsyncEnumerable<FleetTierResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != FleetResource.ResourceType)
+            if (id.ResourceType != DatabaseFleetResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, FleetResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DatabaseFleetResource.ResourceType), nameof(id));
             }
         }
 

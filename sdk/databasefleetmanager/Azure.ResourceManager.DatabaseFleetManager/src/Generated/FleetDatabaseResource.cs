@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
     /// <summary>
     /// A class representing a FleetDatabase along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FleetDatabaseResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FleetspaceResource"/> using the GetFleetDatabases method.
+    /// Otherwise you can get one from its parent resource <see cref="DatabaseFleetspaceResource"/> using the GetFleetDatabases method.
     /// </summary>
     public partial class FleetDatabaseResource : ArmResource
     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         private readonly FleetDatabases _fleetDatabasesRestClient;
         private readonly FleetDatabaseData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.DatabaseFleetManager/fleets/fleetspaces/databases";
+        public static readonly ResourceType ResourceType = "Microsoft.DatabaseFleetManager/fleets/fleetspaces/databases";
 
         /// <summary> Initializes a new instance of FleetDatabaseResource for mocking. </summary>
         protected FleetDatabaseResource()
@@ -427,12 +427,12 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The details of the change tier operation. </param>
+        /// <param name="content"> The details of the change tier operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation> ChangeTierAsync(WaitUntil waitUntil, DatabaseChangeTierProperties body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> ChangeTierAsync(WaitUntil waitUntil, DatabaseChangeTierContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _fleetDatabasesClientDiagnostics.CreateScope("FleetDatabaseResource.ChangeTier");
             scope.Start();
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetDatabasesRestClient.CreateChangeTierRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DatabaseChangeTierProperties.ToRequestContent(body), context);
+                HttpMessage message = _fleetDatabasesRestClient.CreateChangeTierRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DatabaseChangeTierContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DatabaseFleetManagerArmOperation operation = new DatabaseFleetManagerArmOperation(_fleetDatabasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -480,12 +480,12 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The details of the change tier operation. </param>
+        /// <param name="content"> The details of the change tier operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation ChangeTier(WaitUntil waitUntil, DatabaseChangeTierProperties body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation ChangeTier(WaitUntil waitUntil, DatabaseChangeTierContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _fleetDatabasesClientDiagnostics.CreateScope("FleetDatabaseResource.ChangeTier");
             scope.Start();
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetDatabasesRestClient.CreateChangeTierRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DatabaseChangeTierProperties.ToRequestContent(body), context);
+                HttpMessage message = _fleetDatabasesRestClient.CreateChangeTierRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DatabaseChangeTierContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DatabaseFleetManagerArmOperation operation = new DatabaseFleetManagerArmOperation(_fleetDatabasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -533,12 +533,12 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The details of the rename operation. </param>
+        /// <param name="content"> The details of the rename operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation> RenameAsync(WaitUntil waitUntil, DatabaseRenameProperties body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> RenameAsync(WaitUntil waitUntil, DatabaseRenameContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _fleetDatabasesClientDiagnostics.CreateScope("FleetDatabaseResource.Rename");
             scope.Start();
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetDatabasesRestClient.CreateRenameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DatabaseRenameProperties.ToRequestContent(body), context);
+                HttpMessage message = _fleetDatabasesRestClient.CreateRenameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DatabaseRenameContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DatabaseFleetManagerArmOperation operation = new DatabaseFleetManagerArmOperation(_fleetDatabasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -586,12 +586,12 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The details of the rename operation. </param>
+        /// <param name="content"> The details of the rename operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation Rename(WaitUntil waitUntil, DatabaseRenameProperties body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation Rename(WaitUntil waitUntil, DatabaseRenameContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _fleetDatabasesClientDiagnostics.CreateScope("FleetDatabaseResource.Rename");
             scope.Start();
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetDatabasesRestClient.CreateRenameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DatabaseRenameProperties.ToRequestContent(body), context);
+                HttpMessage message = _fleetDatabasesRestClient.CreateRenameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DatabaseRenameContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DatabaseFleetManagerArmOperation operation = new DatabaseFleetManagerArmOperation(_fleetDatabasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

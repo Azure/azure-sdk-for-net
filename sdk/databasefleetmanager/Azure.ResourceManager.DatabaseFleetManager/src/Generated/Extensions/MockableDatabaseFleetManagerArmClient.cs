@@ -35,22 +35,22 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Mocking
             return new FleetDatabaseResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="FleetspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DatabaseFleetspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FleetspaceResource"/> object. </returns>
-        public virtual FleetspaceResource GetFleetspaceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseFleetspaceResource"/> object. </returns>
+        public virtual DatabaseFleetspaceResource GetDatabaseFleetspaceResource(ResourceIdentifier id)
         {
-            FleetspaceResource.ValidateResourceId(id);
-            return new FleetspaceResource(Client, id);
+            DatabaseFleetspaceResource.ValidateResourceId(id);
+            return new DatabaseFleetspaceResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="FleetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DatabaseFleetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FleetResource"/> object. </returns>
-        public virtual FleetResource GetFleetResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseFleetResource"/> object. </returns>
+        public virtual DatabaseFleetResource GetDatabaseFleetResource(ResourceIdentifier id)
         {
-            FleetResource.ValidateResourceId(id);
-            return new FleetResource(Client, id);
+            DatabaseFleetResource.ValidateResourceId(id);
+            return new DatabaseFleetResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="FirewallRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>

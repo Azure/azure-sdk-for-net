@@ -12,25 +12,25 @@ using Azure.ResourceManager.DatabaseFleetManager;
 namespace Azure.ResourceManager.DatabaseFleetManager.Models
 {
     /// <summary> Server registration definition. </summary>
-    public partial class RegisterServerProperties
+    public partial class RegisterServerContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RegisterServerProperties"/>. </summary>
-        public RegisterServerProperties()
+        /// <summary> Initializes a new instance of <see cref="RegisterServerContent"/>. </summary>
+        public RegisterServerContent()
         {
             DestinationTierOverrides = new ChangeTrackingList<DestinationTierOverride>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RegisterServerProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegisterServerContent"/>. </summary>
         /// <param name="tierName"> Destination tier name. </param>
         /// <param name="sourceSubscriptionId"> Source subscription id. </param>
         /// <param name="sourceResourceGroupName"> Source resource group name. </param>
         /// <param name="sourceServerName"> Source SQL Server name. </param>
         /// <param name="destinationTierOverrides"> Destination tier overrides. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RegisterServerProperties(string tierName, string sourceSubscriptionId, string sourceResourceGroupName, string sourceServerName, IList<DestinationTierOverride> destinationTierOverrides, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RegisterServerContent(string tierName, string sourceSubscriptionId, string sourceResourceGroupName, string sourceServerName, IList<DestinationTierOverride> destinationTierOverrides, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TierName = tierName;
             SourceSubscriptionId = sourceSubscriptionId;

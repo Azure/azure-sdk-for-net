@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="tierName"> Destination tier name. </param>
         /// <param name="resourceName"> Resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tierName"/> or <paramref name="resourceName"/> is null. </exception>
-        public DestinationTierOverride(ResourceType resourceType, string tierName, string resourceName)
+        public DestinationTierOverride(DatabaseFleetResourceKind resourceType, string tierName, string resourceName)
         {
             Argument.AssertNotNull(tierName, nameof(tierName));
             Argument.AssertNotNull(resourceName, nameof(resourceName));
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="tierName"> Destination tier name. </param>
         /// <param name="resourceName"> Resource name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DestinationTierOverride(ResourceType resourceType, string tierName, string resourceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DestinationTierOverride(DatabaseFleetResourceKind resourceType, string tierName, string resourceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
             TierName = tierName;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         }
 
         /// <summary> Resource type. </summary>
-        public ResourceType ResourceType { get; }
+        public DatabaseFleetResourceKind ResourceType { get; }
 
         /// <summary> Destination tier name. </summary>
         public string TierName { get; }

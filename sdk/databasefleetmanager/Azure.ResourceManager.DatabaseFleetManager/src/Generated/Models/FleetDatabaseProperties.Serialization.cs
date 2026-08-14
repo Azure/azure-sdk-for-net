@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            if (options.Format != "W" && Optional.IsDefined(Recoverable))
+            if (options.Format != "W" && Optional.IsDefined(IsRecoverable))
             {
                 writer.WritePropertyName("recoverable"u8);
-                writer.WriteBooleanValue(Recoverable.Value);
+                writer.WriteBooleanValue(IsRecoverable.Value);
             }
             if (Optional.IsDefined(RestoreFromOn))
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             DatabaseCreateMode? createMode = default;
             string tierName = default;
             string connectionString = default;
-            bool? recoverable = default;
+            bool? isRecoverable = default;
             DateTimeOffset? restoreFromOn = default;
             DateTimeOffset? earliestRestoreOn = default;
             DateTimeOffset? latestRestoreOn = default;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             string sourceDatabaseName = default;
             IDictionary<string, string> resourceTags = default;
             IdentityProperties identity = default;
-            TransparentDataEncryption transparentDataEncryption = default;
+            DatabaseFleetManagerTransparentDataEncryption transparentDataEncryption = default;
             string collation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                     {
                         continue;
                     }
-                    recoverable = prop.Value.GetBoolean();
+                    isRecoverable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("restoreFromTime"u8))
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                     {
                         continue;
                     }
-                    transparentDataEncryption = TransparentDataEncryption.DeserializeTransparentDataEncryption(prop.Value, options);
+                    transparentDataEncryption = DatabaseFleetManagerTransparentDataEncryption.DeserializeDatabaseFleetManagerTransparentDataEncryption(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("collation"u8))
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                 createMode,
                 tierName,
                 connectionString,
-                recoverable,
+                isRecoverable,
                 restoreFromOn,
                 earliestRestoreOn,
                 latestRestoreOn,

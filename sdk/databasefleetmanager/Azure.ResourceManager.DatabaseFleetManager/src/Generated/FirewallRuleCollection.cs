@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DatabaseFleetManager
 {
     /// <summary>
     /// A class representing a collection of <see cref="FirewallRuleResource"/> and their operations.
-    /// Each <see cref="FirewallRuleResource"/> in the collection will belong to the same instance of <see cref="FleetspaceResource"/>.
-    /// To get a <see cref="FirewallRuleCollection"/> instance call the GetFirewallRules method from an instance of <see cref="FleetspaceResource"/>.
+    /// Each <see cref="FirewallRuleResource"/> in the collection will belong to the same instance of <see cref="DatabaseFleetspaceResource"/>.
+    /// To get a <see cref="FirewallRuleCollection"/> instance call the GetFirewallRules method from an instance of <see cref="DatabaseFleetspaceResource"/>.
     /// </summary>
     public partial class FirewallRuleCollection : ArmCollection, IEnumerable<FirewallRuleResource>, IAsyncEnumerable<FirewallRuleResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != FleetspaceResource.ResourceType)
+            if (id.ResourceType != DatabaseFleetspaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, FleetspaceResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DatabaseFleetspaceResource.ResourceType), nameof(id));
             }
         }
 

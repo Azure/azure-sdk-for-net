@@ -15,61 +15,61 @@ using Azure.ResourceManager.DatabaseFleetManager;
 namespace Azure.ResourceManager.DatabaseFleetManager.Models
 {
     /// <summary> A database change tier definition. </summary>
-    public partial class DatabaseChangeTierProperties : IJsonModel<DatabaseChangeTierProperties>
+    public partial class DatabaseChangeTierContent : IJsonModel<DatabaseChangeTierContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DatabaseChangeTierProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DatabaseChangeTierContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatabaseChangeTierProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseChangeTierContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDatabaseChangeTierProperties(document.RootElement, options);
+                        return DeserializeDatabaseChangeTierContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseChangeTierProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseChangeTierContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatabaseChangeTierProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseChangeTierContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDatabaseFleetManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseChangeTierProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseChangeTierContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DatabaseChangeTierProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DatabaseChangeTierContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DatabaseChangeTierProperties IPersistableModel<DatabaseChangeTierProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DatabaseChangeTierContent IPersistableModel<DatabaseChangeTierContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DatabaseChangeTierProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DatabaseChangeTierContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="databaseChangeTierProperties"> The <see cref="DatabaseChangeTierProperties"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DatabaseChangeTierProperties databaseChangeTierProperties)
+        /// <param name="databaseChangeTierContent"> The <see cref="DatabaseChangeTierContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DatabaseChangeTierContent databaseChangeTierContent)
         {
-            if (databaseChangeTierProperties == null)
+            if (databaseChangeTierContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(databaseChangeTierProperties, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(databaseChangeTierContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DatabaseChangeTierProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DatabaseChangeTierContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatabaseChangeTierProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseChangeTierContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseChangeTierProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseChangeTierContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(TargetTierName))
             {
@@ -109,24 +109,24 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DatabaseChangeTierProperties IJsonModel<DatabaseChangeTierProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DatabaseChangeTierContent IJsonModel<DatabaseChangeTierContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DatabaseChangeTierProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DatabaseChangeTierContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatabaseChangeTierProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseChangeTierContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseChangeTierProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseChangeTierContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDatabaseChangeTierProperties(document.RootElement, options);
+            return DeserializeDatabaseChangeTierContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DatabaseChangeTierProperties DeserializeDatabaseChangeTierProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static DatabaseChangeTierContent DeserializeDatabaseChangeTierContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DatabaseChangeTierProperties(targetTierName, additionalBinaryDataProperties);
+            return new DatabaseChangeTierContent(targetTierName, additionalBinaryDataProperties);
         }
     }
 }

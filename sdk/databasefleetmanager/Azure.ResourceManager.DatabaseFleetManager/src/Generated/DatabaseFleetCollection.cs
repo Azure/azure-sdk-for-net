@@ -15,32 +15,33 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DatabaseFleetManager
 {
     /// <summary>
-    /// A class representing a collection of <see cref="FleetspaceResource"/> and their operations.
-    /// Each <see cref="FleetspaceResource"/> in the collection will belong to the same instance of <see cref="FleetResource"/>.
-    /// To get a <see cref="FleetspaceCollection"/> instance call the GetFleetspaces method from an instance of <see cref="FleetResource"/>.
+    /// A class representing a collection of <see cref="DatabaseFleetResource"/> and their operations.
+    /// Each <see cref="DatabaseFleetResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DatabaseFleetCollection"/> instance call the GetDatabaseFleets method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class FleetspaceCollection : ArmCollection, IEnumerable<FleetspaceResource>, IAsyncEnumerable<FleetspaceResource>
+    public partial class DatabaseFleetCollection : ArmCollection, IEnumerable<DatabaseFleetResource>, IAsyncEnumerable<DatabaseFleetResource>
     {
-        private readonly ClientDiagnostics _fleetspacesClientDiagnostics;
-        private readonly Fleetspaces _fleetspacesRestClient;
+        private readonly ClientDiagnostics _fleetsClientDiagnostics;
+        private readonly Fleets _fleetsRestClient;
 
-        /// <summary> Initializes a new instance of FleetspaceCollection for mocking. </summary>
-        protected FleetspaceCollection()
+        /// <summary> Initializes a new instance of DatabaseFleetCollection for mocking. </summary>
+        protected DatabaseFleetCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FleetspaceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseFleetCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal FleetspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DatabaseFleetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(FleetspaceResource.ResourceType, out string fleetspaceApiVersion);
-            _fleetspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DatabaseFleetManager", FleetspaceResource.ResourceType.Namespace, Diagnostics);
-            _fleetspacesRestClient = new Fleetspaces(_fleetspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fleetspaceApiVersion ?? "2025-02-01-preview");
+            TryGetApiVersion(DatabaseFleetResource.ResourceType, out string databaseFleetApiVersion);
+            _fleetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DatabaseFleetManager", DatabaseFleetResource.ResourceType.Namespace, Diagnostics);
+            _fleetsRestClient = new Fleets(_fleetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databaseFleetApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 
@@ -48,22 +49,22 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != FleetResource.ResourceType)
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, FleetResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
         /// <summary>
-        /// Creates or updates a fleetspace resource.
+        /// Creates or updates a fleet resource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseFleetManager/fleets/{fleetName}/fleetspaces/{fleetspaceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseFleetManager/fleets/{fleetName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Fleetspaces_CreateOrUpdate. </description>
+        /// <description> Fleets_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -72,17 +73,17 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="fleetspaceName"> Name of the fleetspace. </param>
+        /// <param name="fleetName"> Name of the database fleet. </param>
         /// <param name="data"> The fleet object to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetspaceName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fleetspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<FleetspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fleetspaceName, FleetspaceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<DatabaseFleetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fleetName, DatabaseFleetData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fleetspaceName, nameof(fleetspaceName));
+            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _fleetspacesClientDiagnostics.CreateScope("FleetspaceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("DatabaseFleetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,11 +91,11 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetspaceName, FleetspaceData.ToRequestContent(data), context);
+                HttpMessage message = _fleetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fleetName, DatabaseFleetData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DatabaseFleetManagerArmOperation<FleetspaceResource> operation = new DatabaseFleetManagerArmOperation<FleetspaceResource>(
-                    new FleetspaceResourceOperationSource(Client),
-                    _fleetspacesClientDiagnostics,
+                DatabaseFleetManagerArmOperation<DatabaseFleetResource> operation = new DatabaseFleetManagerArmOperation<DatabaseFleetResource>(
+                    new DatabaseFleetResourceOperationSource(Client),
+                    _fleetsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -113,15 +114,15 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         }
 
         /// <summary>
-        /// Creates or updates a fleetspace resource.
+        /// Creates or updates a fleet resource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseFleetManager/fleets/{fleetName}/fleetspaces/{fleetspaceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseFleetManager/fleets/{fleetName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Fleetspaces_CreateOrUpdate. </description>
+        /// <description> Fleets_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -130,17 +131,17 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="fleetspaceName"> Name of the fleetspace. </param>
+        /// <param name="fleetName"> Name of the database fleet. </param>
         /// <param name="data"> The fleet object to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetspaceName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fleetspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<FleetspaceResource> CreateOrUpdate(WaitUntil waitUntil, string fleetspaceName, FleetspaceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<DatabaseFleetResource> CreateOrUpdate(WaitUntil waitUntil, string fleetName, DatabaseFleetData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fleetspaceName, nameof(fleetspaceName));
+            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _fleetspacesClientDiagnostics.CreateScope("FleetspaceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("DatabaseFleetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,11 +149,11 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetspaceName, FleetspaceData.ToRequestContent(data), context);
+                HttpMessage message = _fleetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fleetName, DatabaseFleetData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                DatabaseFleetManagerArmOperation<FleetspaceResource> operation = new DatabaseFleetManagerArmOperation<FleetspaceResource>(
-                    new FleetspaceResourceOperationSource(Client),
-                    _fleetspacesClientDiagnostics,
+                DatabaseFleetManagerArmOperation<DatabaseFleetResource> operation = new DatabaseFleetManagerArmOperation<DatabaseFleetResource>(
+                    new DatabaseFleetResourceOperationSource(Client),
+                    _fleetsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -171,15 +172,15 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         }
 
         /// <summary>
-        /// Gets fleetspace resource.
+        /// Gets a fleet resource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseFleetManager/fleets/{fleetName}/fleetspaces/{fleetspaceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseFleetManager/fleets/{fleetName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Fleetspaces_Get. </description>
+        /// <description> Fleets_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -187,15 +188,15 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="fleetspaceName"> Name of the fleetspace. </param>
+        /// <param name="fleetName"> Name of the database fleet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fleetspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<FleetspaceResource>> GetAsync(string fleetspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DatabaseFleetResource>> GetAsync(string fleetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fleetspaceName, nameof(fleetspaceName));
+            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
 
-            using DiagnosticScope scope = _fleetspacesClientDiagnostics.CreateScope("FleetspaceCollection.Get");
+            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("DatabaseFleetCollection.Get");
             scope.Start();
             try
             {
@@ -203,14 +204,14 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetspaceName, context);
+                HttpMessage message = _fleetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fleetName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FleetspaceData> response = Response.FromValue(FleetspaceData.FromResponse(result), result);
+                Response<DatabaseFleetData> response = Response.FromValue(DatabaseFleetData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new FleetspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DatabaseFleetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -220,15 +221,15 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         }
 
         /// <summary>
-        /// Gets fleetspace resource.
+        /// Gets a fleet resource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseFleetManager/fleets/{fleetName}/fleetspaces/{fleetspaceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseFleetManager/fleets/{fleetName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Fleetspaces_Get. </description>
+        /// <description> Fleets_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -236,15 +237,15 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="fleetspaceName"> Name of the fleetspace. </param>
+        /// <param name="fleetName"> Name of the database fleet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fleetspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<FleetspaceResource> Get(string fleetspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DatabaseFleetResource> Get(string fleetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fleetspaceName, nameof(fleetspaceName));
+            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
 
-            using DiagnosticScope scope = _fleetspacesClientDiagnostics.CreateScope("FleetspaceCollection.Get");
+            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("DatabaseFleetCollection.Get");
             scope.Start();
             try
             {
@@ -252,14 +253,14 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetspaceName, context);
+                HttpMessage message = _fleetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fleetName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<FleetspaceData> response = Response.FromValue(FleetspaceData.FromResponse(result), result);
+                Response<DatabaseFleetData> response = Response.FromValue(DatabaseFleetData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new FleetspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DatabaseFleetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -269,15 +270,15 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         }
 
         /// <summary>
-        /// Lists fleetspaces in a fleet.
+        /// Gets all fleets in a resource group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseFleetManager/fleets/{fleetName}/fleetspaces. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseFleetManager/fleets. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Fleetspaces_ListByFleet. </description>
+        /// <description> Fleets_ListByResourceGroup. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -289,35 +290,34 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FleetspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FleetspaceResource> GetAllAsync(long? skip = default, long? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatabaseFleetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DatabaseFleetResource> GetAllAsync(long? skip = default, long? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FleetspaceData, FleetspaceResource>(new FleetspacesGetByFleetAsyncCollectionResultOfT(
-                _fleetspacesRestClient,
+            return new AsyncPageableWrapper<DatabaseFleetData, DatabaseFleetResource>(new FleetsGetByResourceGroupAsyncCollectionResultOfT(
+                _fleetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
-                Id.Name,
                 skip,
                 top,
                 skiptoken,
                 context,
-                "FleetspaceCollection.GetAll"), data => new FleetspaceResource(Client, data));
+                "DatabaseFleetCollection.GetAll"), data => new DatabaseFleetResource(Client, data));
         }
 
         /// <summary>
-        /// Lists fleetspaces in a fleet.
+        /// Gets all fleets in a resource group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseFleetManager/fleets/{fleetName}/fleetspaces. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseFleetManager/fleets. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Fleetspaces_ListByFleet. </description>
+        /// <description> Fleets_ListByResourceGroup. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -329,23 +329,22 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FleetspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FleetspaceResource> GetAll(long? skip = default, long? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatabaseFleetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DatabaseFleetResource> GetAll(long? skip = default, long? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FleetspaceData, FleetspaceResource>(new FleetspacesGetByFleetCollectionResultOfT(
-                _fleetspacesRestClient,
+            return new PageableWrapper<DatabaseFleetData, DatabaseFleetResource>(new FleetsGetByResourceGroupCollectionResultOfT(
+                _fleetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
-                Id.Name,
                 skip,
                 top,
                 skiptoken,
                 context,
-                "FleetspaceCollection.GetAll"), data => new FleetspaceResource(Client, data));
+                "DatabaseFleetCollection.GetAll"), data => new DatabaseFleetResource(Client, data));
         }
 
         /// <summary>
@@ -353,11 +352,11 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseFleetManager/fleets/{fleetName}/fleetspaces/{fleetspaceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseFleetManager/fleets/{fleetName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Fleetspaces_Get. </description>
+        /// <description> Fleets_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -365,15 +364,15 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="fleetspaceName"> Name of the fleetspace. </param>
+        /// <param name="fleetName"> Name of the database fleet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fleetspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string fleetspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string fleetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fleetspaceName, nameof(fleetspaceName));
+            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
 
-            using DiagnosticScope scope = _fleetspacesClientDiagnostics.CreateScope("FleetspaceCollection.Exists");
+            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("DatabaseFleetCollection.Exists");
             scope.Start();
             try
             {
@@ -381,17 +380,17 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetspaceName, context);
+                HttpMessage message = _fleetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fleetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<FleetspaceData> response = default;
+                Response<DatabaseFleetData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(FleetspaceData.FromResponse(result), result);
+                        response = Response.FromValue(DatabaseFleetData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((FleetspaceData)null, result);
+                        response = Response.FromValue((DatabaseFleetData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -410,11 +409,11 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseFleetManager/fleets/{fleetName}/fleetspaces/{fleetspaceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseFleetManager/fleets/{fleetName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Fleetspaces_Get. </description>
+        /// <description> Fleets_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -422,15 +421,15 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="fleetspaceName"> Name of the fleetspace. </param>
+        /// <param name="fleetName"> Name of the database fleet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fleetspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string fleetspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string fleetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fleetspaceName, nameof(fleetspaceName));
+            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
 
-            using DiagnosticScope scope = _fleetspacesClientDiagnostics.CreateScope("FleetspaceCollection.Exists");
+            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("DatabaseFleetCollection.Exists");
             scope.Start();
             try
             {
@@ -438,17 +437,17 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetspaceName, context);
+                HttpMessage message = _fleetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fleetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<FleetspaceData> response = default;
+                Response<DatabaseFleetData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(FleetspaceData.FromResponse(result), result);
+                        response = Response.FromValue(DatabaseFleetData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((FleetspaceData)null, result);
+                        response = Response.FromValue((DatabaseFleetData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -467,11 +466,11 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseFleetManager/fleets/{fleetName}/fleetspaces/{fleetspaceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseFleetManager/fleets/{fleetName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Fleetspaces_Get. </description>
+        /// <description> Fleets_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -479,15 +478,15 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="fleetspaceName"> Name of the fleetspace. </param>
+        /// <param name="fleetName"> Name of the database fleet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fleetspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<FleetspaceResource>> GetIfExistsAsync(string fleetspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<DatabaseFleetResource>> GetIfExistsAsync(string fleetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fleetspaceName, nameof(fleetspaceName));
+            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
 
-            using DiagnosticScope scope = _fleetspacesClientDiagnostics.CreateScope("FleetspaceCollection.GetIfExists");
+            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("DatabaseFleetCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -495,26 +494,26 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetspaceName, context);
+                HttpMessage message = _fleetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fleetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<FleetspaceData> response = default;
+                Response<DatabaseFleetData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(FleetspaceData.FromResponse(result), result);
+                        response = Response.FromValue(DatabaseFleetData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((FleetspaceData)null, result);
+                        response = Response.FromValue((DatabaseFleetData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<FleetspaceResource>(response.GetRawResponse());
+                    return new NoValueResponse<DatabaseFleetResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new FleetspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DatabaseFleetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -528,11 +527,11 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseFleetManager/fleets/{fleetName}/fleetspaces/{fleetspaceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseFleetManager/fleets/{fleetName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Fleetspaces_Get. </description>
+        /// <description> Fleets_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -540,15 +539,15 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="fleetspaceName"> Name of the fleetspace. </param>
+        /// <param name="fleetName"> Name of the database fleet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fleetspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<FleetspaceResource> GetIfExists(string fleetspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<DatabaseFleetResource> GetIfExists(string fleetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fleetspaceName, nameof(fleetspaceName));
+            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
 
-            using DiagnosticScope scope = _fleetspacesClientDiagnostics.CreateScope("FleetspaceCollection.GetIfExists");
+            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("DatabaseFleetCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -556,26 +555,26 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetspaceName, context);
+                HttpMessage message = _fleetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fleetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<FleetspaceData> response = default;
+                Response<DatabaseFleetData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(FleetspaceData.FromResponse(result), result);
+                        response = Response.FromValue(DatabaseFleetData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((FleetspaceData)null, result);
+                        response = Response.FromValue((DatabaseFleetData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<FleetspaceResource>(response.GetRawResponse());
+                    return new NoValueResponse<DatabaseFleetResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new FleetspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DatabaseFleetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -584,7 +583,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
             }
         }
 
-        IEnumerator<FleetspaceResource> IEnumerable<FleetspaceResource>.GetEnumerator()
+        IEnumerator<DatabaseFleetResource> IEnumerable<DatabaseFleetResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -595,7 +594,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<FleetspaceResource> IAsyncEnumerable<FleetspaceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DatabaseFleetResource> IAsyncEnumerable<DatabaseFleetResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

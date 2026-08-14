@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             }
             AzureProvisioningState? provisioningState = default;
             int? capacityMax = default;
-            MainPrincipal mainPrincipal = default;
+            FleetAdministrator mainPrincipal = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                     {
                         continue;
                     }
-                    mainPrincipal = MainPrincipal.DeserializeMainPrincipal(prop.Value, options);
+                    mainPrincipal = FleetAdministrator.DeserializeFleetAdministrator(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Fleet database properties. </param>
         /// <returns> A new <see cref="DatabaseFleetManager.FleetDatabaseData"/> instance for mocking. </returns>
-        public static FleetDatabaseData FleetDatabaseData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, FleetDatabaseProperties properties = default)
+        public static FleetDatabaseData FleetDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FleetDatabaseProperties properties = default)
         {
             return new FleetDatabaseData(
                 id,
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="createMode"> Create mode. Available options: Default - Create a database. Copy - Copy the source database (source database name must be specified) PointInTimeRestore - Create a database by restoring source database from a point in time (source database name and restore from time must be specified). </param>
         /// <param name="tierName"> Name of the tier this database belongs to. </param>
         /// <param name="connectionString"> Connection string to connect to the database with. </param>
-        /// <param name="recoverable"> If true, database is recoverable. </param>
+        /// <param name="isRecoverable"> If true, database is recoverable. </param>
         /// <param name="restoreFromOn"> Restore from time when CreateMode is PointInTimeRestore. </param>
         /// <param name="earliestRestoreOn"> Earliest restore time. </param>
         /// <param name="latestRestoreOn"> Latest restore time. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="transparentDataEncryption"> Transparent Data Encryption properties. </param>
         /// <param name="collation"> Database collation. </param>
         /// <returns> A new <see cref="Models.FleetDatabaseProperties"/> instance for mocking. </returns>
-        public static FleetDatabaseProperties FleetDatabaseProperties(string originalDatabaseId = default, AzureProvisioningState? provisioningState = default, DatabaseCreateMode? createMode = default, string tierName = default, string connectionString = default, bool? recoverable = default, DateTimeOffset? restoreFromOn = default, DateTimeOffset? earliestRestoreOn = default, DateTimeOffset? latestRestoreOn = default, int? backupRetentionDays = default, int? databaseSizeGbMax = default, string sourceDatabaseName = default, IDictionary<string, string> resourceTags = default, IdentityProperties identity = default, TransparentDataEncryption transparentDataEncryption = default, string collation = default)
+        public static FleetDatabaseProperties FleetDatabaseProperties(string originalDatabaseId = default, AzureProvisioningState? provisioningState = default, DatabaseCreateMode? createMode = default, string tierName = default, string connectionString = default, bool? isRecoverable = default, DateTimeOffset? restoreFromOn = default, DateTimeOffset? earliestRestoreOn = default, DateTimeOffset? latestRestoreOn = default, int? backupRetentionDays = default, int? databaseSizeGbMax = default, string sourceDatabaseName = default, IDictionary<string, string> resourceTags = default, IdentityProperties identity = default, DatabaseFleetManagerTransparentDataEncryption transparentDataEncryption = default, string collation = default)
         {
             resourceTags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                 createMode,
                 tierName,
                 connectionString,
-                recoverable,
+                isRecoverable,
                 restoreFromOn,
                 earliestRestoreOn,
                 latestRestoreOn,
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="userAssignedIdentities"> User identity ids. </param>
         /// <param name="federatedClientId"> The federated client id for the SQL Database. It is used for cross tenant CMK scenario. </param>
         /// <returns> A new <see cref="Models.IdentityProperties"/> instance for mocking. </returns>
-        public static IdentityProperties IdentityProperties(IdentityType? identityType = default, IEnumerable<DatabaseIdentity> userAssignedIdentities = default, Guid? federatedClientId = default)
+        public static IdentityProperties IdentityProperties(DatabaseFleetManagerIdentityType? identityType = default, IEnumerable<DatabaseIdentity> userAssignedIdentities = default, Guid? federatedClientId = default)
         {
             userAssignedIdentities ??= new ChangeTrackingList<DatabaseIdentity>();
 
@@ -99,26 +99,26 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="keyUri"> Customer Managed Key (CMK) Uri. </param>
         /// <param name="keys"> Additional Keys. </param>
         /// <param name="enableAutoRotation"> Enable key auto rotation. </param>
-        /// <returns> A new <see cref="Models.TransparentDataEncryption"/> instance for mocking. </returns>
-        public static TransparentDataEncryption TransparentDataEncryption(Uri keyUri = default, IEnumerable<string> keys = default, bool? enableAutoRotation = default)
+        /// <returns> A new <see cref="Models.DatabaseFleetManagerTransparentDataEncryption"/> instance for mocking. </returns>
+        public static DatabaseFleetManagerTransparentDataEncryption DatabaseFleetManagerTransparentDataEncryption(Uri keyUri = default, IEnumerable<string> keys = default, bool? enableAutoRotation = default)
         {
             keys ??= new ChangeTrackingList<string>();
 
-            return new TransparentDataEncryption(keyUri, (keys ?? new ChangeTrackingList<string>()).ToList(), enableAutoRotation, default);
+            return new DatabaseFleetManagerTransparentDataEncryption(keyUri, (keys ?? new ChangeTrackingList<string>()).ToList(), enableAutoRotation, default);
         }
 
         /// <param name="targetTierName"> A target tier name. </param>
-        /// <returns> A new <see cref="Models.DatabaseChangeTierProperties"/> instance for mocking. </returns>
-        public static DatabaseChangeTierProperties DatabaseChangeTierProperties(string targetTierName = default)
+        /// <returns> A new <see cref="Models.DatabaseChangeTierContent"/> instance for mocking. </returns>
+        public static DatabaseChangeTierContent DatabaseChangeTierContent(string targetTierName = default)
         {
-            return new DatabaseChangeTierProperties(targetTierName, default);
+            return new DatabaseChangeTierContent(targetTierName, default);
         }
 
         /// <param name="newName"> New database name. </param>
-        /// <returns> A new <see cref="Models.DatabaseRenameProperties"/> instance for mocking. </returns>
-        public static DatabaseRenameProperties DatabaseRenameProperties(string newName = default)
+        /// <returns> A new <see cref="Models.DatabaseRenameContent"/> instance for mocking. </returns>
+        public static DatabaseRenameContent DatabaseRenameContent(string newName = default)
         {
-            return new DatabaseRenameProperties(newName, default);
+            return new DatabaseRenameContent(newName, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> A Fleetspace properties. </param>
-        /// <returns> A new <see cref="DatabaseFleetManager.FleetspaceData"/> instance for mocking. </returns>
-        public static FleetspaceData FleetspaceData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, FleetspaceProperties properties = default)
+        /// <returns> A new <see cref="DatabaseFleetManager.DatabaseFleetspaceData"/> instance for mocking. </returns>
+        public static DatabaseFleetspaceData DatabaseFleetspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FleetspaceProperties properties = default)
         {
-            return new FleetspaceData(
+            return new DatabaseFleetspaceData(
                 id,
                 name,
                 resourceType,
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="capacityMax"> Maximum number of vCores database fleet manager is allowed to provision in the fleetspace. </param>
         /// <param name="mainPrincipal"> Main Microsoft Entra ID principal that has admin access to all databases in the fleetspace. </param>
         /// <returns> A new <see cref="Models.FleetspaceProperties"/> instance for mocking. </returns>
-        public static FleetspaceProperties FleetspaceProperties(AzureProvisioningState? provisioningState = default, int? capacityMax = default, MainPrincipal mainPrincipal = default)
+        public static FleetspaceProperties FleetspaceProperties(AzureProvisioningState? provisioningState = default, int? capacityMax = default, FleetAdministrator mainPrincipal = default)
         {
             return new FleetspaceProperties(provisioningState, capacityMax, mainPrincipal, default);
         }
@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="objectId"> Object Id of the main principal. </param>
         /// <param name="tenantId"> Tenant Id of the main principal. </param>
         /// <param name="principalType"> Principal type of the main principal. </param>
-        /// <returns> A new <see cref="Models.MainPrincipal"/> instance for mocking. </returns>
-        public static MainPrincipal MainPrincipal(string login = default, Guid? applicationId = default, Guid? objectId = default, Guid? tenantId = default, PrincipalType? principalType = default)
+        /// <returns> A new <see cref="Models.FleetAdministrator"/> instance for mocking. </returns>
+        public static FleetAdministrator FleetAdministrator(string login = default, Guid? applicationId = default, Guid? objectId = default, Guid? tenantId = default, DatabaseFleetManagerPrincipalType? principalType = default)
         {
-            return new MainPrincipal(
+            return new FleetAdministrator(
                 login,
                 applicationId,
                 objectId,
@@ -169,12 +169,12 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="sourceResourceGroupName"> Source resource group name. </param>
         /// <param name="sourceServerName"> Source SQL Server name. </param>
         /// <param name="destinationTierOverrides"> Destination tier overrides. </param>
-        /// <returns> A new <see cref="Models.RegisterServerProperties"/> instance for mocking. </returns>
-        public static RegisterServerProperties RegisterServerProperties(string tierName = default, string sourceSubscriptionId = default, string sourceResourceGroupName = default, string sourceServerName = default, IEnumerable<DestinationTierOverride> destinationTierOverrides = default)
+        /// <returns> A new <see cref="Models.RegisterServerContent"/> instance for mocking. </returns>
+        public static RegisterServerContent RegisterServerContent(string tierName = default, string sourceSubscriptionId = default, string sourceResourceGroupName = default, string sourceServerName = default, IEnumerable<DestinationTierOverride> destinationTierOverrides = default)
         {
             destinationTierOverrides ??= new ChangeTrackingList<DestinationTierOverride>();
 
-            return new RegisterServerProperties(
+            return new RegisterServerContent(
                 tierName,
                 sourceSubscriptionId,
                 sourceResourceGroupName,
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="tierName"> Destination tier name. </param>
         /// <param name="resourceName"> Resource name. </param>
         /// <returns> A new <see cref="Models.DestinationTierOverride"/> instance for mocking. </returns>
-        public static DestinationTierOverride DestinationTierOverride(ResourceType resourceType = default, string tierName = default, string resourceName = default)
+        public static DestinationTierOverride DestinationTierOverride(DatabaseFleetResourceKind resourceType = default, string tierName = default, string resourceName = default)
         {
             return new DestinationTierOverride(resourceType, tierName, resourceName, default);
         }
@@ -199,12 +199,12 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The fleet properties. </param>
-        /// <returns> A new <see cref="DatabaseFleetManager.FleetData"/> instance for mocking. </returns>
-        public static FleetData FleetData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FleetProperties properties = default)
+        /// <returns> A new <see cref="DatabaseFleetManager.DatabaseFleetData"/> instance for mocking. </returns>
+        public static DatabaseFleetData DatabaseFleetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FleetProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new FleetData(
+            return new DatabaseFleetData(
                 id,
                 name,
                 resourceType,
@@ -225,12 +225,12 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
 
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The Database Fleet properties. </param>
-        /// <returns> A new <see cref="Models.FleetPatch"/> instance for mocking. </returns>
-        public static FleetPatch FleetPatch(IDictionary<string, string> tags = default, FleetProperties properties = default)
+        /// <returns> A new <see cref="Models.DatabaseFleetPatch"/> instance for mocking. </returns>
+        public static DatabaseFleetPatch DatabaseFleetPatch(IDictionary<string, string> tags = default, FleetProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new FleetPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+            return new DatabaseFleetPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> A Firewall rule properties. </param>
         /// <returns> A new <see cref="DatabaseFleetManager.FirewallRuleData"/> instance for mocking. </returns>
-        public static FirewallRuleData FirewallRuleData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, FirewallRuleProperties properties = default)
+        public static FirewallRuleData FirewallRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FirewallRuleProperties properties = default)
         {
             return new FirewallRuleData(
                 id,
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> A Fleet tier properties. </param>
         /// <returns> A new <see cref="DatabaseFleetManager.FleetTierData"/> instance for mocking. </returns>
-        public static FleetTierData FleetTierData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, FleetTierProperties properties = default)
+        public static FleetTierData FleetTierData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FleetTierProperties properties = default)
         {
             return new FleetTierData(
                 id,
@@ -277,8 +277,8 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         }
 
         /// <param name="disabled"> If true, tier is disabled. </param>
-        /// <param name="serverless"> If true, serverless resources are provisioned in the tier. </param>
-        /// <param name="pooled"> If true, databases are pooled. </param>
+        /// <param name="isServerless"> If true, serverless resources are provisioned in the tier. </param>
+        /// <param name="isPooled"> If true, databases are pooled. </param>
         /// <param name="serviceTier"> Service tier of provisioned resources. Supported values: GeneralPurpose, Hyperscale. </param>
         /// <param name="family"> Family of provisioned resources, for example Gen5. </param>
         /// <param name="capacity"> Capacity of provisioned resources in the tier, in units matching the specified service tier, for example vCore for GeneralPurpose. </param>
@@ -290,12 +290,12 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="databaseSizeGbMax"> Maximum database size in Gb. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <returns> A new <see cref="Models.FleetTierProperties"/> instance for mocking. </returns>
-        public static FleetTierProperties FleetTierProperties(bool? disabled = default, bool? serverless = default, bool? pooled = default, string serviceTier = default, string family = default, int? capacity = default, int? poolNumOfDatabasesMax = default, int? highAvailabilityReplicaCount = default, ZoneRedundancy? zoneRedundancy = default, double? databaseCapacityMin = default, double? databaseCapacityMax = default, int? databaseSizeGbMax = default, AzureProvisioningState? provisioningState = default)
+        public static FleetTierProperties FleetTierProperties(bool? disabled = default, bool? isServerless = default, bool? isPooled = default, string serviceTier = default, string family = default, int? capacity = default, int? poolNumOfDatabasesMax = default, int? highAvailabilityReplicaCount = default, DatabaseFleetManagerZoneRedundancy? zoneRedundancy = default, double? databaseCapacityMin = default, double? databaseCapacityMax = default, int? databaseSizeGbMax = default, AzureProvisioningState? provisioningState = default)
         {
             return new FleetTierProperties(
                 disabled,
-                serverless,
-                pooled,
+                isServerless,
+                isPooled,
                 serviceTier,
                 family,
                 capacity,

@@ -12,7 +12,7 @@ using Azure.ResourceManager.DatabaseFleetManager;
 namespace Azure.ResourceManager.DatabaseFleetManager.Models
 {
     /// <summary> Resource type of the destination tier override. </summary>
-    public readonly partial struct ResourceType : IEquatable<ResourceType>
+    public readonly partial struct DatabaseFleetResourceKind : IEquatable<DatabaseFleetResourceKind>
     {
         private readonly string _value;
         /// <summary> Database resource type. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <summary> Elastic pool resource type. </summary>
         private const string PoolValue = "Pool";
 
-        /// <summary> Initializes a new instance of <see cref="ResourceType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseFleetResourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ResourceType(string value)
+        public DatabaseFleetResourceKind(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         }
 
         /// <summary> Database resource type. </summary>
-        public static ResourceType Database { get; } = new ResourceType(DatabaseValue);
+        public static DatabaseFleetResourceKind Database { get; } = new DatabaseFleetResourceKind(DatabaseValue);
 
         /// <summary> Elastic pool resource type. </summary>
-        public static ResourceType Pool { get; } = new ResourceType(PoolValue);
+        public static DatabaseFleetResourceKind Pool { get; } = new DatabaseFleetResourceKind(PoolValue);
 
-        /// <summary> Determines if two <see cref="ResourceType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="DatabaseFleetResourceKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ResourceType left, ResourceType right) => left.Equals(right);
+        public static bool operator ==(DatabaseFleetResourceKind left, DatabaseFleetResourceKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ResourceType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="DatabaseFleetResourceKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ResourceType left, ResourceType right) => !left.Equals(right);
+        public static bool operator !=(DatabaseFleetResourceKind left, DatabaseFleetResourceKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ResourceType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DatabaseFleetResourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceType(string value) => new ResourceType(value);
+        public static implicit operator DatabaseFleetResourceKind(string value) => new DatabaseFleetResourceKind(value);
 
-        /// <summary> Converts a string to a <see cref="ResourceType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DatabaseFleetResourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceType?(string value) => value == null ? null : new ResourceType(value);
+        public static implicit operator DatabaseFleetResourceKind?(string value) => value == null ? null : new DatabaseFleetResourceKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ResourceType other && Equals(other);
+        public override bool Equals(object obj) => obj is DatabaseFleetResourceKind other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DatabaseFleetResourceKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

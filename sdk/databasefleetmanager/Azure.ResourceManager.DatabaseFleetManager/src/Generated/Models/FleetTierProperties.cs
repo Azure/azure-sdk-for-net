@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
 
         /// <summary> Initializes a new instance of <see cref="FleetTierProperties"/>. </summary>
         /// <param name="disabled"> If true, tier is disabled. </param>
-        /// <param name="serverless"> If true, serverless resources are provisioned in the tier. </param>
-        /// <param name="pooled"> If true, databases are pooled. </param>
+        /// <param name="isServerless"> If true, serverless resources are provisioned in the tier. </param>
+        /// <param name="isPooled"> If true, databases are pooled. </param>
         /// <param name="serviceTier"> Service tier of provisioned resources. Supported values: GeneralPurpose, Hyperscale. </param>
         /// <param name="family"> Family of provisioned resources, for example Gen5. </param>
         /// <param name="capacity"> Capacity of provisioned resources in the tier, in units matching the specified service tier, for example vCore for GeneralPurpose. </param>
@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="databaseSizeGbMax"> Maximum database size in Gb. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FleetTierProperties(bool? disabled, bool? serverless, bool? pooled, string serviceTier, string family, int? capacity, int? poolNumOfDatabasesMax, int? highAvailabilityReplicaCount, ZoneRedundancy? zoneRedundancy, double? databaseCapacityMin, double? databaseCapacityMax, int? databaseSizeGbMax, AzureProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FleetTierProperties(bool? disabled, bool? isServerless, bool? isPooled, string serviceTier, string family, int? capacity, int? poolNumOfDatabasesMax, int? highAvailabilityReplicaCount, DatabaseFleetManagerZoneRedundancy? zoneRedundancy, double? databaseCapacityMin, double? databaseCapacityMax, int? databaseSizeGbMax, AzureProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Disabled = disabled;
-            Serverless = serverless;
-            Pooled = pooled;
+            IsServerless = isServerless;
+            IsPooled = isPooled;
             ServiceTier = serviceTier;
             Family = family;
             Capacity = capacity;
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         public bool? Disabled { get; }
 
         /// <summary> If true, serverless resources are provisioned in the tier. </summary>
-        public bool? Serverless { get; set; }
+        public bool? IsServerless { get; set; }
 
         /// <summary> If true, databases are pooled. </summary>
-        public bool? Pooled { get; set; }
+        public bool? IsPooled { get; set; }
 
         /// <summary> Service tier of provisioned resources. Supported values: GeneralPurpose, Hyperscale. </summary>
         public string ServiceTier { get; set; }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         public int? HighAvailabilityReplicaCount { get; set; }
 
         /// <summary> Enable zone redundancy for all databases in this tier. </summary>
-        public ZoneRedundancy? ZoneRedundancy { get; set; }
+        public DatabaseFleetManagerZoneRedundancy? ZoneRedundancy { get; set; }
 
         /// <summary> Minimum allocated capacity per database, in units matching the specified service tier. </summary>
         public double? DatabaseCapacityMin { get; set; }

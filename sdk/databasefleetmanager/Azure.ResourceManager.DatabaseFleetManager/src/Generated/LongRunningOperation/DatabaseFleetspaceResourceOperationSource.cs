@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DatabaseFleetManager
 {
     /// <summary></summary>
-    internal partial class FleetspaceResourceOperationSource : IOperationSource<FleetspaceResource>
+    internal partial class DatabaseFleetspaceResourceOperationSource : IOperationSource<DatabaseFleetspaceResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal FleetspaceResourceOperationSource(ArmClient client)
+        internal DatabaseFleetspaceResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        FleetspaceResource IOperationSource<FleetspaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DatabaseFleetspaceResource IOperationSource<DatabaseFleetspaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            FleetspaceData data = FleetspaceData.DeserializeFleetspaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new FleetspaceResource(_client, data);
+            DatabaseFleetspaceData data = DatabaseFleetspaceData.DeserializeDatabaseFleetspaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DatabaseFleetspaceResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<FleetspaceResource> IOperationSource<FleetspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DatabaseFleetspaceResource> IOperationSource<DatabaseFleetspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            FleetspaceData data = FleetspaceData.DeserializeFleetspaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new FleetspaceResource(_client, data);
+            DatabaseFleetspaceData data = DatabaseFleetspaceData.DeserializeDatabaseFleetspaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DatabaseFleetspaceResource(_client, data);
         }
     }
 }

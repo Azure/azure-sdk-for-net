@@ -18,10 +18,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DatabaseFleetManager
 {
     /// <summary> A Database Fleet. </summary>
-    public partial class FleetData : TrackedResourceData, IJsonModel<FleetData>
+    public partial class DatabaseFleetData : TrackedResourceData, IJsonModel<DatabaseFleetData>
     {
-        /// <summary> Initializes a new instance of <see cref="FleetData"/> for deserialization. </summary>
-        internal FleetData()
+        /// <summary> Initializes a new instance of <see cref="DatabaseFleetData"/> for deserialization. </summary>
+        internal DatabaseFleetData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FleetData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseFleetData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFleetData(document.RootElement, options);
+                        return DeserializeDatabaseFleetData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FleetData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseFleetData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FleetData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseFleetData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDatabaseFleetManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FleetData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseFleetData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FleetData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DatabaseFleetData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FleetData IPersistableModel<FleetData>.Create(BinaryData data, ModelReaderWriterOptions options) => (FleetData)PersistableModelCreateCore(data, options);
+        DatabaseFleetData IPersistableModel<DatabaseFleetData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DatabaseFleetData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FleetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DatabaseFleetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="fleetData"> The <see cref="FleetData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(FleetData fleetData)
+        /// <param name="databaseFleetData"> The <see cref="DatabaseFleetData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DatabaseFleetData databaseFleetData)
         {
-            if (fleetData == null)
+            if (databaseFleetData == null)
             {
                 return null;
             }
-            return RequestContent.Create(fleetData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(databaseFleetData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FleetData"/> from. </param>
-        internal static FleetData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DatabaseFleetData"/> from. </param>
+        internal static DatabaseFleetData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeFleetData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeDatabaseFleetData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FleetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DatabaseFleetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FleetData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseFleetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FleetData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseFleetData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -125,24 +125,24 @@ namespace Azure.ResourceManager.DatabaseFleetManager
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FleetData IJsonModel<FleetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FleetData)JsonModelCreateCore(ref reader, options);
+        DatabaseFleetData IJsonModel<DatabaseFleetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DatabaseFleetData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FleetData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseFleetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FleetData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseFleetData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFleetData(document.RootElement, options);
+            return DeserializeDatabaseFleetData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FleetData DeserializeFleetData(JsonElement element, ModelReaderWriterOptions options)
+        internal static DatabaseFleetData DeserializeDatabaseFleetData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
             }
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType resourceType = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                     {
                         continue;
                     }
-                    resourceType = new Core.ResourceType(prop.Value.GetString());
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("systemData"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FleetData(
+            return new DatabaseFleetData(
                 id,
                 name,
                 resourceType,

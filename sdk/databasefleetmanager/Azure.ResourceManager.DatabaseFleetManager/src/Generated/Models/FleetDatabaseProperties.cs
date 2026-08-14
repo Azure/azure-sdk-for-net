@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="createMode"> Create mode. Available options: Default - Create a database. Copy - Copy the source database (source database name must be specified) PointInTimeRestore - Create a database by restoring source database from a point in time (source database name and restore from time must be specified). </param>
         /// <param name="tierName"> Name of the tier this database belongs to. </param>
         /// <param name="connectionString"> Connection string to connect to the database with. </param>
-        /// <param name="recoverable"> If true, database is recoverable. </param>
+        /// <param name="isRecoverable"> If true, database is recoverable. </param>
         /// <param name="restoreFromOn"> Restore from time when CreateMode is PointInTimeRestore. </param>
         /// <param name="earliestRestoreOn"> Earliest restore time. </param>
         /// <param name="latestRestoreOn"> Latest restore time. </param>
@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="transparentDataEncryption"> Transparent Data Encryption properties. </param>
         /// <param name="collation"> Database collation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FleetDatabaseProperties(string originalDatabaseId, AzureProvisioningState? provisioningState, DatabaseCreateMode? createMode, string tierName, string connectionString, bool? recoverable, DateTimeOffset? restoreFromOn, DateTimeOffset? earliestRestoreOn, DateTimeOffset? latestRestoreOn, int? backupRetentionDays, int? databaseSizeGbMax, string sourceDatabaseName, IDictionary<string, string> resourceTags, IdentityProperties identity, TransparentDataEncryption transparentDataEncryption, string collation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FleetDatabaseProperties(string originalDatabaseId, AzureProvisioningState? provisioningState, DatabaseCreateMode? createMode, string tierName, string connectionString, bool? isRecoverable, DateTimeOffset? restoreFromOn, DateTimeOffset? earliestRestoreOn, DateTimeOffset? latestRestoreOn, int? backupRetentionDays, int? databaseSizeGbMax, string sourceDatabaseName, IDictionary<string, string> resourceTags, IdentityProperties identity, DatabaseFleetManagerTransparentDataEncryption transparentDataEncryption, string collation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OriginalDatabaseId = originalDatabaseId;
             ProvisioningState = provisioningState;
             CreateMode = createMode;
             TierName = tierName;
             ConnectionString = connectionString;
-            Recoverable = recoverable;
+            IsRecoverable = isRecoverable;
             RestoreFromOn = restoreFromOn;
             EarliestRestoreOn = earliestRestoreOn;
             LatestRestoreOn = latestRestoreOn;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         public string ConnectionString { get; }
 
         /// <summary> If true, database is recoverable. </summary>
-        public bool? Recoverable { get; }
+        public bool? IsRecoverable { get; }
 
         /// <summary> Restore from time when CreateMode is PointInTimeRestore. </summary>
         public DateTimeOffset? RestoreFromOn { get; set; }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         public IdentityProperties Identity { get; set; }
 
         /// <summary> Transparent Data Encryption properties. </summary>
-        public TransparentDataEncryption TransparentDataEncryption { get; set; }
+        public DatabaseFleetManagerTransparentDataEncryption TransparentDataEncryption { get; set; }
 
         /// <summary> Database collation. </summary>
         public string Collation { get; set; }

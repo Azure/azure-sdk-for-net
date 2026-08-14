@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FleetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FleetResource> GetFleetsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatabaseFleetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DatabaseFleetResource> GetDatabaseFleetsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FleetData, FleetResource>(new FleetsGetAllAsyncCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabaseFleetManagerSubscriptionResource.GetFleets"), data => new FleetResource(Client, data));
+            return new AsyncPageableWrapper<DatabaseFleetData, DatabaseFleetResource>(new FleetsGetAllAsyncCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabaseFleetManagerSubscriptionResource.GetDatabaseFleets"), data => new DatabaseFleetResource(Client, data));
         }
 
         /// <summary>
@@ -84,14 +84,14 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FleetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FleetResource> GetFleets(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatabaseFleetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DatabaseFleetResource> GetDatabaseFleets(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FleetData, FleetResource>(new FleetsGetAllCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabaseFleetManagerSubscriptionResource.GetFleets"), data => new FleetResource(Client, data));
+            return new PageableWrapper<DatabaseFleetData, DatabaseFleetResource>(new FleetsGetAllCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabaseFleetManagerSubscriptionResource.GetDatabaseFleets"), data => new DatabaseFleetResource(Client, data));
         }
     }
 }

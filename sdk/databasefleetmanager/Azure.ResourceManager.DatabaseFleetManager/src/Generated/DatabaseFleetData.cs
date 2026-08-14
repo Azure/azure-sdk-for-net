@@ -14,18 +14,18 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DatabaseFleetManager
 {
     /// <summary> A Database Fleet. </summary>
-    public partial class FleetData : TrackedResourceData
+    public partial class DatabaseFleetData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FleetData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseFleetData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        public FleetData(AzureLocation location) : base(location)
+        public DatabaseFleetData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FleetData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseFleetData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The fleet properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FleetData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FleetProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal DatabaseFleetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FleetProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

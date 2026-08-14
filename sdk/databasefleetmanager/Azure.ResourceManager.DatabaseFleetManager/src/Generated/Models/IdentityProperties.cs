@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="userAssignedIdentities"> User identity ids. </param>
         /// <param name="federatedClientId"> The federated client id for the SQL Database. It is used for cross tenant CMK scenario. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IdentityProperties(IdentityType? identityType, IList<DatabaseIdentity> userAssignedIdentities, Guid? federatedClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IdentityProperties(DatabaseFleetManagerIdentityType? identityType, IList<DatabaseIdentity> userAssignedIdentities, Guid? federatedClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdentityType = identityType;
             UserAssignedIdentities = userAssignedIdentities;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         }
 
         /// <summary> Identity type of the main principal. </summary>
-        public IdentityType? IdentityType { get; set; }
+        public DatabaseFleetManagerIdentityType? IdentityType { get; set; }
 
         /// <summary> User identity ids. </summary>
         public IList<DatabaseIdentity> UserAssignedIdentities { get; }

@@ -20,40 +20,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DatabaseFleetManager
 {
     /// <summary>
-    /// A class representing a Fleet along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FleetResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetFleets method.
+    /// A class representing a DatabaseFleet along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DatabaseFleetResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDatabaseFleets method.
     /// </summary>
-    public partial class FleetResource : ArmResource
+    public partial class DatabaseFleetResource : ArmResource
     {
         private readonly ClientDiagnostics _fleetsClientDiagnostics;
         private readonly Fleets _fleetsRestClient;
-        private readonly FleetData _data;
+        private readonly DatabaseFleetData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.DatabaseFleetManager/fleets";
+        public static readonly ResourceType ResourceType = "Microsoft.DatabaseFleetManager/fleets";
 
-        /// <summary> Initializes a new instance of FleetResource for mocking. </summary>
-        protected FleetResource()
+        /// <summary> Initializes a new instance of DatabaseFleetResource for mocking. </summary>
+        protected DatabaseFleetResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FleetResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseFleetResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal FleetResource(ArmClient client, FleetData data) : this(client, data.Id)
+        internal DatabaseFleetResource(ArmClient client, DatabaseFleetData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FleetResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseFleetResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal FleetResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DatabaseFleetResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string fleetApiVersion);
+            TryGetApiVersion(ResourceType, out string databaseFleetApiVersion);
             _fleetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DatabaseFleetManager", ResourceType.Namespace, Diagnostics);
-            _fleetsRestClient = new Fleets(_fleetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fleetApiVersion ?? "2025-02-01-preview");
+            _fleetsRestClient = new Fleets(_fleetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databaseFleetApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual FleetData Data
+        public virtual DatabaseFleetData Data
         {
             get
             {
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FleetResource"/>. </description>
+        /// <description> <see cref="DatabaseFleetResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FleetResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseFleetResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("FleetResource.Get");
+            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("DatabaseFleetResource.Get");
             scope.Start();
             try
             {
@@ -127,12 +127,12 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 };
                 HttpMessage message = _fleetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FleetData> response = Response.FromValue(FleetData.FromResponse(result), result);
+                Response<DatabaseFleetData> response = Response.FromValue(DatabaseFleetData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new FleetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DatabaseFleetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FleetResource"/>. </description>
+        /// <description> <see cref="DatabaseFleetResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FleetResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DatabaseFleetResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("FleetResource.Get");
+            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("DatabaseFleetResource.Get");
             scope.Start();
             try
             {
@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 };
                 HttpMessage message = _fleetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<FleetData> response = Response.FromValue(FleetData.FromResponse(result), result);
+                Response<DatabaseFleetData> response = Response.FromValue(DatabaseFleetData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new FleetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DatabaseFleetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FleetResource"/>. </description>
+        /// <description> <see cref="DatabaseFleetResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,11 +214,11 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="patch"> The fleet object to patch. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<FleetResource>> UpdateAsync(WaitUntil waitUntil, FleetPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DatabaseFleetResource>> UpdateAsync(WaitUntil waitUntil, DatabaseFleetPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("FleetResource.Update");
+            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("DatabaseFleetResource.Update");
             scope.Start();
             try
             {
@@ -226,10 +226,10 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FleetPatch.ToRequestContent(patch), context);
+                HttpMessage message = _fleetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DatabaseFleetPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DatabaseFleetManagerArmOperation<FleetResource> operation = new DatabaseFleetManagerArmOperation<FleetResource>(
-                    new FleetResourceOperationSource(Client),
+                DatabaseFleetManagerArmOperation<DatabaseFleetResource> operation = new DatabaseFleetManagerArmOperation<DatabaseFleetResource>(
+                    new DatabaseFleetResourceOperationSource(Client),
                     _fleetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FleetResource"/>. </description>
+        /// <description> <see cref="DatabaseFleetResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="patch"> The fleet object to patch. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<FleetResource> Update(WaitUntil waitUntil, FleetPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DatabaseFleetResource> Update(WaitUntil waitUntil, DatabaseFleetPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("FleetResource.Update");
+            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("DatabaseFleetResource.Update");
             scope.Start();
             try
             {
@@ -285,10 +285,10 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FleetPatch.ToRequestContent(patch), context);
+                HttpMessage message = _fleetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DatabaseFleetPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                DatabaseFleetManagerArmOperation<FleetResource> operation = new DatabaseFleetManagerArmOperation<FleetResource>(
-                    new FleetResourceOperationSource(Client),
+                DatabaseFleetManagerArmOperation<DatabaseFleetResource> operation = new DatabaseFleetManagerArmOperation<DatabaseFleetResource>(
+                    new DatabaseFleetResourceOperationSource(Client),
                     _fleetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FleetResource"/>. </description>
+        /// <description> <see cref="DatabaseFleetResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("FleetResource.Delete");
+            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("DatabaseFleetResource.Delete");
             scope.Start();
             try
             {
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FleetResource"/>. </description>
+        /// <description> <see cref="DatabaseFleetResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("FleetResource.Delete");
+            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("DatabaseFleetResource.Delete");
             scope.Start();
             try
             {
@@ -410,12 +410,12 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<FleetResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseFleetResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("FleetResource.AddTag");
+            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("DatabaseFleetResource.AddTag");
             scope.Start();
             try
             {
@@ -430,19 +430,19 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                     };
                     HttpMessage message = _fleetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<FleetData> response = Response.FromValue(FleetData.FromResponse(result), result);
-                    return Response.FromValue(new FleetResource(Client, response.Value), response.GetRawResponse());
+                    Response<DatabaseFleetData> response = Response.FromValue(DatabaseFleetData.FromResponse(result), result);
+                    return Response.FromValue(new DatabaseFleetResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    FleetData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    FleetPatch patch = new FleetPatch();
+                    DatabaseFleetData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DatabaseFleetPatch patch = new DatabaseFleetPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<FleetResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DatabaseFleetResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -458,12 +458,12 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<FleetResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<DatabaseFleetResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("FleetResource.AddTag");
+            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("DatabaseFleetResource.AddTag");
             scope.Start();
             try
             {
@@ -478,19 +478,19 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                     };
                     HttpMessage message = _fleetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<FleetData> response = Response.FromValue(FleetData.FromResponse(result), result);
-                    return Response.FromValue(new FleetResource(Client, response.Value), response.GetRawResponse());
+                    Response<DatabaseFleetData> response = Response.FromValue(DatabaseFleetData.FromResponse(result), result);
+                    return Response.FromValue(new DatabaseFleetResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    FleetData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    FleetPatch patch = new FleetPatch();
+                    DatabaseFleetData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DatabaseFleetPatch patch = new DatabaseFleetPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<FleetResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DatabaseFleetResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -505,11 +505,11 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<FleetResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseFleetResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("FleetResource.SetTags");
+            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("DatabaseFleetResource.SetTags");
             scope.Start();
             try
             {
@@ -525,15 +525,15 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                     };
                     HttpMessage message = _fleetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<FleetData> response = Response.FromValue(FleetData.FromResponse(result), result);
-                    return Response.FromValue(new FleetResource(Client, response.Value), response.GetRawResponse());
+                    Response<DatabaseFleetData> response = Response.FromValue(DatabaseFleetData.FromResponse(result), result);
+                    return Response.FromValue(new DatabaseFleetResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    FleetData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    FleetPatch patch = new FleetPatch();
+                    DatabaseFleetData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DatabaseFleetPatch patch = new DatabaseFleetPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<FleetResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DatabaseFleetResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -548,11 +548,11 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<FleetResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<DatabaseFleetResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("FleetResource.SetTags");
+            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("DatabaseFleetResource.SetTags");
             scope.Start();
             try
             {
@@ -568,15 +568,15 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                     };
                     HttpMessage message = _fleetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<FleetData> response = Response.FromValue(FleetData.FromResponse(result), result);
-                    return Response.FromValue(new FleetResource(Client, response.Value), response.GetRawResponse());
+                    Response<DatabaseFleetData> response = Response.FromValue(DatabaseFleetData.FromResponse(result), result);
+                    return Response.FromValue(new DatabaseFleetResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    FleetData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    FleetPatch patch = new FleetPatch();
+                    DatabaseFleetData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DatabaseFleetPatch patch = new DatabaseFleetPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<FleetResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DatabaseFleetResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -591,11 +591,11 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<FleetResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseFleetResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("FleetResource.RemoveTag");
+            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("DatabaseFleetResource.RemoveTag");
             scope.Start();
             try
             {
@@ -610,19 +610,19 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                     };
                     HttpMessage message = _fleetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<FleetData> response = Response.FromValue(FleetData.FromResponse(result), result);
-                    return Response.FromValue(new FleetResource(Client, response.Value), response.GetRawResponse());
+                    Response<DatabaseFleetData> response = Response.FromValue(DatabaseFleetData.FromResponse(result), result);
+                    return Response.FromValue(new DatabaseFleetResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    FleetData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    FleetPatch patch = new FleetPatch();
+                    DatabaseFleetData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DatabaseFleetPatch patch = new DatabaseFleetPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<FleetResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DatabaseFleetResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -637,11 +637,11 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<FleetResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<DatabaseFleetResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("FleetResource.RemoveTag");
+            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("DatabaseFleetResource.RemoveTag");
             scope.Start();
             try
             {
@@ -656,19 +656,19 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                     };
                     HttpMessage message = _fleetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<FleetData> response = Response.FromValue(FleetData.FromResponse(result), result);
-                    return Response.FromValue(new FleetResource(Client, response.Value), response.GetRawResponse());
+                    Response<DatabaseFleetData> response = Response.FromValue(DatabaseFleetData.FromResponse(result), result);
+                    return Response.FromValue(new DatabaseFleetResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    FleetData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    FleetPatch patch = new FleetPatch();
+                    DatabaseFleetData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DatabaseFleetPatch patch = new DatabaseFleetPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<FleetResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DatabaseFleetResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -679,11 +679,11 @@ namespace Azure.ResourceManager.DatabaseFleetManager
             }
         }
 
-        /// <summary> Gets a collection of Fleetspaces in the <see cref="FleetResource"/>. </summary>
-        /// <returns> An object representing collection of Fleetspaces and their operations over a FleetspaceResource. </returns>
-        public virtual FleetspaceCollection GetFleetspaces()
+        /// <summary> Gets a collection of DatabaseFleetspaces in the <see cref="DatabaseFleetResource"/>. </summary>
+        /// <returns> An object representing collection of DatabaseFleetspaces and their operations over a DatabaseFleetspaceResource. </returns>
+        public virtual DatabaseFleetspaceCollection GetDatabaseFleetspaces()
         {
-            return GetCachedClient(client => new FleetspaceCollection(client, Id));
+            return GetCachedClient(client => new DatabaseFleetspaceCollection(client, Id));
         }
 
         /// <summary> Gets fleetspace resource. </summary>
@@ -692,11 +692,11 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <exception cref="ArgumentNullException"> <paramref name="fleetspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FleetspaceResource>> GetFleetspaceAsync(string fleetspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseFleetspaceResource>> GetDatabaseFleetspaceAsync(string fleetspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fleetspaceName, nameof(fleetspaceName));
 
-            return await GetFleetspaces().GetAsync(fleetspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetDatabaseFleetspaces().GetAsync(fleetspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets fleetspace resource. </summary>
@@ -705,14 +705,14 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <exception cref="ArgumentNullException"> <paramref name="fleetspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FleetspaceResource> GetFleetspace(string fleetspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<DatabaseFleetspaceResource> GetDatabaseFleetspace(string fleetspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fleetspaceName, nameof(fleetspaceName));
 
-            return GetFleetspaces().Get(fleetspaceName, cancellationToken);
+            return GetDatabaseFleetspaces().Get(fleetspaceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of FleetTiers in the <see cref="FleetResource"/>. </summary>
+        /// <summary> Gets a collection of FleetTiers in the <see cref="DatabaseFleetResource"/>. </summary>
         /// <returns> An object representing collection of FleetTiers and their operations over a FleetTierResource. </returns>
         public virtual FleetTierCollection GetFleetTiers()
         {

@@ -15,61 +15,61 @@ using Azure.ResourceManager.DatabaseFleetManager;
 namespace Azure.ResourceManager.DatabaseFleetManager.Models
 {
     /// <summary> A database rename definition. </summary>
-    public partial class DatabaseRenameProperties : IJsonModel<DatabaseRenameProperties>
+    public partial class DatabaseRenameContent : IJsonModel<DatabaseRenameContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DatabaseRenameProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DatabaseRenameContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatabaseRenameProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseRenameContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDatabaseRenameProperties(document.RootElement, options);
+                        return DeserializeDatabaseRenameContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseRenameProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseRenameContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatabaseRenameProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseRenameContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDatabaseFleetManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseRenameProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseRenameContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DatabaseRenameProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DatabaseRenameContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DatabaseRenameProperties IPersistableModel<DatabaseRenameProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DatabaseRenameContent IPersistableModel<DatabaseRenameContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DatabaseRenameProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DatabaseRenameContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="databaseRenameProperties"> The <see cref="DatabaseRenameProperties"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DatabaseRenameProperties databaseRenameProperties)
+        /// <param name="databaseRenameContent"> The <see cref="DatabaseRenameContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DatabaseRenameContent databaseRenameContent)
         {
-            if (databaseRenameProperties == null)
+            if (databaseRenameContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(databaseRenameProperties, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(databaseRenameContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DatabaseRenameProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DatabaseRenameContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatabaseRenameProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseRenameContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseRenameProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseRenameContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(NewName))
             {
@@ -109,24 +109,24 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DatabaseRenameProperties IJsonModel<DatabaseRenameProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DatabaseRenameContent IJsonModel<DatabaseRenameContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DatabaseRenameProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DatabaseRenameContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatabaseRenameProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseRenameContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseRenameProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseRenameContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDatabaseRenameProperties(document.RootElement, options);
+            return DeserializeDatabaseRenameContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DatabaseRenameProperties DeserializeDatabaseRenameProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static DatabaseRenameContent DeserializeDatabaseRenameContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DatabaseRenameProperties(newName, additionalBinaryDataProperties);
+            return new DatabaseRenameContent(newName, additionalBinaryDataProperties);
         }
     }
 }
