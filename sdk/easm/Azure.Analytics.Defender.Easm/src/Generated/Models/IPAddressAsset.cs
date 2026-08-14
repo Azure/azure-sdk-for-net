@@ -10,11 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    /// <summary> The IpAddressAsset. </summary>
-    public partial class IpAddressAsset : InventoryAsset
+    /// <summary> The IPAddressAsset. </summary>
+    public partial class IPAddressAsset : InventoryAsset
     {
-        /// <summary> Initializes a new instance of <see cref="IpAddressAsset"/>. </summary>
-        internal IpAddressAsset()
+        /// <summary> Initializes a new instance of <see cref="IPAddressAsset"/>. </summary>
+        internal IPAddressAsset()
         {
             Asns = new ChangeTrackingList<ObservedLong>();
             Reputations = new ChangeTrackingList<ReputationDetails>();
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Defender.Easm
             Cookies = new ChangeTrackingList<CookieDetails>();
             SslCerts = new ChangeTrackingList<SslCertAsset>();
             Services = new ChangeTrackingList<AssetService>();
-            IpBlocks = new ChangeTrackingList<IpBlock>();
+            IPBlocks = new ChangeTrackingList<IPBlock>();
             Sources = new ChangeTrackingList<SourceDetails>();
             Banners = new ChangeTrackingList<BannerDetails>();
             ScanMetadata = new ChangeTrackingList<ScanMetadata>();
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Defender.Easm
             SslServerConfig = new ChangeTrackingList<SslServerConfig>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IpAddressAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPAddressAsset"/>. </summary>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="ipAddress"></param>
         /// <param name="asns"></param>
@@ -62,11 +62,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="hosts"></param>
         /// <param name="nxdomain"></param>
         /// <param name="sslServerConfig"></param>
-        /// <param name="ipv4"></param>
-        /// <param name="ipv6"></param>
-        internal IpAddressAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, string ipAddress, IList<ObservedLong> asns, IList<ReputationDetails> reputations, IList<WebComponent> webComponents, IList<ObservedString> netRanges, IList<ObservedHeader> headers, IList<AttributeDetails> attributes, IList<CookieDetails> cookies, IList<SslCertAsset> sslCerts, IList<AssetService> services, IList<IpBlock> ipBlocks, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<BannerDetails> banners, IList<ScanMetadata> scanMetadata, IList<ObservedBoolean> nsRecord, IList<ObservedBoolean> mxRecord, IList<ObservedLocation> location, IList<ObservedString> hosts, IList<ObservedBoolean> nxdomain, IList<SslServerConfig> sslServerConfig, bool? ipv4, bool? ipv6) : base(additionalBinaryDataProperties)
+        /// <param name="iPv4"></param>
+        /// <param name="iPv6"></param>
+        internal IPAddressAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, string ipAddress, IList<ObservedLong> asns, IList<ReputationDetails> reputations, IList<WebComponent> webComponents, IList<ObservedString> netRanges, IList<ObservedHeader> headers, IList<AttributeDetails> attributes, IList<CookieDetails> cookies, IList<SslCertAsset> sslCerts, IList<AssetService> services, IList<IPBlock> ipBlocks, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<BannerDetails> banners, IList<ScanMetadata> scanMetadata, IList<ObservedBoolean> nsRecord, IList<ObservedBoolean> mxRecord, IList<ObservedLocation> location, IList<ObservedString> hosts, IList<ObservedBoolean> nxdomain, IList<SslServerConfig> sslServerConfig, bool? iPv4, bool? iPv6) : base(additionalBinaryDataProperties)
         {
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             Asns = asns;
             Reputations = reputations;
             WebComponents = webComponents;
@@ -76,7 +76,7 @@ namespace Azure.Analytics.Defender.Easm
             Cookies = cookies;
             SslCerts = sslCerts;
             Services = services;
-            IpBlocks = ipBlocks;
+            IPBlocks = ipBlocks;
             Sources = sources;
             FirstSeen = firstSeen;
             LastSeen = lastSeen;
@@ -89,12 +89,12 @@ namespace Azure.Analytics.Defender.Easm
             Hosts = hosts;
             Nxdomain = nxdomain;
             SslServerConfig = sslServerConfig;
-            Ipv4 = ipv4;
-            Ipv6 = ipv6;
+            IPv4 = iPv4;
+            IPv6 = iPv6;
         }
 
-        /// <summary> Gets the IpAddress. </summary>
-        public string IpAddress { get; }
+        /// <summary> Gets the IPAddress. </summary>
+        public string IPAddress { get; }
 
         /// <summary> Gets the Asns. </summary>
         public IList<ObservedLong> Asns { get; }
@@ -123,8 +123,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the Services. </summary>
         public IList<AssetService> Services { get; }
 
-        /// <summary> Gets the IpBlocks. </summary>
-        public IList<IpBlock> IpBlocks { get; }
+        /// <summary> Gets the IPBlocks. </summary>
+        public IList<IPBlock> IPBlocks { get; }
 
         /// <summary> Gets the Sources. </summary>
         public IList<SourceDetails> Sources { get; }
@@ -162,10 +162,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the SslServerConfig. </summary>
         public IList<SslServerConfig> SslServerConfig { get; }
 
-        /// <summary> Gets the Ipv4. </summary>
-        public bool? Ipv4 { get; }
+        /// <summary> Gets the IPv4. </summary>
+        public bool? IPv4 { get; }
 
-        /// <summary> Gets the Ipv6. </summary>
-        public bool? Ipv6 { get; }
+        /// <summary> Gets the IPv6. </summary>
+        public bool? IPv6 { get; }
     }
 }
