@@ -35,9 +35,9 @@ namespace Azure.Generator.Management.Visitors
                 var bodyUpdated = false;
                 foreach (var statement in method.BodyStatements)
                 {
-                    // Primary factory methods are created before later visitors may reset/reorder model constructors.
-                    // Rebuild direct constructor calls from the method signature so the public factory parameters
-                    // keep flowing into the final constructor slots.
+                    // Factory methods can be created before later visitors reset or reorder model constructors.
+                    // Rebuild direct constructor calls from the method signature so factory parameters keep flowing
+                    // into the final constructor slots.
                     if (statement is ExpressionStatement { Expression: KeywordExpression { Expression: NewInstanceExpression newInstanceExpression } }
                         && TryRebuildNewInstanceFromMethodSignature(method, newInstanceExpression, out var updatedArguments))
                     {

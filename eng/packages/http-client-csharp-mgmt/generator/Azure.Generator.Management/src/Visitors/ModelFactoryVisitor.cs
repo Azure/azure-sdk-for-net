@@ -153,13 +153,6 @@ namespace Azure.Generator.Management.Visitors
             }
         }
 
-        private static bool HasSameCSharpSignature(MethodSignature first, MethodSignature second)
-        {
-            return first.Name == second.Name
-                && first.Parameters.Count == second.Parameters.Count
-                && first.Parameters.Zip(second.Parameters).All(pair => pair.First.Type.AreNamesEqual(pair.Second.Type));
-        }
-
         private void FixArgumentNullExceptionXmlDoc(MethodProvider method)
         {
             // Model factory methods are for mocking and should not have ArgumentNullException validation
