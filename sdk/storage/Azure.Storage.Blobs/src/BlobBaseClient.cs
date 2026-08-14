@@ -5564,51 +5564,35 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     scope.Start();
 
-                    // Call the protocol overload rather than the convenience overload to avoid
-                    // generated deserialization. The service returns 204 with no body when the
-                    // blob has no layout, and the convenience overload unconditionally casts the
-                    // response to BlobLayout, which runs XElement.Load over an empty stream and throws XmlException.
-                    Response result;
                     if (async)
                     {
-                        result = await BlobRestClient.GetLayoutAsync(
-                            snapshot: null,
-                            versionId: null,
+                        return await BlobRestClient.GetLayoutAsync(
                             marker: marker,
                             maxresults: maxResults,
-                            timeout: null,
                             range: range.ToString(),
                             leaseId: conditions?.LeaseId,
                             ifTags: conditions?.TagConditions,
                             requestConditions: conditions,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256.ToSerialString(),
-                            context: cancellationToken.ToRequestContext())
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
-                        result = BlobRestClient.GetLayout(
-                            snapshot: null,
-                            versionId: null,
+                        return BlobRestClient.GetLayout(
                             marker: marker,
                             maxresults: maxResults,
-                            timeout: null,
                             range: range.ToString(),
                             leaseId: conditions?.LeaseId,
                             ifTags: conditions?.TagConditions,
                             requestConditions: conditions,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256.ToSerialString(),
-                            context: cancellationToken.ToRequestContext());
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            cancellationToken: cancellationToken);
                     }
-
-                    // A 204 means the blob has no layout. Model that with NoValueResponse.
-                    return result.Status == 204
-                        ? new NoValueResponse<BlobLayout>(result)
-                        : Response.FromValue((BlobLayout)result, result);
                 }
                 catch (Exception ex)
                 {

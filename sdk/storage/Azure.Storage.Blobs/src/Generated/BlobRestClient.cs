@@ -2233,10 +2233,13 @@ namespace Azure.Storage.Blobs
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BlobLayout> GetLayout(string snapshot = default, string versionId = default, string marker = default, int? maxresults = default, int? timeout = default, string range = default, string leaseId = default, string ifTags = default, RequestConditions requestConditions = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<BlobLayout> GetLayout(string snapshot = default, string versionId = default, string marker = default, int? maxresults = default, int? timeout = default, string range = default, string leaseId = default, string ifTags = default, RequestConditions requestConditions = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, CancellationToken cancellationToken = default)
         {
             Response result = GetLayout(snapshot, versionId, marker, maxresults, timeout, range, leaseId, ifTags, requestConditions, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), cancellationToken.ToRequestContext());
+            if (result.Status == 204)
+            {
+                return new NoValueResponse<BlobLayout>(result);
+            }
             return Response.FromValue((BlobLayout)result, result);
         }
 
@@ -2254,10 +2257,13 @@ namespace Azure.Storage.Blobs
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BlobLayout>> GetLayoutAsync(string snapshot = default, string versionId = default, string marker = default, int? maxresults = default, int? timeout = default, string range = default, string leaseId = default, string ifTags = default, RequestConditions requestConditions = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<BlobLayout>> GetLayoutAsync(string snapshot = default, string versionId = default, string marker = default, int? maxresults = default, int? timeout = default, string range = default, string leaseId = default, string ifTags = default, RequestConditions requestConditions = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, CancellationToken cancellationToken = default)
         {
             Response result = await GetLayoutAsync(snapshot, versionId, marker, maxresults, timeout, range, leaseId, ifTags, requestConditions, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            if (result.Status == 204)
+            {
+                return new NoValueResponse<BlobLayout>(result);
+            }
             return Response.FromValue((BlobLayout)result, result);
         }
     }
